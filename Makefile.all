@@ -1,0 +1,79 @@
+SRC := variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm transpile.scm frontend.scm
+RUNTIME_SRC := vruntime.c vlibrary.c vread.c
+
+HOME_DIR := $(shell echo ~)
+INSTALL_DIR := $(HOME_DIR)/.local
+
+LIBS := -lm -ldl -lpthread
+INCLUDES := include $(HOME_DIR)/.local/include
+CFLAGS := -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Wno-missing-field-initializers
+
+IFLAGS := $(addprefix -I, $(INCLUDES))
+
+vpath %.h src $(INCLUDES)
+
+DEP = $(addprefix build/, $(RUNTIME_SRC:.c=.d))
+OBJ = $(addprefix build/, $(SRC:.scm=.o))
+RUNTIME_OBJ = $(addprefix build/, $(RUNTIME_SRC:.c=.o))
+
+BOOT = $(addprefix bin/bootstrap/, $(SRC:.scm=.c))
+BOOT += $(addprefix bin/bootstrap/, $(RUNTIME_SRC))
+STRAP = $(addprefix bootstrap/, $(SRC:.scm=.c))
+
+VSCHEME = libvscheme.so.$(MAJOR)
+VSC = vsc.$(MAJOR)
+
+include config.mk
+
+.PHONY : deps install compiler runtime tests install_compiler lay_egg hatch
+compiler : bin/vsc
+runtime : lib/libvscheme.so
+
+install_compiler : compiler 
+	mkdir -p ~/.local/include/vscheme/
+	mkdir -p ~/.local/lib/
+	cp -ur include/* ~/.local/include/.
+	cp -u bin/vsc ~/.local/bin/$(VSC)
+install : install_compiler runtime
+	cp -u lib/libvscheme.so ~/.local/lib/$(VSCHEME)
+
+lay_egg : $(BOOT) bin/bootstrap/r7rs.c
+
+# Pretty horribly messy, should seperate into a Makefile.hatch
+hatch :
+	cp -ur include/* ~/.local/include/.
+	gcc -rdynamic -c -o build/r7rs.o bootstrap/r7rs.c $(LIBS) $(CFLAGS) -fPIC -Wno-missing-braces
+	gcc -rdynamic -o lib/libvscheme.so build/r7rs.o $(addprefix bootstrap/, $(RUNTIME_SRC)) $(LIBS) $(CFLAGS) -fPIC -shared -Wno-missing-braces
+	cp -u lib/libvscheme.so ~/.local/lib/$(VSCHEME)
+	gcc -rdynamic -o bin/vsc $(STRAP) -lvscheme -Wl,--no-as-needed -Wno-missing-braces
+	cp -u bin/vsc ~/.local/bin/$(VSC)
+bin/bootstrap/r7rs.c : runtime/r7rs.scm
+	vsc -t $< -o $@ $(SCMFLAGS) --shared
+	{ /bin/rm $@; cat src/license_template - >$@; } <$@	
+bin/bootstrap/%.c : src/%.scm
+	vsc -t $< -o $@ $(SCMFLAGS)
+	{ /bin/rm $@; cat src/license_template - >$@; } <$@	
+
+bin/bootstrap/%.c : runtime/%.c
+	cp $< $@
+
+deps : $(DEP)
+
+build/%.d : runtime/%.c
+	gcc $< -MG -MM -MF $@ -MT $@ -MT $(@:.d=.o) $(CFLAGS) $(IFLAGS)
+
+-include $(DEP)
+
+bin/vsc : $(OBJ)
+	vsc -o $@ $^ $(SCMFLAGS)
+lib/libvscheme.so : $(RUNTIME_OBJ) build/r7rs.o
+	gcc -o $@ $^ $(LIBS) $(CFLAGS) -shared
+
+build/r7rs.o : bin/vsc runtime/r7rs.scm
+	bin/vsc runtime/r7rs.scm -c -o build/r7rs.o $(SCMFLAGS) --shared 
+
+build/%.o : runtime/%.c build/%.d 
+	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
+
+build/%.o : src/%.scm
+	vsc -c $< -o $@ $(SCMFLAGS)

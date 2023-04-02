@@ -1,0 +1,29 @@
+VANITY SCHEME MACRO EXCEPETIONS
+
+Additional Permission under GNU GPL Version 3.0 Section 7
+
+During the process of compilation, Vanity Scheme will transform
+your code according to a set of rules or procedures which include
+arbitrary and complex transformations, known in this document as macros.
+
+For the purposes of this exception, a macro is a snippet of code
+which transforms one piece of code into another during
+the execution of Vanity Scheme and its subprocesses on user input
+code to produce an executable, object file, or other document:
+the compilation process. This definition includes but is not limited
+to: C macros, Scheme define-syntax macros, compiler routines which take
+code as input and emit code as output, and C functions in headers
+marked __attribute__((always_inline)).
+
+As a special exception, you may create a larger work that contains
+code transformed by the macros in Vanity Scheme and distribute that
+work under terms of your choice.
+
+Additionally, if you modify or redistribute the macros themselves,
+you may (at your option) remove this special exception, which will
+cause the macros and the resulting modified compiler output files
+to be licensed under the GNU General Public License without this
+special exception. 
+
+This special exception was added by Richard N Van Natta in
+the initial release of Vanity Scheme.

@@ -1,0 +1,57 @@
+#!/bin/bash
+
+echo "Configuring Vanity Scheme Links"
+
+if [ ! -f config.sh ]; then
+  echo "Missing config file! Please run ./configure first"
+  exit
+fi
+
+source config.sh
+
+#major=0
+#install="~/.local"
+#install="${install/#\~/$HOME}"
+
+vsc_link="$install/bin/vsc"
+lib_link="$install/lib/libvscheme.so"
+
+mkdir -p bin
+mkdir -p lib
+mkdir -p build
+
+mkdir -p "$install/bin"
+mkdir -p "$install/lib"
+mkdir -p "$install/include/vscheme"
+
+if [ -L ${vsc_link} ]; then
+  ln -sf "$vsc_link.$major" $vsc_link
+else
+  ln -s "$vsc_link.$major" $vsc_link
+fi
+
+if [ -L ${lib_link} ]; then
+  ln -sf "$lib_link.$major" $lib_link
+else
+  ln -s "$lib_link.$major" $lib_link
+fi
+
+if ! command -v vsc > /dev/null; then
+  echo "NOTE: vsc command is not valid yet!"
+  echo 'You will need to run `make hatch -j`'
+fi
+
+
+if [[ ! :$PATH: == *:"$install/bin":* ]] ||
+   [[ ! :$CPATH: == *:"$install/include":* ]] ||
+   [[ ! :$LIBRARY_PATH: == *:"$install/lib":* ]] ||
+   [[ ! :$LD_LIBRARY_PATH: == *:"$install/lib":* ]]; then
+  echo 'add these to your `.profile` file then log out and in:'
+  echo ""
+  echo "export PATH=\"$install/bin\${PATH:+:\$PATH}\""
+  echo "export CPATH=\"$install/include\${CPATH:+:\$CPATH}\""
+  echo "export LIBRARY_PATH=\"$install/lib\${LIBRARY_PATH:+:\$LIBRARY_PATH}\""
+  echo "export LD_LIBRARY_PATH=\"$install/lib\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}\""
+
+  echo 'next run `./configure` and afterwards `make hatch -j` then `make clean` then finally `make install -j`';
+fi

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo "Configuring Vanity Scheme"
+read -p "Major Version:" major
+read -p "Minor Version:" minor
+read -p "Install Dir:" install
+read -p "Debug Build? (y/N):" debug
+
+if [ -z "$major" ]; then major=0; fi
+if [ -z "$minor" ]; then minor=0; fi
+if [ -z "$install" ]; then install="~/.local"; fi
+if [ "$debug" = "y" ]; then cflags="-O0 -g"; else cflags="-O3"; fi
+if [ "$debug" = "y" ]; then scmflags="-O0 -g"; else scmflags="-O3"; fi
+
+install="${install/#\~/$HOME}"
+
+echo "Installing Vanity Scheme $major.$minor to $install with extra CFLAGS: $cflags and extra SCMFLAGS: $scmflags"
+
+echo "MAJOR := $major" > config.mk
+echo "MINOR := $minor" >> config.mk
+echo "INSTALL_DIR := $install" >> config.mk
+echo "CFLAGS += $cflags" >> config.mk
+echo "SCMFLAGS += $scmflags" >> config.mk
+
+echo "major=$major" > config.sh
+echo "minor=$minor" >> config.sh
+echo "install=$install" >> config.sh
+chmod +x config.sh
