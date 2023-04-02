@@ -2,9 +2,7 @@
 
 A R7RS scheme compiler vanity project that I started writing July 2022.
 
-It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. However, I wouldn't recommend doing that now as I need to do a pass on the language's ABI.
-
-The main reason I started this is a burning desire for parallelism (which I haven't implemented yet). I have no intent on supporting parallel threads: the parallelism will be only structured parallelism in the forms of parallel for's and async, with lots of limitations so there are minimal barriers and atomics despite the garbage collector. I view threads as the GOTO of parallelism so no intent to implement them as they'll wreck too much havoc in a compacting garbage collected language. Eventually it will also have a solid foreign function interface and hopefully be suitable for gamedev.
+It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. However, I wouldn't recommend doing that now as I need to do a pass on the language's ABI. The main reason I started this is a burning desire for parallelism (which I haven't implemented yet).
 
 The compiler is free software under GPL v3.0, and the runtime is free software under LGPL v3.0. Both are published with a macro exception similar to GNU Bison's. So, just as with gcc, you may use the compiler to build and link nonfree software if you do not statically link the runtime library.
 
