@@ -2,6 +2,8 @@
 
 A R7RS scheme compiler vanity project that I started writing July 2022.
 
+It would be a mistake to use this compiler in its current state, but you can have fun looking at the code!
+
 It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. However, I wouldn't recommend doing that now as I need to do a pass on the language's ABI. The main reason I started this is a burning desire for parallelism (which I haven't implemented yet).
 
 The compiler is free software under GPL v3.0, and the runtime is free software under LGPL v3.0. So, just as with gcc, you may use the compiler to build and link nonfree software if you do not statically link the runtime library.
