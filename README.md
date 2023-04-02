@@ -1,6 +1,6 @@
 # Vanity Scheme
 
-A R7RS scheme compiler vanity project that I started writing July 2022.
+A self hosted R7RS scheme compiler vanity project that I started writing July 2022.
 
 It would be a mistake to use this compiler in its current state, but you can have fun looking at the code!
 
