@@ -8,11 +8,11 @@ The compiler is free software under GPL v3.0, and the runtime is free software u
 
 ## Install Instructions
 
-At the moment, x64 Linux is a requirement, as there are multiple nonportable bits of runtime, and a bit of assembly as well. I'm not sure if I can say this compiler works on machines other than my own :). I did successfully run the full bootstrap procedure on a laptop.
+At the moment, x64 Linux is a requirement, as there are multiple nonportable bits of runtime, and a bit of assembly as well. I'm not sure if I can say this compiler works on machines other than my own. I did successfully run the full bootstrap procedure on a laptop.
 
 You should just need an install of gnumake and gcc. I compiled with gcc 12.2, but older is likely fine?
 
-Sorry, clang isn't supported, and in fact, for debugging purposes, I'll be adding libgccjit to the install requirements later too :(.
+Sorry, clang isn't supported, and in fact, for debugging purposes, I'll be adding libgccjit to the install requirements later too.
 
 1. Run `./configure` and answer the prompts, or just mash enter.
 	* The defaults installs to `~/.local/bin`, `~/.local/lib`, etc
