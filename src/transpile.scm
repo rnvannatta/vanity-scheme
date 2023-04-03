@@ -326,7 +326,7 @@
         (('bruijn name up right)
          (printf "    V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},~N      ")
          (print-expr k)
-         (printf ",~N      ~A, ~A,~N      " up right)
+         (printf ",~N      VEncodeInt(~Al), VEncodeInt(~Al),~N      " up right)
          (print-expr x)
          (printf "~N    );~N"))
         (sym

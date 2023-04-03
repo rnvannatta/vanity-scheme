@@ -125,7 +125,7 @@
 
 (define flags
   (string-append
-    " -rdynamic"
+    " -rdynamic -Wmissing-braces"
     (sprintf " -O~A" optimization)
     (if debug? " -g" "")
     (if object? " -c" " -lvscheme")

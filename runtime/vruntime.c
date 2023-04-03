@@ -793,6 +793,7 @@ void VSetEnvVar(VEnv * env) {
   if(VStackOverflow((char*)&env) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
     VGarbageCollect(VSetEnvVar, env);
   } else {
+    if(env->num_vars != 4) VError("set!: not enough arguments? This should be impossible\n");
     VClosure * k = VDecodeClosure(env->vars[0]);
     long up = VDecodeInt(env->vars[1]);
     long var = VDecodeInt(env->vars[2]);
@@ -934,7 +935,7 @@ void VMultiDefine(VEnv * env) {
 
 void VLookupLibrary(VEnv * env) {
   if(VStackOverflow((char*)&env) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
-    VGarbageCollect(VDefineGlobalVar, env);
+    VGarbageCollect(VLookupLibrary, env);
 
 #define sym_str "##vcore.libraries"
   VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);

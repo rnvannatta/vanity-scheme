@@ -45,7 +45,7 @@ hatch :
 	gcc -rdynamic -c -o build/r7rs.o bootstrap/r7rs.c $(LIBS) $(CFLAGS) -fPIC -Wno-missing-braces
 	gcc -rdynamic -o lib/libvscheme.so build/r7rs.o $(addprefix bootstrap/, $(RUNTIME_SRC)) $(LIBS) $(CFLAGS) -fPIC -shared -Wno-missing-braces
 	cp -u lib/libvscheme.so ~/.local/lib/$(VSCHEME)
-	gcc -rdynamic -o bin/vsc $(STRAP) -lvscheme -Wl,--no-as-needed -Wno-missing-braces
+	gcc -rdynamic -o bin/vsc $(STRAP) $(CFLAGS) -lvscheme -Wl,--no-as-needed -Wno-missing-braces
 	cp -u bin/vsc ~/.local/bin/$(VSC)
 bin/bootstrap/r7rs.c : runtime/r7rs.scm
 	vsc -t $< -o $@ $(SCMFLAGS) --shared

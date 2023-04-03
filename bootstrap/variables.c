@@ -249,6 +249,8 @@ static struct { VBlob sym; char bytes[14]; } _V0lookup__inline = { { VSYMBOL, 14
 static struct { VBlob sym; char bytes[15]; } _V0mangle__library = { { VSYMBOL, 15 }, "mangle-library" };
 static struct { VBlob sym; char bytes[14]; } _V0mangle__symbol = { { VSYMBOL, 14 }, "mangle-symbol" };
 static void variables_k40(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k40" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k40, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##k.11 5 0) (##inline ##sys.cons (##inline ##sys.cons (quote mangle-symbol) (bruijn mangle-symbol 5 1)) (##inline ##sys.cons (##inline ##sys.cons (quote mangle-library) (bruijn mangle-library 5 2)) (##inline ##sys.cons (##inline ##sys.cons (quote lookup-inline) (bruijn lookup-inline 5 3)) (##inline ##sys.cons (##inline ##sys.cons (quote lookup-intrinsic) (bruijn lookup-intrinsic 5 4)) (##inline ##sys.cons (##inline ##sys.cons (quote free-variables) (bruijn free-variables 5 5)) (quote ())))))))
@@ -303,6 +305,8 @@ VEncodePointer(&_V0free__variables.sym, VPOINTER_OTHER),
  }
 }
 static void _V0free__variables_k43(VEnv * env) {
+ static VDebugInfo dbg = { "_V0free__variables_k43" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0free__variables_k43, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop 1 1) (bruijn ##k.47 1 0) (quote ()) (bruijn expr 5 1))
@@ -319,6 +323,8 @@ static void _V0free__variables_k43(VEnv * env) {
  }
 }
 static void _V0loop_k46(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k46" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k46, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.64 0 0) ((bruijn ##k.52 3 0) (quote ())) ((bruijn list 14 12) (bruijn ##k.52 3 0) (bruijn expr 3 2)))
@@ -341,6 +347,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k45(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k45" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k45, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.62 0 0) (if (bruijn ##x.62 0 0) ((bruijn ##k.52 2 0) (quote ())) ((bruijn list 13 12) (bruijn ##k.52 2 0) (bruijn expr 2 2))) ((bruijn lookup-intrinsic 12 4) (close _V0loop_k46) (bruijn expr 2 2)))
@@ -371,6 +379,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k54(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k54" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k54, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop 10 1) (bruijn ##k.52 9 0) (bruijn ##x.80 1 0) (bruijn ##x.81 0 0))
@@ -387,6 +397,8 @@ static void _V0loop_k54(VEnv * env) {
  }
 }
 static void _V0loop_k53(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k53" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k53, env) {
  if (env->num_vars == 1) {
   // ((bruijn cddr 19 9) (close _V0loop_k54) (bruijn expr 8 2))
@@ -402,6 +414,8 @@ static void _V0loop_k53(VEnv * env) {
  }
 }
 static void _V0loop_k52(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k52" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k52, env) {
  if (env->num_vars == 1) {
   // ((bruijn append-improper 11 2) (close _V0loop_k53) (bruijn ##x.82 0 0) (bruijn bound 7 1))
@@ -418,6 +432,8 @@ static void _V0loop_k52(VEnv * env) {
  }
 }
 static void _V0loop_k58(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k58" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k58, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop2 2 1) (bruijn ##k.88 2 0) (bruijn ##x.93 0 0))
@@ -433,6 +449,8 @@ static void _V0loop_k58(VEnv * env) {
  }
 }
 static void _V0loop_k57(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k57" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k57, env) {
  if (env->num_vars == 1) {
   // ((bruijn cdr 21 3) (close _V0loop_k58) (bruijn expr 10 2))
@@ -448,6 +466,8 @@ static void _V0loop_k57(VEnv * env) {
  }
 }
 static void _V0loop2_k65(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop2_k65" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop2_k65, env) {
  if (env->num_vars == 1) {
   // ((bruijn merge 21 1) (bruijn ##k.94 7 0) (bruijn ##x.101 2 0) (bruijn ##x.102 0 0))
@@ -464,6 +484,8 @@ static void _V0loop2_k65(VEnv * env) {
  }
 }
 static void _V0loop2_k64(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop2_k64" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop2_k64, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop2 7 1) (close _V0loop2_k65) (bruijn ##x.103 0 0))
@@ -479,6 +501,8 @@ static void _V0loop2_k64(VEnv * env) {
  }
 }
 static void _V0loop2_k63(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop2_k63" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop2_k63, env) {
  if (env->num_vars == 1) {
   // ((bruijn cdr 26 3) (close _V0loop2_k64) (bruijn cases 5 1))
@@ -494,6 +518,8 @@ static void _V0loop2_k63(VEnv * env) {
  }
 }
 static void _V0loop2_k62(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop2_k62" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop2_k62, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop 15 1) (close _V0loop2_k63) (bruijn ##x.104 1 0) (bruijn ##x.105 0 0))
@@ -510,6 +536,8 @@ static void _V0loop2_k62(VEnv * env) {
  }
 }
 static void _V0loop2_k61(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop2_k61" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop2_k61, env) {
  if (env->num_vars == 1) {
   // ((bruijn cdar 24 7) (close _V0loop2_k62) (bruijn cases 3 1))
@@ -525,6 +553,8 @@ static void _V0loop2_k61(VEnv * env) {
  }
 }
 static void _V0loop2_k60(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop2_k60" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop2_k60, env) {
  if (env->num_vars == 1) {
   // ((bruijn append-improper 16 2) (close _V0loop2_k61) (bruijn ##x.106 0 0) (bruijn bound 12 1))
@@ -541,6 +571,8 @@ static void _V0loop2_k60(VEnv * env) {
  }
 }
 static void _V0loop2_k59(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop2_k59" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop2_k59, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.96 0 0) ((bruijn ##k.94 1 0) (quote ())) ((bruijn caar 22 8) (close _V0loop2_k60) (bruijn cases 1 1)))
@@ -563,6 +595,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop2_lambda10(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop2_lambda10" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop2_lambda10, env) {
  if (env->num_vars == 2) {
   // ((bruijn null? 21 6) (close _V0loop2_k59) (bruijn cases 0 1))
@@ -578,16 +612,20 @@ static void _V0loop2_lambda10(VEnv * env) {
  }
 }
 static void _V0loop_lambda9(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_lambda9" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_lambda9, env) {
   // (set! (close _V0loop_k57) (bruijn loop2 0 1) (close _V0loop2_lambda10))
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},
       VEncodeClosure((VClosure[]){VMakeClosure(_V0loop_k57, env)}),
-      0, 1,
+      VEncodeInt(0l), VEncodeInt(1l),
       VEncodeClosure((VClosure[]){VMakeClosure(_V0loop2_lambda10, env)})
     );
  }
 }
 static void _V0loop_k68(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k68" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k68, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop 12 1) (bruijn ##k.52 11 0) (bruijn bound 11 1) (bruijn ##x.112 0 0))
@@ -604,6 +642,8 @@ static void _V0loop_k68(VEnv * env) {
  }
 }
 static void _V0loop_k72(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k72" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k72, env) {
  if (env->num_vars == 1) {
   // ((bruijn merge 18 1) (bruijn ##k.52 14 0) (bruijn ##x.115 2 0) (bruijn ##x.116 0 0))
@@ -620,6 +660,8 @@ static void _V0loop_k72(VEnv * env) {
  }
 }
 static void _V0loop_k71(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k71" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k71, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop 14 1) (close _V0loop_k72) (bruijn bound 13 1) (bruijn ##x.117 0 0))
@@ -636,6 +678,8 @@ static void _V0loop_k71(VEnv * env) {
  }
 }
 static void _V0loop_k70(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k70" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k70, env) {
  if (env->num_vars == 1) {
   // ((bruijn cdr 23 3) (close _V0loop_k71) (bruijn expr 12 2))
@@ -651,6 +695,8 @@ static void _V0loop_k70(VEnv * env) {
  }
 }
 static void _V0loop_k69(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k69" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k69, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop 12 1) (close _V0loop_k70) (bruijn bound 11 1) (bruijn ##x.118 0 0))
@@ -667,6 +713,8 @@ static void _V0loop_k69(VEnv * env) {
  }
 }
 static void _V0loop_k67(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k67" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k67, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.109 0 0) ((bruijn cdr 21 3) (close _V0loop_k68) (bruijn expr 10 2)) ((bruijn car 21 4) (close _V0loop_k69) (bruijn expr 10 2)))
@@ -690,6 +738,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k66(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k66" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k66, env) {
  if (env->num_vars == 1) {
   // ((bruijn eqv? 20 5) (close _V0loop_k67) (bruijn ##x.119 0 0) (quote set!))
@@ -706,6 +756,8 @@ static void _V0loop_k66(VEnv * env) {
  }
 }
 static void _V0loop_k56(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k56" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k56, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.85 0 0) ((close _V0loop_lambda9) (bruijn ##k.52 8 0) #f) ((bruijn car 19 4) (close _V0loop_k66) (bruijn expr 8 2)))
@@ -729,6 +781,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k55(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k55" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k55, env) {
  if (env->num_vars == 1) {
   // ((bruijn eqv? 18 5) (close _V0loop_k56) (bruijn ##x.120 0 0) (quote case-lambda))
@@ -745,6 +799,8 @@ static void _V0loop_k55(VEnv * env) {
  }
 }
 static void _V0loop_k51(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k51" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k51, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.77 0 0) ((bruijn cadr 17 10) (close _V0loop_k52) (bruijn expr 6 2)) ((bruijn car 17 4) (close _V0loop_k55) (bruijn expr 6 2)))
@@ -768,6 +824,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k50(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k50" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k50, env) {
  if (env->num_vars == 1) {
   // ((bruijn eqv? 16 5) (close _V0loop_k51) (bruijn ##x.121 0 0) (quote lambda))
@@ -784,6 +842,8 @@ static void _V0loop_k50(VEnv * env) {
  }
 }
 static void _V0loop_k49(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k49" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k49, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.72 0 0) ((bruijn ##k.52 4 0) (quote ())) ((bruijn car 15 4) (close _V0loop_k50) (bruijn expr 4 2)))
@@ -806,6 +866,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k48(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k48" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k48, env) {
  if (env->num_vars == 1) {
   // ((bruijn eqv? 14 5) (close _V0loop_k49) (bruijn ##x.122 0 0) (quote quote))
@@ -822,6 +884,8 @@ static void _V0loop_k48(VEnv * env) {
  }
 }
 static void _V0loop_k47(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k47" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k47, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.67 0 0) ((bruijn ##k.52 2 0) (quote ())) ((bruijn car 13 4) (close _V0loop_k48) (bruijn expr 2 2)))
@@ -844,6 +908,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k44(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k44" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k44, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.54 0 0) ((bruijn memv 12 13) (close _V0loop_k45) (bruijn expr 1 2) (bruijn bound 1 1)) ((bruijn atom? 12 11) (close _V0loop_k47) (bruijn expr 1 2)))
@@ -868,6 +934,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_lambda8(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_lambda8" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_lambda8, env) {
  if (env->num_vars == 3) {
   // ((bruijn symbol? 11 14) (close _V0loop_k44) (bruijn expr 0 2))
@@ -883,16 +951,20 @@ static void _V0loop_lambda8(VEnv * env) {
  }
 }
 static void _V0free__variables_lambda7(VEnv * env) {
+ static VDebugInfo dbg = { "_V0free__variables_lambda7" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0free__variables_lambda7, env) {
   // (set! (close _V0free__variables_k43) (bruijn loop 0 1) (close _V0loop_lambda8))
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},
       VEncodeClosure((VClosure[]){VMakeClosure(_V0free__variables_k43, env)}),
-      0, 1,
+      VEncodeInt(0l), VEncodeInt(1l),
       VEncodeClosure((VClosure[]){VMakeClosure(_V0loop_lambda8, env)})
     );
  }
 }
 static void _V0free__variables_k42(VEnv * env) {
+ static VDebugInfo dbg = { "_V0free__variables_k42" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0free__variables_k42, env) {
  if (env->num_vars == 1) {
   // ((close _V0free__variables_lambda7) (bruijn ##k.39 2 0) #f)
@@ -908,6 +980,8 @@ static void _V0free__variables_k42(VEnv * env) {
  }
 }
 static void _V0append__improper_k76(VEnv * env) {
+ static VDebugInfo dbg = { "_V0append__improper_k76" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0append__improper_k76, env) {
  if (env->num_vars == 1) {
   // ((bruijn cons 13 1) (bruijn ##k.123 4 0) (bruijn ##x.128 2 0) (bruijn ##x.129 0 0))
@@ -924,6 +998,8 @@ static void _V0append__improper_k76(VEnv * env) {
  }
 }
 static void _V0append__improper_k75(VEnv * env) {
+ static VDebugInfo dbg = { "_V0append__improper_k75" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0append__improper_k75, env) {
  if (env->num_vars == 1) {
   // ((bruijn append-improper 5 2) (close _V0append__improper_k76) (bruijn ##x.130 0 0) (bruijn b 3 2))
@@ -940,6 +1016,8 @@ static void _V0append__improper_k75(VEnv * env) {
  }
 }
 static void _V0append__improper_k74(VEnv * env) {
+ static VDebugInfo dbg = { "_V0append__improper_k74" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0append__improper_k74, env) {
  if (env->num_vars == 1) {
   // ((bruijn cdr 11 3) (close _V0append__improper_k75) (bruijn a 2 1))
@@ -955,6 +1033,8 @@ static void _V0append__improper_k74(VEnv * env) {
  }
 }
 static void _V0append__improper_k77(VEnv * env) {
+ static VDebugInfo dbg = { "_V0append__improper_k77" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0append__improper_k77, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.133 0 0) ((bruijn ##k.123 2 0) (bruijn b 2 2)) ((bruijn cons 11 1) (bruijn ##k.123 2 0) (bruijn a 2 1) (bruijn b 2 2)))
@@ -978,6 +1058,8 @@ env->vars[0])) {
  }
 }
 static void _V0append__improper_k73(VEnv * env) {
+ static VDebugInfo dbg = { "_V0append__improper_k73" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0append__improper_k73, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.125 0 0) ((bruijn car 10 4) (close _V0append__improper_k74) (bruijn a 1 1)) ((bruijn null? 10 6) (close _V0append__improper_k77) (bruijn a 1 1)))
@@ -1001,6 +1083,8 @@ env->vars[0])) {
  }
 }
 static void _V0append__improper_lambda11(VEnv * env) {
+ static VDebugInfo dbg = { "_V0append__improper_lambda11" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0append__improper_lambda11, env) {
  if (env->num_vars == 3) {
   // ((bruijn pair? 9 2) (close _V0append__improper_k73) (bruijn a 0 1))
@@ -1016,12 +1100,14 @@ static void _V0append__improper_lambda11(VEnv * env) {
  }
 }
 static void _V0free__variables_k41(VEnv * env) {
+ static VDebugInfo dbg = { "_V0free__variables_k41" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0free__variables_k41, env) {
  if (env->num_vars == 1) {
   // (set! (close _V0free__variables_k42) (bruijn append-improper 1 2) (close _V0append__improper_lambda11))
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},
       VEncodeClosure((VClosure[]){VMakeClosure(_V0free__variables_k42, env)}),
-      1, 2,
+      VEncodeInt(1l), VEncodeInt(2l),
       VEncodeClosure((VClosure[]){VMakeClosure(_V0append__improper_lambda11, env)})
     );
  } else {
@@ -1032,6 +1118,8 @@ static void _V0free__variables_k41(VEnv * env) {
  }
 }
 static void _V0merge_k81(VEnv * env) {
+ static VDebugInfo dbg = { "_V0merge_k81" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0merge_k81, env) {
  if (env->num_vars == 1) {
   // ((bruijn merge 5 1) (bruijn ##k.138 4 0) (bruijn ##x.148 0 0) (bruijn b 4 2))
@@ -1048,6 +1136,8 @@ static void _V0merge_k81(VEnv * env) {
  }
 }
 static void _V0merge_k84(VEnv * env) {
+ static VDebugInfo dbg = { "_V0merge_k84" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0merge_k84, env) {
  if (env->num_vars == 1) {
   // ((bruijn merge 7 1) (bruijn ##k.138 6 0) (bruijn ##x.151 2 0) (bruijn ##x.152 0 0))
@@ -1064,6 +1154,8 @@ static void _V0merge_k84(VEnv * env) {
  }
 }
 static void _V0merge_k83(VEnv * env) {
+ static VDebugInfo dbg = { "_V0merge_k83" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0merge_k83, env) {
  if (env->num_vars == 1) {
   // ((bruijn cons 13 1) (close _V0merge_k84) (bruijn ##x.153 0 0) (bruijn b 5 2))
@@ -1080,6 +1172,8 @@ static void _V0merge_k83(VEnv * env) {
  }
 }
 static void _V0merge_k82(VEnv * env) {
+ static VDebugInfo dbg = { "_V0merge_k82" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0merge_k82, env) {
  if (env->num_vars == 1) {
   // ((bruijn car 12 4) (close _V0merge_k83) (bruijn a 4 1))
@@ -1095,6 +1189,8 @@ static void _V0merge_k82(VEnv * env) {
  }
 }
 static void _V0merge_k80(VEnv * env) {
+ static VDebugInfo dbg = { "_V0merge_k80" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0merge_k80, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.145 0 0) ((bruijn cdr 11 3) (close _V0merge_k81) (bruijn a 3 1)) ((bruijn cdr 11 3) (close _V0merge_k82) (bruijn a 3 1)))
@@ -1118,6 +1214,8 @@ env->vars[0])) {
  }
 }
 static void _V0merge_k79(VEnv * env) {
+ static VDebugInfo dbg = { "_V0merge_k79" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0merge_k79, env) {
  if (env->num_vars == 1) {
   // ((bruijn memv 10 13) (close _V0merge_k80) (bruijn ##x.154 0 0) (bruijn b 2 2))
@@ -1134,6 +1232,8 @@ static void _V0merge_k79(VEnv * env) {
  }
 }
 static void _V0merge_k78(VEnv * env) {
+ static VDebugInfo dbg = { "_V0merge_k78" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0merge_k78, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.140 0 0) ((bruijn ##k.138 1 0) (bruijn b 1 2)) ((bruijn car 9 4) (close _V0merge_k79) (bruijn a 1 1)))
@@ -1156,6 +1256,8 @@ env->vars[0])) {
  }
 }
 static void _V0merge_lambda12(VEnv * env) {
+ static VDebugInfo dbg = { "_V0merge_lambda12" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0merge_lambda12, env) {
  if (env->num_vars == 3) {
   // ((bruijn null? 8 6) (close _V0merge_k78) (bruijn a 0 1))
@@ -1171,16 +1273,20 @@ static void _V0merge_lambda12(VEnv * env) {
  }
 }
 static void _V0free__variables_lambda6(VEnv * env) {
+ static VDebugInfo dbg = { "_V0free__variables_lambda6" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0free__variables_lambda6, env) {
   // (set! (close _V0free__variables_k41) (bruijn merge 0 1) (close _V0merge_lambda12))
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},
       VEncodeClosure((VClosure[]){VMakeClosure(_V0free__variables_k41, env)}),
-      0, 1,
+      VEncodeInt(0l), VEncodeInt(1l),
       VEncodeClosure((VClosure[]){VMakeClosure(_V0merge_lambda12, env)})
     );
  }
 }
 static void _V0free__variables_lambda5(VEnv * env) {
+ static VDebugInfo dbg = { "_V0free__variables_lambda5" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0free__variables_lambda5, env) {
  if (env->num_vars == 2) {
   // ((close _V0free__variables_lambda6) (bruijn ##k.37 0 0) #f #f)
@@ -1197,12 +1303,14 @@ static void _V0free__variables_lambda5(VEnv * env) {
  }
 }
 static void variables_k39(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k39" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k39, env) {
  if (env->num_vars == 1) {
   // (set! (close variables_k40) (bruijn free-variables 4 5) (close _V0free__variables_lambda5))
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},
       VEncodeClosure((VClosure[]){VMakeClosure(variables_k40, env)}),
-      4, 5,
+      VEncodeInt(4l), VEncodeInt(5l),
       VEncodeClosure((VClosure[]){VMakeClosure(_V0free__variables_lambda5, env)})
     );
  } else {
@@ -1213,6 +1321,8 @@ static void variables_k39(VEnv * env) {
  }
 }
 static void _V0lookup__intrinsic_k159(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k159" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k159, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.529 0 0) ((bruijn ##k.157 75 0) (##string ##string.847)) ((bruijn ##k.157 75 0) #f))
@@ -1234,6 +1344,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k158(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k158" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k158, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.524 0 0) ((bruijn ##k.157 74 0) (##string ##string.846)) ((bruijn eqv? 79 5) (close _V0lookup__intrinsic_k159) (bruijn ##x.3 74 1) (quote ##sys.command-line)))
@@ -1257,6 +1369,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k157(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k157" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k157, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.519 0 0) ((bruijn ##k.157 73 0) (##string ##string.845)) ((bruijn eqv? 78 5) (close _V0lookup__intrinsic_k158) (bruijn ##x.3 73 1) (quote ##sys.make-temporary-file)))
@@ -1280,6 +1394,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k156(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k156" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k156, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.514 0 0) ((bruijn ##k.157 72 0) (##string ##string.844)) ((bruijn eqv? 77 5) (close _V0lookup__intrinsic_k157) (bruijn ##x.3 72 1) (quote ##sys.open-output-process)))
@@ -1303,6 +1419,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k155(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k155" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k155, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.509 0 0) ((bruijn ##k.157 71 0) (##string ##string.843)) ((bruijn eqv? 76 5) (close _V0lookup__intrinsic_k156) (bruijn ##x.3 71 1) (quote ##sys.open-input-process)))
@@ -1326,6 +1444,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k154(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k154" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k154, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.504 0 0) ((bruijn ##k.157 70 0) (##string ##string.842)) ((bruijn eqv? 75 5) (close _V0lookup__intrinsic_k155) (bruijn ##x.3 70 1) (quote ##sys.system)))
@@ -1349,6 +1469,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k153(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k153" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k153, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.499 0 0) ((bruijn ##k.157 69 0) (##string ##string.841)) ((bruijn eqv? 74 5) (close _V0lookup__intrinsic_k154) (bruijn ##x.3 69 1) (quote ##sys.newline)))
@@ -1372,6 +1494,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k152(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k152" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k152, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.494 0 0) ((bruijn ##k.157 68 0) (##string ##string.840)) ((bruijn eqv? 73 5) (close _V0lookup__intrinsic_k153) (bruijn ##x.3 68 1) (quote ##sys.write)))
@@ -1395,6 +1519,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k151(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k151" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k151, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.489 0 0) ((bruijn ##k.157 67 0) (##string ##string.839)) ((bruijn eqv? 72 5) (close _V0lookup__intrinsic_k152) (bruijn ##x.3 67 1) (quote ##sys.display-word)))
@@ -1418,6 +1544,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k150(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k150" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k150, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.484 0 0) ((bruijn ##k.157 66 0) (##string ##string.838)) ((bruijn eqv? 71 5) (close _V0lookup__intrinsic_k151) (bruijn ##x.3 66 1) (quote ##sys.read)))
@@ -1441,6 +1569,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k149(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k149" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k149, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.479 0 0) ((bruijn ##k.157 65 0) (##string ##string.837)) ((bruijn eqv? 70 5) (close _V0lookup__intrinsic_k150) (bruijn ##x.3 65 1) (quote ##sys.read-line)))
@@ -1464,6 +1594,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k148(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k148" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k148, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.474 0 0) ((bruijn ##k.157 64 0) (##string ##string.836)) ((bruijn eqv? 69 5) (close _V0lookup__intrinsic_k149) (bruijn ##x.3 64 1) (quote ##sys.read-char)))
@@ -1487,6 +1619,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k147(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k147" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k147, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.469 0 0) ((bruijn ##k.157 63 0) (##string ##string.835)) ((bruijn eqv? 68 5) (close _V0lookup__intrinsic_k148) (bruijn ##x.3 63 1) (quote ##sys.eof-object?)))
@@ -1510,6 +1644,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k146(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k146" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k146, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.464 0 0) ((bruijn ##k.157 62 0) (##string ##string.834)) ((bruijn eqv? 67 5) (close _V0lookup__intrinsic_k147) (bruijn ##x.3 62 1) (quote ##sys.get-output-string)))
@@ -1533,6 +1669,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k145(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k145" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k145, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.459 0 0) ((bruijn ##k.157 61 0) (##string ##string.833)) ((bruijn eqv? 66 5) (close _V0lookup__intrinsic_k146) (bruijn ##x.3 61 1) (quote ##sys.open-output-string)))
@@ -1556,6 +1694,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k144(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k144" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k144, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.454 0 0) ((bruijn ##k.157 60 0) (##string ##string.832)) ((bruijn eqv? 65 5) (close _V0lookup__intrinsic_k145) (bruijn ##x.3 60 1) (quote ##sys.close-stream)))
@@ -1579,6 +1719,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k143(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k143" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k143, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.449 0 0) ((bruijn ##k.157 59 0) (##string ##string.831)) ((bruijn eqv? 64 5) (close _V0lookup__intrinsic_k144) (bruijn ##x.3 59 1) (quote ##sys.open-output-stream)))
@@ -1602,6 +1744,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k142(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k142" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k142, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.444 0 0) ((bruijn ##k.157 58 0) (##string ##string.830)) ((bruijn eqv? 63 5) (close _V0lookup__intrinsic_k143) (bruijn ##x.3 58 1) (quote ##sys.open-input-stream)))
@@ -1625,6 +1769,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k141(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k141" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k141, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.439 0 0) ((bruijn ##k.157 57 0) (##string ##string.829)) ((bruijn eqv? 62 5) (close _V0lookup__intrinsic_k142) (bruijn ##x.3 57 1) (quote ##sys.dup-stderr)))
@@ -1648,6 +1794,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k140(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k140" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k140, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.434 0 0) ((bruijn ##k.157 56 0) (##string ##string.828)) ((bruijn eqv? 61 5) (close _V0lookup__intrinsic_k141) (bruijn ##x.3 56 1) (quote ##sys.dup-stdout)))
@@ -1671,6 +1819,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k139(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k139" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k139, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.429 0 0) ((bruijn ##k.157 55 0) (##string ##string.827)) ((bruijn eqv? 60 5) (close _V0lookup__intrinsic_k140) (bruijn ##x.3 55 1) (quote ##sys.dup-stdin)))
@@ -1694,6 +1844,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k138(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k138" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k138, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.424 0 0) ((bruijn ##k.157 54 0) (##string ##string.826)) ((bruijn eqv? 59 5) (close _V0lookup__intrinsic_k139) (bruijn ##x.3 54 1) (quote ##sys.char-integer)))
@@ -1717,6 +1869,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k137(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k137" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k137, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.419 0 0) ((bruijn ##k.157 53 0) (##string ##string.825)) ((bruijn eqv? 58 5) (close _V0lookup__intrinsic_k138) (bruijn ##x.3 53 1) (quote ##sys.symbol->string)))
@@ -1740,6 +1894,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k136(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k136" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k136, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.414 0 0) ((bruijn ##k.157 52 0) (##string ##string.824)) ((bruijn eqv? 57 5) (close _V0lookup__intrinsic_k137) (bruijn ##x.3 52 1) (quote ##sys.string->number)))
@@ -1763,6 +1919,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k135(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k135" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k135, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.409 0 0) ((bruijn ##k.157 51 0) (##string ##string.823)) ((bruijn eqv? 56 5) (close _V0lookup__intrinsic_k136) (bruijn ##x.3 51 1) (quote ##sys.string->symbol)))
@@ -1786,6 +1944,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k134(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k134" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k134, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.404 0 0) ((bruijn ##k.157 50 0) (##string ##string.822)) ((bruijn eqv? 55 5) (close _V0lookup__intrinsic_k135) (bruijn ##x.3 50 1) (quote ##sys.string-length)))
@@ -1809,6 +1969,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k133(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k133" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k133, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.399 0 0) ((bruijn ##k.157 49 0) (##string ##string.821)) ((bruijn eqv? 54 5) (close _V0lookup__intrinsic_k134) (bruijn ##x.3 49 1) (quote ##sys.string-set!)))
@@ -1832,6 +1994,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k132(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k132" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k132, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.394 0 0) ((bruijn ##k.157 48 0) (##string ##string.820)) ((bruijn eqv? 53 5) (close _V0lookup__intrinsic_k133) (bruijn ##x.3 48 1) (quote ##sys.string-ref)))
@@ -1855,6 +2019,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k131(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k131" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k131, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.389 0 0) ((bruijn ##k.157 47 0) (##string ##string.819)) ((bruijn eqv? 52 5) (close _V0lookup__intrinsic_k132) (bruijn ##x.3 47 1) (quote ##sys.string-copy!)))
@@ -1878,6 +2044,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k130(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k130" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k130, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.384 0 0) ((bruijn ##k.157 46 0) (##string ##string.818)) ((bruijn eqv? 51 5) (close _V0lookup__intrinsic_k131) (bruijn ##x.3 46 1) (quote ##sys.substring)))
@@ -1901,6 +2069,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k129(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k129" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k129, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.379 0 0) ((bruijn ##k.157 45 0) (##string ##string.817)) ((bruijn eqv? 50 5) (close _V0lookup__intrinsic_k130) (bruijn ##x.3 45 1) (quote ##sys.make-string)))
@@ -1924,6 +2094,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k128(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k128" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k128, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.374 0 0) ((bruijn ##k.157 44 0) (##string ##string.816)) ((bruijn eqv? 49 5) (close _V0lookup__intrinsic_k129) (bruijn ##x.3 44 1) (quote ##sys.vector-length)))
@@ -1947,6 +2119,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k127(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k127" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k127, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.369 0 0) ((bruijn ##k.157 43 0) (##string ##string.815)) ((bruijn eqv? 48 5) (close _V0lookup__intrinsic_k128) (bruijn ##x.3 43 1) (quote ##sys.vector-set!)))
@@ -1970,6 +2144,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k126(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k126" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k126, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.364 0 0) ((bruijn ##k.157 42 0) (##string ##string.814)) ((bruijn eqv? 47 5) (close _V0lookup__intrinsic_k127) (bruijn ##x.3 42 1) (quote ##sys.vector-ref)))
@@ -1993,6 +2169,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k125(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k125" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k125, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.359 0 0) ((bruijn ##k.157 41 0) (##string ##string.813)) ((bruijn eqv? 46 5) (close _V0lookup__intrinsic_k126) (bruijn ##x.3 41 1) (quote ##sys.list->vector)))
@@ -2016,6 +2194,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k124(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k124" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k124, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.354 0 0) ((bruijn ##k.157 40 0) (##string ##string.812)) ((bruijn eqv? 45 5) (close _V0lookup__intrinsic_k125) (bruijn ##x.3 40 1) (quote ##sys.set-cdr!)))
@@ -2039,6 +2219,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k123(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k123" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k123, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.349 0 0) ((bruijn ##k.157 39 0) (##string ##string.811)) ((bruijn eqv? 44 5) (close _V0lookup__intrinsic_k124) (bruijn ##x.3 39 1) (quote ##sys.set-car!)))
@@ -2062,6 +2244,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k122(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k122" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k122, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.344 0 0) ((bruijn ##k.157 38 0) (##string ##string.810)) ((bruijn eqv? 43 5) (close _V0lookup__intrinsic_k123) (bruijn ##x.3 38 1) (quote ##sys.cdr)))
@@ -2085,6 +2269,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k198(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k198" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k198, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.529 0 0) ((bruijn ##k.157 76 0) (##string ##string.847)) ((bruijn ##k.157 76 0) #f))
@@ -2106,6 +2292,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k197(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k197" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k197, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.524 0 0) ((bruijn ##k.157 75 0) (##string ##string.846)) ((bruijn eqv? 80 5) (close _V0lookup__intrinsic_k198) (bruijn ##x.3 75 1) (quote ##sys.command-line)))
@@ -2129,6 +2317,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k196(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k196" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k196, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.519 0 0) ((bruijn ##k.157 74 0) (##string ##string.845)) ((bruijn eqv? 79 5) (close _V0lookup__intrinsic_k197) (bruijn ##x.3 74 1) (quote ##sys.make-temporary-file)))
@@ -2152,6 +2342,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k195(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k195" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k195, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.514 0 0) ((bruijn ##k.157 73 0) (##string ##string.844)) ((bruijn eqv? 78 5) (close _V0lookup__intrinsic_k196) (bruijn ##x.3 73 1) (quote ##sys.open-output-process)))
@@ -2175,6 +2367,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k194(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k194" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k194, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.509 0 0) ((bruijn ##k.157 72 0) (##string ##string.843)) ((bruijn eqv? 77 5) (close _V0lookup__intrinsic_k195) (bruijn ##x.3 72 1) (quote ##sys.open-input-process)))
@@ -2198,6 +2392,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k193(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k193" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k193, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.504 0 0) ((bruijn ##k.157 71 0) (##string ##string.842)) ((bruijn eqv? 76 5) (close _V0lookup__intrinsic_k194) (bruijn ##x.3 71 1) (quote ##sys.system)))
@@ -2221,6 +2417,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k192(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k192" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k192, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.499 0 0) ((bruijn ##k.157 70 0) (##string ##string.841)) ((bruijn eqv? 75 5) (close _V0lookup__intrinsic_k193) (bruijn ##x.3 70 1) (quote ##sys.newline)))
@@ -2244,6 +2442,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k191(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k191" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k191, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.494 0 0) ((bruijn ##k.157 69 0) (##string ##string.840)) ((bruijn eqv? 74 5) (close _V0lookup__intrinsic_k192) (bruijn ##x.3 69 1) (quote ##sys.write)))
@@ -2267,6 +2467,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k190(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k190" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k190, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.489 0 0) ((bruijn ##k.157 68 0) (##string ##string.839)) ((bruijn eqv? 73 5) (close _V0lookup__intrinsic_k191) (bruijn ##x.3 68 1) (quote ##sys.display-word)))
@@ -2290,6 +2492,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k189(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k189" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k189, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.484 0 0) ((bruijn ##k.157 67 0) (##string ##string.838)) ((bruijn eqv? 72 5) (close _V0lookup__intrinsic_k190) (bruijn ##x.3 67 1) (quote ##sys.read)))
@@ -2313,6 +2517,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k188(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k188" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k188, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.479 0 0) ((bruijn ##k.157 66 0) (##string ##string.837)) ((bruijn eqv? 71 5) (close _V0lookup__intrinsic_k189) (bruijn ##x.3 66 1) (quote ##sys.read-line)))
@@ -2336,6 +2542,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k187(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k187" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k187, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.474 0 0) ((bruijn ##k.157 65 0) (##string ##string.836)) ((bruijn eqv? 70 5) (close _V0lookup__intrinsic_k188) (bruijn ##x.3 65 1) (quote ##sys.read-char)))
@@ -2359,6 +2567,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k186(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k186" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k186, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.469 0 0) ((bruijn ##k.157 64 0) (##string ##string.835)) ((bruijn eqv? 69 5) (close _V0lookup__intrinsic_k187) (bruijn ##x.3 64 1) (quote ##sys.eof-object?)))
@@ -2382,6 +2592,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k185(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k185" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k185, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.464 0 0) ((bruijn ##k.157 63 0) (##string ##string.834)) ((bruijn eqv? 68 5) (close _V0lookup__intrinsic_k186) (bruijn ##x.3 63 1) (quote ##sys.get-output-string)))
@@ -2405,6 +2617,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k184(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k184" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k184, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.459 0 0) ((bruijn ##k.157 62 0) (##string ##string.833)) ((bruijn eqv? 67 5) (close _V0lookup__intrinsic_k185) (bruijn ##x.3 62 1) (quote ##sys.open-output-string)))
@@ -2428,6 +2642,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k183(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k183" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k183, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.454 0 0) ((bruijn ##k.157 61 0) (##string ##string.832)) ((bruijn eqv? 66 5) (close _V0lookup__intrinsic_k184) (bruijn ##x.3 61 1) (quote ##sys.close-stream)))
@@ -2451,6 +2667,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k182(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k182" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k182, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.449 0 0) ((bruijn ##k.157 60 0) (##string ##string.831)) ((bruijn eqv? 65 5) (close _V0lookup__intrinsic_k183) (bruijn ##x.3 60 1) (quote ##sys.open-output-stream)))
@@ -2474,6 +2692,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k181(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k181" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k181, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.444 0 0) ((bruijn ##k.157 59 0) (##string ##string.830)) ((bruijn eqv? 64 5) (close _V0lookup__intrinsic_k182) (bruijn ##x.3 59 1) (quote ##sys.open-input-stream)))
@@ -2497,6 +2717,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k180(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k180" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k180, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.439 0 0) ((bruijn ##k.157 58 0) (##string ##string.829)) ((bruijn eqv? 63 5) (close _V0lookup__intrinsic_k181) (bruijn ##x.3 58 1) (quote ##sys.dup-stderr)))
@@ -2520,6 +2742,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k179(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k179" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k179, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.434 0 0) ((bruijn ##k.157 57 0) (##string ##string.828)) ((bruijn eqv? 62 5) (close _V0lookup__intrinsic_k180) (bruijn ##x.3 57 1) (quote ##sys.dup-stdout)))
@@ -2543,6 +2767,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k178(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k178" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k178, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.429 0 0) ((bruijn ##k.157 56 0) (##string ##string.827)) ((bruijn eqv? 61 5) (close _V0lookup__intrinsic_k179) (bruijn ##x.3 56 1) (quote ##sys.dup-stdin)))
@@ -2566,6 +2792,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k177(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k177" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k177, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.424 0 0) ((bruijn ##k.157 55 0) (##string ##string.826)) ((bruijn eqv? 60 5) (close _V0lookup__intrinsic_k178) (bruijn ##x.3 55 1) (quote ##sys.char-integer)))
@@ -2589,6 +2817,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k176(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k176" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k176, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.419 0 0) ((bruijn ##k.157 54 0) (##string ##string.825)) ((bruijn eqv? 59 5) (close _V0lookup__intrinsic_k177) (bruijn ##x.3 54 1) (quote ##sys.symbol->string)))
@@ -2612,6 +2842,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k175(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k175" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k175, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.414 0 0) ((bruijn ##k.157 53 0) (##string ##string.824)) ((bruijn eqv? 58 5) (close _V0lookup__intrinsic_k176) (bruijn ##x.3 53 1) (quote ##sys.string->number)))
@@ -2635,6 +2867,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k174(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k174" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k174, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.409 0 0) ((bruijn ##k.157 52 0) (##string ##string.823)) ((bruijn eqv? 57 5) (close _V0lookup__intrinsic_k175) (bruijn ##x.3 52 1) (quote ##sys.string->symbol)))
@@ -2658,6 +2892,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k173(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k173" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k173, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.404 0 0) ((bruijn ##k.157 51 0) (##string ##string.822)) ((bruijn eqv? 56 5) (close _V0lookup__intrinsic_k174) (bruijn ##x.3 51 1) (quote ##sys.string-length)))
@@ -2681,6 +2917,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k172(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k172" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k172, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.399 0 0) ((bruijn ##k.157 50 0) (##string ##string.821)) ((bruijn eqv? 55 5) (close _V0lookup__intrinsic_k173) (bruijn ##x.3 50 1) (quote ##sys.string-set!)))
@@ -2704,6 +2942,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k171(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k171" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k171, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.394 0 0) ((bruijn ##k.157 49 0) (##string ##string.820)) ((bruijn eqv? 54 5) (close _V0lookup__intrinsic_k172) (bruijn ##x.3 49 1) (quote ##sys.string-ref)))
@@ -2727,6 +2967,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k170(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k170" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k170, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.389 0 0) ((bruijn ##k.157 48 0) (##string ##string.819)) ((bruijn eqv? 53 5) (close _V0lookup__intrinsic_k171) (bruijn ##x.3 48 1) (quote ##sys.string-copy!)))
@@ -2750,6 +2992,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k169(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k169" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k169, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.384 0 0) ((bruijn ##k.157 47 0) (##string ##string.818)) ((bruijn eqv? 52 5) (close _V0lookup__intrinsic_k170) (bruijn ##x.3 47 1) (quote ##sys.substring)))
@@ -2773,6 +3017,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k168(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k168" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k168, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.379 0 0) ((bruijn ##k.157 46 0) (##string ##string.817)) ((bruijn eqv? 51 5) (close _V0lookup__intrinsic_k169) (bruijn ##x.3 46 1) (quote ##sys.make-string)))
@@ -2796,6 +3042,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k167(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k167" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k167, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.374 0 0) ((bruijn ##k.157 45 0) (##string ##string.816)) ((bruijn eqv? 50 5) (close _V0lookup__intrinsic_k168) (bruijn ##x.3 45 1) (quote ##sys.vector-length)))
@@ -2819,6 +3067,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k166(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k166" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k166, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.369 0 0) ((bruijn ##k.157 44 0) (##string ##string.815)) ((bruijn eqv? 49 5) (close _V0lookup__intrinsic_k167) (bruijn ##x.3 44 1) (quote ##sys.vector-set!)))
@@ -2842,6 +3092,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k165(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k165" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k165, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.364 0 0) ((bruijn ##k.157 43 0) (##string ##string.814)) ((bruijn eqv? 48 5) (close _V0lookup__intrinsic_k166) (bruijn ##x.3 43 1) (quote ##sys.vector-ref)))
@@ -2865,6 +3117,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k164(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k164" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k164, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.359 0 0) ((bruijn ##k.157 42 0) (##string ##string.813)) ((bruijn eqv? 47 5) (close _V0lookup__intrinsic_k165) (bruijn ##x.3 42 1) (quote ##sys.list->vector)))
@@ -2888,6 +3142,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k163(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k163" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k163, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.354 0 0) ((bruijn ##k.157 41 0) (##string ##string.812)) ((bruijn eqv? 46 5) (close _V0lookup__intrinsic_k164) (bruijn ##x.3 41 1) (quote ##sys.set-cdr!)))
@@ -2911,6 +3167,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k162(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k162" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k162, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.349 0 0) ((bruijn ##k.157 40 0) (##string ##string.811)) ((bruijn eqv? 45 5) (close _V0lookup__intrinsic_k163) (bruijn ##x.3 40 1) (quote ##sys.set-car!)))
@@ -2934,6 +3192,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k161(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k161" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k161, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.344 0 0) ((bruijn ##k.157 39 0) (##string ##string.810)) ((bruijn eqv? 44 5) (close _V0lookup__intrinsic_k162) (bruijn ##x.3 39 1) (quote ##sys.cdr)))
@@ -2957,6 +3217,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k160(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k160" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k160, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.536 0 0) ((bruijn ##k.157 38 0) (##string ##string.809)) ((bruijn eqv? 43 5) (close _V0lookup__intrinsic_k161) (bruijn ##x.3 38 1) (quote ##sys.car)))
@@ -2980,6 +3242,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k121(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k121" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k121, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.534 0 0) (if (bruijn ##x.534 0 0) ((bruijn ##k.157 37 0) (##string ##string.809)) ((bruijn eqv? 42 5) (close _V0lookup__intrinsic_k122) (bruijn ##x.3 37 1) (quote ##sys.car))) ((bruijn eqv? 42 5) (close _V0lookup__intrinsic_k160) (bruijn ##x.3 37 1) (quote ##sys.qcons)))
@@ -3012,6 +3276,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k120(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k120" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k120, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.334 0 0) ((bruijn ##k.157 36 0) (##string ##string.808)) ((bruijn eqv? 41 5) (close _V0lookup__intrinsic_k121) (bruijn ##x.3 36 1) (quote ##sys.cons)))
@@ -3035,6 +3301,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k119(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k119" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k119, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.329 0 0) ((bruijn ##k.157 35 0) (##string ##string.807)) ((bruijn eqv? 40 5) (close _V0lookup__intrinsic_k120) (bruijn ##x.3 35 1) (quote ##vcore.lookup-library)))
@@ -3058,6 +3326,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k118(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k118" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k118, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.324 0 0) ((bruijn ##k.157 34 0) (##string ##string.806)) ((bruijn eqv? 39 5) (close _V0lookup__intrinsic_k119) (bruijn ##x.3 34 1) (quote ##vcore.multidefine)))
@@ -3081,6 +3351,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k117(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k117" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k117, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.319 0 0) ((bruijn ##k.157 33 0) (##string ##string.805)) ((bruijn eqv? 38 5) (close _V0lookup__intrinsic_k118) (bruijn ##x.3 33 1) (quote ##vcore.define)))
@@ -3104,6 +3376,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k116(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k116" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k116, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.314 0 0) ((bruijn ##k.157 32 0) (##string ##string.804)) ((bruijn eqv? 37 5) (close _V0lookup__intrinsic_k117) (bruijn ##x.3 32 1) (quote ##vcore.function)))
@@ -3127,6 +3401,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k115(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k115" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k115, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.309 0 0) ((bruijn ##k.157 31 0) (##string ##string.803)) ((bruijn eqv? 36 5) (close _V0lookup__intrinsic_k116) (bruijn ##x.3 31 1) (quote ##sys.import)))
@@ -3150,6 +3426,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k114(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k114" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k114, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.304 0 0) ((bruijn ##k.157 30 0) (##string ##string.802)) ((bruijn eqv? 35 5) (close _V0lookup__intrinsic_k115) (bruijn ##x.3 30 1) (quote ##sys.exit)))
@@ -3173,6 +3451,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k113(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k113" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k113, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.299 0 0) ((bruijn ##k.157 29 0) (##string ##string.801)) ((bruijn eqv? 34 5) (close _V0lookup__intrinsic_k114) (bruijn ##x.3 29 1) (quote ##sys.abort)))
@@ -3196,6 +3476,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k112(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k112" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k112, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.294 0 0) ((bruijn ##k.157 28 0) (##string ##string.800)) ((bruijn eqv? 33 5) (close _V0lookup__intrinsic_k113) (bruijn ##x.3 28 1) (quote ##sys.apply)))
@@ -3219,6 +3501,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k111(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k111" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k111, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.289 0 0) ((bruijn ##k.157 27 0) (##string ##string.799)) ((bruijn eqv? 32 5) (close _V0lookup__intrinsic_k112) (bruijn ##x.3 27 1) (quote ##sys.call-with-values)))
@@ -3242,6 +3526,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k110(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k110" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k110, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.284 0 0) ((bruijn ##k.157 26 0) (##string ##string.798)) ((bruijn eqv? 31 5) (close _V0lookup__intrinsic_k111) (bruijn ##x.3 26 1) (quote ##sys.call/cc)))
@@ -3265,6 +3551,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k109(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k109" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k109, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.279 0 0) ((bruijn ##k.157 25 0) (##string ##string.797)) ((bruijn eqv? 30 5) (close _V0lookup__intrinsic_k110) (bruijn ##x.3 25 1) (quote ##sys.next)))
@@ -3288,6 +3576,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k108(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k108" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k108, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.274 0 0) ((bruijn ##k.157 24 0) #t) ((bruijn eqv? 29 5) (close _V0lookup__intrinsic_k109) (bruijn ##x.3 24 1) (quote ##sys.not)))
@@ -3311,6 +3601,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k107(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k107" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k107, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.269 0 0) ((bruijn ##k.157 23 0) #t) ((bruijn eqv? 28 5) (close _V0lookup__intrinsic_k108) (bruijn ##x.3 23 1) (quote ##sys.or)))
@@ -3334,6 +3626,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k106(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k106" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k106, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.264 0 0) ((bruijn ##k.157 22 0) #t) ((bruijn eqv? 27 5) (close _V0lookup__intrinsic_k107) (bruijn ##x.3 22 1) (quote ##sys.and)))
@@ -3357,6 +3651,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k105(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k105" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k105, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.259 0 0) ((bruijn ##k.157 21 0) #t) ((bruijn eqv? 26 5) (close _V0lookup__intrinsic_k106) (bruijn ##x.3 21 1) (quote ##sys.begin)))
@@ -3380,6 +3676,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k104(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k104" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k104, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.254 0 0) ((bruijn ##k.157 20 0) (##string ##string.796)) ((bruijn eqv? 25 5) (close _V0lookup__intrinsic_k105) (bruijn ##x.3 20 1) (quote ##sys.if)))
@@ -3403,6 +3701,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k103(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k103" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k103, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.249 0 0) ((bruijn ##k.157 19 0) (##string ##string.795)) ((bruijn eqv? 24 5) (close _V0lookup__intrinsic_k104) (bruijn ##x.3 19 1) (quote ##sys.blob=?)))
@@ -3426,6 +3726,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k102(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k102" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k102, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.244 0 0) ((bruijn ##k.157 18 0) (##string ##string.794)) ((bruijn eqv? 23 5) (close _V0lookup__intrinsic_k103) (bruijn ##x.3 18 1) (quote ##sys.symbol=?)))
@@ -3449,6 +3751,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k101(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k101" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k101, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.239 0 0) ((bruijn ##k.157 17 0) (##string ##string.793)) ((bruijn eqv? 22 5) (close _V0lookup__intrinsic_k102) (bruijn ##x.3 17 1) (quote ##sys.eq?)))
@@ -3472,6 +3776,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k100(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k100" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k100, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.234 0 0) ((bruijn ##k.157 16 0) (##string ##string.792)) ((bruijn eqv? 21 5) (close _V0lookup__intrinsic_k101) (bruijn ##x.3 16 1) (quote ##sys.char?)))
@@ -3495,6 +3801,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k99(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k99" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k99, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.229 0 0) ((bruijn ##k.157 15 0) (##string ##string.791)) ((bruijn eqv? 20 5) (close _V0lookup__intrinsic_k100) (bruijn ##x.3 15 1) (quote ##sys.double?)))
@@ -3518,6 +3826,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k98(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k98" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k98, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.224 0 0) ((bruijn ##k.157 14 0) (##string ##string.790)) ((bruijn eqv? 19 5) (close _V0lookup__intrinsic_k99) (bruijn ##x.3 14 1) (quote ##sys.int?)))
@@ -3541,6 +3851,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k97(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k97" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k97, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.219 0 0) ((bruijn ##k.157 13 0) (##string ##string.789)) ((bruijn eqv? 18 5) (close _V0lookup__intrinsic_k98) (bruijn ##x.3 13 1) (quote ##sys.string?)))
@@ -3564,6 +3876,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k96(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k96" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k96, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.214 0 0) ((bruijn ##k.157 12 0) (##string ##string.788)) ((bruijn eqv? 17 5) (close _V0lookup__intrinsic_k97) (bruijn ##x.3 12 1) (quote ##sys.symbol?)))
@@ -3587,6 +3901,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k95(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k95" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k95, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.209 0 0) ((bruijn ##k.157 11 0) (##string ##string.787)) ((bruijn eqv? 16 5) (close _V0lookup__intrinsic_k96) (bruijn ##x.3 11 1) (quote ##sys.blob?)))
@@ -3610,6 +3926,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k94(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k94" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k94, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.204 0 0) ((bruijn ##k.157 10 0) (##string ##string.786)) ((bruijn eqv? 15 5) (close _V0lookup__intrinsic_k95) (bruijn ##x.3 10 1) (quote ##sys.procedure?)))
@@ -3633,6 +3951,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k93(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k93" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k93, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.199 0 0) ((bruijn ##k.157 9 0) (##string ##string.785)) ((bruijn eqv? 14 5) (close _V0lookup__intrinsic_k94) (bruijn ##x.3 9 1) (quote ##sys.vector?)))
@@ -3656,6 +3976,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k92(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k92" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k92, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.194 0 0) ((bruijn ##k.157 8 0) (##string ##string.784)) ((bruijn eqv? 13 5) (close _V0lookup__intrinsic_k93) (bruijn ##x.3 8 1) (quote ##sys.pair?)))
@@ -3679,6 +4001,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k91(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k91" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k91, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.189 0 0) ((bruijn ##k.157 7 0) (##string ##string.783)) ((bruijn eqv? 12 5) (close _V0lookup__intrinsic_k92) (bruijn ##x.3 7 1) (quote ##sys.null?)))
@@ -3702,6 +4026,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k90(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k90" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k90, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.184 0 0) ((bruijn ##k.157 6 0) (##string ##string.782)) ((bruijn eqv? 11 5) (close _V0lookup__intrinsic_k91) (bruijn ##x.3 6 1) (quote ##sys.remainder)))
@@ -3725,6 +4051,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k89(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k89" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k89, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.179 0 0) ((bruijn ##k.157 5 0) (##string ##string.781)) ((bruijn eqv? 10 5) (close _V0lookup__intrinsic_k90) (bruijn ##x.3 5 1) (quote ##sys.quotient)))
@@ -3748,6 +4076,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k88(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k88" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k88, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.174 0 0) ((bruijn ##k.157 4 0) (##string ##string.780)) ((bruijn eqv? 9 5) (close _V0lookup__intrinsic_k89) (bruijn ##x.3 4 1) (quote ##sys.cmp)))
@@ -3771,6 +4101,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k87(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k87" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k87, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.169 0 0) ((bruijn ##k.157 3 0) (##string ##string.779)) ((bruijn eqv? 8 5) (close _V0lookup__intrinsic_k88) (bruijn ##x.3 3 1) (quote ##sys./)))
@@ -3794,6 +4126,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k86(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k86" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k86, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.164 0 0) ((bruijn ##k.157 2 0) (##string ##string.778)) ((bruijn eqv? 7 5) (close _V0lookup__intrinsic_k87) (bruijn ##x.3 2 1) (quote ##sys.*)))
@@ -3817,6 +4151,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_k85(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_k85" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_k85, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.159 0 0) ((bruijn ##k.157 1 0) (##string ##string.777)) ((bruijn eqv? 6 5) (close _V0lookup__intrinsic_k86) (bruijn ##x.3 1 1) (quote ##sys.-)))
@@ -3840,6 +4176,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__intrinsic_lambda13(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__intrinsic_lambda13" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__intrinsic_lambda13, env) {
  if (env->num_vars == 2) {
   // ((bruijn eqv? 5 5) (close _V0lookup__intrinsic_k85) (bruijn ##x.3 0 1) (quote ##sys.+))
@@ -3856,12 +4194,14 @@ static void _V0lookup__intrinsic_lambda13(VEnv * env) {
  }
 }
 static void variables_k38(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k38" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k38, env) {
  if (env->num_vars == 1) {
   // (set! (close variables_k39) (bruijn lookup-intrinsic 3 4) (close _V0lookup__intrinsic_lambda13))
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},
       VEncodeClosure((VClosure[]){VMakeClosure(variables_k39, env)}),
-      3, 4,
+      VEncodeInt(3l), VEncodeInt(4l),
       VEncodeClosure((VClosure[]){VMakeClosure(_V0lookup__intrinsic_lambda13, env)})
     );
  } else {
@@ -3872,6 +4212,8 @@ static void variables_k38(VEnv * env) {
  }
 }
 static void _V0lookup__inline_k205(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__inline_k205" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__inline_k205, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.571 0 0) ((bruijn ##k.539 7 0) (##string ##string.854)) ((bruijn ##k.539 7 0) #f))
@@ -3893,6 +4235,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__inline_k204(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__inline_k204" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__inline_k204, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.566 0 0) ((bruijn ##k.539 6 0) (##string ##string.853)) ((bruijn eqv? 10 5) (close _V0lookup__inline_k205) (bruijn ##x.2 6 1) (quote ##sys.cdr)))
@@ -3916,6 +4260,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__inline_k208(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__inline_k208" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__inline_k208, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.571 0 0) ((bruijn ##k.539 8 0) (##string ##string.854)) ((bruijn ##k.539 8 0) #f))
@@ -3937,6 +4283,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__inline_k207(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__inline_k207" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__inline_k207, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.566 0 0) ((bruijn ##k.539 7 0) (##string ##string.853)) ((bruijn eqv? 11 5) (close _V0lookup__inline_k208) (bruijn ##x.2 7 1) (quote ##sys.cdr)))
@@ -3960,6 +4308,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__inline_k206(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__inline_k206" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__inline_k206, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.578 0 0) ((bruijn ##k.539 6 0) (##string ##string.852)) ((bruijn eqv? 10 5) (close _V0lookup__inline_k207) (bruijn ##x.2 6 1) (quote ##sys.car)))
@@ -3983,6 +4333,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__inline_k203(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__inline_k203" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__inline_k203, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.576 0 0) (if (bruijn ##x.576 0 0) ((bruijn ##k.539 5 0) (##string ##string.852)) ((bruijn eqv? 9 5) (close _V0lookup__inline_k204) (bruijn ##x.2 5 1) (quote ##sys.car))) ((bruijn eqv? 9 5) (close _V0lookup__inline_k206) (bruijn ##x.2 5 1) (quote ##sys.qcons)))
@@ -4015,6 +4367,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__inline_k202(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__inline_k202" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__inline_k202, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.556 0 0) ((bruijn ##k.539 4 0) (##string ##string.851)) ((bruijn eqv? 8 5) (close _V0lookup__inline_k203) (bruijn ##x.2 4 1) (quote ##sys.cons)))
@@ -4038,6 +4392,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__inline_k201(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__inline_k201" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__inline_k201, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.551 0 0) ((bruijn ##k.539 3 0) (##string ##string.850)) ((bruijn eqv? 7 5) (close _V0lookup__inline_k202) (bruijn ##x.2 3 1) (quote ##sys.eq?)))
@@ -4061,6 +4417,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__inline_k200(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__inline_k200" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__inline_k200, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.546 0 0) ((bruijn ##k.539 2 0) (##string ##string.849)) ((bruijn eqv? 6 5) (close _V0lookup__inline_k201) (bruijn ##x.2 2 1) (quote ##sys.not)))
@@ -4084,6 +4442,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__inline_k199(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__inline_k199" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__inline_k199, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.541 0 0) ((bruijn ##k.539 1 0) (##string ##string.848)) ((bruijn eqv? 5 5) (close _V0lookup__inline_k200) (bruijn ##x.2 1 1) (quote ##sys.pair?)))
@@ -4107,6 +4467,8 @@ env->vars[0])) {
  }
 }
 static void _V0lookup__inline_lambda14(VEnv * env) {
+ static VDebugInfo dbg = { "_V0lookup__inline_lambda14" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0lookup__inline_lambda14, env) {
  if (env->num_vars == 2) {
   // ((bruijn eqv? 4 5) (close _V0lookup__inline_k199) (bruijn ##x.2 0 1) (quote ##sys.null?))
@@ -4123,12 +4485,14 @@ static void _V0lookup__inline_lambda14(VEnv * env) {
  }
 }
 static void variables_k37(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k37" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k37, env) {
  if (env->num_vars == 1) {
   // (set! (close variables_k38) (bruijn lookup-inline 2 3) (close _V0lookup__inline_lambda14))
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},
       VEncodeClosure((VClosure[]){VMakeClosure(variables_k38, env)}),
-      2, 3,
+      VEncodeInt(2l), VEncodeInt(3l),
       VEncodeClosure((VClosure[]){VMakeClosure(_V0lookup__inline_lambda14, env)})
     );
  } else {
@@ -4139,6 +4503,8 @@ static void variables_k37(VEnv * env) {
  }
 }
 static void _V0mangle__library_k212(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__library_k212" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__library_k212, env) {
  if (env->num_vars == 1) {
   // ((bruijn fold 7 16) (bruijn ##k.579 4 0) (bruijn string-append 7 17) (##string ##string.855) (bruijn ##x.589 0 0))
@@ -4156,6 +4522,8 @@ static void _V0mangle__library_k212(VEnv * env) {
  }
 }
 static void _V0mangle__library_k211(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__library_k211" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__library_k211, env) {
  if (env->num_vars == 1) {
   // ((bruijn reverse 6 20) (close _V0mangle__library_k212) (bruijn ##x.590 0 0))
@@ -4171,6 +4539,8 @@ static void _V0mangle__library_k211(VEnv * env) {
  }
 }
 static void _V0mangle__library_k214(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__library_k214" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__library_k214, env) {
  if (env->num_vars == 1) {
   // ((bruijn symbol->string 8 19) (bruijn ##k.591 2 0) (bruijn ##x.596 0 0))
@@ -4186,6 +4556,8 @@ static void _V0mangle__library_k214(VEnv * env) {
  }
 }
 static void _V0mangle__library_k213(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__library_k213" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__library_k213, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.593 0 0) ((bruijn mangle-symbol 6 1) (close _V0mangle__library_k214) (bruijn e 1 1)) ((bruijn error 7 21) (bruijn ##k.591 1 0) (##string ##string.856) (bruijn e 1 1)))
@@ -4210,6 +4582,8 @@ env->vars[0])) {
  }
 }
 static void _V0mangle__library_lambda16(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__library_lambda16" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__library_lambda16, env) {
  if (env->num_vars == 2) {
   // ((bruijn symbol? 6 14) (close _V0mangle__library_k213) (bruijn e 0 1))
@@ -4225,6 +4599,8 @@ static void _V0mangle__library_lambda16(VEnv * env) {
  }
 }
 static void _V0mangle__library_k210(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__library_k210" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__library_k210, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.586 0 0) ((bruijn map 5 18) (close _V0mangle__library_k211) (close _V0mangle__library_lambda16) (bruijn lib 2 1)) ((bruijn error 5 21) (bruijn ##k.579 2 0) (##string ##string.857) (bruijn lib 2 1)))
@@ -4250,6 +4626,8 @@ env->vars[0])) {
  }
 }
 static void _V0mangle__library_k209(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__library_k209" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__library_k209, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.581 0 0) ((bruijn ##k.579 1 0) (bruijn lib 1 1)) ((bruijn pair? 4 2) (close _V0mangle__library_k210) (bruijn lib 1 1)))
@@ -4272,6 +4650,8 @@ env->vars[0])) {
  }
 }
 static void _V0mangle__library_lambda15(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__library_lambda15" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__library_lambda15, env) {
  if (env->num_vars == 2) {
   // ((bruijn string? 3 15) (close _V0mangle__library_k209) (bruijn lib 0 1))
@@ -4287,12 +4667,14 @@ static void _V0mangle__library_lambda15(VEnv * env) {
  }
 }
 static void variables_k36(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k36" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k36, env) {
  if (env->num_vars == 1) {
   // (set! (close variables_k37) (bruijn mangle-library 1 2) (close _V0mangle__library_lambda15))
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},
       VEncodeClosure((VClosure[]){VMakeClosure(variables_k37, env)}),
-      1, 2,
+      VEncodeInt(1l), VEncodeInt(2l),
       VEncodeClosure((VClosure[]){VMakeClosure(_V0mangle__library_lambda15, env)})
     );
  } else {
@@ -4303,6 +4685,8 @@ static void variables_k36(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_k221(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_k221" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_k221, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop 1 1) (bruijn ##k.612 1 0) 0)
@@ -4318,6 +4702,8 @@ static void _V0mangle__symbol_k221(VEnv * env) {
  }
 }
 static void _V0loop_k224(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k224" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k224, env) {
  if (env->num_vars == 1) {
   // ((bruijn string->symbol 17 27) (bruijn ##k.622 1 0) (bruijn ret 1 1))
@@ -4333,6 +4719,8 @@ static void _V0loop_k224(VEnv * env) {
  }
 }
 static void _V0loop_lambda23(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_lambda23" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_lambda23, env) {
   // ((bruijn close-port 16 28) (close _V0loop_k224) (bruijn port 8 1))
     V_CALL_CLOSURE(VDecodeClosureApply(VGetArg(env, 16, 28)),
@@ -4342,6 +4730,8 @@ static void _V0loop_lambda23(VEnv * env) {
  }
 }
 static void _V0loop_k223(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k223" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k223, env) {
  if (env->num_vars == 1) {
   // ((close _V0loop_lambda23) (bruijn ##k.617 2 0) (bruijn ##x.627 0 0))
@@ -4357,6 +4747,8 @@ static void _V0loop_k223(VEnv * env) {
  }
 }
 static void _V0loop_k244(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k244" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k244, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.727 0 0) ((bruijn ##k.635 19 0) (##string ##string.876)) ((bruijn string-ref 35 25) (bruijn ##k.635 19 0) (bruijn str 31 1) (bruijn i 22 1)))
@@ -4380,6 +4772,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k243(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k243" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k243, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.722 0 0) ((bruijn ##k.635 18 0) (##string ##string.875)) ((bruijn eqv? 34 5) (close _V0loop_k244) (bruijn ##x.1 18 1) (quote #\@)))
@@ -4403,6 +4797,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k242(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k242" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k242, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.717 0 0) ((bruijn ##k.635 17 0) (##string ##string.874)) ((bruijn eqv? 33 5) (close _V0loop_k243) (bruijn ##x.1 17 1) (quote #\.)))
@@ -4426,6 +4822,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k241(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k241" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k241, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.712 0 0) ((bruijn ##k.635 16 0) (##string ##string.873)) ((bruijn eqv? 32 5) (close _V0loop_k242) (bruijn ##x.1 16 1) (quote #\-)))
@@ -4449,6 +4847,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k240(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k240" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k240, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.707 0 0) ((bruijn ##k.635 15 0) (##string ##string.872)) ((bruijn eqv? 31 5) (close _V0loop_k241) (bruijn ##x.1 15 1) (quote #\+)))
@@ -4472,6 +4872,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k239(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k239" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k239, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.702 0 0) ((bruijn ##k.635 14 0) (##string ##string.871)) ((bruijn eqv? 30 5) (close _V0loop_k240) (bruijn ##x.1 14 1) (quote #\~)))
@@ -4495,6 +4897,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k238(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k238" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k238, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.697 0 0) ((bruijn ##k.635 13 0) (##string ##string.870)) ((bruijn eqv? 29 5) (close _V0loop_k239) (bruijn ##x.1 13 1) (quote #\_)))
@@ -4518,6 +4922,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k237(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k237" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k237, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.692 0 0) ((bruijn ##k.635 12 0) (##string ##string.869)) ((bruijn eqv? 28 5) (close _V0loop_k238) (bruijn ##x.1 12 1) (quote #\^)))
@@ -4541,6 +4947,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k236(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k236" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k236, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.687 0 0) ((bruijn ##k.635 11 0) (##string ##string.868)) ((bruijn eqv? 27 5) (close _V0loop_k237) (bruijn ##x.1 11 1) (quote #\?)))
@@ -4564,6 +4972,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k235(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k235" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k235, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.682 0 0) ((bruijn ##k.635 10 0) (##string ##string.867)) ((bruijn eqv? 26 5) (close _V0loop_k236) (bruijn ##x.1 10 1) (quote #\>)))
@@ -4587,6 +4997,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k234(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k234" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k234, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.677 0 0) ((bruijn ##k.635 9 0) (##string ##string.866)) ((bruijn eqv? 25 5) (close _V0loop_k235) (bruijn ##x.1 9 1) (quote #\=)))
@@ -4610,6 +5022,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k233(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k233" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k233, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.672 0 0) ((bruijn ##k.635 8 0) (##string ##string.865)) ((bruijn eqv? 24 5) (close _V0loop_k234) (bruijn ##x.1 8 1) (quote #\<)))
@@ -4633,6 +5047,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k232(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k232" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k232, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.667 0 0) ((bruijn ##k.635 7 0) (##string ##string.864)) ((bruijn eqv? 23 5) (close _V0loop_k233) (bruijn ##x.1 7 1) (quote #\:)))
@@ -4656,6 +5072,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k231(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k231" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k231, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.662 0 0) ((bruijn ##k.635 6 0) (##string ##string.863)) ((bruijn eqv? 22 5) (close _V0loop_k232) (bruijn ##x.1 6 1) (quote #\/)))
@@ -4679,6 +5097,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k230(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k230" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k230, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.657 0 0) ((bruijn ##k.635 5 0) (##string ##string.862)) ((bruijn eqv? 21 5) (close _V0loop_k231) (bruijn ##x.1 5 1) (quote #\*)))
@@ -4702,6 +5122,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k229(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k229" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k229, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.652 0 0) ((bruijn ##k.635 4 0) (##string ##string.861)) ((bruijn eqv? 20 5) (close _V0loop_k230) (bruijn ##x.1 4 1) (quote #\&)))
@@ -4725,6 +5147,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k228(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k228" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k228, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.647 0 0) ((bruijn ##k.635 3 0) (##string ##string.860)) ((bruijn eqv? 19 5) (close _V0loop_k229) (bruijn ##x.1 3 1) (quote #\%)))
@@ -4748,6 +5172,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k227(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k227" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k227, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.642 0 0) ((bruijn ##k.635 2 0) (##string ##string.859)) ((bruijn eqv? 18 5) (close _V0loop_k228) (bruijn ##x.1 2 1) (quote #\$)))
@@ -4771,6 +5197,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k226(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k226" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k226, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.637 0 0) ((bruijn ##k.635 1 0) (##string ##string.858)) ((bruijn eqv? 17 5) (close _V0loop_k227) (bruijn ##x.1 1 1) (quote #\!)))
@@ -4794,6 +5222,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_lambda24(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_lambda24" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_lambda24, env) {
   // ((bruijn eqv? 16 5) (close _V0loop_k226) (bruijn ##x.1 0 1) (quote #\#))
     V_CALL_CLOSURE(VDecodeClosureApply(VGetArg(env, 16, 5)),
@@ -4804,6 +5234,8 @@ static void _V0loop_lambda24(VEnv * env) {
  }
 }
 static void _V0loop_k247(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k247" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k247, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop 6 1) (bruijn ##k.617 5 0) (bruijn ##x.633 0 0))
@@ -4819,6 +5251,8 @@ static void _V0loop_k247(VEnv * env) {
  }
 }
 static void _V0loop_k246(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k246" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k246, env) {
  if (env->num_vars == 1) {
   // ((bruijn + 17 23) (close _V0loop_k247) (bruijn i 4 1) 1)
@@ -4835,6 +5269,8 @@ static void _V0loop_k246(VEnv * env) {
  }
 }
 static void _V0loop_k245(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k245" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k245, env) {
  if (env->num_vars == 1) {
   // ((bruijn display 16 24) (close _V0loop_k246) (bruijn ##x.634 0 0) (bruijn port 8 1))
@@ -4851,6 +5287,8 @@ static void _V0loop_k245(VEnv * env) {
  }
 }
 static void _V0loop_k225(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k225" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k225, env) {
  if (env->num_vars == 1) {
   // ((close _V0loop_lambda24) (close _V0loop_k245) (bruijn ##x.732 0 0))
@@ -4866,6 +5304,8 @@ static void _V0loop_k225(VEnv * env) {
  }
 }
 static void _V0loop_k222(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k222" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k222, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.619 0 0) ((bruijn get-output-string 14 26) (close _V0loop_k223) (bruijn port 6 1)) ((bruijn string-ref 14 25) (close _V0loop_k225) (bruijn str 10 1) (bruijn i 1 1)))
@@ -4890,6 +5330,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_lambda22(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_lambda22" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_lambda22, env) {
  if (env->num_vars == 2) {
   // ((bruijn = 13 29) (close _V0loop_k222) (bruijn i 0 1) (bruijn strlen 7 1))
@@ -4906,16 +5348,20 @@ static void _V0loop_lambda22(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_lambda21(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_lambda21" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_lambda21, env) {
   // (set! (close _V0mangle__symbol_k221) (bruijn loop 0 1) (close _V0loop_lambda22))
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},
       VEncodeClosure((VClosure[]){VMakeClosure(_V0mangle__symbol_k221, env)}),
-      0, 1,
+      VEncodeInt(0l), VEncodeInt(1l),
       VEncodeClosure((VClosure[]){VMakeClosure(_V0loop_lambda22, env)})
     );
  }
 }
 static void _V0mangle__symbol_k220(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_k220" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_k220, env) {
  if (env->num_vars == 1) {
   // ((close _V0mangle__symbol_lambda21) (bruijn ##k.607 3 0) #f)
@@ -4931,6 +5377,8 @@ static void _V0mangle__symbol_k220(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_k249(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_k249" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_k249, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop 1 1) (bruijn ##k.612 1 0) 0)
@@ -4946,6 +5394,8 @@ static void _V0mangle__symbol_k249(VEnv * env) {
  }
 }
 static void _V0loop_k252(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k252" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k252, env) {
  if (env->num_vars == 1) {
   // ((bruijn string->symbol 17 27) (bruijn ##k.622 1 0) (bruijn ret 1 1))
@@ -4961,6 +5411,8 @@ static void _V0loop_k252(VEnv * env) {
  }
 }
 static void _V0loop_lambda27(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_lambda27" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_lambda27, env) {
   // ((bruijn close-port 16 28) (close _V0loop_k252) (bruijn port 8 1))
     V_CALL_CLOSURE(VDecodeClosureApply(VGetArg(env, 16, 28)),
@@ -4970,6 +5422,8 @@ static void _V0loop_lambda27(VEnv * env) {
  }
 }
 static void _V0loop_k251(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k251" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k251, env) {
  if (env->num_vars == 1) {
   // ((close _V0loop_lambda27) (bruijn ##k.617 2 0) (bruijn ##x.627 0 0))
@@ -4985,6 +5439,8 @@ static void _V0loop_k251(VEnv * env) {
  }
 }
 static void _V0loop_k272(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k272" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k272, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.727 0 0) ((bruijn ##k.635 19 0) (##string ##string.876)) ((bruijn string-ref 35 25) (bruijn ##k.635 19 0) (bruijn str 31 1) (bruijn i 22 1)))
@@ -5008,6 +5464,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k271(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k271" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k271, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.722 0 0) ((bruijn ##k.635 18 0) (##string ##string.875)) ((bruijn eqv? 34 5) (close _V0loop_k272) (bruijn ##x.1 18 1) (quote #\@)))
@@ -5031,6 +5489,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k270(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k270" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k270, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.717 0 0) ((bruijn ##k.635 17 0) (##string ##string.874)) ((bruijn eqv? 33 5) (close _V0loop_k271) (bruijn ##x.1 17 1) (quote #\.)))
@@ -5054,6 +5514,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k269(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k269" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k269, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.712 0 0) ((bruijn ##k.635 16 0) (##string ##string.873)) ((bruijn eqv? 32 5) (close _V0loop_k270) (bruijn ##x.1 16 1) (quote #\-)))
@@ -5077,6 +5539,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k268(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k268" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k268, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.707 0 0) ((bruijn ##k.635 15 0) (##string ##string.872)) ((bruijn eqv? 31 5) (close _V0loop_k269) (bruijn ##x.1 15 1) (quote #\+)))
@@ -5100,6 +5564,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k267(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k267" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k267, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.702 0 0) ((bruijn ##k.635 14 0) (##string ##string.871)) ((bruijn eqv? 30 5) (close _V0loop_k268) (bruijn ##x.1 14 1) (quote #\~)))
@@ -5123,6 +5589,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k266(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k266" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k266, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.697 0 0) ((bruijn ##k.635 13 0) (##string ##string.870)) ((bruijn eqv? 29 5) (close _V0loop_k267) (bruijn ##x.1 13 1) (quote #\_)))
@@ -5146,6 +5614,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k265(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k265" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k265, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.692 0 0) ((bruijn ##k.635 12 0) (##string ##string.869)) ((bruijn eqv? 28 5) (close _V0loop_k266) (bruijn ##x.1 12 1) (quote #\^)))
@@ -5169,6 +5639,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k264(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k264" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k264, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.687 0 0) ((bruijn ##k.635 11 0) (##string ##string.868)) ((bruijn eqv? 27 5) (close _V0loop_k265) (bruijn ##x.1 11 1) (quote #\?)))
@@ -5192,6 +5664,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k263(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k263" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k263, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.682 0 0) ((bruijn ##k.635 10 0) (##string ##string.867)) ((bruijn eqv? 26 5) (close _V0loop_k264) (bruijn ##x.1 10 1) (quote #\>)))
@@ -5215,6 +5689,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k262(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k262" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k262, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.677 0 0) ((bruijn ##k.635 9 0) (##string ##string.866)) ((bruijn eqv? 25 5) (close _V0loop_k263) (bruijn ##x.1 9 1) (quote #\=)))
@@ -5238,6 +5714,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k261(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k261" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k261, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.672 0 0) ((bruijn ##k.635 8 0) (##string ##string.865)) ((bruijn eqv? 24 5) (close _V0loop_k262) (bruijn ##x.1 8 1) (quote #\<)))
@@ -5261,6 +5739,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k260(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k260" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k260, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.667 0 0) ((bruijn ##k.635 7 0) (##string ##string.864)) ((bruijn eqv? 23 5) (close _V0loop_k261) (bruijn ##x.1 7 1) (quote #\:)))
@@ -5284,6 +5764,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k259(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k259" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k259, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.662 0 0) ((bruijn ##k.635 6 0) (##string ##string.863)) ((bruijn eqv? 22 5) (close _V0loop_k260) (bruijn ##x.1 6 1) (quote #\/)))
@@ -5307,6 +5789,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k258(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k258" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k258, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.657 0 0) ((bruijn ##k.635 5 0) (##string ##string.862)) ((bruijn eqv? 21 5) (close _V0loop_k259) (bruijn ##x.1 5 1) (quote #\*)))
@@ -5330,6 +5814,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k257(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k257" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k257, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.652 0 0) ((bruijn ##k.635 4 0) (##string ##string.861)) ((bruijn eqv? 20 5) (close _V0loop_k258) (bruijn ##x.1 4 1) (quote #\&)))
@@ -5353,6 +5839,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k256(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k256" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k256, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.647 0 0) ((bruijn ##k.635 3 0) (##string ##string.860)) ((bruijn eqv? 19 5) (close _V0loop_k257) (bruijn ##x.1 3 1) (quote #\%)))
@@ -5376,6 +5864,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k255(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k255" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k255, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.642 0 0) ((bruijn ##k.635 2 0) (##string ##string.859)) ((bruijn eqv? 18 5) (close _V0loop_k256) (bruijn ##x.1 2 1) (quote #\$)))
@@ -5399,6 +5889,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_k254(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k254" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k254, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.637 0 0) ((bruijn ##k.635 1 0) (##string ##string.858)) ((bruijn eqv? 17 5) (close _V0loop_k255) (bruijn ##x.1 1 1) (quote #\!)))
@@ -5422,6 +5914,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_lambda28(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_lambda28" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_lambda28, env) {
   // ((bruijn eqv? 16 5) (close _V0loop_k254) (bruijn ##x.1 0 1) (quote #\#))
     V_CALL_CLOSURE(VDecodeClosureApply(VGetArg(env, 16, 5)),
@@ -5432,6 +5926,8 @@ static void _V0loop_lambda28(VEnv * env) {
  }
 }
 static void _V0loop_k275(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k275" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k275, env) {
  if (env->num_vars == 1) {
   // ((bruijn loop 6 1) (bruijn ##k.617 5 0) (bruijn ##x.633 0 0))
@@ -5447,6 +5943,8 @@ static void _V0loop_k275(VEnv * env) {
  }
 }
 static void _V0loop_k274(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k274" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k274, env) {
  if (env->num_vars == 1) {
   // ((bruijn + 17 23) (close _V0loop_k275) (bruijn i 4 1) 1)
@@ -5463,6 +5961,8 @@ static void _V0loop_k274(VEnv * env) {
  }
 }
 static void _V0loop_k273(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k273" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k273, env) {
  if (env->num_vars == 1) {
   // ((bruijn display 16 24) (close _V0loop_k274) (bruijn ##x.634 0 0) (bruijn port 8 1))
@@ -5479,6 +5979,8 @@ static void _V0loop_k273(VEnv * env) {
  }
 }
 static void _V0loop_k253(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k253" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k253, env) {
  if (env->num_vars == 1) {
   // ((close _V0loop_lambda28) (close _V0loop_k273) (bruijn ##x.732 0 0))
@@ -5494,6 +5996,8 @@ static void _V0loop_k253(VEnv * env) {
  }
 }
 static void _V0loop_k250(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_k250" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_k250, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.619 0 0) ((bruijn get-output-string 14 26) (close _V0loop_k251) (bruijn port 6 1)) ((bruijn string-ref 14 25) (close _V0loop_k253) (bruijn str 10 1) (bruijn i 1 1)))
@@ -5518,6 +6022,8 @@ env->vars[0])) {
  }
 }
 static void _V0loop_lambda26(VEnv * env) {
+ static VDebugInfo dbg = { "_V0loop_lambda26" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0loop_lambda26, env) {
  if (env->num_vars == 2) {
   // ((bruijn = 13 29) (close _V0loop_k250) (bruijn i 0 1) (bruijn strlen 7 1))
@@ -5534,16 +6040,20 @@ static void _V0loop_lambda26(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_lambda25(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_lambda25" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_lambda25, env) {
   // (set! (close _V0mangle__symbol_k249) (bruijn loop 0 1) (close _V0loop_lambda26))
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},
       VEncodeClosure((VClosure[]){VMakeClosure(_V0mangle__symbol_k249, env)}),
-      0, 1,
+      VEncodeInt(0l), VEncodeInt(1l),
       VEncodeClosure((VClosure[]){VMakeClosure(_V0loop_lambda26, env)})
     );
  }
 }
 static void _V0mangle__symbol_k248(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_k248" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_k248, env) {
  if (env->num_vars == 1) {
   // ((close _V0mangle__symbol_lambda25) (bruijn ##k.607 3 0) #f)
@@ -5559,6 +6069,8 @@ static void _V0mangle__symbol_k248(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_k219(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_k219" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_k219, env) {
  if (env->num_vars == 1) {
   // (if (bruijn ##x.733 0 0) ((bruijn display 10 24) (close _V0mangle__symbol_k220) (##string ##string.877) (bruijn port 2 1)) ((bruijn display 10 24) (close _V0mangle__symbol_k248) (##string ##string.878) (bruijn port 2 1)))
@@ -5584,6 +6096,8 @@ env->vars[0])) {
  }
 }
 static void _V0mangle__symbol_k218(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_k218" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_k218, env) {
  if (env->num_vars == 1) {
   // ((bruijn eq? 9 22) (close _V0mangle__symbol_k219) (bruijn ##x.738 0 0) #\#)
@@ -5600,6 +6114,8 @@ static void _V0mangle__symbol_k218(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_lambda20(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_lambda20" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_lambda20, env) {
   // ((bruijn string-ref 8 25) (close _V0mangle__symbol_k218) (bruijn str 4 1) 0)
     V_CALL_CLOSURE(VDecodeClosureApply(VGetArg(env, 8, 25)),
@@ -5610,6 +6126,8 @@ static void _V0mangle__symbol_lambda20(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_k217(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_k217" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_k217, env) {
  if (env->num_vars == 1) {
   // ((close _V0mangle__symbol_lambda20) (bruijn ##k.605 1 0) (bruijn ##x.739 0 0))
@@ -5625,6 +6143,8 @@ static void _V0mangle__symbol_k217(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_lambda19(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_lambda19" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_lambda19, env) {
   // ((bruijn open-output-string 6 30) (close _V0mangle__symbol_k217))
     V_CALL_CLOSURE(VDecodeClosureApply(VGetArg(env, 6, 30)),
@@ -5633,6 +6153,8 @@ static void _V0mangle__symbol_lambda19(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_k216(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_k216" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_k216, env) {
  if (env->num_vars == 1) {
   // ((close _V0mangle__symbol_lambda19) (bruijn ##k.603 1 0) (bruijn ##x.740 0 0))
@@ -5648,6 +6170,8 @@ static void _V0mangle__symbol_k216(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_lambda18(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_lambda18" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_lambda18, env) {
   // ((bruijn string-length 4 31) (close _V0mangle__symbol_k216) (bruijn str 0 1))
     V_CALL_CLOSURE(VDecodeClosureApply(VGetArg(env, 4, 31)),
@@ -5657,6 +6181,8 @@ static void _V0mangle__symbol_lambda18(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_k215(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_k215" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_k215, env) {
  if (env->num_vars == 1) {
   // ((close _V0mangle__symbol_lambda18) (bruijn ##k.601 1 0) (bruijn ##x.741 0 0))
@@ -5672,6 +6198,8 @@ static void _V0mangle__symbol_k215(VEnv * env) {
  }
 }
 static void _V0mangle__symbol_lambda17(VEnv * env) {
+ static VDebugInfo dbg = { "_V0mangle__symbol_lambda17" };
+ VRecordCall(&dbg);
  V_GC_CHECK(_V0mangle__symbol_lambda17, env) {
  if (env->num_vars == 2) {
   // ((bruijn symbol->string 2 19) (close _V0mangle__symbol_k215) (bruijn sym 0 1))
@@ -5687,16 +6215,20 @@ static void _V0mangle__symbol_lambda17(VEnv * env) {
  }
 }
 static void variables_lambda4(VEnv * env) {
+ static VDebugInfo dbg = { "variables_lambda4" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_lambda4, env) {
   // (set! (close variables_k36) (bruijn mangle-symbol 0 1) (close _V0mangle__symbol_lambda17))
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(VSetEnvVar, env)},
       VEncodeClosure((VClosure[]){VMakeClosure(variables_k36, env)}),
-      0, 1,
+      VEncodeInt(0l), VEncodeInt(1l),
       VEncodeClosure((VClosure[]){VMakeClosure(_V0mangle__symbol_lambda17, env)})
     );
  }
 }
 static void variables_lambda3(VEnv * env) {
+ static VDebugInfo dbg = { "variables_lambda3" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_lambda3, env) {
   // ((close variables_lambda4) (bruijn ##k.9 0 0) #f #f #f #f #f)
     V_CALL_CLOSURE((VClosure[]){VMakeClosure(variables_lambda4, env)},
@@ -5710,6 +6242,8 @@ static void variables_lambda3(VEnv * env) {
  }
 }
 static void variables_k35(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k35" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k35, env) {
  if (env->num_vars == 1) {
   // ((close variables_lambda3) (bruijn ##k.7 31 0) (bruijn ##x.742 30 0) (bruijn ##x.743 29 0) (bruijn ##x.744 28 0) (bruijn ##x.745 27 0) (bruijn ##x.746 26 0) (bruijn ##x.747 25 0) (bruijn ##x.748 24 0) (bruijn ##x.749 23 0) (bruijn ##x.750 22 0) (bruijn ##x.751 21 0) (bruijn ##x.752 20 0) (bruijn ##x.753 19 0) (bruijn ##x.754 18 0) (bruijn ##x.755 17 0) (bruijn ##x.756 16 0) (bruijn ##x.757 15 0) (bruijn ##x.758 14 0) (bruijn ##x.759 13 0) (bruijn ##x.760 12 0) (bruijn ##x.761 11 0) (bruijn ##x.762 10 0) (bruijn ##x.763 9 0) (bruijn ##x.764 8 0) (bruijn ##x.765 7 0) (bruijn ##x.766 6 0) (bruijn ##x.767 5 0) (bruijn ##x.768 4 0) (bruijn ##x.769 3 0) (bruijn ##x.770 2 0) (bruijn ##x.771 1 0) (bruijn ##x.772 0 0))
@@ -5755,6 +6289,8 @@ static void variables_k35(VEnv * env) {
  }
 }
 static void variables_k34(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k34" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k34, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 30 1) (close variables_k35) (quote string-length))
@@ -5770,6 +6306,8 @@ static void variables_k34(VEnv * env) {
  }
 }
 static void variables_k33(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k33" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k33, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 29 1) (close variables_k34) (quote open-output-string))
@@ -5785,6 +6323,8 @@ static void variables_k33(VEnv * env) {
  }
 }
 static void variables_k32(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k32" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k32, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 28 1) (close variables_k33) (quote =))
@@ -5800,6 +6340,8 @@ static void variables_k32(VEnv * env) {
  }
 }
 static void variables_k31(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k31" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k31, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 27 1) (close variables_k32) (quote close-port))
@@ -5815,6 +6357,8 @@ static void variables_k31(VEnv * env) {
  }
 }
 static void variables_k30(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k30" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k30, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 26 1) (close variables_k31) (quote string->symbol))
@@ -5830,6 +6374,8 @@ static void variables_k30(VEnv * env) {
  }
 }
 static void variables_k29(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k29" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k29, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 25 1) (close variables_k30) (quote get-output-string))
@@ -5845,6 +6391,8 @@ static void variables_k29(VEnv * env) {
  }
 }
 static void variables_k28(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k28" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k28, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 24 1) (close variables_k29) (quote string-ref))
@@ -5860,6 +6408,8 @@ static void variables_k28(VEnv * env) {
  }
 }
 static void variables_k27(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k27" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k27, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 23 1) (close variables_k28) (quote display))
@@ -5875,6 +6425,8 @@ static void variables_k27(VEnv * env) {
  }
 }
 static void variables_k26(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k26" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k26, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 22 1) (close variables_k27) (quote +))
@@ -5890,6 +6442,8 @@ static void variables_k26(VEnv * env) {
  }
 }
 static void variables_k25(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k25" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k25, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 21 1) (close variables_k26) (quote eq?))
@@ -5905,6 +6459,8 @@ static void variables_k25(VEnv * env) {
  }
 }
 static void variables_k24(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k24" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k24, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 20 1) (close variables_k25) (quote error))
@@ -5920,6 +6476,8 @@ static void variables_k24(VEnv * env) {
  }
 }
 static void variables_k23(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k23" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k23, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 19 1) (close variables_k24) (quote reverse))
@@ -5935,6 +6493,8 @@ static void variables_k23(VEnv * env) {
  }
 }
 static void variables_k22(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k22" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k22, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 18 1) (close variables_k23) (quote symbol->string))
@@ -5950,6 +6510,8 @@ static void variables_k22(VEnv * env) {
  }
 }
 static void variables_k21(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k21" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k21, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 17 1) (close variables_k22) (quote map))
@@ -5965,6 +6527,8 @@ static void variables_k21(VEnv * env) {
  }
 }
 static void variables_k20(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k20" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k20, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 16 1) (close variables_k21) (quote string-append))
@@ -5980,6 +6544,8 @@ static void variables_k20(VEnv * env) {
  }
 }
 static void variables_k19(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k19" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k19, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 15 1) (close variables_k20) (quote fold))
@@ -5995,6 +6561,8 @@ static void variables_k19(VEnv * env) {
  }
 }
 static void variables_k18(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k18" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k18, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 14 1) (close variables_k19) (quote string?))
@@ -6010,6 +6578,8 @@ static void variables_k18(VEnv * env) {
  }
 }
 static void variables_k17(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k17" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k17, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 13 1) (close variables_k18) (quote symbol?))
@@ -6025,6 +6595,8 @@ static void variables_k17(VEnv * env) {
  }
 }
 static void variables_k16(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k16" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k16, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 12 1) (close variables_k17) (quote memv))
@@ -6040,6 +6612,8 @@ static void variables_k16(VEnv * env) {
  }
 }
 static void variables_k15(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k15" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k15, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 11 1) (close variables_k16) (quote list))
@@ -6055,6 +6629,8 @@ static void variables_k15(VEnv * env) {
  }
 }
 static void variables_k14(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k14" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k14, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 10 1) (close variables_k15) (quote atom?))
@@ -6070,6 +6646,8 @@ static void variables_k14(VEnv * env) {
  }
 }
 static void variables_k13(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k13" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k13, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 9 1) (close variables_k14) (quote cadr))
@@ -6085,6 +6663,8 @@ static void variables_k13(VEnv * env) {
  }
 }
 static void variables_k12(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k12" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k12, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 8 1) (close variables_k13) (quote cddr))
@@ -6100,6 +6680,8 @@ static void variables_k12(VEnv * env) {
  }
 }
 static void variables_k11(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k11" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k11, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 7 1) (close variables_k12) (quote caar))
@@ -6115,6 +6697,8 @@ static void variables_k11(VEnv * env) {
  }
 }
 static void variables_k10(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k10" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k10, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 6 1) (close variables_k11) (quote cdar))
@@ -6130,6 +6714,8 @@ static void variables_k10(VEnv * env) {
  }
 }
 static void variables_k9(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k9" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k9, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 5 1) (close variables_k10) (quote null?))
@@ -6145,6 +6731,8 @@ static void variables_k9(VEnv * env) {
  }
 }
 static void variables_k8(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k8" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k8, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 4 1) (close variables_k9) (quote eqv?))
@@ -6160,6 +6748,8 @@ static void variables_k8(VEnv * env) {
  }
 }
 static void variables_k7(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k7" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k7, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 3 1) (close variables_k8) (quote car))
@@ -6175,6 +6765,8 @@ static void variables_k7(VEnv * env) {
  }
 }
 static void variables_k6(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k6" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k6, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 2 1) (close variables_k7) (quote cdr))
@@ -6190,6 +6782,8 @@ static void variables_k6(VEnv * env) {
  }
 }
 static void variables_k5(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k5" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k5, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##vcore.import 1 1) (close variables_k6) (quote pair?))
@@ -6205,6 +6799,8 @@ static void variables_k5(VEnv * env) {
  }
 }
 static void variables_lambda2(VEnv * env) {
+ static VDebugInfo dbg = { "variables_lambda2" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_lambda2, env) {
   // ((bruijn ##vcore.import 0 1) (close variables_k5) (quote cons))
     V_CALL_CLOSURE(VDecodeClosureApply(env->vars[1]),
@@ -6214,6 +6810,8 @@ static void variables_lambda2(VEnv * env) {
  }
 }
 static void variables_k4(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k4" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k4, env) {
  if (env->num_vars == 1) {
   // ((close variables_lambda2) (bruijn ##k.5 4 0) (bruijn ##x.773 0 0))
@@ -6229,6 +6827,8 @@ static void variables_k4(VEnv * env) {
  }
 }
 static void variables_k3(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k3" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k3, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##x.774 2 0) (close variables_k4) (##string ##string.879) (bruijn ##x.775 0 0))
@@ -6245,6 +6845,8 @@ static void variables_k3(VEnv * env) {
  }
 }
 static void variables_k2(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k2" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k2, env) {
  if (env->num_vars == 1) {
   // ((bruijn ##x.776 0 0) (close variables_k3) (##string ##string.880))
@@ -6260,6 +6862,8 @@ static void variables_k2(VEnv * env) {
  }
 }
 static void variables_k1(VEnv * env) {
+ static VDebugInfo dbg = { "variables_k1" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_k1, env) {
  if (env->num_vars == 1) {
   // (##vcore.function (close variables_k2) (##string ##string.881))
@@ -6275,6 +6879,8 @@ static void variables_k1(VEnv * env) {
  }
 }
 static void variables_lambda1(VEnv * env) {
+ static VDebugInfo dbg = { "variables_lambda1" };
+ VRecordCall(&dbg);
  V_GC_CHECK(variables_lambda1, env) {
  if (env->num_vars == 1) {
   // (##vcore.function (close variables_k1) (##string ##string.882))

@@ -45,10 +45,7 @@
 #include "vscheme/vhash.h"
 
 typedef struct {
-  union {
-    unsigned long bits;
-    double number;
-  };
+  double number;
 } VWORD;
 
 // If not ISNAN => a number
@@ -95,26 +92,40 @@ enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
 #define LITERAL_HEADER 0x7FF0000000000000ul
 #define POINTER_MIRROR 0xFFFF000000000000ul
 
-#define VNAN ((VWORD){{(LITERAL_HEADER | VIMM_TOK | VTOK_NAN)}})
-#define VNULL ((VWORD){{(LITERAL_HEADER | VIMM_TOK | VTOK_NULL)}})
-#define VTRUE ((VWORD){{(LITERAL_HEADER | VIMM_TOK | VTOK_TRUE)}})
-#define VFALSE ((VWORD){{(LITERAL_HEADER | VIMM_TOK | VTOK_FALSE)}})
-#define VVOID ((VWORD){{(LITERAL_HEADER | VIMM_TOK | VTOK_VOID)}})
-#define VEOF ((VWORD){{(LITERAL_HEADER | VIMM_TOK | VTOK_EOF)}})
-#define VTOMBSTONE ((VWORD){{(LITERAL_HEADER | VIMM_TOK | VTOK_TOMBSTONE)}})
+#define VNAN VWord(LITERAL_HEADER | VIMM_TOK | VTOK_NAN)
+#define VNULL VWord(LITERAL_HEADER | VIMM_TOK | VTOK_NULL)
+#define VTRUE VWord(LITERAL_HEADER | VIMM_TOK | VTOK_TRUE)
+#define VFALSE VWord(LITERAL_HEADER | VIMM_TOK | VTOK_FALSE)
+#define VVOID VWord(LITERAL_HEADER | VIMM_TOK | VTOK_VOID)
+#define VEOF VWord(LITERAL_HEADER | VIMM_TOK | VTOK_EOF)
+#define VTOMBSTONE VWord(LITERAL_HEADER | VIMM_TOK | VTOK_TOMBSTONE)
 
 #define FORWARDED ULLONG_MAX
 
-static inline unsigned long VBits(VWORD v) { return v.bits; }
-static inline VWORD VWord(unsigned long v) { return (VWORD) { .bits = v }; }
+static inline unsigned long VBits(VWORD v) {
+  union {
+    unsigned long bits;
+    VWORD v2;
+  } u;
+  u.v2 = v;
+  return u.bits;
+}
+static inline VWORD VWord(unsigned long v) {
+  union {
+    unsigned long bits;
+    VWORD v2;
+  } u;
+  u.bits = v;
+  return u.v2;
+}
 
 static inline bool VIsEq(VWORD a, VWORD b) { return VBits(a) == VBits(b); }
 
-static inline VWORD VEncodeToken(int tok) { return (VWORD){{LITERAL_HEADER | VIMM_TOK | tok}}; }
+static inline VWORD VEncodeToken(int tok) { return VWord(LITERAL_HEADER | VIMM_TOK | tok); }
 static inline bool VIsToken(VWORD v, int tok) { return VBits(v) == (LITERAL_HEADER | VIMM_TOK | tok); }
 
 static inline bool VIsNumber(VWORD v) {
-  return !isnan(v.number) || v.bits == VNAN.bits;
+  return !isnan(v.number) || VIsToken(v, VTOK_NAN);
 }
 static inline unsigned long VWordType(VWORD v) {
   unsigned long bits = VBits(v);
@@ -146,9 +157,9 @@ static inline VWORD VEncodePointer(void * v, enum VPOINTER_T type) {
   }
   return VVOID;
 }
+static_assert(-1l == -1l >> 63l);
 static inline VWORD * VDecodePointer(VWORD v) {
   long bits = (long)VBits(v);
-  //static_assert(-1l == -1l >> 63l);
   bits = (bits << 16l) >> 16l;
   return (VWORD*)(intptr_t)bits;
 }
@@ -168,8 +179,7 @@ static inline VWORD VEncodeClosure(struct VClosure * c) {
 
 
 static inline long VDecodeInt(VWORD v) {
-  //static_assert(-1l == -1l >> 63l);
-  return ((long)v.bits << 16l) >> 16l;
+  return ((long)VBits(v) << 16l) >> 16l;
 }
 static inline VWORD VEncodeInt(long i) {
   if(!(VINT_MIN <= i && i <= VINT_MAX)) VError("int encoding overflow ~L exceeds 48 bits\n", i);
@@ -177,7 +187,7 @@ static inline VWORD VEncodeInt(long i) {
 }
 
 static inline char VDecodeChar(VWORD v) {
-  return (char)(v.bits & 0xFF);
+  return (char)(VBits(v) & 0xFF);
 }
 static inline VWORD VEncodeChar(char c) {
   return VWord(LITERAL_HEADER | VIMM_CHAR | (unsigned char)c);
@@ -187,14 +197,14 @@ static inline double VDecodeNumber(VWORD v) {
   return v.number;
 }
 static inline VWORD VEncodeNumber(double d) {
-  return (VWORD){{.number = d}};
+  return (VWORD){.number = d};
 }
 
 static inline unsigned VDecodeToken(VWORD v) {
-  return (unsigned)(v.bits & 0xFFFFFFFF);
+  return (unsigned)(VBits(v) & 0xFFFFFFFF);
 }
 static inline bool VDecodeBool(VWORD v) {
-  return VBits(v) != VBits(VFALSE);
+  return !VIsToken(v, VTOK_FALSE);
 }
 static inline VWORD VEncodeBool(bool b) {
   return b ? VTRUE : VFALSE;
@@ -281,7 +291,7 @@ static inline VPair * VFillPair(VPair * pair, VWORD a, VWORD b) {
 }
 
 static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
-  if(a.bits == b.bits)
+  if(VBits(a) == VBits(b))
     return true;
   VBlob * blob_a = (VBlob*)VDecodePointer(a);
   VBlob * blob_b = (VBlob*)VDecodePointer(b);
@@ -440,8 +450,6 @@ typedef void(*VFunc)(VEnv*);
   VClosure _closures[sizeof (VFunc[]){ __VA_ARGS__ } / sizeof(VFunc)]; \
   VBindLetrec(env, _closures, (VFunc[]){ __VA_ARGS__ })
 
-// TODO have a RETURN_CALL that takes 1 nonclosure arg
-
 #if 1
 #define V_TAIL_CALL_CLOSURE(oldenv, closure, ...) \
  do { \
@@ -475,7 +483,6 @@ typedef void(*VFunc)(VEnv*);
   V_CALL(func, __VA_ARGS__)
 #endif
 
-//#define V_GC_CHECK(func, env, dbg)
 #define V_GC_CHECK(func, env) \
   if(VStackOverflow((char*)&env)) { \
     VGarbageCollect(func, env); \
@@ -504,11 +511,10 @@ static inline bool VStackOverflow(char * VStackStop) {
   ptrdiff_t size = VStackStart - VStackStop;
 #ifndef __x86_64__
   // stack may grow upwards on some platforms
-  //static_assert(0);
+  static_assert(0);
 #endif
   assert(size >= 0);
   return size > VStackLen;
-  //return size > 4*1024*1024;
 }
 void VGarbageCollect(void (*f)(VEnv * env), VEnv * env);
 
