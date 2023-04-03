@@ -1,20 +1,20 @@
 # Vanity Scheme
 
-A R7RS scheme compiler vanity project that I started writing July 2022.
+A self hosted R7RS scheme compiler vanity project that I started writing July 2022.
 
-It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. However, I wouldn't recommend doing that now as I need to do a pass on the language's ABI.
+It would be a mistake to use this compiler in its current state, but you can have fun looking at the code!
 
-The main reason I started this is a burning desire for parallelism (which I haven't implemented yet). I have no intent on supporting parallel threads: the parallelism will be only structured parallelism in the forms of parallel for's and async, with lots of limitations so there are minimal barriers and atomics despite the garbage collector. I view threads as the GOTO of parallelism so no intent to implement them as they'll wreck too much havoc in a compacting garbage collected language. Eventually it will also have a solid foreign function interface and hopefully be suitable for gamedev.
+It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. However, I wouldn't recommend doing that now as I need to do a pass on the language's ABI. The main reason I started this is a burning desire for parallelism (which I haven't implemented yet).
 
-The compiler is free software under GPL v3.0, and the runtime is free software under LGPL v3.0. Both are published with a macro exception similar to GNU Bison's. So, just as with gcc, you may use the compiler to build and link nonfree software if you do not statically link the runtime library.
+The compiler is free software under GPL v3.0, and the runtime is free software under LGPL v3.0. So, just as with gcc, you may use the compiler to build and link nonfree software if you do not statically link the runtime library.
 
 ## Install Instructions
 
-At the moment, Linux is a requirement, as there are multiple nonportable bits of runtime, and a bit of assembly as well. I'm not sure if I can say this compiler works on machines other than my own :). I did successfully run the full bootstrap procedure on a laptop.
+At the moment, x64 Linux is a requirement, as there are multiple nonportable bits of runtime, and a bit of assembly as well. I'm not sure if I can say this compiler works on machines other than my own. I did successfully run the full bootstrap procedure on a laptop.
 
 You should just need an install of gnumake and gcc. I compiled with gcc 12.2, but older is likely fine?
 
-Sorry, clang isn't supported, and in fact, for debugging purposes, I'll be adding libgccjit to the install requirements later too :(.
+Sorry, clang isn't supported, and in fact, for debugging purposes, I'll be adding libgccjit to the install requirements later too.
 
 1. Run `./configure` and answer the prompts, or just mash enter.
 	* The defaults installs to `~/.local/bin`, `~/.local/lib`, etc
@@ -30,14 +30,14 @@ The interface of the compiler is similar to gcc, try compiling and running this 
 
 ```
 (define-library (powerset)
-	(import (vanity core))
-	(export powerset)
+  (import (vanity core))
+  (export powerset)
 
-	(define (powerset set)
-		(if (null? set) '(())
-				(let ((x (car set))
-							(pset (powerset (cdr set))))
-				  (append (map (lambda (e) (cons x e)) pset) pset)))))
+  (define (powerset set)
+    (if (null? set) '(())
+        (let ((x (car set))
+              (pset (powerset (cdr set))))
+          (append (map (lambda (e) (cons x e)) pset) pset)))))
 
 (import (powerset) (vanity core))
 (define set '(0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J))
