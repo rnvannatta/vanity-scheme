@@ -573,7 +573,7 @@
         (x #f)))
     (define (print-expr expr args)
       (define (print-builtin-apply f xs tail-call?)
-        (printf "    V_CALL_FUNC2(~A, runtime, dynamics" (lookup-intrinsic2 f))
+        (printf "    V_CALL_FUNC2(~A, runtime" (lookup-intrinsic2 f))
         (for-each
           (lambda (x)
            (printf ",~N      ")
@@ -588,7 +588,7 @@
             (display "VDecodeClosureApply(")
             (print-expr f args)
             (display ")")))
-        (printf ", runtime, dynamics")
+        (printf ", runtime")
         (for-each
           (lambda (x)
            (printf ",~N      ")
@@ -598,7 +598,7 @@
       
       ; should always be a tail call eh
       (define (print-define-global k y x tail-call?)
-        (printf "    V_CALL_CLOSURE2((VClosure[]){VMakeClosure2((VFunc2)VDefineGlobalVar2, env)}, runtime, dynamics,~N      ")
+        (printf "    V_CALL_CLOSURE2((VClosure[]){VMakeClosure2((VFunc2)VDefineGlobalVar2, env)}, runtime,~N      ")
         (print-expr k args)
         (printf ",~N      ")
         (print-literal y)
@@ -608,7 +608,7 @@
       (define (print-set k y x tail-call?)
         (match y
           (('bruijn name up right)
-           (printf "    V_CALL_CLOSURE2((VClosure[]){VMakeClosure2((VFunc2)VSetEnvVar2, env)}, runtime, dynamics,~N      ")
+           (printf "    V_CALL_CLOSURE2((VClosure[]){VMakeClosure2((VFunc2)VSetEnvVar2, env)}, runtime,~N      ")
            (print-expr k args)
            (printf ",~N      VEncodeInt(~Al), VEncodeInt(~Al),~N      " up right)
            (print-expr x args)
@@ -616,7 +616,7 @@
           (sym
            (if (symbol? sym)
                (begin
-                 (printf "    V_CALL_CLOSURE2((VClosure[]){VMakeClosure2((VFunc2)VSetGlobalVar2, env)}, runtime, dynamics,~N      ")
+                 (printf "    V_CALL_CLOSURE2((VClosure[]){VMakeClosure2((VFunc2)VSetGlobalVar2, env)}, runtime,~N      ")
                  (print-expr k args)
                  (printf ",~N      ")
                  (print-literal sym)
@@ -677,7 +677,7 @@
         (map (lambda (e) (sprintf "_var~A" e)) (iota num)))
       (let ((args (gen-args num)))
         (if needs-used? (printf "__attribute__((used)) "))
-        (printf "static void ~A(VRuntime * runtime, VEnv * upenv, VContEnv * returns, VDynamic * dynamics, int argc" name)
+        (printf "static void ~A(VRuntime * runtime, VEnv * upenv, int argc" name)
         (for-each (lambda (arg) (printf ", VWORD ~A" arg)) args)
         (if variadic? (printf ", ..."))
         (printf ") {~N")
@@ -703,7 +703,7 @@
             (begin
               (printf " VWORD _varargs = VNULL;~N")
               (printf " V_GATHER_VARARGS_VARIADIC(&_varargs, ~A, argc, ~A);~N" num (list-ref args (- num 1)))))
-        (printf " V_GC_CHECK2_VARARGS((VFunc2)~A, runtime, upenv, returns, dynamics, ~A, argc" name num)
+        (printf " V_GC_CHECK2_VARARGS((VFunc2)~A, runtime, upenv, ~A, argc" name num)
         (for-each (lambda (arg) (printf ", ~A" arg)) args)
         (if variadic?
             (printf ", _varargs) {~N")
@@ -729,7 +729,7 @@
       (let* ((name (car fun))
              (cases (cddr fun))
              (cases (map (lambda (i e) `(,(sprintf "_V20Case~A_~A" i name) #f ,e)) (iota (length cases)) cases)))
-       (printf "__attribute__((used)) static void _V20CaseError_~A(VRuntime * runtime, VEnv * upenv, VContEnv * returns, VDynamic * dynamics, int argc, ...) {~N" name)
+       (printf "__attribute__((used)) static void _V20CaseError_~A(VRuntime * runtime, VEnv * upenv, int argc, ...) {~N" name)
        (printf " // ~S~N" fun)
        (printf " VError(\"Not enough arguments to ~A, got ~~D~~N\"~N" name)
        (for-each
@@ -753,7 +753,7 @@
          cases)
 
        ; while this declaration is nonstatic, the definition lacks the .globl directive so it's still a static function
-       (printf "void ~A(VRuntime * runtime, VEnv * upenv, VContEnv * returns, VDynamic * dynamics, int argc, ...);~N" name)
+       (printf "void ~A(VRuntime * runtime, VEnv * upenv, int argc, ...);~N" name)
        (printf "asm(~N")
        (printf "\".intel_syntax noprefix\\n\"~N")
        (printf "\"~A:\\n\"~N" name)
@@ -761,10 +761,10 @@
          (lambda (e)
           (match e
             ((name _ (num '+ _))
-             (printf "\"    cmp r8d, ~A\\n\"~N" num)
+             (printf "\"    cmp edx, ~A\\n\"~N" num)
              (printf "\"    jge ~A\\n\"~N" name))
             ((name _ (num _))
-             (printf "\"    cmp r8d, ~A\\n\"~N" num)
+             (printf "\"    cmp edx, ~A\\n\"~N" num)
              (printf "\"    je ~A\\n\"~N" name))))
          cases)
        (printf "\"    jmp _V20CaseError_~A\\n\"~N" name)
@@ -781,7 +781,6 @@
       (printf "void toplevel~A() {~N" i)
       (displayln "    VEnv * env = NULL;")
       (displayln "    VRuntime * runtime = NULL;")
-      (displayln "    VDynamic * dynamics = NULL;")
       (print-expr expr '())
       (displayln "}"))
     (define (print-declare declare)
