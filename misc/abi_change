@@ -8,6 +8,9 @@ PLAN OF ATTACK FOR ABI CHANGE
 2. add major revision info to libs, ie libvscheme1.so, libvscheme2.so
 -- let vscheme select which major revision to use from cmdline
 
+-- links are libvscheme1.so.0 to libvscheme1.so
+-- and vsc1 to vsc
+
 3. add 2 versions of each function, and let codegen select based on abi
 -- ie VCons and VCons2
 
@@ -20,3 +23,25 @@ PLAN OF ATTACK FOR ABI CHANGE
 
 5. delete old codegen
 
+
+NEW ABI IS TERRIBLE:
+
+Why?
+
+Theories:
+1. new api passes 5 args minimum:
+-- runtime, statics, returns, dynamics, argc
+-- this means that compiler has few registers to use as scratch
+-- still plenty of stack pushing going on because of all ze procs
+-- more codegen
+2. storing things in float registers was a bad idea
+-- pipeline between fp and integer rf is slow apparently
+-- almost every usage is in integer, so always passing from fp to integer rf
+
+FIXES:
+1. First, delete returns and dynamics to go to 3 args
+-- returns was a dumb idea
+-- dynamics can be passed in runtime. dynamics are rarely accessed.
+2. Second, change VWORD to be passed in integer register
+-- this will let up to 3 VWORDS be passed in integer registers where they will probably be used as such
+3. Distant future: reject c return to assembly, use our own calling convention that lets us use all 15 gprs?
