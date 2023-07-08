@@ -8,3 +8,4 @@ config.sh
 *.swo
 *.swn
 a.out
+core
