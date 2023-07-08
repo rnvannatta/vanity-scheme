@@ -339,22 +339,6 @@ typedef struct VEnv {
   VWORD vars[];
 } VEnv;
 
-// logic is generally lambdas dont capture
-// continuation values unless optimization
-// happens but if necessary we could forbid it
-// continuations are only for 1 value so optimize
-// them as a special case.
-
-// One consequence of this is that closures then
-// would have two environments, but in many cases
-// the 'return values' would be null
-// TODO actually do this
-typedef struct VContEnv {
-  VTAG tag;
-  struct VContEnv * up;
-  VWORD var;
-} VContEnv;
-
 typedef struct VDynamic {
   VTAG tag;
   VWORD key;
@@ -369,13 +353,11 @@ typedef struct VEnvironment {
   unsigned argc;            //  4
   VRuntime * runtime;       //  8
   VEnv * static_chain;      // 16
-  VContEnv * return_chain;  // 24
-  VDynamic * dynamic_chain; // 32
-  VWORD argv[];             // 40+
+  VWORD argv[];             // 24+
 } VEnvironment;
 
 typedef void(*VFunc)(VEnv * args);
-#define V_CORE_ARGS VRuntime * runtime, VEnv * statics, VContEnv * returns, VDynamic * dynamics, int argc
+#define V_CORE_ARGS VRuntime * runtime, VEnv * statics, int argc
 typedef void (*VFunc2)(V_CORE_ARGS, ...);
 
 void VSysApply(VFunc2 func, VEnvironment * environ);
@@ -490,11 +472,11 @@ static inline VClosure VMakeClosure2(VFunc2 f, VEnv * env) {
    ((VFunc)_closure->func)(&_container.next); \
  } while(0)
 
-#define V_CALL_CLOSURE2(closure, runtime, dynamic_chain, ...) \
+#define V_CALL_CLOSURE2(closure, runtime, ...) \
  do { \
    VClosure * _closure = (closure); \
    assert(_closure->abi == NEW_ABI); \
-   ((VFunc2)_closure->func)(runtime, _closure->env, /* _closure->returns */ NULL, dynamic_chain, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
+   ((VFunc2)_closure->func)(runtime, _closure->env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
  } while(0)
 
 #define V_CALL_FUNC(func, ...) \
@@ -514,9 +496,9 @@ static inline VClosure VMakeClosure2(VFunc2 f, VEnv * env) {
    (func)(&_container.next); \
  } while(0)
 
-#define V_CALL_FUNC2(func, runtime, dynamic_chain, ...) \
+#define V_CALL_FUNC2(func, runtime, ...) \
  do { \
-   (func)(runtime, NULL, NULL, dynamic_chain, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD), __VA_ARGS__); \
+   (func)(runtime, NULL, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD), __VA_ARGS__); \
  } while(0)
 
 #define V_TAIL_CALL_CLOSURE(oldenv, closure, ...) \
@@ -589,28 +571,28 @@ static inline bool VStackOverflow(char * VStackStop) {
   return size > VStackLen;
 }
 void VGarbageCollect(void (*f)(VEnv * env), VEnv * env);
-void VGarbageCollect2(VFunc2 f, VRuntime * runtime, VEnv * statics, VContEnv * returns, VDynamic * dynamics, int argc, VWORD * argv);
-void VGarbageCollect2Args(VFunc2 f, VRuntime * runtime, VEnv * statics, VContEnv * returns, VDynamic * dynamics, int fixed_args, int argc, ...);
+void VGarbageCollect2(VFunc2 f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv);
+void VGarbageCollect2Args(VFunc2 f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...);
 #define V_GC_CHECK(func, env) \
   if(VStackOverflow((char*)&env)) { \
     VGarbageCollect(func, env); \
   } else
 
-#define V_GC_CHECK2(func, runtime, statics, returns, dynamics, argc, argv) \
+#define V_GC_CHECK2(func, runtime, statics, argc, argv) \
   if(VStackOverflow((char*)&runtime)) { \
-    VGarbageCollect2(func, runtime, statics, returns, dynamics, argc, argv); \
+    VGarbageCollect2(func, runtime, statics, argc, argv); \
   } else
-#define V_GC_CHECK2_LIST(func, runtime, statics, returns, dynamics, argc, argv) \
+#define V_GC_CHECK2_LIST(func, runtime, statics, argc, argv) \
   if(VStackOverflow((char*)&runtime)) { \
     VWORD args[argc]; \
     for(int i = 0; i < argc; i++) \
       args[i] = va_arg(argv, VWORD); \
     va_end(argv); \
-    VGarbageCollect2(func, runtime, statics, returns, dynamics, argc, args); \
+    VGarbageCollect2(func, runtime, statics, argc, args); \
   } else
-#define V_GC_CHECK2_VARARGS(func, runtime, statics, returns, dynamics, fixed_args, argc, ...) \
+#define V_GC_CHECK2_VARARGS(func, runtime, statics, fixed_args, argc, ...) \
   if(VStackOverflow((char*)&runtime)) { \
-    VGarbageCollect2Args(func, runtime, statics, returns, dynamics, fixed_args, argc, __VA_ARGS__); \
+    VGarbageCollect2Args(func, runtime, statics, fixed_args, argc, __VA_ARGS__); \
   } else
 
 // abort, exit, commandline left

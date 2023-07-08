@@ -10,9 +10,7 @@
 // ax : loop variable for number of args, eventually number of floating point args
 // di : 1st funcall arg 'runtime'
 // si : 2nd funcall arg 'statics'
-// dx : 3rd funcall arg 'returns'
-// cx : 4th funcall arg 'dynamics'
-// r8 : 5th funcall arg 'argc'
+// dx : 3rd funcall arg 'argc'
 // r9 : temporary for whether we have to use stack space to make the call
 // xmm0-7 : fp funcall args
 // r10 : temporary for pointer to VEnvironment * environ, then after unpacking, pointer to argv
@@ -27,15 +25,10 @@ VSysApply:
 	mov rdi, QWORD PTR [r10+8]
 	// sys arg 2, statics 
 	mov rsi, QWORD PTR [r10+16]
-	// sys arg 3, returns 
-	mov rdx, QWORD PTR [r10+24]
-  // sys arg 4, dynamics
-	mov rcx, QWORD PTR [r10+32]
-	// sys arg 5, argc 
-	mov eax, DWORD PTR [r10+4]
-	mov r8d, eax
-  // mov r10, QWORD PTR [r10+40]
-  lea r10, QWORD PTR [r10+40]
+	// sys arg 3, argc 
+	mov edx, DWORD PTR [r10+4]
+	mov eax, edx
+  lea r10, QWORD PTR [r10+24]
 	// usr args
   xor r9, r9
 	cmp eax, 9
