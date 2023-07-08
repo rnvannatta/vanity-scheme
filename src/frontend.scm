@@ -29,11 +29,13 @@
 (define obj-files '())
 (define shared? #f)
 (define expand? #f)
+(define keep? #f)
 (define transpile? #f)
 (define object? #f)
 (define debug? #f)
 (define verbose? #f)
 (define optimization 1)
+(define api 0)
 (define out-file #f)
 
 (define (extension file)
@@ -64,13 +66,15 @@
   (displayln "  -v            Show intermediate commands")
   (displayln "")
   (displayln "  --shared      Compile as shared library")
+  (displayln "  --keep-temps  Keep temporary compilation files, such as C intermediates")
+  (displayln "  --api=<num>   Compile with major api version 0 or 1")
   (displayln "  --help        You know about this")
   (displayln "  --version     Show version and build info"))
 (define (display-version)
   (displayln "Vanity Scheme Compiler 0.0.0")
   (displayln "Copyright (C) 2023 Richard Van Natta"))
 
-(let loop ((args (getopt "vgtco:O:E:" (command-line) '((shared #f shared) (help #f help) (version #f version)))))
+(let loop ((args (getopt "vgtco:O:E:" (command-line) '((shared #f shared) (help #f help) (api #t api) (version #f version) (keep-temps #f keep-temps)))))
   (if (not (null? args))
       (begin
         (case (caar args)
@@ -94,6 +98,8 @@
           ((help) (display-help) (exit 0))
           ((version) (display-version) (exit 0))
           ((shared) (set! shared? #t))
+          ((api) (set! api (string->number (cdar args))))
+          ((keep-temps) (set! keep? #t))
           (else (write (caar args)) (newline) (error "Unknown CLI option" (cdar args))))
         (loop (cdr args)))))
 
@@ -125,7 +131,7 @@
 
 (define flags
   (string-append
-    " -rdynamic -Wmissing-braces"
+    " -rdynamic -Wmissing-braces -masm=intel"
     (sprintf " -O~A" optimization)
     (if debug? " -g" "")
     (if object? " -c" " -lvscheme")
@@ -157,7 +163,7 @@
                         (if (eq? expand? 2) (for-each write opt)
                             (let* ((bruijn (map bruijn-ify opt))
                                    (funs (to-functions bruijn)))
-                              (apply printout (cons debug? (cons shared? funs)))))))))))))
+                              (apply (if (= api 0) printout printout2) (cons debug? (cons shared? funs)))))))))))))
       scm-files
       cc-files)))
 
@@ -169,4 +175,4 @@
     (begin
       (if verbose? (displayln command))
       (system command)
-      (for-each delete-file cc-files)))
+      (if (not keep?) (for-each delete-file cc-files))))

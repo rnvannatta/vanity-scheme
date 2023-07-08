@@ -787,7 +787,8 @@ void VCallCCLambda(VEnv * env) {
       memmove(env->vars, env->vars+1, sizeof(VWORD[env->num_vars-1]));
       env->num_vars--;
       env->up = k->env;
-      k->func(env);
+      if(k->abi != OLD_ABI) VError("call/cc with new abi\n");
+      ((VFunc)k->func)(env);
     }
 }
 
@@ -821,7 +822,8 @@ void VCallValuesK(VEnv * env) {
   newenv->vars[0] = k;
   memcpy(newenv->vars + 1, env->vars, sizeof(VWORD[nvars]));
 
-  consumer->func(newenv);
+  if(consumer->abi != OLD_ABI) VError("call/values with new abi\n");
+  ((VFunc)consumer->func)(newenv);
 }
 
 void VCallValues(VEnv * env) {
@@ -859,7 +861,8 @@ void VApply(VEnv * env) {
     newenv->vars[cur++] = p->first;
     args = p->rest;
   }
-  f->func(newenv);
+  if(f->abi != OLD_ABI) VError("apply with new abi\n");
+  ((VFunc)f->func)(newenv);
 }
 
 void VSystem(VEnv * env) {

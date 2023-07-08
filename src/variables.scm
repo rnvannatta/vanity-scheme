@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library "variables"
-  (export mangle-symbol mangle-library lookup-inline lookup-intrinsic free-variables)
+  (export mangle-symbol mangle-library lookup-inline lookup-intrinsic lookup-intrinsic2 free-variables)
   (import (vanity core))
 
   ; why does this return another symbol? should return a string? maybe I want eqv? that bad
@@ -142,6 +142,8 @@
          ((##vcore.define) "VDefineGlobalVar")
          ((##vcore.multidefine) "VMultiDefine")
          ((##vcore.lookup-library) "VLookupLibrary")
+         ((##vcore.make-import) "VMakeImport")
+         ((##vcore.load-library) "VLoadLibrary")
 
          ; Lists
          ((##sys.cons ##sys.qcons) "VCons")
@@ -203,6 +205,121 @@
          ((##sys.command-line) "VCommandLine")
 
          (else #f)))
+         
+  (define (lookup-intrinsic2 sym)
+    (case sym
+         ; Math
+         ((##sys.+) "VAdd2")
+         ((##sys.-) "VSub2")
+         ((##sys.*) "VMul2")
+         ((##sys./) "VDiv2")
+         ((##sys.cmp) "VCmp2")
+
+         ((##sys.quotient) "VQuot2")
+         ((##sys.remainder) "VRem2")
+
+         ; Predicates
+         ((##sys.null?) "VNullP2")
+         ((##sys.pair?) "VPairP2")
+         ((##sys.vector?) "VVectorP2")
+         ((##sys.procedure?) "VProcedureP2")
+         ((##sys.blob?) "VBlobP2")
+         ((##sys.symbol?) "VSymbolP2")
+         ((##sys.string?) "VStringP2")
+         ((##sys.int?) "VIntP2")
+         ((##sys.double?) "VDoubleP2")
+         ((##sys.char?) "VCharP2")
+
+         ; Equality
+         ((##sys.eq?) "VEq2")
+         ((##sys.symbol=?) "VSymbolEqv2")
+         ((##sys.blob=?) "VBlobEqv2")
+
+         ; Special Forms (that are temporarily procedures)
+         ((##sys.if) #t)
+         ((##sys.begin) #t)
+         ((##sys.and) #t)
+         ((##sys.or) #t)
+
+         ; Logic
+         ((##sys.not) "VNot2")
+
+         ; System
+         ((##sys.next) "VNext2")
+         ((##sys.call/cc) "VCallCC2")
+         ((##sys.call-with-values) "VCallValues2")
+         ((##sys.apply) "VApply2")
+         ((##sys.abort) "VAbort2")
+         ((##sys.exit) "VExit2")
+
+         ((##sys.import) "VImport2")
+         ((##vcore.function) "VFunction2")
+         ((##vcore.define) "VDefineGlobalVar2")
+         ((##vcore.multidefine) "VMultiDefine2")
+         ((##vcore.lookup-library) "VLookupLibrary2")
+         ((##vcore.make-import) "VMakeImport2")
+         ((##vcore.load-library) "VLoadLibrary2")
+
+         ; Lists
+         ((##sys.cons ##sys.qcons) "VCons2")
+         ((##sys.car) "VCar2")
+         ((##sys.cdr) "VCdr2")
+         ((##sys.set-car!) "VSetCar2")
+         ((##sys.set-cdr!) "VSetCdr2")
+
+         ; Vectors
+         ((##sys.list->vector) "VListVector2")
+         ((##sys.vector-ref) "VVectorRef2")
+         ((##sys.vector-set!) "VVectorSet2")
+         ((##sys.vector-length) "VVectorLength2")
+
+         ; Strings
+
+         ((##sys.make-string) "VMakeString2")
+         ((##sys.substring) "VSubstring2")
+         ((##sys.string-copy!) "VStringCopy2")
+         ((##sys.string-ref) "VStringRef2")
+         ((##sys.string-set!) "VStringSet2")
+         ((##sys.string-length) "VStringLength2")
+         ((##sys.string->symbol) "VStringSymbol2")
+         ((##sys.string->number) "VStringNumber2")
+
+         ((##sys.symbol->string) "VSymbolString2")
+
+         ; Characters
+
+         ((##sys.char-integer) "VCharInt2")
+         
+         ; IO
+         ((##sys.dup-stdin) "VDupStdin2")
+         ((##sys.dup-stdout) "VDupStdout2")
+         ((##sys.dup-stderr) "VDupStderr2")
+
+         ((##sys.open-input-stream) "VOpenInputStream2")
+         ((##sys.open-output-stream) "VOpenOutputStream2")
+         ((##sys.close-stream) "VCloseStream2")
+
+         ((##sys.open-output-string) "VOpenOutputString2")
+         ((##sys.get-output-string) "VGetOutputString2")
+
+         ((##sys.eof-object?) "VEofP2")
+
+         ((##sys.read-char) "VReadChar2")
+         ((##sys.read-line) "VReadLine2")
+         ((##sys.read) "VRead2")
+
+         ((##sys.display-word) "VDisplay2")
+         ((##sys.write) "VWrite2")
+         ((##sys.newline) "VNewline2")
+
+         ; System
+         ((##sys.system) "VSystem2")
+         ((##sys.open-input-process) "VOpenInputProcess2")
+         ((##sys.open-output-process) "VOpenOutputProcess2")
+         ((##sys.make-temporary-file) "VMakeTemporaryFile2")
+         ((##sys.command-line) "VCommandLine2")
+
+         (else #f)))
   (define (free-variables expr)
     (define (merge a b)
       (cond ((null? a) b)
@@ -214,7 +331,7 @@
             (else (cons a b))))
     (let loop ((bound '()) (expr expr))
       (cond ((symbol? expr)
-             (if (or (memv expr bound) (lookup-intrinsic expr)) '() (list expr)))
+             (if (or (memv expr bound) (lookup-intrinsic expr) (lookup-intrinsic2 expr)) '() (list expr)))
             ((atom? expr) '())
             ((eqv? (car expr) 'quote) '())
             ((eqv? (car expr) 'lambda)

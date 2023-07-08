@@ -1,0 +1,22 @@
+PLAN OF ATTACK FOR ABI CHANGE
+
+1. spruce up makefile to handle that inline asm - WHATEVER GOOD ENOUGH
+-- list object files, build object files from rules
+-- quarantine hatching?
+-- add that asm to the hatching
+
+2. add major revision info to libs, ie libvscheme1.so, libvscheme2.so
+-- let vscheme select which major revision to use from cmdline
+
+3. add 2 versions of each function, and let codegen select based on abi
+-- ie VCons and VCons2
+
+4. add 2 versions of codegen
+-- incrementally test: first with calling core library
+-- then with lambda functions
+-- then with standard library
+-- then with test apps
+-- then with self hosting
+
+5. delete old codegen
+

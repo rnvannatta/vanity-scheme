@@ -1,7 +1,10 @@
 bin/
 build/
 lib/
+scratch/
 config.mk
 config.sh
 *.swp
+*.swo
+*.swn
 a.out

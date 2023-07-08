@@ -1,0 +1,60 @@
+plan for parallelism
+
+idea: parallel fibers
+
+to fork of an async task, you do (async foo a b c), which yields a future.
+
+behind the scenes async looks like this:
+
+(define (async f . xs)
+  (defer-pin f)
+  (for-each defer-pin xs)
+  (minor-gc)
+  (let ((ret (fiber-apply f xs)))
+    (set-finalizer! ret (lambda () (unpin f) (for-each unpin xs)))
+    ret))
+
+(define (await f)
+  (fiber-wait f)
+  (finalize! f)
+  (fiber-return f))
+
+This requires a 'pinned memory' section of gc. pinned memory is garbage collected by mark and sweep. it's not garbage collected.
+
+pins are added and removed via refcounting. defer-pin waits to add the pin until next gc. can add a weak pin which moves the
+object to pinned memory but doesn't refcount
+
+we need to refcount because each fiber is still gcing independently and the originater can drop references to the args
+
+its worth for perf adding an async-copy and async-explicit, where the former doesn't make any pins but copies to the stack, and the latter is syntax which forces the user to declare which happens
+
+one issue with pinning is that if a piece of pinned memory is in the heap, that necessitates a deep gc to copy out all the references to that pinned memory
+
+pinned gc happens when pinning fails or during a major gc.
+
+gc types:
+
+minor : collect stack, account for mutations, and manage pins
+heap : collect stack, heap, but not pinned memory
+major : collect stack, heap, pinned memory. will compact pinned memory if no fibers
+devastating : pause all fibers to collect stack & heap, pause all fibers to compact pinned memory. An emergency gc to handle fragmentation
+
+
+gc flags for pinned memory:
+
+marked
+ref_count
+
+pinned memory with a nonzero ref_count is unmovable except for devastating gcs. pinned memory with a maxed out ref_count is unrecoverable except from devastating gcs.
+
+each fiber has its own pinned memory pool.
+
+
+fiber storage:
+-- fibers consist of: registers, a stack, a heap, and a pinned region
+-- registers is negligable
+-- stack by abi needs to be 1mb (65535 arguments, half a meg of allocations per gc frame, and a half meg for C calls)
+-- heap must fit 2 stacks, ie 2mb, and have two of them
+-- pinned region is ???
+-- we can defer allocating heaps and pinned region until they're needed
+-- we dont actually need 2 heaps except during gc, can return the second heap back to the fiber pool

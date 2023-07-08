@@ -81,7 +81,7 @@ enum VTOK_T {
 };
 
 enum VTAG {
-  VTAG_START = 33, VENV = 33, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VPORT,
+  VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VPORT,
   VTAG_END };
 typedef unsigned VTAG;
 
@@ -103,20 +103,14 @@ enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
 #define FORWARDED ULLONG_MAX
 
 static inline unsigned long VBits(VWORD v) {
-  union {
-    unsigned long bits;
-    VWORD v2;
-  } u;
-  u.v2 = v;
-  return u.bits;
+  unsigned long bits;
+  memcpy(&bits, &v, sizeof v);
+  return bits;
 }
-static inline VWORD VWord(unsigned long v) {
-  union {
-    unsigned long bits;
-    VWORD v2;
-  } u;
-  u.bits = v;
-  return u.v2;
+static inline VWORD VWord(unsigned long bits) {
+  VWORD v;
+  memcpy(&v, &bits, sizeof bits);
+  return v;
 }
 
 static inline bool VIsEq(VWORD a, VWORD b) { return VBits(a) == VBits(b); }
@@ -231,6 +225,20 @@ static inline VBlob * VDecodeBlob(VWORD v) {
   else
     return NULL;
 }
+static inline VBlob * VDecodeString(VWORD v) {
+  VBlob * b = VDecodeBlob(v);
+  if(b && b->tag == VSTRING)
+    return b;
+  else
+    return NULL;
+}
+static inline VBlob * VDecodeSymbol(VWORD v) {
+  VBlob * b = VDecodeBlob(v);
+  if(b && b->tag == VSYMBOL)
+    return b;
+  else
+    return NULL;
+}
 
 typedef struct VVector {
   VTAG tag;
@@ -331,6 +339,47 @@ typedef struct VEnv {
   VWORD vars[];
 } VEnv;
 
+// logic is generally lambdas dont capture
+// continuation values unless optimization
+// happens but if necessary we could forbid it
+// continuations are only for 1 value so optimize
+// them as a special case.
+
+// One consequence of this is that closures then
+// would have two environments, but in many cases
+// the 'return values' would be null
+// TODO actually do this
+typedef struct VContEnv {
+  VTAG tag;
+  struct VContEnv * up;
+  VWORD var;
+} VContEnv;
+
+typedef struct VDynamic {
+  VTAG tag;
+  VWORD key;
+  VWORD val;
+  struct VDynamic * up;
+} VDynamic;
+
+typedef struct VRuntime VRuntime;
+
+typedef struct VEnvironment {
+  VTAG tag;                 //  0
+  unsigned argc;            //  4
+  VRuntime * runtime;       //  8
+  VEnv * static_chain;      // 16
+  VContEnv * return_chain;  // 24
+  VDynamic * dynamic_chain; // 32
+  VWORD argv[];             // 40+
+} VEnvironment;
+
+typedef void(*VFunc)(VEnv * args);
+#define V_CORE_ARGS VRuntime * runtime, VEnv * statics, VContEnv * returns, VDynamic * dynamics, int argc
+typedef void (*VFunc2)(V_CORE_ARGS, ...);
+
+void VSysApply(VFunc2 func, VEnvironment * environ);
+
 static inline VWORD VGetArg(VEnv * env, int up, int var) {
   while(up) {
     env = env->up;
@@ -381,25 +430,51 @@ static inline void VRecordCall(VDebugInfo * debug) {
   _newenv->num_vars = _start+1; \
   *_env_dp = _newenv; \
 } while(0)
+#define V_GATHER_VARARGS_VARIADIC(_varargs, numfixed, argc, start) do { \
+  va_list _vlist; va_start(_vlist, start); \
+  VPair _root_pair = VMakePair(VVOID, VNULL); \
+  VPair * _cur = &_root_pair; \
+  for(int i = numfixed; i < argc; i++) { \
+    VPair * p = alloca(sizeof(VPair)); \
+    *p = VMakePair(va_arg(_vlist, VWORD), VNULL); \
+    _cur->rest = VEncodePair(p); \
+    _cur = p; \
+  } \
+  va_end(_vlist); \
+  *_varargs = _root_pair.rest; \
+} while(0)
 
+enum VAbi { OLD_ABI, NEW_ABI };
 typedef struct VClosure {
   VTAG tag;
-  void (*func)(VEnv * env);
+  unsigned abi;
+  void * func;
   VEnv * env;
 } VClosure;
 static inline VClosure VMakeClosure(void (*f)(VEnv * env), VEnv * env) {
   return (VClosure) {
     .tag = VCLOSURE,
+    .abi = OLD_ABI,
+    .func = f,
+    .env = env,
+  };
+}
+static inline VClosure VMakeClosure2(VFunc2 f, VEnv * env) {
+  return (VClosure) {
+    .tag = VCLOSURE,
+    .abi = NEW_ABI,
     .func = f,
     .env = env,
   };
 }
 
 #define V_CALL(f, ...) V_CALL_CLOSURE(f, __VA_ARGS__)
+#define V_CALL2(f, ...) V_CALL_CLOSURE2(f, __VA_ARGS__)
 
 #define V_CALL_CLOSURE(closure, ...) \
  do { \
    VClosure * _closure = (closure); \
+   assert(_closure->abi == OLD_ABI); \
    struct { \
      VEnv next; \
      VWORD vars[sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD)]; \
@@ -412,7 +487,14 @@ static inline VClosure VMakeClosure(void (*f)(VEnv * env), VEnv * env) {
      }, \
     .vars = { __VA_ARGS__ }, \
    }; \
-   (_closure->func)(&_container.next); \
+   ((VFunc)_closure->func)(&_container.next); \
+ } while(0)
+
+#define V_CALL_CLOSURE2(closure, runtime, dynamic_chain, ...) \
+ do { \
+   VClosure * _closure = (closure); \
+   assert(_closure->abi == NEW_ABI); \
+   ((VFunc2)_closure->func)(runtime, _closure->env, /* _closure->returns */ NULL, dynamic_chain, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
  } while(0)
 
 #define V_CALL_FUNC(func, ...) \
@@ -432,37 +514,23 @@ static inline VClosure VMakeClosure(void (*f)(VEnv * env), VEnv * env) {
    (func)(&_container.next); \
  } while(0)
 
-typedef void(*VFunc)(VEnv*);
+#define V_CALL_FUNC2(func, runtime, dynamic_chain, ...) \
+ do { \
+   (func)(runtime, NULL, NULL, dynamic_chain, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD), __VA_ARGS__); \
+ } while(0)
 
-#define V_LETREC(env, ...) \
-  struct { \
-    VEnv letrec; \
-    VWORD vars[sizeof (VFunc[]){ __VA_ARGS__ } / sizeof(VFunc)]; \
-  } _container = { \
-    .letrec = { \
-      .tag = VENV, \
-      .up = env, \
-      .num_vars = sizeof (VFunc[]){ __VA_ARGS__ } / sizeof(VFunc), \
-      .var_len = sizeof (VFunc[]){ __VA_ARGS__ } / sizeof(VFunc), \
-    } \
-  }; \
-  env = &_container.letrec; \
-  VClosure _closures[sizeof (VFunc[]){ __VA_ARGS__ } / sizeof(VFunc)]; \
-  VBindLetrec(env, _closures, (VFunc[]){ __VA_ARGS__ })
-
-#if 1
 #define V_TAIL_CALL_CLOSURE(oldenv, closure, ...) \
  do { \
    /* tail calls don't generate closures or continuations so the oldenv is garbage */ \
    /* reuse variable frame when possible to reduce garbage generated */ \
    VEnv * _env = oldenv; \
+   VClosure * _closure = (closure); \
    if(oldenv && oldenv->var_len >= sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD)) { \
      _env = oldenv; \
    } else { \
      _env = alloca(sizeof(VEnv) + sizeof((VWORD[]){ __VA_ARGS__ })); \
      _env->var_len = sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD); \
    } \
-   VClosure * _closure = (closure); \
    memcpy(_env->vars, (VWORD[]){ __VA_ARGS__ }, sizeof (VWORD[]){ __VA_ARGS__ }); \
     \
    *_env = (VEnv) { \
@@ -472,21 +540,9 @@ typedef void(*VFunc)(VEnv*);
      .var_len = _env->var_len, \
    }; \
     \
-   /*assert(0);*/ \
-   (_closure->func)(_env); \
+   ((VFunc)_closure->func)(_env); \
  } while(0)
 #define V_TAIL_CALL(oldenv, f, ...) V_TAIL_CALL_CLOSURE(oldenv, f, __VA_ARGS__)
-#else
-#define V_TAIL_CALL_CLOSURE(oldenv, func, ...) \
-  V_CALL(func, __VA_ARGS__)
-#define V_TAIL_CALL(oldenv, func, ...) \
-  V_CALL(func, __VA_ARGS__)
-#endif
-
-#define V_GC_CHECK(func, env) \
-  if(VStackOverflow((char*)&env)) { \
-    VGarbageCollect(func, env); \
-  } else
 
 #define V_ARG_CHECK(func, nargs, env) \
   do { \
@@ -504,6 +560,22 @@ typedef void(*VFunc)(VEnv*);
       VError("Incorrect number of arguments to ~Z, got ~D, need between ~D and ~D\n", func, env->num_vars, nargmin, nargmax); \
     } } while(0)
 
+#define V_ARG_CHECK2(func, nargs, num_vars) \
+  do { \
+    if(nargs != num_vars) { \
+      VError("Incorrect number of arguments to ~Z, got ~D, need ~D\n", func, num_vars, nargs); \
+    } } while(0)
+#define V_ARG_MIN2(func, nargs, num_vars) \
+  do { \
+    if(num_vars < nargs) { \
+      VError("Incorrect number of arguments to ~Z, got ~D, need ~D\n", func, num_vars, nargs); \
+    } } while(0)
+#define V_ARG_RANGE2(func, nargmin, nargmax, num_vars) \
+  do { \
+    if(num_vars < nargmin || num_vars > nargmax) { \
+      VError("Incorrect number of arguments to ~Z, got ~D, need between ~D and ~D\n", func, num_vars, nargmin, nargmax); \
+    } } while(0)
+
 extern char* VStackStart;
 extern ssize_t VStackLen;
 
@@ -517,17 +589,43 @@ static inline bool VStackOverflow(char * VStackStop) {
   return size > VStackLen;
 }
 void VGarbageCollect(void (*f)(VEnv * env), VEnv * env);
+void VGarbageCollect2(VFunc2 f, VRuntime * runtime, VEnv * statics, VContEnv * returns, VDynamic * dynamics, int argc, VWORD * argv);
+void VGarbageCollect2Args(VFunc2 f, VRuntime * runtime, VEnv * statics, VContEnv * returns, VDynamic * dynamics, int fixed_args, int argc, ...);
+#define V_GC_CHECK(func, env) \
+  if(VStackOverflow((char*)&env)) { \
+    VGarbageCollect(func, env); \
+  } else
+
+#define V_GC_CHECK2(func, runtime, statics, returns, dynamics, argc, argv) \
+  if(VStackOverflow((char*)&runtime)) { \
+    VGarbageCollect2(func, runtime, statics, returns, dynamics, argc, argv); \
+  } else
+#define V_GC_CHECK2_LIST(func, runtime, statics, returns, dynamics, argc, argv) \
+  if(VStackOverflow((char*)&runtime)) { \
+    VWORD args[argc]; \
+    for(int i = 0; i < argc; i++) \
+      args[i] = va_arg(argv, VWORD); \
+    va_end(argv); \
+    VGarbageCollect2(func, runtime, statics, returns, dynamics, argc, args); \
+  } else
+#define V_GC_CHECK2_VARARGS(func, runtime, statics, returns, dynamics, fixed_args, argc, ...) \
+  if(VStackOverflow((char*)&runtime)) { \
+    VGarbageCollect2Args(func, runtime, statics, returns, dynamics, fixed_args, argc, __VA_ARGS__); \
+  } else
+
+// abort, exit, commandline left
 
 // Root level continuation
 void VNext(VEnv * env);
+void VNext2(V_CORE_ARGS, ...);
 // Default exception continuation
 void VAbort(VEnv * env);
+void VAbort2(V_CORE_ARGS, ...);
 // Exit PROCEDURE, expects a continuation in slot 1
 void VExit(VEnv * env);
+void VExit2(V_CORE_ARGS, VWORD k, VWORD e);
 
 void VDisplayWord(FILE * f, VWORD v, bool write);
-void VBegin(VEnv * env);
-void VIf(VEnv * env);
 
 void VFPrintfC(FILE * f, char const * str, ...);
 
@@ -542,22 +640,38 @@ static inline void VSetRest(VPair * p, VWORD w) {
 }
 
 void VSetCar(VEnv * env);
+void VSetCar2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
 void VSetCdr(VEnv * env);
+void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
 void VVectorSet(VEnv * env);
+void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i, VWORD val);
 
 void VSetEnvVar(VEnv * env);
+void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD up, VWORD var, VWORD val);
 void VSetGlobalVar(VEnv * env);
+void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val);
 void VDefineGlobalVar(VEnv * env);
+void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val);
 void VMultiDefine(VEnv * env);
+void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines);
 
 void VFunction(VEnv * env);
-void VLookupLibrary(VEnv * env);
+void VFunction2(V_CORE_ARGS, VWORD k, VWORD name);
 
-// Main is the entrypoint into the program, the exit closure passed to main
-// is the final continuation to end the program
+void VLookupLibrary(VEnv * env);
+void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name);
+
+//void VMakeImport(VEnv * env);
+extern void (*VMakeImport)(VEnv*);
+void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...);
+//void VLoadLibrary(VEnv * env);
+extern void (*VLoadLibrary)(VEnv*);
+void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD lib);
+
 int VStart(int nargs, void(* const * toplevels)());
 
 extern int VArgc;
 extern char ** VArgv;
 
 void VCommandLine(VEnv * env);
+void VCommandLine2(V_CORE_ARGS, VWORD k);

@@ -408,8 +408,7 @@ static int VLex(FILE * f) {
   }
 }
 
-void VRead(VEnv * env);
-static VWORD VTreeify(VEnv * env, VPair * root) {
+static VWORD VTreeify(VPair * root) {
   VPair * cur = root;
   while(VBits(root->rest) != VBits(VNULL)) {
     VPair * p = (VPair*)VDecodePointer(root->rest);
@@ -764,7 +763,7 @@ void VReadIter(VEnv * env) {
       }
     }
   } while(depth > 0 || read_more);
-  VWORD ret = VTreeify(env, root);
+  VWORD ret = VTreeify(root);
   if(VIsEq(ret, VVOID)) {
     env->num_vars = 2;
     VRead(env);
@@ -779,4 +778,211 @@ void VRead(VEnv * env) {
   bool read_more = false;
   VPair root = VMakePair(VNULL, VNULL);
   V_TAIL_CALL(env, (VClosure[]){VMakeClosure(VReadIter, NULL)}, env->vars[0], env->vars[1], VEncodeInt(depth), VEncodeBool(read_more), VEncodePair(&root));
+}
+
+// ============================================================================
+
+void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
+void VReadIter2(V_CORE_ARGS, VWORD k, VWORD port, VWORD _depth, VWORD _read_more, VWORD _root) {
+  V_ARG_CHECK2("##sys.read-iter", 5, argc);
+
+  FILE * f = ((VPort*)VDecodePointer(port))->stream;
+  int depth = VDecodeInt(_depth);
+  bool read_more = VDecodeBool(_read_more);
+  VPair * const root = VDecodePair(_root);
+
+  void * alloced = &depth;
+#define myalloca(x) (alloced = alloca(x))
+  VWORD elem;
+  do {
+    if(VStackOverflow(alloced)) {
+      fprintf(stderr, "gc during read\n");
+      VTrackMutation(root, &root->rest, root->rest);
+      VGarbageCollect2Args((VFunc2)VReadIter2, runtime, statics, returns, dynamics, 5, argc, k, port, VEncodeInt(depth), VEncodeBool(read_more), _root);
+    }
+
+    int token = VLex(f);
+    if(token != LEX_EOF)
+      read_more = false;
+    switch(token)
+    {
+      case LEX_OPEN_PAREN:
+      {
+        VPair * pair = myalloca(sizeof(VPair));
+        // using CONST_PAIR as a marker to indicate beginning or end of a list
+        // a const pair with a VTOK_LEX_OPENPAREN in the CAR indicates a open paren, ie beginning
+        *pair = VMakePair(VEncodeToken(VTOK_LEX_OPENPAREN), root->rest);
+        pair->tag = VCONST_PAIR;
+        root->rest = VEncodePair(pair);
+        depth++;
+        break;
+      }
+      case LEX_CLOSE_PAREN:
+      {
+        if(depth == 0) VError("read: stray ')'\n");
+        VPair * pair = myalloca(sizeof(VPair));
+        // using CONST_PAIR as a marker to indicate beginning of a new list
+        // a const pair with not VTOK_LEX_OPENPAREN in the CAR indicates the end of a list, the contents of car indicate the tail
+        // ie null for a proper list or nonnull for a dotted list
+        *pair = VMakePair(VEncodeToken(VTOK_LEX_CLOSEPAREN), root->rest);
+        pair->tag = VCONST_PAIR;
+        root->rest = VEncodePair(pair);
+        depth--;
+        break;
+      }
+      case LEX_DOT:
+      {
+        if(depth == 0) VError("read: stray '.'\n");
+        VPair * pair = myalloca(sizeof(VPair));
+        *pair = VMakePair(VEncodeToken(VTOK_LEX_DOT), root->rest);
+        pair->tag = VCONST_PAIR;
+        root->rest = VEncodePair(pair);
+        break;
+      }
+      case LEX_CODE_COMMENT:
+      {
+        VPair * pair = myalloca(sizeof(VPair));
+        *pair = VMakePair(VEncodeToken(VTOK_LEX_COMMENT), root->rest);
+        pair->tag = VCONST_PAIR;
+        root->rest = VEncodePair(pair);
+        read_more = true;
+        break;
+      }
+      case LEX_QUOTE:
+      case LEX_QUASIQUOTE:
+      case LEX_UNQUOTE:
+      case LEX_UNQUOTE_SPLICING:
+      {
+        char * str = NULL;
+        switch(token) {
+          case LEX_QUOTE:
+            str = "quote";
+            break;
+          case LEX_QUASIQUOTE:
+            str = "quasiquote";
+            break;
+          case LEX_UNQUOTE:
+            str = "unquote";
+            break;
+          case LEX_UNQUOTE_SPLICING:
+            str = "unquote-splicing";
+            break;
+        }
+        size_t len = strlen(str)+1;
+        VBlob * sym = myalloca(sizeof(VBlob)+len);
+        VFillBlob(sym, VSYMBOL, len, str);
+        VPair * pair = myalloca(sizeof(VPair)), *second = myalloca(sizeof(VPair));
+        *second = VMakePair(VEncodePointer(sym, VPOINTER_OTHER), VNULL);
+        *pair = VMakePair(VEncodePair(second), root->rest);
+        pair->tag = VCONST_PAIR;
+        root->rest = VEncodePair(pair);
+        read_more = true;
+        break;
+      }
+      case LEX_TRUE:
+      case LEX_FALSE:
+      {
+        elem = token == LEX_TRUE ? VTRUE : VFALSE;
+
+        VPair * pair = myalloca(sizeof(VPair));
+        *pair = VMakePair(elem, root->rest);
+        root->rest = VEncodePair(pair);
+        break;
+      }
+      case LEX_CHAR:
+      {
+        elem = ParseChar(lex_buf);
+
+        VPair * pair = myalloca(sizeof(VPair));
+        *pair = VMakePair(elem, root->rest);
+        root->rest = VEncodePair(pair);
+        break;
+      }
+      case LEX_NUMBER:
+      {
+        errno = 0;
+        char * end;
+        double d = strtod(lex_buf, &end);
+        if(errno || lex_buf == end)
+        {
+          VError("read: failed to parse as number: ~z\n", lex_buf);
+          depth = 0;
+          break;
+        }
+        if(ceil(d) == d && VINT_MIN <= d && d <= VINT_MAX)
+        {
+          elem = VEncodeInt((vint)d);
+        }
+        else
+        {
+          elem = VEncodeNumber(d);
+        }
+
+        VPair * pair = myalloca(sizeof(VPair));
+        *pair = VMakePair(elem, root->rest);
+        root->rest = VEncodePair(pair);
+        break;
+      }
+      case LEX_STRING:
+      {
+        char * str = ParseString(lex_buf);
+
+        size_t len = strlen(str) + 1;
+        VBlob * blob = myalloca(sizeof(VBlob) + len);
+        VFillBlob(blob, VSTRING, len, str);
+        elem = VEncodePointer(blob, VPOINTER_OTHER);
+
+        VPair * pair = myalloca(sizeof(VPair));
+        *pair = VMakePair(elem, root->rest);
+        root->rest = VEncodePair(pair);
+        break;
+      }
+      case LEX_SYMBOL:
+      {
+        size_t len = strlen(lex_buf) + 1;
+        VBlob * blob = myalloca(sizeof(VBlob) + len);
+        VFillBlob(blob, VSYMBOL, len, lex_buf);
+        elem = VEncodePointer(blob, VPOINTER_OTHER);
+
+        VPair * pair = myalloca(sizeof(VPair));
+        *pair = VMakePair(elem, root->rest);
+        root->rest = VEncodePair(pair);
+        break;
+      }
+      case LEX_EOF:
+      {
+        if(read_more)
+          VError("read: missing expr after prefix such as ' or #;\n");
+        if(depth != 0)
+          VError("read: missing close paren\n");
+        VPair * pair = myalloca(sizeof(VPair));
+        *pair = VMakePair(VEOF, VNULL);
+        *root = VMakePair(VNULL, VEncodePair(pair));
+        break;
+      }
+      /* FALLTHRU */
+      default:
+      case LEX_ERROR:
+      {
+        VError("read: failed to lex: ~z\n", lex_buf);
+        depth = 0;
+        break;
+      }
+    }
+  } while(depth > 0 || read_more);
+  VWORD ret = VTreeify(root);
+  if(VIsEq(ret, VVOID)) {
+    // read a comment, try again
+    VRead2(runtime, statics, returns, dynamics, 2, k, port);
+  } else {
+    V_CALL2(VDecodeClosure(k), runtime, dynamics, ret);
+  }
+}
+
+void VRead2(V_CORE_ARGS, VWORD k, VWORD port) {
+  V_ARG_CHECK2("read", 2, argc);
+  int depth = 0;
+  bool read_more = false;
+  VPair root = VMakePair(VNULL, VNULL);
+  V_CALL_FUNC2(VReadIter2, runtime, dynamics, k, port, VEncodeInt(depth), VEncodeBool(read_more), VEncodePair(&root));
 }

@@ -52,6 +52,14 @@ static inline VWORD VInlineEq(VWORD a, VWORD b) {
   return VEncodeBool(VBits(a) == VBits(b));
 }
 
+static inline VWORD VInlineSymbolEqv(VWORD a, VWORD b) {
+  return VEncodeBool(VDecodeSymbol(a) && VDecodeSymbol(b) && VCheckSymbolEqv(a, b));
+}
+
+static inline VWORD VInlineEqv(VWORD a, VWORD b) {
+  return VEncodeBool(VBits(a) == VBits(b) || (VDecodeSymbol(a) && VDecodeSymbol(b) && VCheckSymbolEqv(a, b)));
+}
+
 // lists
 #define VInlineCons(a, b) VEncodePair(VFillPair(alloca(sizeof(VPair)), a, b))
 

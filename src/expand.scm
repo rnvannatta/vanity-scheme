@@ -128,7 +128,7 @@
       `(##vcore.declare ,libname
          (lambda ()
           ,(expand-syntax
-          `(let ((##vcore.import ((##vcore.function "VMakeImport") ,libname . ,(map (lambda (i) `((##vcore.function "VLoadLibrary") ,i)) imports))))
+          `(let ((##vcore.import (##vcore.make-import ,libname . ,(map (lambda (i) `(##vcore.load-library ,i)) imports))))
             (let ,(map (lambda (f) `(,f (##vcore.import ,(list 'quote f)))) free-vars)
             .
             ,(cddr basic-library))))))))
@@ -172,7 +172,7 @@
       (('import) '())
       (('import lib . rest)
        #;(if (not (string? lib)) (error "import must be a string" `(import ,lib)))
-       (cons `(##vcore.multidefine ((##vcore.function "VLoadLibrary") ,(mangle-library lib)))
+       (cons `(##vcore.multidefine (##vcore.load-library ,(mangle-library lib)))
              #;`(##vcore.multidefine ((##vcore.function ,lib)))
              (expand-toplevel `(import . ,rest))))
 
