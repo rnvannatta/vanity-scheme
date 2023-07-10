@@ -1307,7 +1307,8 @@ void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
     VPair * libs_dec = VDecodePair(libs);
     VPair * pair = VDecodePair(libs_dec->first);
     VBlob * str = (VBlob*) VDecodeBlob(pair->first);
-    if(!strcmp(VDecodeBlob(name)->buf, str->buf)) {
+    VBlob * name_dec = VDecodeBlob(name);
+    if(!strcmp(name_dec->buf, str->buf)) {
       lib = pair->rest;
       break;
     }

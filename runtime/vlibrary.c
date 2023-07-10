@@ -180,7 +180,44 @@ end:
     }
 }
 
-void VSub2(V_CORE_ARGS, VWORD k, VWORD x, ...) {
+__attribute__((used)) static void VSub2Case2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b) {
+    bool exact = true;
+    double dacc = 0;
+    long int iacc = 0;
+    {
+      unsigned long type = VWordType(a);
+      if(type == VIMM_INT) {
+        iacc += VDecodeInt(a);
+      } else if(type == VIMM_NUMBER) {
+        exact = false;
+        dacc += VDecodeNumber(a);
+      } else {
+        VError("-: not a number ~S\n", a);
+      }
+    }
+    {
+      unsigned long type = VWordType(b);
+      if(type == VIMM_INT) {
+        iacc -= VDecodeInt(b);
+      } else if(type == VIMM_NUMBER) {
+        exact = false;
+        dacc -= VDecodeNumber(b);
+      } else {
+        VError("-: not a number ~S\n", b);
+      }
+    }
+    VWORD ret;
+    if(iacc >= INT_MAX || iacc <= INT_MIN)
+      exact = false;
+
+    if(exact)
+      ret = VEncodeInt(iacc);
+    else
+      ret = VEncodeNumber(iacc+dacc);
+    V_CALL2(VDecodeClosure(k), runtime, ret);
+}
+
+__attribute__((used)) static void VSub2CaseVarargs(V_CORE_ARGS, VWORD k, VWORD x, ...) {
     V_ARG_MIN2("-", 2, argc);
     bool exact = true;
     double dacc = 0;
@@ -231,6 +268,16 @@ end:
       V_CALL2(VDecodeClosure(k), runtime, ret);
     }
 }
+
+void VSub2(V_CORE_ARGS, VWORD k, VWORD x, ...);
+asm(
+".intel_syntax noprefix\n"
+".globl VSub2\n"
+"VSub2:\n"
+" cmp edx, 3\n"
+" je VSub2Case2\n"
+" jmp VSub2CaseVarargs\n"
+);
 
 void VMul(VEnv * env) {
     VClosure * k = VDecodeClosure(env->vars[0]);
@@ -1627,16 +1674,16 @@ static void VCallCCLambda2(V_CORE_ARGS, VWORD k, ...) {
     // nested call-with-values evil
     VClosure * realk_real = VDecodeClosure(realk);
 
-    VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc]));
+    VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc-1]));
     environ->tag = VENVIRONMENT;
-    environ->argc = argc;
+    environ->argc = argc-1;
     environ->runtime = runtime;
     environ->static_chain = realk_real->env;
 
     va_list args;
     va_start(args, k);
-    for(int i = 0; i < argc; i++) {
-      environ->argv[i] = va_arg(args, VWORD);
+    for(int i = 1; i < argc; i++) {
+      environ->argv[i-1] = va_arg(args, VWORD);
     }
     va_end(args);
     VSysApply(realk_real->func, environ);
@@ -1655,7 +1702,7 @@ void VCallCC2(V_CORE_ARGS, VWORD k, VWORD _proc) {
   env->vars[0] = k;
   VClosure k_wrapped = VMakeClosure2((VFunc2)VCallCCLambda2, env);
 
-  V_CALL2(proc, runtime, VEncodeClosure(&k_wrapped));
+  V_CALL2(proc, runtime, k, VEncodeClosure(&k_wrapped));
 }
 
 void VCallValuesK2(V_CORE_ARGS, ...) {
