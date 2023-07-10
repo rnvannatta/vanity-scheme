@@ -23,7 +23,7 @@
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
-(##vcore.declare "VMakeImport"
+#;(##vcore.declare "VMakeImport"
   (lambda (lib . args)
     (lambda (x)
       (let loop ((args '()) (rest args))
@@ -40,7 +40,7 @@
               ((##sys.symbol=? x (##sys.car (##sys.car args))) (##sys.cdr (##sys.car args)))
               (else (loop (##sys.cdr args) rest)))))))
 
-(##vcore.declare "VLoadLibrary"
+#;(##vcore.declare "VLoadLibrary"
   (lambda (lib)
     ; lookup-library does 2 things:
     ; it initializes ##vcore.libraries, a global

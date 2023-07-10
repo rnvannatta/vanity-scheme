@@ -3,6 +3,8 @@ SRC := variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm transpile
 RUNTIME_SRC := vruntime.c vlibrary.c vread.c
 ASSEMBLY_SRC := vapply-linux-x64.s
 
+TEST_SRC := fact.scm ack.scm core.scm list.scm listfunc.scm io.scm callcc.scm callvalues.scm
+
 HOME_DIR := $(shell echo ~)
 INSTALL_DIR := $(HOME_DIR)/.local
 
@@ -40,6 +42,16 @@ install_compiler : compiler
 install : install_compiler runtime
 	cp -u lib/libvscheme.so ~/.local/lib/$(VSCHEME)
 
+tests : compiler runtime
+	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
+		echo "bin/vsc $$test --api=1 && ./a.out" ; \
+		bin/vsc $$test --api=1 ; \
+		if ! LD_LIBRARY_PATH=`realpath lib/`:$$LD_LIBRARY_PATH ./a.out ; then \
+			echo "FAILURE: $$test"; \
+			break; \
+		fi \
+	done
+
 lay_egg : $(BOOT) bin/bootstrap/r7rs.c
 
 # Pretty horribly messy, should seperate into a Makefile.hatch
@@ -75,7 +87,7 @@ lib/libvscheme.so : $(RUNTIME_OBJ) build/r7rs.o
 	gcc -o $@ $^ $(LIBS) $(CFLAGS) -shared
 
 build/r7rs.o : runtime/r7rs.scm
-	vsc runtime/r7rs.scm -c -o build/r7rs.o $(SCMFLAGS) --shared 
+	vsc runtime/r7rs.scm -c -o build/r7rs.o $(SCMFLAGS) --shared --api=1
 
 build/%.o : runtime/%.c build/%.d 
 	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)

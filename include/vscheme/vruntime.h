@@ -45,7 +45,8 @@
 #include "vscheme/vhash.h"
 
 typedef struct {
-  double number;
+  //double number;
+  unsigned long integer;
 } VWORD;
 
 // If not ISNAN => a number
@@ -89,8 +90,24 @@ enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
 
 #define LITERAL_TYPE_MASK (15ul*TAG_BIAS)
 
-#define LITERAL_HEADER 0x7FF0000000000000ul
+#define LITERAL_HEADER  0x7FF0000000000000ul
+#define LITERAL_PAYLOAD 0x000FFFFFFFFFFFFFul
 #define POINTER_MIRROR 0xFFFF000000000000ul
+
+#if 0
+// logic here: 4 bits. NPXX
+// NAN and INF are placed such that they're 1000 and 0000 respectively. This way you can test
+// if a literal is a double by merely checking that it's real or the bottom 3 bits of tag are 0
+// second top bit is a pointer bit, so all pointers have a 4 in them.
+// otherwise an integer.
+
+// EVEN BETTER IDEA: reject 48 bit integers return to the less insane 32 bit integers
+// this way we can make an intermediate be tag 1111
+enum V_TYPE_T { VIMM_INF = 0, VIMM_TOK = 1*TAG_BIAS, VIMM_INT = 2*TAG_BIAS, VIMM_CHAR = 3*TAG_BIAS,
+  VPTR_CLOSURE = 4*TAG_BIAS, VPTR_PAIR = 5*TAG_BIAS, VPTR_FOREIGN=6*TAG_BIAS, VPTR_OTHER = 7*TAG_BIAS
+
+  VIMM_NAN = 8*TAG_BIAS, VIMM_REAL=16*TAG_BIAS, VIMM_DOUBLE = 17*TAG_BIAS };
+#endif
 
 #define VNAN VWord(LITERAL_HEADER | VIMM_TOK | VTOK_NAN)
 #define VNULL VWord(LITERAL_HEADER | VIMM_TOK | VTOK_NULL)
@@ -119,7 +136,27 @@ static inline VWORD VEncodeToken(int tok) { return VWord(LITERAL_HEADER | VIMM_T
 static inline bool VIsToken(VWORD v, int tok) { return VBits(v) == (LITERAL_HEADER | VIMM_TOK | tok); }
 
 static inline bool VIsNumber(VWORD v) {
-  return !isnan(v.number) || VIsToken(v, VTOK_NAN);
+  //return !isnan(v.number) || VIsToken(v, VTOK_NAN);
+  // FIXME don't use isnan() here because it requires type punning,
+  // just check the mantissa the ooold fashioned way
+  //double number;
+  //memcpy(&number, &v, sizeof v);
+  //return !isnan(number) || VIsToken(v, VTOK_NAN);
+
+  unsigned long bits;
+  memcpy(&bits, &v, sizeof v);
+  // either a standard number, or an inf, or the canonical NAN
+  //return !((bits & LITERAL_HEADER) == LITERAL_HEADER) || !(bits & LITERAL_PAYLOAD) || (bits == (LITERAL_HEADER | VIMM_TOK | VTOK_NAN));
+  if((bits & LITERAL_HEADER) == LITERAL_HEADER) {
+    bits = bits & LITERAL_PAYLOAD;
+    if(bits) {
+      return bits == (VIMM_TOK | VTOK_NAN);
+    } else {
+      return false;
+    }
+  } else {
+    return true;
+  }
 }
 static inline unsigned long VWordType(VWORD v) {
   unsigned long bits = VBits(v);
@@ -188,10 +225,14 @@ static inline VWORD VEncodeChar(char c) {
 }
 
 static inline double VDecodeNumber(VWORD v) {
-  return v.number;
+  double d;
+  memcpy(&d, &v, sizeof v);
+  return d;
 }
 static inline VWORD VEncodeNumber(double d) {
-  return (VWORD){.number = d};
+  VWORD v;
+  memcpy(&v, &d, sizeof v);
+  return v;
 }
 
 static inline unsigned VDecodeToken(VWORD v) {
