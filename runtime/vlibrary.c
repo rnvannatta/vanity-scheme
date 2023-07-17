@@ -707,7 +707,7 @@ void VEq2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
 
 void VSymbolEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   V_ARG_CHECK2("symbol=?", 3, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VInlineEq(x, y));
+  V_CALL2(VDecodeClosure(k), runtime, VInlineSymbolEqv(x, y));
 }
 void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   V_ARG_CHECK2("blob=?", 3, argc);

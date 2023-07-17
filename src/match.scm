@@ -57,8 +57,8 @@
              (pattern-stack (cdr pattern-stack))
              (variables (gather-variables (list pattern) eqv?))
              (syms (map gensym variables))
-             (k (gensym "k"))
-             (k2 (gensym "k"))
+             (k (gensym "kk"))
+             (k2 (gensym "kk"))
              (expr (gensym "expr")))
         `(call-with-values
            (lambda ()
@@ -124,7 +124,7 @@
         )
         (else (error "not implemented yet"))
       ))
-    (let ((k (gensym "k"))
+    (let ((k (gensym "kk"))
           (input (gensym "input")))
       `(call/cc
          (lambda (,k)
