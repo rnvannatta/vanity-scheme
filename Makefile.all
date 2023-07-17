@@ -3,7 +3,9 @@ SRC := variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm transpile
 RUNTIME_SRC := vruntime.c vlibrary.c vread.c
 ASSEMBLY_SRC := vapply-linux-x64.s
 
-TEST_SRC := fact.scm ack.scm core.scm list.scm listfunc.scm io.scm callcc.scm callvalues.scm
+DAYS := 01 02 03 04 05 06 07 08
+AOC := $(addprefix aoc-2022/, $(addsuffix /main.ss, $(DAYS)))
+TEST_SRC := fact.scm ack.scm multilib.scm core.scm list.scm listfunc.scm match.scm io.scm callcc.scm callvalues.scm $(AOC)
 
 HOME_DIR := $(shell echo ~)
 INSTALL_DIR := $(HOME_DIR)/.local
@@ -13,6 +15,8 @@ INCLUDES := include $(HOME_DIR)/.local/include
 CFLAGS := -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=cast-function-type -Wno-missing-field-initializers -Werror=varargs -masm=intel
 
 IFLAGS := $(addprefix -I, $(INCLUDES))
+
+API := --api=1
 
 vpath %.h src $(INCLUDES)
 
@@ -44,9 +48,11 @@ install : install_compiler runtime
 
 tests : compiler runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
-		echo "bin/vsc $$test --api=1 && ./a.out" ; \
-		bin/vsc $$test --api=1 ; \
-		if ! LD_LIBRARY_PATH=`realpath lib/`:$$LD_LIBRARY_PATH ./a.out ; then \
+		echo "bin/vsc $$test $(API) && ./a.out" ; \
+    OVERRIDE=`realpath lib/` ; \
+		LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc $$test $(API); \
+    EXE=`realpath a.out` ; \
+		if ! (cd `dirname $$test` ; LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH $$EXE) ; then \
 			echo "FAILURE: $$test"; \
 			break; \
 		fi \
@@ -87,7 +93,7 @@ lib/libvscheme.so : $(RUNTIME_OBJ) build/r7rs.o
 	gcc -o $@ $^ $(LIBS) $(CFLAGS) -shared
 
 build/r7rs.o : runtime/r7rs.scm
-	vsc runtime/r7rs.scm -c -o build/r7rs.o $(SCMFLAGS) --shared --api=1
+	vsc runtime/r7rs.scm -c -o build/r7rs.o $(SCMFLAGS) --shared $(API)
 
 build/%.o : runtime/%.c build/%.d 
 	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
@@ -96,4 +102,4 @@ build/%.o : runtime/%.s
 	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
 
 build/%.o : src/%.scm
-	vsc -c $< -o $@ $(SCMFLAGS)
+	vsc -c $< -o $@ $(SCMFLAGS) $(API)

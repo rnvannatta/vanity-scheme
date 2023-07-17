@@ -685,10 +685,10 @@ void VLookupLibrary(VEnv * env);
 void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name);
 
 //void VMakeImport(VEnv * env);
-extern void (*VMakeImport)(VEnv*);
+//extern void (*VMakeImport)(VEnv*);
 void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...);
 //void VLoadLibrary(VEnv * env);
-extern void (*VLoadLibrary)(VEnv*);
+//extern void (*VLoadLibrary)(VEnv*);
 void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD lib);
 
 int VStart(int nargs, void(* const * toplevels)());

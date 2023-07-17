@@ -463,6 +463,8 @@
       (displayln "#include \"vscheme/vruntime.h\"")
       (displayln "#include \"vscheme/vlibrary.h\"")
       (displayln "#include \"vscheme/vinlines.h\"")
+      (displayln "extern void (*VMakeImport)(VEnv*);")
+      (displayln "extern void (*VLoadLibrary)(VEnv*);")
       (for-each print-literal-declaration literal-table)
       (for-each print-fun-case functions)
       (for-each print-declare declares)

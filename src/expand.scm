@@ -221,21 +221,24 @@
       (('let* . noise) (error "malformed let*" `(let* . ,noise)))
 
       (('begin x) (expand-syntax x))
-      (('begin x y) `(##sys.begin ,(expand-syntax x) (lambda () ,(expand-syntax y))))
+      (('begin x y) `(begin ,(expand-syntax x) ,(expand-syntax y)))
       (('begin x . y) (expand-syntax `(begin ,x (begin . ,y))))
       (('begin . noise) (error "malformed begin" `(begin . ,noise)))
 
       (('if p x) (expand-syntax `(if ,p ,x #f)))
-      (('if p x y) (expand-syntax `(##sys.if ,p (lambda () ,x) (lambda () ,y))))
+      (('if p x y) `(if ,(expand-syntax p) ,(expand-syntax x) ,(expand-syntax y)))
       (('if . noise) (error "malformed if" `(if . ,noise)))
 
       (('and) #t)
       (('and x) (expand-syntax x))
-      (('and x . ys) (expand-syntax `(##sys.and ,x (lambda () (and . ,ys)))))
+      (('and x y) `(if ,(expand-syntax x) ,(expand-syntax y) #f))
+      (('and x . y) (expand-syntax `(if ,x (and . ,y) #f)))
+
 
       (('or) #f)
       (('or x) (expand-syntax x))
-      (('or x . ys) (expand-syntax `(##sys.or ,x (lambda () (or . ,ys)))))
+      (('or x y) `(or ,(expand-syntax x) ,(expand-syntax y)))
+      (('or x . y) (expand-syntax `(or ,x (or . ,y))))
 
       (('cond ('else . body)) (expand-syntax `(begin . ,body)))
       ; FIXME need renaming macros

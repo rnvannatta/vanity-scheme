@@ -1380,14 +1380,26 @@ static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
     VGarbageCollect2Args((VFunc2)VLoadLibraryK, runtime, statics, 1, argc, loader);
 
   VWORD k = statics->vars[0];
-  VWORD lib = statics->vars[1];
+  VWORD libname = statics->vars[1];
   VWORD libraries_sym = statics->vars[2];
-  VWORD libraries = statics->vars[3];
+  VWORD libraries = VLookupGlobalEntry(libraries_sym)->value;
 
-  VPair p = VMakePair(lib, loader);
+  VPair p = VMakePair(libname, loader);
   VPair newlibs = VMakePair(VEncodePair(&p), libraries);
 
   VDefineImpl(libraries_sym, VEncodePair(&newlibs), true);
+#if 0
+  {
+  VWORD libs = VLookupGlobalEntry(libraries_sym)->value;
+    VFPrintfC(stdout, "---- ~S~N", libraries_sym);
+    while(!VIsEq(libs, VNULL)) {
+      VPair * libs_dec = VDecodePair(libs);
+      VPair * pair = VDecodePair(libs_dec->first);
+      VFPrintfC(stdout, "-- ~S~N", pair->first);
+      libs = libs_dec->rest;
+    }
+  }
+#endif
 
   V_CALL2(VDecodeClosure(k), runtime, loader);
 }
@@ -1426,6 +1438,18 @@ void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
     libs = libs_dec->rest;
   }
   if(!VDecodeBool(lib)) {
+#if 0
+    VFPrintfC(stdout, "Library ~S not found, loading...~N", name);
+    {
+      VWORD libs = libraries;
+      while(!VIsEq(libs, VNULL)) {
+        VPair * libs_dec = VDecodePair(libs);
+        VPair * pair = VDecodePair(libs_dec->first);
+        VFPrintfC(stdout, "-- ~S~N", pair->first);
+        libs = libs_dec->rest;
+      }
+    }
+#endif
     VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[4]));
     env->tag = VENV; env->num_vars = 4; env->var_len = 4; env->up = NULL;
     env->vars[0] = k;
