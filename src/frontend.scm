@@ -35,7 +35,7 @@
 (define debug? #f)
 (define verbose? #f)
 (define optimization 1)
-(define api 0)
+(define api 1)
 (define out-file #f)
 
 (define (extension file)
@@ -67,7 +67,7 @@
   (displayln "")
   (displayln "  --shared      Compile as shared library")
   (displayln "  --keep-temps  Keep temporary compilation files, such as C intermediates")
-  (displayln "  --api=<num>   Compile with major api version 0 or 1")
+  ;(displayln "  --api=<num>   Compile with major api version 0 or 1")
   (displayln "  --help        You know about this")
   (displayln "  --version     Show version and build info"))
 (define (display-version)
@@ -163,7 +163,7 @@
                         (if (eq? expand? 2) (for-each write opt)
                             (let* ((bruijn (map bruijn-ify opt))
                                    (funs (to-functions bruijn)))
-                              (apply (if (= api 0) printout printout2) (cons debug? (cons shared? funs)))))))))))))
+                              (apply printout2 (cons debug? (cons shared? funs)))))))))))))
       scm-files
       cc-files)))
 

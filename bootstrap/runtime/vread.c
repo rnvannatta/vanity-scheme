@@ -408,8 +408,7 @@ static int VLex(FILE * f) {
   }
 }
 
-void VRead(VEnv * env);
-static VWORD VTreeify(VEnv * env, VPair * root) {
+static VWORD VTreeify(VPair * root) {
   VPair * cur = root;
   while(VBits(root->rest) != VBits(VNULL)) {
     VPair * p = (VPair*)VDecodePointer(root->rest);
@@ -574,14 +573,16 @@ static char * ParseString(char * buf) {
   return NULL;
 }
 
-void VRead(VEnv * env);
-void VReadIter(VEnv * env) {
-  V_ARG_CHECK("##sys.read-iter", 5, env);
+// ============================================================================
 
-  FILE * f = ((VPort*)VDecodePointer(env->vars[1]))->stream;
-  int depth = VDecodeInt(env->vars[2]);
-  bool read_more = VDecodeBool(env->vars[3]);
-  VPair * root = VDecodePair(env->vars[4]);
+void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
+void VReadIter2(V_CORE_ARGS, VWORD k, VWORD port, VWORD _depth, VWORD _read_more, VWORD _root) {
+  V_ARG_CHECK2("##sys.read-iter", 5, argc);
+
+  FILE * f = ((VPort*)VDecodePointer(port))->stream;
+  int depth = VDecodeInt(_depth);
+  bool read_more = VDecodeBool(_read_more);
+  VPair * const root = VDecodePair(_root);
 
   void * alloced = &depth;
 #define myalloca(x) (alloced = alloca(x))
@@ -590,9 +591,7 @@ void VReadIter(VEnv * env) {
     if(VStackOverflow(alloced)) {
       fprintf(stderr, "gc during read\n");
       VTrackMutation(root, &root->rest, root->rest);
-      env->vars[2] = VEncodeInt(depth);
-      env->vars[3] = VEncodeBool(read_more);
-      VGarbageCollect(VReadIter, env);
+      VGarbageCollect2Args((VFunc2)VReadIter2, runtime, statics, 5, argc, k, port, VEncodeInt(depth), VEncodeBool(read_more), _root);
     }
 
     int token = VLex(f);
@@ -764,19 +763,19 @@ void VReadIter(VEnv * env) {
       }
     }
   } while(depth > 0 || read_more);
-  VWORD ret = VTreeify(env, root);
+  VWORD ret = VTreeify(root);
   if(VIsEq(ret, VVOID)) {
-    env->num_vars = 2;
-    VRead(env);
+    // read a comment, try again
+    VRead2(runtime, statics, 2, k, port);
   } else {
-    V_TAIL_CALL(env, VDecodeClosure(env->vars[0]), ret);
+    V_CALL2(VDecodeClosure(k), runtime, ret);
   }
 }
 
-void VRead(VEnv * env) {
-  V_ARG_CHECK("read", 2, env);
+void VRead2(V_CORE_ARGS, VWORD k, VWORD port) {
+  V_ARG_CHECK2("read", 2, argc);
   int depth = 0;
   bool read_more = false;
   VPair root = VMakePair(VNULL, VNULL);
-  V_TAIL_CALL(env, (VClosure[]){VMakeClosure(VReadIter, NULL)}, env->vars[0], env->vars[1], VEncodeInt(depth), VEncodeBool(read_more), VEncodePair(&root));
+  V_CALL_FUNC2(VReadIter2, runtime, k, port, VEncodeInt(depth), VEncodeBool(read_more), VEncodePair(&root));
 }

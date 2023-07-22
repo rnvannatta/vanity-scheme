@@ -469,115 +469,6 @@ VWORD * VCheneyScan(VWORD * cur) {
 
 static bool VGrowSymtable;
 static unsigned VGCsSinceMajor;
-void VGarbageCollect(void (*f)(VEnv * env), VEnv * env) {
-  struct timespec start_time, end_time;
-  clock_gettime(CLOCK_MONOTONIC, &start_time);
-  ptrdiff_t stack_len = (char*)&env - VStackStart;
-  if(stack_len < 0) stack_len = -stack_len;
-  stack_len += sizeof(VEnv) + sizeof(VWORD[env->var_len]);
-
-  size_t after_gc_size = VHeapPos - VHeap + stack_len;
-  bool is_major = VHeap + after_gc_size >= VHeapEnd - VStackSize;
-  if(is_major) {
-    VNumMajorGCs++;
-    VSwapHeap();
-  } else {
-    VNumMinorGCs++;
-  }
-  if(after_gc_size > VHeaps[VActiveHeap].size) {
-    fprintf(stderr, "Garbage collector may overflow: this should be impossible.\n");
-    abort();
-  }
-
-  VGCResumeEnv = NULL;
-  VGCResumeEnviron = NULL;
-  VGCResume = f;
-  // env is the only root right, so nothing to do if its NULL?
-  // how long will this stay true . . .
-  // dear past me: when the fuck is it NULL?
-  if(env)
-  {
-    if(env)
-      env = VGCResumeEnv = VCheckedMoveEnv(env);
-
-    for(unsigned i = 0; i < VNumTrackedMutations; i++) {
-      // of interest is that because container is in the heap
-      // we only need to check forwards during a major gc, technically
-      VWORD * container = VTrackedMutations[i].container;
-      VWORD * slot = VTrackedMutations[i].slot;
-      if(container)
-      {
-        VWORD * forward = VForwarded(container);
-        if(forward) {
-          slot = forward + (slot - container);
-        }
-      }
-
-      *slot = VMoveDispatch(*slot);
-    }
-    VNumTrackedMutations = 0;
-
-    if(VGrowSymtable || VNumGlobals >= VNumGlobalSlots * 0.8)
-    {
-      VGrowSymtable = false;
-      VResizeGlobalTable();
-    }
-
-    // Need to resize the global table after tracked mutations, because
-    // global table has tracked mutations in it
-    if(is_major)
-    {
-      for(unsigned i = 0; i < VNumGlobalSlots; i++)
-      {
-        if(VBits(VGlobalTable[i].symbol) != VBits(VVOID))
-        {
-          VGlobalTable[i].hash = VGlobalTable[i].hash;
-          VGlobalTable[i].symbol = VMoveDispatch(VGlobalTable[i].symbol);
-          VGlobalTable[i].value = VMoveDispatch(VGlobalTable[i].value);
-        }
-      }
-    }
-
-    VWORD * cur = (VWORD*)VGCResumeEnv;
-    VWORD * stop = VHeapPos;
-    // the space between cur and stop is the gray set, ie unscanned but moved objects
-    while(cur < stop) {
-      cur = VCheneyScan(cur);
-      stop = VHeapPos;
-    }
-  }
-  // If after a GC, we are still in a state where the next garbage collect can overflow the heap
-  // we need to grow the heap
-  // or if we are doing too many major gcs, grow the heap to avoid thrashing
-  bool grow_heap = false;
-  if(is_major) {
-    // TODO do binomial statistic test here
-    if(VGCsSinceMajor < 20)
-      grow_heap = true;
-    VGCsSinceMajor = 0;
-  } else {
-    VGCsSinceMajor++;
-  }
-
-  if(grow_heap || (VHeapPos - VHeap) + VStackSize > VHeaps[!VActiveHeap].size) {
-    free(VHeaps[!VActiveHeap].begin);
-    VHeaps[!VActiveHeap].size *= 2;
-    VHeaps[!VActiveHeap].begin = malloc(VHeaps[!VActiveHeap].size);
-    VHeaps[!VActiveHeap].end = VHeaps[!VActiveHeap].begin + VHeaps[!VActiveHeap].size;
-    //fprintf(stderr, "Growing heap!\n");
-  }
-
-  clock_gettime(CLOCK_MONOTONIC, &end_time);
-  long diff_sec = end_time.tv_sec - start_time.tv_sec;
-  long diff_nsec = end_time.tv_nsec - start_time.tv_nsec;
-  diff_nsec += 1000ul * 1000ul * 1000ul * diff_sec;
-  if(is_major)
-    VMajorGCTime += diff_nsec;
-  else
-    VMinorGCTime += diff_nsec;
-  longjmp(VRoot, VJMP_GC);
-}
-
 void VGarbageCollect2Args(VFunc2 f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...) {
   VWORD argv[argc];
   va_list list;
@@ -732,14 +623,6 @@ static void VPrintCallHistory() {
 }
 
 
-// Root level continuation
-void VNext(VEnv * env) {
-  // Always GC before a longjmp as all the datas on the stack
-  if(VMemLocation(env) == STACK_MEM)
-    VGarbageCollect(VNext, env);
-  longjmp(VRoot, VJMP_FINISH);
-}
-
 static void VNext2K(V_CORE_ARGS, ...) {
   longjmp(VRoot, VJMP_FINISH);
 }
@@ -749,21 +632,6 @@ void VNext2(V_CORE_ARGS, ...) {
   VGarbageCollect2(VNext2K, runtime, statics, 0, NULL);
 }
 
-void VExit(VEnv * env) {
-  V_ARG_RANGE("exit", 1, 2, env);
-  // Always GC before a longjmp as all the datas on the stack
-  if(VMemLocation(env) == STACK_MEM)
-    VGarbageCollect(VExit, env);
-  VExitCode = 0;
-  if(env->num_vars == 2) {
-    VWORD e = env->vars[1];
-    if(VWordType(e) == VIMM_INT)
-      VExitCode = VDecodeInt(e);
-    else if(!VDecodeBool(e))
-      VExitCode = 1;
-  }
-  longjmp(VRoot, VJMP_EXIT);
-}
 void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
   V_ARG_RANGE2("exit", 1, 2, argc);
   // Always GC before a longjmp as all the datas on the stack
@@ -779,14 +647,6 @@ void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
       VExitCode = 1;
   }
   longjmp(VRoot, VJMP_EXIT);
-}
-
-void VAbort(VEnv * env) {
-  VPrintCallHistory();
-  fflush(stderr);
-  fflush(stdout);
-  raise(SIGTRAP);
-  longjmp(VRoot, VJMP_ERROR);
 }
 void VAbort2(V_CORE_ARGS, ...) {
   VPrintCallHistory();
@@ -883,19 +743,9 @@ void VError(const char * str, ...) {
   VVFPrintfC(stderr, str, args);
 
   va_end(args);
-  VAbort(NULL);
+  VAbort2(NULL, NULL, 0);
 }
 
-
-void VIf(VEnv * env) {
-  VWORD p = VGetArg(env, 0, 1);
-  VClosure * thunk = VDecodeClosure(VGetArg(env, 0, VDecodeBool(p) ? 2 : 3));
-  V_TAIL_CALL(env, thunk, VGetArg(env, 0, 0));
-}
-void VBegin(VEnv * env) {
-  VClosure * thunk = VDecodeClosure(VGetArg(env, 0, 2));
-  V_TAIL_CALL(env, thunk, VGetArg(env, 0, 0));
-}
 
 void VTrackMutation(void * container, VWORD * slot, VWORD val) {
   if(VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
@@ -916,33 +766,6 @@ void VTrackMutation(void * container, VWORD * slot, VWORD val) {
       VNumUntrackedMutations++;
     }
   }
-}
-
-static void VSetPair(VEnv * env, bool bSetCar) {
-  char * proc = bSetCar ? "set-car!" : "set-cdr!";
-  V_ARG_CHECK(proc, 3, env);
-  if(VStackOverflow((char*)&env) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
-    VGarbageCollect(bSetCar ? VSetCar : VSetCdr, env);
-  } else {
-    VClosure * k = VDecodeClosure(env->vars[0]);
-    if(VWordType(env->vars[1]) != VPOINTER_PAIR) VError("%s: arg 1 not a pair\n", proc);
-    VPair * p = VDecodePair(env->vars[1]);
-    VWORD val = env->vars[2];
-
-    VTrackMutation(p, bSetCar ? &p->first : &p->rest, val);
-    
-    if(bSetCar)
-      p->first = val;
-    else
-      p->rest = val;
-    V_TAIL_CALL(env, k, VVOID);
-  }
-}
-void VSetCar(VEnv * env) {
-  VSetPair(env, true);
-}
-void VSetCdr(VEnv * env) {
-  VSetPair(env, false);
 }
 
 static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val) {
@@ -970,25 +793,6 @@ void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val) {
   VSetPair2(runtime, statics, argc, false, k, pair, val);
 }
 
-void VVectorSet(VEnv * env) {
-  V_ARG_CHECK("vector-set!", 4, env);
-  if(VStackOverflow((char*)&env) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
-    VGarbageCollect(VVectorSet, env);
-  } else {
-    VClosure * k = VDecodeClosure(env->vars[0]);
-    VVector * vec = VDecodeVector(env->vars[1]);
-    if(!vec) VError("vector-set!: arg 1 not a vector\n");
-    if(VWordType(env->vars[2]) != VIMM_INT) VError("vector-set!: arg 2 not an int\n");
-    long i = VDecodeInt(env->vars[2]);
-    if(!(0 <= i && i < vec->len)) VError("vector-set!: out of range\n");
-
-    VWORD val = env->vars[3];
-    VTrackMutation(vec, vec->arr + i, val);
-    vec->arr[i] = val;
-
-    V_TAIL_CALL(env, k, VVOID);
-  }
-}
 void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
   V_ARG_CHECK2("vector-set!", 4, argc);
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
@@ -1004,48 +808,6 @@ void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
     vector->arr[index] = val;
 
     V_CALL2(VDecodeClosure(k), runtime, VVOID);
-  }
-}
-
-void VSetEnvVar(VEnv * env) {
-  // not really a procedure but needs to abuse the procedure
-  // interface to garbage collect
-  if(VStackOverflow((char*)&env) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
-    VGarbageCollect(VSetEnvVar, env);
-  } else {
-    if(env->num_vars != 4) VError("set!: not enough arguments? This should be impossible\n");
-    VClosure * k = VDecodeClosure(env->vars[0]);
-    long up = VDecodeInt(env->vars[1]);
-    long var = VDecodeInt(env->vars[2]);
-    VWORD val = env->vars[3];
-    VEnv * orig = env;
-
-    env = env->up;
-    while(up) {
-      env = env->up;
-      up--;
-    }
-    env->vars[var] = val;
-
-    // Its impossible for a var in the old set to point to the new set
-    // except through mutation, track all such events to avoid dropping them
-    // during GC
-    if(VIsPointer(val)) {
-      void * ptr = VDecodePointer(val);
-      if(VMemLocation(ptr) != STACK_MEM) {
-        VNumUntrackedMutations++;
-      } else if(VMemLocation(env) != STACK_MEM) {
-        // an environment in older memory is being set to
-        // a value in the new generation, need to track it to
-        // avoid losing it
-        VTrackedMutations[VNumTrackedMutations].container = (VWORD*)env;
-        VTrackedMutations[VNumTrackedMutations].slot = &env->vars[var];
-        VNumTrackedMutations++;
-      } else {
-        VNumUntrackedMutations++;
-      }
-    }
-    V_TAIL_CALL(orig, k, VVOID);
   }
 }
 
@@ -1129,35 +891,6 @@ static bool VDefineImpl(VWORD sym, VWORD val, bool is_set) {
   return true;
 }
 
-
-void VSetGlobalVar(VEnv * env) {
-  if(VStackOverflow((char*)&env) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS)
-    VGarbageCollect(VSetGlobalVar, env);
-
-  VClosure * k = VDecodeClosure(env->vars[0]);
-  VWORD sym = env->vars[1];
-  VWORD val = env->vars[2];
- 
-  VGlobalEntry * place = VLookupGlobalEntry(sym);
-  if(!place)
-    VError("set!: Symbol not found: ~a\n", sym);
-  
-  place->value = val;
-  if(VIsPointer(val)) {
-    void * ptr = VDecodePointer(val);
-    // The symbol table is not walked during minor gc so always track values
-    if(VMemLocation(ptr) != STACK_MEM) {
-      VNumUntrackedMutations++;
-    } else {
-      // symbol table is never moved, no need to worry about forwards
-      VTrackedMutations[VNumTrackedMutations].container = NULL;
-      VTrackedMutations[VNumTrackedMutations].slot = &place->value;
-      VNumTrackedMutations++;
-    }
-  }
-  V_TAIL_CALL(env, k, VVOID);
-}
-
 void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
   V_ARG_CHECK2("set!", 3, argc);
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
@@ -1169,17 +902,6 @@ void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
 }
 
 
-void VDefineGlobalVar(VEnv * env) {
-  if(VStackOverflow((char*)&env) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
-    VGarbageCollect(VDefineGlobalVar, env);
-
-  VClosure * k = VDecodeClosure(env->vars[0]);
-  VWORD sym = env->vars[1];
-  VWORD val = env->vars[2];
-  VDefineImpl(sym, val, false);
-  V_TAIL_CALL(env, k, VVOID);
-}
-
 void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
   V_ARG_CHECK2("define", 3, argc);
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
@@ -1189,34 +911,6 @@ void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
   V_CALL2(VDecodeClosure(k), runtime, VVOID);
 }
 
-void VMultiDefine(VEnv * env) {
-  V_ARG_CHECK("multidefine", 2, env);
-  long num = 0;
-  VWORD defines = env->vars[1];
-  while(!VIsEq(defines, VNULL)) {
-    num++;
-    defines = VDecodePair(defines)->rest;
-  }
-  VGrowSymtable = VNumGlobals + num >= VNumGlobalSlots * 0.8;
-  if(VStackOverflow((char*)&env) || VNumTrackedMutations+num >= MAX_TRACKED_MUTATIONS || VGrowSymtable) {
-    VGarbageCollect(VMultiDefine, env);
-  }
-
-  VClosure * k = VDecodeClosure(env->vars[0]);
-  defines = env->vars[1];
-  while(!VIsEq(defines, VNULL)) {
-    VPair * pair = VDecodePair(VDecodePair(defines)->first);
-
-#if 0
-    VFPrintfC(stderr, "~S := ~S\n", pair->first, pair->rest);
-#endif
-
-    VDefineImpl(pair->first, pair->rest, false);
-    
-    defines = VDecodePair(defines)->rest;
-  }
-  V_TAIL_CALL(env, k, VVOID);
-}
 void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
   V_ARG_CHECK2("multidefine", 2, argc);
   long num = 0;
@@ -1245,47 +939,12 @@ void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
   V_CALL2(VDecodeClosure(k), runtime, VVOID);
 }
 
-void VLookupLibrary(VEnv * env) {
-  if(VStackOverflow((char*)&env) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
-    VGarbageCollect(VLookupLibrary, env);
-
-#define sym_str "##vcore.libraries"
-  VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
-  sym->tag = VSYMBOL;
-  sym->len = sizeof sym_str;
-  memcpy(sym->buf, sym_str, sym->len);
-#undef sym_str
-
-  VWORD sym_word = VEncodePointer(sym, VPOINTER_OTHER);
-  VGlobalEntry * lookup = VLookupGlobalEntry(sym_word);
-  VWORD libs = VNULL;
-  if(!lookup) {
-    VDefineImpl(sym_word, libs, false);
-  } else {
-    libs = lookup->value;
-  }
-
-  VWORD lib = VFALSE;
-  VBlob * name = VDecodeBlob(env->vars[1]);
-  while(!VIsEq(libs, VNULL)) {
-    VPair * libs_dec = VDecodePair(libs);
-    VPair * pair = VDecodePair(libs_dec->first);
-    VBlob * str = (VBlob*) VDecodeBlob(pair->first);
-    if(!strcmp(name->buf, str->buf)) {
-      lib = pair->rest;
-      break;
-    }
-    libs = libs_dec->rest;
-  }
-  VClosure * k = VDecodeClosure(env->vars[0]);
-  V_TAIL_CALL(env, k, lib);
-}
-
 void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_ARG_CHECK2("lookup-library", 2, argc);
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc2)VLookupLibrary2, runtime, statics, 2, argc, k, name);
 
+  // TODO statically allocate this you knucklehead
 #define sym_str "##vcore.libraries"
   VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
   sym->tag = VSYMBOL;
@@ -1655,7 +1314,7 @@ int VStart(int nargs, void(* const * toplevels)()) {
         if(VGCResumeEnviron)
           VSysApply((VFunc2)VGCResume, VGCResumeEnviron);
         else
-          ((VFunc)VGCResume)(VGCResumeEnv);
+          VError("missing GC Resume Environment???~N");
         break;
       case VJMP_FINISH:
       {
@@ -1676,43 +1335,9 @@ int VStart(int nargs, void(* const * toplevels)()) {
   return 0;
 }
 
-void VFunction(VEnv * env) {
-  V_ARG_CHECK("function", 2, env);
-
-  VBlob * blob = VDecodeBlob(env->vars[1]);
-  if(!blob || blob->tag != VSTRING) {
-    VError("function: not a string ~S\n", env->vars[1]);
-  }
-
-  const char * str = blob->buf;
-  void * ptr = dlsym(RTLD_DEFAULT, str);
-  if(!ptr) {
-    VError("function: failed to dlsym function ~z (did you remember to load or link the file it's in?)\n", str);
-  }
-  void (**fun)(VEnv *) = ptr;
-  VClosure closure = VMakeClosure(*fun, NULL);
-
-  VClosure * k = VDecodeClosure(env->vars[0]);
-  V_TAIL_CALL(env, k, VEncodeClosure(&closure));
-}
-
 void VFunction2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_ARG_CHECK2("function", 2, argc);
 
-  /*
-  VBlob * blob = VDecodeBlob(name);
-  if(!blob || blob->tag != VSTRING) {
-    VError("function: not a string ~S\n", name);
-  }
-
-  const char * str = blob->buf;
-  void * ptr = dlsym(RTLD_DEFAULT, str);
-  if(!ptr) {
-    VError("function: failed to dlsym function ~z (did you remember to load or link the file it's in?)\n", str);
-  }
-  VFunc2 * fun = ptr;
-  VClosure closure = VMakeClosure2(*fun, NULL);
-  */
   VFunc2 fun = VFunctionImpl(name);
   VClosure closure = VMakeClosure2(*fun, NULL);
 
@@ -1721,26 +1346,6 @@ void VFunction2(V_CORE_ARGS, VWORD k, VWORD name) {
 
 int VArgc;
 char ** VArgv;
-
-void VCommandLine(VEnv * env) {
-  V_ARG_CHECK("command-line", 1, env);
-
-  VWORD ret = VNULL;
-  int argc = VArgc;
-  while(argc--) {
-    VPair * pair = alloca(sizeof(VPair));
-    char * arg = VArgv[argc];
-    unsigned len = strlen(arg);
-    VBlob * str = alloca(sizeof(VBlob) + strlen(arg) + 1);
-    str->tag = VSTRING;
-    str->len = len+1;
-    memcpy(str->buf, arg, len+1);
-    *pair = VMakePair(VEncodePointer(str, VPOINTER_OTHER), ret);
-    ret = VEncodePair(pair);
-  }
-  VClosure * k = VDecodeClosure(env->vars[0]);
-  V_TAIL_CALL(env, k, ret);
-}
 
 void VCommandLine2(V_CORE_ARGS, VWORD k) {
   V_ARG_CHECK2("command-line", 1, argc);
@@ -1764,3 +1369,5 @@ void VCommandLine2(V_CORE_ARGS, VWORD k) {
 // ======================================================
 // ------------------- DEBUGGING STUFF ------------------
 // ======================================================
+
+// HAHA NONE
