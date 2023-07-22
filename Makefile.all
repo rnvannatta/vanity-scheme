@@ -16,8 +16,6 @@ CFLAGS := -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Werror=im
 
 IFLAGS := $(addprefix -I, $(INCLUDES))
 
-API := --api=1
-
 vpath %.h src $(INCLUDES)
 
 DEP = $(addprefix build/, $(RUNTIME_SRC:.c=.d))
@@ -25,9 +23,9 @@ OBJ = $(addprefix build/, $(SRC:.scm=.o))
 RUNTIME_OBJ = $(addprefix build/, $(RUNTIME_SRC:.c=.o))
 RUNTIME_OBJ += $(addprefix build/, $(ASSEMBLY_SRC:.s=.o))
 
-BOOT = $(addprefix bin/bootstrap/, $(SRC:.scm=.c))
-BOOT += $(addprefix bin/bootstrap/, $(RUNTIME_SRC))
-STRAP = $(addprefix bootstrap/, $(SRC:.scm=.c))
+BOOT = $(addprefix bin/bootstrap/src/, $(SRC:.scm=.c))
+BOOT += $(addprefix bin/bootstrap/runtime/, $(ASSEMBLY_SRC) $(RUNTIME_SRC))
+STRAP = $(addprefix bootstrap/src/, $(SRC:.scm=.c))
 
 VSCHEME = libvscheme.so.$(MAJOR)
 VSC = vsc.$(MAJOR)
@@ -48,9 +46,9 @@ install : install_compiler runtime
 
 tests : compiler runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
-		echo "bin/vsc $$test $(API) && ./a.out" ; \
+		echo "bin/vsc $$test && ./a.out" ; \
     OVERRIDE=`realpath lib/` ; \
-		LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc $$test $(API); \
+		LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc $$test; \
     EXE=`realpath a.out` ; \
 		if ! (cd `dirname $$test` ; LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH $$EXE) ; then \
 			echo "FAILURE: $$test"; \
@@ -58,24 +56,27 @@ tests : compiler runtime
 		fi \
 	done
 
-lay_egg : $(BOOT) bin/bootstrap/r7rs.c
+lay_egg : $(BOOT) bin/bootstrap/runtime/r7rs.c
+	cp -r include bin/bootstrap/.
 
 # Pretty horribly messy, should seperate into a Makefile.hatch
 hatch :
 	cp -ur include/* ~/.local/include/.
-	gcc -rdynamic -c -o build/r7rs.o bootstrap/r7rs.c $(LIBS) $(CFLAGS) -fPIC -Wno-missing-braces
-	gcc -rdynamic -o lib/libvscheme.so build/r7rs.o $(addprefix bootstrap/, $(RUNTIME_SRC)) bootstrap/vapply-linux-x64.s $(LIBS) $(CFLAGS) -fPIC -shared -Wno-missing-braces -masm=intel
+	gcc -rdynamic -c -o build/r7rs.o bootstrap/runtime/r7rs.c -Ibootstrap/include $(LIBS) $(CFLAGS) -fPIC -Wno-missing-braces
+	gcc -rdynamic -o lib/libvscheme.so build/r7rs.o $(addprefix bootstrap/runtime/, $(RUNTIME_SRC)) bootstrap/runtime/vapply-linux-x64.s -Ibootstrap/include $(LIBS) $(CFLAGS) -fPIC -shared -Wno-missing-braces -masm=intel
 	cp -u lib/libvscheme.so ~/.local/lib/$(VSCHEME)
-	gcc -rdynamic -o bin/vsc $(STRAP) $(CFLAGS) -lvscheme -Wl,--no-as-needed -Wno-missing-braces
+	gcc -rdynamic -o bin/vsc $(STRAP) $(CFLAGS) -Ibootstrap/include -lvscheme -Wl,--no-as-needed -Wno-missing-braces
 	cp -u bin/vsc ~/.local/bin/$(VSC)
-bin/bootstrap/r7rs.c : runtime/r7rs.scm
+# artifact of my idiotic decision to not put runtime and src in seperate folders in boostrap
+bin/bootstrap/runtime/r7rs.c : runtime/r7rs.scm
 	vsc -t $< -o $@ $(SCMFLAGS) --shared
 	{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
-bin/bootstrap/%.c : src/%.scm
+bin/bootstrap/src/%.c : src/%.scm
 	vsc -t $< -o $@ $(SCMFLAGS)
 	{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
-
-bin/bootstrap/%.c : runtime/%.c
+bin/bootstrap/runtime/%.c : runtime/%.c
+	cp $< $@
+bin/bootstrap/runtime/%.s : runtime/%.s
 	cp $< $@
 
 deps : $(DEP)
@@ -92,8 +93,10 @@ bin/vsc : $(OBJ)
 lib/libvscheme.so : $(RUNTIME_OBJ) build/r7rs.o
 	gcc -o $@ $^ $(LIBS) $(CFLAGS) -shared
 
+# TODO Add -I directive to compiler so we can use the local include rather than
+# the installed include
 build/r7rs.o : runtime/r7rs.scm
-	vsc runtime/r7rs.scm -c -o build/r7rs.o $(SCMFLAGS) --shared $(API)
+	vsc runtime/r7rs.scm -c -o build/r7rs.o $(SCMFLAGS) --shared
 
 build/%.o : runtime/%.c build/%.d 
 	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
@@ -102,4 +105,4 @@ build/%.o : runtime/%.s
 	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
 
 build/%.o : src/%.scm
-	vsc -c $< -o $@ $(SCMFLAGS) $(API)
+	vsc -c $< -o $@ $(SCMFLAGS)

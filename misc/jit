@@ -1,0 +1,57 @@
+Implementing a Repl
+
+We don't actually need to compile the code at runtime, and perhaps that is too slow. Our input to the C
+printer is a very constrained subset of the language which can be further constrained: it is a list of applications
+and a list of functions.
+
+Consider (+ (* x x) (* y y))
+
+It compiles to (* (lambda (ret1) (* (lambda (ret2) (+ ##sys.next ret1 ret2)) y y) ) x x)
+
+which is unpacked into
+
+LAMBDA1: 1 ((lookup +) ##sys.next (bruijn 1 0) (bruijn 0 0))
+LAMBDA2: 1 ((lookup *) (close LAMBDA1) (lookup y) (lookup y))
+
+TOPLEVEL1: ((lookup *) (close LAMBDA2) (lookup x) (lookup x))
+
+we can run this in a forth style interpreter:
+
+TOPLEVEL1:
+  RESERVE 4
+  LOOKUP *
+  CLOSE LAMBDA2
+  LOOKUP X
+  LOOKUP X
+  CALL 4
+
+LAMBDA1:
+  RESERVE 4
+  LOOKUP +
+  FUNCTION ##sys.next
+  BRUIJN 1 0
+  BRUIJN 0 0
+  CALL 4
+
+We still need to compile a very small snippet of code at runtime:
+
+```
+LAMBDA1:
+  mov [rdx+8], LAMBDA_ONE_TAPE_OFFSET
+  jmp [rdx+16]
+```
+where rdx is holding VRuntime*
+
+Needed instructions:
+RESERVE N - reserves space for the stack
+APPLY - makes a C funcall with all the args on the stack
+LOOKUP TAPE -  replaces a symbol at the tape location with its bound value
+BRUIJN I J - finds a variable in the static chain
+CLOSE ADDR - pushes a fresh closure on the stack
+JNE TAPE - pops the top of stack, if false jumps to a tape location
+
+PUSH TAPE - pushes a word from the tape onto the stack, ie a double or a symbol
+IMM VAL - pushes an immediate onto the stack
+
+APPLY - c funcall with closure on the stack
+APPLY TAPE - c funcall with closure on the tape
