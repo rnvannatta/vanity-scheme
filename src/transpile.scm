@@ -209,7 +209,7 @@
     (define (print-global sym)
       (let ((builtin (lookup-intrinsic2 sym)))
         (if builtin
-            (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc2)~A,NULL)})" builtin)
+            (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A,NULL)})" builtin)
             (printf "VLookupGlobalVarFast(\"~A\")" sym))))
     (define (print-string s)
       (display #\")
@@ -264,13 +264,8 @@
             ((char? x) (printf "VEncodeChar('~A')" (escape-char x)))
             ((eq? x #t) (printf "VEncodeBool(true)"))
             ((eq? x #f) (printf "VEncodeBool(false)"))
-            ((string? x)
-             (display "V_BLOB_LITERAL(VSTRING, ")
-             (print-string x)
-             (display ")"))
             ((symbol? x)
-             (printf "VEncodePointer(&~A.sym, VPOINTER_OTHER)" (mangle-symbol x))
-             #;(printf "V_BLOB_LITERAL(VSYMBOL, \"~A\")" x))
+             (printf "VEncodePointer(&~A.sym, VPOINTER_OTHER)" (mangle-symbol x)))
             (else (error "Unknown literal type" x))))
     (define (print-literal-declaration lit)
       (cond ((symbol? (car lit))
@@ -305,7 +300,7 @@
         (x #f)))
     (define (print-expr expr args)
       (define (print-builtin-apply f xs tail-call?)
-        (printf "    V_CALL_FUNC2(~A, runtime" (lookup-intrinsic2 f))
+        (printf "    V_CALL_FUNC(~A, NULL, runtime" (lookup-intrinsic2 f))
         (for-each
           (lambda (x)
            (printf ",~N      ")
@@ -313,13 +308,11 @@
           xs)
         (printf "~N    );~N"))
       (define (print-closure-apply f xs tail-call?)
-        (printf "    V_CALL_CLOSURE2(")
         (match f
-          (('close fun) (printf "(VClosure[]){VMakeClosure2((VFunc2)~A, env)}" fun))
+          (('close fun) (printf "V_CALL_FUNC(~A, env" fun))
           (else
-            (display "VDecodeClosureApply(")
-            (print-expr f args)
-            (display ")")))
+            (display "V_CALL(")
+            (print-expr f args)))
         (printf ", runtime")
         (for-each
           (lambda (x)
@@ -330,7 +323,7 @@
       
       ; should always be a tail call eh
       (define (print-define-global k y x tail-call?)
-        (printf "    V_CALL_CLOSURE2((VClosure[]){VMakeClosure2((VFunc2)VDefineGlobalVar2, env)}, runtime,~N      ")
+        (printf "    V_CALL_FUNC(VDefineGlobalVar2, env, runtime,~N      ")
         (print-expr k args)
         (printf ",~N      ")
         (print-literal y)
@@ -340,7 +333,7 @@
       (define (print-set k y x tail-call?)
         (match y
           (('bruijn name up right)
-           (printf "    V_CALL_CLOSURE2((VClosure[]){VMakeClosure2((VFunc2)VSetEnvVar2, env)}, runtime,~N      ")
+           (printf "    V_CALL_FUNC(VSetEnvVar2, env, runtime,~N      ")
            (print-expr k args)
            (printf ",~N      VEncodeInt(~Al), VEncodeInt(~Al),~N      " up right)
            (print-expr x args)
@@ -348,7 +341,7 @@
           (sym
            (if (symbol? sym)
                (begin
-                 (printf "    V_CALL_CLOSURE2((VClosure[]){VMakeClosure2((VFunc2)VSetGlobalVar2, env)}, runtime,~N      ")
+                 (printf "    V_CALL_FUNC(VSetGlobalVar2, env, runtime,~N      ")
                  (print-expr k args)
                  (printf ",~N      ")
                  (print-literal sym)
@@ -375,7 +368,7 @@
         ; FIXME
         (('quote ('##string x)) (print-literal-string x))
         (('quote x) (print-literal x))
-        (('close fun) (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc2)~A, env)})" fun))
+        (('close fun) (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A, env)})" fun))
         (('bruijn name up right)
          (cond ((= up 0) (display (list-ref args right)))
                ((= up 1) (printf "upenv->vars[~A]" right))
@@ -435,7 +428,7 @@
             (begin
               (printf " VWORD _varargs = VNULL;~N")
               (printf " V_GATHER_VARARGS_VARIADIC(&_varargs, ~A, argc, ~A);~N" num (list-ref args (- num 1)))))
-        (printf " V_GC_CHECK2_VARARGS((VFunc2)~A, runtime, upenv, ~A, argc" name num)
+        (printf " V_GC_CHECK2_VARARGS((VFunc)~A, runtime, upenv, ~A, argc" name num)
         (for-each (lambda (arg) (printf ", ~A" arg)) args)
         (if variadic?
             (printf ", _varargs) {~N")
@@ -516,7 +509,7 @@
       (print-expr expr '())
       (displayln "}"))
     (define (print-declare declare)
-      (printf "VFunc2 ~A = (VFunc2)~A;~N" (car declare) (cdr declare)))
+      (printf "VFunc ~A = (VFunc)~A;~N" (car declare) (cdr declare)))
     (define (print-main toplevels)
       (for-each (cut print-toplevel <> <>) (iota (length toplevels)) toplevels)
 

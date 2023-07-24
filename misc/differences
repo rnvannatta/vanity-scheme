@@ -1,0 +1,26 @@
+Practical Divergences from R7RS:
+
+* define-library doesn't require a begin
+----- Why? This is an easy relaxation of the grammar that makes it less noxious.
+* set! and other friends return 0 values, not an indeterminant value
+----- Why? Indeterminant values are always a mistake. Always. There are better ways to get a canonical 'undefined' value.
+----- and anything else is a vendor extension not worth providing which reduces portability.
+----- So because having set! return 0 values doesn't change any valid uses, it doesn't hurt non-buggy code.
+----- If that doesn't sit with you right, you may consider it 'as if' set! returns a trap value that immediately asserts
+----- on any continuation which attempts to bind it :)
+* dynamic-wind is not offered, and will never be offered: it's easy to implement yourself though
+----- dynamic-wind raises horrific questions about how it works with threads. Use finalizers instead, which are a more
+----- robust solution to threads & continuations. Oleg@Okmij.com wrote a good article on the suckiness of dynamic-wind
+----- and his complaints about call/cc mostly go away when dynamic-wind is sent to the trashcan where it belongs.
+* parameter objects are immutable, and require special forms to ''mutate''
+----- parameter objects also play horribly with threads, because their implementation is intrinsically that of a
+----- shallowly bound dynamic variable. Instead vanity uses deeply bound parameters, which coupled with finalizers
+----- also incidentally replace many legitimate uses of dynamic-wind, and the remainder of cases you probably don't want to
+----- be using vanity, as it's a multithreaded lisp first and foremost.
+* + and friends do not 'gradually overflow' + on integers is closed. + asserts on integer overflow
+----- This is to tighten up the type system of vanity. + not being closed on integers means that all functions like
+----- list-ref and vector-ref always have to emit type checks & it complicates emitted assembly unnecessarily.
+
+----- To be fair: vanity does not do type analysis atm, so these are theoretical/future benefits.
+----- Perhaps the difference between (vector-ref v (+ i 1)) dying in the + or in the vector-ref is semantic, but it
+----- is meaningful to a type checker and to type-informed codegen

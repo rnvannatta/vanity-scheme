@@ -3,6 +3,8 @@ SRC := variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm transpile
 RUNTIME_SRC := vruntime.c vlibrary.c vread.c
 ASSEMBLY_SRC := vapply-linux-x64.s
 
+INLINE_SRC := $(addprefix include/vscheme/, vinlines.h vruntime.h)
+
 DAYS := 01 02 03 04 05 06 07 08
 AOC := $(addprefix aoc-2022/, $(addsuffix /main.ss, $(DAYS)))
 TEST_SRC := fact.scm ack.scm multilib.scm core.scm list.scm listfunc.scm match.scm io.scm callcc.scm callvalues.scm $(AOC)
@@ -36,10 +38,13 @@ include config.mk
 compiler : bin/vsc
 runtime : lib/libvscheme.so
 
+# the include copy doesn't have an -u on it because
+# include files aren't build. Can add the -u if we
+# copy the files to the bin directory
 install_compiler : compiler 
 	mkdir -p ~/.local/include/vscheme/
 	mkdir -p ~/.local/lib/
-	cp -ur include/* ~/.local/include/.
+	cp -r include/* ~/.local/include/.
 	cp -u bin/vsc ~/.local/bin/$(VSC)
 install : install_compiler runtime
 	cp -u lib/libvscheme.so ~/.local/lib/$(VSCHEME)
@@ -48,7 +53,10 @@ tests : compiler runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
 		echo "bin/vsc $$test && ./a.out" ; \
     OVERRIDE=`realpath lib/` ; \
-		LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc $$test; \
+		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc $$test -Wc,-Iinclude ) ; then \
+			echo "COMPILE FAILURE: $$test"; \
+			break; \
+	  fi ; \
     EXE=`realpath a.out` ; \
 		if ! (cd `dirname $$test` ; LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH $$EXE) ; then \
 			echo "FAILURE: $$test"; \
@@ -61,12 +69,12 @@ lay_egg : $(BOOT) bin/bootstrap/runtime/r7rs.c
 
 # Pretty horribly messy, should seperate into a Makefile.hatch
 hatch :
-	cp -ur include/* ~/.local/include/.
+	cp -ar bootstrap/include/* ~/.local/include/.
 	gcc -rdynamic -c -o build/r7rs.o bootstrap/runtime/r7rs.c -Ibootstrap/include $(LIBS) $(CFLAGS) -fPIC -Wno-missing-braces
 	gcc -rdynamic -o lib/libvscheme.so build/r7rs.o $(addprefix bootstrap/runtime/, $(RUNTIME_SRC)) bootstrap/runtime/vapply-linux-x64.s -Ibootstrap/include $(LIBS) $(CFLAGS) -fPIC -shared -Wno-missing-braces -masm=intel
-	cp -u lib/libvscheme.so ~/.local/lib/$(VSCHEME)
+	cp -a lib/libvscheme.so ~/.local/lib/$(VSCHEME)
 	gcc -rdynamic -o bin/vsc $(STRAP) $(CFLAGS) -Ibootstrap/include -lvscheme -Wl,--no-as-needed -Wno-missing-braces
-	cp -u bin/vsc ~/.local/bin/$(VSC)
+	cp -a bin/vsc ~/.local/bin/$(VSC)
 # artifact of my idiotic decision to not put runtime and src in seperate folders in boostrap
 bin/bootstrap/runtime/r7rs.c : runtime/r7rs.scm
 	vsc -t $< -o $@ $(SCMFLAGS) --shared
@@ -93,8 +101,13 @@ bin/vsc : $(OBJ)
 lib/libvscheme.so : $(RUNTIME_OBJ) build/r7rs.o
 	gcc -o $@ $^ $(LIBS) $(CFLAGS) -shared
 
-# TODO Add -I directive to compiler so we can use the local include rather than
-# the installed include
+# Think long and hard why you need -Wc,-Iinclude sometimes to get it working
+# but other times you need to not have -Wc,-Iinclude
+
+# I think you need the include when you change ABI but not API
+# and you need to not have the include when you break API but not ABI
+# and if you break both you're fucked.
+
 build/r7rs.o : runtime/r7rs.scm
 	vsc runtime/r7rs.scm -c -o build/r7rs.o $(SCMFLAGS) --shared
 

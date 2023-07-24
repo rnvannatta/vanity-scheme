@@ -39,13 +39,9 @@
 
 #include "vscheme/vhash.h"
 
-typedef struct {
-  //double number;
-  unsigned long integer;
-} VWORD;
+/* ======================== Structures and Enums ======================= */
 
 // If not ISNAN => a number
-
 // 4 bits after mantissa are tag
 
 // RTTP
@@ -56,11 +52,6 @@ typedef struct {
 // Otherwise a nonnumber immediate.
 // TTTP
 // nonpointer types: false, true, NAN, NULL, int, char
-
-#define vint long
-#define VINT_MASK 0x0000FFFFffffFFFFul
-#define VINT_MAX  0x00007FFFffffFFFFl
-#define VINT_MIN ~VINT_MAX
 
 #define TAG_BIAS         0x0001000000000000ul
 #define POINTER_TEST_BIT 0x0001000000000000ul
@@ -80,14 +71,13 @@ enum VTAG {
   VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VPORT,
   VTAG_END };
 typedef unsigned VTAG;
-
 enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
 
 #define LITERAL_TYPE_MASK (15ul*TAG_BIAS)
 
 #define LITERAL_HEADER  0x7FF0000000000000ul
 #define LITERAL_PAYLOAD 0x000FFFFFFFFFFFFFul
-#define POINTER_MIRROR 0xFFFF000000000000ul
+#define POINTER_MIRROR  0xFFFF000000000000ul
 
 #if 0
 // logic here: 4 bits. NPXX
@@ -112,7 +102,14 @@ enum V_TYPE_T { VIMM_INF = 0, VIMM_TOK = 1*TAG_BIAS, VIMM_INT = 2*TAG_BIAS, VIMM
 #define VEOF VWord(LITERAL_HEADER | VIMM_TOK | VTOK_EOF)
 #define VTOMBSTONE VWord(LITERAL_HEADER | VIMM_TOK | VTOK_TOMBSTONE)
 
-#define FORWARDED ULLONG_MAX
+typedef struct VRuntime VRuntime;
+typedef struct VEnv VEnv;
+#define V_CORE_ARGS VRuntime * runtime, VEnv * statics, int argc
+typedef void (*VFunc)(V_CORE_ARGS, ...);
+
+typedef struct {
+  unsigned long integer;
+} VWORD;
 
 static inline unsigned long VBits(VWORD v) {
   unsigned long bits;
@@ -125,23 +122,84 @@ static inline VWORD VWord(unsigned long bits) {
   return v;
 }
 
-static inline bool VIsEq(VWORD a, VWORD b) { return VBits(a) == VBits(b); }
+typedef struct VEnv {
+  VTAG tag;
+  unsigned short num_vars;
+  unsigned short var_len;
+  struct VEnv * up;
+  VWORD vars[];
+} VEnv;
 
-static inline VWORD VEncodeToken(int tok) { return VWord(LITERAL_HEADER | VIMM_TOK | tok); }
+typedef struct VClosure {
+  VTAG tag;
+  VFunc func;
+  VEnv * env;
+} VClosure;
+
+typedef struct VPair {
+  VTAG tag;
+  VWORD first;
+  VWORD rest;
+} VPair;
+
+typedef struct VVector {
+  VTAG tag;
+  unsigned len;
+  VWORD arr[];
+} VVector;
+
+typedef struct VBlob {
+  VTAG tag;
+  unsigned len;
+  char buf[];
+} VBlob;
+
+enum PORT_FLAG_T { PFLAG_READ = 1, PFLAG_WRITE = 2, PFLAG_OSTRING = 4, PFLAG_PROCESS = 8 };
+typedef struct VPort {
+  VTAG tag;
+  FILE * stream;
+  unsigned flags;
+} VPort;
+
+typedef struct VDynamic {
+  VTAG tag;
+  VWORD key;
+  VWORD val;
+  struct VDynamic * up;
+} VDynamic;
+
+typedef struct VRuntime VRuntime;
+
+typedef struct VEnvironment {
+  VTAG tag;                 //  0
+  unsigned argc;            //  4
+  VRuntime * runtime;       //  8
+  VEnv * static_chain;      // 16
+  VWORD argv[];             // 24+
+} VEnvironment;
+
+
+typedef struct {
+  hash64 hash;
+  VWORD symbol;
+  VWORD value;
+} VGlobalEntry;
+
+typedef struct VDebugInfo {
+  char const * name;
+} VDebugInfo;
+
+static inline bool VIsEq(VWORD a, VWORD b) { return VBits(a) == VBits(b); }
+void VError(const char *, ...);
+
+/* ======================== Type Checking ======================= */
+
 static inline bool VIsToken(VWORD v, int tok) { return VBits(v) == (LITERAL_HEADER | VIMM_TOK | tok); }
 
 static inline bool VIsNumber(VWORD v) {
-  //return !isnan(v.number) || VIsToken(v, VTOK_NAN);
-  // FIXME don't use isnan() here because it requires type punning,
-  // just check the mantissa the ooold fashioned way
-  //double number;
-  //memcpy(&number, &v, sizeof v);
-  //return !isnan(number) || VIsToken(v, VTOK_NAN);
-
   unsigned long bits;
   memcpy(&bits, &v, sizeof v);
   // either a standard number, or an inf, or the canonical NAN
-  //return !((bits & LITERAL_HEADER) == LITERAL_HEADER) || !(bits & LITERAL_PAYLOAD) || (bits == (LITERAL_HEADER | VIMM_TOK | VTOK_NAN));
   if((bits & LITERAL_HEADER) == LITERAL_HEADER) {
     bits = bits & LITERAL_PAYLOAD;
     if(bits) {
@@ -161,11 +219,11 @@ static inline unsigned long VWordType(VWORD v) {
     return bits & LITERAL_TYPE_MASK;
   }
 }
+
 static inline bool VIsPointer(VWORD v) {
   return !VIsNumber(v) && VBits(v) & POINTER_TEST_BIT;
 }
 
-void VError(const char *, ...);
 static inline void VCheckWordType(VWORD v, enum VIMMERAL_T type) {
   if(VWordType(v) != type)
   {
@@ -173,50 +231,36 @@ static inline void VCheckWordType(VWORD v, enum VIMMERAL_T type) {
   }
 }
 
-static inline VWORD VEncodePointer(void * v, enum VPOINTER_T type) {
-  if(type != VPOINTER_C) {
-    unsigned long bits = (unsigned long)(intptr_t)v;
-    bits &= ~POINTER_MIRROR;
-    bits |= type;
-    bits |= LITERAL_HEADER;
-    return VWord(bits);
-  }
-  return VVOID;
-}
-static_assert(-1l == -1l >> 63l);
-static inline VWORD * VDecodePointer(VWORD v) {
-  long bits = (long)VBits(v);
-  bits = (bits << 16l) >> 16l;
-  return (VWORD*)(intptr_t)bits;
+/* ======================== Encoding and Decoding ======================= */
+
+// Immediate types
+
+static inline VWORD VEncodeToken(unsigned tok) { return VWord(LITERAL_HEADER | VIMM_TOK | tok); }
+
+static inline unsigned VDecodeToken(VWORD v) {
+  return (unsigned)(VBits(v) & 0xFFFFFFFF);
 }
 
-static inline struct VClosure * VDecodeClosure(VWORD v) {
-  if(VWordType(v) != VPOINTER_CLOSURE) VError("not a closure: ~s\n", v);
-  return (struct VClosure*)VDecodePointer(v);
-}
-static inline struct VClosure * VDecodeClosureApply(VWORD v) {
-  if(VWordType(v) != VPOINTER_CLOSURE) VError("tried to call non-procedure: ~s\n", v);
-  return (struct VClosure*)VDecodePointer(v);
+static inline VWORD VEncodeInt(int i) {
+  return VWord(LITERAL_HEADER | VIMM_INT | (UINT_MAX & (unsigned)i));
 }
 
-static inline VWORD VEncodeClosure(struct VClosure * c) {
-  return VEncodePointer(c, VPOINTER_CLOSURE);
+static inline int VDecodeInt(VWORD v) {
+  return ((long)VBits(v) << 32l) >> 32l;
 }
 
-
-static inline long VDecodeInt(VWORD v) {
-  return ((long)VBits(v) << 16l) >> 16l;
-}
-static inline VWORD VEncodeInt(long i) {
-  if(!(VINT_MIN <= i && i <= VINT_MAX)) VError("int encoding overflow ~L exceeds 48 bits\n", i);
-  return VWord(LITERAL_HEADER | VIMM_INT | (VINT_MASK & (unsigned long)i));
+static inline VWORD VEncodeChar(char c) {
+  return VWord(LITERAL_HEADER | VIMM_CHAR | (unsigned char)c);
 }
 
 static inline char VDecodeChar(VWORD v) {
   return (char)(VBits(v) & 0xFF);
 }
-static inline VWORD VEncodeChar(char c) {
-  return VWord(LITERAL_HEADER | VIMM_CHAR | (unsigned char)c);
+
+static inline VWORD VEncodeNumber(double d) {
+  VWORD v;
+  memcpy(&v, &d, sizeof v);
+  return v;
 }
 
 static inline double VDecodeNumber(VWORD v) {
@@ -224,36 +268,50 @@ static inline double VDecodeNumber(VWORD v) {
   memcpy(&d, &v, sizeof v);
   return d;
 }
-static inline VWORD VEncodeNumber(double d) {
-  VWORD v;
-  memcpy(&v, &d, sizeof v);
-  return v;
-}
 
-static inline unsigned VDecodeToken(VWORD v) {
-  return (unsigned)(VBits(v) & 0xFFFFFFFF);
-}
-static inline bool VDecodeBool(VWORD v) {
-  return !VIsToken(v, VTOK_FALSE);
-}
 static inline VWORD VEncodeBool(bool b) {
   return b ? VTRUE : VFALSE;
 }
 
-// strings, symbols, raw bytes
-typedef struct VBlob {
-  VTAG tag;
-  unsigned len;
-  char buf[];
-} VBlob;
-#define V_ALLOCA_BLOB(len) alloca(sizeof(VBlob) + len);
-static inline VBlob * VFillBlob(VBlob * blob, VTAG tag, unsigned len, char const * dat) {
-  blob->tag = tag;
-  blob->len = len;
-  memcpy(blob->buf, dat, len);
-  return blob;
+static inline bool VDecodeBool(VWORD v) {
+  return !VIsToken(v, VTOK_FALSE);
 }
-#define V_BLOB_LITERAL(tag, dat) VEncodePointer(VFillBlob(alloca(sizeof(VBlob) + sizeof dat), tag, sizeof dat, dat), VPOINTER_OTHER)
+
+// Pointer types
+
+static inline VWORD VEncodePointer(void * v, enum VPOINTER_T type) {
+  unsigned long bits = (unsigned long)(intptr_t)v;
+  bits &= ~POINTER_MIRROR;
+  bits |= type;
+  bits |= LITERAL_HEADER;
+  return VWord(bits);
+}
+
+static_assert(-1l == -1l >> 63l);
+static inline VWORD * VDecodePointer(VWORD v) {
+  long bits = (long)VBits(v);
+  bits = (bits << 16l) >> 16l;
+  return (VWORD*)(intptr_t)bits;
+}
+
+static inline VWORD VEncodeClosure(VClosure * c) {
+  return VEncodePointer(c, VPOINTER_CLOSURE);
+}
+
+static inline VClosure * VDecodeClosure(VWORD v) {
+  return (VClosure*)VDecodePointer(v);
+}
+static inline VClosure * VDecodeClosureApply(VWORD v) {
+  if(VWordType(v) != VPOINTER_CLOSURE) VError("tried to call non-closure: ~s\n", v);
+  return (VClosure*)VDecodePointer(v);
+}
+
+static inline VWORD VEncodePair(VPair * p) {
+  return VEncodePointer(p, VPOINTER_PAIR);
+}
+static inline VPair * VDecodePair(VWORD v) {
+  return (VPair*)VDecodePointer(v);
+}
 
 static inline VBlob * VDecodeBlob(VWORD v) {
   if(VWordType(v) == VPOINTER_OTHER)
@@ -268,6 +326,7 @@ static inline VBlob * VDecodeString(VWORD v) {
   else
     return NULL;
 }
+
 static inline VBlob * VDecodeSymbol(VWORD v) {
   VBlob * b = VDecodeBlob(v);
   if(b && b->tag == VSYMBOL)
@@ -275,20 +334,6 @@ static inline VBlob * VDecodeSymbol(VWORD v) {
   else
     return NULL;
 }
-
-typedef struct VVector {
-  VTAG tag;
-  unsigned len;
-  VWORD arr[];
-} VVector;
-#define V_ALLOCA_VECTOR(len) alloca(sizeof(VVector) + sizeof(VWORD[len]));
-static inline VVector * VFillVector(VVector * vec, VTAG tag, unsigned len, VWORD const * dat) {
-  vec->tag = tag;
-  vec->len = len;
-  memcpy(vec->arr, dat, sizeof(VWORD[len]));
-  return vec;
-}
-#define V_VECTOR_LITERAL(dat) VEncodePointer(VFillVector(alloca(sizeof(VVector) + sizeof dat), VVECTOR, sizeof dat / sizeof *dat, dat), VPOINTER_OTHER)
 
 static inline VVector * VDecodeVector(VWORD v) {
   if(VWordType(v) == VPOINTER_OTHER)
@@ -300,29 +345,68 @@ static inline VVector * VDecodeVector(VWORD v) {
   return NULL;
 }
 
-enum PORT_FLAG_T { PFLAG_READ = 1, PFLAG_WRITE = 2, PFLAG_OSTRING = 4, PFLAG_PROCESS = 8 };
-typedef struct VPort {
-  VTAG tag;
-  FILE * stream;
-  unsigned flags;
-} VPort;
+static inline VClosure * VCheckedDecodeClosure(VWORD v, char * proc) {
+  if(VWordType(v) != VPOINTER_CLOSURE) VError("~Z: not a closure: ~S\n", proc, v);
+  return (VClosure*)VDecodePointer(v);
+}
+
+
+static inline bool VIsBlob(VWORD v) {
+  if(VIsPointer(v)) {
+    VTAG t = *(VTAG*)VDecodePointer(v);
+    switch(t) {
+      case VSTRING:
+      case VSYMBOL:
+        return true;
+      default:
+        return false;
+    }
+  }
+  return false;
+}
+
+static inline bool VIsString(VWORD v) {
+  return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VSTRING;
+}
+
+static inline bool VIsSymbol(VWORD v) {
+  return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VSYMBOL;
+}
+
+static inline bool VIsPort(VWORD v) {
+  return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VPORT;
+}
+
+/* ======================== Construction ======================= */
+
+#define V_ALLOCA_BLOB(len) alloca(sizeof(VBlob) + len);
+static inline VBlob * VFillBlob(VBlob * blob, VTAG tag, unsigned len, char const * dat) {
+  blob->tag = tag;
+  blob->len = len;
+  memcpy(blob->buf, dat, len);
+  return blob;
+}
+
+#define V_ALLOCA_VECTOR(len) alloca(sizeof(VVector) + sizeof(VWORD[len]));
+static inline VVector * VFillVector(VVector * vec, VTAG tag, unsigned len, VWORD const * dat) {
+  vec->tag = tag;
+  vec->len = len;
+  memcpy(vec->arr, dat, sizeof(VWORD[len]));
+  return vec;
+}
 
 static inline VPort VMakePortStream(FILE * stream, unsigned flags) {
   return (VPort) { .tag = VPORT, .stream = stream, .flags = flags };
 }
 
-typedef struct VPair {
-  VTAG tag;
-  VWORD first;
-  VWORD rest;
-} VPair;
+static inline VClosure VMakeClosure2(VFunc f, VEnv * env) {
+  return (VClosure) {
+    .tag = VCLOSURE,
+    .func = f,
+    .env = env,
+  };
+}
 
-static inline VWORD VEncodePair(VPair * p) {
-  return VEncodePointer(p, VPOINTER_PAIR);
-}
-static inline VPair * VDecodePair(VWORD v) {
-  return (VPair*)VDecodePointer(v);
-}
 static inline VPair VMakePair(VWORD a, VWORD b) {
   return (VPair) { .tag = VPAIR, .first = a, .rest = b };
 }
@@ -334,6 +418,8 @@ static inline VPair * VFillPair(VPair * pair, VWORD a, VWORD b) {
   return pair;
 }
 
+/* ======================== Misc ======================= */
+
 static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
   if(VBits(a) == VBits(b))
     return true;
@@ -341,12 +427,6 @@ static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
   VBlob * blob_b = (VBlob*)VDecodePointer(b);
   return !strcmp(blob_a->buf, blob_b->buf);
 }
-
-typedef struct {
-  hash64 hash;
-  VWORD symbol;
-  VWORD value;
-} VGlobalEntry;
 
 VGlobalEntry * VLookupGlobalEntry(VWORD sym);
 static inline VWORD VLookupGlobalVar(VWORD sym) {
@@ -366,37 +446,7 @@ static inline VWORD VLookupGlobalVarFast(char const * sym) {
   return VVOID;
 }
 
-struct VClosure;
-typedef struct VEnv {
-  VTAG tag;
-  unsigned short num_vars;
-  unsigned short var_len;
-  struct VEnv * up;
-  VWORD vars[];
-} VEnv;
-
-typedef struct VDynamic {
-  VTAG tag;
-  VWORD key;
-  VWORD val;
-  struct VDynamic * up;
-} VDynamic;
-
-typedef struct VRuntime VRuntime;
-
-typedef struct VEnvironment {
-  VTAG tag;                 //  0
-  unsigned argc;            //  4
-  VRuntime * runtime;       //  8
-  VEnv * static_chain;      // 16
-  VWORD argv[];             // 24+
-} VEnvironment;
-
-typedef void(*VFunc)(VEnv * args);
-#define V_CORE_ARGS VRuntime * runtime, VEnv * statics, int argc
-typedef void (*VFunc2)(V_CORE_ARGS, ...);
-
-void VSysApply(VFunc2 func, VEnvironment * environ);
+void VSysApply(VFunc func, VEnvironment * environ);
 
 static inline VWORD VGetArg(VEnv * env, int up, int var) {
   while(up) {
@@ -406,9 +456,6 @@ static inline VWORD VGetArg(VEnv * env, int up, int var) {
   return env->vars[var];
 }
 
-typedef struct VDebugInfo {
-  char const * name;
-} VDebugInfo;
 #define V_CALL_HISTORY_LEN 16
 extern VDebugInfo * VCallHistory[V_CALL_HISTORY_LEN];
 extern unsigned VCallHistoryCursor;
@@ -430,31 +477,25 @@ static inline void VRecordCall(VDebugInfo * debug) {
   *_varargs = _root_pair.rest; \
 } while(0)
 
-typedef struct VClosure {
-  VTAG tag;
-  void * func;
-  VEnv * env;
-} VClosure;
-static inline VClosure VMakeClosure2(VFunc2 f, VEnv * env) {
-  return (VClosure) {
-    .tag = VCLOSURE,
-    .func = f,
-    .env = env,
-  };
+#define V_CALL_FUNC(func, env, runtime, ...) \
+ do { \
+   (func)(runtime, env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD), __VA_ARGS__); \
+ } while(0)
+
+#define V_CALL(closure, runtime, ...) \
+  do { \
+    VClosure * _closure = VDecodeClosureApply(closure); \
+    (_closure->func)(runtime, _closure->env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
+  } while(0)
+
+static inline void VReturnWord(VWORD k, VRuntime * runtime, VWORD ret) {
+  VClosure * _k = VDecodeClosure(k); \
+  (_k->func)(runtime, _k->env, 1, ret);
 }
 
-#define V_CALL2(f, ...) V_CALL_CLOSURE2(f, __VA_ARGS__)
-
-#define V_CALL_CLOSURE2(closure, runtime, ...) \
- do { \
-   VClosure * _closure = (closure); \
-   ((VFunc2)_closure->func)(runtime, _closure->env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
- } while(0)
-
-#define V_CALL_FUNC2(func, runtime, ...) \
- do { \
-   (func)(runtime, NULL, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD), __VA_ARGS__); \
- } while(0)
+#define V_RETURN(k, runtime, word) \
+  VReturnWord(k, runtime, word)
+  
 
 #define V_ARG_CHECK2(func, nargs, num_vars) \
   do { \
@@ -484,8 +525,8 @@ static inline bool VStackOverflow(char * VStackStop) {
   assert(size >= 0);
   return size > VStackLen;
 }
-void VGarbageCollect2(VFunc2 f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv);
-void VGarbageCollect2Args(VFunc2 f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...);
+void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv);
+void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...);
 
 #define V_GC_CHECK2(func, runtime, statics, argc, argv) \
   if(VStackOverflow((char*)&runtime)) { \
@@ -503,8 +544,6 @@ void VGarbageCollect2Args(VFunc2 f, VRuntime * runtime, VEnv * statics, int fixe
   if(VStackOverflow((char*)&runtime)) { \
     VGarbageCollect2Args(func, runtime, statics, fixed_args, argc, __VA_ARGS__); \
   } else
-
-// abort, exit, commandline left
 
 // Root level continuation
 void VNext2(V_CORE_ARGS, ...);

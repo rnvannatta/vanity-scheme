@@ -23,6 +23,11 @@
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
+; mangles: _V0  a standard variable
+;          _V10 a system variable
+;          _V20 a library
+;          _V30 a shim function for a ffi
+
 (define-library "variables"
   (export mangle-symbol mangle-library lookup-inline lookup-intrinsic lookup-intrinsic2 free-variables)
   (import (vanity core))
