@@ -591,7 +591,7 @@ void VReadIter2(V_CORE_ARGS, VWORD k, VWORD port, VWORD _depth, VWORD _read_more
     if(VStackOverflow(alloced)) {
       fprintf(stderr, "gc during read\n");
       VTrackMutation(root, &root->rest, root->rest);
-      VGarbageCollect2Args((VFunc2)VReadIter2, runtime, statics, 5, argc, k, port, VEncodeInt(depth), VEncodeBool(read_more), _root);
+      VGarbageCollect2Args((VFunc)VReadIter2, runtime, statics, 5, argc, k, port, VEncodeInt(depth), VEncodeBool(read_more), _root);
     }
 
     int token = VLex(f);
@@ -702,9 +702,9 @@ void VReadIter2(V_CORE_ARGS, VWORD k, VWORD port, VWORD _depth, VWORD _read_more
           depth = 0;
           break;
         }
-        if(ceil(d) == d && VINT_MIN <= d && d <= VINT_MAX)
+        if(ceil(d) == d && INT_MIN <= d && d <= INT_MAX)
         {
-          elem = VEncodeInt((vint)d);
+          elem = VEncodeInt((int)d);
         }
         else
         {
@@ -768,7 +768,7 @@ void VReadIter2(V_CORE_ARGS, VWORD k, VWORD port, VWORD _depth, VWORD _read_more
     // read a comment, try again
     VRead2(runtime, statics, 2, k, port);
   } else {
-    V_CALL2(VDecodeClosure(k), runtime, ret);
+    V_CALL(k, runtime, ret);
   }
 }
 
@@ -777,5 +777,5 @@ void VRead2(V_CORE_ARGS, VWORD k, VWORD port) {
   int depth = 0;
   bool read_more = false;
   VPair root = VMakePair(VNULL, VNULL);
-  V_CALL_FUNC2(VReadIter2, runtime, k, port, VEncodeInt(depth), VEncodeBool(read_more), VEncodePair(&root));
+  V_CALL_FUNC(VReadIter2, NULL, runtime, k, port, VEncodeInt(depth), VEncodeBool(read_more), VEncodePair(&root));
 }

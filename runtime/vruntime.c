@@ -44,6 +44,7 @@
 #include "vscheme/vruntime.h"
 #include "vscheme/vinlines.h"
 
+#define FORWARDED ULLONG_MAX
 
 // makes the GC walk down environments & lists in order to improve cache coherency
 
@@ -469,7 +470,7 @@ VWORD * VCheneyScan(VWORD * cur) {
 
 static bool VGrowSymtable;
 static unsigned VGCsSinceMajor;
-void VGarbageCollect2Args(VFunc2 f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...) {
+void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...) {
   VWORD argv[argc];
   va_list list;
   va_start(list, argc);
@@ -491,7 +492,7 @@ void VGarbageCollect2Args(VFunc2 f, VRuntime * runtime, VEnv * statics, int fixe
   va_end(list);
   VGarbageCollect2(f, runtime, statics, argc, argv);
 }
-void VGarbageCollect2(VFunc2 f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv) {
+void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv) {
   struct timespec start_time, end_time;
   clock_gettime(CLOCK_MONOTONIC, &start_time);
   ptrdiff_t stack_len = (char*)&f - VStackStart;
@@ -637,7 +638,7 @@ void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
   // Always GC before a longjmp as all the datas on the stack
   if(VMemLocation(statics) == STACK_MEM) {
     VWORD argv[] = { k, e };
-    VGarbageCollect2((VFunc2)VExit2, runtime, statics, argc, argv);
+    VGarbageCollect2((VFunc)VExit2, runtime, statics, argc, argv);
   }
   VExitCode = 0;
   if(argc == 2) {
@@ -772,7 +773,7 @@ static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val)
   char * proc = bSetCar ? "set-car!" : "set-cdr!";
   V_ARG_CHECK2(proc, 3, argc);
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
-    VGarbageCollect2Args((VFunc2)(bSetCar ? VSetCar2 : VSetCdr2), runtime, statics, 3, argc, k, pair, val);
+    VGarbageCollect2Args((VFunc)(bSetCar ? VSetCar2 : VSetCdr2), runtime, statics, 3, argc, k, pair, val);
   } else {
     if(VWordType(pair) != VPOINTER_PAIR) VError("%s: arg 1 not a pair\n", proc);
     VPair * p = VDecodePair(pair);
@@ -783,7 +784,7 @@ static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val)
       p->first = val;
     else
       p->rest = val;
-    V_CALL2(VDecodeClosure(k), runtime, VVOID);
+    V_CALL(k, runtime, VVOID);
   }
 }
 void VSetCar2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val) {
@@ -796,7 +797,7 @@ void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val) {
 void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
   V_ARG_CHECK2("vector-set!", 4, argc);
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
-    VGarbageCollect2Args((VFunc2)VVectorSet2, runtime, statics, 4, argc, k, v, i, val);
+    VGarbageCollect2Args((VFunc)VVectorSet2, runtime, statics, 4, argc, k, v, i, val);
   } else {
     VVector * vector = VDecodeVector(v);
     if(!vector) VError("vector-set!: arg 1 not a vector\n");
@@ -807,7 +808,7 @@ void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
     VTrackMutation(vector, vector->arr + index, val);
     vector->arr[index] = val;
 
-    V_CALL2(VDecodeClosure(k), runtime, VVOID);
+    V_CALL(k, runtime, VVOID);
   }
 }
 
@@ -816,7 +817,7 @@ void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD val) {
   // interface to garbage collect
   if(argc != 4) VError("set!: not enough arguments? This should be impossible\n");
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
-    VGarbageCollect2Args((VFunc2)VSetEnvVar2, runtime, statics, 4, 4, k, _up, _var, val);
+    VGarbageCollect2Args((VFunc)VSetEnvVar2, runtime, statics, 4, 4, k, _up, _var, val);
   } else {
     long up = VDecodeInt(_up);
     long var = VDecodeInt(_var);
@@ -845,7 +846,7 @@ void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD val) {
         VNumUntrackedMutations++;
       }
     }
-    V_CALL2(VDecodeClosure(k), runtime, VVOID);
+    V_CALL(k, runtime, VVOID);
   }
 }
 
@@ -894,21 +895,21 @@ static bool VDefineImpl(VWORD sym, VWORD val, bool is_set) {
 void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
   V_ARG_CHECK2("set!", 3, argc);
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
-    VGarbageCollect2Args((VFunc2)VSetGlobalVar2, runtime, statics, 3, argc, k, sym, val);
+    VGarbageCollect2Args((VFunc)VSetGlobalVar2, runtime, statics, 3, argc, k, sym, val);
 
   if(!VDefineImpl(sym, val, true))
     VError("set!: Symbol not found: ~a\n", sym);
-  V_CALL2(VDecodeClosure(k), runtime, VVOID);
+  V_CALL(k, runtime, VVOID);
 }
 
 
 void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
   V_ARG_CHECK2("define", 3, argc);
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
-    VGarbageCollect2Args((VFunc2)VDefineGlobalVar2, runtime, statics, 3, argc, k, sym, val);
+    VGarbageCollect2Args((VFunc)VDefineGlobalVar2, runtime, statics, 3, argc, k, sym, val);
 
   VDefineImpl(sym, val, false);
-  V_CALL2(VDecodeClosure(k), runtime, VVOID);
+  V_CALL(k, runtime, VVOID);
 }
 
 void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
@@ -921,7 +922,7 @@ void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
   }
   VGrowSymtable = VNumGlobals + num >= VNumGlobalSlots * 0.8;
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+num >= MAX_TRACKED_MUTATIONS || VGrowSymtable) {
-    VGarbageCollect2Args((VFunc2)VMultiDefine2, runtime, statics, 2, argc, k, root);
+    VGarbageCollect2Args((VFunc)VMultiDefine2, runtime, statics, 2, argc, k, root);
   }
 
   defines = root;
@@ -936,13 +937,13 @@ void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
     
     defines = VDecodePair(defines)->rest;
   }
-  V_CALL2(VDecodeClosure(k), runtime, VVOID);
+  V_CALL(k, runtime, VVOID);
 }
 
 void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_ARG_CHECK2("lookup-library", 2, argc);
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
-    VGarbageCollect2Args((VFunc2)VLookupLibrary2, runtime, statics, 2, argc, k, name);
+    VGarbageCollect2Args((VFunc)VLookupLibrary2, runtime, statics, 2, argc, k, name);
 
   // TODO statically allocate this you knucklehead
 #define sym_str "##vcore.libraries"
@@ -967,13 +968,13 @@ void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
     VPair * pair = VDecodePair(libs_dec->first);
     VBlob * str = (VBlob*) VDecodeBlob(pair->first);
     VBlob * name_dec = VDecodeBlob(name);
-    if(!strcmp(name_dec->buf, str->buf)) {
+    if(str && name_dec && !strcmp(name_dec->buf, str->buf)) {
       lib = pair->rest;
       break;
     }
     libs = libs_dec->rest;
   }
-  V_CALL2(VDecodeClosure(k), runtime, lib);
+  V_CALL(k, runtime, lib);
 }
 
 static void VMakeImportLambda(V_CORE_ARGS, VWORD k, VWORD x) {
@@ -992,7 +993,7 @@ static void VMakeImportLambda(V_CORE_ARGS, VWORD k, VWORD x) {
     }
     VWORD arg = VInlineCar(args);
     if(VDecodeBool(VInlineEqv(VInlineCar(arg), x))) {
-      V_CALL2(VDecodeClosure(k), runtime, VInlineCdr(arg));
+      V_CALL(k, runtime, VInlineCdr(arg));
       break;
     } else {
       args = VInlineCdr(args);
@@ -1014,11 +1015,11 @@ void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...) {
   for(int i = 2; i < argc; i++)
     env->vars[i] = va_arg(args, VWORD);
   va_end(args);
-  VClosure ret = VMakeClosure2((VFunc2)VMakeImportLambda, env);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeClosure(&ret));
+  VClosure ret = VMakeClosure2((VFunc)VMakeImportLambda, env);
+  V_CALL(k, runtime, VEncodeClosure(&ret));
 }
 
-static VFunc2 VFunctionImpl(VWORD name) {
+static VFunc VFunctionImpl(VWORD name) {
   VBlob * blob = VDecodeBlob(name);
   if(!blob || blob->tag != VSTRING) {
     VError("function: not a string ~S\n", name);
@@ -1029,14 +1030,14 @@ static VFunc2 VFunctionImpl(VWORD name) {
   if(!ptr) {
     VError("function: failed to dlsym function ~z (did you remember to load or link the file it's in?)\n", str);
   }
-  VFunc2 * fun = ptr;
+  VFunc * fun = ptr;
   return *fun;
 }
 
 static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
   V_ARG_CHECK2("load-library-k", 1, argc);
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
-    VGarbageCollect2Args((VFunc2)VLoadLibraryK, runtime, statics, 1, argc, loader);
+    VGarbageCollect2Args((VFunc)VLoadLibraryK, runtime, statics, 1, argc, loader);
 
   VWORD k = statics->vars[0];
   VWORD libname = statics->vars[1];
@@ -1060,13 +1061,13 @@ static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
   }
 #endif
 
-  V_CALL2(VDecodeClosure(k), runtime, loader);
+  V_CALL(k, runtime, loader);
 }
 
 void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_ARG_CHECK2("load-library", 2, argc);
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
-    VGarbageCollect2Args((VFunc2)VLoadLibrary2, runtime, statics, 2, argc, k, name);
+    VGarbageCollect2Args((VFunc)VLoadLibrary2, runtime, statics, 2, argc, k, name);
 
 #define sym_str "##vcore.libraries"
   VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
@@ -1089,8 +1090,9 @@ void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   while(!VIsEq(libs, VNULL)) {
     VPair * libs_dec = VDecodePair(libs);
     VPair * pair = VDecodePair(libs_dec->first);
-    VBlob * str = (VBlob*) VDecodeBlob(pair->first);
-    if(!strcmp(VDecodeBlob(name)->buf, str->buf)) {
+    VBlob * str = VDecodeBlob(pair->first);
+    VBlob * nm = VDecodeBlob(name);
+    if(str && nm && !strcmp(nm->buf, str->buf)) {
       lib = pair->rest;
       break;
     }
@@ -1115,12 +1117,11 @@ void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
     env->vars[1] = name;
     env->vars[2] = sym_word;
     env->vars[3] = libraries;
-    VClosure callback = VMakeClosure2((VFunc2)VLoadLibraryK, env);
-    VFunc2 loader = VFunctionImpl(name);
-    V_CALL_FUNC2((*loader), runtime, VEncodeClosure(&callback));
-    //V_CALL_FUNC2(VFunction2, runtime, VEncodeClosure(&callback), name);
+    VClosure callback = VMakeClosure2((VFunc)VLoadLibraryK, env);
+    VFunc loader = VFunctionImpl(name);
+    V_CALL_FUNC((*loader), NULL, runtime, VEncodeClosure(&callback));
   } else {
-    V_CALL2(VDecodeClosure(k), runtime, lib);
+    V_CALL(k, runtime, lib);
   }
 }
 
@@ -1131,7 +1132,7 @@ void VDisplayWord(FILE * f, VWORD v, bool write) {
       fprintf(f, "%f", VDecodeNumber(v));
       break;
     case VIMM_INT:
-      fprintf(f, "%ld", VDecodeInt(v));
+      fprintf(f, "%d", VDecodeInt(v));
       break;
     case VIMM_CHAR:
       if(write) {
@@ -1312,7 +1313,7 @@ int VStart(int nargs, void(* const * toplevels)()) {
         break;
       case VJMP_GC:
         if(VGCResumeEnviron)
-          VSysApply((VFunc2)VGCResume, VGCResumeEnviron);
+          VSysApply((VFunc)VGCResume, VGCResumeEnviron);
         else
           VError("missing GC Resume Environment???~N");
         break;
@@ -1338,10 +1339,10 @@ int VStart(int nargs, void(* const * toplevels)()) {
 void VFunction2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_ARG_CHECK2("function", 2, argc);
 
-  VFunc2 fun = VFunctionImpl(name);
+  VFunc fun = VFunctionImpl(name);
   VClosure closure = VMakeClosure2(*fun, NULL);
 
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeClosure(&closure));
+  V_CALL(k, runtime, VEncodeClosure(&closure));
 }
 
 int VArgc;
@@ -1363,7 +1364,7 @@ void VCommandLine2(V_CORE_ARGS, VWORD k) {
     *pair = VMakePair(VEncodePointer(str, VPOINTER_OTHER), ret);
     ret = VEncodePair(pair);
   }
-  V_CALL2(VDecodeClosure(k), runtime, ret);
+  V_CALL(k, runtime, ret);
 }
 
 // ======================================================

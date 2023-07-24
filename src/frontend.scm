@@ -38,6 +38,10 @@
 (define api 1)
 (define out-file #f)
 
+(define c-options '())
+
+(define benchmark? #f)
+
 (define (extension file)
   (let loop ((i (- (string-length file) 1)))
     (cond ((<= i 0) #f)
@@ -53,6 +57,11 @@
     (cond ((<= i 0) file)
           ((eq? #\/ (string-ref file i)) (substring file (+ i 1)))
           (else (loop (- i 1))))))
+(define (decomma str)
+  (let loop ((i (- (string-length str) 1)))
+    (cond ((< i 0) str)
+          ((eq? #\, (string-ref str i)) (string-set! str i #\space) (loop (- i 1)))
+          (else (loop (- i 1))))))
 
 (define (display-help)
   (displayln "Usage: vsc [options] file...")
@@ -64,6 +73,7 @@
   (displayln "  -c            Transpile, compile, and assemble, but do not link")
   (displayln "  -o <file>     Place the output into <file>")
   (displayln "  -v            Show intermediate commands")
+  (displayln "  -Wc,<option>  Pass comma seperated to the C compiler")
   (displayln "")
   (displayln "  --shared      Compile as shared library")
   (displayln "  --keep-temps  Keep temporary compilation files, such as C intermediates")
@@ -74,7 +84,7 @@
   (displayln "Vanity Scheme Compiler 0.0.0")
   (displayln "Copyright (C) 2023 Richard Van Natta"))
 
-(let loop ((args (getopt "vgtco:O:E:" (command-line) '((shared #f shared) (help #f help) (api #t api) (version #f version) (keep-temps #f keep-temps)))))
+(let loop ((args (getopt "vgtco:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (version #f version) (keep-temps #f keep-temps) (benchmark #f benchmark)))))
   (if (not (null? args))
       (begin
         (case (caar args)
@@ -95,11 +105,18 @@
            (set! expand? (string->number (cdar args)))
            (if (not (and expand? (integer? expand?) (<= 0 expand? 2)))
                (error "Expand flag -E expects integer between 0 and 2 inclusive" (cdar args))))
+          ((#\W)
+           (if (not (eq? (string-ref (cdar args) 0) #\c))
+               (error "Wrapper flag -W can only pass args to the C compiler, eg -Wc,-Ilib"))
+           (if (not (and (>= (string-length (cdar args)) 2) (eq? (string-ref (cdar args) 1) #\,)))
+               (error "Wrapper flag -W missing comma"))
+           (set! c-options (cons (decomma (substring (cdar args) 1)) c-options)))
           ((help) (display-help) (exit 0))
           ((version) (display-version) (exit 0))
           ((shared) (set! shared? #t))
           ((api) (set! api (string->number (cdar args))))
           ((keep-temps) (set! keep? #t))
+          ((benchmark) (set! benchmark? #t))
           (else (write (caar args)) (newline) (error "Unknown CLI option" (cdar args))))
         (loop (cdr args)))))
 
@@ -139,9 +156,12 @@
 (define command
   (sprintf "gcc -o ~A" out-file))
 (for-each
-  (lambda (file)
-    (set! command (string-append command " " file)))
+  (lambda (file) (set! command (string-append command " " file)))
   (append obj-files cc-files))
+(for-each
+  (lambda (option) (set! command (string-append command option)))
+  c-options)
+
 (set! command (string-append command flags))
 
 (define stdout (current-output-port))

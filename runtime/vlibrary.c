@@ -60,7 +60,7 @@ __attribute__((used)) static void VAdd2CaseVarargs(V_CORE_ARGS, VWORD k, ...) {
       ret = VEncodeInt(iacc);
     else
       ret = VEncodeNumber(iacc+dacc);
-    V_CALL2(VDecodeClosure(k), runtime, ret);
+    V_CALL(k, runtime, ret);
 }
 
 __attribute__((used)) static void VAdd2Case2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b) {
@@ -88,7 +88,7 @@ __attribute__((used)) static void VAdd2Case2(V_CORE_ARGS, VWORD k, VWORD a, VWOR
       ret = VEncodeInt(iacc);
     else
       ret = VEncodeNumber(iacc+dacc);
-    V_CALL2(VDecodeClosure(k), runtime, ret);
+    V_CALL(k, runtime, ret);
 }
 
 void VAdd2(V_CORE_ARGS, VWORD k, ...);
@@ -135,7 +135,7 @@ __attribute__((used)) static void VSub2Case2(V_CORE_ARGS, VWORD k, VWORD a, VWOR
       ret = VEncodeInt(iacc);
     else
       ret = VEncodeNumber(iacc+dacc);
-    V_CALL2(VDecodeClosure(k), runtime, ret);
+    V_CALL(k, runtime, ret);
 }
 
 __attribute__((used)) static void VSub2CaseVarargs(V_CORE_ARGS, VWORD k, VWORD x, ...) {
@@ -186,7 +186,7 @@ end:
         ret = VEncodeInt(iacc);
       else
         ret = VEncodeNumber(iacc+dacc);
-      V_CALL2(VDecodeClosure(k), runtime, ret);
+      V_CALL(k, runtime, ret);
     }
 }
 
@@ -231,7 +231,7 @@ void VMul2(V_CORE_ARGS, VWORD k, ...) {
       ret = VEncodeInt(iacc);
     else
       ret = VEncodeNumber(iacc*dacc);
-    V_CALL2(VDecodeClosure(k), runtime, ret);
+    V_CALL(k, runtime, ret);
 }
 
 void VDiv2(V_CORE_ARGS, VWORD k, VWORD x, ...) {
@@ -289,7 +289,7 @@ end:
         ret = VEncodeInt(iacc);
       else
         ret = VEncodeNumber(iacc*dacc);
-      V_CALL2(VDecodeClosure(k), runtime, ret);
+      V_CALL(k, runtime, ret);
     }
 }
 
@@ -299,7 +299,7 @@ void VQuot2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
     if(VWordType(x) != VIMM_INT) VError("quotient: not an int");
     if(VWordType(y) != VIMM_INT) VError("quotient: not an int");
 
-    V_CALL2(VDecodeClosure(k), runtime, VEncodeInt(VDecodeInt(x) / VDecodeInt(y)));
+    V_CALL(k, runtime, VEncodeInt(VDecodeInt(x) / VDecodeInt(y)));
 }
 void VRem2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
     V_ARG_CHECK2("remainder", 3, argc);
@@ -307,7 +307,7 @@ void VRem2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
     if(VWordType(x) != VIMM_INT) VError("remainder: not an int");
     if(VWordType(y) != VIMM_INT) VError("remainder: not an int");
 
-    V_CALL2(VDecodeClosure(k), runtime, VEncodeInt(VDecodeInt(x) % VDecodeInt(y)));
+    V_CALL(k, runtime, VEncodeInt(VDecodeInt(x) % VDecodeInt(y)));
 }
 
 // This feels fucking idiotic.
@@ -330,30 +330,30 @@ void VCmp2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
           : diff == 0.0 ? 0
           : -1 ;
 
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeInt(ret));
+  V_CALL(k, runtime, VEncodeInt(ret));
   
 }
 
 // type predicates
 void VNullP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("null?", 2, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(VBits(x) == VBits(VNULL)));
+  V_CALL(k, runtime, VEncodeBool(VBits(x) == VBits(VNULL)));
 }
 void VEofP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("eof-object?", 2, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(VBits(x) == VBits(VEOF)));
+  V_CALL(k, runtime, VEncodeBool(VBits(x) == VBits(VEOF)));
 }
 void VPairP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("pair?", 2, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(VWordType(x) == VPOINTER_PAIR));
+  V_CALL(k, runtime, VEncodeBool(VWordType(x) == VPOINTER_PAIR));
 }
 void VVectorP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("vector?", 2, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(VDecodeVector(x)));
+  V_CALL(k, runtime, VEncodeBool(VDecodeVector(x)));
 }
 void VProcedureP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("procedure?", 2, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(VWordType(x) == VPOINTER_CLOSURE));
+  V_CALL(k, runtime, VEncodeBool(VWordType(x) == VPOINTER_CLOSURE));
 }
 void VBlobP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("blob?", 2, argc);
@@ -369,38 +369,38 @@ void VBlobP2(V_CORE_ARGS, VWORD k, VWORD x) {
         break;
     }
   }
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(ret));
+  V_CALL(k, runtime, VEncodeBool(ret));
 }
 void VSymbolP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("symbol?", 2, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(VDecodeSymbol(x)));
+  V_CALL(k, runtime, VEncodeBool(VDecodeSymbol(x)));
 }
 void VStringP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("string?", 2, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(VDecodeString(x)));
+  V_CALL(k, runtime, VEncodeBool(VDecodeString(x)));
 }
 void VDoubleP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("double?", 2, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(VIsNumber(x)));
+  V_CALL(k, runtime, VEncodeBool(VIsNumber(x)));
 }
 void VIntP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("int?", 2, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(VWordType(x) == VIMM_INT));
+  V_CALL(k, runtime, VEncodeBool(VWordType(x) == VIMM_INT));
 }
 void VCharP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("char?", 2, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(VWordType(x) == VIMM_CHAR));
+  V_CALL(k, runtime, VEncodeBool(VWordType(x) == VIMM_CHAR));
 }
 
 // equality
 void VEq2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   V_ARG_CHECK2("eq?", 3, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VInlineEq(x, y));
+  V_CALL(k, runtime, VInlineEq(x, y));
 }
 
 void VSymbolEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   V_ARG_CHECK2("symbol=?", 3, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VInlineSymbolEqv(x, y));
+  V_CALL(k, runtime, VInlineSymbolEqv(x, y));
 }
 void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   V_ARG_CHECK2("blob=?", 3, argc);
@@ -409,31 +409,31 @@ void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   bool ret = false;
   if(blob_a->len == blob_b->len)
     ret = blob_a->tag == blob_b->tag && !memcmp(blob_a->buf, blob_b->buf, blob_a->len);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(ret));
+  V_CALL(k, runtime, VEncodeBool(ret));
 }
 
 // logic
 
 void VNot2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("not", 2, argc);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeBool(VBits(x) == VBits(VFALSE)));
+  V_CALL(k, runtime, VEncodeBool(VBits(x) == VBits(VFALSE)));
 }
 
 // pairs
 
 void VCons2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
     V_ARG_CHECK2("cons", 3, argc);
-    V_CALL2(VDecodeClosure(k), runtime, VInlineCons(x, y));
+    V_CALL(k, runtime, VInlineCons(x, y));
 }
 
 void VCar2(V_CORE_ARGS, VWORD k, VWORD x) {
     V_ARG_CHECK2("car", 2, argc);
-    V_CALL2(VDecodeClosure(k), runtime, VInlineCar(x));
+    V_CALL(k, runtime, VInlineCar(x));
 }
 
 void VCdr2(V_CORE_ARGS, VWORD k, VWORD x) {
     V_ARG_CHECK2("cdr", 2, argc);
-    V_CALL2(VDecodeClosure(k), runtime, VInlineCdr(x));
+    V_CALL(k, runtime, VInlineCdr(x));
 }
 
 // vectors
@@ -441,7 +441,7 @@ void VCdr2(V_CORE_ARGS, VWORD k, VWORD x) {
 void VListVector2(V_CORE_ARGS, VWORD k, VWORD lst) {
   V_ARG_CHECK2("list->vector", 2, argc);
 
-  V_GC_CHECK2_VARARGS((VFunc2)VVectorLength2, runtime, statics, 2, argc, k, lst) {
+  V_GC_CHECK2_VARARGS((VFunc)VVectorLength2, runtime, statics, 2, argc, k, lst) {
     int len = 0;
     VWORD v = lst;
     while(VWordType(v) == VPOINTER_PAIR) {
@@ -461,7 +461,7 @@ void VListVector2(V_CORE_ARGS, VWORD k, VWORD lst) {
       vec->arr[i++] = p->first;
       v = p->rest;
     }
-    V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(vec, VPOINTER_OTHER));
+    V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER));
   }
 }
 
@@ -473,14 +473,14 @@ void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vector, VWORD index) {
   long i = VDecodeInt(index);
   if(!(0 <= i && i < vec->len)) VError("vector-ref: out of range\n");
 
-  V_CALL2(VDecodeClosure(k), runtime, vec->arr[i]);
+  V_CALL(k, runtime, vec->arr[i]);
 }
 
 void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vector) {
   V_ARG_CHECK2("vector-length", 2, argc);
   VVector * vec = VDecodeVector(vector);
   if(!vec) VError("vector-ref: arg 1 not a vector\n");
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeInt(vec->len));
+  V_CALL(k, runtime, VEncodeInt(vec->len));
 }
 
 // strings
@@ -508,7 +508,7 @@ void VMakeString2(V_CORE_ARGS, VWORD k, VWORD len, ...) {
   str->buf[i] = '\0';
   memset(str->buf, c, i);
 
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(str, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }
 
 void VSubstring2(V_CORE_ARGS, VWORD k, VWORD string, ...) {
@@ -547,7 +547,7 @@ void VSubstring2(V_CORE_ARGS, VWORD k, VWORD string, ...) {
   copy->buf[len] = '\0';
   memcpy(copy->buf, str->buf + start, len);
 
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(copy, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(copy, VPOINTER_OTHER));
 }
 
 void VStringCopy2(V_CORE_ARGS, VWORD k, VWORD dest, VWORD _at, VWORD source, ...) {
@@ -589,16 +589,16 @@ void VStringCopy2(V_CORE_ARGS, VWORD k, VWORD dest, VWORD _at, VWORD source, ...
   if(dstlen < srclen) VError("string-copy!: attempting to copy ~l chars into a substring ~l chars long.\n", srclen, dstlen);
 
   memmove(dst->buf + at, src->buf + start, srclen);
-  V_CALL2(VDecodeClosure(k), runtime, VVOID);
+  V_CALL(k, runtime, VVOID);
 }
 
 void VStringLength2(V_CORE_ARGS, VWORD k, VWORD _str) {
   V_ARG_CHECK2("string-length", 2, argc);
   VBlob * str = VDecodeBlob(_str);
-  if(!str || str->tag != VSTRING) VError("string-length: not a string");
+  if(!str || str->tag != VSTRING) VError("string-length: not a string: ~S~N", _str);
 
   // not exposing the null terminal
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeInt(str->len - 1));
+  V_CALL(k, runtime, VEncodeInt(str->len - 1));
 }
 
 void VStringRef2(V_CORE_ARGS, VWORD k, VWORD _str, VWORD _i) {
@@ -609,9 +609,9 @@ void VStringRef2(V_CORE_ARGS, VWORD k, VWORD _str, VWORD _i) {
   if(VWordType(_i) != VIMM_INT) VError("string-ref: not an int");
   long i = VDecodeInt(_i);
   // not exposing the null terminal
-  if(!(0 <= i && i < str->len)) VError("string-ref: out of bounds");
+  if(!(0 <= i && i < str->len)) VError("string-ref: ~A out of bounds (0 to ~D)~N", _i, str->len);
 
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeChar(str->buf[i]));
+  V_CALL(k, runtime, VEncodeChar(str->buf[i]));
 }
 
 void VStringSet2(V_CORE_ARGS, VWORD k, VWORD _str, VWORD _i, VWORD _c) {
@@ -629,7 +629,7 @@ void VStringSet2(V_CORE_ARGS, VWORD k, VWORD _str, VWORD _i, VWORD _c) {
   char c = VDecodeChar(_c);
   str->buf[i] = c;
 
-  V_CALL2(VDecodeClosure(k), runtime, VVOID);
+  V_CALL(k, runtime, VVOID);
 }
 
 void VStringSymbol2(V_CORE_ARGS, VWORD k, VWORD _str) {
@@ -639,7 +639,7 @@ void VStringSymbol2(V_CORE_ARGS, VWORD k, VWORD _str) {
 
   VBlob * sym = V_ALLOCA_BLOB(str->len);
   VFillBlob(sym, VSYMBOL, str->len, str->buf);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(sym, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(sym, VPOINTER_OTHER));
 }
 void VSymbolString2(V_CORE_ARGS, VWORD k, VWORD _sym) {
   V_ARG_CHECK2("symbol->string", 2, argc);
@@ -648,7 +648,7 @@ void VSymbolString2(V_CORE_ARGS, VWORD k, VWORD _sym) {
 
   VBlob * str = V_ALLOCA_BLOB(sym->len);
   VFillBlob(str, VSTRING, sym->len, sym->buf);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(str, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }
 
 void VStringNumber2(V_CORE_ARGS, VWORD k, VWORD _str) {
@@ -657,24 +657,24 @@ void VStringNumber2(V_CORE_ARGS, VWORD k, VWORD _str) {
   if(!str || str->tag != VSTRING) VError("string->number: not a string: ~A~N", _str);
 
   if(str->len == 1)
-    V_CALL2(VDecodeClosure(k), runtime, VFALSE);
+    V_CALL(k, runtime, VFALSE);
 
   char * end = NULL;
   errno = 0;
   double d = strtod(str->buf, &end);
   if(errno) {
     errno = 0;
-    V_CALL2(VDecodeClosure(k), runtime, VFALSE);
+    V_CALL(k, runtime, VFALSE);
   }
   if(str->buf + str->len - 1 != end)
-    V_CALL2(VDecodeClosure(k), runtime, VFALSE);
+    V_CALL(k, runtime, VFALSE);
 
   // FIXME lazy but incorrect way to parse ints vs doubles, need to parse by checking for period
   // actually, it's probably correct but stupid, deliberate deviation incoming
-  if(floor(d) == d && VINT_MIN <= d && d <= VINT_MAX) {
-    V_CALL2(VDecodeClosure(k), runtime, VEncodeInt((vint)d));
+  if(floor(d) == d && INT_MIN <= d && d <= INT_MAX) {
+    V_CALL(k, runtime, VEncodeInt((int)d));
   } else {
-    V_CALL2(VDecodeClosure(k), runtime, VEncodeNumber(d));
+    V_CALL(k, runtime, VEncodeNumber(d));
   }
 }
 
@@ -683,7 +683,7 @@ void VStringNumber2(V_CORE_ARGS, VWORD k, VWORD _str) {
 void VCharInt2(V_CORE_ARGS, VWORD k, VWORD c) {
   V_ARG_CHECK2("char->int", 2, argc);
   if(VWordType(c) != VIMM_CHAR) VError("char->integer: not a char");
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeInt((long)VDecodeChar(c)));
+  V_CALL(k, runtime, VEncodeInt((long)VDecodeChar(c)));
 }
 
 // ports
@@ -694,7 +694,7 @@ void VDupStdout2(V_CORE_ARGS, VWORD k) {
   int fd = dup(fileno(stdout));
   FILE * f = fdopen(fd, "wb");
   VPort port = VMakePortStream(f, PFLAG_WRITE);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
 }
 
 void VDupStdin2(V_CORE_ARGS, VWORD k) {
@@ -704,7 +704,7 @@ void VDupStdin2(V_CORE_ARGS, VWORD k) {
   int fd = dup(fileno(stdin));
   FILE * f = fdopen(fd, "rb");
   VPort port = VMakePortStream(f, PFLAG_READ);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
 }
 
 void VDupStderr2(V_CORE_ARGS, VWORD k) {
@@ -714,7 +714,7 @@ void VDupStderr2(V_CORE_ARGS, VWORD k) {
   int fd = dup(fileno(stderr));
   FILE * f = fdopen(fd, "wb");
   VPort port = VMakePortStream(f, PFLAG_WRITE);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
 }
 
 static void VOpenStream2(VRuntime * runtime, VWORD k, VWORD path, char const * mode, unsigned flags) {
@@ -723,7 +723,7 @@ static void VOpenStream2(VRuntime * runtime, VWORD k, VWORD path, char const * m
   FILE * f = fopen(str->buf, mode);
   if(!f) VError("open-stream: failed to open file `~Z`~N", str->buf);
   VPort port = VMakePortStream(f, flags);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
 }
 
 void VOpenInputStream2(V_CORE_ARGS, VWORD k, VWORD path) {
@@ -751,7 +751,7 @@ void VCloseStream2(V_CORE_ARGS, VWORD k, VWORD _port) {
   }
   port->stream = NULL;
 
-  V_CALL2(VDecodeClosure(k), runtime, VVOID);
+  V_CALL(k, runtime, VVOID);
 }
 
 void VOpenOutputString2(V_CORE_ARGS, VWORD k) {
@@ -760,7 +760,7 @@ void VOpenOutputString2(V_CORE_ARGS, VWORD k) {
   V_ARG_CHECK2("open-output-string", 1, argc);
   FILE * f = tmpfile();
   VPort port = VMakePortStream(f, PFLAG_WRITE | PFLAG_OSTRING);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
 }
 
 void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD _port) {
@@ -779,7 +779,7 @@ void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD _port) {
   str->buf[len] = '\0';
   fseek(f, 0, SEEK_END);
 
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(str, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }
 
 // input
@@ -793,16 +793,16 @@ void VReadChar2(V_CORE_ARGS, VWORD k, VWORD _port) {
   FILE * f = port->stream;
   char c = fgetc(f);
   if(c == EOF) {
-    V_CALL2(VDecodeClosure(k), runtime, VEOF);
+    V_CALL(k, runtime, VEOF);
   } else {
-    V_CALL2(VDecodeClosure(k), runtime, VEncodeChar((char)c));
+    V_CALL(k, runtime, VEncodeChar((char)c));
   }
 }
 
 // FIXME BADLY only reads 256 char lines
 void VReadLine2(V_CORE_ARGS, VWORD k, VWORD _port) {
   V_ARG_CHECK2("read-line", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc2)VReadLine2, runtime, statics, 2, argc, k, _port) {
+  V_GC_CHECK2_VARARGS((VFunc)VReadLine2, runtime, statics, 2, argc, k, _port) {
     VPort * port = (VPort*)VDecodePointer(_port);
     if(!port || port->tag != VPORT) VError("read-line: not a port ~S~N", _port);
     if(!(port->flags & PFLAG_READ)) VError("read-line: not an readable port ~S~N", _port);
@@ -811,7 +811,7 @@ void VReadLine2(V_CORE_ARGS, VWORD k, VWORD _port) {
     VBlob * str = alloca(sizeof(VBlob) + 256);
     str->tag = VSTRING;
     if(!fgets(str->buf, 256, f)) {
-      V_CALL2(VDecodeClosure(k), runtime, VEOF);
+      V_CALL(k, runtime, VEOF);
     } else {
       size_t len = strlen(str->buf);
       if(len > 0 && str->buf[len-1] == '\n')
@@ -820,7 +820,7 @@ void VReadLine2(V_CORE_ARGS, VWORD k, VWORD _port) {
         len--;
       str->buf[len] = '\0';
       str->len = len+1; // account for the null terminal
-      V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(str, VPOINTER_OTHER));
+      V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
     }
   }
 }
@@ -831,20 +831,20 @@ void VDisplay2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port) {
     V_ARG_CHECK2("display-word", 3, argc);
     FILE * f = ((VPort*)VDecodePointer(port))->stream;
     VDisplayWord(f, val, false);
-    V_CALL2(VDecodeClosure(k), runtime, VVOID);
+    V_CALL(k, runtime, VVOID);
 }
 void VWrite2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port) {
     V_ARG_CHECK2("write-word", 3, argc);
     FILE * f = ((VPort*)VDecodePointer(port))->stream;
     VDisplayWord(f, val, true);
-    V_CALL2(VDecodeClosure(k), runtime, VVOID);
+    V_CALL(k, runtime, VVOID);
 }
 void VNewline2(V_CORE_ARGS, VWORD k, VWORD port) {
     V_ARG_CHECK2("newline", 2, argc);
     FILE * f = ((VPort*)VDecodePointer(port))->stream;
     fprintf(f, "\n");
     fflush(f);
-    V_CALL2(VDecodeClosure(k), runtime, VVOID);
+    V_CALL(k, runtime, VVOID);
 }
 
 // misc
@@ -860,13 +860,13 @@ static void VCallCCLambda2(V_CORE_ARGS, VWORD k, ...) {
     va_start(args, k);
     VWORD ret = va_arg(args, VWORD);
     va_end(args);
-    V_CALL2(VDecodeClosure(realk), runtime, ret);
+    V_CALL(realk, runtime, ret);
   } else if(argc == 1) {
     // call/cc in a (begin)
-    V_CALL2(VDecodeClosure(realk), runtime);
+    V_CALL(realk, runtime);
   } else {
     // nested call-with-values evil
-    VClosure * realk_real = VDecodeClosure(realk);
+    VClosure * realk_real = VDecodeClosureApply(realk);
 
     VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc-1]));
     environ->tag = VENVIRONMENT;
@@ -889,19 +889,18 @@ void VCallCC2(V_CORE_ARGS, VWORD k, VWORD _proc) {
   // for supporting multiple values
   // (lambda (k proc) (proc k (lambda (k2 . xs) (apply k xs))))
   V_ARG_CHECK2("call/cc", 2, argc);
-  VClosure * proc = VDecodeClosure(_proc);
   
   VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[1]));
   env->tag = VENV; env->num_vars = 1; env->var_len = 1; env->up = NULL;
   env->vars[0] = k;
-  VClosure k_wrapped = VMakeClosure2((VFunc2)VCallCCLambda2, env);
+  VClosure k_wrapped = VMakeClosure2((VFunc)VCallCCLambda2, env);
 
-  V_CALL2(proc, runtime, k, VEncodeClosure(&k_wrapped));
+  V_CALL(_proc, runtime, k, VEncodeClosure(&k_wrapped));
 }
 
 void VCallValuesK2(V_CORE_ARGS, ...) {
   VWORD k = statics->vars[0];
-  VClosure * consumer = VDecodeClosure(statics->vars[1]);
+  VClosure * consumer = VCheckedDecodeClosure(statics->vars[1], "call/values");
 
   VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc+1]));
   environ->tag = VENVIRONMENT;
@@ -924,21 +923,20 @@ void VCallValues2(V_CORE_ARGS, VWORD _k, VWORD _producer, VWORD _consumer) {
   // FIXME type check
   // (lambda (k producer consumer) (producer (lambda (k2 . args) (apply consumer k args))))
   V_ARG_CHECK2("call-with-values", 3, argc);
-  VClosure * producer = VDecodeClosure(_producer);
 
   VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
   env->tag = VENV; env->num_vars = 2; env->var_len = 2; env->up = NULL;
   env->vars[0] = _k;
   env->vars[1] = _consumer;
-  VClosure consume = VMakeClosure2((VFunc2)VCallValuesK2, env);
+  VClosure consume = VMakeClosure2((VFunc)VCallValuesK2, env);
 
-  V_CALL2(producer, runtime, VEncodeClosure(&consume));
+  V_CALL(_producer, runtime, VEncodeClosure(&consume));
 }
 
 void VApply2(V_CORE_ARGS, VWORD k, VWORD _proc, ...) {
   V_ARG_MIN2("apply", 3, argc);
 
-    VClosure * proc = VDecodeClosure(_proc);
+    VClosure * proc = VCheckedDecodeClosure(_proc, "apply");
 
     VWORD tmp[argc-2];
 
@@ -988,7 +986,7 @@ void VSystem2(V_CORE_ARGS, VWORD k, VWORD cmd) {
 
   int ret = system(blob->buf);
 
-  V_CALL2(VDecodeClosure(k), runtime, VEncodeInt(ret));
+  V_CALL(k, runtime, VEncodeInt(ret));
 }
 
 static void VOpenProcess2(V_CORE_ARGS, VWORD k, VWORD cmd, char const * mode, unsigned flags) {
@@ -1001,7 +999,7 @@ static void VOpenProcess2(V_CORE_ARGS, VWORD k, VWORD cmd, char const * mode, un
 
   if(!f) VError("open-io-process: failed to open process `~Z`~N", blob->buf);
   VPort port = VMakePortStream(f, flags | PFLAG_PROCESS);
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
 }
 
 void VOpenInputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd) {
@@ -1056,5 +1054,5 @@ void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD _prefix, ...) {
   // probably isn't, looks like the turd windows will give me some trouble with this procedure
   (void)mkstemps(str->buf, strlen(s));
 
-  V_CALL2(VDecodeClosure(k), runtime, VEncodePointer(str, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }

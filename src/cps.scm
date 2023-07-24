@@ -29,6 +29,8 @@
   (define (to-cps expr)
     (define (application? x)
       (and (pair? x) (not (memv (car x) '(quote lambda case-lambda)))))
+    (define (combination? x)
+      (and (pair? x) (not (memv (car x) '(quote lambda case-lambda begin if or)))))
     (define (iter-atom x)
       (define (iter-lambda args body)
         (let ((k (gensym "k")))
@@ -65,7 +67,25 @@
              (cond ((application? p)
                     (let ((sym (gensym "p")))
                       (iter2 p `(continuation (,sym) ,(iter2 `(if ,sym ,x ,y) cont)))))
-                   ((symbol? p) `(if ,p ,(iter2 x cont) ,(iter2 y cont)))
+                   ((symbol? p)
+                    ; I originally didn't make the extra let binding when cont was a lambda, but it caused
+                    ; exponential growth of the code lol
+                    ;
+                    ; There are probably times where you want to inline the cont instead of binding it to a
+                    ; let, but idk
+                    ;
+                    ; Not inlining the lambda does produce a slower exe I believe, but the compile time is
+                    ; soooooooo much faster
+                    ;
+                    ; well, the exe is also smaller so better icache? transpile.scm was a 200,000 line C
+                    ; file without the let binding. and with it it's 20,000 lines
+                    ;
+                    ; One thing we could do better is that if both halfs of an if are not applications
+                    ; we can instead compile it as (k (atom-if p a b)) instead of (if p (k a) (k b))
+                    (if (symbol? cont)
+                        `(if ,p ,(iter2 x cont) ,(iter2 y cont))
+                        (let ((k (gensym "k")))
+                          `((continuation (,k) (if ,p ,(iter2 x k) ,(iter2 y k))) ,cont))))
                    ((eq? p #f) (iter2 y cont))
                    (else (iter2 x cont))))
             (('or x y)
@@ -73,6 +93,10 @@
                     (let ((sym (gensym "p")))
                      (iter2 x `(continuation (,sym) ,(iter2 `(or ,sym ,y) cont)))))
                    (else (iter2 `(if ,x ,x ,y) cont))))
+            (((lambda (x) body) val)
+             (if (application? val)
+                 (iter2 val `(continuation (,x) ,(iter2 body cont)))
+                 (iter-combination expr cont)))
             (else (iter-combination expr cont)))
           `(,cont ,(iter-atom expr))))
 
@@ -194,6 +218,9 @@
     (match expr
       ((lamb xs body)
        (match (optimize-apply body)
+         ; a nice party trick: is this still necessary outside of niche usage?
+         ; is there a more general usage of this?
+         ; this was more important previously because the to cps routine was garbage
          ((f . ys)
           (if (and (not (special-apply? f))
                    (equal? xs ys)
@@ -202,47 +229,49 @@
               f
               `(,lamb ,xs (,f . ,ys))))
          (opt-body `(,lamb ,xs ,opt-body))))))
-  ; only optimizes 'applications', ie (f x y). But due to how codegen works, (if p (f a) (y b)) is also an application
   (define (reducible? x y expr)
     (and
       #;(pure-in? y expr)
-      (or (atom? x) (eqv? (car x) 'quote) (= 1 (ref-count y expr)))))
+      (or (atom? x) (eqv? (car x) 'quote) (= (ref-count y expr) 1))))
   (define (taillength lst)
     (let loop ((lst lst) (len 0))
       (if (pair? lst)
           (loop (cdr lst) (+ len 1))
           len)))
+
+  ; This optimization MIGHT be worth it to combine continuations which get
+  ; optimized into let forms from inlining
+  #;(define (optimize-let-chain let-expr)
+    (match let-expr
+      ((('continuation (xs ...)
+          (('continuation (x2) body) e2))
+        . es)
+       (if (and (not (memv x2 xs))
+                (let loop ((xs xs))
+                  (cond ((null? xs) #t)
+                        ((= 0 (ref-count (car xs) e2)) (loop (cdr xs)))
+                        (else #f))))
+           (optimize-let-chain `((continuation (,@xs ,x2) ,(optimize-apply body)) ,@es ,e2))
+           (map optimize-atom let-expr)))
+      ((l . xs) `(,(optimize-atom l) . ,(map optimize-atom xs)))))
   (define (optimize-let let-expr)
     (match let-expr
       ((('continuation (y) expr) x)
-       (if (reducible? x y expr)
-           (optimize-apply (substitute y x expr))
-           `(,(optimize-atom `(continuation (,y) ,expr)) ,(optimize-atom x))))
+       (let ((refs (ref-count y expr)))
+         (cond ((= refs 0) (optimize-apply expr))
+               ((or (atom? x) (eqv? (car x) 'quote) (= refs 1)) (optimize-apply (substitute y x expr)))
+               (else `(,(optimize-atom `(continuation (,y) ,expr)) ,(optimize-atom x))))))
       ((('lambda (ys ...) expr) xs ...)
        (if (not (= (length ys) (length xs))) (error "Not enough arguments to lambda"))
-       `(,(optimize-atom `(lambda ,ys ,expr)) . ,(map optimize-atom xs)))
+       #;(optimize-let-chain let-expr)
+       (map optimize-atom let-expr)
+       #;`(,(optimize-atom `(lambda ,ys ,expr)) . ,(map optimize-atom xs)))
       ((('lambda ys expr) . xs)
        (if (not (<= (taillength ys) (length xs))) (error "Not enough arguments to lambda"))
        `(,(optimize-atom `(lambda ,ys ,expr)) . ,(map optimize-atom xs)))
-      ((('continuation . _) . _) (error "Not enough arguments to continuation. Codegen bug."))
-      #;((('lambda (ys ...) expr) xs ...)
-       (let loop ((new-ys '()) (new-xs '()) (expr (optimize-apply expr)) (old-ys ys) (old-xs xs))
-         (cond ((null? old-ys)
-                (if (null? new-ys)
-                    (optimize-apply expr)
-                    `(,(optimize-atom `(lambda ,(reverse new-ys) ,expr)) . ,(map optimize-atom (reverse new-xs)))))
-               ((reducible? (car old-xs) (car old-ys) expr)
-                (loop new-ys
-                      new-xs
-                      (substitute (car old-ys) (car old-xs) expr)
-                      (cdr old-ys)
-                      (cdr old-xs)))
-               (else
-                (loop (cons (car old-ys) new-ys) (cons (car old-xs) new-xs) expr (cdr old-ys) (cdr old-xs)))
-               ))
-       )
-    )
+      ((('continuation . _) . _) (error "Not enough arguments to continuation. Codegen bug.")))
   )
+  ; only optimizes 'applications', ie (f x y). But due to how codegen works, (if p (f a) (y b)) is also an application
   (define (optimize-apply expr)
     (match expr
       ; Simplifying ((continuation (x) (x args ...)) y) to (y args)
