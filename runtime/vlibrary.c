@@ -349,7 +349,7 @@ void VPairP2(V_CORE_ARGS, VWORD k, VWORD x) {
 }
 void VVectorP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("vector?", 2, argc);
-  V_CALL(k, runtime, VEncodeBool(VDecodeVector(x)));
+  V_CALL(k, runtime, VEncodeBool(VIsVector(x)));
 }
 void VProcedureP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("procedure?", 2, argc);
@@ -357,27 +357,15 @@ void VProcedureP2(V_CORE_ARGS, VWORD k, VWORD x) {
 }
 void VBlobP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("blob?", 2, argc);
-  bool ret = false;
-  if(VWordType(x) == VPOINTER_OTHER) {
-    switch(*(VTAG*)VDecodePointer(x)) {
-      case VSYMBOL:
-      case VSTRING:
-        ret = true;
-        break;
-      default:
-        ret = false;
-        break;
-    }
-  }
-  V_CALL(k, runtime, VEncodeBool(ret));
+  V_CALL(k, runtime, VEncodeBool(VIsBlob(x)));
 }
 void VSymbolP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("symbol?", 2, argc);
-  V_CALL(k, runtime, VEncodeBool(VDecodeSymbol(x)));
+  V_CALL(k, runtime, VEncodeBool(VIsSymbol(x)));
 }
 void VStringP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("string?", 2, argc);
-  V_CALL(k, runtime, VEncodeBool(VDecodeString(x)));
+  V_CALL(k, runtime, VEncodeBool(VIsString(x)));
 }
 void VDoubleP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("double?", 2, argc);
@@ -404,8 +392,8 @@ void VSymbolEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
 }
 void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   V_ARG_CHECK2("blob=?", 3, argc);
-  VBlob * blob_a = (VBlob*)VDecodePointer(x);
-  VBlob * blob_b = (VBlob*)VDecodePointer(y);
+  VBlob * blob_a = VCheckedDecodeBlob(x, "blob=?");
+  VBlob * blob_b = VCheckedDecodeBlob(y, "blob=?");
   bool ret = false;
   if(blob_a->len == blob_b->len)
     ret = blob_a->tag == blob_b->tag && !memcmp(blob_a->buf, blob_b->buf, blob_a->len);
@@ -467,8 +455,7 @@ void VListVector2(V_CORE_ARGS, VWORD k, VWORD lst) {
 
 void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vector, VWORD index) {
   V_ARG_CHECK2("vector-ref", 3, argc);
-  VVector * vec = VDecodeVector(vector);
-  if(!vec) VError("vector-ref: arg 1 not a vector\n");
+  VVector * vec = VCheckedDecodeVector(vector, "vector-ref");
   if(VWordType(index) != VIMM_INT) VError("vector-ref: arg 2 not an int\n");
   long i = VDecodeInt(index);
   if(!(0 <= i && i < vec->len)) VError("vector-ref: out of range\n");
@@ -478,8 +465,7 @@ void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vector, VWORD index) {
 
 void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vector) {
   V_ARG_CHECK2("vector-length", 2, argc);
-  VVector * vec = VDecodeVector(vector);
-  if(!vec) VError("vector-ref: arg 1 not a vector\n");
+  VVector * vec = VCheckedDecodeVector(vector, "vector-length");
   V_CALL(k, runtime, VEncodeInt(vec->len));
 }
 
@@ -514,8 +500,7 @@ void VMakeString2(V_CORE_ARGS, VWORD k, VWORD len, ...) {
 void VSubstring2(V_CORE_ARGS, VWORD k, VWORD string, ...) {
   V_ARG_RANGE2("substring", 2, 4, argc);
 
-  VBlob const * str = VDecodeBlob(string);
-  if(!str || str->tag != VSTRING) VError("substring: arg 1 not a string");
+  VBlob const * str = VCheckedDecodeString(string, "substring");
 
   long start = 0;
   long end = str->len - 1;
@@ -553,15 +538,13 @@ void VSubstring2(V_CORE_ARGS, VWORD k, VWORD string, ...) {
 void VStringCopy2(V_CORE_ARGS, VWORD k, VWORD dest, VWORD _at, VWORD source, ...) {
   V_ARG_RANGE2("string-copy!", 4, 6, argc);
 
-  VBlob * dst = VDecodeBlob(dest);
-  if(!dst || dst->tag != VSTRING) VError("string-copy!: arg 1 not a string\n");
+  VBlob * dst = VCheckedDecodeString(dest, "string-copy!");
 
   if(VWordType(_at) != VIMM_INT) VError("string-copy!: arg 2 not an int\n");
   long at = VDecodeInt(_at);
   if(!(0 <= at && at < dst->len)) VError("string-copy!: at out of bounds\n");
 
-  VBlob const * src = VDecodeBlob(source);
-  if(!src || src->tag != VSTRING) VError("string-copy!: arg 3 not a string\n");
+  VBlob const * src = VCheckedDecodeString(source, "string-copy!");
 
 
   long start = 0;
@@ -594,8 +577,7 @@ void VStringCopy2(V_CORE_ARGS, VWORD k, VWORD dest, VWORD _at, VWORD source, ...
 
 void VStringLength2(V_CORE_ARGS, VWORD k, VWORD _str) {
   V_ARG_CHECK2("string-length", 2, argc);
-  VBlob * str = VDecodeBlob(_str);
-  if(!str || str->tag != VSTRING) VError("string-length: not a string: ~S~N", _str);
+  VBlob * str = VCheckedDecodeString(_str, "string-length");
 
   // not exposing the null terminal
   V_CALL(k, runtime, VEncodeInt(str->len - 1));
@@ -603,8 +585,7 @@ void VStringLength2(V_CORE_ARGS, VWORD k, VWORD _str) {
 
 void VStringRef2(V_CORE_ARGS, VWORD k, VWORD _str, VWORD _i) {
   V_ARG_CHECK2("string-ref", 3, argc);
-  VBlob * str = VDecodeBlob(_str);
-  if(!str || str->tag != VSTRING) VError("string-ref: not a string");
+  VBlob * str = VCheckedDecodeString(_str, "string-ref");
 
   if(VWordType(_i) != VIMM_INT) VError("string-ref: not an int");
   long i = VDecodeInt(_i);
@@ -616,8 +597,7 @@ void VStringRef2(V_CORE_ARGS, VWORD k, VWORD _str, VWORD _i) {
 
 void VStringSet2(V_CORE_ARGS, VWORD k, VWORD _str, VWORD _i, VWORD _c) {
   V_ARG_CHECK2("string-set!", 4, argc);
-  VBlob * str = VDecodeBlob(_str);
-  if(!str || str->tag != VSTRING) VError("string-set!: not a string");
+  VBlob * str = VCheckedDecodeString(_str, "string-set!");
 
   if(VWordType(_i) != VIMM_INT) VError("string-set!: not an int");
   long i = VDecodeInt(_i);
@@ -634,8 +614,7 @@ void VStringSet2(V_CORE_ARGS, VWORD k, VWORD _str, VWORD _i, VWORD _c) {
 
 void VStringSymbol2(V_CORE_ARGS, VWORD k, VWORD _str) {
   V_ARG_CHECK2("string->symbol", 2, argc);
-  VBlob * str = VDecodeBlob(_str);
-  if(!str || str->tag != VSTRING) VError("string->symbol: not a string: ~A~N", _str);
+  VBlob * str = VCheckedDecodeString(_str, "string->symbol");
 
   VBlob * sym = V_ALLOCA_BLOB(str->len);
   VFillBlob(sym, VSYMBOL, str->len, str->buf);
@@ -643,8 +622,7 @@ void VStringSymbol2(V_CORE_ARGS, VWORD k, VWORD _str) {
 }
 void VSymbolString2(V_CORE_ARGS, VWORD k, VWORD _sym) {
   V_ARG_CHECK2("symbol->string", 2, argc);
-  VBlob * sym = VDecodeBlob(_sym);
-  if(!sym || sym->tag != VSYMBOL) VError("symbol->string: not a symbol: ~A~N", _sym);
+  VBlob * sym = VCheckedDecodeSymbol(_sym, "symbol->string");
 
   VBlob * str = V_ALLOCA_BLOB(sym->len);
   VFillBlob(str, VSTRING, sym->len, sym->buf);
@@ -653,8 +631,7 @@ void VSymbolString2(V_CORE_ARGS, VWORD k, VWORD _sym) {
 
 void VStringNumber2(V_CORE_ARGS, VWORD k, VWORD _str) {
   V_ARG_CHECK2("string->number", 2, argc);
-  VBlob * str = VDecodeBlob(_str);
-  if(!str || str->tag != VSTRING) VError("string->number: not a string: ~A~N", _str);
+  VBlob * str = VCheckedDecodeString(_str, "string->number");
 
   if(str->len == 1)
     V_CALL(k, runtime, VFALSE);
@@ -718,8 +695,7 @@ void VDupStderr2(V_CORE_ARGS, VWORD k) {
 }
 
 static void VOpenStream2(VRuntime * runtime, VWORD k, VWORD path, char const * mode, unsigned flags) {
-  VBlob * str = VDecodeBlob(path);
-  if(!str || str->tag != VSTRING) VError("open-stream: not a string");
+  VBlob * str = VCheckedDecodeString(path, "open-stream");
   FILE * f = fopen(str->buf, mode);
   if(!f) VError("open-stream: failed to open file `~Z`~N", str->buf);
   VPort port = VMakePortStream(f, flags);
@@ -979,10 +955,7 @@ void VApply2(V_CORE_ARGS, VWORD k, VWORD _proc, ...) {
 void VSystem2(V_CORE_ARGS, VWORD k, VWORD cmd) {
   V_ARG_CHECK2("system", 2, argc);
 
-  VBlob * blob = VDecodeBlob(cmd);
-  if(!blob || blob->tag != VSTRING) {
-    VError("system: not a string ~S\n", cmd);
-  }
+  VBlob * blob = VCheckedDecodeString(cmd, "system");
 
   int ret = system(blob->buf);
 
@@ -990,10 +963,7 @@ void VSystem2(V_CORE_ARGS, VWORD k, VWORD cmd) {
 }
 
 static void VOpenProcess2(V_CORE_ARGS, VWORD k, VWORD cmd, char const * mode, unsigned flags) {
-  VBlob * blob = VDecodeBlob(cmd);
-  if(!blob || blob->tag != VSTRING) {
-    VError("open-io-process: not a string ~S\n", cmd);
-  }
+  VBlob * blob = VCheckedDecodeString(cmd, "open-io-process");
 
   FILE * f = popen(blob->buf, mode);
 
@@ -1014,21 +984,15 @@ void VOpenOutputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd) {
 void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD _prefix, ...) {
   V_ARG_RANGE2("make-temporary-file", 2, 3, argc);
 
-  VBlob * prefix = VDecodeBlob(_prefix);
-  if(!prefix || prefix->tag != VSTRING) {
-    VError("make-temporary-file: not a string ~S\n", _prefix);
-  }
+  VBlob * prefix = VCheckedDecodeString(_prefix, "make-temporary-file");
 
   // suffix may be annoying to do on windings
   VBlob * suffix = NULL;
   if(argc == 3) {
     va_list args; va_start(args, _prefix);
     VWORD _suffix = va_arg(args, VWORD);
-    suffix = VDecodeBlob(_suffix);
+    suffix = VCheckedDecodeString(_suffix, "make-temporary-file");
     va_end(args);
-    if(!suffix || suffix->tag != VSTRING) {
-      VError("make-temporary-file: not a string ~S\n", _suffix);
-    }
   }
 
   char const * p = prefix->buf;

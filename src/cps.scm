@@ -229,10 +229,6 @@
               f
               `(,lamb ,xs (,f . ,ys))))
          (opt-body `(,lamb ,xs ,opt-body))))))
-  (define (reducible? x y expr)
-    (and
-      #;(pure-in? y expr)
-      (or (atom? x) (eqv? (car x) 'quote) (= (ref-count y expr) 1))))
   (define (taillength lst)
     (let loop ((lst lst) (len 0))
       (if (pair? lst)
@@ -259,13 +255,18 @@
       ((('continuation (y) expr) x)
        (let ((refs (ref-count y expr)))
          (cond ((= refs 0) (optimize-apply expr))
-               ((or (atom? x) (eqv? (car x) 'quote) (= refs 1)) (optimize-apply (substitute y x expr)))
+               ; we don't care whether the data the variable addresses is pure, just whether
+               ; the variable is pure, which can be determined statically.
+               ; ... and now that I think about it, any variable which is impure is used twice
+               ; or can be eliminated, but eliminating that variable requires eliminating the
+               ; set! expressions
+               ((and (or (atom? x) (eqv? (car x) 'quote) (= refs 1)) (pure-in? y expr))
+                (optimize-apply (substitute y x expr)))
                (else `(,(optimize-atom `(continuation (,y) ,expr)) ,(optimize-atom x))))))
       ((('lambda (ys ...) expr) xs ...)
        (if (not (= (length ys) (length xs))) (error "Not enough arguments to lambda"))
        #;(optimize-let-chain let-expr)
-       (map optimize-atom let-expr)
-       #;`(,(optimize-atom `(lambda ,ys ,expr)) . ,(map optimize-atom xs)))
+       (map optimize-atom let-expr))
       ((('lambda ys expr) . xs)
        (if (not (<= (taillength ys) (length xs))) (error "Not enough arguments to lambda"))
        `(,(optimize-atom `(lambda ,ys ,expr)) . ,(map optimize-atom xs)))
@@ -286,35 +287,6 @@
       (('if p a b)
        `(if ,p ,(optimize-apply a) ,(optimize-apply b)))
 
-      ; Simplifying (if# k p (lambda (k1) (f1 k1 args)) (lambda (k2) (f2 k2 args)))
-      ; to (if p (f1 k args) (f2 k args)) ?
-      (('##sys.if k p ('lambda (k1) apply1) ('lambda (k2) apply2))
-       (if (or (not (= 1 (ref-count k1 apply1)))
-               (not (= 1 (ref-count k2 apply2))))
-           (error "failed to inline if statement because of refcounts" expr))
-       (optimize-apply `(if ,p ,(substitute k1 k apply1) ,(substitute k2 k apply2))))
-       ; Simplifying (begin# k a (lambda (k1) (f k1 args))) to (f k args)
-      (('##sys.begin k a ('lambda (k1) apply))
-       ;(optimize-apply `((lambda (,k1) ,apply) k))
-       (if (not (= 1 (ref-count k1 apply)))
-           (error "failed to inline begin statement because of refcounts" expr))
-       (optimize-apply (substitute k1 k apply)))
-
-      ; Simplifying (and# k x (lambda (k1) (f k1 args))) to just (if x (f k args) (k #f))
-      (('##sys.and k x ('lambda (k1) apply))
-       (if (not (= 1 (ref-count k1 apply)))
-           (error "failed to inline and statement because of refcounts" expr))
-       (optimize-apply `(if ,x ,(substitute k1 k apply) (,k #f))))
-      ; Simplifying (or# k x (lambda (k1) (f k1 args))) to just (if x (k x) (f k args))
-      (('##sys.or k x ('lambda (k1) apply))
-       (if (not (= 1 (ref-count k1 apply)))
-           (error "failed to inline or statement because of refcounts" expr))
-       (optimize-apply `(if ,x (,k ,x) ,(substitute k1 k apply))))
-
-      (('##sys.if . _) (error "failed to inline if statement" expr))
-      (('##sys.or . _) (error "failed to inline or statement" expr))
-      (('##sys.and . _) (error "failed to inline and statement" expr))
-      (('##sys.begin . _) (error "failed to inline begin statement" expr))
       ; Inlining builtins
       ; TODO: this doesn't take into account 'cost'. TODO account for function cost to avoid
       ; inlining so many functions that the garbage collect fails. One thing we could do is

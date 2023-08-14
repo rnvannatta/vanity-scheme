@@ -125,12 +125,6 @@
          ((##sys.symbol=?) "VSymbolEqv")
          ((##sys.blob=?) "VBlobEqv")
 
-         ; Special Forms (that are temporarily procedures)
-         ((##sys.if) #t)
-         ((##sys.begin) #t)
-         ((##sys.and) #t)
-         ((##sys.or) #t)
-
          ; Logic
          ((##sys.not) "VNot")
 
@@ -239,12 +233,6 @@
          ((##sys.eq?) "VEq2")
          ((##sys.symbol=?) "VSymbolEqv2")
          ((##sys.blob=?) "VBlobEqv2")
-
-         ; Special Forms (that are temporarily procedures)
-         ((##sys.if) #t)
-         ((##sys.begin) #t)
-         ((##sys.and) #t)
-         ((##sys.or) #t)
 
          ; Logic
          ((##sys.not) "VNot2")
