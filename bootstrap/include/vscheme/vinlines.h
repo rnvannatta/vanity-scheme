@@ -53,11 +53,11 @@ static inline VWORD VInlineEq(VWORD a, VWORD b) {
 }
 
 static inline VWORD VInlineSymbolEqv(VWORD a, VWORD b) {
-  return VEncodeBool(VDecodeSymbol(a) && VDecodeSymbol(b) && VCheckSymbolEqv(a, b));
+  return VEncodeBool(VIsSymbol(a) && VIsSymbol(b) && VCheckSymbolEqv(a, b));
 }
 
 static inline VWORD VInlineEqv(VWORD a, VWORD b) {
-  return VEncodeBool(VBits(a) == VBits(b) || (VDecodeSymbol(a) && VDecodeSymbol(b) && VCheckSymbolEqv(a, b)));
+  return VEncodeBool(VBits(a) == VBits(b) || (VIsSymbol(a) && VIsSymbol(b) && VCheckSymbolEqv(a, b)));
 }
 
 // lists

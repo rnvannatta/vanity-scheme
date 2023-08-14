@@ -192,45 +192,6 @@ typedef struct VDebugInfo {
 static inline bool VIsEq(VWORD a, VWORD b) { return VBits(a) == VBits(b); }
 void VError(const char *, ...);
 
-/* ======================== Type Checking ======================= */
-
-static inline bool VIsToken(VWORD v, int tok) { return VBits(v) == (LITERAL_HEADER | VIMM_TOK | tok); }
-
-static inline bool VIsNumber(VWORD v) {
-  unsigned long bits;
-  memcpy(&bits, &v, sizeof v);
-  // either a standard number, or an inf, or the canonical NAN
-  if((bits & LITERAL_HEADER) == LITERAL_HEADER) {
-    bits = bits & LITERAL_PAYLOAD;
-    if(bits) {
-      return bits == (VIMM_TOK | VTOK_NAN);
-    } else {
-      return false;
-    }
-  } else {
-    return true;
-  }
-}
-static inline unsigned long VWordType(VWORD v) {
-  unsigned long bits = VBits(v);
-  if(VIsNumber(v)) {
-    return VIMM_NUMBER;
-  } else {
-    return bits & LITERAL_TYPE_MASK;
-  }
-}
-
-static inline bool VIsPointer(VWORD v) {
-  return !VIsNumber(v) && VBits(v) & POINTER_TEST_BIT;
-}
-
-static inline void VCheckWordType(VWORD v, enum VIMMERAL_T type) {
-  if(VWordType(v) != type)
-  {
-    VError("incorrect type\n");
-  }
-}
-
 /* ======================== Encoding and Decoding ======================= */
 
 // Immediate types
@@ -274,7 +235,7 @@ static inline VWORD VEncodeBool(bool b) {
 }
 
 static inline bool VDecodeBool(VWORD v) {
-  return !VIsToken(v, VTOK_FALSE);
+  return VBits(v) != VBits(VFALSE);
 }
 
 // Pointer types
@@ -301,10 +262,6 @@ static inline VWORD VEncodeClosure(VClosure * c) {
 static inline VClosure * VDecodeClosure(VWORD v) {
   return (VClosure*)VDecodePointer(v);
 }
-static inline VClosure * VDecodeClosureApply(VWORD v) {
-  if(VWordType(v) != VPOINTER_CLOSURE) VError("tried to call non-closure: ~s\n", v);
-  return (VClosure*)VDecodePointer(v);
-}
 
 static inline VWORD VEncodePair(VPair * p) {
   return VEncodePointer(p, VPOINTER_PAIR);
@@ -314,42 +271,57 @@ static inline VPair * VDecodePair(VWORD v) {
 }
 
 static inline VBlob * VDecodeBlob(VWORD v) {
-  if(VWordType(v) == VPOINTER_OTHER)
-    return (VBlob*) VDecodePointer(v);
-  else
-    return NULL;
+  return (VBlob*) VDecodePointer(v);
 }
 static inline VBlob * VDecodeString(VWORD v) {
-  VBlob * b = VDecodeBlob(v);
-  if(b && b->tag == VSTRING)
-    return b;
-  else
-    return NULL;
+  return (VBlob*) VDecodePointer(v);
 }
-
 static inline VBlob * VDecodeSymbol(VWORD v) {
-  VBlob * b = VDecodeBlob(v);
-  if(b && b->tag == VSYMBOL)
-    return b;
-  else
-    return NULL;
+  return (VBlob*) VDecodePointer(v);
 }
 
 static inline VVector * VDecodeVector(VWORD v) {
-  if(VWordType(v) == VPOINTER_OTHER)
-  {
-    void * ptr = VDecodePointer(v);
-    if(*(VTAG*)ptr == VVECTOR)
-      return (VVector*)ptr;
+  return (VVector*) VDecodePointer(v);
+}
+
+/* ======================== Type Checking ======================= */
+
+static inline bool VIsToken(VWORD v, int tok) { return VBits(v) == (LITERAL_HEADER | VIMM_TOK | tok); }
+
+static inline bool VIsNumber(VWORD v) {
+  unsigned long bits;
+  memcpy(&bits, &v, sizeof v);
+  // either a standard number, or an inf, or the canonical NAN
+  if((bits & LITERAL_HEADER) == LITERAL_HEADER) {
+    bits = bits & LITERAL_PAYLOAD;
+    if(bits) {
+      return bits == (VIMM_TOK | VTOK_NAN);
+    } else {
+      return false;
+    }
+  } else {
+    return true;
   }
-  return NULL;
+}
+static inline unsigned long VWordType(VWORD v) {
+  unsigned long bits = VBits(v);
+  if(VIsNumber(v)) {
+    return VIMM_NUMBER;
+  } else {
+    return bits & LITERAL_TYPE_MASK;
+  }
 }
 
-static inline VClosure * VCheckedDecodeClosure(VWORD v, char * proc) {
-  if(VWordType(v) != VPOINTER_CLOSURE) VError("~Z: not a closure: ~S\n", proc, v);
-  return (VClosure*)VDecodePointer(v);
+static inline bool VIsPointer(VWORD v) {
+  return !VIsNumber(v) && VBits(v) & POINTER_TEST_BIT;
 }
 
+static inline void VCheckWordType(VWORD v, enum VIMMERAL_T type) {
+  if(VWordType(v) != type)
+  {
+    VError("incorrect type\n");
+  }
+}
 
 static inline bool VIsBlob(VWORD v) {
   if(VIsPointer(v)) {
@@ -373,8 +345,66 @@ static inline bool VIsSymbol(VWORD v) {
   return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VSYMBOL;
 }
 
+static inline bool VIsVector(VWORD v) {
+  return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VVECTOR;
+}
+
 static inline bool VIsPort(VWORD v) {
   return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VPORT;
+}
+
+/* ======================== Checked Decoding ======================= */
+
+static inline int VCheckedDecodeInt(VWORD v, char const * proc) {
+  if(VWordType(v) != VIMM_INT) VError("~Z: not an int: ~S\n", proc, v);
+  return VDecodeInt(v);
+}
+
+static inline double VCheckedDecodeDouble(VWORD v, char const * proc) {
+  if(!VIsNumber(v)) VError("~Z: not a double: ~S\n", proc, v);
+  return VDecodeNumber(v);
+}
+
+static inline char VCheckedDecodeChar(VWORD v, char const * proc) {
+  if(VWordType(v) != VIMM_CHAR) VError("~Z: not a char: ~S\n", proc, v);
+  return VDecodeChar(v);
+}
+
+static inline VClosure * VCheckedDecodeClosure(VWORD v, char const * proc) {
+  if(VWordType(v) != VPOINTER_CLOSURE) VError("~Z: not a closure: ~S\n", proc, v);
+  return (VClosure*)VDecodePointer(v);
+}
+static inline VClosure * VDecodeClosureApply(VWORD v) {
+  if(VWordType(v) != VPOINTER_CLOSURE) VError("tried to call non-closure: ~s\n", v);
+  return (VClosure*)VDecodePointer(v);
+}
+
+static inline VBlob * VCheckedDecodeBlob(VWORD v, char const * proc) {
+  if(VIsBlob(v)) return (VBlob*) VDecodePointer(v);
+  VError("~Z: not a blob: ~S\n", proc, v);
+  return NULL;
+}
+static inline VBlob * VCheckedDecodeString(VWORD v, char const * proc) {
+  if(VIsString(v)) return (VBlob*) VDecodePointer(v);
+  VError("~Z: not a string: ~S\n", proc, v);
+  return NULL;
+}
+static inline VBlob * VCheckedDecodeSymbol(VWORD v, char const * proc) {
+  if(VIsSymbol(v)) return (VBlob*) VDecodePointer(v);
+  VError("~Z: not a symbol: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VVector * VCheckedDecodeVector(VWORD v, char const * proc) {
+  if(VIsVector(v)) return (VVector*) VDecodePointer(v);
+  VError("~Z: not a vector: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VPort * VCheckedDecodePort(VWORD v, char const * proc) {
+  if(VIsPort(v)) return (VPort*) VDecodePointer(v);
+  VError("~Z: not a port: ~S\n", proc, v);
+  return NULL;
 }
 
 /* ======================== Construction ======================= */

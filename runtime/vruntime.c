@@ -799,8 +799,7 @@ void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
     VGarbageCollect2Args((VFunc)VVectorSet2, runtime, statics, 4, argc, k, v, i, val);
   } else {
-    VVector * vector = VDecodeVector(v);
-    if(!vector) VError("vector-set!: arg 1 not a vector\n");
+    VVector * vector = VCheckedDecodeVector(v, "vector-set!");
     if(VWordType(i) != VIMM_INT) VError("vector-set!: arg 2 not an int\n");
     long index = VDecodeInt(i);
     if(!(0 <= index && index < vector->len)) VError("vector-set!: out of range\n");
@@ -1020,10 +1019,7 @@ void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...) {
 }
 
 static VFunc VFunctionImpl(VWORD name) {
-  VBlob * blob = VDecodeBlob(name);
-  if(!blob || blob->tag != VSTRING) {
-    VError("function: not a string ~S\n", name);
-  }
+  VBlob * blob = VCheckedDecodeString(name, "function");
 
   const char * str = blob->buf;
   void * ptr = dlsym(RTLD_DEFAULT, str);

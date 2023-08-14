@@ -41,13 +41,12 @@ runtime : lib/libvscheme.so
 # the include copy doesn't have an -u on it because
 # include files aren't build. Can add the -u if we
 # copy the files to the bin directory
-install_compiler : compiler 
+install : compiler runtime
+	cp -u lib/libvscheme.so ~/.local/lib/$(VSCHEME)
 	mkdir -p ~/.local/include/vscheme/
 	mkdir -p ~/.local/lib/
 	cp -r include/* ~/.local/include/.
 	cp -u bin/vsc ~/.local/bin/$(VSC)
-install : install_compiler runtime
-	cp -u lib/libvscheme.so ~/.local/lib/$(VSCHEME)
 
 tests : compiler runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
