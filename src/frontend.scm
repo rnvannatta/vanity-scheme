@@ -63,6 +63,12 @@
           ((eq? #\, (string-ref str i)) (string-set! str i #\space) (loop (- i 1)))
           (else (loop (- i 1))))))
 
+(define (realbasepath file)
+  (let* ((proc (open-input-process (sprintf "dirname `realpath ~A`" file)))
+         (ret (read-line proc)))
+    (close-port proc)
+    ret))
+
 (define (display-help)
   (displayln "Usage: vsc [options] file...")
   (displayln "Options:")
@@ -145,54 +151,91 @@
 (define cc-files
   (if (or transpile? expand?) (list out-file)
       (map (lambda (file) (make-temporary-file (string-append "/tmp/" (basename file)) ".c")) scm-files)))
+(define cc-obj-files
+  (cond ((or transpile? expand?) (list #f))
+        (object? (list out-file))
+        (else (map (lambda (file) (make-temporary-file (string-append "/tmp/" (basename file)) ".o")) scm-files))))
 
-(define flags
+(define cc-command-flags
   (string-append
     " -rdynamic -Wmissing-braces -masm=intel"
     (sprintf " -O~A" optimization)
     (if debug? " -g" "")
-    (if object? " -c" " -lvscheme")
-    (if shared? " -fPIC -shared" " -Wl,--no-as-needed")))
-(define command
-  (sprintf "gcc -o ~A" out-file))
+    (if shared? " -fPIC" "")))
+(define cc-command "gcc")
+(set! cc-command (string-append cc-command cc-command-flags))
 (for-each
-  (lambda (file) (set! command (string-append command " " file)))
-  (append obj-files cc-files))
-(for-each
-  (lambda (option) (set! command (string-append command option)))
+  (lambda (option) (set! cc-command (string-append cc-command option)))
   c-options)
 
-(set! command (string-append command flags))
-
 (define stdout (current-output-port))
+; 1. transpile
 (define num-mains
   (fold
     (lambda (x acc) (+ acc (if x 1 0)))
     0
     (map
-      (lambda (scm-file cc-file)
-        (with-output-to-file
-          cc-file
-          (lambda ()
-            (let* ((file (append (read-all (open-input-file scm-file))))
-                   (expanded  (map expand-toplevel file)))
-              (if (eq? expand? 0) (for-each write expanded)
-                  (let ((cps (map (lambda (expr) (annotate-lambdas (to-cps expr))) (apply append expanded))))
-                   (if (eq? expand? 1) (for-each write cps)
-                       (let ((opt (map (lambda (expr) (deannotate-lambdas (optimize expr))) cps)))
-                        (if (eq? expand? 2) (for-each write opt)
-                            (let* ((bruijn (map bruijn-ify opt))
-                                   (funs (to-functions bruijn)))
-                              (apply printout2 (cons debug? (cons shared? funs)))))))))))))
+      (lambda (scm-file cc-file obj-file)
+        (let ((path (realbasepath scm-file)))
+          (with-output-to-file
+            cc-file
+            (lambda ()
+              (let* ((file (append (read-all (open-input-file scm-file))))
+                     (expanded  (map (lambda (e) (expand-toplevel e path)) file)))
+                (if (eq? expand? 0) (for-each write expanded)
+                    (let ((cps (map (lambda (expr) (annotate-lambdas (to-cps expr))) (apply append expanded))))
+                     (if (eq? expand? 1) (for-each write cps)
+                         (let ((opt (map (lambda (expr) (deannotate-lambdas (optimize expr))) cps)))
+                          (if (eq? expand? 2) (for-each write opt)
+                              (let* ((bruijn (map bruijn-ify opt))
+                                     (funs (to-functions bruijn)))
+                                (apply printout2 (cons debug? (cons shared? funs))))))))))))))
       scm-files
-      cc-files)))
+      cc-files
+      cc-obj-files)))
+; 2. compile
+(for-each
+  (lambda (scm-file cc-file obj-file)
+    (let ((path (realbasepath scm-file)))
+      (if (and (not transpile?) (not expand?))
+          (begin
+            (if verbose? (displayln (sprintf "~A -I~A -c -o ~A ~A" cc-command path obj-file cc-file)))
+            (system (sprintf "~A -I~A -c -o ~A ~A" cc-command path obj-file cc-file))))))
+  scm-files
+  cc-files
+  cc-obj-files)
 
 (if (and shared? (> num-mains 0)) (error "shared library has toplevel expressions or defines"))
 (if (> num-mains 1) (error "program has toplevel expressions in multiple files, and so it generated multiple mains"))
 
 (define (delete-file f)  (system (sprintf "/bin/rm ~A" f)))
-(if (and (not transpile?) (not expand?))
-    (begin
-      (if verbose? (displayln command))
-      (system command)
-      (if (not keep?) (for-each delete-file cc-files))))
+
+; 3. link
+(if (and (not transpile?) (not expand?) (not object?))
+    (let ()
+      (define link-command-flags
+        (string-append
+          " -rdynamic -Wmissing-braces -masm=intel"
+          (sprintf " -O~A" optimization)
+          (if debug? " -g" "")
+          ; TODO way to not link vscheme in
+          " -lvscheme"
+          (if shared? " -fPIC -shared" " -Wl,--no-as-needed")))
+      (define link-command
+        (sprintf "gcc -o ~A" out-file))
+      (for-each
+        (lambda (file) (set! link-command (string-append link-command " " file)))
+        (append obj-files cc-obj-files))
+      (for-each
+        (lambda (option) (set! link-command (string-append link-command option)))
+        c-options)
+      (set! link-command (string-append link-command link-command-flags))
+
+      (if verbose? (displayln link-command))
+      (system link-command)))
+
+; 4. cleanup
+(if (and (not transpile?) (not expand?) (not keep?))
+    (for-each delete-file cc-files))
+(if (and (not transpile?) (not expand?) (not object?) (not keep?))
+    (for-each delete-file cc-obj-files))

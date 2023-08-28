@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library "expand"
-  (import (vanity core) "utils" "match" "variables")
+  (import (vanity core) "utils" "match" "variables" "ffi")
   (export expand-toplevel)
   ; TODO
 
@@ -92,15 +92,13 @@
     (define imports '())
     (define (expand-library-expr expr)
       (match expr
-        #;(('begin . ys)
-         (apply append (map expand-toplevel ys)))
         (('export . syms)
          (set! exports (append syms exports))
          (list))
         (('import . libs)
          (set! imports (append (map mangle-library libs) imports))
          (list))
-        (('define (f . xs) . body) (expand-toplevel `(define ,f (lambda ,xs . ,body))))
+        (('define (f . xs) . body) (expand-define `(define ,f (lambda ,xs . ,body))))
         (('define f ('lambda . body))
          (if (not (symbol? f)) (error "define's first argument is not a symbol" f))
          (list `(define ,f ,(expand-syntax `(lambda . ,body)))))
@@ -109,6 +107,7 @@
          (list `(define ,f ,(expand-syntax `(case-lambda . ,body)))))
         (('define x y) (list `(define ,x ,(expand-syntax y))))
         (('define . noise) (error "malformed define" `(define . ,noise)))
+        ; TODO why not? we've done everything we need for expressions in libraries
         (else (error "expressions not permitted in libraries yet" expr))))
     ; still has free variables
     (define basic-library
@@ -161,22 +160,26 @@
       ((loop ((xs vals) ...) . body) (expand-syntax `(letrec ((,loop (lambda ,xs . ,body))) (,loop . ,vals))))
       (_ (error "malformed let" `(let . ,expr)))))
 
-  (define (expand-toplevel expr)
+  (define (expand-define expr)
+    (match expr
+      (('define x body)
+       (if (not (symbol? x)) (error "define's first argument is not a symbol" x))
+       (list `(define ,x ,(expand-syntax body))))
+      (else (error "malformed define" expr))))
+  (define (expand-toplevel expr path)
     (match expr
       (('begin . ys)
-       (apply append (map expand-toplevel ys)))
+       (apply append (map (lambda (e) (expand-toplevel e path)) ys)))
 
       (('define-library lib . body) (list (expand-library `(define-library ,lib . ,body))))
       (('define-library . noise) (error "malformed define-library" `(define-library . ,noise)))
 
       (('import) '())
       (('import lib . rest)
-       #;(if (not (string? lib)) (error "import must be a string" `(import ,lib)))
        (cons `(##vcore.multidefine (##vcore.load-library ,(mangle-library lib)))
-             #;`(##vcore.multidefine ((##vcore.function ,lib)))
-             (expand-toplevel `(import . ,rest))))
+             (expand-toplevel `(import . ,rest) path)))
 
-      (('define (f . xs) . body) (expand-toplevel `(define ,f (lambda ,xs . ,body))))
+      (('define (f . xs) . body) (expand-define `(define ,f (lambda ,xs . ,body))))
       (('define x body)
        (if (not (symbol? x)) (error "define's first argument is not a symbol" x))
        (list `(define ,x ,(expand-syntax body))))
@@ -190,6 +193,11 @@
         (('##vcore.function . args) 'ok)
         (else (error "##vcore.declare's second argument is not a lambda expression" l)))
        (list `(##vcore.declare ,f ,(expand-syntax l))))
+      (('##foreign.declare str)
+       (if (not (string? str)) (error "##foreign.declare's first argument is not a string" str))
+       (list expr))
+      (('##foreign.import lang str)
+       (resolve-foreign-import expr path))
 
       (expr (list (expand-syntax expr)))))
 
@@ -241,18 +249,16 @@
       (('or x . y) (expand-syntax `(or ,x (or . ,y))))
 
       (('cond ('else . body)) (expand-syntax `(begin . ,body)))
-      ; FIXME need renaming macros
       (('cond (p '=> f) . rest) (let ((foobar (gensym "x"))) (expand-syntax `(let ((,foobar ,p)) (if ,foobar (,f ,foobar) (cond . ,rest))))))
       (('cond (p . body) . rest) (expand-syntax `(if ,p (begin . ,body) (cond . ,rest))))
       (('cond) `(error "exhausted cond statement"))
       (('cond . noise) (error "malformed cond" `(cond . ,noise)))
 
-      ; FIXME need renaming macros
       (('case x . rest) (let ((foobar (gensym "x"))) (expand-syntax `(let ((,foobar ,x)) (case-iter ,foobar . ,rest)))))
       (('case-iter x ('else . body)) (expand-syntax `(begin . ,body)))
       (('case-iter x ((toks ...) . body) . rest) (expand-syntax `(if (or . ,(map (lambda (y) `(eqv? ,x (quote ,y))) toks)) (begin . ,body) (case-iter ,x . ,rest))))
       (('case-iter x) `(error "exhausted case statement"))
-      ; FIXME don't expose case iteration like this
+      ; FIXME don't expose case iteration like this - should probably compile to hash table or memv?
 
       (('cut f . args) (expand-syntax `(cut-iter () () ,f . ,args)))
       (('cut-iter xs args f) (expand-syntax `(lambda ,(reverse xs) (,f . ,(reverse args)))))
@@ -269,6 +275,9 @@
       (('define . ys) (error "stray define in program" `(define . ,ys)))
 
       (('match . ys) (expand-syntax (transform-match `(match . ,ys) eqv?)))
+
+      (('##foreign.function . _)
+       (validate-foreign-function expr))
 
       ((f args ...)
        (if (and (atom? f) (not (symbol? f))) (error "function application's first arg is not a function" f))

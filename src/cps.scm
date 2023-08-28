@@ -28,9 +28,9 @@
   (export to-cps optimize alpha-convert annotate-lambdas deannotate-lambdas)
   (define (to-cps expr)
     (define (application? x)
-      (and (pair? x) (not (memv (car x) '(quote lambda case-lambda)))))
+      (and (pair? x) (not (memv (car x) '(quote lambda case-lambda ##foreign.function)))))
     (define (combination? x)
-      (and (pair? x) (not (memv (car x) '(quote lambda case-lambda begin if or)))))
+      (and (pair? x) (not (memv (car x) '(quote lambda case-lambda ##foreign.function begin if or)))))
     (define (iter-atom x)
       (define (iter-lambda args body)
         (let ((k (gensym "k")))
@@ -40,6 +40,7 @@
          (cons 'lambda (iter-lambda args body)))
         (('case-lambda (args body) ...)
          (cons 'case-lambda (map iter-lambda args body)))
+        (('##foreign.function . _) x)
         (('quote _) x)
         (() (error "stray () in program"))
         (else x)))
@@ -103,6 +104,7 @@
     (define (to-cps-impl expr)
       (iter2 expr '##sys.next))
     (match expr
+      (('##foreign.declare . _) expr)
       (('##vcore.declare f l)
        ; (to-cps-impl l) returns (##sys.next (lambda ...)) because lambda expressions are atoms
        `(##vcore.declare ,f ,(cadr (to-cps-impl l))))
@@ -135,6 +137,7 @@
        (ref-count-lambda x args body))
       (('case-lambda (args body) ...)
        (apply + (map (lambda (args body) (ref-count-lambda x args body)) args body)))
+      (('##foreign.function . _) 0)
       (('quote x) 0)
       ((f . xs) (+ (ref-count x f) (ref-count x xs)))
       (y (if (eqv? x y) 1 0))))
@@ -149,6 +152,7 @@
        (pure-in-lambda? x args body))
       (('case-lambda (args body) ...)
        (fold (lambda (a b) (and a b)) #t (map (lambda (args body) (pure-in-lambda? x args body)) args body)))
+      (('##foreign.function . _) #t)
       (('quote x) #t)
       (('set! k y . body)
        (if (eqv? x y) #f
@@ -166,6 +170,7 @@
        (cons 'continuation (substitute-lambda x atom args body)))
       (('case-lambda (args body) ...)
        (cons 'case-lambda (map (lambda (args body) (substitute-lambda x atom args body)) args body)))
+      (('##foreign.function . _) expr)
       (('quote x) expr)
       ((f . xs) (cons (substitute x atom f) (substitute x atom xs)))
       (y (if (eqv? x y) atom y))))
@@ -260,7 +265,7 @@
                ; ... and now that I think about it, any variable which is impure is used twice
                ; or can be eliminated, but eliminating that variable requires eliminating the
                ; set! expressions
-               ((and (or (atom? x) (eqv? (car x) 'quote) (= refs 1)) (pure-in? y expr))
+               ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1)) (pure-in? y expr))
                 (optimize-apply (substitute y x expr)))
                (else `(,(optimize-atom `(continuation (,y) ,expr)) ,(optimize-atom x))))))
       ((('lambda (ys ...) expr) xs ...)
@@ -270,18 +275,14 @@
       ((('lambda ys expr) . xs)
        (if (not (<= (taillength ys) (length xs))) (error "Not enough arguments to lambda"))
        `(,(optimize-atom `(lambda ,ys ,expr)) . ,(map optimize-atom xs)))
-      ((('continuation . _) . _) (error "Not enough arguments to continuation. Codegen bug.")))
-  )
+      ((('continuation . _) . _) (error "Not enough arguments to continuation. Codegen bug."))))
   ; only optimizes 'applications', ie (f x y). But due to how codegen works, (if p (f a) (y b)) is also an application
   (define (optimize-apply expr)
     (match expr
       ; Simplifying ((continuation (x) (x args ...)) y) to (y args)
       ((('continuation . _) . _) (optimize-let expr))
       ((('lambda . _) . _) (optimize-let expr))
-      #;((('continuation (y) (xs ...)) x)
-       (if (or (atom? x) (= 1 (ref-count y xs)))
-           (optimize-apply (substitute y x xs))
-           `(,(optimize-atom `(continuation (,y) ,xs)) ,(optimize-atom x))))
+
       (('if #t a b) (optimize-apply a))
       (('if #f a b) (optimize-apply b))
       (('if p a b)
@@ -300,6 +301,7 @@
   (define (optimize-atom expr)
     (match expr
       (('quote . _) expr)
+      (('##foreign.function . _) expr)
       (('##inline . _) expr)
 
       (('lambda . _) (optimize-lambda expr))
@@ -317,6 +319,7 @@
     ; applications consist of applying a set of atoms together, applications do not apply applications
     (match expr
       (('quote . _) expr)
+      (('##foreign.function . _) expr)
       (('##inline . _) expr)
       (('lambda . _) (optimize-lambda expr))
       (('continuation . _) (optimize-lambda expr))
@@ -325,6 +328,7 @@
   (define (optimize expr)
     (let ((expr (alpha-convert expr)))
       (match expr
+          (('##foreign.declare . _) expr)
           (('##vcore.declare f l)
            `(##vcore.declare ,f ,(optimize-impl l)))
           (else (optimize-impl expr)))))

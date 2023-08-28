@@ -31,17 +31,18 @@
 #include <errno.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdint.h>
 
 __attribute__((used)) static void VAdd2CaseVarargs(V_CORE_ARGS, VWORD k, ...) {
     V_ARG_MIN2("+", 1, argc);
     bool exact = true;
     double dacc = 0;
-    long int iacc = 0;
+    int64_t iacc = 0;
     va_list args;
     va_start(args, k);
     for(unsigned i = 1; i < argc; i++) {
       VWORD v = va_arg(args, VWORD);
-      unsigned long type = VWordType(v);
+      uint64_t type = VWordType(v);
       if(type == VIMM_INT) {
         iacc += VDecodeInt(v);
       } else if(type == VIMM_NUMBER) {
@@ -53,7 +54,7 @@ __attribute__((used)) static void VAdd2CaseVarargs(V_CORE_ARGS, VWORD k, ...) {
     }
     va_end(args);
     VWORD ret;
-    if(iacc >= INT_MAX || iacc <= INT_MIN)
+    if(iacc >= INT32_MAX || iacc <= INT32_MIN)
       exact = false;
 
     if(exact)
@@ -66,11 +67,11 @@ __attribute__((used)) static void VAdd2CaseVarargs(V_CORE_ARGS, VWORD k, ...) {
 __attribute__((used)) static void VAdd2Case2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b) {
     bool exact = true;
     double dacc = 0;
-    long int iacc = 0;
+    int64_t iacc = 0;
     for(int i = 0; i < 2; i++)
     {
       VWORD v = i ? b : a;
-      unsigned long type = VWordType(v);
+      uint64_t type = VWordType(v);
       if(type == VIMM_INT) {
         iacc += VDecodeInt(v);
       } else if(type == VIMM_NUMBER) {
@@ -81,7 +82,7 @@ __attribute__((used)) static void VAdd2Case2(V_CORE_ARGS, VWORD k, VWORD a, VWOR
       }
     }
     VWORD ret;
-    if(iacc >= INT_MAX || iacc <= INT_MIN)
+    if(iacc >= INT32_MAX || iacc <= INT32_MIN)
       exact = false;
 
     if(exact)
@@ -104,9 +105,9 @@ asm(
 __attribute__((used)) static void VSub2Case2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b) {
     bool exact = true;
     double dacc = 0;
-    long int iacc = 0;
+    int64_t iacc = 0;
     {
-      unsigned long type = VWordType(a);
+      uint64_t type = VWordType(a);
       if(type == VIMM_INT) {
         iacc += VDecodeInt(a);
       } else if(type == VIMM_NUMBER) {
@@ -117,7 +118,7 @@ __attribute__((used)) static void VSub2Case2(V_CORE_ARGS, VWORD k, VWORD a, VWOR
       }
     }
     {
-      unsigned long type = VWordType(b);
+      uint64_t type = VWordType(b);
       if(type == VIMM_INT) {
         iacc -= VDecodeInt(b);
       } else if(type == VIMM_NUMBER) {
@@ -128,7 +129,7 @@ __attribute__((used)) static void VSub2Case2(V_CORE_ARGS, VWORD k, VWORD a, VWOR
       }
     }
     VWORD ret;
-    if(iacc >= INT_MAX || iacc <= INT_MIN)
+    if(iacc >= INT32_MAX || iacc <= INT32_MIN)
       exact = false;
 
     if(exact)
@@ -142,9 +143,9 @@ __attribute__((used)) static void VSub2CaseVarargs(V_CORE_ARGS, VWORD k, VWORD x
     V_ARG_MIN2("-", 2, argc);
     bool exact = true;
     double dacc = 0;
-    long int iacc = 0;
+    int64_t iacc = 0;
     {
-      unsigned long type = VWordType(x);
+      uint64_t type = VWordType(x);
       if(type == VIMM_INT) {
         iacc += VDecodeInt(x);
       } else if(type == VIMM_NUMBER) {
@@ -165,7 +166,7 @@ __attribute__((used)) static void VSub2CaseVarargs(V_CORE_ARGS, VWORD k, VWORD x
     va_start(args, x);
     for(unsigned i = 2; i < argc; i++) {
       VWORD v = va_arg(args, VWORD);
-      unsigned long type = VWordType(v);
+      uint64_t type = VWordType(v);
       if(type == VIMM_INT) {
         iacc -= VDecodeInt(v);
       } else if(type == VIMM_NUMBER) {
@@ -179,7 +180,7 @@ __attribute__((used)) static void VSub2CaseVarargs(V_CORE_ARGS, VWORD k, VWORD x
 end:
     {
       VWORD ret;
-      if(iacc >= INT_MAX || iacc <= INT_MIN)
+      if(iacc >= INT32_MAX || iacc <= INT32_MIN)
         exact = false;
 
       if(exact)
@@ -204,17 +205,17 @@ void VMul2(V_CORE_ARGS, VWORD k, ...) {
     V_ARG_MIN2("*", 1, argc);
     bool exact = true;
     double dacc = 1;
-    long int iacc = 1;
+    int64_t iacc = 1;
     va_list args;
     va_start(args, k);
     for(unsigned i = 1; i < argc; i++) {
       VWORD v = va_arg(args, VWORD);
-      unsigned long type = VWordType(v);
+      uint64_t type = VWordType(v);
       if(type == VIMM_INT) {
         // FIXME no longer handles overflow correctly, instead
         // use overflow detection from hacker's delight
         iacc *= VDecodeInt(v);
-        if(iacc >= INT_MAX || iacc <= INT_MIN) {
+        if(iacc >= INT32_MAX || iacc <= INT32_MIN) {
           exact = false;
           dacc *= iacc;
           iacc = 1;
@@ -238,9 +239,9 @@ void VDiv2(V_CORE_ARGS, VWORD k, VWORD x, ...) {
     V_ARG_MIN2("/", 2, argc);
     bool exact = true;
     double dacc = 1;
-    long int iacc = 1;
+    int64_t iacc = 1;
     {
-      unsigned long type = VWordType(x);
+      uint64_t type = VWordType(x);
       if(type == VIMM_INT) {
         iacc += VDecodeInt(x);
       } else if(type == VIMM_NUMBER) {
@@ -265,7 +266,7 @@ void VDiv2(V_CORE_ARGS, VWORD k, VWORD x, ...) {
     va_start(args, x);
     for(unsigned i = 2; i < argc; i++) {
       VWORD v = va_arg(args, VWORD);
-      unsigned long type = VWordType(v);
+      uint64_t type = VWordType(v);
       if(type == VIMM_INT) {
         int i = VDecodeInt(v);
         if(iacc % i == 0) {
@@ -457,7 +458,7 @@ void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vector, VWORD index) {
   V_ARG_CHECK2("vector-ref", 3, argc);
   VVector * vec = VCheckedDecodeVector(vector, "vector-ref");
   if(VWordType(index) != VIMM_INT) VError("vector-ref: arg 2 not an int\n");
-  long i = VDecodeInt(index);
+  int i = VDecodeInt(index);
   if(!(0 <= i && i < vec->len)) VError("vector-ref: out of range\n");
 
   V_CALL(k, runtime, vec->arr[i]);
@@ -474,7 +475,7 @@ void VMakeString2(V_CORE_ARGS, VWORD k, VWORD len, ...) {
   V_ARG_RANGE2("make-string", 2, 3, argc);
 
   if(VWordType(len) != VIMM_INT) VError("make-string: not an int");
-  long i = VDecodeInt(len);
+  int i = VDecodeInt(len);
   if(!(0 <= i && i < 1024 * 1024)) VError("make-string: out of bounds");
 
   char c = 'X';
@@ -502,8 +503,8 @@ void VSubstring2(V_CORE_ARGS, VWORD k, VWORD string, ...) {
 
   VBlob const * str = VCheckedDecodeString(string, "substring");
 
-  long start = 0;
-  long end = str->len - 1;
+  int start = 0;
+  int end = str->len - 1;
   va_list args;
   if(argc >= 3)
   {
@@ -541,14 +542,14 @@ void VStringCopy2(V_CORE_ARGS, VWORD k, VWORD dest, VWORD _at, VWORD source, ...
   VBlob * dst = VCheckedDecodeString(dest, "string-copy!");
 
   if(VWordType(_at) != VIMM_INT) VError("string-copy!: arg 2 not an int\n");
-  long at = VDecodeInt(_at);
+  int at = VDecodeInt(_at);
   if(!(0 <= at && at < dst->len)) VError("string-copy!: at out of bounds\n");
 
   VBlob const * src = VCheckedDecodeString(source, "string-copy!");
 
 
-  long start = 0;
-  long end = src->len - 1;
+  int start = 0;
+  int end = src->len - 1;
   va_list args;
   if(argc >= 5) {
     va_start(args, source);
@@ -564,8 +565,8 @@ void VStringCopy2(V_CORE_ARGS, VWORD k, VWORD dest, VWORD _at, VWORD source, ...
   if(argc >= 5) {
     va_end(args);
   }
-  long srclen = end - start;
-  long dstlen = dst->len-1 - at;
+  int srclen = end - start;
+  int dstlen = dst->len-1 - at;
   if(!(0 <= start && start < src->len)) VError("string-copy!: start out of bounds\n");
   if(!(0 <= end && end < src->len)) VError("string-copy!: end out of bounds\n");
   if(start > end) VError("string-copy!: start greater than end\n");
@@ -588,7 +589,7 @@ void VStringRef2(V_CORE_ARGS, VWORD k, VWORD _str, VWORD _i) {
   VBlob * str = VCheckedDecodeString(_str, "string-ref");
 
   if(VWordType(_i) != VIMM_INT) VError("string-ref: not an int");
-  long i = VDecodeInt(_i);
+  int i = VDecodeInt(_i);
   // not exposing the null terminal
   if(!(0 <= i && i < str->len)) VError("string-ref: ~A out of bounds (0 to ~D)~N", _i, str->len);
 
@@ -600,7 +601,7 @@ void VStringSet2(V_CORE_ARGS, VWORD k, VWORD _str, VWORD _i, VWORD _c) {
   VBlob * str = VCheckedDecodeString(_str, "string-set!");
 
   if(VWordType(_i) != VIMM_INT) VError("string-set!: not an int");
-  long i = VDecodeInt(_i);
+  int i = VDecodeInt(_i);
   // not exposing the null terminal
   if(!(0 <= i && i < str->len)) VError("string-set!: out of bounds");
 
@@ -648,7 +649,7 @@ void VStringNumber2(V_CORE_ARGS, VWORD k, VWORD _str) {
 
   // FIXME lazy but incorrect way to parse ints vs doubles, need to parse by checking for period
   // actually, it's probably correct but stupid, deliberate deviation incoming
-  if(floor(d) == d && INT_MIN <= d && d <= INT_MAX) {
+  if(floor(d) == d && INT32_MIN <= d && d <= INT32_MAX) {
     V_CALL(k, runtime, VEncodeInt((int)d));
   } else {
     V_CALL(k, runtime, VEncodeNumber(d));
@@ -660,7 +661,7 @@ void VStringNumber2(V_CORE_ARGS, VWORD k, VWORD _str) {
 void VCharInt2(V_CORE_ARGS, VWORD k, VWORD c) {
   V_ARG_CHECK2("char->int", 2, argc);
   if(VWordType(c) != VIMM_CHAR) VError("char->integer: not a char");
-  V_CALL(k, runtime, VEncodeInt((long)VDecodeChar(c)));
+  V_CALL(k, runtime, VEncodeInt((int)VDecodeChar(c)));
 }
 
 // ports
@@ -746,7 +747,7 @@ void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD _port) {
   if(!(port->flags & PFLAG_OSTRING)) VError("get-output-string: not an output string port");
 
   FILE * f = port->stream;
-  long len = ftell(f);
+  int len = ftell(f);
   rewind(f);
   VBlob * str = alloca(sizeof(VBlob) + len + 1);
   str->tag = VSTRING;
