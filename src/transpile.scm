@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library "transpile"
-  (import (vanity core) "utils" "match" "variables")
+  (import (vanity core) "utils" "match" "variables" "ffi")
   (export bruijn-ify to-functions printout2)
 ; Strips the names from bound variables and replaces them with indices
 ; free variables are assumed to be builtin functions
@@ -63,8 +63,8 @@
          `(case-lambda . ,(map (lambda (e) (bruijn-lambda env e)) cases)))
         (('continuation (x) body)
          `(continuation 1 ,(iter (cons (list x) env) body)))
-        (('quote . _)
-         expr)
+        (('##foreign.function . _) expr)
+        (('quote . _) expr)
         (('##inline f . xs)
          `(##inline ,f . ,(map (lambda (x) (iter env x)) xs)))
         ((f xs ...)
@@ -75,6 +75,7 @@
     (define (doit expr)
       (iter '() expr))
     (match expr
+      (('##foreign.declare . _) expr)
       (('##vcore.declare f l)
        `(##vcore.declare ,f ,(doit l)))
       (else (doit expr))))
@@ -91,6 +92,7 @@
     (define (gencont fun)
         (set! curcont (+ curcont 1))
         (string->symbol (sprintf "~A_k~A" fun curcont)))
+    (define foreign-functions '())
     (define functions '())
     (define literal-table '())
     ; TODO drop the unnecessary quotes from nonsymbols, ie turn '"foo" into just "foo"
@@ -103,6 +105,7 @@
             ((eq? x #f) x)
             ((null? x) x)
             ((string? x)
+             ; FIXME ASSOC DETECTED
              (let ((lookup (assoc x literal-table)))
                (if lookup `(##string ,(cdr lookup))
                    (begin
@@ -111,6 +114,7 @@
                    )
                )))
             ((symbol? x)
+             ; FIXME ASSOC DETECTED
              (if (not (assv x literal-table))
                  (set! literal-table (cons (cons x '()) literal-table)))
              x)
@@ -140,6 +144,13 @@
          (let ((k (gencont fun)))
            (set! functions (cons `(,k #t (,n ,(iter-apply fun body))) functions))
            `(close ,k)))
+        ; TODO replace lang with C
+        (('##foreign.function lang decl ret name . args)
+         (let ((mangled (mangle-foreign-function name)))
+           ; FIXME ASSOC DETECTED
+           (if (not (assoc mangled foreign-functions))
+               (set! foreign-functions (cons expr foreign-functions)))
+           `(##foreign.function ,mangled)))
         (('quote x)
          `(quote ,(lift-literal x)))
         (('##inline f . xs)
@@ -161,8 +172,7 @@
            `((close ,lamb) . ,(map (lambda (x) (iter-atom fun x)) xs))))
         ((xs ...)
          (map (lambda (x) (iter-atom fun x)) xs))))
-    (define (iter fun expr)
-      (match expr
+    (define (iter fun expr) (match expr
         (('bruijn . _) expr)
         (('lambda . _) (iter-atom fun expr))
         (('case-lambda . _) (iter-atom fun expr))
@@ -173,8 +183,9 @@
         (else (iter-atom fun expr))))
     (define (iter-declare d)
       (match d
+        (('##foreign.declare . _) d)
         (('##vcore.declare f l)
-         (cons f (cadr (iter f l))))))
+         (list '##vcore.declare  f (cadr (iter f l))))))
     ; TODO lift these three up and out
     (define (make-list n k)
       (if (= 0 n)
@@ -197,15 +208,19 @@
         (multi-partition
           (lambda (e)
             (match e
+              (('##foreign.declare . _) 1)
               (('##vcore.declare . _) 1)
               (else 0)))
           2 exprs))
       (lambda (globals declares)
         (let ((toplevels (map (lambda (e) (iter "global" e)) globals))
               (declares (map iter-declare declares)))
-          (list literal-table functions declares toplevels)))))
+          (list literal-table foreign-functions functions declares toplevels)))))
 
-    (define (printout2 debug? shared? literal-table functions declares toplevels)
+
+
+
+    (define (printout2 debug? shared? literal-table foreign-functions functions declares toplevels)
     (define (print-global sym)
       (let ((builtin (lookup-intrinsic2 sym)))
         (if builtin
@@ -297,7 +312,8 @@
         ((f) (closes? f))
         ((f . xs)
          (or (closes? f) (closes? xs)))
-        (x #f)))
+        (x #f)
+        (else (error "closes?: unknown form" expr))))
     (define (print-expr expr args)
       (define (print-builtin-apply f xs tail-call?)
         (printf "    V_CALL_FUNC(~A, NULL, runtime" (lookup-intrinsic2 f))
@@ -349,7 +365,8 @@
                  (print-expr x args)
                  (printf "~N    );~N")
                )
-               (error "set!'s first argument is not a symbol")))))
+               (error "set!'s first argument is not a symbol")))
+              (else (error "print-set: unknown form" y))))
       (define (print-inline f xs)
         (let ((inline (lookup-inline f)))
           (if (not inline) (error "unknown inline" f))
@@ -391,12 +408,14 @@
         (('##string x)
          (if (null? x) (error "fugg" literal-table))
          (print-literal-string x))
+        (('##foreign.function x)
+         (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A, NULL)})" x))
         ((f xs ...)
          (if (lookup-intrinsic2 f)
              (print-builtin-apply f xs #f)
              (print-closure-apply f xs #f)))
         (x (if (symbol? x) (print-global x) (print-literal x)))
-        (else (error "malformed expression" expr))))
+        (else (error "print-expr: malformed expression" expr))))
      (define (print-fun-single name check-args? num variadic? body needs-used?)
       (define (gen-args num)
         (map (lambda (e) (sprintf "_var~A" e)) (iota num)))
@@ -508,8 +527,20 @@
       (displayln "    VRuntime * runtime = NULL;")
       (print-expr expr '())
       (displayln "}"))
+
+    ; Kind of gross to do it this way but whatever
+    (define (print-foreign-declare declare)
+      (match declare
+        (('##foreign.declare d) (displayln d))
+        (('##vcore.declare f v) #f)
+        (else (error "print-foreign-declare: unknown form" declare))))
     (define (print-declare declare)
-      (printf "VFunc ~A = (VFunc)~A;~N" (car declare) (cdr declare)))
+      (match declare
+        (('##foreign.declare d) #f)
+        (('##vcore.declare f v) 
+         (printf "VFunc ~A = (VFunc)~A;~N" f v))
+        (else (error "print-declare: unknown form" declare))))
+
     (define (print-main toplevels)
       (for-each (cut print-toplevel <> <>) (iota (length toplevels)) toplevels)
 
@@ -528,6 +559,8 @@
       (displayln "#include \"vscheme/vinlines.h\"")
       (displayln "#include <stdarg.h>")
       (for-each print-literal-declaration literal-table)
+      (for-each print-foreign-declare declares)
+      (for-each print-foreign-function foreign-functions)
       (for-each print-fun functions)
       (for-each print-declare declares)
 

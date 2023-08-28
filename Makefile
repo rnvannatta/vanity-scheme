@@ -1,4 +1,4 @@
-.PHONY : clean deps cleandeps compiler runtime install tests config lay_egg hatch boot_dirs
+.PHONY : clean deps cleandeps compiler runtime install tests config lay_egg hatch boot_dirs testffi
 
 boot_dirs :
 	mkdir -p bin/bootstrap/src
@@ -6,7 +6,7 @@ boot_dirs :
 
 lay_egg : boot_dirs
 
-compiler runtime deps install tests lay_egg hatch : Makefile.all
+compiler runtime deps install tests lay_egg hatch testffi : Makefile.all
 	@mkdir -p bin bin/bootstrap lib build
 	@if ! $(MAKE) deps -f Makefile.all --no-print-directory; \
 	then \

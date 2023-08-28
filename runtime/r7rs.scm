@@ -23,7 +23,7 @@
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
-(##vcore.declare "VMakeImport"
+#;(##vcore.declare "VMakeImport"
   (lambda (lib . args)
     (lambda (x)
       (let loop ((args '()) (rest args))
@@ -40,7 +40,7 @@
               ((##sys.symbol=? x (##sys.car (##sys.car args))) (##sys.cdr (##sys.car args)))
               (else (loop (##sys.cdr args) rest)))))))
 
-(##vcore.declare "VLoadLibrary"
+#;(##vcore.declare "VLoadLibrary"
   (lambda (lib)
     ; lookup-library does 2 things:
     ; it initializes ##vcore.libraries, a global
@@ -611,11 +611,11 @@
                      (##sys.display-word #\newline port)
                      (loop (+ i 2) args))
                     ((#\a #\A)
-                     (if (null? args) (error "printf: not enough args for format string"))
+                     (if (null? args) (error "printf: not enough args for format string" fmt))
                      (display (car args) port)
                      (loop (+ i 2) (cdr args)))
                     ((#\s #\S)
-                     (if (null? args) (error "printf: not enough args for format string"))
+                     (if (null? args) (error "printf: not enough args for format string" fmt))
                      (write (car args) port)
                      (loop (+ i 2) (cdr args)))
                     (else (error "printf: unknown format" (substring fmt i (+ i 2))))))
@@ -662,7 +662,7 @@
               (if (not (null? irritants))
                 (begin
                   (display " " err)
-                  (display (car irritants) err)
+                  (write (car irritants) err)
                   (loop (cdr irritants)))))))
       (newline err)
       (##sys.abort))))

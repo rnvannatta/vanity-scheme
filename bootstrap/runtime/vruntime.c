@@ -100,8 +100,8 @@ static unsigned VMemLocation(void * obj) {
 unsigned VNumMinorGCs;
 unsigned VNumMajorGCs;
 
-unsigned long VMinorGCTime;
-unsigned long VMajorGCTime;
+uint64_t VMinorGCTime;
+uint64_t VMajorGCTime;
 
 #define MAX_TRACKED_MUTATIONS 256
 unsigned VNumTrackedMutations;
@@ -224,14 +224,14 @@ int VExitCode = 0;
 
 
 void * VForwarded(void * address) {
-  if(*(unsigned long*)address == FORWARDED)
+  if(*(uint64_t*)address == FORWARDED)
     return *(void**)(address + sizeof(VWORD));
   else
     return NULL;
 }
 
 void VForward(void * old, void const * forward) {
-  *(unsigned long*)old = FORWARDED;
+  *(uint64_t*)old = FORWARDED;
   *(void const**)(old + sizeof(VWORD)) = forward;
 }
 
@@ -338,7 +338,7 @@ VWORD VMoveDispatch(VWORD word) {
   void * ptr = VDecodePointer(word);
   if(!VNeedsMove(ptr))
     return word;
-  unsigned long type = VWordType(word);
+  uint64_t type = VWordType(word);
   void * forward = VForwarded(ptr);
   if(forward) {
     return VEncodePointer(forward, type);
@@ -801,7 +801,7 @@ void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
   } else {
     VVector * vector = VCheckedDecodeVector(v, "vector-set!");
     if(VWordType(i) != VIMM_INT) VError("vector-set!: arg 2 not an int\n");
-    long index = VDecodeInt(i);
+    int index = VDecodeInt(i);
     if(!(0 <= index && index < vector->len)) VError("vector-set!: out of range\n");
 
     VTrackMutation(vector, vector->arr + index, val);
@@ -818,8 +818,8 @@ void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD val) {
   if(VStackOverflow((char*)&runtime) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
     VGarbageCollect2Args((VFunc)VSetEnvVar2, runtime, statics, 4, 4, k, _up, _var, val);
   } else {
-    long up = VDecodeInt(_up);
-    long var = VDecodeInt(_var);
+    int up = VDecodeInt(_up);
+    int var = VDecodeInt(_var);
 
     while(up) {
       statics = statics->up;
@@ -913,7 +913,7 @@ void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
 
 void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
   V_ARG_CHECK2("multidefine", 2, argc);
-  long num = 0;
+  int num = 0;
   VWORD root = defines;
   while(!VIsEq(defines, VNULL)) {
     num++;
@@ -1122,7 +1122,7 @@ void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
 }
 
 void VDisplayWord(FILE * f, VWORD v, bool write) {
-  unsigned long type = VWordType(v);
+  uint64_t type = VWordType(v);
   switch(type) {
     case VIMM_NUMBER:
       fprintf(f, "%f", VDecodeNumber(v));

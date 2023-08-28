@@ -702,7 +702,7 @@ void VReadIter2(V_CORE_ARGS, VWORD k, VWORD port, VWORD _depth, VWORD _read_more
           depth = 0;
           break;
         }
-        if(ceil(d) == d && INT_MIN <= d && d <= INT_MAX)
+        if(ceil(d) == d && INT32_MIN <= d && d <= INT32_MAX)
         {
           elem = VEncodeInt((int)d);
         }

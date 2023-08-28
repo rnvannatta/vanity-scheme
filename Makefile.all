@@ -1,5 +1,5 @@
 # This is unideal, specify object files instead of source files. Need to create dummy .d files for assembly and scm
-SRC := variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm transpile.scm frontend.scm
+SRC := variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm transpile.scm frontend.scm ffi.scm
 RUNTIME_SRC := vruntime.c vlibrary.c vread.c
 ASSEMBLY_SRC := vapply-linux-x64.s
 
@@ -7,7 +7,7 @@ INLINE_SRC := $(addprefix include/vscheme/, vinlines.h vruntime.h)
 
 DAYS := 01 02 03 04 05 06 07 08
 AOC := $(addprefix aoc-2022/, $(addsuffix /main.ss, $(DAYS)))
-TEST_SRC := fact.scm ack.scm multilib.scm core.scm list.scm listfunc.scm match.scm io.scm callcc.scm callvalues.scm $(AOC)
+TEST_SRC := fact.scm ack.scm multilib.scm core.scm list.scm listfunc.scm match.scm io.scm callcc.scm callvalues.scm ffitest.scm ffiimport.scm $(AOC)
 
 HOME_DIR := $(shell echo ~)
 INSTALL_DIR := $(HOME_DIR)/.local
@@ -21,20 +21,22 @@ IFLAGS := $(addprefix -I, $(INCLUDES))
 vpath %.h src $(INCLUDES)
 
 DEP = $(addprefix build/, $(RUNTIME_SRC:.c=.d))
-OBJ = $(addprefix build/, $(SRC:.scm=.o))
+OBJ = $(addprefix build/, $(SRC:.scm=.o)) build/ffi.tab.o build/ffi.lex.o
 RUNTIME_OBJ = $(addprefix build/, $(RUNTIME_SRC:.c=.o))
 RUNTIME_OBJ += $(addprefix build/, $(ASSEMBLY_SRC:.s=.o))
 
 BOOT = $(addprefix bin/bootstrap/src/, $(SRC:.scm=.c))
 BOOT += $(addprefix bin/bootstrap/runtime/, $(ASSEMBLY_SRC) $(RUNTIME_SRC))
-STRAP = $(addprefix bootstrap/src/, $(SRC:.scm=.c))
+
+STRAPSRC := variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm transpile.scm frontend.scm ffi.scm
+STRAP = $(addprefix bootstrap/src/, $(STRAPSRC:.scm=.c))
 
 VSCHEME = libvscheme.so.$(MAJOR)
 VSC = vsc.$(MAJOR)
 
 include config.mk
 
-.PHONY : deps install compiler runtime tests install_compiler lay_egg hatch
+.PHONY : deps install compiler runtime tests install_compiler lay_egg hatch testffi
 compiler : bin/vsc
 runtime : lib/libvscheme.so
 
@@ -52,7 +54,7 @@ tests : compiler runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
 		echo "bin/vsc $$test && ./a.out" ; \
     OVERRIDE=`realpath lib/` ; \
-		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc $$test -Wc,-Iinclude ) ; then \
+		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc $$test -Wc,-Iinclude -Wc,-lm ) ; then \
 			echo "COMPILE FAILURE: $$test"; \
 			break; \
 	  fi ; \
@@ -65,6 +67,10 @@ tests : compiler runtime
 
 lay_egg : $(BOOT) bin/bootstrap/runtime/r7rs.c
 	cp -r include bin/bootstrap/.
+	yacc -d -b ffi src/ffi.y
+	mv ffi.tab.h bin/bootstrap/src/
+	mv ffi.tab.c bin/bootstrap/src/
+	lex -t src/ffi.l > bin/bootstrap/src/ffi.lex.c
 
 # Pretty horribly messy, should seperate into a Makefile.hatch
 hatch :
@@ -72,7 +78,7 @@ hatch :
 	gcc -rdynamic -c -o build/r7rs.o bootstrap/runtime/r7rs.c -Ibootstrap/include $(LIBS) $(CFLAGS) -fPIC -Wno-missing-braces
 	gcc -rdynamic -o lib/libvscheme.so build/r7rs.o $(addprefix bootstrap/runtime/, $(RUNTIME_SRC)) bootstrap/runtime/vapply-linux-x64.s -Ibootstrap/include $(LIBS) $(CFLAGS) -fPIC -shared -Wno-missing-braces -masm=intel
 	cp -a lib/libvscheme.so ~/.local/lib/$(VSCHEME)
-	gcc -rdynamic -o bin/vsc $(STRAP) $(CFLAGS) -Ibootstrap/include -lvscheme -Wl,--no-as-needed -Wno-missing-braces
+	gcc -rdynamic -o bin/vsc $(STRAP) $(CFLAGS) bootstrap/src/ffi.tab.c bootstrap/src/ffi.lex.c -Ibootstrap/include -lvscheme -Wl,--no-as-needed -Wno-missing-braces
 	cp -a bin/vsc ~/.local/bin/$(VSC)
 # artifact of my idiotic decision to not put runtime and src in seperate folders in boostrap
 bin/bootstrap/runtime/r7rs.c : runtime/r7rs.scm
@@ -118,3 +124,24 @@ build/%.o : runtime/%.s
 
 build/%.o : src/%.scm
 	vsc -c $< -o $@ $(SCMFLAGS)
+
+build/ffi.lex.c : src/ffi.l
+	lex -t $< > $@
+
+# Horrifically, we must use a pattern rule here to force make to understand these
+# targets are built simultaneously
+build/%.tab.h build/%.tab.c : src/%.y
+	yacc -d -b ffi $< && mv ffi.tab.h build/ && mv ffi.tab.c build/
+
+build/ffi.lex.o build/ffi.tab.o : include/vscheme/vmemory.h include/vscheme/vruntime.h include/vscheme/vinlines.h 
+
+build/ffi.lex.o : build/ffi.lex.c build/ffi.tab.h
+	gcc -c $< -o $@ $(CFLAGS)
+
+build/ffi.tab.o : build/ffi.tab.c
+	gcc -c $< -o $@ $(CFLAGS)
+
+bin/testffi : build/ffi.lex.o build/ffi.tab.o test/testffi.c
+	gcc -o $@ $^ $(CFLAGS) -lvscheme
+
+testffi : bin/testffi

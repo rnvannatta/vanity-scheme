@@ -28,9 +28,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <math.h>
-#include <limits.h>
 #include <stdlib.h>
-#include <setjmp.h>
 #include <string.h>
 #include <stddef.h>
 #include <stdarg.h>
@@ -38,6 +36,12 @@
 #include <stdint.h>
 
 #include "vscheme/vhash.h"
+
+static_assert(sizeof(char) == sizeof(int8_t));
+static_assert(sizeof(short) == sizeof(int16_t));
+static_assert(sizeof(int) == sizeof(int32_t));
+// not true on windows, bleh! need to fix this one the most
+static_assert(sizeof(long) == sizeof(int64_t));
 
 /* ======================== Structures and Enums ======================= */
 
@@ -57,8 +61,11 @@
 #define POINTER_TEST_BIT 0x0001000000000000ul
 enum VPOINTER_T { VPOINTER_CLOSURE = 1*TAG_BIAS, VPOINTER_PAIR = 3*TAG_BIAS, VPOINTER_C = 5*TAG_BIAS, VPOINTER_OTHER = 7*TAG_BIAS };
 //cannot start at 0, the mantissa has to be nonzero as otherwise the number is an inf
-//enum VIMMERAL_T { VIMM_TRUE = 2*TAG_BIAS, VIMM_NAN = 4*TAG_BIAS, VIMM_NULL = 6*TAG_BIAS, VIMM_FALSE = 8*TAG_BIAS, VIMM_VOID = 10*TAG_BIAS, VIMM_INT = 12*TAG_BIAS, VIMM_EOF = 14*TAG_BIAS, VIMM_NUMBER = 16*TAG_BIAS };
+
+// replace VIMM_NUMBER with VIMM_DOUBLE
 enum VIMMERAL_T { VIMM_TOK = 2*TAG_BIAS, VIMM_INT = 4*TAG_BIAS, VIMM_CHAR = 6*TAG_BIAS, VIMM_NUMBER = 16*TAG_BIAS };
+#define VIMM_DOUBLE VIMM_NUMBER
+
 enum VTOK_T {
   VTOK_FALSE, VTOK_TRUE, VTOK_VOID, VTOK_NAN, VTOK_NULL, VTOK_EOF, VTOK_TOMBSTONE,
   // TO ONLY BE USED BY THE LEXER
@@ -108,15 +115,15 @@ typedef struct VEnv VEnv;
 typedef void (*VFunc)(V_CORE_ARGS, ...);
 
 typedef struct {
-  unsigned long integer;
+  uint64_t integer;
 } VWORD;
 
-static inline unsigned long VBits(VWORD v) {
-  unsigned long bits;
+static inline uint64_t VBits(VWORD v) {
+  uint64_t bits;
   memcpy(&bits, &v, sizeof v);
   return bits;
 }
-static inline VWORD VWord(unsigned long bits) {
+static inline VWORD VWord(uint64_t bits) {
   VWORD v;
   memcpy(&v, &bits, sizeof bits);
   return v;
@@ -203,11 +210,12 @@ static inline unsigned VDecodeToken(VWORD v) {
 }
 
 static inline VWORD VEncodeInt(int i) {
-  return VWord(LITERAL_HEADER | VIMM_INT | (UINT_MAX & (unsigned)i));
+  return VWord(LITERAL_HEADER | VIMM_INT | (UINT32_MAX & (unsigned)i));
 }
 
 static inline int VDecodeInt(VWORD v) {
-  return ((long)VBits(v) << 32l) >> 32l;
+  //return ((int64_t)VBits(v) << 32) >> 32;
+  return VBits(v) & UINT32_MAX;
 }
 
 static inline VWORD VEncodeChar(char c) {
@@ -218,7 +226,13 @@ static inline char VDecodeChar(VWORD v) {
   return (char)(VBits(v) & 0xFF);
 }
 
+// TODO remove usage of this function
 static inline VWORD VEncodeNumber(double d) {
+  VWORD v;
+  memcpy(&v, &d, sizeof v);
+  return v;
+}
+static inline VWORD VEncodeDouble(double d) {
   VWORD v;
   memcpy(&v, &d, sizeof v);
   return v;
@@ -241,17 +255,17 @@ static inline bool VDecodeBool(VWORD v) {
 // Pointer types
 
 static inline VWORD VEncodePointer(void * v, enum VPOINTER_T type) {
-  unsigned long bits = (unsigned long)(intptr_t)v;
+  uint64_t bits = (uint64_t)(intptr_t)v;
   bits &= ~POINTER_MIRROR;
   bits |= type;
   bits |= LITERAL_HEADER;
   return VWord(bits);
 }
 
-static_assert(-1l == -1l >> 63l);
+static_assert(-1ll == -1ll >> 63ll);
 static inline VWORD * VDecodePointer(VWORD v) {
-  long bits = (long)VBits(v);
-  bits = (bits << 16l) >> 16l;
+  int64_t bits = (int64_t)VBits(v);
+  bits = (bits << 16) >> 16;
   return (VWORD*)(intptr_t)bits;
 }
 
@@ -288,8 +302,9 @@ static inline VVector * VDecodeVector(VWORD v) {
 
 static inline bool VIsToken(VWORD v, int tok) { return VBits(v) == (LITERAL_HEADER | VIMM_TOK | tok); }
 
+// TODO replace all uses with VIsDouble
 static inline bool VIsNumber(VWORD v) {
-  unsigned long bits;
+  uint64_t bits;
   memcpy(&bits, &v, sizeof v);
   // either a standard number, or an inf, or the canonical NAN
   if((bits & LITERAL_HEADER) == LITERAL_HEADER) {
@@ -303,17 +318,21 @@ static inline bool VIsNumber(VWORD v) {
     return true;
   }
 }
-static inline unsigned long VWordType(VWORD v) {
-  unsigned long bits = VBits(v);
-  if(VIsNumber(v)) {
-    return VIMM_NUMBER;
+static inline bool VIsDouble(VWORD v) {
+  return VIsNumber(v);
+}
+
+static inline uint64_t VWordType(VWORD v) {
+  uint64_t bits = VBits(v);
+  if(VIsDouble(v)) {
+    return VIMM_DOUBLE;
   } else {
     return bits & LITERAL_TYPE_MASK;
   }
 }
 
 static inline bool VIsPointer(VWORD v) {
-  return !VIsNumber(v) && VBits(v) & POINTER_TEST_BIT;
+  return !VIsDouble(v) && VBits(v) & POINTER_TEST_BIT;
 }
 
 static inline void VCheckWordType(VWORD v, enum VIMMERAL_T type) {
@@ -361,8 +380,15 @@ static inline int VCheckedDecodeInt(VWORD v, char const * proc) {
 }
 
 static inline double VCheckedDecodeDouble(VWORD v, char const * proc) {
-  if(!VIsNumber(v)) VError("~Z: not a double: ~S\n", proc, v);
+  if(!VIsDouble(v)) VError("~Z: not a double: ~S\n", proc, v);
   return VDecodeNumber(v);
+}
+
+static inline double VCheckedDecodeNumber(VWORD v, char const * proc) {
+  if(VIsDouble(v)) return VDecodeNumber(v);
+  if(VWordType(v) != VIMM_INT) VError("~Z: neither an int nor a double: ~S\n", proc, v);
+  return VDecodeInt(v);
+
 }
 
 static inline char VCheckedDecodeChar(VWORD v, char const * proc) {
@@ -407,6 +433,49 @@ static inline VPort * VCheckedDecodePort(VWORD v, char const * proc) {
   return NULL;
 }
 
+/* ======================== C FFI Decoding ======================= */
+
+static inline bool VCheckedDecodeBool(VWORD v, char const * proc) {
+  return VDecodeBool(v);
+}
+static inline VWORD VCheckedDecodeVWORD(VWORD v, char const * proc) {
+  return v;
+}
+
+// I understand these are obvious, but srsly why not
+#define UINT8_MIN 0
+#define UINT16_MIN 0
+#define UINT32_MIN 0
+#define UINT64_MIN 0
+
+#define V_MAKE_DECODE_INT(type, Type, TYPE) \
+ static inline type VCheckedDecode ## Type(VWORD v, char const * proc) { \
+    if(VWordType(v) != VIMM_INT) VError("~Z: not an int: ~S\n", proc, v); \
+    int dec = VDecodeInt(v); \
+    if(!(TYPE ## _MIN < dec && dec <= TYPE ## _MAX)) VError("~Z: overflow casting to " # type ": ~S\n", proc, v); \
+    return (type)dec; \
+ }
+
+V_MAKE_DECODE_INT(int8_t, SignedChar, INT8);
+V_MAKE_DECODE_INT(int16_t, Short, INT16);
+
+V_MAKE_DECODE_INT(uint8_t, UnsignedChar, UINT8);
+V_MAKE_DECODE_INT(uint16_t, UnsignedShort, UINT16);
+
+static inline int64_t VDecodeLong(VWORD v, char const * proc) {
+  if(VWordType(v) != VIMM_INT) VError("~Z: not an int: ~S\n", proc, v);
+  return VDecodeInt(v);
+}
+static inline uint64_t VDecodeUnsignedLong(VWORD v, char const * proc) {
+  if(VWordType(v) != VIMM_INT) VError("~Z: not an int: ~S\n", proc, v);
+  int32_t i = VDecodeInt(v);
+  unsigned u = i;
+  return u;
+}
+static inline char * VCheckedDecodeCString(VWORD v, char const * proc) { \
+  return VCheckedDecodeString(v, proc)->buf;
+}
+
 /* ======================== Construction ======================= */
 
 #define V_ALLOCA_BLOB(len) alloca(sizeof(VBlob) + len);
@@ -416,6 +485,8 @@ static inline VBlob * VFillBlob(VBlob * blob, VTAG tag, unsigned len, char const
   memcpy(blob->buf, dat, len);
   return blob;
 }
+
+#define V_STATIC_STRING(name, str) struct { VBlob b; char buf[sizeof str]; } name = { { .tag = VSTRING, .len = sizeof str }, str };
 
 #define V_ALLOCA_VECTOR(len) alloca(sizeof(VVector) + sizeof(VWORD[len]));
 static inline VVector * VFillVector(VVector * vec, VTAG tag, unsigned len, VWORD const * dat) {
