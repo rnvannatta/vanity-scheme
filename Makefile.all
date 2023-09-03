@@ -56,12 +56,12 @@ tests : compiler runtime
     OVERRIDE=`realpath lib/` ; \
 		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc $$test -Wc,-Iinclude -Wc,-lm ) ; then \
 			echo "COMPILE FAILURE: $$test"; \
-			break; \
+			exit 1; \
 	  fi ; \
     EXE=`realpath a.out` ; \
 		if ! (cd `dirname $$test` ; LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH $$EXE) ; then \
 			echo "FAILURE: $$test"; \
-			break; \
+			exit 1; \
 		fi \
 	done
 

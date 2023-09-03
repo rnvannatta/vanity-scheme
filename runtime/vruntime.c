@@ -1176,6 +1176,16 @@ void VDisplayWord(FILE * f, VWORD v, bool write) {
       fprintf(f, "#pair");
       break;
     }
+    case VPOINTER_CLOSURE:
+    {
+      fprintf(f, "#closure");
+      break;
+    }
+    case VPOINTER_FOREIGN:
+    {
+      fprintf(f, "#foreign-pointer");
+      break;
+    }
     case VPOINTER_OTHER:
     {
       void * ptr = (void*)VDecodePointer(v);
@@ -1238,9 +1248,6 @@ void VDisplayWord(FILE * f, VWORD v, bool write) {
       }
       break;
     }
-    case VPOINTER_CLOSURE:
-      fprintf(f, "#closure");
-      break;
     default:
       fprintf(f, "#?");
       break;

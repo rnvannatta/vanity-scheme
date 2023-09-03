@@ -25,6 +25,8 @@ enum keyword_t {
   T_VOLATILE,
   // function qualifiers
   T_INLINE,
+  // yucky types that don't belong except for convenience
+  T_SIZE_T
 };
 extern VMemoryPool parse_pool;
 
@@ -47,16 +49,21 @@ WHITESPACE [ \t]|\\\n
 "_Complex" { yylval.keyword_val = T_COMPLEX; return T_TYPE; }
 "_Imaginary" { yylval.keyword_val = T_IMAGINARY; return T_TYPE; }
 
-"short" { yylval.keyword_val = T_SHORT; return T_INT_QUALIFIER; }
-"long" { yylval.keyword_val = T_LONG; return T_INT_QUALIFIER; }
-"signed" { yylval.keyword_val = T_SIGNED; return T_INT_QUALIFIER; }
-"unsigned" { yylval.keyword_val = T_UNSIGNED; return T_INT_QUALIFIER; }
+  /* extra yuck for laziness */
+"size_t" { yylval.keyword_val = T_SIZE_T; return T_TYPE; }
+
+"short" { yylval.keyword_val = T_SHORT; return T_TYPE; }
+"long" { yylval.keyword_val = T_LONG; return T_TYPE; }
+"signed" { yylval.keyword_val = T_SIGNED; return T_TYPE; }
+"unsigned" { yylval.keyword_val = T_UNSIGNED; return T_TYPE; }
 
 "const" { yylval.keyword_val = T_CONST; return T_QUALIFIER; }
 "restrict" { yylval.keyword_val = T_RESTRICT; return T_QUALIFIER; }
 "volatile" { yylval.keyword_val = T_VOLATILE; return T_QUALIFIER; }
 
 "inline" { yylval.keyword_val = T_INLINE; return T_FUNCTION_QUALIFIER; }
+
+"struct" { return T_STRUCT; }
 
   /* no doubles or strings */
 [1-9][0-9]* { yylval.int_val = strtoul(yytext, NULL, 0); return T_INTEGER; }
@@ -73,6 +80,8 @@ WHITESPACE [ \t]|\\\n
 \\\n
 \n
 [ \t\r]+
+"//"([^\n\\]|\\+(.|\n))*\n
+\/\*([^*]|\*+[^*/])*\*+\/
 
 %%
 

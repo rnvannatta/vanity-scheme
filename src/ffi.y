@@ -31,6 +31,8 @@ enum keyword_t {
   T_VOLATILE,
   // function qualifiers
   T_INLINE,
+  // yucky types for the lazy
+  T_SIZE_T,
 };
 
 // types
@@ -45,6 +47,7 @@ V_STATIC_STRING(_Imaginary_str, "_Imaginary");
 // int qualifers
 V_STATIC_STRING(short_str, "short");
 V_STATIC_STRING(long_str, "long");
+V_STATIC_STRING(signed_str, "signed");
 V_STATIC_STRING(unsigned_str, "unsigned");
 // qualifers
 V_STATIC_STRING(const_str, "const");
@@ -52,6 +55,8 @@ V_STATIC_STRING(restrict_str, "restrict");
 V_STATIC_STRING(volatile_str, "volatile");
 // func qualifiers
 V_STATIC_STRING(inline_str, "inline");
+// yucky types for the lazy
+V_STATIC_STRING(size_t_str, "size_t");
 
 VBlob * keyword_to_blob[] = {
   // types
@@ -66,6 +71,7 @@ VBlob * keyword_to_blob[] = {
   // int qualifiers
   (VBlob*)&short_str,
   (VBlob*)&long_str,
+  (VBlob*)&signed_str,
   (VBlob*)&unsigned_str,
   // qualifiers
   (VBlob*)&const_str,
@@ -73,6 +79,8 @@ VBlob * keyword_to_blob[] = {
   (VBlob*)&volatile_str,
   // func qualifiers
   (VBlob*)&inline_str,
+  // yucky types
+  (VBlob*)&size_t_str,
 };
 
 VWORD keyword_to_vword(int i) {
@@ -130,17 +138,9 @@ extern VWORD parse_ret;
 
 %}
 
-%token T_OPEN_PAREN
-%token T_CLOSE_PAREN
-%token T_OPEN_BRACKET
-%token T_CLOSE_BRACKET
-
-%token T_STAR
-%token T_COMMA
-%token T_SEMICOLON
+%token T_STRUCT
 
 %token <keyword_val> T_TYPE
-%token <keyword_val> T_INT_QUALIFIER
 %token <keyword_val> T_QUALIFIER
 %token <keyword_val> T_FUNCTION_QUALIFIER
 
@@ -154,13 +154,13 @@ extern VWORD parse_ret;
   VWORD vword_val;
 }
 
-%type <vword_val> start toplevel declaration declarator_list postfix_declarator parameter_list
+%type <vword_val> start toplevel declaration declarator_list prefix_declarator postfix_declarator parameter_list abstract_prefix_declarator abstract_postfix_declarator qualified_type post_qualified_type
 
 %%
 start : toplevel
       { parse_ret = CONS("toplevel", reverse($1)); }
-      | T_TYPE postfix_declarator
-      { parse_ret = LIST("naked_declaration", keyword_to_vword($1), $2); }
+      | qualified_type prefix_declarator
+      { parse_ret = LIST("naked_declaration", $1, $2); }
       ;
 
 toplevel : declaration
@@ -169,38 +169,94 @@ toplevel : declaration
          { $$ = CONS($2, $1); }
          ;
 
-declaration : T_TYPE declarator_list ';'
-            { $$ = CONS("declaration", CONS(keyword_to_vword($1), reverse($2))); }
-            | T_TYPE ';'
-            { $$ = LIST("declaration", keyword_to_vword($1)); }
+declaration : qualified_type declarator_list ';'
+            { $$ = CONS("declaration", CONS($1, reverse($2))); }
+            | qualified_type ';'
+            { $$ = LIST("declaration", $1); }
             ;
 
-declarator_list : postfix_declarator
+declarator_list : prefix_declarator
                 { $$ = LIST($1); }
-                | declarator_list ',' postfix_declarator
+                | declarator_list ',' prefix_declarator
                 { $$ = CONS( $3, $1 ); }
                 ;
 
+prefix_declarator : postfix_declarator
+                  { $$ = $1; }
+                  | '*' postfix_declarator
+                  { $$ = LIST("pointer", $2); }
+                  | '*' T_QUALIFIER postfix_declarator
+                  { $$ = LIST("pointer", LIST(keyword_to_vword($2), $3)); }
+                  ;
+
 postfix_declarator : T_IDENTIFIER
-                   { $$ = LIST("variable", $1); }
-                   | T_OPEN_PAREN postfix_declarator ')'
-                   { $$ = $2; }
-                   | T_IDENTIFIER '(' ')'
+                   { $$ = $1; }
+                   | postfix_declarator '(' ')'
                    { $$ = LIST("function", $1); }
-                   | T_IDENTIFIER '[' ']'
+                   | postfix_declarator '[' ']'
                    { $$ = LIST("array", $1); }
-                   | T_IDENTIFIER '(' parameter_list ')'
+                   | postfix_declarator '(' parameter_list ')'
                    { $$ = LIST("function", $1, detangle_params($3)); }
+                   | '(' prefix_declarator ')'
+                   { $$ = $2; }
                    ;
 
-parameter_list : T_TYPE
-               { $$ = LIST("param", VNULL, keyword_to_vword($1), VFALSE); }
-               | T_TYPE T_IDENTIFIER
-               { $$ = LIST("param", VNULL, keyword_to_vword($1), $2); }
-               | parameter_list ',' T_TYPE
-               { $$ = LIST("param", $1, keyword_to_vword($3), VFALSE); }
-               | parameter_list ',' T_TYPE T_IDENTIFIER 
-               { $$ = LIST("param", $1, keyword_to_vword($3), $4); }
+abstract_postfix_declarator : abstract_postfix_declarator '(' ')'
+                            { $$ = LIST("function", $1); }
+                            | abstract_postfix_declarator '[' ']'
+                            { $$ = LIST("array", $1); }
+                            | abstract_postfix_declarator '(' parameter_list ')'
+                            { $$ = LIST("function", $1, detangle_params($3)); }
+                            | '(' ')'
+                            { $$ = LIST("function", VFALSE); }
+                            | '[' ']'
+                            { $$ = LIST("array", VFALSE); }
+                            | '(' parameter_list ')'
+                            { $$ = LIST("function", VFALSE, detangle_params($2)); }
+                            | '(' abstract_prefix_declarator ')'
+                            { $$ = $2; }
+                            ;
+
+abstract_prefix_declarator : abstract_postfix_declarator
+                           { $$ = $1; }
+                           | '*'
+                           { $$ = LIST("pointer", VFALSE); }
+                           | '*' T_QUALIFIER
+                           { $$ = LIST("pointer", LIST(keyword_to_vword($2), VFALSE)); }
+                           | '*' abstract_prefix_declarator
+                           { $$ = LIST("pointer", $2); }
+                           | '*' T_QUALIFIER abstract_prefix_declarator
+                           { $$ = LIST("pointer", LIST(keyword_to_vword($2), $3)); }
+                           ;
+
+parameter_list : qualified_type
+               { $$ = LIST("param", VNULL, $1, VFALSE); }
+               | qualified_type abstract_prefix_declarator
+               { $$ = LIST("param", VNULL, $1, $2); }
+               | qualified_type prefix_declarator
+               { $$ = LIST("param", VNULL, $1, $2); }
+               | parameter_list ',' qualified_type
+               { $$ = LIST("param", $1, $3, VFALSE); }
+               | parameter_list ',' qualified_type abstract_prefix_declarator
+               { $$ = LIST("param", $1, $3, $4); }
+               | parameter_list ',' qualified_type prefix_declarator 
+               { $$ = LIST("param", $1, $3, $4); }
+               ;
+
+post_qualified_type : T_TYPE
+               { $$ = LIST(keyword_to_vword($1)); }
+               | T_STRUCT T_IDENTIFIER
+               { $$ = LIST(LIST("struct", $2)); }
+               | post_qualified_type T_QUALIFIER
+               { $$ = CONS(keyword_to_vword($2), $1); }
+               | post_qualified_type T_TYPE
+               { $$ = CONS(keyword_to_vword($2), $1); }
+               ;
+
+qualified_type : post_qualified_type
+               { $$ = $1; }
+               | T_QUALIFIER qualified_type
+               { $$ = CONS(keyword_to_vword($1), $2); }
                ;
 
 %%
