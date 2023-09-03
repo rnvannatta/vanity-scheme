@@ -27,74 +27,80 @@
   (export mangle-foreign-function validate-foreign-function print-foreign-function resolve-foreign-import)
   (import (vanity core) "utils")
 
-  ; total syntax:
-  ;   declare - adds c snippet and adds info to ffi interface
-  ;   function - creates a procedure, optionally also declaring
-  ;   define - does both declare and define
-  ;   foreign-import - the preferred
+  ; user exposed syntax:
+  ;   foreign-declare -- toplevel
+  ;   foreign-import  -- toplevel
+
+  ; compiler only special forms:
+  ;   declare - embeds c snippet
+  ;   function - creates a procedure & declares
 
   ; example usage:
-  ; (foreign-function "C" double "atan2" double double)
-  ; (foreign-function "C" c-string "strdup" c-string)
-  ; (foreign-function "C" signed-char "idk" unsigned-int)
+  ;  (foreign-import "C" "mylib.h")
+  ;  (foreign-declare "C"
+  ;     "double atan2(double);
+  ;      void * make_window(int w, int h, char * title);
+  ;      void poll_inputs(struct Window * win);
+  ;      enum MyEnum { RED, GREEN, BLUE };")
 
-  ; 3 syntaxes:
-  ; (foreign-function lang ret name args ...) purely binding a foreign function, it must be declared
-  ; -- (foreign-function "C" double "sqrt" double)
-  ; (foreign-function lang decl ret name args ...) binding and declaring a foreign function
-  ; -- (foreign-function "C" "double sqrt(double);" double sqrt double)
-  ; (foreing-function lang decl) binding and declaring a foreign function, with parsed types
-  ; -- (foreign-function "C" "double sqrt(double);")
-
-  ; what about typedefs?
-  ; (foreign-typedef "C" "typedef unsigned GLuint;" unsigned "GLuint")
-  ; => informs ffi decoder that GLuint is an alias for unsigned
-
-  ; and enums?
-  ; (foreign-enum "C" "enum color { RED, GREEN, BLUE };")
-  ; => informs ffi decoder that enum color is an alias for int
-  ; => binds RED, GREEN, BLUE as immutable variables
+  ; which may expand into
+  ;  (foreign-embed "C" "include <mylib.h>") ; DONT DO THIS IN YOUR OWN CODE, PLEEEEEEASE
+  ;  (define sqrtf (foreign-function "C" float "sqrtf" float))
+  ;  (foreign-embed "C"
+  ;     "double atan2(double);
+  ;      void * make_window(int w, int h, char * title);
+  ;      void poll_inputs(struct Window * win);")
+  ;  (define atan2 (foreign-function "C" double "atan2" double))
+  ;  (define make_window (foreign-function "C" (pointer void) "make_window" int int (pointer char)))
+  ;  (define poll_inputs (foreign-function "C" void "poll_inputs" (pointer void)))
+  ;  (define RED 0) (define GREEN 1) (define BLUE 2)
 
   ; and bulk files?
   ; (foreign-define "enum color { RED, GREEN, BLUE }; foreign-typedef unsigned GLuint; double sqrt(double);")
   ; does all the above, and binds the shim of sqrt to the symbol "sqrt"
 
   (define (get-encoder type)
-    (assv type '((bool . "VEncodeBool")
-                 (char . "VEncodeChar")
-                 (signed-char . "VEncodeInt")
-                 (unsigned-char . "VEncodeInt")
-                 (short . "VEncodeInt")
-                 (unsigned-short . "VEncodeInt")
-                 (int . "VEncodeInt")
-                 (unsigned-int . "VEncodeInt")
-                 ; no long yet
-                 ; no unsigned long yet
-                 (double . "VEncodeDouble")
-                 (float . "VEncodeDouble")
-                 ; no strict float yet
-                 (vword . "")
-                 ; no c string yet
-                 ; no FILE yet
-                )))
+    (if (equal? type '(pointer void)) '((pointer void) . "VEncodeForeignPointer")
+        (assv type '((void . #t)
+                     (bool . "VEncodeBool")
+                     (char . "VEncodeChar")
+                     (signed-char . "VEncodeInt")
+                     (unsigned-char . "VEncodeInt")
+                     (short . "VEncodeInt")
+                     (unsigned-short . "VEncodeInt")
+                     (int . "VEncodeInt")
+                     (unsigned-int . "VEncodeInt")
+                     ; no long yet
+                     ; no unsigned long yet
+                     (double . "VEncodeDouble")
+                     (float . "VEncodeDouble")
+                     ; no strict float yet
+                     (vword . "")
+                     ; no c string yet
+                     ; no FILE yet
+                    ))))
   (define (get-decoder type)
-    (assv type '((bool . "VCheckedDecodeBool")
-                 (char . "VCheckedDecodeChar")
-                 (signed-char . "VCheckedDecodeSignedChar")
-                 (unsigned-char . "VCheckedDecodeUnsignedChar")
-                 (short . "VCheckedDecodeShort")
-                 (unsigned-short . "VCheckedDecodeUnsignedShort")
-                 (int . "VCheckedDecodeInt")
-                 (unsigned-int . "VCheckedDecodeInt")
-                 (long . "VCheckedDecodeLong")
-                 (unsigned-long . "VCheckedDecodeUnsignedLong")
-                 (double . "VCheckedDecodeNumber")
-                 (float . "VCheckedDecodeNumber")
-                 ; no strict float yet
-                 (vword . "VCheckedDecodeVWORD")
-                 (c-string . "VCheckedDecodeCString")
-                 ; no FILE yet
-                 )))
+    (if (and (pair? type) (eqv? (car type) 'pointer))
+        '(pointer . "VCheckedDecodeForeignPointer")
+        (assv type '((bool . "VCheckedDecodeBool")
+                     (char . "VCheckedDecodeChar")
+                     (signed-char . "VCheckedDecodeSignedChar")
+                     (unsigned-char . "VCheckedDecodeUnsignedChar")
+                     (short . "VCheckedDecodeShort")
+                     (unsigned-short . "VCheckedDecodeUnsignedShort")
+                     (int . "VCheckedDecodeInt")
+                     (unsigned-int . "VCheckedDecodeInt")
+                     (long . "VCheckedDecodeLong")
+                     (unsigned-long . "VCheckedDecodeUnsignedLong")
+                     (double . "VCheckedDecodeNumber")
+                     (float . "VCheckedDecodeNumber")
+                     ; no strict float yet
+                     (vword . "VCheckedDecodeVWORD")
+                     (c-string . "VCheckedDecodeCString")
+                     ; no FILE yet
+                     ; yuckiness
+                     (size_t . "VCheckedDecodeUnsignedLong")
+                     ))))
   (define (mangle-foreign-function name)
     (sprintf "_V30~A_shim" name))
   ; not exposing outside this file because it only correctly copies the datatypes ffi.y returns
@@ -102,54 +108,120 @@
     (cond ((string? x) (string-copy x))
           ((pair? x) (cons (deep-copy (car x)) (deep-copy (cdr x))))
           (else x)))
-  (define (validate-args expr)
-    (match expr
-      (('##foreign.function lang decl ret name args ...)
-         (if (not (string? decl)) (error "Expected declaration string" expr decl))
-         (if (not (equal? lang "C")) (error "Unsupported foreign function language" lang))
-         (if (not (get-encoder ret)) (error "Unsupported return type in C foreign-function" expr ret))
-         (if (not (string? name)) (error "Foreign function name must be a string: ~A" name))
-         (for-each
-           (lambda (arg)
-             (if (not (get-decoder arg)) (error "Unsupported arg type in C foreign-function ~A: ~A" name arg)))
-           args)
-         expr)))
-  (define (unwrap-function decl ret name args)
-    (match args
-     (()
-      (validate-args `(##foreign.function "C" ,decl ,ret ,name)))
-     ((("parameter_list" type ...))
-      (validate-args `(##foreign.function "C" ,decl ,(string->symbol ret) ,name . ,(map string->symbol (map car type)))))
-     (else (error "Unsupported C declaration" `("declaration" ,ret ("function" ,name . ,args))))))
   (define (validate-foreign-function expr)
     (define parse-decl-c (##vcore.function "VForeignParseDeclC"))
     (define release-parse (##vcore.function "VForeignReleaseParse"))
-    (define (is-one-function parse)
+    (define (is-one-decl parse)
       (match parse
-        (("toplevel" ("declaration" ret ("function" . _))) (cadr parse))
-        (("naked_declaration" ret ("function" . _)) (cons "declaration" (cdr parse)))
+        (("toplevel" ("declaration" ret _)) (cdadr parse))
+        (("naked_declaration" ret _) (cdr parse))
         (else (error "Declaration is not a single function" parse) #f)))
     (match expr
       (('##foreign.function lang decl)
        (if (not (equal? lang "C")) (error "Unsupported foreign function language" lang))
-       (let ((parse (is-one-function (deep-copy (parse-decl-c decl)))))
+       (let ((parse (is-one-decl (deep-copy (parse-decl-c decl)))))
          (release-parse)
-         (match parse
-           (("declaration" ret ("function" name))
-            (validate-args `(##foreign.function "C" ,decl ,ret ,name)))
-           (("declaration" ret ("function" name ("parameter_list" type ...)))
-            (validate-args `(##foreign.function "C" ,decl ,(string->symbol ret) ,name . ,(map string->symbol (map car type)))))
-           (else (error "Unsupported C declaration" parse)))))
+         (unwrap-function decl parse)))
       (else (error "Invalid foreign function syntax" expr))))
 
+  (define (drop-const x)
+    (match x
+      (('const y) y)
+      (else x)))
+  (define (preprocess-declare-loop decl)
+    ; assumes ret has already been preprocessed
+    (match decl
+      ((ret ("function" expr))
+       `(function ,(drop-const ret) ,expr))
+      ((ret ("function" expr ("parameter_list" args ...)))
+       `(function ,(drop-const ret) ,expr . ,(map drop-const (preprocess-args args))))
+      ((ret ("pointer" expr))
+       (preprocess-declare-loop (list (list 'pointer ret) expr)))
+      ((ret expr) `(variable ,ret ,expr))))
+  (define (preprocess-declare decl)
+    (preprocess-declare-loop (list (preprocess-type (car decl)) (cadr decl))))
+  (define (preprocess-args args)
+    (if (null? args) '()
+        (cons
+          (cadr (preprocess-declare (car args)))
+          (preprocess-args (cdr args)))))
+  (define (preprocess-type t)
+    (define (decide . args)
+      (match args
+        (('char 0 #f #f #f)
+         'char)
+        (('char 0 #f #t #f)
+         'unsigned-char)
+        (('char 0 #f #f #t)
+         'signed-char)
+
+        (('int 0 #f #f _)
+         'int)
+        (('int 0 #f #t #f)
+         'unsigned-int)
+        ; TODO assumes long = 64 bit
+        (('int 1 #f #f _)
+         'long)
+        (('int 1 #f #t #f)
+         'unsigned-long)
+
+        (('int 2 #f #f _)
+         'long)
+        (('int 2 #f #t #f)
+         'unsigned-long)
+
+        (('int 0 #t #f _)
+         'short)
+        (('int 0 #t #t #f)
+         'unsigned-short)
+
+        ((special 0 #f #f #f)
+         special)
+        (else (error "unsupported type combination" (map list args '(special longs short unsigned signed))))))
+    (define (append-const const? type)
+      (if const? (list 'const type) type))
+    (define (maybe-string->symbol x)
+      (if (string? x) (string->symbol x) x))
+    (let loop ((t (map maybe-string->symbol t)) (special #f) (const #f) (longs 0) (short #f) (unsigned #f) (signed #f))
+      (if (null? t)
+          (append-const
+             const
+             (decide (if special special 'int) longs short unsigned signed))
+          (case (car t)
+            ((const) (loop (cdr t) special #t longs short unsigned signed))
+            ((restrict volatile)
+             ; we don't care about either of these qualifiers, and never will
+             (loop (cdr t) special const longs short unsigned signed))
+            ((long) (loop (cdr t) special const (+ longs 1) short unsigned signed))
+            ((short) (loop (cdr t) special const longs #t unsigned signed))
+            ((unsigned) (loop (cdr t) special const longs short #t signed))
+            ((signed) (loop (cdr t) special const longs short unsigned #t))
+            (else (if special (error "Can only have one type in a declaration" (car t) special)
+                      (loop (cdr t) (car t) const longs short unsigned signed))))
+      )
+    ))
+  (define (unwrap-function decl expr)
+    (let ((expr (preprocess-declare expr)))
+      (match expr
+        (('function ret name . args)
+         (if (not (get-encoder ret)) (error "Unsupported return type in C foreign-function" expr))
+         (if (not (string? name)) (error "Not a simple function declaration: ~A" expr))
+         (for-each
+             (lambda (arg)
+               (if (not (get-decoder arg)) (error "Unsupported arg type in C foreign-function" name arg)))
+             args)
+         `(##foreign.function "C" ,decl ,ret ,name . ,args))
+        (else (error "Unsupported C declaration" expr)))))
   (define (unwrap-declares parse)
     (match parse
       (("toplevel") '())
-      (("toplevel" ("declaration" ret ("function" name . args) . declrest) . toprest)
+      (("toplevel" ("declaration" ret decl . declrest) . toprest)
        (cons
-         `(define ,(string->symbol name) ,(unwrap-function "" ret name args))
+         (let ((ff (unwrap-function "" (list ret decl))))
+          `(define ,(string->symbol (list-ref ff 4)) ,ff))
          (unwrap-declares `("toplevel" ("declaration" ,ret . ,declrest) . ,toprest))))
       (("toplevel" ("declaration" ret) . toprest) (unwrap-declares `("toplevel" . ,toprest)))))
+
   (define (resolve-foreign-import expr path)
     (define parse-header-c (##vcore.function "VForeignParseHeaderC"))
     (define release-parse (##vcore.function "VForeignReleaseParse"))
@@ -180,10 +252,12 @@
          (for-each (lambda (e) (printf ", VWORD _arg~A" e)) names)
          (printf ") {~N")
          (printf "  V_ARG_CHECK2(\"~A\", ~A, argc);~N" mangled (+ 1 (length args)))
-         (printf "  V_GC_CHECK2_VARARGS((VFunc)~A, runtime, statics, ~A, ~A" mangled (+ 1 (length args)) (+ 1 (length args)))
+         (printf "  V_GC_CHECK2_VARARGS((VFunc)~A, runtime, statics, ~A, ~A, _k" mangled (+ 1 (length args)) (+ 1 (length args)))
          (for-each (lambda (e) (printf ", _arg~A" e)) names)
          (printf ") {~N")
-         (printf "    VWORD _ret = ~A(~A(" (cdr (get-encoder ret)) name)
+         (if (eqv? ret 'void)
+             (printf "(~A(" name)
+             (printf "    VWORD _ret = ~A(~A(" (cdr (get-encoder ret)) name))
          (if (pair? args)
              (begin
                (print-arg (car args) (car names))
@@ -194,5 +268,7 @@
                  (cdr args)
                  (cdr names))))
          (printf "));~N")
-         (printf "  V_CALL(_k, runtime, _ret);~N")
+         (if (eqv? ret 'void)
+             (printf "  V_CALL(_k, runtime, VVOID);~N")
+             (printf "  V_CALL(_k, runtime, _ret);~N"))
          (printf "  }~N}~N"))))))
