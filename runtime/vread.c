@@ -43,6 +43,7 @@ enum lex_t {
   LEX_CHAR,
   LEX_NAMED_CHAR,
   LEX_NUMBER,
+  LEX_DOUBLE,
   LEX_SYMBOL,
   LEX_STRING,
   LEX_STRING_ESCAPE,
@@ -125,6 +126,9 @@ static int VLexStart(int c, bool * satisfied, bool * unget) {
 }
 
 static int VLexDot(int c, bool * satisfied, bool * unget) {
+  if('0' <= c && c <= '9') {
+    return LEX_NUMBER;
+  }
   switch(c) {
     case '(':
     case ')':
@@ -212,7 +216,7 @@ static int VLexSign(int c, bool * satisfied, bool * unget) {
       *unget = true;
       return LEX_SYMBOL;
     case '.':
-      return LEX_NUMBER;
+      return LEX_DOUBLE;
     default:
       *satisfied = true;
       return LEX_ERROR;
@@ -225,6 +229,9 @@ static int VLexNumber(int c, bool * satisfied, bool * unget) {
   }
   // TODO add doubles & add fancy number decoding
   switch(c) {
+    case '.':
+      return LEX_DOUBLE;
+      break;
     case '(':
     case ')':
     case '"':
@@ -241,6 +248,30 @@ static int VLexNumber(int c, bool * satisfied, bool * unget) {
       *satisfied = true;
       return LEX_ERROR;
   }
+}
+
+static int VLexDouble(int c, bool * satisfied, bool * unget) {
+  if('0' <= c && c <= '9') {
+    return LEX_DOUBLE;
+  }
+  switch(c) {
+    case '(':
+    case ')':
+    case '"':
+    case ';':
+    case ' ':
+    case '\r':
+    case '\t':
+    case '\n':
+      *satisfied = true;
+      *unget = true;
+      return LEX_DOUBLE;
+      break;
+    default:
+      *satisfied = true;
+      return LEX_ERROR;
+  }
+  
 }
 
 static int VLexSymbol(int c, bool * satisfied, bool * unget) {
@@ -357,6 +388,9 @@ static int VLex(FILE * f) {
         break;
       case LEX_NUMBER:
         lex_state = VLexNumber(c, &satisfied, &unget);
+        break;
+      case LEX_DOUBLE:
+        lex_state = VLexDouble(c, &satisfied, &unget);
         break;
       case LEX_SYMBOL:
         lex_state = VLexSymbol(c, &satisfied, &unget);
@@ -710,6 +744,24 @@ void VReadIter2(V_CORE_ARGS, VWORD k, VWORD port, VWORD _depth, VWORD _read_more
         {
           elem = VEncodeNumber(d);
         }
+
+        VPair * pair = myalloca(sizeof(VPair));
+        *pair = VMakePair(elem, root->rest);
+        root->rest = VEncodePair(pair);
+        break;
+      }
+      case LEX_DOUBLE:
+      {
+        errno = 0;
+        char * end;
+        double d = strtod(lex_buf, &end);
+        if(errno || lex_buf == end)
+        {
+          VError("read: failed to parse as number: ~z\n", lex_buf);
+          depth = 0;
+          break;
+        }
+        elem = VEncodeNumber(d);
 
         VPair * pair = myalloca(sizeof(VPair));
         *pair = VMakePair(elem, root->rest);

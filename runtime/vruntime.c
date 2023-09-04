@@ -502,6 +502,10 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
 
   size_t after_gc_size = VHeapPos - VHeap + stack_len;
   bool is_major = VHeap + after_gc_size >= VHeapEnd - VStackSize;
+  static VDebugInfo major_info = { "Garbage Collection (major)" };
+  static VDebugInfo minor_info = { "Garbage Collection (minor)" };
+  VRecordCall(is_major ? &major_info : &minor_info);
+
   if(is_major) {
     VNumMajorGCs++;
     VSwapHeap();
