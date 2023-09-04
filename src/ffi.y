@@ -41,9 +41,9 @@ V_STATIC_STRING(char_str, "char");
 V_STATIC_STRING(int_str, "int");
 V_STATIC_STRING(float_str, "float");
 V_STATIC_STRING(double_str, "double");
-V_STATIC_STRING(_Bool_str, "_Bool");
-V_STATIC_STRING(_Complex_str, "_Complex");
-V_STATIC_STRING(_Imaginary_str, "_Imaginary");
+V_STATIC_STRING(_Bool_str, "bool");
+V_STATIC_STRING(_Complex_str, "complex");
+V_STATIC_STRING(_Imaginary_str, "imaginary");
 // int qualifers
 V_STATIC_STRING(short_str, "short");
 V_STATIC_STRING(long_str, "long");

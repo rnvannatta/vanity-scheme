@@ -243,19 +243,19 @@ void VDiv2(V_CORE_ARGS, VWORD k, VWORD x, ...) {
     {
       uint64_t type = VWordType(x);
       if(type == VIMM_INT) {
-        iacc += VDecodeInt(x);
+        iacc = VDecodeInt(x);
       } else if(type == VIMM_NUMBER) {
         exact = false;
-        dacc += VDecodeNumber(x);
+        dacc = VDecodeNumber(x);
       } else {
-        VError("-: not a number\n");
+        VError("/: not a number\n");
       }
     }
     // performs the 1/x op
     if(argc == 2) {
       if(iacc != 1) {
-        iacc = 1;
         dacc = iacc;
+        iacc = 1;
         exact = false;
       }
       dacc = 1.0/dacc;
@@ -430,7 +430,7 @@ void VCdr2(V_CORE_ARGS, VWORD k, VWORD x) {
 void VListVector2(V_CORE_ARGS, VWORD k, VWORD lst) {
   V_ARG_CHECK2("list->vector", 2, argc);
 
-  V_GC_CHECK2_VARARGS((VFunc)VVectorLength2, runtime, statics, 2, argc, k, lst) {
+  V_GC_CHECK2_VARARGS((VFunc)VListVector2, runtime, statics, 2, argc, k, lst) {
     int len = 0;
     VWORD v = lst;
     while(VWordType(v) == VPOINTER_PAIR) {

@@ -381,6 +381,18 @@ static inline bool VIsBlob(VWORD v) {
   }
   return false;
 }
+static inline bool VIsMutableBlob(VWORD v) {
+  if(VIsPointer(v)) {
+    VTAG t = *(VTAG*)VDecodePointer(v);
+    switch(t) {
+      case VSTRING:
+        return true;
+      default:
+        return false;
+    }
+  }
+  return false;
+}
 
 static inline bool VIsString(VWORD v) {
   return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VSTRING;
@@ -503,8 +515,46 @@ static inline uint64_t VCheckedDecodeUnsignedLong(VWORD v, char const * proc) {
   unsigned u = i;
   return u;
 }
-static inline char * VCheckedDecodeCString(VWORD v, char const * proc) { \
-  return VCheckedDecodeString(v, proc)->buf;
+static inline char * VCheckedDecodeCString(VWORD v, char const * proc) {
+  if(VIsString(v)) {
+    return VDecodeBlob(v)->buf;
+  } else if(VIsForeignPointer(v)) {
+    return (void*)VDecodePointer(v);
+  }
+  VError("~Z: not castable to c string: ~S\n", proc, v);
+  return NULL;
+}
+static inline char const * VCheckedDecodeConstCString(VWORD v, char const * proc) {
+  if(VIsString(v) || VIsSymbol(v)) {
+    return VDecodeBlob(v)->buf;
+  } else if(VIsForeignPointer(v)) {
+    return (void*)VDecodePointer(v);
+  }
+  VError("~Z: not castable to const c string: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline void * VCheckedDecodeVoidPtr(VWORD v, char const * proc) {
+  // void pointers accept any non-const foreign ponters and
+  // any non-const buffers, so any buffer except symbols
+  if(VIsForeignPointer(v)) {
+    return (void*)VDecodePointer(v);
+  } else if(VIsMutableBlob(v)) {
+    return VDecodeBlob(v)->buf;
+  }
+  VError("~Z: not castable to void pointer: ~S\n", proc, v);
+  return NULL;
+}
+static inline void const * VCheckedDecodeConstVoidPtr(VWORD v, char const * proc) {
+  // const void pointers accept any foreign ponters and
+  // any buffers, including constant buffers
+  if(VIsForeignPointer(v)) {
+    return VCheckedDecodeForeignPointer(v, proc);
+  } else if(VIsBlob(v)) {
+    return VDecodeBlob(v)->buf;
+  }
+  VError("~Z: not castable to const void pointer: ~S\n", proc, v);
+  return NULL;
 }
 
 /* ======================== Construction ======================= */
