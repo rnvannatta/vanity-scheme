@@ -90,12 +90,12 @@ Another program: My favorite infinite loop. Neither recursion nor closures nor s
 
 A rough ordering of the next few improvements I'll be making:
 
-1. Change the calling convention so arguments are passed by register.
-2. Implement a foreign function interface.
-3. Add support for structures and records.
+1. DONE: Change the calling convention so arguments are passed by register.
+2. DONE: Implement a foreign function interface.
+3. IN PROGRESS: Implement finalizers.
 4. Emit header files for compiled libraries.
-5. Improve the debugging with 'stack traces' via tracing the continuation
-6. Add a repl with libgccjit.
+5. Implement Fibers.
+6. Add a repl via bytecode
 
 Progress is very slow as I am moonlighting this project while daylighting as a graphics programmer.
 
@@ -136,10 +136,6 @@ Call History (most recent to least recent)
 ```
 
 As continuation passing style folds the program inside out and all procedures gain an extra continuation parameter.  You can check it out by expanding the code to continuation passing style with `vsc -E2`.
-
-### No Finalizers
-
-I haven't added finalizers yet. So, if you don't run `close-port` on your files and ports, they will leak. And eventually you'll run out of file descriptors and your program will crash.
 
 ### Weird Limits
 
