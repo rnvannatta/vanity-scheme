@@ -59,7 +59,9 @@ static_assert(sizeof(long) == sizeof(int64_t));
 
 #define TAG_BIAS         0x0001000000000000ul
 #define POINTER_TEST_BIT 0x0001000000000000ul
-enum VPOINTER_T { VPOINTER_CLOSURE = 1*TAG_BIAS, VPOINTER_PAIR = 3*TAG_BIAS, VPOINTER_C = 5*TAG_BIAS, VPOINTER_OTHER = 7*TAG_BIAS };
+enum VPOINTER_T { VPOINTER_CLOSURE = 1*TAG_BIAS, VPOINTER_PAIR = 3*TAG_BIAS, VPOINTER_UNUSED = 5*TAG_BIAS, VPOINTER_OTHER = 7*TAG_BIAS,
+// yuck
+VPOINTER_FOREIGN = 8*TAG_BIAS, };
 //cannot start at 0, the mantissa has to be nonzero as otherwise the number is an inf
 
 // replace VIMM_NUMBER with VIMM_DOUBLE
@@ -87,18 +89,34 @@ enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
 #define POINTER_MIRROR  0xFFFF000000000000ul
 
 #if 0
-// logic here: 4 bits. NPXX
+// 4 bits. NPXX
+// NAN: 1000, INF: 0000
+
+// OTHER: 0100
+// CLOSURE: 0101
+// PAIR: 0110
+
+// TOK: 0001
+// INT: 0010
+// CHAR: 0011
+
+// FOREIGN: 1001
+
 // NAN and INF are placed such that they're 1000 and 0000 respectively. This way you can test
 // if a literal is a double by merely checking that it's real or the bottom 3 bits of tag are 0
 // second top bit is a pointer bit, so all pointers have a 4 in them.
-// otherwise an integer.
 
-// EVEN BETTER IDEA: reject 48 bit integers return to the less insane 32 bit integers
-// this way we can make an intermediate be tag 1111
-enum V_TYPE_T { VIMM_INF = 0, VIMM_TOK = 1*TAG_BIAS, VIMM_INT = 2*TAG_BIAS, VIMM_CHAR = 3*TAG_BIAS,
-  VPTR_CLOSURE = 4*TAG_BIAS, VPTR_PAIR = 5*TAG_BIAS, VPTR_FOREIGN=6*TAG_BIAS, VPTR_OTHER = 7*TAG_BIAS
+// checking that a type is an type other than double is merely checking that the top 16 bits are all
+// set appropriately.
 
-  VIMM_NAN = 8*TAG_BIAS, VIMM_REAL=16*TAG_BIAS, VIMM_DOUBLE = 17*TAG_BIAS };
+// note that, ofc the sign bit is undefined for a true nan and clearly flipped for an inf
+// not to mention infs don't have the literal header as do nans
+
+enum V_TYPE_T { VIMM_TOK = 1*TAG_BIAS, VIMM_INT = 2*TAG_BIAS, VIMM_CHAR = 3*TAG_BIAS,
+  VPTR_OTHER = 4*TAG_BIAS, VPTR_PAIR = 5*CLOSURE, VPTR_PAIR=6*TAG_BIAS,
+  VPTR_FOREIGN = 9*TAG_BIAS
+
+  VIMM_INF = 0, VIMM_NAN = 8*TAG_BIAS, VIMM_REAL=16*TAG_BIAS, VIMM_DOUBLE = 17*TAG_BIAS };
 #endif
 
 #define VNAN VWord(LITERAL_HEADER | VIMM_TOK | VTOK_NAN)
@@ -161,7 +179,14 @@ typedef struct VBlob {
   char buf[];
 } VBlob;
 
-enum PORT_FLAG_T { PFLAG_READ = 1, PFLAG_WRITE = 2, PFLAG_OSTRING = 4, PFLAG_PROCESS = 8 };
+enum PORT_FLAG_T {
+  PFLAG_READ = 1,
+  PFLAG_WRITE = 2,
+  PFLAG_OSTRING = 4,
+  PFLAG_PROCESS = 8,
+  PFLAG_NOCLOSE = 16,
+};
+
 typedef struct VPort {
   VTAG tag;
   FILE * stream;
@@ -284,6 +309,10 @@ static inline VPair * VDecodePair(VWORD v) {
   return (VPair*)VDecodePointer(v);
 }
 
+static inline VWORD VEncodeForeignPointer(void * v) {
+  return VEncodePointer(v, VPOINTER_FOREIGN);
+}
+
 static inline VBlob * VDecodeBlob(VWORD v) {
   return (VBlob*) VDecodePointer(v);
 }
@@ -332,7 +361,11 @@ static inline uint64_t VWordType(VWORD v) {
 }
 
 static inline bool VIsPointer(VWORD v) {
-  return !VIsDouble(v) && VBits(v) & POINTER_TEST_BIT;
+  return !VIsDouble(v) && (VBits(v) & POINTER_TEST_BIT);
+}
+
+static inline bool VIsForeignPointer(VWORD v) {
+  return !VIsDouble(v) && (VBits(v) & VPOINTER_FOREIGN) == VPOINTER_FOREIGN;
 }
 
 static inline void VCheckWordType(VWORD v, enum VIMMERAL_T type) {
@@ -348,6 +381,18 @@ static inline bool VIsBlob(VWORD v) {
     switch(t) {
       case VSTRING:
       case VSYMBOL:
+        return true;
+      default:
+        return false;
+    }
+  }
+  return false;
+}
+static inline bool VIsMutableBlob(VWORD v) {
+  if(VIsPointer(v)) {
+    VTAG t = *(VTAG*)VDecodePointer(v);
+    switch(t) {
+      case VSTRING:
         return true;
       default:
         return false;
@@ -403,6 +448,11 @@ static inline VClosure * VCheckedDecodeClosure(VWORD v, char const * proc) {
 static inline VClosure * VDecodeClosureApply(VWORD v) {
   if(VWordType(v) != VPOINTER_CLOSURE) VError("tried to call non-closure: ~s\n", v);
   return (VClosure*)VDecodePointer(v);
+}
+
+static inline void * VCheckedDecodeForeignPointer(VWORD v, char const * proc) {
+  if(VWordType(v) != VPOINTER_FOREIGN) VError("~Z: not a foreign pointer: ~S\n", proc, v);
+  return (void*)VDecodePointer(v);
 }
 
 static inline VBlob * VCheckedDecodeBlob(VWORD v, char const * proc) {
@@ -462,18 +512,56 @@ V_MAKE_DECODE_INT(int16_t, Short, INT16);
 V_MAKE_DECODE_INT(uint8_t, UnsignedChar, UINT8);
 V_MAKE_DECODE_INT(uint16_t, UnsignedShort, UINT16);
 
-static inline int64_t VDecodeLong(VWORD v, char const * proc) {
+static inline int64_t VCheckedDecodeLong(VWORD v, char const * proc) {
   if(VWordType(v) != VIMM_INT) VError("~Z: not an int: ~S\n", proc, v);
   return VDecodeInt(v);
 }
-static inline uint64_t VDecodeUnsignedLong(VWORD v, char const * proc) {
+static inline uint64_t VCheckedDecodeUnsignedLong(VWORD v, char const * proc) {
   if(VWordType(v) != VIMM_INT) VError("~Z: not an int: ~S\n", proc, v);
   int32_t i = VDecodeInt(v);
   unsigned u = i;
   return u;
 }
-static inline char * VCheckedDecodeCString(VWORD v, char const * proc) { \
-  return VCheckedDecodeString(v, proc)->buf;
+static inline char * VCheckedDecodeCString(VWORD v, char const * proc) {
+  if(VIsString(v)) {
+    return VDecodeBlob(v)->buf;
+  } else if(VIsForeignPointer(v)) {
+    return (void*)VDecodePointer(v);
+  }
+  VError("~Z: not castable to c string: ~S\n", proc, v);
+  return NULL;
+}
+static inline char const * VCheckedDecodeConstCString(VWORD v, char const * proc) {
+  if(VIsString(v) || VIsSymbol(v)) {
+    return VDecodeBlob(v)->buf;
+  } else if(VIsForeignPointer(v)) {
+    return (void*)VDecodePointer(v);
+  }
+  VError("~Z: not castable to const c string: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline void * VCheckedDecodeVoidPtr(VWORD v, char const * proc) {
+  // void pointers accept any non-const foreign ponters and
+  // any non-const buffers, so any buffer except symbols
+  if(VIsForeignPointer(v)) {
+    return (void*)VDecodePointer(v);
+  } else if(VIsMutableBlob(v)) {
+    return VDecodeBlob(v)->buf;
+  }
+  VError("~Z: not castable to void pointer: ~S\n", proc, v);
+  return NULL;
+}
+static inline void const * VCheckedDecodeConstVoidPtr(VWORD v, char const * proc) {
+  // const void pointers accept any foreign ponters and
+  // any buffers, including constant buffers
+  if(VIsForeignPointer(v)) {
+    return VCheckedDecodeForeignPointer(v, proc);
+  } else if(VIsBlob(v)) {
+    return VDecodeBlob(v)->buf;
+  }
+  VError("~Z: not castable to const void pointer: ~S\n", proc, v);
+  return NULL;
 }
 
 /* ======================== Construction ======================= */
@@ -666,6 +754,11 @@ static inline void VSetRest(VPair * p, VWORD w) {
   VTrackMutation(p, &p->rest, w);
   p->rest = w;
 }
+
+void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major);
+void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer);
+void VHasFinalizer(V_CORE_ARGS, VWORD k, VWORD mem);
+void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem);
 
 void VSetCar2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
 void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);

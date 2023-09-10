@@ -87,6 +87,10 @@ void VCharInt2(V_CORE_ARGS, VWORD k, VWORD c);
 //void VIntChar2(V_CORE_ARGS, VWORD k, VWORD int);
 
 // ports
+void VStdinPort(V_CORE_ARGS, VWORD k);
+void VStdoutPort(V_CORE_ARGS, VWORD k);
+void VStderrPort(V_CORE_ARGS, VWORD k);
+
 void VDupStdin2(V_CORE_ARGS, VWORD k);
 void VDupStdout2(V_CORE_ARGS, VWORD k);
 void VDupStderr2(V_CORE_ARGS, VWORD k);

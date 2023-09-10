@@ -140,6 +140,8 @@ static struct { VBlob sym; char bytes[12]; } _V0case__lambda = { { VSYMBOL, 12 }
 static struct { VBlob sym; char bytes[7]; } _V0lambda = { { VSYMBOL, 7 }, "lambda" };
 static struct { VBlob sym; char bytes[16]; } _V0expand__toplevel = { { VSYMBOL, 16 }, "expand-toplevel" };
 static void expand_k47(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k47" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k47, got ~D~N"
   "-- expected 1~N"
@@ -161,6 +163,8 @@ VEncodePointer(&_V0expand__toplevel.sym, VPOINTER_OTHER),
  }
 }
 static void _V0expand__syntax_k51(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k51" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k51, got ~D~N"
   "-- expected 1~N"
@@ -175,6 +179,8 @@ V_CALL(VGetArg(upenv, 6-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k50(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k50" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k50, got ~D~N"
   "-- expected 1~N"
@@ -194,6 +200,8 @@ V_CALL(VGetArg(upenv, 17-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k49(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k49" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k49, got ~D~N"
   "-- expected 1~N"
@@ -212,6 +220,8 @@ V_CALL(VGetArg(upenv, 15-1, 6), runtime,
  }
 }
 static void _V0expand__syntax_k48(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k48" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k48, got ~D~N"
   "-- expected 1~N"
@@ -237,6 +247,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda7(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda7" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda7, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -265,6 +277,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k54(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k54" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k54, got ~D~N"
   "-- expected 1~N"
@@ -283,6 +297,8 @@ VGetArg(upenv, 5-1, 1)
  }
 }
 static void _V0loop_k56(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k56" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k56, got ~D~N"
   "-- expected 1~N"
@@ -298,6 +314,8 @@ V_CALL(upenv->up->up->up->vars[1], runtime,
  }
 }
 static void _V0loop_k55(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k55" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k55, got ~D~N"
   "-- expected 1~N"
@@ -329,6 +347,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k59(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k59" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k59, got ~D~N"
   "-- expected 1~N"
@@ -344,6 +364,8 @@ V_CALL(VGetArg(upenv, 7-1, 1), runtime,
  }
 }
 static void _V0loop_k58(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k58" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k58, got ~D~N"
   "-- expected 1~N"
@@ -362,6 +384,8 @@ V_CALL(VGetArg(upenv, 24-1, 9), runtime,
  }
 }
 static void _V0loop_lambda14(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda14" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0loop_lambda14, got ~D~N"
   "-- expected 2~N"
@@ -392,6 +416,8 @@ upenv->up->up->vars[1]
  }
 }
 static void _V0loop_lambda13(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_lambda13" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_lambda13, got ~D~N"
   "-- expected 1~N"
@@ -410,6 +436,8 @@ V_CALL(VGetArg(upenv, 22-1, 10), runtime,
  }
 }
 static void _V0loop_k57(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k57" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k57, got ~D~N"
   "-- expected 1~N"
@@ -429,6 +457,8 @@ V_CALL(VGetArg(upenv, 21-1, 11), runtime,
  }
 }
 static void _V0loop_lambda12(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0loop_lambda12" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0loop_lambda12, got ~D~N"
   "-- expected 3~N"
@@ -448,6 +478,8 @@ V_CALL_FUNC(_V0loop_k55, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda11" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda11, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -463,6 +495,8 @@ static void _V0expand__syntax_lambda11(VRuntime * runtime, VEnv * upenv, int arg
  }
 }
 static void _V0expand__syntax_lambda10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda10" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__syntax_lambda10, got ~D~N"
   "-- expected 2~N"
@@ -482,6 +516,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda11, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda9(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda9" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_lambda9, got ~D~N"
   "-- expected 1~N"
@@ -500,6 +536,8 @@ V_CALL(VGetArg(upenv, 17-1, 10), runtime,
  }
 }
 static void _V0expand__syntax_k60(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k60" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k60, got ~D~N"
   "-- expected 1~N"
@@ -518,6 +556,8 @@ VEncodePointer(&_V0case__lambda.sym, VPOINTER_OTHER),
  }
 }
 static void _V0expand__syntax_lambda15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda15" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0expand__syntax_lambda15, got ~D~N"
   "-- expected 3~N"
@@ -549,6 +589,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k53(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k53" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k53, got ~D~N"
   "-- expected 1~N"
@@ -575,6 +617,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda8(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda8" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda8, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -603,6 +647,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k63(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k63" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k63, got ~D~N"
   "-- expected 1~N"
@@ -617,6 +663,8 @@ V_CALL(VGetArg(upenv, 6-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k62(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k62" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k62, got ~D~N"
   "-- expected 1~N"
@@ -643,6 +691,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda16(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda16" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda16, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -671,6 +721,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k68(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k68" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k68, got ~D~N"
   "-- expected 1~N"
@@ -685,6 +737,8 @@ V_CALL(VGetArg(upenv, 9-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k67(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k67" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k67, got ~D~N"
   "-- expected 1~N"
@@ -703,6 +757,8 @@ V_CALL(VGetArg(upenv, 19-1, 10), runtime,
  }
 }
 static void _V0expand__syntax_k66(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k66" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k66, got ~D~N"
   "-- expected 1~N"
@@ -748,6 +804,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k65(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k65" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k65, got ~D~N"
   "-- expected 1~N"
@@ -775,6 +833,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda17(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda17" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda17, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -803,6 +863,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k73(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k73" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k73, got ~D~N"
   "-- expected 1~N"
@@ -817,6 +879,8 @@ V_CALL(VGetArg(upenv, 10-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k72(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k72" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k72, got ~D~N"
   "-- expected 1~N"
@@ -892,6 +956,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k71(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k71" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k71, got ~D~N"
   "-- expected 1~N"
@@ -922,6 +988,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k70(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k70" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k70, got ~D~N"
   "-- expected 1~N"
@@ -949,6 +1017,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda18(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda18" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda18, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -977,6 +1047,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k76(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k76" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k76, got ~D~N"
   "-- expected 1~N"
@@ -1025,6 +1097,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k75(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k75" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k75, got ~D~N"
   "-- expected 1~N"
@@ -1052,6 +1126,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda19(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda19" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda19, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -1080,6 +1156,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k80(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k80" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k80, got ~D~N"
   "-- expected 1~N"
@@ -1094,6 +1172,8 @@ V_CALL(VGetArg(upenv, 11-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k79(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k79" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k79, got ~D~N"
   "-- expected 1~N"
@@ -1112,6 +1192,8 @@ V_CALL(VGetArg(upenv, 21-1, 7), runtime,
  }
 }
 static void _V0expand__syntax_k78(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k78" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k78, got ~D~N"
   "-- expected 1~N"
@@ -1137,6 +1219,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda20(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda20" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda20, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -1165,6 +1249,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k87(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k87" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k87, got ~D~N"
   "-- expected 1~N"
@@ -1179,6 +1265,8 @@ V_CALL(VGetArg(upenv, 15-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k86(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k86" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k86, got ~D~N"
   "-- expected 1~N"
@@ -1276,6 +1364,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0expand__syntax_k85(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k85" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k85, got ~D~N"
   "-- expected 1~N"
@@ -1306,6 +1396,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k84(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k84" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k84, got ~D~N"
   "-- expected 1~N"
@@ -1336,6 +1428,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k83(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k83" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k83, got ~D~N"
   "-- expected 1~N"
@@ -1366,6 +1460,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k82(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k82" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k82, got ~D~N"
   "-- expected 1~N"
@@ -1393,6 +1489,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda21(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda21" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda21, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -1421,6 +1519,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k91(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k91" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k91, got ~D~N"
   "-- expected 1~N"
@@ -1435,6 +1535,8 @@ V_CALL(VGetArg(upenv, 13-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k90(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k90" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k90, got ~D~N"
   "-- expected 1~N"
@@ -1483,6 +1585,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k89(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k89" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k89, got ~D~N"
   "-- expected 1~N"
@@ -1510,6 +1614,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda22(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda22" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda22, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -1538,6 +1644,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k94(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k94" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k94, got ~D~N"
   "-- expected 1~N"
@@ -1552,6 +1660,8 @@ V_CALL(VGetArg(upenv, 13-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k93(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k93" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k93, got ~D~N"
   "-- expected 1~N"
@@ -1585,6 +1695,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda23(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda23" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda23, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -1613,6 +1725,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k98(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k98" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k98, got ~D~N"
   "-- expected 1~N"
@@ -1632,6 +1746,8 @@ upenv->up->up->up->vars[0]
  }
 }
 static void _V0loop_k101(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k101" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k101, got ~D~N"
   "-- expected 1~N"
@@ -1648,6 +1764,8 @@ V_CALL(VGetArg(upenv, 5-1, 1), runtime,
  }
 }
 static void _V0loop_k100(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k100" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k100, got ~D~N"
   "-- expected 1~N"
@@ -1666,6 +1784,8 @@ V_CALL(VGetArg(upenv, 32-1, 9), runtime,
  }
 }
 static void _V0loop_k99(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k99" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k99, got ~D~N"
   "-- expected 1~N"
@@ -1697,6 +1817,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k105(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k105" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k105, got ~D~N"
   "-- expected 1~N"
@@ -1753,6 +1875,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0loop_k104(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k104" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k104, got ~D~N"
   "-- expected 1~N"
@@ -1783,6 +1907,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k108(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k108" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k108, got ~D~N"
   "-- expected 1~N"
@@ -1799,6 +1925,8 @@ V_CALL(VGetArg(upenv, 9-1, 1), runtime,
  }
 }
 static void _V0loop_k107(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k107" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k107, got ~D~N"
   "-- expected 1~N"
@@ -1817,6 +1945,8 @@ V_CALL(VGetArg(upenv, 36-1, 9), runtime,
  }
 }
 static void _V0loop_k106(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k106" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k106, got ~D~N"
   "-- expected 1~N"
@@ -1835,6 +1965,8 @@ V_CALL(VGetArg(upenv, 35-1, 9), runtime,
  }
 }
 static void _V0loop_k103(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k103" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k103, got ~D~N"
   "-- expected 1~N"
@@ -1852,6 +1984,8 @@ V_CALL_FUNC(_V0loop_k104, env, runtime,
  }
 }
 static void _V0loop_lambda30(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda30" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0loop_lambda30, got ~D~N"
   "-- expected 2~N"
@@ -1873,6 +2007,8 @@ upenv->up->up->vars[1]
  }
 }
 static void _V0loop_lambda29(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_lambda29" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_lambda29, got ~D~N"
   "-- expected 1~N"
@@ -1891,6 +2027,8 @@ V_CALL(VGetArg(upenv, 32-1, 10), runtime,
  }
 }
 static void _V0loop_k102(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k102" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k102, got ~D~N"
   "-- expected 1~N"
@@ -1910,6 +2048,8 @@ V_CALL(VGetArg(upenv, 31-1, 11), runtime,
  }
 }
 static void _V0loop_lambda28(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+ static VDebugInfo dbg = { "_V0loop_lambda28" };
+ VRecordCall(&dbg);
  if(argc != 4) {
   VError("Not enough arguments to _V0loop_lambda28, got ~D~N"
   "-- expected 4~N"
@@ -1930,6 +2070,8 @@ V_CALL_FUNC(_V0loop_k99, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda27(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda27" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda27, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -1945,6 +2087,8 @@ static void _V0expand__syntax_lambda27(VRuntime * runtime, VEnv * upenv, int arg
  }
 }
 static void _V0expand__syntax_lambda26(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda26" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__syntax_lambda26, got ~D~N"
   "-- expected 2~N"
@@ -1964,6 +2108,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda27, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda25(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda25" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_lambda25, got ~D~N"
   "-- expected 1~N"
@@ -1982,6 +2128,8 @@ V_CALL(VGetArg(upenv, 27-1, 10), runtime,
  }
 }
 static void _V0expand__syntax_k112(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k112" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k112, got ~D~N"
   "-- expected 1~N"
@@ -1996,6 +2144,8 @@ V_CALL(VGetArg(upenv, 19-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k111(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k111" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k111, got ~D~N"
   "-- expected 1~N"
@@ -2026,6 +2176,8 @@ upenv->up->up->vars[2],
  }
 }
 static void _V0expand__syntax_lambda32(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda32" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__syntax_lambda32, got ~D~N"
   "-- expected 2~N"
@@ -2039,6 +2191,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k110(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k110" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k110, got ~D~N"
   "-- expected 1~N"
@@ -2058,6 +2212,8 @@ V_CALL(VGetArg(upenv, 29-1, 15), runtime,
  }
 }
 static void _V0expand__syntax_k109(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k109" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k109, got ~D~N"
   "-- expected 1~N"
@@ -2080,6 +2236,8 @@ upenv->up->vars[0]
  }
 }
 static void _V0expand__syntax_lambda33(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda33" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0expand__syntax_lambda33, got ~D~N"
   "-- expected 3~N"
@@ -2105,6 +2263,8 @@ _var2,
  }
 }
 static void _V0expand__syntax_lambda31(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda31" };
+ VRecordCall(&dbg);
  if(argc != 4) {
   VError("Not enough arguments to _V0expand__syntax_lambda31, got ~D~N"
   "-- expected 4~N"
@@ -2138,6 +2298,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k97(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k97" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k97, got ~D~N"
   "-- expected 1~N"
@@ -2167,6 +2329,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k96(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k96" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k96, got ~D~N"
   "-- expected 1~N"
@@ -2194,6 +2358,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda24(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda24" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda24, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -2222,6 +2388,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k115(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k115" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k115, got ~D~N"
   "-- expected 1~N"
@@ -2236,6 +2404,8 @@ V_CALL(VGetArg(upenv, 15-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k114(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k114" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k114, got ~D~N"
   "-- expected 1~N"
@@ -2269,6 +2439,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda34(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda34" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda34, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -2297,6 +2469,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k118(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k118" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k118, got ~D~N"
   "-- expected 1~N"
@@ -2311,6 +2485,8 @@ V_CALL(VGetArg(upenv, 16-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k117(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k117" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k117, got ~D~N"
   "-- expected 1~N"
@@ -2343,6 +2519,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda35(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda35" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda35, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -2371,6 +2549,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k125(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k125" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k125, got ~D~N"
   "-- expected 1~N"
@@ -2389,6 +2569,8 @@ VGetArg(upenv, 6-1, 0)
  }
 }
 static void _V0loop_k127(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k127" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k127, got ~D~N"
   "-- expected 1~N"
@@ -2404,6 +2586,8 @@ V_CALL(upenv->up->up->up->vars[1], runtime,
  }
 }
 static void _V0loop_k126(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k126" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k126, got ~D~N"
   "-- expected 1~N"
@@ -2435,6 +2619,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k130(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k130" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k130, got ~D~N"
   "-- expected 1~N"
@@ -2450,6 +2636,8 @@ V_CALL(VGetArg(upenv, 7-1, 1), runtime,
  }
 }
 static void _V0loop_k129(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k129" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k129, got ~D~N"
   "-- expected 1~N"
@@ -2468,6 +2656,8 @@ V_CALL(VGetArg(upenv, 40-1, 9), runtime,
  }
 }
 static void _V0loop_lambda42(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda42" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0loop_lambda42, got ~D~N"
   "-- expected 2~N"
@@ -2498,6 +2688,8 @@ upenv->up->up->vars[1]
  }
 }
 static void _V0loop_lambda41(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_lambda41" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_lambda41, got ~D~N"
   "-- expected 1~N"
@@ -2516,6 +2708,8 @@ V_CALL(VGetArg(upenv, 38-1, 10), runtime,
  }
 }
 static void _V0loop_k128(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k128" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k128, got ~D~N"
   "-- expected 1~N"
@@ -2535,6 +2729,8 @@ V_CALL(VGetArg(upenv, 37-1, 11), runtime,
  }
 }
 static void _V0loop_lambda40(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0loop_lambda40" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0loop_lambda40, got ~D~N"
   "-- expected 3~N"
@@ -2554,6 +2750,8 @@ V_CALL_FUNC(_V0loop_k126, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda39(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda39" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda39, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -2569,6 +2767,8 @@ static void _V0expand__syntax_lambda39(VRuntime * runtime, VEnv * upenv, int arg
  }
 }
 static void _V0expand__syntax_lambda38(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda38" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__syntax_lambda38, got ~D~N"
   "-- expected 2~N"
@@ -2588,6 +2788,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda39, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda37(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda37" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_lambda37, got ~D~N"
   "-- expected 1~N"
@@ -2606,6 +2808,8 @@ V_CALL(VGetArg(upenv, 33-1, 10), runtime,
  }
 }
 static void _V0expand__syntax_k131(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k131" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k131, got ~D~N"
   "-- expected 1~N"
@@ -2620,6 +2824,8 @@ V_CALL(VGetArg(upenv, 22-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_lambda43(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda43" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0expand__syntax_lambda43, got ~D~N"
   "-- expected 3~N"
@@ -2691,6 +2897,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k124(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k124" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k124, got ~D~N"
   "-- expected 1~N"
@@ -2733,6 +2941,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0expand__syntax_k123(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k123" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k123, got ~D~N"
   "-- expected 1~N"
@@ -2763,6 +2973,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k122(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k122" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k122, got ~D~N"
   "-- expected 1~N"
@@ -2793,6 +3005,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k121(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k121" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k121, got ~D~N"
   "-- expected 1~N"
@@ -2823,6 +3037,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k120(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k120" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k120, got ~D~N"
   "-- expected 1~N"
@@ -2850,6 +3066,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda36(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda36" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda36, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -2878,6 +3096,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k135(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k135" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k135, got ~D~N"
   "-- expected 1~N"
@@ -2892,6 +3112,8 @@ V_CALL(VGetArg(upenv, 19-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k134(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k134" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k134, got ~D~N"
   "-- expected 1~N"
@@ -2940,6 +3162,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k133(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k133" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k133, got ~D~N"
   "-- expected 1~N"
@@ -2967,6 +3191,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda44(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda44" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda44, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -2995,6 +3221,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k138(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k138" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k138, got ~D~N"
   "-- expected 1~N"
@@ -3009,6 +3237,8 @@ V_CALL(VGetArg(upenv, 19-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k137(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k137" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k137, got ~D~N"
   "-- expected 1~N"
@@ -3042,6 +3272,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda45(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda45" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda45, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -3070,6 +3302,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k142(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k142" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k142, got ~D~N"
   "-- expected 1~N"
@@ -3084,6 +3318,8 @@ V_CALL(VGetArg(upenv, 21-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k141(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k141" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k141, got ~D~N"
   "-- expected 1~N"
@@ -3128,6 +3364,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k140(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k140" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k140, got ~D~N"
   "-- expected 1~N"
@@ -3155,6 +3393,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda46(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda46" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda46, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -3183,6 +3423,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k148(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k148" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k148, got ~D~N"
   "-- expected 1~N"
@@ -3209,6 +3451,8 @@ _var0,
  }
 }
 static void _V0expand__syntax_k147(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k147" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k147, got ~D~N"
   "-- expected 1~N"
@@ -3230,6 +3474,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__syntax_k146(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k146" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k146, got ~D~N"
   "-- expected 1~N"
@@ -3274,6 +3520,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k145(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k145" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k145, got ~D~N"
   "-- expected 1~N"
@@ -3304,6 +3552,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k144(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k144" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k144, got ~D~N"
   "-- expected 1~N"
@@ -3331,6 +3581,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda47(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda47" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda47, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -3359,6 +3611,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k152(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k152" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k152, got ~D~N"
   "-- expected 1~N"
@@ -3373,6 +3627,8 @@ V_CALL(VGetArg(upenv, 23-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k151(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k151" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k151, got ~D~N"
   "-- expected 1~N"
@@ -3423,6 +3679,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k150(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k150" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k150, got ~D~N"
   "-- expected 1~N"
@@ -3450,6 +3708,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda48(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda48" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda48, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -3478,6 +3738,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k155(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k155" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k155, got ~D~N"
   "-- expected 1~N"
@@ -3492,6 +3754,8 @@ V_CALL(VGetArg(upenv, 23-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k154(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k154" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k154, got ~D~N"
   "-- expected 1~N"
@@ -3525,6 +3789,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda49(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda49" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda49, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -3553,6 +3819,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k160(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k160" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k160, got ~D~N"
   "-- expected 1~N"
@@ -3567,6 +3835,8 @@ V_CALL(VGetArg(upenv, 26-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k159(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k159" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k159, got ~D~N"
   "-- expected 1~N"
@@ -3630,6 +3900,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k158(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k158" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k158, got ~D~N"
   "-- expected 1~N"
@@ -3660,6 +3932,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k157(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k157" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k157, got ~D~N"
   "-- expected 1~N"
@@ -3687,6 +3961,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda50(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda50" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda50, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -3715,6 +3991,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k168(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k168" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k168, got ~D~N"
   "-- expected 1~N"
@@ -3745,6 +4023,8 @@ _var0,
  }
 }
 static void _V0expand__syntax_k167(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k167" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k167, got ~D~N"
   "-- expected 1~N"
@@ -3766,6 +4046,8 @@ upenv->up->vars[0]
  }
 }
 static void _V0expand__syntax_k166(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k166" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k166, got ~D~N"
   "-- expected 1~N"
@@ -3787,6 +4069,8 @@ upenv->up->vars[0]
  }
 }
 static void _V0expand__syntax_k165(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k165" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k165, got ~D~N"
   "-- expected 1~N"
@@ -3831,6 +4115,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k164(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k164" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k164, got ~D~N"
   "-- expected 1~N"
@@ -3861,6 +4147,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k163(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k163" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k163, got ~D~N"
   "-- expected 1~N"
@@ -3891,6 +4179,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k162(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k162" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k162, got ~D~N"
   "-- expected 1~N"
@@ -3918,6 +4208,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda51(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda51" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda51, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -3946,6 +4238,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k171(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k171" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k171, got ~D~N"
   "-- expected 1~N"
@@ -3960,6 +4254,8 @@ V_CALL(VGetArg(upenv, 26-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k170(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k170" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k170, got ~D~N"
   "-- expected 1~N"
@@ -3993,6 +4289,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda52(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda52" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda52, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -4021,6 +4319,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k173(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k173" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k173, got ~D~N"
   "-- expected 1~N"
@@ -4055,6 +4355,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda53(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda53" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda53, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -4083,6 +4385,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k177(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k177" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k177, got ~D~N"
   "-- expected 1~N"
@@ -4097,6 +4401,8 @@ V_CALL(VGetArg(upenv, 29-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k176(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k176" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k176, got ~D~N"
   "-- expected 1~N"
@@ -4141,6 +4447,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k175(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k175" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k175, got ~D~N"
   "-- expected 1~N"
@@ -4168,6 +4476,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda54(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda54" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda54, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -4196,6 +4506,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k183(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k183" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k183, got ~D~N"
   "-- expected 1~N"
@@ -4226,6 +4538,8 @@ VEncodeBool(false),
  }
 }
 static void _V0expand__syntax_k182(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k182" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k182, got ~D~N"
   "-- expected 1~N"
@@ -4247,6 +4561,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__syntax_k181(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k181" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k181, got ~D~N"
   "-- expected 1~N"
@@ -4291,6 +4607,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k180(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k180" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k180, got ~D~N"
   "-- expected 1~N"
@@ -4321,6 +4639,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k179(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k179" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k179, got ~D~N"
   "-- expected 1~N"
@@ -4348,6 +4668,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda55(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda55" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda55, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -4376,6 +4698,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k187(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k187" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k187, got ~D~N"
   "-- expected 1~N"
@@ -4390,6 +4714,8 @@ V_CALL(VGetArg(upenv, 31-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k186(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k186" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k186, got ~D~N"
   "-- expected 1~N"
@@ -4444,6 +4770,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k185(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k185" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k185, got ~D~N"
   "-- expected 1~N"
@@ -4471,6 +4799,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda56(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda56" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda56, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -4499,6 +4829,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k189(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k189" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k189, got ~D~N"
   "-- expected 1~N"
@@ -4533,6 +4865,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda57(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda57" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda57, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -4561,6 +4895,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k193(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k193" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k193, got ~D~N"
   "-- expected 1~N"
@@ -4575,6 +4911,8 @@ V_CALL(VGetArg(upenv, 33-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k192(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k192" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k192, got ~D~N"
   "-- expected 1~N"
@@ -4619,6 +4957,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k191(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k191" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k191, got ~D~N"
   "-- expected 1~N"
@@ -4646,6 +4986,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda58(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda58" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda58, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -4674,6 +5016,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k199(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k199" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k199, got ~D~N"
   "-- expected 1~N"
@@ -4700,6 +5044,8 @@ _var0,
  }
 }
 static void _V0expand__syntax_k198(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k198" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k198, got ~D~N"
   "-- expected 1~N"
@@ -4721,6 +5067,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__syntax_k197(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k197" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k197, got ~D~N"
   "-- expected 1~N"
@@ -4765,6 +5113,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k196(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k196" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k196, got ~D~N"
   "-- expected 1~N"
@@ -4795,6 +5145,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k195(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k195" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k195, got ~D~N"
   "-- expected 1~N"
@@ -4822,6 +5174,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda59(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda59" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda59, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -4850,6 +5204,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k203(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k203" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k203, got ~D~N"
   "-- expected 1~N"
@@ -4864,6 +5220,8 @@ V_CALL(VGetArg(upenv, 35-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k202(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k202" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k202, got ~D~N"
   "-- expected 1~N"
@@ -4914,6 +5272,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k201(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k201" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k201, got ~D~N"
   "-- expected 1~N"
@@ -4941,6 +5301,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda60(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda60" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda60, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -4969,6 +5331,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k209(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k209" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k209, got ~D~N"
   "-- expected 1~N"
@@ -4983,6 +5347,8 @@ V_CALL(VGetArg(upenv, 38-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k208(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k208" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k208, got ~D~N"
   "-- expected 1~N"
@@ -5028,6 +5394,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k207(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k207" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k207, got ~D~N"
   "-- expected 1~N"
@@ -5060,6 +5428,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k206(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k206" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k206, got ~D~N"
   "-- expected 1~N"
@@ -5090,6 +5460,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k205(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k205" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k205, got ~D~N"
   "-- expected 1~N"
@@ -5117,6 +5489,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda61(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda61" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda61, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -5145,6 +5519,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k218(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k218" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k218, got ~D~N"
   "-- expected 1~N"
@@ -5159,6 +5535,8 @@ V_CALL(VGetArg(upenv, 42-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k217(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k217" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k217, got ~D~N"
   "-- expected 1~N"
@@ -5238,6 +5616,8 @@ VGetArg(upenv, 5-1, 0)
  }
 }
 static void _V0expand__syntax_k216(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k216" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k216, got ~D~N"
   "-- expected 1~N"
@@ -5279,6 +5659,8 @@ V_CALL(VGetArg(upenv, 6-1, 0), runtime,
  }
 }
 static void _V0expand__syntax_k215(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k215" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k215, got ~D~N"
   "-- expected 1~N"
@@ -5306,6 +5688,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0expand__syntax_k214(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k214" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k214, got ~D~N"
   "-- expected 1~N"
@@ -5338,6 +5722,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k213(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k213" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k213, got ~D~N"
   "-- expected 1~N"
@@ -5368,6 +5754,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k212(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k212" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k212, got ~D~N"
   "-- expected 1~N"
@@ -5398,6 +5786,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k211(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k211" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k211, got ~D~N"
   "-- expected 1~N"
@@ -5425,6 +5815,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda62(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda62" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda62, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -5453,6 +5845,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k223(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k223" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k223, got ~D~N"
   "-- expected 1~N"
@@ -5467,6 +5861,8 @@ V_CALL(VGetArg(upenv, 39-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k222(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k222" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k222, got ~D~N"
   "-- expected 1~N"
@@ -5528,6 +5924,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k221(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k221" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k221, got ~D~N"
   "-- expected 1~N"
@@ -5558,6 +5956,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k220(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k220" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k220, got ~D~N"
   "-- expected 1~N"
@@ -5585,6 +5985,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda63(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda63" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda63, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -5613,6 +6015,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k225(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k225" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k225, got ~D~N"
   "-- expected 1~N"
@@ -5655,6 +6059,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda64(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda64" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda64, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -5683,6 +6089,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k228(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k228" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k228, got ~D~N"
   "-- expected 1~N"
@@ -5697,6 +6105,8 @@ V_CALL(VGetArg(upenv, 39-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k227(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k227" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k227, got ~D~N"
   "-- expected 1~N"
@@ -5730,6 +6140,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda65(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda65" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda65, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -5758,6 +6170,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k233(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k233" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k233, got ~D~N"
   "-- expected 1~N"
@@ -5772,6 +6186,8 @@ V_CALL(VGetArg(upenv, 42-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k232(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k232" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k232, got ~D~N"
   "-- expected 1~N"
@@ -5828,6 +6244,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__syntax_k231(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k231" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k231, got ~D~N"
   "-- expected 1~N"
@@ -5856,6 +6274,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k230(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k230" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k230, got ~D~N"
   "-- expected 1~N"
@@ -5883,6 +6303,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda66(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda66" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda66, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -5911,6 +6333,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k240(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k240" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k240, got ~D~N"
   "-- expected 1~N"
@@ -5925,6 +6349,8 @@ V_CALL(VGetArg(upenv, 45-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k239(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k239" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k239, got ~D~N"
   "-- expected 1~N"
@@ -5970,6 +6396,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0expand__syntax_k238(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k238" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k238, got ~D~N"
   "-- expected 1~N"
@@ -6002,6 +6430,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k237(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k237" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k237, got ~D~N"
   "-- expected 1~N"
@@ -6032,6 +6462,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k236(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k236" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k236, got ~D~N"
   "-- expected 1~N"
@@ -6062,6 +6494,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k235(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k235" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k235, got ~D~N"
   "-- expected 1~N"
@@ -6089,6 +6523,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda67(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda67" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda67, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -6117,6 +6553,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k247(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k247" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k247, got ~D~N"
   "-- expected 1~N"
@@ -6135,6 +6573,8 @@ upenv->up->up->up->vars[0]
  }
 }
 static void _V0loop_k249(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k249" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k249, got ~D~N"
   "-- expected 1~N"
@@ -6150,6 +6590,8 @@ V_CALL(upenv->up->up->up->vars[1], runtime,
  }
 }
 static void _V0loop_k248(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k248" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k248, got ~D~N"
   "-- expected 1~N"
@@ -6181,6 +6623,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k252(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k252" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k252, got ~D~N"
   "-- expected 1~N"
@@ -6196,6 +6640,8 @@ V_CALL(VGetArg(upenv, 7-1, 1), runtime,
  }
 }
 static void _V0loop_k251(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k251" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k251, got ~D~N"
   "-- expected 1~N"
@@ -6214,6 +6660,8 @@ V_CALL(VGetArg(upenv, 65-1, 9), runtime,
  }
 }
 static void _V0loop_lambda74(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda74" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0loop_lambda74, got ~D~N"
   "-- expected 2~N"
@@ -6244,6 +6692,8 @@ upenv->up->up->vars[1]
  }
 }
 static void _V0loop_lambda73(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_lambda73" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_lambda73, got ~D~N"
   "-- expected 1~N"
@@ -6262,6 +6712,8 @@ V_CALL(VGetArg(upenv, 63-1, 10), runtime,
  }
 }
 static void _V0loop_k250(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k250" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k250, got ~D~N"
   "-- expected 1~N"
@@ -6281,6 +6733,8 @@ V_CALL(VGetArg(upenv, 62-1, 11), runtime,
  }
 }
 static void _V0loop_lambda72(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0loop_lambda72" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0loop_lambda72, got ~D~N"
   "-- expected 3~N"
@@ -6300,6 +6754,8 @@ V_CALL_FUNC(_V0loop_k248, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda71(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda71" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda71, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -6315,6 +6771,8 @@ static void _V0expand__syntax_lambda71(VRuntime * runtime, VEnv * upenv, int arg
  }
 }
 static void _V0expand__syntax_lambda70(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda70" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__syntax_lambda70, got ~D~N"
   "-- expected 2~N"
@@ -6334,6 +6792,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda71, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda69(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda69" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_lambda69, got ~D~N"
   "-- expected 1~N"
@@ -6352,6 +6812,8 @@ V_CALL(VGetArg(upenv, 58-1, 10), runtime,
  }
 }
 static void _V0expand__syntax_k254(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k254" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k254, got ~D~N"
   "-- expected 1~N"
@@ -6366,6 +6828,8 @@ V_CALL(VGetArg(upenv, 48-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k253(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k253" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k253, got ~D~N"
   "-- expected 1~N"
@@ -6422,6 +6886,8 @@ upenv->up->up->vars[0]
  }
 }
 static void _V0expand__syntax_lambda76(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda76" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__syntax_lambda76, got ~D~N"
   "-- expected 2~N"
@@ -6455,6 +6921,8 @@ _var1,
  }
 }
 static void _V0expand__syntax_lambda75(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda75" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0expand__syntax_lambda75, got ~D~N"
   "-- expected 3~N"
@@ -6486,6 +6954,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k246(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k246" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k246, got ~D~N"
   "-- expected 1~N"
@@ -6515,6 +6985,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0expand__syntax_k245(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k245" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k245, got ~D~N"
   "-- expected 1~N"
@@ -6545,6 +7017,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k244(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k244" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k244, got ~D~N"
   "-- expected 1~N"
@@ -6565,6 +7039,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__syntax_k243(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k243" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k243, got ~D~N"
   "-- expected 1~N"
@@ -6595,6 +7071,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k242(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k242" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k242, got ~D~N"
   "-- expected 1~N"
@@ -6622,6 +7100,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda68(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda68" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda68, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -6650,6 +7130,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k257(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k257" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k257, got ~D~N"
   "-- expected 1~N"
@@ -6695,6 +7177,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k256(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k256" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k256, got ~D~N"
   "-- expected 1~N"
@@ -6722,6 +7206,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda77(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda77" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda77, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -6750,6 +7236,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k261(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k261" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k261, got ~D~N"
   "-- expected 1~N"
@@ -6764,6 +7252,8 @@ V_CALL(VGetArg(upenv, 45-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k260(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k260" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k260, got ~D~N"
   "-- expected 1~N"
@@ -6814,6 +7304,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k259(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k259" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k259, got ~D~N"
   "-- expected 1~N"
@@ -6841,6 +7333,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda78(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda78" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda78, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -6869,6 +7363,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k269(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k269" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k269, got ~D~N"
   "-- expected 1~N"
@@ -6883,6 +7379,8 @@ V_CALL(VGetArg(upenv, 50-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k268(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k268" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k268, got ~D~N"
   "-- expected 1~N"
@@ -6920,6 +7418,8 @@ upenv->up->vars[0]
  }
 }
 static void _V0expand__syntax_k267(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k267" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k267, got ~D~N"
   "-- expected 1~N"
@@ -6941,6 +7441,8 @@ upenv->up->vars[0]
  }
 }
 static void _V0expand__syntax_k266(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k266" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k266, got ~D~N"
   "-- expected 1~N"
@@ -6985,6 +7487,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k265(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k265" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k265, got ~D~N"
   "-- expected 1~N"
@@ -7015,6 +7519,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k264(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k264" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k264, got ~D~N"
   "-- expected 1~N"
@@ -7045,6 +7551,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k263(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k263" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k263, got ~D~N"
   "-- expected 1~N"
@@ -7072,6 +7580,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda79(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda79" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda79, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -7100,6 +7610,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k278(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k278" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k278, got ~D~N"
   "-- expected 1~N"
@@ -7114,6 +7626,8 @@ V_CALL(VGetArg(upenv, 52-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k277(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k277" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k277, got ~D~N"
   "-- expected 1~N"
@@ -7168,6 +7682,8 @@ upenv->up->vars[0]
  }
 }
 static void _V0expand__syntax_k276(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k276" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k276, got ~D~N"
   "-- expected 1~N"
@@ -7193,6 +7709,8 @@ V_CALL(VGetArg(upenv, 6-1, 0), runtime,
  }
 }
 static void _V0expand__syntax_k275(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k275" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k275, got ~D~N"
   "-- expected 1~N"
@@ -7225,6 +7743,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0expand__syntax_k274(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k274" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k274, got ~D~N"
   "-- expected 1~N"
@@ -7255,6 +7775,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k273(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k273" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k273, got ~D~N"
   "-- expected 1~N"
@@ -7285,6 +7807,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k272(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k272" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k272, got ~D~N"
   "-- expected 1~N"
@@ -7315,6 +7839,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k271(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k271" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k271, got ~D~N"
   "-- expected 1~N"
@@ -7342,6 +7868,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda80(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda80" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda80, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -7370,6 +7898,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k286(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k286" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k286, got ~D~N"
   "-- expected 1~N"
@@ -7384,6 +7914,8 @@ V_CALL(VGetArg(upenv, 52-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k285(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k285" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k285, got ~D~N"
   "-- expected 1~N"
@@ -7422,6 +7954,8 @@ V_CALL(VGetArg(upenv, 6-1, 0), runtime,
  }
 }
 static void _V0expand__syntax_k284(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k284" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k284, got ~D~N"
   "-- expected 1~N"
@@ -7454,6 +7988,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0expand__syntax_k283(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k283" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k283, got ~D~N"
   "-- expected 1~N"
@@ -7484,6 +8020,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k282(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k282" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k282, got ~D~N"
   "-- expected 1~N"
@@ -7514,6 +8052,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k281(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k281" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k281, got ~D~N"
   "-- expected 1~N"
@@ -7544,6 +8084,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k280(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k280" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k280, got ~D~N"
   "-- expected 1~N"
@@ -7571,6 +8113,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda81(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda81" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda81, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -7599,6 +8143,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k293(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k293" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k293, got ~D~N"
   "-- expected 1~N"
@@ -7613,6 +8159,8 @@ V_CALL(VGetArg(upenv, 52-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k292(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k292" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k292, got ~D~N"
   "-- expected 1~N"
@@ -7676,6 +8224,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0expand__syntax_k291(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k291" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k291, got ~D~N"
   "-- expected 1~N"
@@ -7706,6 +8256,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k290(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k290" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k290, got ~D~N"
   "-- expected 1~N"
@@ -7736,6 +8288,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k289(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k289" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k289, got ~D~N"
   "-- expected 1~N"
@@ -7766,6 +8320,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k288(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k288" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k288, got ~D~N"
   "-- expected 1~N"
@@ -7793,6 +8349,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda82(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda82" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda82, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -7821,6 +8379,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k296(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k296" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k296, got ~D~N"
   "-- expected 1~N"
@@ -7835,6 +8395,8 @@ V_CALL(VGetArg(upenv, 49-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k295(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k295" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k295, got ~D~N"
   "-- expected 1~N"
@@ -7868,6 +8430,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda83(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda83" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda83, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -7896,6 +8460,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k304(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k304" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k304, got ~D~N"
   "-- expected 1~N"
@@ -7918,6 +8484,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k306(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k306" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k306, got ~D~N"
   "-- expected 1~N"
@@ -7944,6 +8512,8 @@ _var0,
  }
 }
 static void _V0expand__syntax_k305(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k305" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k305, got ~D~N"
   "-- expected 1~N"
@@ -7965,6 +8535,8 @@ upenv->up->up->vars[0]
  }
 }
 static void _V0expand__syntax_k303(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k303" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k303, got ~D~N"
   "-- expected 1~N"
@@ -7982,6 +8554,8 @@ V_CALL_FUNC(_V0expand__syntax_k304, env, runtime,
  }
 }
 static void _V0expand__syntax_k302(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k302" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k302, got ~D~N"
   "-- expected 1~N"
@@ -8000,6 +8574,8 @@ V_CALL(VGetArg(upenv, 65-1, 13), runtime,
  }
 }
 static void _V0expand__syntax_k301(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k301" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k301, got ~D~N"
   "-- expected 1~N"
@@ -8041,6 +8617,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k300(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k300" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k300, got ~D~N"
   "-- expected 1~N"
@@ -8061,6 +8639,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__syntax_k299(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k299" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k299, got ~D~N"
   "-- expected 1~N"
@@ -8091,6 +8671,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_k298(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k298" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k298, got ~D~N"
   "-- expected 1~N"
@@ -8118,6 +8700,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda84(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda84" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda84, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -8146,6 +8730,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k309(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k309" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k309, got ~D~N"
   "-- expected 1~N"
@@ -8160,6 +8746,8 @@ V_CALL(VGetArg(upenv, 51-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k308(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k308" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k308, got ~D~N"
   "-- expected 1~N"
@@ -8193,6 +8781,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda85(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda85" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda85, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -8221,6 +8811,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k312(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k312" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k312, got ~D~N"
   "-- expected 1~N"
@@ -8235,6 +8827,8 @@ V_CALL(VGetArg(upenv, 52-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k311(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k311" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k311, got ~D~N"
   "-- expected 1~N"
@@ -8268,6 +8862,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda86(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda86" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda86, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -8296,6 +8892,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k316(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k316" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k316, got ~D~N"
   "-- expected 1~N"
@@ -8310,6 +8908,8 @@ V_CALL(VGetArg(upenv, 54-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k315(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k315" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k315, got ~D~N"
   "-- expected 1~N"
@@ -8328,6 +8928,8 @@ V_CALL(VGetArg(upenv, 64-1, 10), runtime,
  }
 }
 static void _V0expand__syntax_k314(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k314" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k314, got ~D~N"
   "-- expected 1~N"
@@ -8361,6 +8963,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda87(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda87" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda87, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -8389,6 +8993,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k319(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k319" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k319, got ~D~N"
   "-- expected 1~N"
@@ -8403,6 +9009,8 @@ V_CALL(VGetArg(upenv, 54-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k318(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k318" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k318, got ~D~N"
   "-- expected 1~N"
@@ -8428,6 +9036,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__syntax_lambda88(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda88" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda88, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -8456,6 +9066,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k322(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k322" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k322, got ~D~N"
   "-- expected 1~N"
@@ -8474,6 +9086,8 @@ VGetArg(upenv, 5-1, 1)
  }
 }
 static void _V0loop_k324(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k324" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k324, got ~D~N"
   "-- expected 1~N"
@@ -8489,6 +9103,8 @@ V_CALL(upenv->up->up->up->vars[1], runtime,
  }
 }
 static void _V0loop_k323(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k323" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k323, got ~D~N"
   "-- expected 1~N"
@@ -8520,6 +9136,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k327(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k327" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k327, got ~D~N"
   "-- expected 1~N"
@@ -8535,6 +9153,8 @@ V_CALL(VGetArg(upenv, 7-1, 1), runtime,
  }
 }
 static void _V0loop_k326(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k326" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k326, got ~D~N"
   "-- expected 1~N"
@@ -8553,6 +9173,8 @@ V_CALL(VGetArg(upenv, 74-1, 9), runtime,
  }
 }
 static void _V0loop_lambda95(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda95" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0loop_lambda95, got ~D~N"
   "-- expected 2~N"
@@ -8583,6 +9205,8 @@ upenv->up->up->vars[1]
  }
 }
 static void _V0loop_lambda94(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_lambda94" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_lambda94, got ~D~N"
   "-- expected 1~N"
@@ -8601,6 +9225,8 @@ V_CALL(VGetArg(upenv, 72-1, 10), runtime,
  }
 }
 static void _V0loop_k325(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k325" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k325, got ~D~N"
   "-- expected 1~N"
@@ -8620,6 +9246,8 @@ V_CALL(VGetArg(upenv, 71-1, 11), runtime,
  }
 }
 static void _V0loop_lambda93(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0loop_lambda93" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0loop_lambda93, got ~D~N"
   "-- expected 3~N"
@@ -8639,6 +9267,8 @@ V_CALL_FUNC(_V0loop_k323, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda92(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda92" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda92, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -8654,6 +9284,8 @@ static void _V0expand__syntax_lambda92(VRuntime * runtime, VEnv * upenv, int arg
  }
 }
 static void _V0expand__syntax_lambda91(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda91" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__syntax_lambda91, got ~D~N"
   "-- expected 2~N"
@@ -8673,6 +9305,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda92, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda90(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda90" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_lambda90, got ~D~N"
   "-- expected 1~N"
@@ -8691,6 +9325,8 @@ V_CALL(VGetArg(upenv, 67-1, 10), runtime,
  }
 }
 static void _V0expand__syntax_k330(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k330" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k330, got ~D~N"
   "-- expected 1~N"
@@ -8705,6 +9341,8 @@ V_CALL(VGetArg(upenv, 70-1, 13), runtime,
  }
 }
 static void _V0expand__syntax_k329(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k329" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k329, got ~D~N"
   "-- expected 1~N"
@@ -8730,6 +9368,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k332(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k332" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k332, got ~D~N"
   "-- expected 1~N"
@@ -8752,6 +9392,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k335(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k335" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k335, got ~D~N"
   "-- expected 1~N"
@@ -8770,6 +9412,8 @@ upenv->vars[0],
  }
 }
 static void _V0expand__syntax_k334(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k334" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k334, got ~D~N"
   "-- expected 1~N"
@@ -8789,6 +9433,8 @@ V_CALL(VGetArg(upenv, 71-1, 15), runtime,
  }
 }
 static void _V0expand__syntax_k333(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k333" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k333, got ~D~N"
   "-- expected 1~N"
@@ -8807,6 +9453,8 @@ V_CALL(VGetArg(upenv, 69-1, 10), runtime,
  }
 }
 static void _V0expand__syntax_k331(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k331" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k331, got ~D~N"
   "-- expected 1~N"
@@ -8824,6 +9472,8 @@ V_CALL_FUNC(_V0expand__syntax_k332, env, runtime,
  }
 }
 static void _V0expand__syntax_k328(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k328" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k328, got ~D~N"
   "-- expected 1~N"
@@ -8841,6 +9491,8 @@ V_CALL_FUNC(_V0expand__syntax_k329, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda96(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda96" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0expand__syntax_lambda96, got ~D~N"
   "-- expected 3~N"
@@ -8871,6 +9523,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k321(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k321" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k321, got ~D~N"
   "-- expected 1~N"
@@ -8890,6 +9544,8 @@ V_CALL(VGetArg(upenv, 66-1, 11), runtime,
  }
 }
 static void _V0expand__syntax_lambda89(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda89" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda89, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -8916,6 +9572,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k337(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k337" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k337, got ~D~N"
   "-- expected 1~N"
@@ -8930,6 +9588,8 @@ V_CALL(VGetArg(upenv, 55-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_lambda97(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda97" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda97, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -8965,6 +9625,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k340(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k340" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k340, got ~D~N"
   "-- expected 1~N"
@@ -8979,6 +9641,8 @@ V_CALL(VGetArg(upenv, 56-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k339(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k339" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k339, got ~D~N"
   "-- expected 1~N"
@@ -9008,6 +9672,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__syntax_k341(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k341" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k341, got ~D~N"
   "-- expected 1~N"
@@ -9022,6 +9688,8 @@ V_CALL(VGetArg(upenv, 55-1, 1), runtime,
  }
 }
 static void _V0expand__syntax_k338(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k338" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k338, got ~D~N"
   "-- expected 1~N"
@@ -9039,6 +9707,8 @@ V_CALL_FUNC(_V0expand__syntax_k339, env, runtime,
  }
 }
 static void _V0expand__syntax_k336(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k336" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k336, got ~D~N"
   "-- expected 1~N"
@@ -9057,6 +9727,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda97, env, runtime,
  }
 }
 static void _V0expand__syntax_k320(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k320" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k320, got ~D~N"
   "-- expected 1~N"
@@ -9075,6 +9747,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda89, env, runtime,
  }
 }
 static void _V0expand__syntax_k317(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k317" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k317, got ~D~N"
   "-- expected 1~N"
@@ -9093,6 +9767,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda88, env, runtime,
  }
 }
 static void _V0expand__syntax_k313(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k313" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k313, got ~D~N"
   "-- expected 1~N"
@@ -9111,6 +9787,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda87, env, runtime,
  }
 }
 static void _V0expand__syntax_k310(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k310" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k310, got ~D~N"
   "-- expected 1~N"
@@ -9129,6 +9807,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda86, env, runtime,
  }
 }
 static void _V0expand__syntax_k307(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k307" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k307, got ~D~N"
   "-- expected 1~N"
@@ -9147,6 +9827,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda85, env, runtime,
  }
 }
 static void _V0expand__syntax_k297(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k297" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k297, got ~D~N"
   "-- expected 1~N"
@@ -9165,6 +9847,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda84, env, runtime,
  }
 }
 static void _V0expand__syntax_k294(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k294" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k294, got ~D~N"
   "-- expected 1~N"
@@ -9183,6 +9867,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda83, env, runtime,
  }
 }
 static void _V0expand__syntax_k287(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k287" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k287, got ~D~N"
   "-- expected 1~N"
@@ -9201,6 +9887,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda82, env, runtime,
  }
 }
 static void _V0expand__syntax_k279(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k279" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k279, got ~D~N"
   "-- expected 1~N"
@@ -9219,6 +9907,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda81, env, runtime,
  }
 }
 static void _V0expand__syntax_k270(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k270" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k270, got ~D~N"
   "-- expected 1~N"
@@ -9237,6 +9927,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda80, env, runtime,
  }
 }
 static void _V0expand__syntax_k262(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k262" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k262, got ~D~N"
   "-- expected 1~N"
@@ -9255,6 +9947,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda79, env, runtime,
  }
 }
 static void _V0expand__syntax_k258(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k258" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k258, got ~D~N"
   "-- expected 1~N"
@@ -9273,6 +9967,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda78, env, runtime,
  }
 }
 static void _V0expand__syntax_k255(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k255" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k255, got ~D~N"
   "-- expected 1~N"
@@ -9291,6 +9987,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda77, env, runtime,
  }
 }
 static void _V0expand__syntax_k241(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k241" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k241, got ~D~N"
   "-- expected 1~N"
@@ -9309,6 +10007,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda68, env, runtime,
  }
 }
 static void _V0expand__syntax_k234(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k234" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k234, got ~D~N"
   "-- expected 1~N"
@@ -9327,6 +10027,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda67, env, runtime,
  }
 }
 static void _V0expand__syntax_k229(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k229" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k229, got ~D~N"
   "-- expected 1~N"
@@ -9345,6 +10047,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda66, env, runtime,
  }
 }
 static void _V0expand__syntax_k226(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k226" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k226, got ~D~N"
   "-- expected 1~N"
@@ -9363,6 +10067,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda65, env, runtime,
  }
 }
 static void _V0expand__syntax_k224(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k224" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k224, got ~D~N"
   "-- expected 1~N"
@@ -9381,6 +10087,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda64, env, runtime,
  }
 }
 static void _V0expand__syntax_k219(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k219" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k219, got ~D~N"
   "-- expected 1~N"
@@ -9399,6 +10107,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda63, env, runtime,
  }
 }
 static void _V0expand__syntax_k210(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k210" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k210, got ~D~N"
   "-- expected 1~N"
@@ -9417,6 +10127,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda62, env, runtime,
  }
 }
 static void _V0expand__syntax_k204(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k204" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k204, got ~D~N"
   "-- expected 1~N"
@@ -9435,6 +10147,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda61, env, runtime,
  }
 }
 static void _V0expand__syntax_k200(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k200" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k200, got ~D~N"
   "-- expected 1~N"
@@ -9453,6 +10167,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda60, env, runtime,
  }
 }
 static void _V0expand__syntax_k194(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k194" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k194, got ~D~N"
   "-- expected 1~N"
@@ -9471,6 +10187,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda59, env, runtime,
  }
 }
 static void _V0expand__syntax_k190(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k190" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k190, got ~D~N"
   "-- expected 1~N"
@@ -9489,6 +10207,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda58, env, runtime,
  }
 }
 static void _V0expand__syntax_k188(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k188" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k188, got ~D~N"
   "-- expected 1~N"
@@ -9507,6 +10227,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda57, env, runtime,
  }
 }
 static void _V0expand__syntax_k184(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k184" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k184, got ~D~N"
   "-- expected 1~N"
@@ -9525,6 +10247,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda56, env, runtime,
  }
 }
 static void _V0expand__syntax_k178(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k178" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k178, got ~D~N"
   "-- expected 1~N"
@@ -9543,6 +10267,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda55, env, runtime,
  }
 }
 static void _V0expand__syntax_k174(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k174" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k174, got ~D~N"
   "-- expected 1~N"
@@ -9561,6 +10287,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda54, env, runtime,
  }
 }
 static void _V0expand__syntax_k172(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k172" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k172, got ~D~N"
   "-- expected 1~N"
@@ -9579,6 +10307,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda53, env, runtime,
  }
 }
 static void _V0expand__syntax_k169(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k169" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k169, got ~D~N"
   "-- expected 1~N"
@@ -9597,6 +10327,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda52, env, runtime,
  }
 }
 static void _V0expand__syntax_k161(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k161" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k161, got ~D~N"
   "-- expected 1~N"
@@ -9615,6 +10347,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda51, env, runtime,
  }
 }
 static void _V0expand__syntax_k156(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k156" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k156, got ~D~N"
   "-- expected 1~N"
@@ -9633,6 +10367,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda50, env, runtime,
  }
 }
 static void _V0expand__syntax_k153(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k153" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k153, got ~D~N"
   "-- expected 1~N"
@@ -9651,6 +10387,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda49, env, runtime,
  }
 }
 static void _V0expand__syntax_k149(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k149" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k149, got ~D~N"
   "-- expected 1~N"
@@ -9669,6 +10407,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda48, env, runtime,
  }
 }
 static void _V0expand__syntax_k143(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k143" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k143, got ~D~N"
   "-- expected 1~N"
@@ -9687,6 +10427,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda47, env, runtime,
  }
 }
 static void _V0expand__syntax_k139(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k139" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k139, got ~D~N"
   "-- expected 1~N"
@@ -9705,6 +10447,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda46, env, runtime,
  }
 }
 static void _V0expand__syntax_k136(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k136" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k136, got ~D~N"
   "-- expected 1~N"
@@ -9723,6 +10467,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda45, env, runtime,
  }
 }
 static void _V0expand__syntax_k132(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k132" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k132, got ~D~N"
   "-- expected 1~N"
@@ -9741,6 +10487,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda44, env, runtime,
  }
 }
 static void _V0expand__syntax_k119(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k119" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k119, got ~D~N"
   "-- expected 1~N"
@@ -9759,6 +10507,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda36, env, runtime,
  }
 }
 static void _V0expand__syntax_k116(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k116" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k116, got ~D~N"
   "-- expected 1~N"
@@ -9777,6 +10527,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda35, env, runtime,
  }
 }
 static void _V0expand__syntax_k113(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k113" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k113, got ~D~N"
   "-- expected 1~N"
@@ -9795,6 +10547,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda34, env, runtime,
  }
 }
 static void _V0expand__syntax_k95(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k95" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k95, got ~D~N"
   "-- expected 1~N"
@@ -9813,6 +10567,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda24, env, runtime,
  }
 }
 static void _V0expand__syntax_k92(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k92" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k92, got ~D~N"
   "-- expected 1~N"
@@ -9831,6 +10587,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda23, env, runtime,
  }
 }
 static void _V0expand__syntax_k88(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k88" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k88, got ~D~N"
   "-- expected 1~N"
@@ -9849,6 +10607,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda22, env, runtime,
  }
 }
 static void _V0expand__syntax_k81(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k81" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k81, got ~D~N"
   "-- expected 1~N"
@@ -9867,6 +10627,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda21, env, runtime,
  }
 }
 static void _V0expand__syntax_k77(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k77" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k77, got ~D~N"
   "-- expected 1~N"
@@ -9885,6 +10647,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda20, env, runtime,
  }
 }
 static void _V0expand__syntax_k74(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k74" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k74, got ~D~N"
   "-- expected 1~N"
@@ -9903,6 +10667,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda19, env, runtime,
  }
 }
 static void _V0expand__syntax_k69(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k69" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k69, got ~D~N"
   "-- expected 1~N"
@@ -9921,6 +10687,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda18, env, runtime,
  }
 }
 static void _V0expand__syntax_k64(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k64" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k64, got ~D~N"
   "-- expected 1~N"
@@ -9939,6 +10707,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda17, env, runtime,
  }
 }
 static void _V0expand__syntax_k61(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k61" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k61, got ~D~N"
   "-- expected 1~N"
@@ -9957,6 +10727,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda16, env, runtime,
  }
 }
 static void _V0expand__syntax_k52(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__syntax_k52" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__syntax_k52, got ~D~N"
   "-- expected 1~N"
@@ -9975,6 +10747,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda8, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda6" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__syntax_lambda6, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -9989,6 +10763,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda7, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda5" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__syntax_lambda5, got ~D~N"
   "-- expected 2~N"
@@ -10008,6 +10784,8 @@ V_CALL_FUNC(_V0expand__syntax_lambda6, env, runtime,
  }
 }
 static void _V0expand__syntax_lambda4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__syntax_lambda4" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__syntax_lambda4, got ~D~N"
   "-- expected 2~N"
@@ -10027,6 +10805,8 @@ V_CALL(VGetArg(upenv, 11-1, 10), runtime,
  }
 }
 static void expand_k46(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k46" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k46, got ~D~N"
   "-- expected 1~N"
@@ -10046,6 +10826,8 @@ static void expand_k46(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) 
  }
 }
 static void _V0expand__toplevel_k344(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k344" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k344, got ~D~N"
   "-- expected 1~N"
@@ -10060,6 +10842,8 @@ V_CALL(VGetArg(upenv, 5-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k343(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k343" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k343, got ~D~N"
   "-- expected 1~N"
@@ -10079,6 +10863,8 @@ V_CALL(VGetArg(upenv, 15-1, 17), runtime,
  }
 }
 static void _V0expand__toplevel_lambda102(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda102" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__toplevel_lambda102, got ~D~N"
   "-- expected 2~N"
@@ -10094,6 +10880,8 @@ V_CALL(VGetArg(upenv, 14-1, 9), runtime,
  }
 }
 static void _V0expand__toplevel_k342(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k342" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k342, got ~D~N"
   "-- expected 1~N"
@@ -10123,6 +10911,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda101(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda101" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda101, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -10151,6 +10941,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k349(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k349" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k349, got ~D~N"
   "-- expected 1~N"
@@ -10165,6 +10957,8 @@ V_CALL(VGetArg(upenv, 7-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k348(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k348" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k348, got ~D~N"
   "-- expected 1~N"
@@ -10183,6 +10977,8 @@ V_CALL(VGetArg(upenv, 17-1, 21), runtime,
  }
 }
 static void _V0expand__toplevel_k347(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k347" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k347, got ~D~N"
   "-- expected 1~N"
@@ -10225,6 +11021,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k346(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k346" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k346, got ~D~N"
   "-- expected 1~N"
@@ -10252,6 +11050,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda103(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda103" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda103, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -10280,6 +11080,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k352(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k352" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k352, got ~D~N"
   "-- expected 1~N"
@@ -10294,6 +11096,8 @@ V_CALL(VGetArg(upenv, 6-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k351(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k351" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k351, got ~D~N"
   "-- expected 1~N"
@@ -10327,6 +11131,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda104(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda104" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda104, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -10355,6 +11161,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k354(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k354" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k354, got ~D~N"
   "-- expected 1~N"
@@ -10389,6 +11197,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda105(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda105" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda105, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -10417,6 +11227,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k360(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k360" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k360, got ~D~N"
   "-- expected 1~N"
@@ -10431,6 +11243,8 @@ V_CALL(VGetArg(upenv, 11-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k359(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k359" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k359, got ~D~N"
   "-- expected 1~N"
@@ -10466,6 +11280,8 @@ upenv->vars[0],
  }
 }
 static void _V0expand__toplevel_k358(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k358" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k358, got ~D~N"
   "-- expected 1~N"
@@ -10492,6 +11308,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__toplevel_k357(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k357" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k357, got ~D~N"
   "-- expected 1~N"
@@ -10523,6 +11341,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k356(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k356" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k356, got ~D~N"
   "-- expected 1~N"
@@ -10550,6 +11370,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda106(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda106" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda106, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -10578,6 +11400,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k365(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k365" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k365, got ~D~N"
   "-- expected 1~N"
@@ -10592,6 +11416,8 @@ V_CALL(VGetArg(upenv, 11-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k364(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k364" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k364, got ~D~N"
   "-- expected 1~N"
@@ -10649,6 +11475,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k363(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k363" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k363, got ~D~N"
   "-- expected 1~N"
@@ -10679,6 +11507,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k362(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k362" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k362, got ~D~N"
   "-- expected 1~N"
@@ -10706,6 +11536,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda107(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda107" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda107, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -10734,6 +11566,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k373(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k373" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k373, got ~D~N"
   "-- expected 1~N"
@@ -10756,6 +11590,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k376(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k376" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k376, got ~D~N"
   "-- expected 1~N"
@@ -10770,6 +11606,8 @@ V_CALL(VGetArg(upenv, 17-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k375(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k375" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k375, got ~D~N"
   "-- expected 1~N"
@@ -10800,6 +11638,8 @@ _var0,
  }
 }
 static void _V0expand__toplevel_k374(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k374" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k374, got ~D~N"
   "-- expected 1~N"
@@ -10821,6 +11661,8 @@ upenv->up->up->vars[0]
  }
 }
 static void _V0expand__toplevel_k372(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k372" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k372, got ~D~N"
   "-- expected 1~N"
@@ -10838,6 +11680,8 @@ V_CALL_FUNC(_V0expand__toplevel_k373, env, runtime,
  }
 }
 static void _V0expand__toplevel_k371(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k371" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k371, got ~D~N"
   "-- expected 1~N"
@@ -10856,6 +11700,8 @@ V_CALL(VGetArg(upenv, 24-1, 13), runtime,
  }
 }
 static void _V0expand__toplevel_k370(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k370" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k370, got ~D~N"
   "-- expected 1~N"
@@ -10897,6 +11743,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k369(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k369" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k369, got ~D~N"
   "-- expected 1~N"
@@ -10917,6 +11765,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__toplevel_k368(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k368" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k368, got ~D~N"
   "-- expected 1~N"
@@ -10947,6 +11797,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k367(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k367" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k367, got ~D~N"
   "-- expected 1~N"
@@ -10974,6 +11826,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda108(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda108" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda108, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -11002,6 +11856,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k379(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k379" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k379, got ~D~N"
   "-- expected 1~N"
@@ -11016,6 +11872,8 @@ V_CALL(VGetArg(upenv, 11-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k378(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k378" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k378, got ~D~N"
   "-- expected 1~N"
@@ -11049,6 +11907,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda109(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda109" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda109, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -11077,6 +11937,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k388(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k388" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k388, got ~D~N"
   "-- expected 1~N"
@@ -11099,6 +11961,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k392(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k392" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k392, got ~D~N"
   "-- expected 1~N"
@@ -11113,6 +11977,8 @@ V_CALL(VGetArg(upenv, 21-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k391(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k391" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k391, got ~D~N"
   "-- expected 1~N"
@@ -11143,6 +12009,8 @@ _var0,
  }
 }
 static void _V0expand__toplevel_k390(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k390" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k390, got ~D~N"
   "-- expected 1~N"
@@ -11161,6 +12029,8 @@ V_CALL(VGetArg(upenv, 29-1, 10), runtime,
  }
 }
 static void _V0expand__toplevel_k393(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k393" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k393, got ~D~N"
   "-- expected 1~N"
@@ -11182,6 +12052,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda113(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda113" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda113, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -11210,6 +12082,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k395(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k395" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k395, got ~D~N"
   "-- expected 1~N"
@@ -11231,6 +12105,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda114(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda114" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda114, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -11259,6 +12135,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k397(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k397" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k397, got ~D~N"
   "-- expected 1~N"
@@ -11280,6 +12158,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda115(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda115" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda115, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -11308,6 +12188,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k399(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k399" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k399, got ~D~N"
   "-- expected 1~N"
@@ -11322,6 +12204,8 @@ V_CALL(VGetArg(upenv, 5-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k398(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k398" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k398, got ~D~N"
   "-- expected 1~N"
@@ -11341,6 +12225,8 @@ V_CALL(VGetArg(upenv, 34-1, 16), runtime,
  }
 }
 static void _V0expand__toplevel_k396(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k396" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k396, got ~D~N"
   "-- expected 1~N"
@@ -11359,6 +12245,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda115, env, runtime,
  }
 }
 static void _V0expand__toplevel_k394(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k394" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k394, got ~D~N"
   "-- expected 1~N"
@@ -11377,6 +12265,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda114, env, runtime,
  }
 }
 static void _V0expand__toplevel_lambda112(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda112" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda112, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -11391,6 +12281,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda113, env, runtime,
  }
 }
 static void _V0expand__toplevel_lambda111(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda111" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__toplevel_lambda111, got ~D~N"
   "-- expected 2~N"
@@ -11410,6 +12302,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda112, env, runtime,
  }
 }
 static void _V0expand__toplevel_k389(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k389" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k389, got ~D~N"
   "-- expected 1~N"
@@ -11428,6 +12322,8 @@ V_CALL(VGetArg(upenv, 29-1, 10), runtime,
  }
 }
 static void _V0expand__toplevel_k387(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k387" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k387, got ~D~N"
   "-- expected 1~N"
@@ -11445,6 +12341,8 @@ V_CALL_FUNC(_V0expand__toplevel_k388, env, runtime,
  }
 }
 static void _V0expand__toplevel_k386(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k386" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k386, got ~D~N"
   "-- expected 1~N"
@@ -11463,6 +12361,8 @@ V_CALL(VGetArg(upenv, 27-1, 13), runtime,
  }
 }
 static void _V0expand__toplevel_k385(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k385" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k385, got ~D~N"
   "-- expected 1~N"
@@ -11494,6 +12394,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0expand__toplevel_k384(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k384" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k384, got ~D~N"
   "-- expected 1~N"
@@ -11524,6 +12426,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k383(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k383" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k383, got ~D~N"
   "-- expected 1~N"
@@ -11544,6 +12448,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__toplevel_k382(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k382" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k382, got ~D~N"
   "-- expected 1~N"
@@ -11574,6 +12480,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k381(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k381" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k381, got ~D~N"
   "-- expected 1~N"
@@ -11601,6 +12509,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda110(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda110" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda110, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -11629,6 +12539,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k406(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k406" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k406, got ~D~N"
   "-- expected 1~N"
@@ -11651,6 +12563,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k408(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k408" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k408, got ~D~N"
   "-- expected 1~N"
@@ -11665,6 +12579,8 @@ V_CALL(VGetArg(upenv, 18-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k407(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k407" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k407, got ~D~N"
   "-- expected 1~N"
@@ -11683,6 +12599,8 @@ V_CALL(VGetArg(upenv, 28-1, 21), runtime,
  }
 }
 static void _V0expand__toplevel_k405(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k405" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k405, got ~D~N"
   "-- expected 1~N"
@@ -11700,6 +12618,8 @@ V_CALL_FUNC(_V0expand__toplevel_k406, env, runtime,
  }
 }
 static void _V0expand__toplevel_k404(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k404" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k404, got ~D~N"
   "-- expected 1~N"
@@ -11718,6 +12638,8 @@ V_CALL(VGetArg(upenv, 26-1, 13), runtime,
  }
 }
 static void _V0expand__toplevel_k403(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k403" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k403, got ~D~N"
   "-- expected 1~N"
@@ -11749,6 +12671,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k402(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k402" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k402, got ~D~N"
   "-- expected 1~N"
@@ -11779,6 +12703,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k401(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k401" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k401, got ~D~N"
   "-- expected 1~N"
@@ -11806,6 +12732,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda116(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda116" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda116, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -11834,6 +12762,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k413(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k413" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k413, got ~D~N"
   "-- expected 1~N"
@@ -11848,6 +12778,8 @@ V_CALL(VGetArg(upenv, 16-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k412(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k412" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k412, got ~D~N"
   "-- expected 1~N"
@@ -11890,6 +12822,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k411(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k411" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k411, got ~D~N"
   "-- expected 1~N"
@@ -11920,6 +12854,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_k410(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k410" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k410, got ~D~N"
   "-- expected 1~N"
@@ -11947,6 +12883,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__toplevel_lambda117(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda117" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda117, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -11975,6 +12913,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__toplevel_k416(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k416" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k416, got ~D~N"
   "-- expected 1~N"
@@ -11989,6 +12929,8 @@ V_CALL(VGetArg(upenv, 15-1, 1), runtime,
  }
 }
 static void _V0expand__toplevel_k415(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k415" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k415, got ~D~N"
   "-- expected 1~N"
@@ -12007,6 +12949,8 @@ V_CALL(VGetArg(upenv, 25-1, 21), runtime,
  }
 }
 static void _V0expand__toplevel_lambda118(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda118" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda118, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -12021,6 +12965,8 @@ V_CALL(VGetArg(upenv, 23-1, 10), runtime,
  }
 }
 static void _V0expand__toplevel_k417(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k417" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k417, got ~D~N"
   "-- expected 1~N"
@@ -12035,6 +12981,8 @@ V_CALL(VGetArg(upenv, 24-1, 16), runtime,
  }
 }
 static void _V0expand__toplevel_k414(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k414" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k414, got ~D~N"
   "-- expected 1~N"
@@ -12053,6 +13001,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda118, env, runtime,
  }
 }
 static void _V0expand__toplevel_k409(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k409" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k409, got ~D~N"
   "-- expected 1~N"
@@ -12071,6 +13021,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda117, env, runtime,
  }
 }
 static void _V0expand__toplevel_k400(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k400" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k400, got ~D~N"
   "-- expected 1~N"
@@ -12089,6 +13041,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda116, env, runtime,
  }
 }
 static void _V0expand__toplevel_k380(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k380" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k380, got ~D~N"
   "-- expected 1~N"
@@ -12107,6 +13061,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda110, env, runtime,
  }
 }
 static void _V0expand__toplevel_k377(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k377" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k377, got ~D~N"
   "-- expected 1~N"
@@ -12125,6 +13081,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda109, env, runtime,
  }
 }
 static void _V0expand__toplevel_k366(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k366" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k366, got ~D~N"
   "-- expected 1~N"
@@ -12143,6 +13101,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda108, env, runtime,
  }
 }
 static void _V0expand__toplevel_k361(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k361" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k361, got ~D~N"
   "-- expected 1~N"
@@ -12161,6 +13121,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda107, env, runtime,
  }
 }
 static void _V0expand__toplevel_k355(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k355" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k355, got ~D~N"
   "-- expected 1~N"
@@ -12179,6 +13141,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda106, env, runtime,
  }
 }
 static void _V0expand__toplevel_k353(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k353" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k353, got ~D~N"
   "-- expected 1~N"
@@ -12197,6 +13161,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda105, env, runtime,
  }
 }
 static void _V0expand__toplevel_k350(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k350" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k350, got ~D~N"
   "-- expected 1~N"
@@ -12215,6 +13181,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda104, env, runtime,
  }
 }
 static void _V0expand__toplevel_k345(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_k345" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__toplevel_k345, got ~D~N"
   "-- expected 1~N"
@@ -12233,6 +13201,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda103, env, runtime,
  }
 }
 static void _V0expand__toplevel_lambda100(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda100" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__toplevel_lambda100, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -12247,6 +13217,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda101, env, runtime,
  }
 }
 static void _V0expand__toplevel_lambda99(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda99" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__toplevel_lambda99, got ~D~N"
   "-- expected 2~N"
@@ -12266,6 +13238,8 @@ V_CALL_FUNC(_V0expand__toplevel_lambda100, env, runtime,
  }
 }
 static void _V0expand__toplevel_lambda98(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0expand__toplevel_lambda98" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0expand__toplevel_lambda98, got ~D~N"
   "-- expected 3~N"
@@ -12286,6 +13260,8 @@ V_CALL(VGetArg(upenv, 10-1, 10), runtime,
  }
 }
 static void expand_k45(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k45" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k45, got ~D~N"
   "-- expected 1~N"
@@ -12305,6 +13281,8 @@ static void expand_k45(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) 
  }
 }
 static void _V0expand__define_k424(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k424" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k424, got ~D~N"
   "-- expected 1~N"
@@ -12327,6 +13305,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__define_k427(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k427" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k427, got ~D~N"
   "-- expected 1~N"
@@ -12341,6 +13321,8 @@ V_CALL(VGetArg(upenv, 11-1, 1), runtime,
  }
 }
 static void _V0expand__define_k426(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k426" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k426, got ~D~N"
   "-- expected 1~N"
@@ -12371,6 +13353,8 @@ _var0,
  }
 }
 static void _V0expand__define_k425(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k425" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k425, got ~D~N"
   "-- expected 1~N"
@@ -12392,6 +13376,8 @@ upenv->up->up->vars[0]
  }
 }
 static void _V0expand__define_k423(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k423" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k423, got ~D~N"
   "-- expected 1~N"
@@ -12409,6 +13395,8 @@ V_CALL_FUNC(_V0expand__define_k424, env, runtime,
  }
 }
 static void _V0expand__define_k422(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k422" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k422, got ~D~N"
   "-- expected 1~N"
@@ -12427,6 +13415,8 @@ V_CALL(VGetArg(upenv, 17-1, 13), runtime,
  }
 }
 static void _V0expand__define_k421(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k421" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k421, got ~D~N"
   "-- expected 1~N"
@@ -12468,6 +13458,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__define_k420(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k420" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k420, got ~D~N"
   "-- expected 1~N"
@@ -12488,6 +13480,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__define_k419(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k419" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k419, got ~D~N"
   "-- expected 1~N"
@@ -12518,6 +13512,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__define_k418(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k418" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k418, got ~D~N"
   "-- expected 1~N"
@@ -12545,6 +13541,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__define_lambda122(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__define_lambda122" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__define_lambda122, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -12573,6 +13571,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__define_k429(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k429" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k429, got ~D~N"
   "-- expected 1~N"
@@ -12587,6 +13587,8 @@ V_CALL(upenv->up->up->vars[1], runtime,
  }
 }
 static void _V0expand__define_k428(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__define_k428" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__define_k428, got ~D~N"
   "-- expected 1~N"
@@ -12606,6 +13608,8 @@ V_CALL(VGetArg(upenv, 12-1, 16), runtime,
  }
 }
 static void _V0expand__define_lambda121(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__define_lambda121" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__define_lambda121, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -12620,6 +13624,8 @@ V_CALL_FUNC(_V0expand__define_lambda122, env, runtime,
  }
 }
 static void _V0expand__define_lambda120(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__define_lambda120" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__define_lambda120, got ~D~N"
   "-- expected 2~N"
@@ -12639,6 +13645,8 @@ V_CALL_FUNC(_V0expand__define_lambda121, env, runtime,
  }
 }
 static void _V0expand__define_lambda119(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__define_lambda119" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__define_lambda119, got ~D~N"
   "-- expected 2~N"
@@ -12658,6 +13666,8 @@ V_CALL(VGetArg(upenv, 9-1, 10), runtime,
  }
 }
 static void expand_k44(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k44" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k44, got ~D~N"
   "-- expected 1~N"
@@ -12677,6 +13687,8 @@ static void expand_k44(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) 
  }
 }
 static void _V0expand__let_k430(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_k430" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_k430, got ~D~N"
   "-- expected 1~N"
@@ -12696,6 +13708,8 @@ upenv->up->up->up->vars[1]
  }
 }
 static void _V0loop_k433(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k433" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k433, got ~D~N"
   "-- expected 1~N"
@@ -12712,6 +13726,8 @@ V_CALL(VGetArg(upenv, 5-1, 1), runtime,
  }
 }
 static void _V0loop_k432(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k432" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k432, got ~D~N"
   "-- expected 1~N"
@@ -12730,6 +13746,8 @@ V_CALL(VGetArg(upenv, 17-1, 9), runtime,
  }
 }
 static void _V0loop_k431(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k431" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k431, got ~D~N"
   "-- expected 1~N"
@@ -12761,6 +13779,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k437(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k437" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k437, got ~D~N"
   "-- expected 1~N"
@@ -12817,6 +13837,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0loop_k436(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k436" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k436, got ~D~N"
   "-- expected 1~N"
@@ -12847,6 +13869,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k440(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k440" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k440, got ~D~N"
   "-- expected 1~N"
@@ -12863,6 +13887,8 @@ V_CALL(VGetArg(upenv, 9-1, 1), runtime,
  }
 }
 static void _V0loop_k439(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k439" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k439, got ~D~N"
   "-- expected 1~N"
@@ -12881,6 +13907,8 @@ V_CALL(VGetArg(upenv, 21-1, 9), runtime,
  }
 }
 static void _V0loop_k438(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k438" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k438, got ~D~N"
   "-- expected 1~N"
@@ -12899,6 +13927,8 @@ V_CALL(VGetArg(upenv, 20-1, 9), runtime,
  }
 }
 static void _V0loop_k435(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k435" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k435, got ~D~N"
   "-- expected 1~N"
@@ -12916,6 +13946,8 @@ V_CALL_FUNC(_V0loop_k436, env, runtime,
  }
 }
 static void _V0loop_lambda132(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda132" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0loop_lambda132, got ~D~N"
   "-- expected 2~N"
@@ -12937,6 +13969,8 @@ upenv->up->up->vars[1]
  }
 }
 static void _V0loop_lambda131(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_lambda131" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_lambda131, got ~D~N"
   "-- expected 1~N"
@@ -12955,6 +13989,8 @@ V_CALL(VGetArg(upenv, 17-1, 10), runtime,
  }
 }
 static void _V0loop_k434(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k434" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k434, got ~D~N"
   "-- expected 1~N"
@@ -12974,6 +14010,8 @@ V_CALL(VGetArg(upenv, 16-1, 11), runtime,
  }
 }
 static void _V0loop_lambda130(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+ static VDebugInfo dbg = { "_V0loop_lambda130" };
+ VRecordCall(&dbg);
  if(argc != 4) {
   VError("Not enough arguments to _V0loop_lambda130, got ~D~N"
   "-- expected 4~N"
@@ -12994,6 +14032,8 @@ V_CALL_FUNC(_V0loop_k431, env, runtime,
  }
 }
 static void _V0expand__let_lambda129(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda129" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__let_lambda129, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -13009,6 +14049,8 @@ static void _V0expand__let_lambda129(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0expand__let_lambda128(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda128" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__let_lambda128, got ~D~N"
   "-- expected 2~N"
@@ -13028,6 +14070,8 @@ V_CALL_FUNC(_V0expand__let_lambda129, env, runtime,
  }
 }
 static void _V0expand__let_lambda127(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda127" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_lambda127, got ~D~N"
   "-- expected 1~N"
@@ -13046,6 +14090,8 @@ V_CALL(VGetArg(upenv, 12-1, 10), runtime,
  }
 }
 static void _V0expand__let_k441(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_k441" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_k441, got ~D~N"
   "-- expected 1~N"
@@ -13060,6 +14106,8 @@ V_CALL(upenv->up->up->up->vars[1], runtime,
  }
 }
 static void _V0expand__let_lambda133(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda133" };
+ VRecordCall(&dbg);
  if(argc != 4) {
   VError("Not enough arguments to _V0expand__let_lambda133, got ~D~N"
   "-- expected 4~N"
@@ -13106,6 +14154,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__let_lambda126(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda126" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__let_lambda126, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -13131,6 +14181,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__let_k445(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_k445" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_k445, got ~D~N"
   "-- expected 1~N"
@@ -13150,6 +14202,8 @@ upenv->up->up->up->vars[0]
  }
 }
 static void _V0loop_k448(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k448" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k448, got ~D~N"
   "-- expected 1~N"
@@ -13166,6 +14220,8 @@ V_CALL(VGetArg(upenv, 5-1, 1), runtime,
  }
 }
 static void _V0loop_k447(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k447" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k447, got ~D~N"
   "-- expected 1~N"
@@ -13184,6 +14240,8 @@ V_CALL(VGetArg(upenv, 20-1, 9), runtime,
  }
 }
 static void _V0loop_k446(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k446" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k446, got ~D~N"
   "-- expected 1~N"
@@ -13215,6 +14273,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k452(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k452" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k452, got ~D~N"
   "-- expected 1~N"
@@ -13271,6 +14331,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0loop_k451(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k451" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k451, got ~D~N"
   "-- expected 1~N"
@@ -13301,6 +14363,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k455(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k455" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k455, got ~D~N"
   "-- expected 1~N"
@@ -13317,6 +14381,8 @@ V_CALL(VGetArg(upenv, 9-1, 1), runtime,
  }
 }
 static void _V0loop_k454(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k454" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k454, got ~D~N"
   "-- expected 1~N"
@@ -13335,6 +14401,8 @@ V_CALL(VGetArg(upenv, 24-1, 9), runtime,
  }
 }
 static void _V0loop_k453(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k453" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k453, got ~D~N"
   "-- expected 1~N"
@@ -13353,6 +14421,8 @@ V_CALL(VGetArg(upenv, 23-1, 9), runtime,
  }
 }
 static void _V0loop_k450(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k450" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k450, got ~D~N"
   "-- expected 1~N"
@@ -13370,6 +14440,8 @@ V_CALL_FUNC(_V0loop_k451, env, runtime,
  }
 }
 static void _V0loop_lambda140(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda140" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0loop_lambda140, got ~D~N"
   "-- expected 2~N"
@@ -13391,6 +14463,8 @@ upenv->up->up->vars[1]
  }
 }
 static void _V0loop_lambda139(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_lambda139" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_lambda139, got ~D~N"
   "-- expected 1~N"
@@ -13409,6 +14483,8 @@ V_CALL(VGetArg(upenv, 20-1, 10), runtime,
  }
 }
 static void _V0loop_k449(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k449" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k449, got ~D~N"
   "-- expected 1~N"
@@ -13428,6 +14504,8 @@ V_CALL(VGetArg(upenv, 19-1, 11), runtime,
  }
 }
 static void _V0loop_lambda138(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+ static VDebugInfo dbg = { "_V0loop_lambda138" };
+ VRecordCall(&dbg);
  if(argc != 4) {
   VError("Not enough arguments to _V0loop_lambda138, got ~D~N"
   "-- expected 4~N"
@@ -13448,6 +14526,8 @@ V_CALL_FUNC(_V0loop_k446, env, runtime,
  }
 }
 static void _V0expand__let_lambda137(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda137" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__let_lambda137, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -13463,6 +14543,8 @@ static void _V0expand__let_lambda137(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0expand__let_lambda136(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda136" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__let_lambda136, got ~D~N"
   "-- expected 2~N"
@@ -13482,6 +14564,8 @@ V_CALL_FUNC(_V0expand__let_lambda137, env, runtime,
  }
 }
 static void _V0expand__let_lambda135(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda135" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_lambda135, got ~D~N"
   "-- expected 1~N"
@@ -13500,6 +14584,8 @@ V_CALL(VGetArg(upenv, 15-1, 10), runtime,
  }
 }
 static void _V0expand__let_k456(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_k456" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_k456, got ~D~N"
   "-- expected 1~N"
@@ -13514,6 +14600,8 @@ V_CALL(VGetArg(upenv, 7-1, 1), runtime,
  }
 }
 static void _V0expand__let_lambda141(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda141" };
+ VRecordCall(&dbg);
  if(argc != 4) {
   VError("Not enough arguments to _V0expand__let_lambda141, got ~D~N"
   "-- expected 4~N"
@@ -13584,6 +14672,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__let_k444(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_k444" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_k444, got ~D~N"
   "-- expected 1~N"
@@ -13613,6 +14703,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__let_k443(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_k443" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_k443, got ~D~N"
   "-- expected 1~N"
@@ -13633,6 +14725,8 @@ upenv->vars[1]
  }
 }
 static void _V0expand__let_lambda134(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda134" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__let_lambda134, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -13659,6 +14753,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__let_k459(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_k459" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_k459, got ~D~N"
   "-- expected 1~N"
@@ -13673,6 +14769,8 @@ V_CALL(VGetArg(upenv, 14-1, 16), runtime,
  }
 }
 static void _V0expand__let_k458(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_k458" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_k458, got ~D~N"
   "-- expected 1~N"
@@ -13691,6 +14789,8 @@ V_CALL(upenv->up->up->up->vars[1], runtime,
  }
 }
 static void _V0expand__let_k457(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_k457" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_k457, got ~D~N"
   "-- expected 1~N"
@@ -13714,6 +14814,8 @@ VEncodePointer(&_V0let.sym, VPOINTER_OTHER),
  }
 }
 static void _V0expand__let_k442(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__let_k442" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__let_k442, got ~D~N"
   "-- expected 1~N"
@@ -13732,6 +14834,8 @@ V_CALL_FUNC(_V0expand__let_lambda134, env, runtime,
  }
 }
 static void _V0expand__let_lambda125(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda125" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__let_lambda125, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -13746,6 +14850,8 @@ V_CALL_FUNC(_V0expand__let_lambda126, env, runtime,
  }
 }
 static void _V0expand__let_lambda124(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda124" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__let_lambda124, got ~D~N"
   "-- expected 2~N"
@@ -13765,6 +14871,8 @@ V_CALL_FUNC(_V0expand__let_lambda125, env, runtime,
  }
 }
 static void _V0expand__let_lambda123(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__let_lambda123" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__let_lambda123, got ~D~N"
   "-- expected 2~N"
@@ -13784,6 +14892,8 @@ V_CALL(VGetArg(upenv, 8-1, 10), runtime,
  }
 }
 static void expand_k43(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k43" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k43, got ~D~N"
   "-- expected 1~N"
@@ -13803,6 +14913,8 @@ static void expand_k43(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) 
  }
 }
 static void _V0expand__lambda_k464(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k464" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k464, got ~D~N"
   "-- expected 1~N"
@@ -13825,6 +14937,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__lambda_k466(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k466" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k466, got ~D~N"
   "-- expected 1~N"
@@ -13847,6 +14961,8 @@ _var0,
  }
 }
 static void _V0expand__lambda_k465(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k465" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k465, got ~D~N"
   "-- expected 1~N"
@@ -13868,6 +14984,8 @@ upenv->up->up->vars[0]
  }
 }
 static void _V0expand__lambda_k463(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k463" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k463, got ~D~N"
   "-- expected 1~N"
@@ -13885,6 +15003,8 @@ V_CALL_FUNC(_V0expand__lambda_k464, env, runtime,
  }
 }
 static void _V0expand__lambda_k462(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k462" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k462, got ~D~N"
   "-- expected 1~N"
@@ -13903,6 +15023,8 @@ V_CALL(VGetArg(upenv, 13-1, 13), runtime,
  }
 }
 static void _V0expand__lambda_k461(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k461" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k461, got ~D~N"
   "-- expected 1~N"
@@ -13944,6 +15066,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__lambda_k460(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k460" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k460, got ~D~N"
   "-- expected 1~N"
@@ -13964,6 +15088,8 @@ upenv->vars[1]
  }
 }
 static void _V0expand__lambda_lambda145(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__lambda_lambda145" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__lambda_lambda145, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -13990,6 +15116,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__lambda_k471(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k471" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k471, got ~D~N"
   "-- expected 1~N"
@@ -14012,6 +15140,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__lambda_k474(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k474" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k474, got ~D~N"
   "-- expected 1~N"
@@ -14026,6 +15156,8 @@ V_CALL(VGetArg(upenv, 9-1, 1), runtime,
  }
 }
 static void _V0expand__lambda_k473(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k473" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k473, got ~D~N"
   "-- expected 1~N"
@@ -14052,6 +15184,8 @@ _var0,
  }
 }
 static void _V0expand__lambda_k472(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k472" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k472, got ~D~N"
   "-- expected 1~N"
@@ -14073,6 +15207,8 @@ upenv->up->up->up->vars[1]
  }
 }
 static void _V0expand__lambda_k470(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k470" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k470, got ~D~N"
   "-- expected 1~N"
@@ -14090,6 +15226,8 @@ V_CALL_FUNC(_V0expand__lambda_k471, env, runtime,
  }
 }
 static void _V0expand__lambda_k469(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k469" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k469, got ~D~N"
   "-- expected 1~N"
@@ -14108,6 +15246,8 @@ V_CALL(VGetArg(upenv, 13-1, 13), runtime,
  }
 }
 static void _V0expand__lambda_k468(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k468" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k468, got ~D~N"
   "-- expected 1~N"
@@ -14126,6 +15266,8 @@ V_CALL(VGetArg(upenv, 11-1, 5), runtime,
  }
 }
 static void _V0expand__lambda_lambda146(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__lambda_lambda146" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__lambda_lambda146, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -14152,6 +15294,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__lambda_k477(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k477" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k477, got ~D~N"
   "-- expected 1~N"
@@ -14166,6 +15310,8 @@ V_CALL(VGetArg(upenv, 13-1, 16), runtime,
  }
 }
 static void _V0expand__lambda_k476(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k476" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k476, got ~D~N"
   "-- expected 1~N"
@@ -14184,6 +15330,8 @@ V_CALL(upenv->up->up->up->vars[1], runtime,
  }
 }
 static void _V0expand__lambda_k475(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k475" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k475, got ~D~N"
   "-- expected 1~N"
@@ -14207,6 +15355,8 @@ VEncodePointer(&_V0lambda.sym, VPOINTER_OTHER),
  }
 }
 static void _V0expand__lambda_k467(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__lambda_k467" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__lambda_k467, got ~D~N"
   "-- expected 1~N"
@@ -14225,6 +15375,8 @@ V_CALL_FUNC(_V0expand__lambda_lambda146, env, runtime,
  }
 }
 static void _V0expand__lambda_lambda144(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__lambda_lambda144" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__lambda_lambda144, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -14239,6 +15391,8 @@ V_CALL_FUNC(_V0expand__lambda_lambda145, env, runtime,
  }
 }
 static void _V0expand__lambda_lambda143(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__lambda_lambda143" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__lambda_lambda143, got ~D~N"
   "-- expected 2~N"
@@ -14258,6 +15412,8 @@ V_CALL_FUNC(_V0expand__lambda_lambda144, env, runtime,
  }
 }
 static void _V0expand__lambda_lambda142(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__lambda_lambda142" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__lambda_lambda142, got ~D~N"
   "-- expected 2~N"
@@ -14277,6 +15433,8 @@ V_CALL(VGetArg(upenv, 7-1, 10), runtime,
  }
 }
 static void expand_k42(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k42" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k42, got ~D~N"
   "-- expected 1~N"
@@ -14296,6 +15454,8 @@ static void expand_k42(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) 
  }
 }
 static void _V0valid__args_Q_k485(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0valid__args_Q_k485" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0valid__args_Q_k485, got ~D~N"
   "-- expected 1~N"
@@ -14311,6 +15471,8 @@ V_CALL(VGetArg(upenv, 14-1, 16), runtime,
  }
 }
 static void _V0valid__args_Q_k484(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0valid__args_Q_k484" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0valid__args_Q_k484, got ~D~N"
   "-- expected 1~N"
@@ -14336,6 +15498,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0valid__args_Q_k487(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0valid__args_Q_k487" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0valid__args_Q_k487, got ~D~N"
   "-- expected 1~N"
@@ -14350,6 +15514,8 @@ V_CALL(VGetArg(upenv, 13-1, 5), runtime,
  }
 }
 static void _V0valid__args_Q_k486(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0valid__args_Q_k486" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0valid__args_Q_k486, got ~D~N"
   "-- expected 1~N"
@@ -14375,6 +15541,8 @@ V_CALL(VGetArg(upenv, 7-1, 0), runtime,
  }
 }
 static void _V0valid__args_Q_k483(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0valid__args_Q_k483" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0valid__args_Q_k483, got ~D~N"
   "-- expected 1~N"
@@ -14392,6 +15560,8 @@ V_CALL_FUNC(_V0valid__args_Q_k484, env, runtime,
  }
 }
 static void _V0valid__args_Q_k482(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0valid__args_Q_k482" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0valid__args_Q_k482, got ~D~N"
   "-- expected 1~N"
@@ -14411,6 +15581,8 @@ V_CALL(VGetArg(upenv, 10-1, 4), runtime,
  }
 }
 static void _V0valid__args_Q_k481(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0valid__args_Q_k481" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0valid__args_Q_k481, got ~D~N"
   "-- expected 1~N"
@@ -14429,6 +15601,8 @@ V_CALL(VGetArg(upenv, 10-1, 2), runtime,
  }
 }
 static void _V0valid__args_Q_k480(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0valid__args_Q_k480" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0valid__args_Q_k480, got ~D~N"
   "-- expected 1~N"
@@ -14454,6 +15628,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0valid__args_Q_k479(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0valid__args_Q_k479" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0valid__args_Q_k479, got ~D~N"
   "-- expected 1~N"
@@ -14479,6 +15655,8 @@ V_CALL(VGetArg(upenv, 8-1, 24), runtime,
  }
 }
 static void _V0valid__args_Q_k478(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0valid__args_Q_k478" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0valid__args_Q_k478, got ~D~N"
   "-- expected 1~N"
@@ -14504,6 +15682,8 @@ V_CALL(VGetArg(upenv, 7-1, 22), runtime,
  }
 }
 static void _V0valid__args_Q_lambda147(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0valid__args_Q_lambda147" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0valid__args_Q_lambda147, got ~D~N"
   "-- expected 2~N"
@@ -14523,6 +15703,8 @@ V_CALL(VGetArg(upenv, 6-1, 14), runtime,
  }
 }
 static void expand_k41(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k41" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k41, got ~D~N"
   "-- expected 1~N"
@@ -14542,6 +15724,8 @@ static void expand_k41(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) 
  }
 }
 static void _V0memtail_k491(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0memtail_k491" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0memtail_k491, got ~D~N"
   "-- expected 1~N"
@@ -14557,6 +15741,8 @@ V_CALL(VGetArg(upenv, 8-1, 4), runtime,
  }
 }
 static void _V0memtail_k490(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0memtail_k490" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0memtail_k490, got ~D~N"
   "-- expected 1~N"
@@ -14582,6 +15768,8 @@ V_CALL(VGetArg(upenv, 8-1, 2), runtime,
  }
 }
 static void _V0memtail_k489(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0memtail_k489" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0memtail_k489, got ~D~N"
   "-- expected 1~N"
@@ -14601,6 +15789,8 @@ V_CALL(VGetArg(upenv, 7-1, 5), runtime,
  }
 }
 static void _V0memtail_k488(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0memtail_k488" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0memtail_k488, got ~D~N"
   "-- expected 1~N"
@@ -14628,6 +15818,8 @@ V_CALL(VGetArg(upenv, 6-1, 5), runtime,
  }
 }
 static void _V0memtail_lambda148(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0memtail_lambda148" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0memtail_lambda148, got ~D~N"
   "-- expected 3~N"
@@ -14648,6 +15840,8 @@ V_CALL(VGetArg(upenv, 5-1, 24), runtime,
  }
 }
 static void expand_k40(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k40" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k40, got ~D~N"
   "-- expected 1~N"
@@ -14667,6 +15861,8 @@ static void expand_k40(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) 
  }
 }
 static void _V0expand__library_k511(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k511" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k511, got ~D~N"
   "-- expected 1~N"
@@ -14688,6 +15884,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library_k515(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k515" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k515, got ~D~N"
   "-- expected 1~N"
@@ -14702,6 +15900,8 @@ V_CALL(VGetArg(upenv, 28-1, 13), runtime,
  }
 }
 static void _V0expand__library_k514(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k514" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k514, got ~D~N"
   "-- expected 1~N"
@@ -14727,6 +15927,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library_k518(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k518" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k518, got ~D~N"
   "-- expected 1~N"
@@ -14743,6 +15945,8 @@ V_CALL(VGetArg(upenv, 29-1, 16), runtime,
  }
 }
 static void _V0expand__library_k517(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k517" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k517, got ~D~N"
   "-- expected 1~N"
@@ -14768,6 +15972,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library_k523(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k523" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k523, got ~D~N"
   "-- expected 1~N"
@@ -14805,6 +16011,8 @@ _var0,
  }
 }
 static void _V0expand__library_k522(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k522" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k522, got ~D~N"
   "-- expected 1~N"
@@ -14863,6 +16071,8 @@ upenv->vars[0],
  }
 }
 static void _V0expand__library_k521(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k521" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k521, got ~D~N"
   "-- expected 1~N"
@@ -14881,6 +16091,8 @@ V_CALL(VGetArg(upenv, 30-1, 27), runtime,
  }
 }
 static void _V0expand__library_k524(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k524" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k524, got ~D~N"
   "-- expected 1~N"
@@ -14910,6 +16122,8 @@ _var0,
  }
 }
 static void _V0expand__library_lambda151(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library_lambda151" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__library_lambda151, got ~D~N"
   "-- expected 2~N"
@@ -14930,6 +16144,8 @@ V_CALL(VGetArg(upenv, 30-1, 21), runtime,
  }
 }
 static void _V0expand__library_k520(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k520" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k520, got ~D~N"
   "-- expected 1~N"
@@ -14949,6 +16165,8 @@ V_CALL(VGetArg(upenv, 29-1, 15), runtime,
  }
 }
 static void _V0expand__library_lambda152(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library_lambda152" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__library_lambda152, got ~D~N"
   "-- expected 2~N"
@@ -14970,6 +16188,8 @@ _var1,
  }
 }
 static void _V0expand__library_k519(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k519" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k519, got ~D~N"
   "-- expected 1~N"
@@ -14989,6 +16209,8 @@ V_CALL(VGetArg(upenv, 28-1, 15), runtime,
  }
 }
 static void _V0expand__library_k516(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k516" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k516, got ~D~N"
   "-- expected 1~N"
@@ -15006,6 +16228,8 @@ V_CALL_FUNC(_V0expand__library_k517, env, runtime,
  }
 }
 static void _V0expand__library_k513(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k513" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k513, got ~D~N"
   "-- expected 1~N"
@@ -15023,6 +16247,8 @@ V_CALL_FUNC(_V0expand__library_k514, env, runtime,
  }
 }
 static void _V0expand__library_k512(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k512" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k512, got ~D~N"
   "-- expected 1~N"
@@ -15041,6 +16267,8 @@ V_CALL(VGetArg(upenv, 25-1, 22), runtime,
  }
 }
 static void _V0expand__library_k510(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k510" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k510, got ~D~N"
   "-- expected 1~N"
@@ -15058,6 +16286,8 @@ V_CALL_FUNC(_V0expand__library_k511, env, runtime,
  }
 }
 static void _V0expand__library_k509(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k509" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k509, got ~D~N"
   "-- expected 1~N"
@@ -15076,6 +16306,8 @@ V_CALL(VGetArg(upenv, 23-1, 13), runtime,
  }
 }
 static void _V0expand__library_lambda153(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0expand__library_lambda153" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0expand__library_lambda153, got ~D~N"
   "-- expected 3~N"
@@ -15096,6 +16328,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library_k508(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k508" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k508, got ~D~N"
   "-- expected 1~N"
@@ -15116,6 +16350,8 @@ V_CALL(VGetArg(upenv, 22-1, 26), runtime,
  }
 }
 static void _V0expand__library_k507(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k507" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k507, got ~D~N"
   "-- expected 1~N"
@@ -15135,6 +16371,8 @@ V_CALL(VGetArg(upenv, 21-1, 15), runtime,
  }
 }
 static void _V0expand__library_k506(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k506" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k506, got ~D~N"
   "-- expected 1~N"
@@ -15153,6 +16391,8 @@ V_CALL(VGetArg(upenv, 20-1, 18), runtime,
  }
 }
 static void _V0expand__library_k505(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k505" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k505, got ~D~N"
   "-- expected 1~N"
@@ -15171,6 +16411,8 @@ V_CALL(VGetArg(upenv, 19-1, 28), runtime,
  }
 }
 static void _V0expand__library_k504(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k504" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k504, got ~D~N"
   "-- expected 1~N"
@@ -15190,6 +16432,8 @@ static void _V0expand__library_k504(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0expand__library_k503(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k503" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k503, got ~D~N"
   "-- expected 1~N"
@@ -15208,6 +16452,8 @@ V_CALL(VGetArg(upenv, 17-1, 25), runtime,
  }
 }
 static void _V0expand__library_k502(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k502" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k502, got ~D~N"
   "-- expected 1~N"
@@ -15227,6 +16473,8 @@ static void _V0expand__library_k502(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0expand__library_k501(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k501" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k501, got ~D~N"
   "-- expected 1~N"
@@ -15253,6 +16501,8 @@ VNULL,
  }
 }
 static void _V0expand__library_k500(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k500" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k500, got ~D~N"
   "-- expected 1~N"
@@ -15272,6 +16522,8 @@ V_CALL(VGetArg(upenv, 14-1, 3), runtime,
  }
 }
 static void _V0expand__library_k499(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k499" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k499, got ~D~N"
   "-- expected 1~N"
@@ -15290,6 +16542,8 @@ V_CALL(VGetArg(upenv, 13-1, 21), runtime,
  }
 }
 static void _V0expand__library_k498(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k498" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k498, got ~D~N"
   "-- expected 1~N"
@@ -15308,6 +16562,8 @@ V_CALL(VGetArg(upenv, 7-1, 1), runtime,
  }
 }
 static void _V0expand__library_k497(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k497" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k497, got ~D~N"
   "-- expected 1~N"
@@ -15327,6 +16583,8 @@ V_CALL(VGetArg(upenv, 11-1, 17), runtime,
  }
 }
 static void _V0expand__library_k496(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k496" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k496, got ~D~N"
   "-- expected 1~N"
@@ -15346,6 +16604,8 @@ V_CALL(VGetArg(upenv, 10-1, 15), runtime,
  }
 }
 static void _V0expand__library_k495(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k495" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k495, got ~D~N"
   "-- expected 1~N"
@@ -15364,6 +16624,8 @@ V_CALL(VGetArg(upenv, 9-1, 27), runtime,
  }
 }
 static void _V0expand__library__expr_k528(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k528" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k528, got ~D~N"
   "-- expected 1~N"
@@ -15378,6 +16640,8 @@ V_CALL(VGetArg(upenv, 6-1, 1), runtime,
  }
 }
 static void _V0expand__library__expr_k527(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k527" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k527, got ~D~N"
   "-- expected 1~N"
@@ -15395,6 +16659,8 @@ V_CALL(VGetArg(upenv, 15-1, 21), runtime,
  }
 }
 static void _V0expand__library__expr_k526(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k526" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k526, got ~D~N"
   "-- expected 1~N"
@@ -15414,6 +16680,8 @@ static void _V0expand__library__expr_k526(VRuntime * runtime, VEnv * upenv, int 
  }
 }
 static void _V0expand__library__expr_k525(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k525" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k525, got ~D~N"
   "-- expected 1~N"
@@ -15443,6 +16711,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_lambda157(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_lambda157" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__library__expr_lambda157, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -15471,6 +16741,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library__expr_k534(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k534" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k534, got ~D~N"
   "-- expected 1~N"
@@ -15485,6 +16757,8 @@ V_CALL(VGetArg(upenv, 8-1, 1), runtime,
  }
 }
 static void _V0expand__library__expr_k533(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k533" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k533, got ~D~N"
   "-- expected 1~N"
@@ -15502,6 +16776,8 @@ V_CALL(VGetArg(upenv, 17-1, 21), runtime,
  }
 }
 static void _V0expand__library__expr_k532(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k532" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k532, got ~D~N"
   "-- expected 1~N"
@@ -15521,6 +16797,8 @@ static void _V0expand__library__expr_k532(VRuntime * runtime, VEnv * upenv, int 
  }
 }
 static void _V0expand__library__expr_k531(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k531" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k531, got ~D~N"
   "-- expected 1~N"
@@ -15540,6 +16818,8 @@ V_CALL(VGetArg(upenv, 15-1, 3), runtime,
  }
 }
 static void _V0expand__library__expr_k530(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k530" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k530, got ~D~N"
   "-- expected 1~N"
@@ -15569,6 +16849,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_lambda158(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_lambda158" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__library__expr_lambda158, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -15597,6 +16879,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library__expr_k539(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k539" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k539, got ~D~N"
   "-- expected 1~N"
@@ -15611,6 +16895,8 @@ V_CALL(VGetArg(upenv, 8-1, 1), runtime,
  }
 }
 static void _V0expand__library__expr_k538(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k538" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k538, got ~D~N"
   "-- expected 1~N"
@@ -15668,6 +16954,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_k537(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k537" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k537, got ~D~N"
   "-- expected 1~N"
@@ -15698,6 +16986,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_k536(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k536" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k536, got ~D~N"
   "-- expected 1~N"
@@ -15725,6 +17015,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_lambda159(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_lambda159" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__library__expr_lambda159, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -15753,6 +17045,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library__expr_k549(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k549" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k549, got ~D~N"
   "-- expected 1~N"
@@ -15775,6 +17069,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library__expr_k552(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k552" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k552, got ~D~N"
   "-- expected 1~N"
@@ -15789,6 +17085,8 @@ V_CALL(VGetArg(upenv, 16-1, 1), runtime,
  }
 }
 static void _V0expand__library__expr_k551(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k551" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k551, got ~D~N"
   "-- expected 1~N"
@@ -15819,6 +17117,8 @@ _var0,
  }
 }
 static void _V0expand__library__expr_k550(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k550" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k550, got ~D~N"
   "-- expected 1~N"
@@ -15844,6 +17144,8 @@ upenv->up->up->up->vars[0]
  }
 }
 static void _V0expand__library__expr_k548(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k548" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k548, got ~D~N"
   "-- expected 1~N"
@@ -15861,6 +17163,8 @@ V_CALL_FUNC(_V0expand__library__expr_k549, env, runtime,
  }
 }
 static void _V0expand__library__expr_k547(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k547" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k547, got ~D~N"
   "-- expected 1~N"
@@ -15879,6 +17183,8 @@ V_CALL(VGetArg(upenv, 22-1, 13), runtime,
  }
 }
 static void _V0expand__library__expr_k546(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k546" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k546, got ~D~N"
   "-- expected 1~N"
@@ -15917,6 +17223,8 @@ V_CALL(VGetArg(upenv, 6-1, 0), runtime,
  }
 }
 static void _V0expand__library__expr_k545(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k545" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k545, got ~D~N"
   "-- expected 1~N"
@@ -15949,6 +17257,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0expand__library__expr_k544(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k544" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k544, got ~D~N"
   "-- expected 1~N"
@@ -15979,6 +17289,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_k543(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k543" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k543, got ~D~N"
   "-- expected 1~N"
@@ -15999,6 +17311,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__library__expr_k542(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k542" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k542, got ~D~N"
   "-- expected 1~N"
@@ -16029,6 +17343,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_k541(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k541" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k541, got ~D~N"
   "-- expected 1~N"
@@ -16056,6 +17372,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_lambda160(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_lambda160" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__library__expr_lambda160, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -16084,6 +17402,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library__expr_k562(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k562" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k562, got ~D~N"
   "-- expected 1~N"
@@ -16106,6 +17426,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library__expr_k565(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k565" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k565, got ~D~N"
   "-- expected 1~N"
@@ -16120,6 +17442,8 @@ V_CALL(VGetArg(upenv, 17-1, 1), runtime,
  }
 }
 static void _V0expand__library__expr_k564(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k564" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k564, got ~D~N"
   "-- expected 1~N"
@@ -16150,6 +17474,8 @@ _var0,
  }
 }
 static void _V0expand__library__expr_k563(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k563" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k563, got ~D~N"
   "-- expected 1~N"
@@ -16175,6 +17501,8 @@ upenv->up->up->up->vars[0]
  }
 }
 static void _V0expand__library__expr_k561(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k561" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k561, got ~D~N"
   "-- expected 1~N"
@@ -16192,6 +17520,8 @@ V_CALL_FUNC(_V0expand__library__expr_k562, env, runtime,
  }
 }
 static void _V0expand__library__expr_k560(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k560" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k560, got ~D~N"
   "-- expected 1~N"
@@ -16210,6 +17540,8 @@ V_CALL(VGetArg(upenv, 23-1, 13), runtime,
  }
 }
 static void _V0expand__library__expr_k559(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k559" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k559, got ~D~N"
   "-- expected 1~N"
@@ -16248,6 +17580,8 @@ V_CALL(VGetArg(upenv, 6-1, 0), runtime,
  }
 }
 static void _V0expand__library__expr_k558(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k558" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k558, got ~D~N"
   "-- expected 1~N"
@@ -16280,6 +17614,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0expand__library__expr_k557(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k557" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k557, got ~D~N"
   "-- expected 1~N"
@@ -16310,6 +17646,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_k556(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k556" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k556, got ~D~N"
   "-- expected 1~N"
@@ -16330,6 +17668,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__library__expr_k555(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k555" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k555, got ~D~N"
   "-- expected 1~N"
@@ -16360,6 +17700,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_k554(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k554" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k554, got ~D~N"
   "-- expected 1~N"
@@ -16387,6 +17729,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_lambda161(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_lambda161" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__library__expr_lambda161, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -16415,6 +17759,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library__expr_k571(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k571" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k571, got ~D~N"
   "-- expected 1~N"
@@ -16429,6 +17775,8 @@ V_CALL(VGetArg(upenv, 12-1, 1), runtime,
  }
 }
 static void _V0expand__library__expr_k570(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k570" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k570, got ~D~N"
   "-- expected 1~N"
@@ -16462,6 +17810,8 @@ _var0,
  }
 }
 static void _V0expand__library__expr_k569(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k569" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k569, got ~D~N"
   "-- expected 1~N"
@@ -16506,6 +17856,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_k568(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k568" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k568, got ~D~N"
   "-- expected 1~N"
@@ -16536,6 +17888,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_k567(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k567" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k567, got ~D~N"
   "-- expected 1~N"
@@ -16563,6 +17917,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_lambda162(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_lambda162" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__library__expr_lambda162, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -16591,6 +17947,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library__expr_k574(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k574" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k574, got ~D~N"
   "-- expected 1~N"
@@ -16605,6 +17963,8 @@ V_CALL(VGetArg(upenv, 10-1, 1), runtime,
  }
 }
 static void _V0expand__library__expr_k573(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k573" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k573, got ~D~N"
   "-- expected 1~N"
@@ -16638,6 +17998,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__library__expr_lambda163(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_lambda163" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__library__expr_lambda163, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -16666,6 +18028,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__library__expr_k576(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k576" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k576, got ~D~N"
   "-- expected 1~N"
@@ -16680,6 +18044,8 @@ V_CALL(VGetArg(upenv, 9-1, 1), runtime,
  }
 }
 static void _V0expand__library__expr_k575(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k575" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k575, got ~D~N"
   "-- expected 1~N"
@@ -16699,6 +18065,8 @@ V_CALL(VGetArg(upenv, 18-1, 16), runtime,
  }
 }
 static void _V0expand__library__expr_k572(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k572" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k572, got ~D~N"
   "-- expected 1~N"
@@ -16717,6 +18085,8 @@ V_CALL_FUNC(_V0expand__library__expr_lambda163, env, runtime,
  }
 }
 static void _V0expand__library__expr_k566(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k566" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k566, got ~D~N"
   "-- expected 1~N"
@@ -16735,6 +18105,8 @@ V_CALL_FUNC(_V0expand__library__expr_lambda162, env, runtime,
  }
 }
 static void _V0expand__library__expr_k553(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k553" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k553, got ~D~N"
   "-- expected 1~N"
@@ -16753,6 +18125,8 @@ V_CALL_FUNC(_V0expand__library__expr_lambda161, env, runtime,
  }
 }
 static void _V0expand__library__expr_k540(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k540" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k540, got ~D~N"
   "-- expected 1~N"
@@ -16771,6 +18145,8 @@ V_CALL_FUNC(_V0expand__library__expr_lambda160, env, runtime,
  }
 }
 static void _V0expand__library__expr_k535(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k535" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k535, got ~D~N"
   "-- expected 1~N"
@@ -16789,6 +18165,8 @@ V_CALL_FUNC(_V0expand__library__expr_lambda159, env, runtime,
  }
 }
 static void _V0expand__library__expr_k529(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_k529" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library__expr_k529, got ~D~N"
   "-- expected 1~N"
@@ -16807,6 +18185,8 @@ V_CALL_FUNC(_V0expand__library__expr_lambda158, env, runtime,
  }
 }
 static void _V0expand__library__expr_lambda156(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_lambda156" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__library__expr_lambda156, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -16821,6 +18201,8 @@ V_CALL_FUNC(_V0expand__library__expr_lambda157, env, runtime,
  }
 }
 static void _V0expand__library__expr_lambda155(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_lambda155" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__library__expr_lambda155, got ~D~N"
   "-- expected 2~N"
@@ -16840,6 +18222,8 @@ V_CALL_FUNC(_V0expand__library__expr_lambda156, env, runtime,
  }
 }
 static void _V0expand__library__expr_lambda154(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library__expr_lambda154" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__library__expr_lambda154, got ~D~N"
   "-- expected 2~N"
@@ -16859,6 +18243,8 @@ V_CALL(VGetArg(upenv, 9-1, 10), runtime,
  }
 }
 static void _V0expand__library_k494(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k494" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k494, got ~D~N"
   "-- expected 1~N"
@@ -16878,6 +18264,8 @@ static void _V0expand__library_k494(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0expand__library_k493(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k493" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k493, got ~D~N"
   "-- expected 1~N"
@@ -16897,6 +18285,8 @@ static void _V0expand__library_k493(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0expand__library_k492(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__library_k492" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__library_k492, got ~D~N"
   "-- expected 1~N"
@@ -16916,6 +18306,8 @@ static void _V0expand__library_k492(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0make__library__output_k578(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0make__library__output_k578" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0make__library__output_k578, got ~D~N"
   "-- expected 1~N"
@@ -16930,6 +18322,8 @@ V_CALL(VGetArg(upenv, 7-1, 10), runtime,
  }
 }
 static void _V0make__library__output_k577(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0make__library__output_k577" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0make__library__output_k577, got ~D~N"
   "-- expected 1~N"
@@ -16949,6 +18343,8 @@ V_CALL(VGetArg(upenv, 7-1, 21), runtime,
  }
 }
 static void _V0make__library__output_k579(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0make__library__output_k579" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0make__library__output_k579, got ~D~N"
   "-- expected 1~N"
@@ -16964,6 +18360,8 @@ V_CALL(VGetArg(upenv, 8-1, 1), runtime,
  }
 }
 static void _V0make__library__output_lambda165(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0make__library__output_lambda165" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0make__library__output_lambda165, got ~D~N"
   "-- expected 2~N"
@@ -16984,6 +18382,8 @@ V_CALL(VGetArg(upenv, 7-1, 21), runtime,
  }
 }
 static void _V0make__library__output_lambda164(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0make__library__output_lambda164" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0make__library__output_lambda164, got ~D~N"
   "-- expected 2~N"
@@ -17004,6 +18404,8 @@ V_CALL(VGetArg(upenv, 6-1, 15), runtime,
  }
 }
 static void _V0expand__library_lambda150(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6) {
+ static VDebugInfo dbg = { "_V0expand__library_lambda150" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__library_lambda150, runtime, upenv, 7, argc, _var0, _var1, _var2, _var3, _var4, _var5, _var6) {
   struct { VEnv env; VWORD argv[7]; } container;
   VEnv * env = &container.env;
@@ -17024,6 +18426,8 @@ static void _V0expand__library_lambda150(VRuntime * runtime, VEnv * upenv, int a
  }
 }
 static void _V0expand__library_lambda149(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__library_lambda149" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__library_lambda149, got ~D~N"
   "-- expected 2~N"
@@ -17048,6 +18452,8 @@ V_CALL_FUNC(_V0expand__library_lambda150, env, runtime,
  }
 }
 static void expand_k39(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k39" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k39, got ~D~N"
   "-- expected 1~N"
@@ -17067,6 +18473,8 @@ static void expand_k39(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) 
  }
 }
 static void _V0expand__quasiquote_k583(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k583" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k583, got ~D~N"
   "-- expected 1~N"
@@ -17121,6 +18529,8 @@ VNULL,
  }
 }
 static void _V0expand__quasiquote_k582(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k582" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k582, got ~D~N"
   "-- expected 1~N"
@@ -17143,6 +18553,8 @@ upenv->vars[0]
  }
 }
 static void _V0expand__quasiquote_k581(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k581" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k581, got ~D~N"
   "-- expected 1~N"
@@ -17185,6 +18597,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__quasiquote_k580(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k580" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k580, got ~D~N"
   "-- expected 1~N"
@@ -17212,6 +18626,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__quasiquote_lambda169(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_lambda169" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__quasiquote_lambda169, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -17240,6 +18656,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__quasiquote_k591(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k591" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k591, got ~D~N"
   "-- expected 1~N"
@@ -17293,6 +18711,8 @@ VNULL,
  }
 }
 static void _V0expand__quasiquote_k590(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k590" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k590, got ~D~N"
   "-- expected 1~N"
@@ -17312,6 +18732,8 @@ V_CALL(VGetArg(upenv, 12-1, 2), runtime,
  }
 }
 static void _V0expand__quasiquote_k589(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k589" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k589, got ~D~N"
   "-- expected 1~N"
@@ -17338,6 +18760,8 @@ V_CALL(VGetArg(upenv, 12-1, 30), runtime,
  }
 }
 static void _V0expand__quasiquote_k592(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k592" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k592, got ~D~N"
   "-- expected 1~N"
@@ -17352,6 +18776,8 @@ V_CALL(VGetArg(upenv, 8-1, 1), runtime,
  }
 }
 static void _V0expand__quasiquote_k588(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k588" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k588, got ~D~N"
   "-- expected 1~N"
@@ -17369,6 +18795,8 @@ V_CALL_FUNC(_V0expand__quasiquote_k589, env, runtime,
  }
 }
 static void _V0expand__quasiquote_k587(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k587" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k587, got ~D~N"
   "-- expected 1~N"
@@ -17401,6 +18829,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__quasiquote_k586(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k586" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k586, got ~D~N"
   "-- expected 1~N"
@@ -17431,6 +18861,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__quasiquote_k585(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k585" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k585, got ~D~N"
   "-- expected 1~N"
@@ -17458,6 +18890,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__quasiquote_lambda170(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_lambda170" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__quasiquote_lambda170, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -17486,6 +18920,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__quasiquote_k601(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k601" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k601, got ~D~N"
   "-- expected 1~N"
@@ -17511,6 +18947,8 @@ _var0,
  }
 }
 static void _V0expand__quasiquote_k604(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k604" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k604, got ~D~N"
   "-- expected 1~N"
@@ -17576,6 +19014,8 @@ _var0,
  }
 }
 static void _V0expand__quasiquote_k603(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k603" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k603, got ~D~N"
   "-- expected 1~N"
@@ -17595,6 +19035,8 @@ V_CALL(VGetArg(upenv, 16-1, 2), runtime,
  }
 }
 static void _V0expand__quasiquote_k602(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k602" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k602, got ~D~N"
   "-- expected 1~N"
@@ -17614,6 +19056,8 @@ V_CALL(VGetArg(upenv, 15-1, 2), runtime,
  }
 }
 static void _V0expand__quasiquote_k600(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k600" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k600, got ~D~N"
   "-- expected 1~N"
@@ -17642,6 +19086,8 @@ V_CALL(VGetArg(upenv, 15-1, 30), runtime,
  }
 }
 static void _V0expand__quasiquote_k605(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k605" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k605, got ~D~N"
   "-- expected 1~N"
@@ -17656,6 +19102,8 @@ V_CALL(VGetArg(upenv, 11-1, 1), runtime,
  }
 }
 static void _V0expand__quasiquote_k599(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k599" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k599, got ~D~N"
   "-- expected 1~N"
@@ -17673,6 +19121,8 @@ V_CALL_FUNC(_V0expand__quasiquote_k600, env, runtime,
  }
 }
 static void _V0expand__quasiquote_k598(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k598" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k598, got ~D~N"
   "-- expected 1~N"
@@ -17692,6 +19142,8 @@ V_CALL(VGetArg(upenv, 13-1, 31), runtime,
  }
 }
 static void _V0expand__quasiquote_k597(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k597" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k597, got ~D~N"
   "-- expected 1~N"
@@ -17725,6 +19177,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__quasiquote_k596(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k596" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k596, got ~D~N"
   "-- expected 1~N"
@@ -17755,6 +19209,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0expand__quasiquote_k595(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k595" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k595, got ~D~N"
   "-- expected 1~N"
@@ -17782,6 +19238,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0expand__quasiquote_k594(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k594" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k594, got ~D~N"
   "-- expected 1~N"
@@ -17814,6 +19272,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0expand__quasiquote_lambda171(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_lambda171" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__quasiquote_lambda171, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -17840,6 +19300,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__quasiquote_k608(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k608" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k608, got ~D~N"
   "-- expected 1~N"
@@ -17866,6 +19328,8 @@ _var0,
  }
 }
 static void _V0expand__quasiquote_k607(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k607" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k607, got ~D~N"
   "-- expected 1~N"
@@ -17888,6 +19352,8 @@ upenv->vars[1]
  }
 }
 static void _V0expand__quasiquote_lambda172(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_lambda172" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__quasiquote_lambda172, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -17916,6 +19382,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0expand__quasiquote_lambda173(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_lambda173" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__quasiquote_lambda173, runtime, upenv, 2, argc, _var0, _var1) {
   // ((bruijn ##kk.23 6 1) (bruijn ##k.1460 0 0) (##inline ##sys.cons (quote quote) (##inline ##sys.cons (bruijn x 0 1) (quote ()))))
 V_CALL(VGetArg(upenv, 6-1, 1), runtime,
@@ -17933,6 +19401,8 @@ _var1,
  }
 }
 static void _V0expand__quasiquote_k610(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k610" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k610, got ~D~N"
   "-- expected 1~N"
@@ -17947,6 +19417,8 @@ V_CALL(VGetArg(upenv, 10-1, 16), runtime,
  }
 }
 static void _V0expand__quasiquote_k609(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k609" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k609, got ~D~N"
   "-- expected 1~N"
@@ -17965,6 +19437,8 @@ V_CALL_FUNC(_V0expand__quasiquote_lambda173, env, runtime,
  }
 }
 static void _V0expand__quasiquote_k606(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k606" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k606, got ~D~N"
   "-- expected 1~N"
@@ -17983,6 +19457,8 @@ V_CALL_FUNC(_V0expand__quasiquote_lambda172, env, runtime,
  }
 }
 static void _V0expand__quasiquote_k593(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k593" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k593, got ~D~N"
   "-- expected 1~N"
@@ -18001,6 +19477,8 @@ V_CALL_FUNC(_V0expand__quasiquote_lambda171, env, runtime,
  }
 }
 static void _V0expand__quasiquote_k584(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_k584" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0expand__quasiquote_k584, got ~D~N"
   "-- expected 1~N"
@@ -18019,6 +19497,8 @@ V_CALL_FUNC(_V0expand__quasiquote_lambda170, env, runtime,
  }
 }
 static void _V0expand__quasiquote_lambda168(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_lambda168" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0expand__quasiquote_lambda168, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -18033,6 +19513,8 @@ V_CALL_FUNC(_V0expand__quasiquote_lambda169, env, runtime,
  }
 }
 static void _V0expand__quasiquote_lambda167(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_lambda167" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0expand__quasiquote_lambda167, got ~D~N"
   "-- expected 2~N"
@@ -18052,6 +19534,8 @@ V_CALL_FUNC(_V0expand__quasiquote_lambda168, env, runtime,
  }
 }
 static void _V0expand__quasiquote_lambda166(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0expand__quasiquote_lambda166" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0expand__quasiquote_lambda166, got ~D~N"
   "-- expected 3~N"
@@ -18072,6 +19556,8 @@ V_CALL(upenv->up->up->vars[10], runtime,
  }
 }
 static void expand_k38(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k38" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k38, got ~D~N"
   "-- expected 1~N"
@@ -18091,6 +19577,8 @@ static void expand_k38(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) 
  }
 }
 static void _V0collect__defines_k611(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0collect__defines_k611" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0collect__defines_k611, got ~D~N"
   "-- expected 1~N"
@@ -18106,6 +19594,8 @@ V_CALL(upenv->vars[1], runtime,
  }
 }
 static void _V0loop_k617(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k617" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k617, got ~D~N"
   "-- expected 1~N"
@@ -18120,6 +19610,8 @@ V_CALL(VGetArg(upenv, 8-1, 1), runtime,
  }
 }
 static void _V0loop_k616(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k616" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k616, got ~D~N"
   "-- expected 1~N"
@@ -18142,6 +19634,8 @@ VGetArg(upenv, 5-1, 1)
  }
 }
 static void _V0loop_k615(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k615" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k615, got ~D~N"
   "-- expected 1~N"
@@ -18200,6 +19694,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void _V0loop_k614(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k614" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k614, got ~D~N"
   "-- expected 1~N"
@@ -18230,6 +19726,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0loop_k613(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k613" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k613, got ~D~N"
   "-- expected 1~N"
@@ -18257,6 +19755,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0loop_k612(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k612" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k612, got ~D~N"
   "-- expected 1~N"
@@ -18289,6 +19789,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0loop_lambda179(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda179" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0loop_lambda179, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -18315,6 +19817,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k626(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k626" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k626, got ~D~N"
   "-- expected 1~N"
@@ -18337,6 +19841,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k629(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k629" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k629, got ~D~N"
   "-- expected 1~N"
@@ -18351,6 +19857,8 @@ V_CALL(VGetArg(upenv, 13-1, 1), runtime,
  }
 }
 static void _V0loop_k628(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k628" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k628, got ~D~N"
   "-- expected 1~N"
@@ -18373,6 +19881,8 @@ VGetArg(upenv, 9-1, 1)
  }
 }
 static void _V0loop_k627(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k627" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k627, got ~D~N"
   "-- expected 1~N"
@@ -18407,6 +19917,8 @@ upenv->up->up->vars[0]
  }
 }
 static void _V0loop_k625(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k625" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k625, got ~D~N"
   "-- expected 1~N"
@@ -18424,6 +19936,8 @@ V_CALL_FUNC(_V0loop_k626, env, runtime,
  }
 }
 static void _V0loop_k624(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k624" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k624, got ~D~N"
   "-- expected 1~N"
@@ -18442,6 +19956,8 @@ V_CALL(VGetArg(upenv, 14-1, 13), runtime,
  }
 }
 static void _V0loop_k623(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k623" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k623, got ~D~N"
   "-- expected 1~N"
@@ -18483,6 +19999,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0loop_k622(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k622" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k622, got ~D~N"
   "-- expected 1~N"
@@ -18503,6 +20021,8 @@ upenv->vars[0]
  }
 }
 static void _V0loop_k621(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k621" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k621, got ~D~N"
   "-- expected 1~N"
@@ -18533,6 +20053,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0loop_k620(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k620" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k620, got ~D~N"
   "-- expected 1~N"
@@ -18560,6 +20082,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0loop_k619(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k619" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k619, got ~D~N"
   "-- expected 1~N"
@@ -18592,6 +20116,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0loop_lambda180(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda180" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0loop_lambda180, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -18618,6 +20144,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k632(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k632" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k632, got ~D~N"
   "-- expected 1~N"
@@ -18632,6 +20160,8 @@ V_CALL(VGetArg(upenv, 6-1, 1), runtime,
  }
 }
 static void _V0loop_k631(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k631" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k631, got ~D~N"
   "-- expected 1~N"
@@ -18665,6 +20195,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0loop_lambda181(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda181" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0loop_lambda181, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -18693,6 +20225,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k634(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k634" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k634, got ~D~N"
   "-- expected 1~N"
@@ -18707,6 +20241,8 @@ V_CALL(VGetArg(upenv, 5-1, 1), runtime,
  }
 }
 static void _V0loop_k636(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k636" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k636, got ~D~N"
   "-- expected 1~N"
@@ -18735,6 +20271,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k638(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k638" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k638, got ~D~N"
   "-- expected 1~N"
@@ -18751,6 +20289,8 @@ V_CALL(upenv->vars[1], runtime,
  }
 }
 static void _V0loop_k641(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k641" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k641, got ~D~N"
   "-- expected 1~N"
@@ -18767,6 +20307,8 @@ V_CALL(VGetArg(upenv, 5-1, 1), runtime,
  }
 }
 static void _V0loop_k640(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k640" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k640, got ~D~N"
   "-- expected 1~N"
@@ -18785,6 +20327,8 @@ V_CALL(VGetArg(upenv, 19-1, 9), runtime,
  }
 }
 static void _V0loop_k639(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k639" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k639, got ~D~N"
   "-- expected 1~N"
@@ -18816,6 +20360,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k647(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k647" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k647, got ~D~N"
   "-- expected 1~N"
@@ -18872,6 +20418,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void _V0loop_k646(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k646" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k646, got ~D~N"
   "-- expected 1~N"
@@ -18902,6 +20450,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0loop_k645(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k645" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k645, got ~D~N"
   "-- expected 1~N"
@@ -18929,6 +20479,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void _V0loop_k644(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k644" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k644, got ~D~N"
   "-- expected 1~N"
@@ -18961,6 +20513,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_k650(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k650" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k650, got ~D~N"
   "-- expected 1~N"
@@ -18977,6 +20531,8 @@ V_CALL(VGetArg(upenv, 9-1, 1), runtime,
  }
 }
 static void _V0loop_k649(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k649" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k649, got ~D~N"
   "-- expected 1~N"
@@ -18995,6 +20551,8 @@ V_CALL(VGetArg(upenv, 23-1, 9), runtime,
  }
 }
 static void _V0loop_k648(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k648" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k648, got ~D~N"
   "-- expected 1~N"
@@ -19013,6 +20571,8 @@ V_CALL(VGetArg(upenv, 22-1, 9), runtime,
  }
 }
 static void _V0loop_k643(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k643" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k643, got ~D~N"
   "-- expected 1~N"
@@ -19030,6 +20590,8 @@ V_CALL_FUNC(_V0loop_k644, env, runtime,
  }
 }
 static void _V0loop_lambda189(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda189" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0loop_lambda189, got ~D~N"
   "-- expected 2~N"
@@ -19051,6 +20613,8 @@ upenv->up->up->vars[1]
  }
 }
 static void _V0loop_lambda188(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_lambda188" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_lambda188, got ~D~N"
   "-- expected 1~N"
@@ -19069,6 +20633,8 @@ V_CALL(VGetArg(upenv, 19-1, 10), runtime,
  }
 }
 static void _V0loop_k642(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k642" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k642, got ~D~N"
   "-- expected 1~N"
@@ -19088,6 +20654,8 @@ V_CALL(VGetArg(upenv, 18-1, 11), runtime,
  }
 }
 static void _V0loop_lambda187(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+ static VDebugInfo dbg = { "_V0loop_lambda187" };
+ VRecordCall(&dbg);
  if(argc != 4) {
   VError("Not enough arguments to _V0loop_lambda187, got ~D~N"
   "-- expected 4~N"
@@ -19108,6 +20676,8 @@ V_CALL_FUNC(_V0loop_k639, env, runtime,
  }
 }
 static void _V0loop_lambda186(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda186" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0loop_lambda186, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -19123,6 +20693,8 @@ static void _V0loop_lambda186(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
  }
 }
 static void _V0loop_lambda185(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda185" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0loop_lambda185, got ~D~N"
   "-- expected 2~N"
@@ -19142,6 +20714,8 @@ V_CALL_FUNC(_V0loop_lambda186, env, runtime,
  }
 }
 static void _V0loop_lambda184(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_lambda184" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_lambda184, got ~D~N"
   "-- expected 1~N"
@@ -19160,6 +20734,8 @@ V_CALL(VGetArg(upenv, 14-1, 10), runtime,
  }
 }
 static void _V0loop_k651(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k651" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k651, got ~D~N"
   "-- expected 1~N"
@@ -19182,6 +20758,8 @@ _var0,
  }
 }
 static void _V0loop_lambda190(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+ static VDebugInfo dbg = { "_V0loop_lambda190" };
+ VRecordCall(&dbg);
  if(argc != 4) {
   VError("Not enough arguments to _V0loop_lambda190, got ~D~N"
   "-- expected 4~N"
@@ -19215,6 +20793,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void _V0loop_lambda183(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda183" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0loop_lambda183, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -19230,6 +20810,8 @@ V_CALL(VGetArg(upenv, 13-1, 11), runtime,
  }
 }
 static void _V0loop_k652(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k652" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k652, got ~D~N"
   "-- expected 1~N"
@@ -19244,6 +20826,8 @@ V_CALL(VGetArg(upenv, 13-1, 16), runtime,
  }
 }
 static void _V0loop_k637(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k637" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k637, got ~D~N"
   "-- expected 1~N"
@@ -19262,6 +20846,8 @@ V_CALL_FUNC(_V0loop_lambda183, env, runtime,
  }
 }
 static void _V0loop_k635(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k635" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k635, got ~D~N"
   "-- expected 1~N"
@@ -19279,6 +20865,8 @@ V_CALL_FUNC(_V0loop_k636, env, runtime,
  }
 }
 static void _V0loop_lambda182(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda182" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0loop_lambda182, got ~D~N"
   "-- expected 2~N"
@@ -19298,6 +20886,8 @@ V_CALL(VGetArg(upenv, 10-1, 9), runtime,
  }
 }
 static void _V0loop_k633(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k633" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k633, got ~D~N"
   "-- expected 1~N"
@@ -19316,6 +20906,8 @@ V_CALL(VGetArg(upenv, 9-1, 10), runtime,
  }
 }
 static void _V0loop_k630(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k630" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k630, got ~D~N"
   "-- expected 1~N"
@@ -19334,6 +20926,8 @@ V_CALL_FUNC(_V0loop_lambda181, env, runtime,
  }
 }
 static void _V0loop_k618(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0loop_k618" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0loop_k618, got ~D~N"
   "-- expected 1~N"
@@ -19352,6 +20946,8 @@ V_CALL_FUNC(_V0loop_lambda180, env, runtime,
  }
 }
 static void _V0loop_lambda178(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda178" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0loop_lambda178, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -19366,6 +20962,8 @@ V_CALL_FUNC(_V0loop_lambda179, env, runtime,
  }
 }
 static void _V0loop_lambda177(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0loop_lambda177" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0loop_lambda177, got ~D~N"
   "-- expected 2~N"
@@ -19385,6 +20983,8 @@ V_CALL_FUNC(_V0loop_lambda178, env, runtime,
  }
 }
 static void _V0loop_lambda176(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0loop_lambda176" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0loop_lambda176, got ~D~N"
   "-- expected 3~N"
@@ -19405,6 +21005,8 @@ V_CALL(upenv->up->up->up->vars[10], runtime,
  }
 }
 static void _V0collect__defines_lambda175(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0collect__defines_lambda175" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0collect__defines_lambda175, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -19420,6 +21022,8 @@ static void _V0collect__defines_lambda175(VRuntime * runtime, VEnv * upenv, int 
  }
 }
 static void _V0collect__defines_lambda174(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V0collect__defines_lambda174" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V0collect__defines_lambda174, got ~D~N"
   "-- expected 2~N"
@@ -19439,6 +21043,8 @@ V_CALL_FUNC(_V0collect__defines_lambda175, env, runtime,
  }
 }
 static void expand_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6, VWORD _var7, VWORD _var8, VWORD _var9, VWORD _var10) {
+ static VDebugInfo dbg = { "expand_lambda3" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)expand_lambda3, runtime, upenv, 11, argc, _var0, _var1, _var2, _var3, _var4, _var5, _var6, _var7, _var8, _var9, _var10) {
   struct { VEnv env; VWORD argv[11]; } container;
   VEnv * env = &container.env;
@@ -19463,6 +21069,8 @@ static void expand_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
  }
 }
 static void expand_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6, VWORD _var7, VWORD _var8, VWORD _var9, VWORD _var10, VWORD _var11, VWORD _var12, VWORD _var13, VWORD _var14, VWORD _var15, VWORD _var16, VWORD _var17, VWORD _var18, VWORD _var19, VWORD _var20, VWORD _var21, VWORD _var22, VWORD _var23, VWORD _var24, VWORD _var25, VWORD _var26, VWORD _var27, VWORD _var28, VWORD _var29, VWORD _var30, VWORD _var31) {
+ static VDebugInfo dbg = { "expand_lambda2" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)expand_lambda2, runtime, upenv, 32, argc, _var0, _var1, _var2, _var3, _var4, _var5, _var6, _var7, _var8, _var9, _var10, _var11, _var12, _var13, _var14, _var15, _var16, _var17, _var18, _var19, _var20, _var21, _var22, _var23, _var24, _var25, _var26, _var27, _var28, _var29, _var30, _var31) {
   struct { VEnv env; VWORD argv[32]; } container;
   VEnv * env = &container.env;
@@ -19516,6 +21124,8 @@ V_CALL_FUNC(expand_lambda3, env, runtime,
  }
 }
 static void expand_k37(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k37" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k37, got ~D~N"
   "-- expected 1~N"
@@ -19564,6 +21174,8 @@ V_CALL_FUNC(expand_lambda2, env, runtime,
  }
 }
 static void expand_k36(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k36" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k36, got ~D~N"
   "-- expected 1~N"
@@ -19582,6 +21194,8 @@ V_CALL(VGetArg(upenv, 30-1, 0), runtime,
  }
 }
 static void expand_k35(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k35" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k35, got ~D~N"
   "-- expected 1~N"
@@ -19600,6 +21214,8 @@ V_CALL(VGetArg(upenv, 29-1, 0), runtime,
  }
 }
 static void expand_k34(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k34" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k34, got ~D~N"
   "-- expected 1~N"
@@ -19618,6 +21234,8 @@ V_CALL(VGetArg(upenv, 28-1, 0), runtime,
  }
 }
 static void expand_k33(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k33" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k33, got ~D~N"
   "-- expected 1~N"
@@ -19636,6 +21254,8 @@ V_CALL(VGetArg(upenv, 27-1, 0), runtime,
  }
 }
 static void expand_k32(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k32" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k32, got ~D~N"
   "-- expected 1~N"
@@ -19654,6 +21274,8 @@ V_CALL(VGetArg(upenv, 26-1, 0), runtime,
  }
 }
 static void expand_k31(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k31" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k31, got ~D~N"
   "-- expected 1~N"
@@ -19672,6 +21294,8 @@ V_CALL(VGetArg(upenv, 25-1, 0), runtime,
  }
 }
 static void expand_k30(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k30" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k30, got ~D~N"
   "-- expected 1~N"
@@ -19690,6 +21314,8 @@ V_CALL(VGetArg(upenv, 24-1, 0), runtime,
  }
 }
 static void expand_k29(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k29" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k29, got ~D~N"
   "-- expected 1~N"
@@ -19708,6 +21334,8 @@ V_CALL(VGetArg(upenv, 23-1, 0), runtime,
  }
 }
 static void expand_k28(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k28" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k28, got ~D~N"
   "-- expected 1~N"
@@ -19726,6 +21354,8 @@ V_CALL(VGetArg(upenv, 22-1, 0), runtime,
  }
 }
 static void expand_k27(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k27" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k27, got ~D~N"
   "-- expected 1~N"
@@ -19744,6 +21374,8 @@ V_CALL(VGetArg(upenv, 21-1, 0), runtime,
  }
 }
 static void expand_k26(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k26" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k26, got ~D~N"
   "-- expected 1~N"
@@ -19762,6 +21394,8 @@ V_CALL(VGetArg(upenv, 20-1, 0), runtime,
  }
 }
 static void expand_k25(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k25" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k25, got ~D~N"
   "-- expected 1~N"
@@ -19780,6 +21414,8 @@ V_CALL(VGetArg(upenv, 19-1, 0), runtime,
  }
 }
 static void expand_k24(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k24" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k24, got ~D~N"
   "-- expected 1~N"
@@ -19798,6 +21434,8 @@ V_CALL(VGetArg(upenv, 18-1, 0), runtime,
  }
 }
 static void expand_k23(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k23" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k23, got ~D~N"
   "-- expected 1~N"
@@ -19816,6 +21454,8 @@ V_CALL(VGetArg(upenv, 17-1, 0), runtime,
  }
 }
 static void expand_k22(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k22" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k22, got ~D~N"
   "-- expected 1~N"
@@ -19834,6 +21474,8 @@ V_CALL(VGetArg(upenv, 16-1, 0), runtime,
  }
 }
 static void expand_k21(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k21" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k21, got ~D~N"
   "-- expected 1~N"
@@ -19852,6 +21494,8 @@ V_CALL(VGetArg(upenv, 15-1, 0), runtime,
  }
 }
 static void expand_k20(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k20" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k20, got ~D~N"
   "-- expected 1~N"
@@ -19870,6 +21514,8 @@ V_CALL(VGetArg(upenv, 14-1, 0), runtime,
  }
 }
 static void expand_k19(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k19" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k19, got ~D~N"
   "-- expected 1~N"
@@ -19888,6 +21534,8 @@ V_CALL(VGetArg(upenv, 13-1, 0), runtime,
  }
 }
 static void expand_k18(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k18" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k18, got ~D~N"
   "-- expected 1~N"
@@ -19906,6 +21554,8 @@ V_CALL(VGetArg(upenv, 12-1, 0), runtime,
  }
 }
 static void expand_k17(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k17" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k17, got ~D~N"
   "-- expected 1~N"
@@ -19924,6 +21574,8 @@ V_CALL(VGetArg(upenv, 11-1, 0), runtime,
  }
 }
 static void expand_k16(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k16" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k16, got ~D~N"
   "-- expected 1~N"
@@ -19942,6 +21594,8 @@ V_CALL(VGetArg(upenv, 10-1, 0), runtime,
  }
 }
 static void expand_k15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k15" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k15, got ~D~N"
   "-- expected 1~N"
@@ -19960,6 +21614,8 @@ V_CALL(VGetArg(upenv, 9-1, 0), runtime,
  }
 }
 static void expand_k14(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k14" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k14, got ~D~N"
   "-- expected 1~N"
@@ -19978,6 +21634,8 @@ V_CALL(VGetArg(upenv, 8-1, 0), runtime,
  }
 }
 static void expand_k13(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k13" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k13, got ~D~N"
   "-- expected 1~N"
@@ -19996,6 +21654,8 @@ V_CALL(VGetArg(upenv, 7-1, 0), runtime,
  }
 }
 static void expand_k12(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k12" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k12, got ~D~N"
   "-- expected 1~N"
@@ -20014,6 +21674,8 @@ V_CALL(VGetArg(upenv, 6-1, 0), runtime,
  }
 }
 static void expand_k11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k11" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k11, got ~D~N"
   "-- expected 1~N"
@@ -20032,6 +21694,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void expand_k10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k10" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k10, got ~D~N"
   "-- expected 1~N"
@@ -20050,6 +21714,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void expand_k9(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k9" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k9, got ~D~N"
   "-- expected 1~N"
@@ -20068,6 +21734,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void expand_k8(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k8" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k8, got ~D~N"
   "-- expected 1~N"
@@ -20086,6 +21754,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void expand_k7(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k7" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k7, got ~D~N"
   "-- expected 1~N"
@@ -20104,6 +21774,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void expand_k6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k6" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k6, got ~D~N"
   "-- expected 1~N"
@@ -20122,6 +21794,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void expand_k5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k5" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k5, got ~D~N"
   "-- expected 1~N"
@@ -20145,6 +21819,8 @@ static void expand_k5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  }
 }
 static void expand_k4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k4" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k4, got ~D~N"
   "-- expected 1~N"
@@ -20163,6 +21839,8 @@ static void expand_k4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  }
 }
 static void expand_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k3" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k3, got ~D~N"
   "-- expected 1~N"
@@ -20181,6 +21859,8 @@ static void expand_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  }
 }
 static void expand_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k2" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k2, got ~D~N"
   "-- expected 1~N"
@@ -20199,6 +21879,8 @@ static void expand_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  }
 }
 static void expand_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_k1" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_k1, got ~D~N"
   "-- expected 1~N"
@@ -20217,6 +21899,8 @@ static void expand_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  }
 }
 static void expand_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "expand_lambda1" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to expand_lambda1, got ~D~N"
   "-- expected 1~N"

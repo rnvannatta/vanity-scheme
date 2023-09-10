@@ -243,19 +243,19 @@ void VDiv2(V_CORE_ARGS, VWORD k, VWORD x, ...) {
     {
       uint64_t type = VWordType(x);
       if(type == VIMM_INT) {
-        iacc += VDecodeInt(x);
+        iacc = VDecodeInt(x);
       } else if(type == VIMM_NUMBER) {
         exact = false;
-        dacc += VDecodeNumber(x);
+        dacc = VDecodeNumber(x);
       } else {
-        VError("-: not a number\n");
+        VError("/: not a number\n");
       }
     }
     // performs the 1/x op
     if(argc == 2) {
       if(iacc != 1) {
-        iacc = 1;
         dacc = iacc;
+        iacc = 1;
         exact = false;
       }
       dacc = 1.0/dacc;
@@ -430,7 +430,7 @@ void VCdr2(V_CORE_ARGS, VWORD k, VWORD x) {
 void VListVector2(V_CORE_ARGS, VWORD k, VWORD lst) {
   V_ARG_CHECK2("list->vector", 2, argc);
 
-  V_GC_CHECK2_VARARGS((VFunc)VVectorLength2, runtime, statics, 2, argc, k, lst) {
+  V_GC_CHECK2_VARARGS((VFunc)VListVector2, runtime, statics, 2, argc, k, lst) {
     int len = 0;
     VWORD v = lst;
     while(VWordType(v) == VPOINTER_PAIR) {
@@ -665,6 +665,8 @@ void VCharInt2(V_CORE_ARGS, VWORD k, VWORD c) {
 }
 
 // ports
+
+// TODO delete this idiotic procedures
 void VDupStdout2(V_CORE_ARGS, VWORD k) {
   V_ARG_CHECK2("dup-stdout", 1, argc);
 
@@ -695,10 +697,36 @@ void VDupStderr2(V_CORE_ARGS, VWORD k) {
   V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
 }
 
+//
+// less idiotic versions of the dup procedures
+//
+void VStdoutPort(V_CORE_ARGS, VWORD k) {
+  V_ARG_CHECK2("stdout->port", 1, argc);
+
+  VPort port = VMakePortStream(stdout, PFLAG_WRITE | PFLAG_NOCLOSE);
+  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+}
+
+void VStdinPort(V_CORE_ARGS, VWORD k) {
+  V_ARG_CHECK2("stdin->port", 1, argc);
+
+  VPort port = VMakePortStream(stdin, PFLAG_READ | PFLAG_NOCLOSE);
+  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+}
+
+void VStderrPort(V_CORE_ARGS, VWORD k) {
+  V_ARG_CHECK2("stderr->port", 1, argc);
+
+  VPort port = VMakePortStream(stderr, PFLAG_WRITE | PFLAG_NOCLOSE);
+  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+}
+
+
 static void VOpenStream2(VRuntime * runtime, VWORD k, VWORD path, char const * mode, unsigned flags) {
   VBlob * str = VCheckedDecodeString(path, "open-stream");
   FILE * f = fopen(str->buf, mode);
-  if(!f) VError("open-stream: failed to open file `~Z`~N", str->buf);
+  if(!f) V_CALL(k, runtime, VFALSE);
+
   VPort port = VMakePortStream(f, flags);
   V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
 }
@@ -713,29 +741,31 @@ void VOpenOutputStream2(V_CORE_ARGS, VWORD k, VWORD path) {
 }
 
 void VCloseStream2(V_CORE_ARGS, VWORD k, VWORD _port) {
-  V_ARG_CHECK2("close-stream", 2, argc);
+  V_ARG_CHECK2("close-port", 2, argc);
 
-  if(VWordType(_port) != VPOINTER_OTHER) VError("close-stream: not a port");
+  if(VWordType(_port) != VPOINTER_OTHER) VError("close-port: not a port\n");
   VPort * port = (VPort*)VDecodePointer(_port);
-  if(port->tag != VPORT) VError("close-stream: not a port");
+  if(port->tag != VPORT) VError("close-port: not a port\n");
 
-  if(port->stream)
-  {
+  if(port->flags && !(port->flags & PFLAG_NOCLOSE)) {
     if(port->flags & PFLAG_PROCESS)
       pclose(port->stream);
     else
       fclose(port->stream);
+    port->stream = NULL;
+    port->flags = 0;
   }
-  port->stream = NULL;
 
   V_CALL(k, runtime, VVOID);
 }
 
 void VOpenOutputString2(V_CORE_ARGS, VWORD k) {
   // using tmpfile like this feels horrible
-  // but it works
+  // but it works for now
   V_ARG_CHECK2("open-output-string", 1, argc);
   FILE * f = tmpfile();
+  if(!f) V_CALL(k, runtime, VFALSE);
+
   VPort port = VMakePortStream(f, PFLAG_WRITE | PFLAG_OSTRING);
   V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
 }
@@ -743,8 +773,8 @@ void VOpenOutputString2(V_CORE_ARGS, VWORD k) {
 void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD _port) {
   V_ARG_CHECK2("get-output-string", 2, argc);
   VPort * port = (VPort*)VDecodePointer(_port);
-  if(port->tag != VPORT) VError("get-output-string: not a port");
-  if(!(port->flags & PFLAG_OSTRING)) VError("get-output-string: not an output string port");
+  if(port->tag != VPORT) VError("get-output-string: not a port\n");
+  if(!(port->flags & PFLAG_OSTRING)) VError("get-output-string: not an output string port\n");
 
   FILE * f = port->stream;
   int len = ftell(f);
@@ -806,19 +836,23 @@ void VReadLine2(V_CORE_ARGS, VWORD k, VWORD _port) {
 
 void VDisplay2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port) {
     V_ARG_CHECK2("display-word", 3, argc);
-    FILE * f = ((VPort*)VDecodePointer(port))->stream;
-    VDisplayWord(f, val, false);
+    VPort * p = VCheckedDecodePort(port, "display-word");
+    if(!(p->flags & PFLAG_WRITE)) VError("display-word: port's write end is closed~N");
+    VDisplayWord(p->stream, val, false);
     V_CALL(k, runtime, VVOID);
 }
 void VWrite2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port) {
     V_ARG_CHECK2("write-word", 3, argc);
-    FILE * f = ((VPort*)VDecodePointer(port))->stream;
-    VDisplayWord(f, val, true);
+    VPort * p = VCheckedDecodePort(port, "write-word");
+    if(!(p->flags & PFLAG_WRITE)) VError("write-word: port's write end is closed~N");
+    VDisplayWord(p->stream, val, true);
     V_CALL(k, runtime, VVOID);
 }
 void VNewline2(V_CORE_ARGS, VWORD k, VWORD port) {
     V_ARG_CHECK2("newline", 2, argc);
-    FILE * f = ((VPort*)VDecodePointer(port))->stream;
+    VPort * p = VCheckedDecodePort(port, "newline");
+    if(!(p->flags & PFLAG_WRITE)) VError("newline: port's write end is closed~N");
+    FILE * f = p->stream;
     fprintf(f, "\n");
     fflush(f);
     V_CALL(k, runtime, VVOID);

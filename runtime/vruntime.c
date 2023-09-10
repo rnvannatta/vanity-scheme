@@ -46,9 +46,19 @@
 
 #define FORWARDED ULLONG_MAX
 
-// makes the GC walk down environments & lists in order to improve cache coherency
+// order of operations for implementing finalizers:
+// 1. change gc to resume with continuation instead of func + environ
+// 2. expose calls to run the gc
+// 3. add gc preservation of the finalizer table - which is icky, have to run gc twice
+// 4. expose set-finalizer! and finalize!, experiment with them
+// 5. start debugging finalizer walking
+// 6. add foreign pointers to finalizers
 
-// Have to be very careful about what optimizations are added here, to avoid
+// so finalizers can run in any order and thats them lumps
+
+// the GC will walk down environments & lists in order to improve cache coherency
+
+// Have to be very careful about what optimizations are added to it, to avoid
 // a stack overflow during GC
 
 // Specifically,
@@ -66,6 +76,7 @@ char * VStackStart;
 ssize_t VStackSize;
 ssize_t VStackLen;
 
+bool VForceMajorGC;
 void * VHeap;
 void * VHeapPos;
 void * VHeapEnd;
@@ -206,20 +217,164 @@ VGlobalEntry * VLookupGlobalEntryFast(char const * sym) {
   return place;
 }
 
-/*
-VGlobalEntry * VLookupGlobalEntry(VWORD sym) {
-  for(unsigned i = 0; i < VNumGlobals; i++) {
-    if(VCheckSymbolEqv(sym, VGlobalTable[i].symbol))
-      return &VGlobalTable[i];
+// okay: so finalizers to managed memory can be detected as stale when they remain after a gc
+// specifically, after gc, a finalizer to managed memory points to a forwarded address
+// -- finalizers to foreign memory are manually tended to during move
+// -- this requires checking the finalizer table any time we move a foreign pointer :(
+//
+// -- there's no way to avoid this without insane behavior. even if we alloc for holding
+// -- the type, it would still be insane to attach the finalizer to the alloc not the foreign
+// -- address
+
+// what does the alg look like? hmmmmm
+// 1. garbage collect
+// 2. scan finalizer set for moved and unmoved addresses
+// ---- moved addresses get their finalizers forward to next set
+// 3. unmoved addresses also get forwarded to next set...
+// 4. but unmoved addresses get a continuation stacked on
+// ---- (lambda _ (finalize! k addr)) where k is the gc continuation
+// ---- these keep getting tacked on ie (lambda _ (finalize! (lambda _ (finalize! k addr0))) addr1)
+// 5. and then gc resumes which causes the finalizers to do their thang
+
+typedef struct {
+  bool touched;
+  VWORD mem;
+  VWORD finalizer;
+} VFinalizerEntry;
+
+typedef struct {
+  VFinalizerEntry * dense;
+  unsigned * table;
+
+  unsigned num_finalizers;
+  unsigned dense_size;
+  unsigned table_size;
+} VFinalizerTable;
+
+VFinalizerTable VStackFinalizers;
+VFinalizerTable VHeapFinalizers[2];
+
+static void VWipeFinalizerTable(VFinalizerTable * table) {
+  table->num_finalizers = 0;
+  for(unsigned i = 0; i < table->table_size; i++)
+    table->table[i] = ~0u;
+}
+
+static void VSetFinalizerHash(VFinalizerTable * table, VWORD mem, unsigned dense_index, bool dupe_test) {
+  hash64 h = uint64_hash64(hash64_seed(), VBits(mem));
+  unsigned i = h & (table->table_size - 1);
+  unsigned tries = 0;
+  while(tries++ <= table->table_size && ~table->table[i]) {
+    if(dupe_test && VBits(table->dense[table->table[i]].mem) == VBits(mem))
+      VError("set-finalizer!: tried to set finalizer to address that already has one ~S\n", mem);
+    i = (i+1) & (table->table_size - 1);
+  }
+  if(tries >= table->table_size) VError("Unable to insert into finalizer hashmap\n");
+  table->table[i] = dense_index;
+}
+
+void VSetFinalizerImpl(VFinalizerTable * table, VWORD mem, VWORD finalizer) {
+  if(table->num_finalizers >= table->dense_size) {
+    unsigned new_size = table->dense_size;
+    if(new_size) new_size *= 2;
+    else new_size = 8;
+    table->dense = realloc(table->dense, sizeof(VFinalizerEntry[new_size]));
+    table->dense_size = new_size;
+  }
+
+  if(table->num_finalizers >= table->table_size * 0.8) {
+    unsigned new_size = table->table_size;
+    if(new_size) new_size *= 2;
+    else new_size = 8;
+    free(table->table);
+    table->table = malloc(sizeof(unsigned[new_size]));
+    table->table_size = new_size;
+    for(unsigned i = 0; i < new_size; i++) {
+      table->table[i] = ~0u;
+    }
+    for(unsigned i = 0; i < table->num_finalizers; i++) {
+      // skip over tombstones
+      VWORD mem = table->dense[i].mem;
+      if(VDecodeBool(mem))
+        VSetFinalizerHash(table, mem, i, false);
+    }
+  }
+
+  unsigned dense_index = table->num_finalizers;
+  table->dense[dense_index] = (VFinalizerEntry) { .touched = false, .mem = mem, .finalizer = finalizer };
+  table->num_finalizers++;
+
+  VSetFinalizerHash(table, mem, dense_index, true);
+}
+
+VFinalizerEntry * VGetFinalizer(bool check_heap, VWORD mem) {
+  VFinalizerTable * table = check_heap ? &VHeapFinalizers[VActiveHeap] : &VStackFinalizers;
+  hash64 h = uint64_hash64(hash64_seed(), VBits(mem));
+  unsigned i = h & (table->table_size - 1);
+  unsigned tries = 0;
+  while(tries++ < table->table_size) {
+    unsigned dense_index = table->table[i];
+    if(!~dense_index) return NULL;
+
+    VFinalizerEntry * f = table->dense + dense_index;
+    if(VBits(f->mem) == VBits(mem)) return f;
+
+    i = (i+1) & (table->table_size - 1);
   }
   return NULL;
 }
-*/
 
-//void (*VGCResume)(VEnv * env);
-void * VGCResume;
-VEnv * VGCResumeEnv;
-VEnvironment * VGCResumeEnviron;
+void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer) {
+  V_ARG_CHECK2("set-finalizer!", 3, argc);
+  if(!VIsPointer(mem)) VError("set-finalizer!: Finalizers can only be set on addresses ~S\n", mem);
+  if(!(VWordType(finalizer) == VPOINTER_CLOSURE)) VError("set-finalizer!: Not a procedure ~S\n", finalizer);
+  VSetFinalizerImpl(&VStackFinalizers, mem, finalizer);
+  V_CALL(k, runtime, VVOID);
+}
+
+void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem) {
+  V_GC_CHECK2_VARARGS((VFunc)VFinalize, runtime, statics, 2, argc, k, mem) {
+    V_ARG_CHECK2("finalize!", 2, argc);
+    if(!VIsPointer(mem)) VError("finalize!: Not an address ~S\n", mem);
+
+    VFinalizerEntry * finalizer = VGetFinalizer(false, mem);
+    if(!finalizer) {
+      finalizer = VGetFinalizer(true, mem);
+      if(!finalizer) VError("finalize!: No finalizer at address of ~S\n", mem);
+    }
+    VWORD final = finalizer->finalizer;
+    if(!VDecodeBool(final)) VError("finalize!: double finalize at address of ~S\n", mem);
+    finalizer->mem = VFALSE;
+    finalizer->finalizer = VFALSE;
+    V_CALL(final, runtime, k, mem);
+  }
+}
+
+void VHasFinalizer(V_CORE_ARGS, VWORD k, VWORD mem) {
+  if(!VIsPointer(mem)) VError("has-finalizer?: Not an address ~S\n", mem);
+  bool finalizer = VGetFinalizer(false, mem);
+  if(!finalizer)
+    finalizer = VGetFinalizer(true, mem);
+  V_CALL(k, runtime, VEncodeBool(finalizer));
+}
+
+void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major) {
+  VClosure * cl = VDecodeClosure(k);
+  if(VDecodeBool(major)) {
+    VForceMajorGC = true;
+  }
+  VGarbageCollect2Args(cl->func, runtime, cl->env, 1, 1, VVOID);
+}
+
+// continuation to run finalizers that didn't survive a gc
+static void VApplyFinalizer(V_CORE_ARGS, ...) {
+  VWORD k = statics->vars[0];
+  VWORD mem = statics->vars[1];
+
+  V_CALL_FUNC(VFinalize, NULL, runtime, k, mem);
+}
+VRuntime * VNextRuntime;
+VWORD VGCResumeCont;
 int VExitCode = 0;
 
 
@@ -235,14 +390,21 @@ void VForward(void * old, void const * forward) {
   *(void const**)(old + sizeof(VWORD)) = forward;
 }
 
-void * VMoveObject(void * obj, size_t size) {
+static void * VAllocHeap(size_t size) {
   if(VHeapPos + size >= VHeapEnd) {
+    return NULL;
+  }
+  void * ret = (void*)VHeapPos;
+  VHeapPos += size;
+  return ret;
+}
+
+static void * VMoveObject(void * obj, size_t size) {
+  void * collected = VAllocHeap(size);
+  if(!collected) {
     fprintf(stderr, "Heap Overflow! This shouldn't have happened\n");
     abort();
   }
-
-  void * collected = (void*)(VHeapPos);
-  VHeapPos += size;
 
   memcpy(collected, obj, size);
   VForward(obj, collected);
@@ -387,6 +549,8 @@ VWORD VMoveDispatch(VWORD word) {
       }
       break;
     }
+    case VENVIRONMENT:
+      return VEncodePointer(VCheckedMoveEnviron(ptr), VPOINTER_OTHER);
     default:
       fprintf(stderr, "Unknown type %016lx in VMoveDispatch. Heap corruption?\n", type);
       abort();
@@ -468,6 +632,12 @@ VWORD * VCheneyScan(VWORD * cur) {
   return NULL;
 }
 
+static void VGCResumeFunc(V_CORE_ARGS, ...) {
+  VFunc f = VCheckedDecodeForeignPointer(statics->vars[0], "gc-resume");
+  VEnvironment * e = (void*)VDecodePointer(statics->vars[1]);
+  VSysApply((VFunc)f, e);
+}
+
 static bool VGrowSymtable;
 static unsigned VGCsSinceMajor;
 void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...) {
@@ -492,6 +662,7 @@ void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed
   va_end(list);
   VGarbageCollect2(f, runtime, statics, argc, argv);
 }
+VWORD VCleanupFinalizers(VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables);
 void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv) {
   struct timespec start_time, end_time;
   clock_gettime(CLOCK_MONOTONIC, &start_time);
@@ -501,10 +672,11 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
   stack_len += environ_size;
 
   size_t after_gc_size = VHeapPos - VHeap + stack_len;
-  bool is_major = VHeap + after_gc_size >= VHeapEnd - VStackSize;
+  bool is_major = VForceMajorGC || VHeap + after_gc_size >= VHeapEnd - VStackSize;
   static VDebugInfo major_info = { "Garbage Collection (major)" };
   static VDebugInfo minor_info = { "Garbage Collection (minor)" };
   VRecordCall(is_major ? &major_info : &minor_info);
+  VForceMajorGC = false;
 
   if(is_major) {
     VNumMajorGCs++;
@@ -538,6 +710,7 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
     // we only need to check forwards during a major gc, technically
     VWORD * container = VTrackedMutations[i].container;
     VWORD * slot = VTrackedMutations[i].slot;
+    // the container may be another tracked mutation's slot
     if(container)
     {
       VWORD * forward = VForwarded(container);
@@ -571,16 +744,51 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
     }
   }
 
-  VGCResumeEnv = NULL;
-  VGCResumeEnviron = VCheckedMoveEnviron(environ);
-  VGCResume = f;
-
-  VWORD * stop = VHeapPos;
-  // the space between cur and stop is the gray set, ie unscanned but moved objects
-  while(cur < stop) {
-    cur = VCheneyScan(cur);
-    stop = VHeapPos;
+  environ = VCheckedMoveEnviron(environ);
+  {
+    VEnv * e = VAllocHeap(sizeof(VEnv)+sizeof(VWORD[2]));
+    e->tag = VENV;
+    e->num_vars = 2;
+    e->var_len = 2;
+    e->up = NULL;
+    e->vars[0] = VEncodeForeignPointer(f);
+    e->vars[1] = VEncodePointer(environ, VPOINTER_OTHER);
+    VClosure * k = VAllocHeap(sizeof(VClosure));
+    *k = VMakeClosure2((VFunc)VGCResumeFunc, e);
+    VGCResumeCont = VEncodeClosure(k);
   }
+
+  {
+    VWORD * stop = VHeapPos;
+    // the space between cur and stop is the gray set, ie unscanned but moved objects
+    while(cur < stop) {
+      cur = VCheneyScan(cur);
+      stop = VHeapPos;
+    }
+  }
+
+  {
+    int num_dead_tables = is_major ? 2 : 1;
+    VFinalizerTable * dead_tables[num_dead_tables+1];
+    dead_tables[0] = &VStackFinalizers;
+    if(is_major) {
+      dead_tables[1] = &VHeapFinalizers[!VActiveHeap];
+      dead_tables[2] = NULL;
+    } else {
+      dead_tables[1] = NULL;
+    }
+    VGCResumeCont = VCleanupFinalizers(VGCResumeCont, &VHeapFinalizers[VActiveHeap], dead_tables);
+  }
+
+  {
+    VWORD * stop = VHeapPos;
+    // the space between cur and stop is the gray set, ie unscanned but moved objects
+    while(cur < stop) {
+      cur = VCheneyScan(cur);
+      stop = VHeapPos;
+    }
+  }
+
   // If after a GC, we are still in a state where the next garbage collect can overflow the heap
   // we need to grow the heap
   // or if we are doing too many major gcs, grow the heap to avoid thrashing
@@ -610,7 +818,60 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
     VMajorGCTime += diff_nsec;
   else
     VMinorGCTime += diff_nsec;
+
   longjmp(VRoot, VJMP_GC);
+}
+
+// The last thing that happens in garbage collection before resuming
+VWORD VCleanupFinalizers(VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables) {
+  while(*dead_tables) {
+    VFinalizerTable * dead_table = *dead_tables;
+    for(unsigned i = 0; i < dead_table->num_finalizers; i++) {
+      VFinalizerEntry * entry = dead_table->dense + i;
+      // tombstone, we can skip it
+      if(!VDecodeBool(entry->mem)) continue;
+
+
+      VWORD finalizer = finalizer = VMoveDispatch(entry->finalizer);
+      VWORD mem = entry->mem;
+      void * mem_ptr = VDecodePointer(mem);
+      void * mem_forward = VForwarded(mem_ptr);
+      //printf("%u\n", VMemLocation(VDecodePointer(mem)));
+      
+      if(mem_forward) {
+        //printf("found an object with a finalizer, it got copied\n");
+        mem = VEncodePointer(mem_forward, VWordType(mem));
+      } else if(VMemLocation(mem_ptr) == HEAP_MEM) {
+        //printf("found an object with a finalizer, it survived\n");
+      } else {
+        mem = VMoveDispatch(mem);
+        VEnv * e = VAllocHeap(sizeof(VEnv) + sizeof(VWORD[2]));
+        // no. it's not okay if the alloc fails
+        //printf("found an object with a finalizer, it didn't get copied\n");
+        if(e) {
+          e->tag = VENV;
+          e->num_vars = 2;
+          e->var_len = 2;
+          e->up = NULL;
+          e->vars[0] = k;
+          e->vars[1] = mem;
+          VClosure * newk = VAllocHeap(sizeof(VClosure));
+          if(newk) {
+            *newk = VMakeClosure2(VApplyFinalizer, e);
+            k = VEncodeClosure(newk);
+          } else {
+            VError("Ran out of heap space while managing finalizers~N");
+          }
+        } else {
+          VError("Ran out of heap space while managing finalizers~N");
+        }
+      }
+      VSetFinalizerImpl(new_table, mem, finalizer);
+    }
+    VWipeFinalizerTable(dead_table);
+    dead_tables++;
+  }
+  return k;
 }
 
 VDebugInfo * VCallHistory[V_CALL_HISTORY_LEN];
@@ -629,6 +890,7 @@ static void VPrintCallHistory() {
 
 
 static void VNext2K(V_CORE_ARGS, ...) {
+  VNextRuntime = runtime;
   longjmp(VRoot, VJMP_FINISH);
 }
 
@@ -637,13 +899,48 @@ void VNext2(V_CORE_ARGS, ...) {
   VGarbageCollect2(VNext2K, runtime, statics, 0, NULL);
 }
 
+static void VExitK(V_CORE_ARGS, ...) {
+  VFinalizerTable * table = &VHeapFinalizers[VActiveHeap];
+  if(table->num_finalizers == 0)
+    longjmp(VRoot, VJMP_EXIT);
+
+  VClosure * closure = alloca(sizeof(VClosure));
+  *closure = VMakeClosure2(VExitK, NULL);
+  VWORD k = VEncodeClosure(closure);
+
+  // num_finalizers includes tombstones
+  bool any_finalizers = false;
+  for(unsigned i = 0; i < table->num_finalizers; i++) {
+    if(VStackOverflow((char*)closure))
+      VGarbageCollect2Args(closure->func, runtime, closure->env, 1, 1, VVOID);
+
+    VFinalizerEntry * entry = table->dense + i;
+    // tombstone, we can skip it
+    if(!VDecodeBool(entry->mem)) continue;
+
+    any_finalizers = true;
+    VWORD mem = entry->mem;
+    //printf("found an object with a finalizer while exiting, time to die\n");
+    
+    VEnv * e = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+    e->tag = VENV;
+    e->num_vars = 2;
+    e->var_len = 2;
+    e->up = NULL;
+    e->vars[0] = k;
+    e->vars[1] = mem;
+    closure = alloca(sizeof(VClosure));
+    *closure = VMakeClosure2(VApplyFinalizer, e);
+    k = VEncodeClosure(closure);
+  }
+  if(any_finalizers)
+    V_CALL(k, runtime, VVOID);
+  else
+    longjmp(VRoot, VJMP_EXIT);
+}
+
 void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
   V_ARG_RANGE2("exit", 1, 2, argc);
-  // Always GC before a longjmp as all the datas on the stack
-  if(VMemLocation(statics) == STACK_MEM) {
-    VWORD argv[] = { k, e };
-    VGarbageCollect2((VFunc)VExit2, runtime, statics, argc, argv);
-  }
   VExitCode = 0;
   if(argc == 2) {
     if(VWordType(e) == VIMM_INT)
@@ -651,8 +948,11 @@ void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
     else if(!VDecodeBool(e))
       VExitCode = 1;
   }
-  longjmp(VRoot, VJMP_EXIT);
+  // TODO append every finalizer continuation here
+  // and run as many as you can before gc
+  VGarbageCollect2(VExitK, runtime, NULL, 0, NULL);
 }
+
 void VAbort2(V_CORE_ARGS, ...) {
   VPrintCallHistory();
   fflush(stderr);
@@ -1319,10 +1619,10 @@ int VStart(int nargs, void(* const * toplevels)()) {
         func();
         break;
       case VJMP_GC:
-        if(VGCResumeEnviron)
-          VSysApply((VFunc)VGCResume, VGCResumeEnviron);
+        if(VWordType(VGCResumeCont) == VPOINTER_CLOSURE)
+          V_CALL(VGCResumeCont, NULL, VVOID);
         else
-          VError("missing GC Resume Environment???~N");
+          VError("missing GC Resume Continuation???~N");
         break;
       case VJMP_FINISH:
       {
@@ -1340,6 +1640,7 @@ int VStart(int nargs, void(* const * toplevels)()) {
       }
     }
   }
+  VExit2(VNextRuntime, NULL, 2, VVOID, VEncodeInt(0));
   return 0;
 }
 

@@ -179,7 +179,14 @@ typedef struct VBlob {
   char buf[];
 } VBlob;
 
-enum PORT_FLAG_T { PFLAG_READ = 1, PFLAG_WRITE = 2, PFLAG_OSTRING = 4, PFLAG_PROCESS = 8 };
+enum PORT_FLAG_T {
+  PFLAG_READ = 1,
+  PFLAG_WRITE = 2,
+  PFLAG_OSTRING = 4,
+  PFLAG_PROCESS = 8,
+  PFLAG_NOCLOSE = 16,
+};
+
 typedef struct VPort {
   VTAG tag;
   FILE * stream;
@@ -747,6 +754,11 @@ static inline void VSetRest(VPair * p, VWORD w) {
   VTrackMutation(p, &p->rest, w);
   p->rest = w;
 }
+
+void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major);
+void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer);
+void VHasFinalizer(V_CORE_ARGS, VWORD k, VWORD mem);
+void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem);
 
 void VSetCar2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
 void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);

@@ -23,37 +23,6 @@
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
-#;(##vcore.declare "VMakeImport"
-  (lambda (lib . args)
-    (lambda (x)
-      (let loop ((args '()) (rest args))
-        (cond ((##sys.null? args)
-               (if (##sys.null? rest)
-                   (let ((stdout (##sys.dup-stdout)))
-                     (##sys.display-word "library " stdout)
-                     (##sys.display-word lib stdout)
-                     (##sys.display-word ": symbol not found: " stdout)
-                     (##sys.display-word x stdout)
-                     (##sys.newline stdout)
-                     (##sys.abort))
-                   (loop (##sys.car rest) (##sys.cdr rest))))
-              ((##sys.symbol=? x (##sys.car (##sys.car args))) (##sys.cdr (##sys.car args)))
-              (else (loop (##sys.cdr args) rest)))))))
-
-#;(##vcore.declare "VLoadLibrary"
-  (lambda (lib)
-    ; lookup-library does 2 things:
-    ; it initializes ##vcore.libraries, a global
-    ; and it also returns the library if it exists
-    ; maybe instead of ##vcore.lookup-library
-    ; we provide a ##vcore.init-global which only sets
-    ; a global if it doesn't exist
-    (let ((lookup (##vcore.lookup-library lib)))
-      (if lookup lookup
-          (begin
-            (set! ##vcore.libraries (##sys.cons (##sys.cons lib ((##vcore.function lib))) ##vcore.libraries))
-            (##sys.cdr (##sys.car ##vcore.libraries)))))))
-
 (define-library (vanity core)
   (export
     ; predicates
@@ -465,27 +434,59 @@
 
   ; io
   (define current-output-port 
-    (let ((out (##sys.dup-stdout)))
+    (let ((out (##sys.stdout->port)))
       (case-lambda
         (() out)
         ((port) (set! out port)))))
   (define current-error-port 
-    (let ((out (##sys.dup-stderr)))
+    (let ((out (##sys.stderr->port)))
       (case-lambda
         (() out)
         ((port) (set! out port)))))
   (define current-input-port 
-    (let ((in (##sys.dup-stdin)))
+    (let ((in (##sys.stdin->port)))
       (case-lambda
         (() in)
         ((port) (set! in port)))))
 
 
-  (define open-input-file ##sys.open-input-stream)
-  (define open-output-file ##sys.open-output-stream)
-  (define close-port ##sys.close-stream)
+  #;(define close-port ##sys.close-stream)
+  #;(define open-input-file ##sys.open-input-stream)
+  #;(define open-output-file ##sys.open-output-stream)
+  #;(define open-output-string ##sys.open-output-string)
+  (define (try-or-gc thunk msg)
+    (let ((ret (thunk)))
+      (if ret ret
+          (begin
+            (##sys.garbage-collect #t)
+            (let ((ret (thunk)))
+              (if ret ret
+                  (error msg)))))))
 
-  (define open-output-string ##sys.open-output-string)
+  (define (close-port port)
+    (if (##sys.has-finalizer? port)
+        (##sys.finalize! port)
+        (##sys.close-stream port)))
+
+  (define (open-input-file-impl path)
+    (let ((ret (##sys.open-input-stream path)))
+      (if ret (##sys.set-finalizer! ret ##sys.close-stream))
+      ret))
+  (define (open-output-file-impl path)
+    (let ((ret (##sys.open-output-stream path)))
+      (if ret (##sys.set-finalizer! ret ##sys.close-stream))
+      ret))
+  (define (open-output-string-impl)
+    (let ((ret (##sys.open-output-string)))
+      (if ret (##sys.set-finalizer! ret ##sys.close-stream))
+      ret))
+
+  (define (open-input-file path)
+    (try-or-gc (lambda () (open-input-file-impl path)) "open-input-file: failed"))
+  (define (open-output-file path)
+    (try-or-gc (lambda () (open-output-file-impl path)) "open-output-file: failed"))
+  (define (open-output-string)
+    (try-or-gc open-output-string-impl "open-output-string: failed"))
   (define get-output-string ##sys.get-output-string)
 
   (define (with-output-to-file str thunk)
