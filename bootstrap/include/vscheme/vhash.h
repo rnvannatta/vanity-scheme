@@ -47,10 +47,10 @@ static inline hash64 string_hash64(hash64 seed, char const * buf, size_t len) {
   return seed;
 }
 
-static inline hash64 uint64_hash64(hash64 seed, unsigned long i) {
+static inline hash64 uint64_hash64(hash64 seed, unsigned long u) {
   for(size_t i = 0; i < 8; i++) {
-    seed = char_hash64(seed, i & 0xFF);
-    i >>= 8;
+    seed = char_hash64(seed, u & 0xFF);
+    u >>= 8;
   }
   return seed;
 }

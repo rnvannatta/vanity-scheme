@@ -54,19 +54,12 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    T_OPEN_PAREN = 258,            /* T_OPEN_PAREN  */
-    T_CLOSE_PAREN = 259,           /* T_CLOSE_PAREN  */
-    T_OPEN_BRACKET = 260,          /* T_OPEN_BRACKET  */
-    T_CLOSE_BRACKET = 261,         /* T_CLOSE_BRACKET  */
-    T_STAR = 262,                  /* T_STAR  */
-    T_COMMA = 263,                 /* T_COMMA  */
-    T_SEMICOLON = 264,             /* T_SEMICOLON  */
-    T_TYPE = 265,                  /* T_TYPE  */
-    T_INT_QUALIFIER = 266,         /* T_INT_QUALIFIER  */
-    T_QUALIFIER = 267,             /* T_QUALIFIER  */
-    T_FUNCTION_QUALIFIER = 268,    /* T_FUNCTION_QUALIFIER  */
-    T_INTEGER = 269,               /* T_INTEGER  */
-    T_IDENTIFIER = 270             /* T_IDENTIFIER  */
+    T_STRUCT = 258,                /* T_STRUCT  */
+    T_TYPE = 259,                  /* T_TYPE  */
+    T_QUALIFIER = 260,             /* T_QUALIFIER  */
+    T_FUNCTION_QUALIFIER = 261,    /* T_FUNCTION_QUALIFIER  */
+    T_INTEGER = 262,               /* T_INTEGER  */
+    T_IDENTIFIER = 263             /* T_IDENTIFIER  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -75,19 +68,12 @@ extern int yydebug;
 #define YYEOF 0
 #define YYerror 256
 #define YYUNDEF 257
-#define T_OPEN_PAREN 258
-#define T_CLOSE_PAREN 259
-#define T_OPEN_BRACKET 260
-#define T_CLOSE_BRACKET 261
-#define T_STAR 262
-#define T_COMMA 263
-#define T_SEMICOLON 264
-#define T_TYPE 265
-#define T_INT_QUALIFIER 266
-#define T_QUALIFIER 267
-#define T_FUNCTION_QUALIFIER 268
-#define T_INTEGER 269
-#define T_IDENTIFIER 270
+#define T_STRUCT 258
+#define T_TYPE 259
+#define T_QUALIFIER 260
+#define T_FUNCTION_QUALIFIER 261
+#define T_INTEGER 262
+#define T_IDENTIFIER 263
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -99,7 +85,7 @@ union YYSTYPE
   int keyword_val;
   VWORD vword_val;
 
-#line 103 "ffi.tab.h"
+#line 89 "ffi.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

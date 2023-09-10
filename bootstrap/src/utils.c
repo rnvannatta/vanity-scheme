@@ -40,6 +40,8 @@ static struct { VBlob sym; char bytes[7]; } _V0filter = { { VSYMBOL, 7 }, "filte
 static struct { VBlob sym; char bytes[7]; } _V0gensym = { { VSYMBOL, 7 }, "gensym" };
 static struct { VBlob sym; char bytes[8]; } _V10string_D31 = { { VSTRING, 8 }, "##~A.~A" };
 static void utils_k13(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k13" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k13, got ~D~N"
   "-- expected 1~N"
@@ -54,6 +56,8 @@ V_CALL(VGetArg(upenv, 7-1, 2), runtime,
  }
 }
 static void utils_k12(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k12" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k12, got ~D~N"
   "-- expected 1~N"
@@ -74,6 +78,8 @@ V_CALL(VGetArg(upenv, 6-1, 3), runtime,
  }
 }
 static void utils_k11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k11" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k11, got ~D~N"
   "-- expected 1~N"
@@ -93,6 +99,8 @@ static void utils_k11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  }
 }
 static void utils_lambda5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "utils_lambda5" };
+ VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to utils_lambda5, got ~D~N"
   "-- expected 2~N"
@@ -113,6 +121,8 @@ V_CALL(upenv->up->up->up->vars[1], runtime,
  }
 }
 static void utils_lambda4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "utils_lambda4" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)utils_lambda4, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -126,6 +136,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void utils_k15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k15" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k15, got ~D~N"
   "-- expected 1~N"
@@ -155,6 +167,8 @@ VEncodePointer(&_V0filter.sym, VPOINTER_OTHER),
  }
 }
 static void utils_k14(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k14" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k14, got ~D~N"
   "-- expected 1~N"
@@ -174,6 +188,8 @@ static void utils_k14(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  }
 }
 static void utils_k10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k10" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k10, got ~D~N"
   "-- expected 1~N"
@@ -192,6 +208,8 @@ V_CALL_FUNC(utils_lambda4, env, runtime,
  }
 }
 static void _V0filter_k21(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0filter_k21" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0filter_k21, got ~D~N"
   "-- expected 1~N"
@@ -207,6 +225,8 @@ V_CALL(VGetArg(upenv, 8-1, 6), runtime,
  }
 }
 static void _V0filter_k20(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0filter_k20" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0filter_k20, got ~D~N"
   "-- expected 1~N"
@@ -226,6 +246,8 @@ V_CALL(VGetArg(upenv, 6-1, 1), runtime,
  }
 }
 static void _V0filter_k19(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0filter_k19" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0filter_k19, got ~D~N"
   "-- expected 1~N"
@@ -244,6 +266,8 @@ V_CALL(VGetArg(upenv, 6-1, 7), runtime,
  }
 }
 static void _V0filter_k22(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0filter_k22" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0filter_k22, got ~D~N"
   "-- expected 1~N"
@@ -259,6 +283,8 @@ V_CALL(VGetArg(upenv, 5-1, 1), runtime,
  }
 }
 static void _V0filter_k18(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0filter_k18" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0filter_k18, got ~D~N"
   "-- expected 1~N"
@@ -285,6 +311,8 @@ V_CALL(VGetArg(upenv, 5-1, 7), runtime,
  }
 }
 static void _V0filter_k17(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0filter_k17" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0filter_k17, got ~D~N"
   "-- expected 1~N"
@@ -303,6 +331,8 @@ V_CALL(upenv->up->vars[1], runtime,
  }
 }
 static void _V0filter_k16(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0filter_k16" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0filter_k16, got ~D~N"
   "-- expected 1~N"
@@ -328,6 +358,8 @@ V_CALL(upenv->up->up->vars[5], runtime,
  }
 }
 static void _V0filter_lambda6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V0filter_lambda6" };
+ VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0filter_lambda6, got ~D~N"
   "-- expected 3~N"
@@ -348,6 +380,8 @@ V_CALL(upenv->up->vars[4], runtime,
  }
 }
 static void utils_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "utils_lambda3" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)utils_lambda3, runtime, upenv, 3, argc, _var0, _var1, _var2) {
   struct { VEnv env; VWORD argv[3]; } container;
   VEnv * env = &container.env;
@@ -364,6 +398,8 @@ static void utils_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
  }
 }
 static void utils_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6, VWORD _var7) {
+ static VDebugInfo dbg = { "utils_lambda2" };
+ VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)utils_lambda2, runtime, upenv, 8, argc, _var0, _var1, _var2, _var3, _var4, _var5, _var6, _var7) {
   struct { VEnv env; VWORD argv[8]; } container;
   VEnv * env = &container.env;
@@ -385,6 +421,8 @@ V_CALL_FUNC(utils_lambda3, env, runtime,
  }
 }
 static void utils_k9(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k9" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k9, got ~D~N"
   "-- expected 1~N"
@@ -409,6 +447,8 @@ V_CALL_FUNC(utils_lambda2, env, runtime,
  }
 }
 static void utils_k8(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k8" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k8, got ~D~N"
   "-- expected 1~N"
@@ -427,6 +467,8 @@ V_CALL(VGetArg(upenv, 6-1, 0), runtime,
  }
 }
 static void utils_k7(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k7" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k7, got ~D~N"
   "-- expected 1~N"
@@ -445,6 +487,8 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void utils_k6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k6" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k6, got ~D~N"
   "-- expected 1~N"
@@ -463,6 +507,8 @@ V_CALL(upenv->up->up->up->vars[0], runtime,
  }
 }
 static void utils_k5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k5" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k5, got ~D~N"
   "-- expected 1~N"
@@ -481,6 +527,8 @@ V_CALL(upenv->up->up->vars[0], runtime,
  }
 }
 static void utils_k4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k4" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k4, got ~D~N"
   "-- expected 1~N"
@@ -499,6 +547,8 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void utils_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k3" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k3, got ~D~N"
   "-- expected 1~N"
@@ -517,6 +567,8 @@ V_CALL(upenv->vars[0], runtime,
  }
 }
 static void utils_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k2" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k2, got ~D~N"
   "-- expected 1~N"
@@ -535,6 +587,8 @@ V_CALL(_var0, runtime,
  }
 }
 static void utils_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_k1" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_k1, got ~D~N"
   "-- expected 1~N"
@@ -554,6 +608,8 @@ static void utils_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  }
 }
 static void utils_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "utils_lambda1" };
+ VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to utils_lambda1, got ~D~N"
   "-- expected 1~N"

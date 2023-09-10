@@ -175,6 +175,10 @@
          ((##sys.char-integer) "VCharInt")
          
          ; IO
+         ((##sys.stdin->port) "VStdinPort")
+         ((##sys.stdout->port) "VStdoutPort")
+         ((##sys.stderr->port) "VStderrPort")
+
          ((##sys.dup-stdin) "VDupStdin")
          ((##sys.dup-stdout) "VDupStdout")
          ((##sys.dup-stderr) "VDupStderr")
@@ -284,6 +288,10 @@
          ((##sys.char-integer) "VCharInt2")
          
          ; IO
+         ((##sys.stdin->port) "VStdinPort")
+         ((##sys.stdout->port) "VStdoutPort")
+         ((##sys.stderr->port) "VStderrPort")
+
          ((##sys.dup-stdin) "VDupStdin2")
          ((##sys.dup-stdout) "VDupStdout2")
          ((##sys.dup-stderr) "VDupStderr2")
@@ -304,6 +312,12 @@
          ((##sys.display-word) "VDisplay2")
          ((##sys.write) "VWrite2")
          ((##sys.newline) "VNewline2")
+
+         ; GC
+         ((##sys.set-finalizer!) "VSetFinalizer")
+         ((##sys.has-finalizer?) "VHasFinalizer")
+         ((##sys.finalize!) "VFinalize")
+         ((##sys.garbage-collect) "VGarbageCollect")
 
          ; System
          ((##sys.system) "VSystem2")
