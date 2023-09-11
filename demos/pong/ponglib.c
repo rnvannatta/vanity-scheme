@@ -110,7 +110,7 @@ void present_window(struct Window * win) {
 struct FrameTimer {
   struct timespec last;
 };
-void * make_frametimer() {
+void * make_frametimer_impl() {
   struct FrameTimer * ret = malloc(sizeof(struct FrameTimer));
   clock_gettime(CLOCK_MONOTONIC, &ret->last);
   return ret;
@@ -124,7 +124,7 @@ double frametimer_lap(struct FrameTimer * ft) {
   long nsecs = end.tv_nsec - begin.tv_nsec;
   return secs + nsecs / (1000.0 * 1000 * 1000);
 }
-void close_frametimer(struct FrameTimer * ft) {
+void close_frametimer_impl(struct FrameTimer * ft) {
   free(ft);
 }
 void floatsleep(double seconds) {

@@ -16,6 +16,6 @@ void present_window(struct Window * win);
 void floatsleep(double seconds);
 
 struct FrameTimer;
-void * make_frametimer();
+void * make_frametimer_impl();
 double frametimer_lap(struct FrameTimer * ft);
-void close_frametimer(struct FrameTimer * ft);
+void close_frametimer_impl(struct FrameTimer * ft);

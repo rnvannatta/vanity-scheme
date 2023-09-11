@@ -363,9 +363,13 @@ static inline uint64_t VWordType(VWORD v) {
 static inline bool VIsPointer(VWORD v) {
   return !VIsDouble(v) && (VBits(v) & POINTER_TEST_BIT);
 }
-
+#define VIsManagedPointer VIsPointer
 static inline bool VIsForeignPointer(VWORD v) {
   return !VIsDouble(v) && (VBits(v) & VPOINTER_FOREIGN) == VPOINTER_FOREIGN;
+}
+static inline bool VIsAnyPointer(VWORD v) {
+  uint64_t bits = VBits(v);
+  return !VIsDouble(v) && ((bits & POINTER_TEST_BIT) || (bits & VPOINTER_FOREIGN) == VPOINTER_FOREIGN);
 }
 
 static inline void VCheckWordType(VWORD v, enum VIMMERAL_T type) {
