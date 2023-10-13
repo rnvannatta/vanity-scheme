@@ -1,4 +1,4 @@
-.PHONY : clean deps cleandeps compiler runtime install tests config lay_egg hatch boot_dirs testffi
+.PHONY : clean deps cleandeps compiler runtime install tests config lay_egg boot_dirs testffi
 
 boot_dirs :
 	mkdir -p bin/bootstrap/src
@@ -6,22 +6,28 @@ boot_dirs :
 
 lay_egg : boot_dirs
 
-compiler runtime deps install tests lay_egg hatch testffi : Makefile.all
-	@mkdir -p bin bin/bootstrap lib build
-	@if ! $(MAKE) deps -f Makefile.all --no-print-directory; \
+hatch :
+	@$(MAKE) clean --no-print-directory --no-builtin-rules
+	@$(MAKE) $@ -f Makefile.bootstrap --no-print-directory --no-builtin-rules
+	@$(MAKE) clean --no-print-directory --no-builtin-rules
+
+compiler runtime deps install tests lay_egg testffi : Makefile.all
+	@mkdir -p lib bin/bootstrap/vanity/compiler bin/bootstrap/scheme build/vanity/compiler build/scheme
+	@if ! $(MAKE) deps -f Makefile.all --no-print-directory --no-builtin-rules; \
 	then \
 		$(MAKE) cleandeps --no-print-directory --no-builtin-rules; \
 		$(MAKE) deps -f Makefile.all --no-print-directory --no-builtin-rules; \
 	fi
+	@$(MAKE) headers -f Makefile.headers --no-print-directory --no-builtin-rules
 	@$(MAKE) $@ -f Makefile.all --no-print-directory --no-builtin-rules
 
 clean :
-	-/bin/rm -rf bin/* build/*
-	-/bin/rm -f test_bin/*
-	-/bin/rm -f lib/*
+	-\rm -rf bin/* build/*
+	-\rm -f test_bin/*
+	-\rm -f lib/*
 
 cleandeps :
-	-/bin/rm -f build/*.d
+	-find build -type f -name '*.d' -exec \rm -f {} +
 
 Makefile.all : config.mk
 	$(MAKE) clean --no-print-directory

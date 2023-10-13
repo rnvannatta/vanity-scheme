@@ -1,0 +1,49 @@
+Binary lisp format:
+
+inspired by protobuf and bson
+all entries consist of a type byte followed by a value if that type has it
+
+1. varint encoding: big endian
+number of extra data bytes in bottom nybble of type word
+sign extended top byte
+trailing bytes
+
+FX - int, with X encoding number of extra data bytes. ints are always signed
+--> example: 'F07F' -> +127, or 'F10104' -> +260 or 'F0FF' -> -1
+EX - char, with X encoding number of extra data bytes. Chars are at most 24 bits and are encoded as if they're signed, which is fine as utf8 is 21 bit
+--> example 'E056' -> V
+
+2. interesting types
+
+00 : end of compound object
+--> indicates end of list, vector, etc
+
+01 : null
+02 : true
+03 : false
+
+04 : double
+--> 8 byte double
+
+05 : symbol
+06 : string
+07 : keyword
+--> varint length followed by the bytes
+
+08 : typed vector
+--> the subtype, followed by varint length, followed by the bytes
+
+09 : list
+--> list of elements terminated by a 00
+--> lists are stored in reverse to make CONSing easier
+--> (1 2 3) is stored as 09 F003 F002 F001 00
+0A : dotted list
+--> (1 2 . 3) is stored as 0A F003 F002 F001 00
+0B : vector
+--> length followed by elements and a 00
+--> vectors are not stored in reverse
+0C : record
+--> length incl record label, followed by record label (a symbol) followed by elements and a 00
+--> records are not stored in reverse
+
+

@@ -13,6 +13,7 @@ if [ "$debug" = "y" ]; then cflags="-O0 -g"; else cflags="-O3"; fi
 if [ "$debug" = "y" ]; then scmflags="-O0 -g"; else scmflags="-O3"; fi
 
 install="${install/#\~/$HOME}"
+install=`realpath $install`
 
 echo "Installing Vanity Scheme $major.$minor to $install with extra CFLAGS: $cflags and extra SCMFLAGS: $scmflags"
 
@@ -26,3 +27,10 @@ echo "major=$major" > config.sh
 echo "minor=$minor" >> config.sh
 echo "install=$install" >> config.sh
 chmod +x config.sh
+
+cat << EOF > src/vanity/compiler/config.scm
+(define-library (vanity compiler config)
+  (export install-root version)
+  (define version '($major $minor))
+  (define install-root "$install/"))
+EOF

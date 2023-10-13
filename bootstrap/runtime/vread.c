@@ -610,10 +610,13 @@ static char * ParseString(char * buf) {
 // ============================================================================
 
 void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
-void VReadIter2(V_CORE_ARGS, VWORD k, VWORD port, VWORD _depth, VWORD _read_more, VWORD _root) {
+void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD _read_more, VWORD _root) {
   V_ARG_CHECK2("##sys.read-iter", 5, argc);
 
-  FILE * f = ((VPort*)VDecodePointer(port))->stream;
+  VPort * port = VCheckedDecodePort(_port, "read");
+  FILE * f = port->stream;
+  if(!f) VError("read: trying to read from closed port\n");
+  if(!(port->flags & PFLAG_READ)) VError("read: trying to read from writeonly port\n");
   int depth = VDecodeInt(_depth);
   bool read_more = VDecodeBool(_read_more);
   VPair * const root = VDecodePair(_root);
@@ -625,7 +628,7 @@ void VReadIter2(V_CORE_ARGS, VWORD k, VWORD port, VWORD _depth, VWORD _read_more
     if(VStackOverflow(alloced)) {
       fprintf(stderr, "gc during read\n");
       VTrackMutation(root, &root->rest, root->rest);
-      VGarbageCollect2Args((VFunc)VReadIter2, runtime, statics, 5, argc, k, port, VEncodeInt(depth), VEncodeBool(read_more), _root);
+      VGarbageCollect2Args((VFunc)VReadIter2, runtime, statics, 5, argc, k, _port, VEncodeInt(depth), VEncodeBool(read_more), _root);
     }
 
     int token = VLex(f);
@@ -818,7 +821,7 @@ void VReadIter2(V_CORE_ARGS, VWORD k, VWORD port, VWORD _depth, VWORD _read_more
   VWORD ret = VTreeify(root);
   if(VIsEq(ret, VVOID)) {
     // read a comment, try again
-    VRead2(runtime, statics, 2, k, port);
+    VRead2(runtime, statics, 2, k, _port);
   } else {
     V_CALL(k, runtime, ret);
   }

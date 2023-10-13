@@ -64,6 +64,76 @@
 // the worst stack space from this is pair -> closure -> env
 // it can't loop because closures only have envs, and envs only have envs
 
+typedef struct {
+  bool foreign_marked;
+  uint8_t pad;
+  VWORD mem;
+  VWORD finalizer;
+} VFinalizerEntry;
+
+typedef struct {
+  VFinalizerEntry * dense;
+  unsigned * table;
+
+  unsigned num_finalizers;
+  unsigned dense_size;
+  unsigned table_size;
+  // from new_finalizers_start to num_finalizers
+  // are all the finalizers added since last gc
+  unsigned new_finalizers_start;
+} VFinalizerTable;
+
+#define MAX_TRACKED_MUTATIONS 256
+typedef struct VRuntime {
+  VTAG tag;
+  // the heart
+  jmp_buf VRoot;
+  // what is preserved
+  VWORD VGCResumeCont;
+  int VExitCode;
+  // stack info
+  char * VStackStart;
+  ssize_t VStackSize;
+  ssize_t VStackLen;
+  // heap info
+  char * VHeapPos;
+  char * VHeapEnd;
+  struct {
+    char * begin;
+    char * end;
+    size_t size;
+  } VHeaps[2];
+  bool VActiveHeap;
+  // mutation info
+  struct {
+    void * container;
+    VWORD * slot;
+  } VTrackedMutations[MAX_TRACKED_MUTATIONS];
+  unsigned VNumTrackedMutations;
+  unsigned VNumUntrackedMutations;
+  // globals
+  VGlobalEntry * VGlobalTable;
+  unsigned VNumGlobals;
+  unsigned VNumGlobalSlots;
+  // finalizers
+  VFinalizerTable VHeapFinalizers[2];
+  // gc info
+  bool VForceMajorGC;
+  bool VGrowSymtable;
+  unsigned VGCsSinceMajor;
+  // gc stats
+  unsigned VNumMinorGCs;
+  unsigned VNumMajorGCs;
+  uint64_t VMinorGCTime;
+  uint64_t VMajorGCTime;
+  // debug info
+  VDebugInfo * VCallHistory[V_CALL_HISTORY_LEN];
+  unsigned VCallHistoryCursor;
+  // args
+  int VArgc;
+  char ** Vargv;
+} VRuntime;
+
 // terrible, horrible, this goes away if we replace all these globals with a function param
 jmp_buf VRoot;
 
@@ -109,7 +179,6 @@ unsigned VNumMajorGCs;
 uint64_t VMinorGCTime;
 uint64_t VMajorGCTime;
 
-#define MAX_TRACKED_MUTATIONS 256
 unsigned VNumTrackedMutations;
 unsigned VNumUntrackedMutations;
 struct {
@@ -231,27 +300,7 @@ VGlobalEntry * VLookupGlobalEntryFast(char const * sym) {
 // ---- these keep getting tacked on ie (lambda _ (finalize! (lambda _ (finalize! k addr0))) addr1)
 // 5. and then gc resumes which causes the finalizers to do their thang
 
-typedef struct {
-  bool foreign_marked;
-  uint8_t pad;
-  VWORD mem;
-  VWORD finalizer;
-} VFinalizerEntry;
-
-typedef struct {
-  VFinalizerEntry * dense;
-  unsigned * table;
-
-  unsigned num_finalizers;
-  unsigned dense_size;
-  unsigned table_size;
-  // from new_finalizers_start to num_finalizers
-  // are all the finalizers added since last gc
-  unsigned new_finalizers_start;
-} VFinalizerTable;
-
 VFinalizerTable VHeapFinalizers[2];
-bool VGCScanForeignPointers;
 
 static void VWipeFinalizerTable(VFinalizerTable * table) {
   table->num_finalizers = 0;
@@ -277,7 +326,6 @@ static void VSetFinalizerHash(VFinalizerTable * table, VWORD mem, unsigned dense
   table->table[i] = dense_index;
 }
 
-void VTrackMutation(void * container, VWORD * slot, VWORD val);
 void VSetFinalizerImpl(VFinalizerTable * table, VWORD mem, VWORD finalizer) {
   // in order to track table entries, we need this to be constant in frame
   // which means we need to trigger a gc if we cannot fit into dense

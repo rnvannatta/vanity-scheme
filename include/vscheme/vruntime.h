@@ -77,7 +77,7 @@ enum VTOK_T {
 };
 
 enum VTAG {
-  VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VPORT,
+  VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VPORT, VRUNTIME,
   VTAG_END };
 typedef unsigned VTAG;
 enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
@@ -132,7 +132,7 @@ typedef struct VEnv VEnv;
 #define V_CORE_ARGS VRuntime * runtime, VEnv * statics, int argc
 typedef void (*VFunc)(V_CORE_ARGS, ...);
 
-typedef struct {
+typedef struct VWORD {
   uint64_t integer;
 } VWORD;
 
