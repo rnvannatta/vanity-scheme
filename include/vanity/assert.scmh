@@ -1,0 +1,1 @@
+(define-library-interface (vanity assert) (import (vanity core)) (export assert-equal) (inline-import) (inline-export))

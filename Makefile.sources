@@ -1,0 +1,20 @@
+SRC := $(addprefix vanity/compiler/, variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm transpile.scm frontend.scm ffi.scm library.scm config.scm)
+RUNTIME_SRC := vruntime.c vlibrary.c vread.c
+ASSEMBLY_SRC := vapply-linux-x64.s
+
+RUNTIME_LISP_SRC := scheme/r7rs.scm vanity/core.scm vanity/assert.scm
+
+INLINE_SRC := $(addprefix include/vscheme/, vinlines.h vruntime.h)
+
+DAYS := 01 02 03 04 05 06 07 08
+AOC := $(addprefix aoc-2022/, $(addsuffix /main.ss, $(DAYS)))
+TEST_SRC := fact.scm ack.scm core.scm multilib.scm list.scm listfunc.scm match.scm io.scm callcc.scm callvalues.scm ffitest.scm ffiimport.scm finalize.scm $(AOC)
+
+HOME_DIR := $(shell echo ~)
+INSTALL_DIR := $(HOME_DIR)/.local
+
+LIBS := -lm -ldl -lpthread
+CFLAGS := -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=cast-function-type -Wno-missing-field-initializers -Werror=varargs -masm=intel
+
+INCLUDES := include $(HOME_DIR)/.local/include
+IFLAGS := $(addprefix -I, $(INCLUDES))

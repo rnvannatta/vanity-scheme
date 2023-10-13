@@ -77,7 +77,7 @@ enum VTOK_T {
 };
 
 enum VTAG {
-  VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VPORT,
+  VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VPORT, VRUNTIME,
   VTAG_END };
 typedef unsigned VTAG;
 enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
@@ -132,7 +132,7 @@ typedef struct VEnv VEnv;
 #define V_CORE_ARGS VRuntime * runtime, VEnv * statics, int argc
 typedef void (*VFunc)(V_CORE_ARGS, ...);
 
-typedef struct {
+typedef struct VWORD {
   uint64_t integer;
 } VWORD;
 
@@ -363,9 +363,13 @@ static inline uint64_t VWordType(VWORD v) {
 static inline bool VIsPointer(VWORD v) {
   return !VIsDouble(v) && (VBits(v) & POINTER_TEST_BIT);
 }
-
+#define VIsManagedPointer VIsPointer
 static inline bool VIsForeignPointer(VWORD v) {
   return !VIsDouble(v) && (VBits(v) & VPOINTER_FOREIGN) == VPOINTER_FOREIGN;
+}
+static inline bool VIsAnyPointer(VWORD v) {
+  uint64_t bits = VBits(v);
+  return !VIsDouble(v) && ((bits & POINTER_TEST_BIT) || (bits & VPOINTER_FOREIGN) == VPOINTER_FOREIGN);
 }
 
 static inline void VCheckWordType(VWORD v, enum VIMMERAL_T type) {

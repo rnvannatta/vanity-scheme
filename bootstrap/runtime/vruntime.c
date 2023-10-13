@@ -47,11 +47,6 @@
 #define FORWARDED ULLONG_MAX
 
 // order of operations for implementing finalizers:
-// 1. change gc to resume with continuation instead of func + environ
-// 2. expose calls to run the gc
-// 3. add gc preservation of the finalizer table - which is icky, have to run gc twice
-// 4. expose set-finalizer! and finalize!, experiment with them
-// 5. start debugging finalizer walking
 // 6. add foreign pointers to finalizers
 
 // so finalizers can run in any order and thats them lumps
@@ -68,6 +63,76 @@
 // -- everything else is typical cheney GC
 // the worst stack space from this is pair -> closure -> env
 // it can't loop because closures only have envs, and envs only have envs
+
+typedef struct {
+  bool foreign_marked;
+  uint8_t pad;
+  VWORD mem;
+  VWORD finalizer;
+} VFinalizerEntry;
+
+typedef struct {
+  VFinalizerEntry * dense;
+  unsigned * table;
+
+  unsigned num_finalizers;
+  unsigned dense_size;
+  unsigned table_size;
+  // from new_finalizers_start to num_finalizers
+  // are all the finalizers added since last gc
+  unsigned new_finalizers_start;
+} VFinalizerTable;
+
+#define MAX_TRACKED_MUTATIONS 256
+typedef struct VRuntime {
+  VTAG tag;
+  // the heart
+  jmp_buf VRoot;
+  // what is preserved
+  VWORD VGCResumeCont;
+  int VExitCode;
+  // stack info
+  char * VStackStart;
+  ssize_t VStackSize;
+  ssize_t VStackLen;
+  // heap info
+  char * VHeapPos;
+  char * VHeapEnd;
+  struct {
+    char * begin;
+    char * end;
+    size_t size;
+  } VHeaps[2];
+  bool VActiveHeap;
+  // mutation info
+  struct {
+    void * container;
+    VWORD * slot;
+  } VTrackedMutations[MAX_TRACKED_MUTATIONS];
+  unsigned VNumTrackedMutations;
+  unsigned VNumUntrackedMutations;
+  // globals
+  VGlobalEntry * VGlobalTable;
+  unsigned VNumGlobals;
+  unsigned VNumGlobalSlots;
+  // finalizers
+  VFinalizerTable VHeapFinalizers[2];
+  // gc info
+  bool VForceMajorGC;
+  bool VGrowSymtable;
+  unsigned VGCsSinceMajor;
+  // gc stats
+  unsigned VNumMinorGCs;
+  unsigned VNumMajorGCs;
+  uint64_t VMinorGCTime;
+  uint64_t VMajorGCTime;
+  // debug info
+  VDebugInfo * VCallHistory[V_CALL_HISTORY_LEN];
+  unsigned VCallHistoryCursor;
+  // args
+  int VArgc;
+  char ** Vargv;
+} VRuntime;
 
 // terrible, horrible, this goes away if we replace all these globals with a function param
 jmp_buf VRoot;
@@ -114,7 +179,6 @@ unsigned VNumMajorGCs;
 uint64_t VMinorGCTime;
 uint64_t VMajorGCTime;
 
-#define MAX_TRACKED_MUTATIONS 256
 unsigned VNumTrackedMutations;
 unsigned VNumUntrackedMutations;
 struct {
@@ -236,32 +300,21 @@ VGlobalEntry * VLookupGlobalEntryFast(char const * sym) {
 // ---- these keep getting tacked on ie (lambda _ (finalize! (lambda _ (finalize! k addr0))) addr1)
 // 5. and then gc resumes which causes the finalizers to do their thang
 
-typedef struct {
-  bool touched;
-  VWORD mem;
-  VWORD finalizer;
-} VFinalizerEntry;
-
-typedef struct {
-  VFinalizerEntry * dense;
-  unsigned * table;
-
-  unsigned num_finalizers;
-  unsigned dense_size;
-  unsigned table_size;
-} VFinalizerTable;
-
-VFinalizerTable VStackFinalizers;
 VFinalizerTable VHeapFinalizers[2];
 
 static void VWipeFinalizerTable(VFinalizerTable * table) {
   table->num_finalizers = 0;
+  table->new_finalizers_start = 0;
   for(unsigned i = 0; i < table->table_size; i++)
     table->table[i] = ~0u;
 }
 
+static inline hash64 VHashPointer(VWORD ptr) {
+  return uint64_hash64(hash64_seed(), (uintptr_t)VDecodePointer(ptr));
+}
+
 static void VSetFinalizerHash(VFinalizerTable * table, VWORD mem, unsigned dense_index, bool dupe_test) {
-  hash64 h = uint64_hash64(hash64_seed(), VBits(mem));
+  hash64 h = VHashPointer(mem);
   unsigned i = h & (table->table_size - 1);
   unsigned tries = 0;
   while(tries++ <= table->table_size && ~table->table[i]) {
@@ -274,6 +327,8 @@ static void VSetFinalizerHash(VFinalizerTable * table, VWORD mem, unsigned dense
 }
 
 void VSetFinalizerImpl(VFinalizerTable * table, VWORD mem, VWORD finalizer) {
+  // in order to track table entries, we need this to be constant in frame
+  // which means we need to trigger a gc if we cannot fit into dense
   if(table->num_finalizers >= table->dense_size) {
     unsigned new_size = table->dense_size;
     if(new_size) new_size *= 2;
@@ -301,15 +356,16 @@ void VSetFinalizerImpl(VFinalizerTable * table, VWORD mem, VWORD finalizer) {
   }
 
   unsigned dense_index = table->num_finalizers;
-  table->dense[dense_index] = (VFinalizerEntry) { .touched = false, .mem = mem, .finalizer = finalizer };
+  VFinalizerEntry * entry = &table->dense[dense_index];
+  *entry = (VFinalizerEntry) { .foreign_marked = false, .pad = 0, .mem = mem, .finalizer = finalizer };
   table->num_finalizers++;
 
   VSetFinalizerHash(table, mem, dense_index, true);
 }
 
-VFinalizerEntry * VGetFinalizer(bool check_heap, VWORD mem) {
-  VFinalizerTable * table = check_heap ? &VHeapFinalizers[VActiveHeap] : &VStackFinalizers;
-  hash64 h = uint64_hash64(hash64_seed(), VBits(mem));
+static VFinalizerEntry * VGetFinalizer(VWORD mem, bool active_heap) {
+  VFinalizerTable * table = &VHeapFinalizers[VActiveHeap ^ !active_heap];
+  hash64 h = VHashPointer(mem);
   unsigned i = h & (table->table_size - 1);
   unsigned tries = 0;
   while(tries++ < table->table_size) {
@@ -324,24 +380,37 @@ VFinalizerEntry * VGetFinalizer(bool check_heap, VWORD mem) {
   return NULL;
 }
 
+static void VMarkForeignFinalizer(VWORD mem, bool active_heap) {
+  VFinalizerEntry * entry = VGetFinalizer(mem, active_heap);
+  if(entry) {
+    entry->foreign_marked = true;
+  }
+}
+
 void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer) {
   V_ARG_CHECK2("set-finalizer!", 3, argc);
-  if(!VIsPointer(mem)) VError("set-finalizer!: Finalizers can only be set on addresses ~S\n", mem);
-  if(!(VWordType(finalizer) == VPOINTER_CLOSURE)) VError("set-finalizer!: Not a procedure ~S\n", finalizer);
-  VSetFinalizerImpl(&VStackFinalizers, mem, finalizer);
+  if(!(VIsPointer(mem) || VIsForeignPointer(mem)))
+    VError("set-finalizer!: Finalizers can only be set on addresses ~S\n", mem);
+  if(!(VWordType(finalizer) == VPOINTER_CLOSURE))
+    VError("set-finalizer!: Not a procedure ~S\n", finalizer);
+
+  // In order to just have heap finalizers, we need to track finalizer
+  // as a mutation to avoid dropping it
+  // we also can't drop mem until the finalizer is run ofc
+
+  VSetFinalizerImpl(&VHeapFinalizers[VActiveHeap], mem, finalizer);
   V_CALL(k, runtime, VVOID);
 }
 
 void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem) {
   V_GC_CHECK2_VARARGS((VFunc)VFinalize, runtime, statics, 2, argc, k, mem) {
     V_ARG_CHECK2("finalize!", 2, argc);
-    if(!VIsPointer(mem)) VError("finalize!: Not an address ~S\n", mem);
+    if(!(VIsPointer(mem) || VIsForeignPointer(mem)))
+      VError("finalize!: Not an address ~S\n", mem);
 
-    VFinalizerEntry * finalizer = VGetFinalizer(false, mem);
-    if(!finalizer) {
-      finalizer = VGetFinalizer(true, mem);
-      if(!finalizer) VError("finalize!: No finalizer at address of ~S\n", mem);
-    }
+    VFinalizerEntry * finalizer = VGetFinalizer(mem, true);
+    if(!finalizer) VError("finalize!: No finalizer at address of ~S\n", mem);
+
     VWORD final = finalizer->finalizer;
     if(!VDecodeBool(final)) VError("finalize!: double finalize at address of ~S\n", mem);
     finalizer->mem = VFALSE;
@@ -351,11 +420,9 @@ void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem) {
 }
 
 void VHasFinalizer(V_CORE_ARGS, VWORD k, VWORD mem) {
-  if(!VIsPointer(mem)) VError("has-finalizer?: Not an address ~S\n", mem);
-  bool finalizer = VGetFinalizer(false, mem);
-  if(!finalizer)
-    finalizer = VGetFinalizer(true, mem);
-  V_CALL(k, runtime, VEncodeBool(finalizer));
+  if(!(VIsPointer(mem) || VIsForeignPointer(mem)))
+    VError("has-finalizer?: Not an address ~S\n", mem);
+  V_CALL(k, runtime, VEncodeBool(VGetFinalizer(mem, true)));
 }
 
 void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major) {
@@ -495,8 +562,11 @@ VPair * VMovePair(VPair * pair) {
 }
 
 VWORD VMoveDispatch(VWORD word) {
-  if(!VIsPointer(word))
+  if(!VIsPointer(word)) {
+    if(VIsForeignPointer(word))
+      VMarkForeignFinalizer(word, false);
     return word;
+  }
   void * ptr = VDecodePointer(word);
   if(!VNeedsMove(ptr))
     return word;
@@ -672,7 +742,8 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
   stack_len += environ_size;
 
   size_t after_gc_size = VHeapPos - VHeap + stack_len;
-  bool is_major = VForceMajorGC || VHeap + after_gc_size >= VHeapEnd - VStackSize;
+  bool is_unplanned_major = VHeap + after_gc_size >= VHeapEnd - VStackSize;
+  bool is_major = VForceMajorGC || is_unplanned_major;
   static VDebugInfo major_info = { "Garbage Collection (major)" };
   static VDebugInfo minor_info = { "Garbage Collection (minor)" };
   VRecordCall(is_major ? &major_info : &minor_info);
@@ -705,21 +776,40 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
 
   VWORD * cur = (VWORD*)VHeapPos;
 
-  for(unsigned i = 0; i < VNumTrackedMutations; i++) {
-    // of interest is that because container is in the heap
-    // we only need to check forwards during a major gc, technically
-    VWORD * container = VTrackedMutations[i].container;
-    VWORD * slot = VTrackedMutations[i].slot;
-    // the container may be another tracked mutation's slot
-    if(container)
-    {
-      VWORD * forward = VForwarded(container);
-      if(forward) {
-        slot = forward + (slot - container);
+  if(!is_major) {
+    // tracked mutations can be ignored during major gcs
+    // because the issue was heap pointing to stack
+    // but we're crawling heap and stack this gc
+    for(unsigned i = 0; i < VNumTrackedMutations; i++) {
+      // of interest is that because container is in the heap
+      // we only need to check forwards during a major gc, technically
+      VWORD * container = VTrackedMutations[i].container;
+      VWORD * slot = VTrackedMutations[i].slot;
+      // the container may be another tracked mutation's slot
+      if(container)
+      {
+        VWORD * forward = VForwarded(container);
+        if(forward) {
+          slot = forward + (slot - container);
+        }
+      }
+
+      *slot = VMoveDispatch(*slot);
+    }
+    // Finalizers are only processed during major gcs, so we need
+    // to manually copy them over during minor gcs
+    VFinalizerTable * table = &VHeapFinalizers[VActiveHeap];
+    for(unsigned i = table->new_finalizers_start; i < table->num_finalizers; i++) {
+      VFinalizerEntry * entry = table->dense + i;
+      VWORD finalizer = entry->finalizer = VMoveDispatch(entry->finalizer);
+      VWORD mem = VMoveDispatch(entry->mem);
+      if(VBits(mem) != VBits(entry->mem)) {
+        entry->finalizer = VFALSE;
+        entry->mem = VFALSE;
+        VSetFinalizerImpl(table, mem, finalizer);
       }
     }
-
-    *slot = VMoveDispatch(*slot);
+    table->new_finalizers_start = table->num_finalizers;
   }
   VNumTrackedMutations = 0;
 
@@ -767,16 +857,12 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
     }
   }
 
+  if(is_major)
   {
-    int num_dead_tables = is_major ? 2 : 1;
+    int num_dead_tables = 1;
     VFinalizerTable * dead_tables[num_dead_tables+1];
-    dead_tables[0] = &VStackFinalizers;
-    if(is_major) {
-      dead_tables[1] = &VHeapFinalizers[!VActiveHeap];
-      dead_tables[2] = NULL;
-    } else {
-      dead_tables[1] = NULL;
-    }
+    dead_tables[0] = &VHeapFinalizers[!VActiveHeap];
+    dead_tables[1] = NULL;
     VGCResumeCont = VCleanupFinalizers(VGCResumeCont, &VHeapFinalizers[VActiveHeap], dead_tables);
   }
 
@@ -793,7 +879,7 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
   // we need to grow the heap
   // or if we are doing too many major gcs, grow the heap to avoid thrashing
   bool grow_heap = false;
-  if(is_major) {
+  if(is_unplanned_major) {
     // TODO do binomial statistic test here
     if(VGCsSinceMajor < 20)
       grow_heap = true;
@@ -832,36 +918,30 @@ VWORD VCleanupFinalizers(VWORD k, VFinalizerTable * new_table, VFinalizerTable *
       if(!VDecodeBool(entry->mem)) continue;
 
 
-      VWORD finalizer = finalizer = VMoveDispatch(entry->finalizer);
+      VWORD finalizer = VMoveDispatch(entry->finalizer);
       VWORD mem = entry->mem;
       void * mem_ptr = VDecodePointer(mem);
-      void * mem_forward = VForwarded(mem_ptr);
-      //printf("%u\n", VMemLocation(VDecodePointer(mem)));
+      void * mem_forward = VIsManagedPointer(mem) ? VForwarded(mem_ptr) : NULL;
       
       if(mem_forward) {
-        //printf("found an object with a finalizer, it got copied\n");
         mem = VEncodePointer(mem_forward, VWordType(mem));
-      } else if(VMemLocation(mem_ptr) == HEAP_MEM) {
-        //printf("found an object with a finalizer, it survived\n");
+      } else if(VMemLocation(mem_ptr) == HEAP_MEM || entry->foreign_marked) {
+        /* nothing. all is good :) */
       } else {
         mem = VMoveDispatch(mem);
         VEnv * e = VAllocHeap(sizeof(VEnv) + sizeof(VWORD[2]));
+        VClosure * newk = VAllocHeap(sizeof(VClosure));
         // no. it's not okay if the alloc fails
         //printf("found an object with a finalizer, it didn't get copied\n");
-        if(e) {
+        if(e && newk) {
           e->tag = VENV;
           e->num_vars = 2;
           e->var_len = 2;
           e->up = NULL;
           e->vars[0] = k;
           e->vars[1] = mem;
-          VClosure * newk = VAllocHeap(sizeof(VClosure));
-          if(newk) {
-            *newk = VMakeClosure2(VApplyFinalizer, e);
-            k = VEncodeClosure(newk);
-          } else {
-            VError("Ran out of heap space while managing finalizers~N");
-          }
+          *newk = VMakeClosure2(VApplyFinalizer, e);
+          k = VEncodeClosure(newk);
         } else {
           VError("Ran out of heap space while managing finalizers~N");
         }
@@ -871,6 +951,7 @@ VWORD VCleanupFinalizers(VWORD k, VFinalizerTable * new_table, VFinalizerTable *
     VWipeFinalizerTable(dead_table);
     dead_tables++;
   }
+  new_table->new_finalizers_start = new_table->num_finalizers;
   return k;
 }
 
@@ -910,6 +991,7 @@ static void VExitK(V_CORE_ARGS, ...) {
 
   // num_finalizers includes tombstones
   bool any_finalizers = false;
+  assert(table->num_finalizers == table->new_finalizers_start);
   for(unsigned i = 0; i < table->num_finalizers; i++) {
     if(VStackOverflow((char*)closure))
       VGarbageCollect2Args(closure->func, runtime, closure->env, 1, 1, VVOID);
@@ -921,6 +1003,7 @@ static void VExitK(V_CORE_ARGS, ...) {
     any_finalizers = true;
     VWORD mem = entry->mem;
     //printf("found an object with a finalizer while exiting, time to die\n");
+    //printf("exit finalizing object at dense index %u\n", i);
     
     VEnv * e = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
     e->tag = VENV;
@@ -948,8 +1031,6 @@ void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
     else if(!VDecodeBool(e))
       VExitCode = 1;
   }
-  // TODO append every finalizer continuation here
-  // and run as many as you can before gc
   VGarbageCollect2(VExitK, runtime, NULL, 0, NULL);
 }
 
@@ -1056,6 +1137,7 @@ void VTrackMutation(void * container, VWORD * slot, VWORD val) {
   if(VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
     VError("Unable to track mutation: overflow\n");
   }
+
   if(VIsPointer(val)) {
     void * ptr = VDecodePointer(val);
     if(VMemLocation(ptr) != STACK_MEM) {
@@ -1070,7 +1152,7 @@ void VTrackMutation(void * container, VWORD * slot, VWORD val) {
     } else {
       VNumUntrackedMutations++;
     }
-  }
+  } 
 }
 
 static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val) {
@@ -1148,7 +1230,7 @@ void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD val) {
       } else {
         VNumUntrackedMutations++;
       }
-    }
+    } 
     V_CALL(k, runtime, VVOID);
   }
 }

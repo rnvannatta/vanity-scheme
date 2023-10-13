@@ -11,3 +11,5 @@ config.sh
 *.so
 a.out
 core
+.gdb_history
+src/vanity/compiler/config.scm

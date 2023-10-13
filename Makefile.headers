@@ -1,0 +1,26 @@
+include Makefile.sources
+
+vpath %.h src $(INCLUDES)
+vpath %.scmh build $(INCLUDES)
+
+DEPS = $(addprefix build/headers, $(RUNTIME_LISP_SRC:.scm=.d) $(SRC:.scm=.d))
+
+include config.mk
+
+.PHONY : headers
+
+headers : $(addprefix build/, $(SRC:.scm=.scmh) $(RUNTIME_LISP_SRC:.scm=.scmh))
+
+-include $(DEPS)
+
+build/%.scmh : src/%.scm
+	@mkdir -p `dirname $@`
+	vsc -h $< -o $@
+	@mkdir -p `dirname build/include/$*.scmh`
+	@rsync --checksum $@ build/include/$*.scmh
+
+build/%.scmh : runtime/%.scm
+	@mkdir -p `dirname $@`
+	vsc -h $< -o $@
+	@mkdir -p `dirname include/$*.scmh`
+	@rsync --checksum $@ include/$*.scmh

@@ -724,11 +724,14 @@ void VStderrPort(V_CORE_ARGS, VWORD k) {
 
 static void VOpenStream2(VRuntime * runtime, VWORD k, VWORD path, char const * mode, unsigned flags) {
   VBlob * str = VCheckedDecodeString(path, "open-stream");
+  errno = 0;
   FILE * f = fopen(str->buf, mode);
-  if(!f) V_CALL(k, runtime, VFALSE);
+  // ENFILE error can be fixed by running a garbage collect
+  VWORD ok = VEncodeBool(errno != ENFILE && errno != EMFILE);
+  if(!f) V_CALL(k, runtime, VFALSE, ok);
 
   VPort port = VMakePortStream(f, flags);
-  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER), ok);
 }
 
 void VOpenInputStream2(V_CORE_ARGS, VWORD k, VWORD path) {
@@ -763,11 +766,14 @@ void VOpenOutputString2(V_CORE_ARGS, VWORD k) {
   // using tmpfile like this feels horrible
   // but it works for now
   V_ARG_CHECK2("open-output-string", 1, argc);
+  errno = 0;
   FILE * f = tmpfile();
-  if(!f) V_CALL(k, runtime, VFALSE);
+  // ENFILE error can be fixed by running a garbage collect
+  VWORD ok = VEncodeBool(errno != ENFILE && errno != EMFILE);
+  if(!f) V_CALL(k, runtime, VFALSE, ok);
 
   VPort port = VMakePortStream(f, PFLAG_WRITE | PFLAG_OSTRING);
-  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER), ok);
 }
 
 void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD _port) {
