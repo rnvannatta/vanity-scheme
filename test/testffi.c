@@ -8,11 +8,6 @@
 extern VWORD parse_ret;
 extern VMemoryPool parse_pool;
 
-void VError(char const * str, ...) {
-  fprintf(stderr, "%s", str);
-  exit(1);
-}
-
 void print_parse(VWORD node) {
   printf("(");
   while(!VDecodeBool(VInlineNullP(node))) {
@@ -23,6 +18,12 @@ void print_parse(VWORD node) {
       printf("%s", VDecodeString(first)->buf);
     else if(VDecodeBool(VInlineNullP(first)))
       printf("()");
+    else if(VIsEq(first, VFALSE))
+      printf("#f");
+    else if(VIsEq(first, VTRUE))
+      printf("#f");
+    else if(VWordType(first) == VIMM_INT)
+      printf("%i", VDecodeInt(first));
     else
       printf("#?");
     node = VInlineCdr(node);

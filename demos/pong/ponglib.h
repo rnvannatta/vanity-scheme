@@ -1,21 +1,21 @@
 #pragma once
 
-struct Window;
+typedef struct Window Window;
 void * make_window(int w, int h, char * title);
-void poll_events(struct Window * win);
-float get_mouse_x(struct Window * win);
-float get_mouse_y(struct Window * win);
-_Bool get_exit_request(struct Window * win);
-void close_window(struct Window * win);
+void poll_events(Window * win);
+float get_mouse_x(Window * win);
+float get_mouse_y(Window * win);
+_Bool get_exit_request(Window * win);
+void close_window(Window * win);
 
-void clear_window(struct Window * win);
-void set_draw_color(struct Window * win, float r, float g, float b, float a);
-void draw_rect(struct Window * win, float x, float y, float w, float h);
-void present_window(struct Window * win);
+void clear_window(Window * win);
+void set_draw_color(Window * win, float r, float g, float b, float a);
+void draw_rect(Window * win, float x, float y, float w, float h);
+void present_window(Window * win);
 
 void floatsleep(double seconds);
 
-struct FrameTimer;
+typedef struct FrameTimer FrameTimer;
 void * make_frametimer_impl();
-double frametimer_lap(struct FrameTimer * ft);
-void close_frametimer_impl(struct FrameTimer * ft);
+double frametimer_lap(FrameTimer * ft);
+void close_frametimer_impl(FrameTimer * ft);
