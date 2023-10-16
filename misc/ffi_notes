@@ -1,0 +1,17 @@
+FFI:
+
+High priority to change:
+* Constant integer expressions are not permitted yet
+* No preprocessor statements other than #pragma once
+
+Medium priority to change:
+* The only pointers permitted as return type are void*
+
+Low priority to change:
+* No structure implementations are permitted, only forward declarations
+* Vanity ints are 32 bit signed. And so enums must be storable in int32
+
+Unlikely to change:
+* No inline or static definitions: all declarations must be extern & no implementations are permitted
+* You may not shadow a typedef name; for example: this is illegal in the ffi C `typedef int pain; void foo(int pain);`
+* VLAs are not permitted; for example: `void foo(int len, int arr[][len]);`

@@ -1,6 +1,7 @@
 %{
 
 #include <stdlib.h>
+#include <limits.h>
 #include "vscheme/vruntime.h"
 #include "vscheme/vmemory.h"
 #include "vscheme/vinlines.h"
@@ -20,7 +21,7 @@ enum keyword_t {
   T_BOOL,
   T_COMPLEX,
   T_IMAGINARY,
-  // int qualifiers
+  // int types
   T_SHORT,
   T_LONG,
   T_SIGNED,
@@ -31,6 +32,12 @@ enum keyword_t {
   T_VOLATILE,
   // function qualifiers
   T_INLINE,
+  // storage specifiers
+  T_REGISTER,
+  T_AUTO,
+  T_STATIC,
+  T_EXTERN,
+  T_TYPEDEF,
   // yucky types for the lazy
   T_SIZE_T,
 };
@@ -41,9 +48,9 @@ V_STATIC_STRING(char_str, "char");
 V_STATIC_STRING(int_str, "int");
 V_STATIC_STRING(float_str, "float");
 V_STATIC_STRING(double_str, "double");
-V_STATIC_STRING(_Bool_str, "bool");
-V_STATIC_STRING(_Complex_str, "complex");
-V_STATIC_STRING(_Imaginary_str, "imaginary");
+V_STATIC_STRING(_Bool_str, "_Bool");
+V_STATIC_STRING(_Complex_str, "_Complex");
+V_STATIC_STRING(_Imaginary_str, "_Imaginary");
 // int qualifers
 V_STATIC_STRING(short_str, "short");
 V_STATIC_STRING(long_str, "long");
@@ -55,6 +62,12 @@ V_STATIC_STRING(restrict_str, "restrict");
 V_STATIC_STRING(volatile_str, "volatile");
 // func qualifiers
 V_STATIC_STRING(inline_str, "inline");
+// storage specifiers
+V_STATIC_STRING(register_str, "register");
+V_STATIC_STRING(auto_str, "auto");
+V_STATIC_STRING(static_str, "static");
+V_STATIC_STRING(extern_str, "extern");
+V_STATIC_STRING(typedef_str, "typedef");
 // yucky types for the lazy
 V_STATIC_STRING(size_t_str, "size_t");
 
@@ -79,6 +92,12 @@ VBlob * keyword_to_blob[] = {
   (VBlob*)&volatile_str,
   // func qualifiers
   (VBlob*)&inline_str,
+  // storage specifiers
+  (VBlob*)&register_str,
+  (VBlob*)&auto_str,
+  (VBlob*)&static_str,
+  (VBlob*)&extern_str,
+  (VBlob*)&typedef_str,
   // yucky types
   (VBlob*)&size_t_str,
 };
@@ -121,6 +140,15 @@ static VWORD detangle_params(VWORD param) {
   ret = CONS("parameter_list", ret);
   return ret;
 }
+static VWORD detangle_enums(VWORD enum_list) {
+  VWORD ret = VNULL;
+  while(!VDecodeBool(VInlineNullP(enum_list))) {
+    VWORD newenum = CDR(enum_list);
+    ret = CONS(newenum, ret);
+    enum_list = CAR(enum_list);
+  }
+  return ret;
+}
 static VWORD reverse(VWORD param) {
   VWORD ret = VNULL;
   while(!VDecodeBool(VInlineNullP(param))) {
@@ -128,6 +156,37 @@ static VWORD reverse(VWORD param) {
     param = CDR(param);
   }
   return ret;
+}
+
+static bool memv(char const * x, VWORD lst) {
+  while(!VDecodeBool(VInlineNullP(lst))) {
+    VWORD e = CAR(lst);
+    if(VIsSymbol(e) && !strcmp(VDecodeSymbol(e)->buf, x)) return true;
+    if(VIsString(e) && !strcmp(VDecodeString(e)->buf, x)) return true;
+    lst = CDR(lst);
+  }
+  return false;
+}
+
+// forbidding the shadowing of typedefs really simplifies this code
+// as we can merely track whether a variable is a typedef
+// and since typedef is a storage declaration, it can only show up
+// in declarations, and since we do not parse block statements, we
+// can just keep a simple table of typedefs
+static VWORD typedef_table = { LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
+
+static void register_typedef(VWORD type, VWORD decl) {
+  if(!memv("typedef", type)) return;
+
+  VWORD sym = decl;
+  while(VWordType(sym) == VPOINTER_PAIR)
+    sym = CADR(sym);
+  if(!VIsString(sym)) VError("foreign-parse-header: internal error\n");
+  typedef_table = CONS(sym, typedef_table);
+}
+
+bool is_typedef(char const * symbol) {
+  return memv(symbol, typedef_table);
 }
 
 int yylex(void);
@@ -138,15 +197,16 @@ extern VWORD parse_ret;
 
 %}
 
-%token T_STRUCT
+%token T_STRUCT T_ENUM
 
 %token <keyword_val> T_TYPE
 %token <keyword_val> T_QUALIFIER
 %token <keyword_val> T_FUNCTION_QUALIFIER
+%token <keyword_val> T_STORAGE
 
 %token <int_val> T_INTEGER
 
-%token <vword_val> T_IDENTIFIER
+%token <vword_val> T_TYPENAME T_VARIABLE
 
 %union {
   unsigned long long int_val;
@@ -154,14 +214,49 @@ extern VWORD parse_ret;
   VWORD vword_val;
 }
 
-%type <vword_val> start toplevel declaration declarator_list prefix_declarator postfix_declarator parameter_list abstract_prefix_declarator abstract_postfix_declarator qualified_type post_qualified_type
+%type <vword_val> start toplevel declaration declarator_list prefix_declarator postfix_declarator parameter_list abstract_prefix_declarator abstract_postfix_declarator param_prefix_declarator param_postfix_declarator qualified_type post_qualified_type enum_list expr specified_type post_specified_type plain_type identifier
 
 %%
+
+// A grammatical ambiguity much worse than the classic A * a ambiguity:
+
+// the standard c grammar accepts an identifier for declarations as opposed to
+// a variable. however to avoid an absolutely awful reduce-reduce conflict we require
+// variables. the c grammar specifies that in the event of this reduce/reduce
+// conflict you choose to parse a typedef name as a type instead of a declarator
+// for example:
+// typedef int pain;
+
+// void foo(pain x); // x is a declarator for an int
+// void foo(pain (x)); // x is a declarator for an int
+// void foo(int int); // syntax error
+// void foo(int (int)); // the argument is an abstract declarator of a function accepting an int
+// void foo(pain pain); // second pain is a declarator for an int
+// void foo(pain (pain)); // reduce-reduce conflict :boom:
+
+// This is horrendous to implement.
+// It might be simple to implement but I don't know how to.
+
+// to be honest, the cases where you'd get a reduce-reduce conflict are degenerate
+// and so, we do not permit shadowing typedef names
+// once you declare something as a typedef, you cannot shadow it
+// Any code in the wild which does this is a mistake: fight me.
+
+// As one exception, if it's a storage declaration as opposed to a parameter declaration,
+// we permit identifiers to support double typedef'ing.
+// The ambiguity is between abstract and concrete declarators, which is only a problem for
+// parameters. And it's natural to allow duplicate declaration.
+
+// typedef int pain;
+// typedef int pain;
+
 start : toplevel
       { parse_ret = CONS("toplevel", reverse($1)); }
-      | qualified_type prefix_declarator
+      | specified_type prefix_declarator
       { parse_ret = LIST("naked_declaration", $1, $2); }
       ;
+
+identifier : T_VARIABLE | T_TYPENAME ;
 
 toplevel : declaration
          { $$ = LIST($1); }
@@ -169,27 +264,30 @@ toplevel : declaration
          { $$ = CONS($2, $1); }
          ;
 
-declaration : qualified_type declarator_list ';'
-            { $$ = CONS("declaration", CONS($1, reverse($2))); }
-            | qualified_type ';'
+declaration : declarator_list ';'
+            { VWORD v = $1; $$ = CONS("declaration", CONS(CAR(v), reverse(CDR(v)))); }
+            | specified_type ';'
             { $$ = LIST("declaration", $1); }
             ;
 
-declarator_list : prefix_declarator
-                { $$ = LIST($1); }
+declarator_list : specified_type prefix_declarator 
+                { register_typedef($1, $2);
+                  $$ = CONS($1, LIST($2)); }
                 | declarator_list ',' prefix_declarator
-                { $$ = CONS( $3, $1 ); }
+                { VWORD v = $1;
+                  register_typedef(CAR(v), $3);
+                  $$ = CONS(CAR(v), CONS($3, CDR(v))); }
                 ;
 
 prefix_declarator : postfix_declarator
                   { $$ = $1; }
-                  | '*' postfix_declarator
+                  | '*' prefix_declarator
                   { $$ = LIST("pointer", $2); }
-                  | '*' T_QUALIFIER postfix_declarator
+                  | '*' T_QUALIFIER prefix_declarator
                   { $$ = LIST("pointer", LIST(keyword_to_vword($2), $3)); }
                   ;
 
-postfix_declarator : T_IDENTIFIER
+postfix_declarator : identifier
                    { $$ = $1; }
                    | postfix_declarator '(' ')'
                    { $$ = LIST("function", $1); }
@@ -229,24 +327,59 @@ abstract_prefix_declarator : abstract_postfix_declarator
                            { $$ = LIST("pointer", LIST(keyword_to_vword($2), $3)); }
                            ;
 
+param_prefix_declarator : param_postfix_declarator
+                        { $$ = $1; }
+                        | '*' param_prefix_declarator
+                        { $$ = LIST("pointer", $2); }
+                        | '*' T_QUALIFIER param_prefix_declarator
+                        { $$ = LIST("pointer", LIST(keyword_to_vword($2), $3)); }
+                        ;
+
+param_postfix_declarator : T_VARIABLE
+                         { $$ = $1; }
+                         | param_postfix_declarator '(' ')'
+                         { $$ = LIST("function", $1); }
+                         | param_postfix_declarator '[' ']'
+                         { $$ = LIST("array", $1); }
+                         | param_postfix_declarator '(' parameter_list ')'
+                         { $$ = LIST("function", $1, detangle_params($3)); }
+                         | '(' param_prefix_declarator ')'
+                         { $$ = $2; }
+
 parameter_list : qualified_type
                { $$ = LIST("param", VNULL, $1, VFALSE); }
                | qualified_type abstract_prefix_declarator
                { $$ = LIST("param", VNULL, $1, $2); }
-               | qualified_type prefix_declarator
+               | qualified_type param_prefix_declarator
                { $$ = LIST("param", VNULL, $1, $2); }
                | parameter_list ',' qualified_type
                { $$ = LIST("param", $1, $3, VFALSE); }
                | parameter_list ',' qualified_type abstract_prefix_declarator
                { $$ = LIST("param", $1, $3, $4); }
-               | parameter_list ',' qualified_type prefix_declarator 
+               | parameter_list ',' qualified_type param_prefix_declarator 
                { $$ = LIST("param", $1, $3, $4); }
                ;
 
-post_qualified_type : T_TYPE
-               { $$ = LIST(keyword_to_vword($1)); }
-               | T_STRUCT T_IDENTIFIER
-               { $$ = LIST(LIST("struct", $2)); }
+plain_type : T_TYPE
+           { $$ = keyword_to_vword($1); }
+           | T_TYPENAME
+           { $$ = $1; }
+           | T_STRUCT identifier
+           { $$ = LIST("struct", $2); }
+           | T_ENUM identifier
+           { $$ = LIST("enum", $2, VFALSE); }
+           | T_ENUM '{' enum_list '}'
+           { $$ = LIST("enum", VFALSE, detangle_enums($3)); }
+           | T_ENUM identifier '{' enum_list '}'
+           { $$ = LIST("enum", $2, detangle_enums($4)); }
+           | T_ENUM '{' enum_list ',' '}'
+           { $$ = LIST("enum", VFALSE, detangle_enums($3)); }
+           | T_ENUM identifier '{' enum_list ',' '}'
+           { $$ = LIST("enum", $2, detangle_enums($4)); }
+           ;
+
+post_qualified_type : plain_type
+               { $$ = LIST($1); }
                | post_qualified_type T_QUALIFIER
                { $$ = CONS(keyword_to_vword($2), $1); }
                | post_qualified_type T_TYPE
@@ -258,6 +391,38 @@ qualified_type : post_qualified_type
                | T_QUALIFIER qualified_type
                { $$ = CONS(keyword_to_vword($1), $2); }
                ;
+
+specified_type : post_specified_type
+               { $$ = $1; }
+               | T_QUALIFIER specified_type
+               { $$ = CONS(keyword_to_vword($1), $2); }
+               | T_STORAGE specified_type
+               { $$ = CONS(keyword_to_vword($1), $2); }
+               ;
+
+post_specified_type : plain_type
+                    { $$ = LIST($1); }
+                    | post_specified_type T_QUALIFIER
+                    { $$ = CONS(keyword_to_vword($2), $1); }
+                    | post_specified_type T_TYPE
+                    { $$ = CONS(keyword_to_vword($2), $1); }
+                    | post_specified_type T_STORAGE
+                    { $$ = CONS(keyword_to_vword($2), $1); }
+                    ;
+
+enum_list : T_VARIABLE
+          { $$ = LIST(VNULL, $1, VFALSE); }
+          | T_VARIABLE '=' expr
+          { $$ = LIST(VNULL, $1, $3); }
+          | enum_list ',' T_VARIABLE
+          { $$ = LIST($1, $3, VFALSE); }
+          | enum_list ',' T_VARIABLE '=' expr
+          { $$ = LIST($1, $3, $5); }
+          ;
+
+expr : T_INTEGER
+     { if($1 > INT_MAX) VError("foreign-prase-header-c: failed to parse, integer exceeds 31 bit limit %llu", $1); $$ = VEncodeInt($1); }
+     ;
 
 %%
 

@@ -14,7 +14,7 @@ enum keyword_t {
   T_BOOL,
   T_COMPLEX,
   T_IMAGINARY,
-  // int qualifiers
+  // int types
   T_SHORT,
   T_LONG,
   T_SIGNED,
@@ -25,10 +25,17 @@ enum keyword_t {
   T_VOLATILE,
   // function qualifiers
   T_INLINE,
+  // storage specifiers
+  T_REGISTER,
+  T_AUTO,
+  T_STATIC,
+  T_EXTERN,
+  T_TYPEDEF,
   // yucky types that don't belong except for convenience
-  T_SIZE_T
+  T_SIZE_T,
 };
 extern VMemoryPool parse_pool;
+extern _Bool is_typedef(char const * symbol);
 
 %}
 
@@ -64,13 +71,20 @@ WHITESPACE [ \t]|\\\n
 "inline" { yylval.keyword_val = T_INLINE; return T_FUNCTION_QUALIFIER; }
 
 "struct" { return T_STRUCT; }
+"enum" { return T_ENUM; }
+
+"register" { yylval.keyword_val = T_REGISTER; return T_STORAGE; }
+"auto" { yylval.keyword_val = T_AUTO; return T_STORAGE; }
+"static" { yylval.keyword_val = T_STATIC; return T_STORAGE; }
+"extern" { yylval.keyword_val = T_EXTERN; return T_STORAGE; }
+"typedef" { yylval.keyword_val = T_TYPEDEF; return T_STORAGE; }
 
   /* no doubles or strings */
 [1-9][0-9]* { yylval.int_val = strtoul(yytext, NULL, 0); return T_INTEGER; }
 0[0-9]* { yylval.int_val = strtoul(yytext, NULL, 0); return T_INTEGER; }
 0[xX][0-9a-fA-F]+ { yylval.int_val = strtoul(yytext, NULL, 0); return T_INTEGER; }
 
-[a-zA-Z_][0-9a-zA-Z_]* { yylval.vword_val = VPoolString(&parse_pool, yytext); return T_IDENTIFIER; }
+[a-zA-Z_][0-9a-zA-Z_]* { yylval.vword_val = VPoolString(&parse_pool, yytext); return is_typedef(yytext) ? T_TYPENAME : T_VARIABLE; }
 
   /* yicky way to get rid of pragma onces */
   /* need at minimum pragma once to make a functional header */
