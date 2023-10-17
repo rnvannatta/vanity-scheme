@@ -38,8 +38,6 @@ enum keyword_t {
   T_STATIC,
   T_EXTERN,
   T_TYPEDEF,
-  // yucky types for the lazy
-  T_SIZE_T,
 };
 
 // types
@@ -68,8 +66,6 @@ V_STATIC_STRING(auto_str, "auto");
 V_STATIC_STRING(static_str, "static");
 V_STATIC_STRING(extern_str, "extern");
 V_STATIC_STRING(typedef_str, "typedef");
-// yucky types for the lazy
-V_STATIC_STRING(size_t_str, "size_t");
 
 VBlob * keyword_to_blob[] = {
   // types
@@ -98,8 +94,6 @@ VBlob * keyword_to_blob[] = {
   (VBlob*)&static_str,
   (VBlob*)&extern_str,
   (VBlob*)&typedef_str,
-  // yucky types
-  (VBlob*)&size_t_str,
 };
 
 VWORD keyword_to_vword(int i) {
@@ -422,6 +416,45 @@ enum_list : T_VARIABLE
 
 expr : T_INTEGER
      { if($1 > INT_MAX) VError("foreign-prase-header-c: failed to parse, integer exceeds 31 bit limit %llu", $1); $$ = VEncodeInt($1); }
+     /*
+     | '-' expr
+     | '+' expr
+     | '!' expr
+     | T_SIZEOF expr
+     | T_ALIGNOF expr
+
+     | expr '*' expr
+     | expr '/' expr
+     | expr '%' expr
+
+     | expr '+' expr
+     | expr '-' expr
+
+     | expr T_SHL expr
+     | expr T_SHR expr
+
+     | expr '>' expr
+     | expr '<' expr
+     | expr T_GEQ expr
+     | expr T_LEQ expr
+
+     | expr T_EQ expr
+     | expr T_NEQ expr
+
+     | expr '&' expr
+
+     | expr '|' expr
+
+     | expr '^' expr
+
+     | expr '&&' expr
+
+     | expr '||' expr
+
+     | expr '?' expr ':' expr
+
+     | expr ',' expr
+     */
      ;
 
 %%

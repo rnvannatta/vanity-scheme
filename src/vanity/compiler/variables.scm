@@ -30,7 +30,7 @@
 
 (define-library (vanity compiler variables)
   (export mangle-symbol mangle-library lookup-inline lookup-intrinsic2 free-variables)
-  (import (vanity core))
+  (import (vanity core) (vanity compiler utils))
 
   ; why does this return another symbol? should return a string? maybe I want eqv? that bad
   (define (mangle-symbol sym)
@@ -77,9 +77,9 @@
             (fold string-append "_V20" ; TODO implement list?
               (reverse
                 (map (lambda (e) (if (symbol? e) (symbol->string (mangle-symbol e))
-                                     (error "non-symbol in library path:" e)))
+                                     (compiler-error "non-symbol in library path:" e)))
                   lib))))
-          (else (error "library name must be a string which is a valid c identifier or a list of symbols" lib))))
+          (else (compiler-error "library name must be a string which is a valid c identifier or a list of symbols" lib))))
   (define (lookup-inline sym)
     (case sym
       ; predicates

@@ -71,7 +71,7 @@
          (cons (iter env f) (map (lambda (x) (iter env x)) xs)))
         (x
          (if (symbol? x) (lookup 0 env x) x))
-        (else (error "No matching case" expr))))
+        (else (compiler-error "bruijnify-pass: No matching case" expr))))
     (define (doit expr)
       (iter '() expr))
     (match expr
@@ -118,7 +118,7 @@
              (if (not (assv x literal-table))
                  (set! literal-table (cons (cons x '()) literal-table)))
              x)
-            (else (error "Unknown literal type" x))))
+            (else (compiler-error "literal-lifting: unknown literal type" x))))
     (define (iter-lambda fun lamb) 
       (match lamb
         ((n body)
@@ -281,7 +281,7 @@
             ((eq? x #f) (printf "VEncodeBool(false)"))
             ((symbol? x)
              (printf "VEncodePointer(&~A.sym, VPOINTER_OTHER)" (mangle-symbol x)))
-            (else (error "Unknown literal type" x))))
+            (else (compiler-error "print-literal: unknown literal type" x))))
     (define (print-literal-declaration lit)
       (cond ((symbol? (car lit))
              (let* ((mangled (mangle-symbol (car lit)))
@@ -295,7 +295,7 @@
                     (len (+ (string-length (car lit)) 1)))
                (printf "static struct { VBlob sym; char bytes[~A]; } ~A = { { VSTRING, ~A }, \"~A\" };~N"
                 len mangled len escaped)))
-            (else (error "unknown entry in literal table"))))
+            (else (compiler-error "print-literal-table: unknown entry in literal table" lit))))
     (define (closes? expr)
       (match expr
         (('close fun) #t)
@@ -313,7 +313,7 @@
         ((f . xs)
          (or (closes? f) (closes? xs)))
         (x #f)
-        (else (error "closes?: unknown form" expr))))
+        (else (compiler-error "closes?: unknown form" expr))))
     (define (print-expr expr args)
       (define (print-builtin-apply f xs tail-call?)
         (printf "    V_CALL_FUNC(~A, NULL, runtime" (lookup-intrinsic2 f))
@@ -365,11 +365,11 @@
                  (print-expr x args)
                  (printf "~N    );~N")
                )
-               (error "set!'s first argument is not a symbol")))
-              (else (error "print-set: unknown form" y))))
+               (compiler-error "set!'s first argument is not a symbol")))
+              (else (compiler-error "print-set: unknown form" y))))
       (define (print-inline f xs)
         (let ((inline (lookup-inline f)))
-          (if (not inline) (error "unknown inline" f))
+          (if (not inline) (compiler-error "unknown inline" f))
           (printf "~A(~N" inline)
           (if (not (null? xs))
               (begin
@@ -406,7 +406,6 @@
         (('##inline f . xs)
          (print-inline f xs))
         (('##string x)
-         (if (null? x) (error "fugg" literal-table))
          (print-literal-string x))
         (('##foreign.function x)
          (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A, NULL)})" x))
@@ -415,7 +414,7 @@
              (print-builtin-apply f xs #f)
              (print-closure-apply f xs #f)))
         (x (if (symbol? x) (print-global x) (print-literal x)))
-        (else (error "print-expr: malformed expression" expr))))
+        (else (compiler-error "print-expr: malformed expression" expr))))
      (define (print-fun-single name check-args? num variadic? body needs-used?)
       (define (gen-args num)
         (map (lambda (e) (sprintf "_var~A" e)) (iota num)))
@@ -533,13 +532,13 @@
       (match declare
         (('##foreign.declare d) (displayln d))
         (('##vcore.declare f v) #f)
-        (else (error "print-foreign-declare: unknown form" declare))))
+        (else (compiler-error "print-foreign-declare: unknown form" declare))))
     (define (print-declare declare)
       (match declare
         (('##foreign.declare d) #f)
         (('##vcore.declare f v) 
          (printf "VFunc ~A = (VFunc)~A;~N" f v))
-        (else (error "print-declare: unknown form" declare))))
+        (else (compiler-error "print-declare: unknown form" declare))))
 
     (define (print-main toplevels)
       (for-each (cut print-toplevel <> <>) (iota (length toplevels)) toplevels)
@@ -565,7 +564,7 @@
       (for-each print-declare declares)
 
       (if (and shared? print-main?)
-          (error "shared library has toplevel expressions or defines"))
+          (compiler-error "shared library has toplevel expressions or defines"))
       (if print-main?
           (print-main toplevels))
       print-main?))
