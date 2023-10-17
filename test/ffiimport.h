@@ -1,4 +1,5 @@
 #pragma once
+#include <stddef.h>
 
 // duplicate declares are ignored
 typedef int myint;

@@ -1,7 +1,9 @@
 #pragma once
+#include <stdbool.h>
+#include <stdint.h>
 
 typedef struct Window Window;
-void * make_window(int w, int h, char * title);
+struct Window * make_window(int w, int h, char * title);
 void poll_events(Window * win);
 float get_mouse_x(Window * win);
 float get_mouse_y(Window * win);
@@ -16,6 +18,6 @@ void present_window(Window * win);
 void floatsleep(double seconds);
 
 typedef struct FrameTimer FrameTimer;
-void * make_frametimer_impl();
+struct FrameTimer * make_frametimer_impl();
 double frametimer_lap(FrameTimer * ft);
 void close_frametimer_impl(FrameTimer * ft);

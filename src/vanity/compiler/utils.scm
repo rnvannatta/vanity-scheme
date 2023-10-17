@@ -25,7 +25,7 @@
 
 (define-library (vanity compiler utils)
   (import (vanity core))
-  (export read-all search-open-input-file gensym filter)
+  (export read-all search-open-input-file compiler-error gensym filter)
   (define (read-all port)
     (let ((expr (read port)))
       (if (eof-object? expr) '()
@@ -35,6 +35,20 @@
       (if (null? paths) #f
           (let ((fd (open-input-file (string-append (car paths) "/" file))))
             (if fd fd (loop (cdr paths)))))))
+  (define (compiler-error msg . irritants)
+    (let ((err (current-error-port)))
+      (display "vsc: fatal error: " err)
+      (display msg err)
+      (if (not (null? irritants))
+          (begin
+            (display ":" err)
+            (for-each
+              (lambda (irritant)
+                (display " " err)
+                (write irritant err))
+              irritants)))
+      (newline err)
+      (exit 1)))
   (define (filter p lst)
     (cond ((null? lst) '())
           ((p (car lst)) (cons (car lst) (filter p (cdr lst))))

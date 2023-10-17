@@ -129,16 +129,16 @@
           ((#\O)
            (set! optimization (string->number (cdar args)))
            (if (not (and optimization (integer? optimization) (<= 0 optimization 3)))
-               (error "Optimization flag -O expects integer between 0 and 3 inclusive" (cdar args))))
+               (compiler-error "Optimization flag -O expects integer between 0 and 3 inclusive" (cdar args))))
           ((#\E)
            (set! expand? (string->number (cdar args)))
            (if (not (and expand? (integer? expand?) (<= 0 expand? 2)))
-               (error "Expand flag -E expects integer between 0 and 2 inclusive" (cdar args))))
+               (compiler-error "Expand flag -E expects integer between 0 and 2 inclusive" (cdar args))))
           ((#\W)
            (if (not (eq? (string-ref (cdar args) 0) #\c))
-               (error "Wrapper flag -W can only pass args to the C compiler, eg -Wc,-Ilib"))
+               (compiler-error "Wrapper flag -W can only pass args to the C compiler, eg -Wc,-Ilib"))
            (if (not (and (>= (string-length (cdar args)) 2) (eq? (string-ref (cdar args) 1) #\,)))
-               (error "Wrapper flag -W missing comma"))
+               (compiler-error "Wrapper flag -W missing comma"))
            (set! c-options (cons (decomma (substring (cdar args) 1)) c-options)))
           ((help) (display-help) (exit 0))
           ((version) (display-version) (exit 0))
@@ -148,22 +148,22 @@
           ((makefile) (set! makefile? #t))
           ((maketarget) (set! maketargets (cons (cdar args) maketargets)))
           ((benchmark) (set! benchmark? #t))
-          (else (write (caar args)) (newline) (error "Unknown CLI option" (cdar args))))
+          (else (write (caar args)) (newline) (compiler-error "Unknown CLI option" (cdar args))))
         (loop (cdr args)))))
 
 (define (count-true . args)
   (let loop ((args args) (ct 0))
     (if (null? args) ct
         (loop (cdr args) (+ ct (if (car args) 1 0))))))
-(if (> (count-true makefile? header? transpile? object? expand?) 1) (error "Only one of '-h' or '-c' or '-t' or '-E' or '--makefile' can be set"))
+(if (> (count-true makefile? header? transpile? object? expand?) 1) (compiler-error "Only one of '-h' or '-c' or '-t' or '-E' or '--makefile' can be set"))
 
-(if (and (null? scm-files) (null? obj-files)) (error "No input file provided"))
+(if (and (null? scm-files) (null? obj-files)) (compiler-error "No input file provided"))
 
-(if (and (or makefile? header? transpile? object? expand?) (not (null? obj-files))) (error "Cannot specify '-h' '-c' or '-t' or '-E' or '--makefile' with object files"))
-(if (and (or makefile? header? transpile? object? expand?) out-file (not (null? (cdr scm-files)))) (error "Cannot specify '-h' or '-c' or '-t' or '-E' or '--makefile' with '-o' and multiple files"))
+(if (and (or makefile? header? transpile? object? expand?) (not (null? obj-files))) (compiler-error "Cannot specify '-h' '-c' or '-t' or '-E' or '--makefile' with object files"))
+(if (and (or makefile? header? transpile? object? expand?) out-file (not (null? (cdr scm-files)))) (compiler-error "Cannot specify '-h' or '-c' or '-t' or '-E' or '--makefile' with '-o' and multiple files"))
 
 ; TEMPORARY
-(if (and (or makefile? header? transpile? object? expand?) (not (null? (cdr scm-files)))) (error "FIXME: -h and -c and -t and -E can only handle one file"))
+(if (and (or makefile? header? transpile? object? expand?) (not (null? (cdr scm-files)))) (compiler-error "FIXME: -h and -c and -t and -E can only handle one file"))
 
 (if (not out-file)
     (set! out-file
@@ -177,8 +177,8 @@
 (define (gen-header)
   (let* ((file (read-all (open-input-file (car scm-files))))
          (headers (filter (lambda (x) x) (map header-from-library file))))
-    (if (> (length headers) 1) (error "Only one statement permitted in header generation"))
-    (if (not (or (null? headers) (car headers))) (error "File did not produce a valid header"))
+    (if (> (length headers) 1) (compiler-error "Only one statement permitted in header generation"))
+    (if (not (or (null? headers) (car headers))) (compiler-error "File did not produce a valid header"))
     (with-output-to-file
       out-file
       (lambda ()
@@ -199,7 +199,7 @@
       (lambda (dep) 
         (if (pair? dep)
             (begin
-              (if (not (valid-import? dep)) (error "invalid import" dep))
+              (if (not (valid-import? dep)) (compiler-error "invalid import" dep))
               (format port " ~A" (import->path dep)))))
       deps)
     (newline port)
@@ -243,7 +243,7 @@
             cc-file
             (lambda ()
               (let* ((fd (open-input-file scm-file))
-                     (file (if fd (append (read-all fd)) (error "file does not exist" scm-file)))
+                     (file (if fd (append (read-all fd)) (compiler-error "file does not exist" scm-file)))
                      (expanded  (map (lambda (e) (expand-toplevel e (cons path paths))) file)))
                 (if (eq? expand? 0) (for-each write expanded)
                     (let ((cps (map (lambda (expr) (annotate-lambdas (to-cps expr))) (apply append expanded))))
@@ -268,8 +268,8 @@
   cc-files
   cc-obj-files)
 
-(if (and shared? (> num-mains 0)) (error "shared library has toplevel expressions or defines"))
-(if (> num-mains 1) (error "program has toplevel expressions in multiple files, and so it generated multiple mains"))
+(if (and shared? (> num-mains 0)) (compiler-error "shared library has toplevel expressions or defines"))
+(if (> num-mains 1) (compiler-error "program has toplevel expressions in multiple files, and so it generated multiple mains"))
 
 (define (delete-file f)  (system (sprintf "/bin/rm ~A" f)))
 

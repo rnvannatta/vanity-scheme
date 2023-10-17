@@ -31,8 +31,6 @@ enum keyword_t {
   T_STATIC,
   T_EXTERN,
   T_TYPEDEF,
-  // yucky types that don't belong except for convenience
-  T_SIZE_T,
 };
 extern VMemoryPool parse_pool;
 extern _Bool is_typedef(char const * symbol);
@@ -55,9 +53,6 @@ WHITESPACE [ \t]|\\\n
 "_Bool" { yylval.keyword_val = T_BOOL; return T_TYPE; }
 "_Complex" { yylval.keyword_val = T_COMPLEX; return T_TYPE; }
 "_Imaginary" { yylval.keyword_val = T_IMAGINARY; return T_TYPE; }
-
-  /* extra yuck for laziness */
-"size_t" { yylval.keyword_val = T_SIZE_T; return T_TYPE; }
 
 "short" { yylval.keyword_val = T_SHORT; return T_TYPE; }
 "long" { yylval.keyword_val = T_LONG; return T_TYPE; }

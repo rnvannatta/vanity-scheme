@@ -16,8 +16,7 @@ struct Window {
   int mouse_y;
 };
 
-// TMP: returning void ptr because don't have type checking for pointers yet
-void * make_window(int w, int h, char * title) {
+struct Window * make_window(int w, int h, char * title) {
   if(SDL_Init(SDL_INIT_VIDEO) < 0)
     return NULL; struct Window * out = malloc(sizeof(struct Window));
   memset(out, 0, sizeof(struct Window));
@@ -110,7 +109,7 @@ void present_window(struct Window * win) {
 struct FrameTimer {
   struct timespec last;
 };
-void * make_frametimer_impl() {
+struct FrameTimer * make_frametimer_impl() {
   struct FrameTimer * ret = malloc(sizeof(struct FrameTimer));
   clock_gettime(CLOCK_MONOTONIC, &ret->last);
   return ret;

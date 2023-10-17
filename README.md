@@ -14,6 +14,7 @@ At the moment, x64 Linux is a requirement, as there are multiple nonportable bit
 
 Dependencies:
 * gnumake
+* rsync
 * gcc
 * flex
 * bison
@@ -92,8 +93,8 @@ A rough ordering of the next few improvements I'll be making:
 
 1. DONE: Change the calling convention so arguments are passed by register.
 2. DONE: Implement a foreign function interface.
-3. IN PROGRESS: Implement finalizers.
-4. Emit header files for compiled libraries.
+3. DONE: Implement finalizers.
+4. DONE: Emit header files for compiled libraries.
 5. Implement Fibers.
 6. Add a repl via bytecode
 

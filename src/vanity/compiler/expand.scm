@@ -58,9 +58,9 @@
       (match body
         ((('define (f . xs) . body) . rest) (loop (cons `(define ,f (lambda ,xs . ,body)) defines) rest))
         ((('define x body) . rest)
-         (if (not (symbol? x)) (error "define's first argument is not a symbol" x))
+         (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
          (loop (cons `(define ,x ,body) defines) rest))
-        (('define . noise) (error "malformed define" `(define . ,noise)))
+        (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
         (else
           (match (reverse defines)
             (() `(begin . ,body))
@@ -106,15 +106,15 @@
          (list))
         (('define (f . xs) . body) (expand-define `(define ,f (lambda ,xs . ,body))))
         (('define f ('lambda . body))
-         (if (not (symbol? f)) (error "define's first argument is not a symbol" f))
+         (if (not (symbol? f)) (compiler-error "define's first argument is not a symbol" f))
          (list `(define ,f ,(expand-syntax `(lambda . ,body)))))
         (('define f ('case-lambda . body))
-         (if (not (symbol? f)) (error "define's first argument is not a symbol" f))
+         (if (not (symbol? f)) (compiler-error "define's first argument is not a symbol" f))
          (list `(define ,f ,(expand-syntax `(case-lambda . ,body)))))
         (('define x y) (list `(define ,x ,(expand-syntax y))))
-        (('define . noise) (error "malformed define" `(define . ,noise)))
+        (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
         ; TODO why not? we've done everything we need for expressions in libraries
-        (else (error "expressions not permitted in libraries yet" expr))))
+        (else (compiler-error "expressions not permitted in libraries yet" expr))))
     ; still has free variables
     (define basic-library
        (expand-syntax
@@ -127,12 +127,12 @@
     (define free-vars
       (free-variables basic-library))
     (let ((unbound-vars (filter (lambda (var) (not (memv var imports))) free-vars)))
-      (if (not (null? unbound-vars)) (error "library has free variables" (cadr lib) unbound-vars)))
+      (if (not (null? unbound-vars)) (compiler-error "library has free variables" (cadr lib) unbound-vars)))
     (register-library-interface! (header-from-library lib))
     (let* ((libname (mangle-library (cadr lib))))
-      (if (not (fold (lambda (a b) (and a b)) #t (map string? mangled-imports))) (error "imports to library must all be c strings"))
+      (if (not (fold (lambda (a b) (and a b)) #t (map string? mangled-imports))) (compiler-error "imports to library must all be c strings"))
       (if (and (null? mangled-imports) (not (null? free-vars)))
-          (error "library has free variables but no imports:" (cadr lib) free-vars))
+          (compiler-error "library has free variables but no imports:" (cadr lib) free-vars))
       `(##vcore.declare ,libname
          (lambda ()
           ,(expand-syntax
@@ -151,37 +151,37 @@
         (null? args)
         (and (pair? args)
              (if (memtail (car args) (cdr args))
-                 (error "duplicate in lambda" (car args))
+                 (compiler-error "duplicate in lambda" (car args))
                  #t)
              (valid-args? (cdr args)))))
   (define (expand-lambda expr)
     (match expr
       ((args body)
-       (if (not (valid-args? args)) (error "invalid lambda args" args))
+       (if (not (valid-args? args)) (compiler-error "invalid lambda args" args))
        `(,args ,(expand-syntax body)))
       ((args . body)
-       (if (not (valid-args? args)) (error "invalid lambda args" args))
+       (if (not (valid-args? args)) (compiler-error "invalid lambda args" args))
        (expand-lambda `(,args ,(collect-defines body))))
-      (_ (error "invalid lambda" `(lambda . ,expr)))))
+      (_ (compiler-error "invalid lambda" `(lambda . ,expr)))))
   (define (expand-let expr)
     (match expr
       ((((xs vals) ...) . body) (expand-syntax `((lambda ,xs . ,body) . ,vals)))
       ((loop ((xs vals) ...) . body) (expand-syntax `(letrec ((,loop (lambda ,xs . ,body))) (,loop . ,vals))))
-      (_ (error "malformed let" `(let . ,expr)))))
+      (_ (compiler-error "malformed let" `(let . ,expr)))))
 
   (define (expand-define expr)
     (match expr
       (('define x body)
-       (if (not (symbol? x)) (error "define's first argument is not a symbol" x))
+       (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
        (list `(define ,x ,(expand-syntax body))))
-      (else (error "malformed define" expr))))
+      (else (compiler-error "malformed define" expr))))
   (define (expand-toplevel expr paths)
     (match expr
       (('begin . ys)
        (apply append (map (lambda (e) (expand-toplevel e paths)) ys)))
 
       (('define-library lib . body) (list (expand-library `(define-library ,lib . ,body) paths)))
-      (('define-library . noise) (error "malformed define-library" `(define-library . ,noise)))
+      (('define-library . noise) (compiler-error "malformed define-library" `(define-library . ,noise)))
 
       (('import) '())
       (('import lib . rest)
@@ -190,20 +190,20 @@
 
       (('define (f . xs) . body) (expand-define `(define ,f (lambda ,xs . ,body))))
       (('define x body)
-       (if (not (symbol? x)) (error "define's first argument is not a symbol" x))
+       (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
        (list `(define ,x ,(expand-syntax body))))
-      (('define . noise) (error "malformed define" `(define . ,noise)))
+      (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
 
       (('##vcore.declare f l)
-       (if (not (string? f)) (error "##vcore.declare's first argument is not a string" f))
+       (if (not (string? f)) (compiler-error "##vcore.declare's first argument is not a string" f))
        (match l
         (('lambda . args) 'ok)
         (('case-lambda . args) 'ok)
         (('##vcore.function . args) 'ok)
-        (else (error "##vcore.declare's second argument is not a lambda expression" l)))
+        (else (compiler-error "##vcore.declare's second argument is not a lambda expression" l)))
        (list `(##vcore.declare ,f ,(expand-syntax l))))
       (('##foreign.declare str)
-       (if (not (string? str)) (error "##foreign.declare's first argument is not a string" str))
+       (if (not (string? str)) (compiler-error "##foreign.declare's first argument is not a string" str))
        (list expr))
       (('##foreign.import lang str)
        (resolve-foreign-import expr paths))
@@ -216,7 +216,7 @@
 
       (('case-lambda lamb ...)
        `(case-lambda . ,(map expand-lambda lamb)))
-      (('case-lambda . _) (error "malformed case-lambda" expr))
+      (('case-lambda . _) (compiler-error "malformed case-lambda" expr))
 
       (('quasiquote x) (expand-syntax (expand-quasiquote 1 x)))
       (('quote (a . b)) (expand-syntax `(##sys.qcons (quote ,a) (quote ,b))))
@@ -227,24 +227,24 @@
       (('let*-values ((xs producer) . rest) . body)
        (expand-syntax `(call-with-values (lambda () ,producer) (lambda ,xs (let*-values ,rest . ,body)))))
       (('let*-values () . body) (expand-syntax `(begin . ,body)))
-      (('let*-values . noise) (error "malformed let-values*" `(letrec . ,noise)))
+      (('let*-values . noise) (compiler-error "malformed let-values*" `(letrec . ,noise)))
 
       (('letrec ((xs vals) ...) . body) (expand-syntax `((lambda ,xs ,@(map (lambda (x val) `(set! ,x ,val)) xs vals) . ,body) . ,(map (lambda (val) #f) xs))))
-      (('letrec . noise) (error "malformed letrec" `(letrec . ,noise)))
+      (('letrec . noise) (compiler-error "malformed letrec" `(letrec . ,noise)))
       (('letrec* . rest) (expand-syntax `(letrec . ,rest)))
 
       (('let* ((x val) rest ...) . body) (expand-syntax `(let ((,x ,val)) (let* ,rest . ,body))))
       (('let* () . body) (expand-syntax `(begin . ,body)))
-      (('let* . noise) (error "malformed let*" `(let* . ,noise)))
+      (('let* . noise) (compiler-error "malformed let*" `(let* . ,noise)))
 
       (('begin x) (expand-syntax x))
       (('begin x y) `(begin ,(expand-syntax x) ,(expand-syntax y)))
       (('begin x . y) (expand-syntax `(begin ,x (begin . ,y))))
-      (('begin . noise) (error "malformed begin" `(begin . ,noise)))
+      (('begin . noise) (compiler-error "malformed begin" `(begin . ,noise)))
 
       (('if p x) (expand-syntax `(if ,p ,x #f)))
       (('if p x y) `(if ,(expand-syntax p) ,(expand-syntax x) ,(expand-syntax y)))
-      (('if . noise) (error "malformed if" `(if . ,noise)))
+      (('if . noise) (compiler-error "malformed if" `(if . ,noise)))
 
       (('and) #t)
       (('and x) (expand-syntax x))
@@ -261,7 +261,7 @@
       (('cond (p '=> f) . rest) (let ((foobar (gensym "x"))) (expand-syntax `(let ((,foobar ,p)) (if ,foobar (,f ,foobar) (cond . ,rest))))))
       (('cond (p . body) . rest) (expand-syntax `(if ,p (begin . ,body) (cond . ,rest))))
       (('cond) `(error "exhausted cond statement"))
-      (('cond . noise) (error "malformed cond" `(cond . ,noise)))
+      (('cond . noise) (compiler-error "malformed cond" `(cond . ,noise)))
 
       (('case x . rest) (let ((foobar (gensym "x"))) (expand-syntax `(let ((,foobar ,x)) (case-iter ,foobar . ,rest)))))
       (('case-iter x ('else . body)) (expand-syntax `(begin . ,body)))
@@ -272,16 +272,16 @@
       (('cut f . args) (expand-syntax `(cut-iter () () ,f . ,args)))
       (('cut-iter xs args f) (expand-syntax `(lambda ,(reverse xs) (,f . ,(reverse args)))))
       (('cut-iter xs args f '<> . rest) (let ((x (gensym "x"))) (expand-syntax `(cut-iter (,x . ,xs) (,x . ,args) ,f . ,rest))))
-      (('cut-iter xs args f '<...>) (error "cut: ellipses syntax not supported yet"))
+      (('cut-iter xs args f '<...>) (compiler-error "cut: ellipses syntax not supported yet"))
       (('cut-iter xs args f x . rest) (expand-syntax `(cut-iter ,xs (,x . ,args) ,f . ,rest)))
-      (('cut . noise) (error "malformed cut" `(cut . ,noise)))
+      (('cut . noise) (compiler-error "malformed cut" `(cut . ,noise)))
 
       (('set! y x)
-       (if (not (symbol? y)) (error "set!'s first argument is not a symbol" y))
+       (if (not (symbol? y)) (compiler-error "set!'s first argument is not a symbol" y))
        `(set! ,y ,(expand-syntax x)))
-      (('set! . noise) (error "malformed set!" `(set! . ,noise)))
+      (('set! . noise) (compiler-error "malformed set!" `(set! . ,noise)))
 
-      (('define . ys) (error "stray define in program" `(define . ,ys)))
+      (('define . ys) (compiler-error "stray define in program" `(define . ,ys)))
 
       (('match . ys) (expand-syntax (transform-match `(match . ,ys) eqv?)))
 
@@ -289,10 +289,10 @@
        (validate-foreign-function expr))
 
       ((f args ...)
-       (if (and (atom? f) (not (symbol? f))) (error "function application's first arg is not a function" f))
+       (if (and (atom? f) (not (symbol? f))) (compiler-error "function application's first arg is not a function" f))
        `(,(expand-syntax f) . ,(map expand-syntax args)))
 
-      ((a . b) (error "stray improper list in program" `(,a . ,b)))
-      (() (error "stray null list in program" '()))
+      ((a . b) (compiler-error "stray improper list in program" `(,a . ,b)))
+      (() (compiler-error "stray null list in program" '()))
 
       (else expr))))
