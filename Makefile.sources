@@ -2,7 +2,7 @@ SRC := $(addprefix vanity/compiler/, variables.scm match.scm utils.scm getopt.sc
 RUNTIME_SRC := vruntime.c vlibrary.c vread.c
 ASSEMBLY_SRC := vapply-linux-x64.s
 
-RUNTIME_LISP_SRC := scheme/r7rs.scm vanity/core.scm vanity/assert.scm
+RUNTIME_LISP_SRC := scheme/r7rs.scm vanity/core.scm vanity/assert.scm vanity/list.scm
 
 INLINE_SRC := $(addprefix include/vscheme/, vinlines.h vruntime.h)
 

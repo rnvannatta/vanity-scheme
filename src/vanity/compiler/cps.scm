@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler cps)
-  (import (vanity core) (vanity compiler utils) (vanity compiler match) (vanity compiler variables))
+  (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables))
   (export to-cps optimize alpha-convert annotate-lambdas deannotate-lambdas)
   (define (to-cps expr)
     (define (application? x)

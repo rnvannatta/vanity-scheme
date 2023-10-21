@@ -69,7 +69,7 @@
     make-temporary-file
     exit
     ; not r5rs
-    atom? displayln writeln format printf sprintf error fold fold-right iota
+    atom? displayln writeln format printf sprintf error
   )
   ; predicates
   (define null? ##sys.null?)
@@ -158,11 +158,8 @@
       ((a b c)
        (max (max a b) c))
       ((a b c d)
-       ; bikeshedding... does this order make sense? why not (max (max (max a b) c) d) - check codegen!
        (max (max (max a b) c) d))
       ((a . bs)
-       ; this should probably be written in terms of fold for future compiler optimize pass purposes
-       ; but fold is a part of srfi-1, should be part of vcore
        (let loop ((ret a) (rem bs))
         (if (null? bs) ret
             (loop (max a (car bs)) (cdr bs)))))))
@@ -267,41 +264,15 @@
          (if (##sys.not (##sys.null? (##sys.car lsts)))
              (begin (apply f (map ##sys.car lsts)) (loop (map ##sys.cdr lsts))))))))
 
-  (define iota
-    (case-lambda
-      ((n)
-       (let loop ((i 0))
-        (if (eq? i n) '()
-            (cons i (loop (+ i 1))))))
-      ((n b)
-       (let loop ((i 0))
-        (if (eq? i n) '()
-            (cons (+ i b) (loop (+ i 1))))))
-      ((n b s)
-       (let loop ((i 0))
-        (if (eq? i n) '()
-            (cons (+ (* i s) b) (loop (+ i 1))))))))
-  (define fold
-    (case-lambda
-      ((kons knil ks)
-       (let loop ((kur knil) (ks ks))
-         (if (null? ks) kur
-             (loop (kons (car ks) kur) (cdr ks)))))))
   (define fold-right
     (case-lambda
       ((kons knil ks)
        (let loop ((ks ks))
          (if (null? ks) knil
              (kons (car ks) (loop (cdr ks))))))))
-  #;(define append
-    (case-lambda (() '())
-      ((a) a)
-      ((a b) (fold-right cons b a))
-      ((a b c) (fold-right cons (fold-right cons c b) a))
-      ((a b c d) (fold-right cons (fold-right cons (fold-right cons d c) b) a))
-      (lsts (fold-right append '() lsts))))
   (define append
-    (case-lambda (() '())
+    (case-lambda
+      (() '())
       ((a) a)
       ((a b)
        (let loop ((a a))
@@ -325,10 +296,13 @@
     (cond ((null? lst) #f)
           ((eqv? x (car lst)) lst)
           (else (memv x (cdr lst)))))
-  (define (member x lst)
-    (cond ((null? lst) #f)
-          ((equal? x (car lst)) lst)
-          (else (member x (cdr lst)))))
+  (define member
+    (case-lambda
+      ((x lst) (member x lst equal?))
+      ((x lst =)
+       (cond ((null? lst) #f)
+             ((= x (car lst)) lst)
+             (else (member x (cdr lst)))))))
 
   (define (assq x alst)
     (cond ((null? alst) #f)
@@ -338,10 +312,13 @@
     (cond ((null? alst) #f)
           ((eqv? x (caar alst)) (car alst))
           (else (assv x (cdr alst)))))
-  (define (assoc x alst)
-    (cond ((null? alst) #f)
-          ((equal? x (caar alst)) (car alst))
-          (else (assoc x (cdr alst)))))
+  (define assoc
+    (case-lambda 
+      ((x alst) (assoc x alst equal?))
+      ((x alst =)
+       (cond ((null? alst) #f)
+             ((= x (caar alst)) (car alst))
+             (else (assoc x (cdr alst)))))))
 
   ; strings
 
@@ -431,6 +408,27 @@
   ; chars
 
   (define char->integer ##sys.char-integer)
+
+  ; parameters
+  #;(define make-parameter
+    (case-lambda
+      ((init) (make-parameter init (lambda (e) e)))
+      ((init conv)
+       (let ((id (##vcore.make-id))
+             (init (conv init)))
+         (##sys.set-finalizer! id ##vcore.release-id)
+         (case-lambda
+           (()
+            (call-with-values
+              (lambda () (##vcore.lookup-parameter id))
+              (lambda (ret found) (if found ret init))))
+           ((secret x)
+            (if (eqv? secret '##secret.make-parameter) (##vcore.push-parameter! id (conv x))
+                (error "parameter objects do not accept arguments in Vanity")))
+           ((secret)
+            (if (eqv? secret '##secret.make-parameter) (##vcore.pop-parameter! id)
+                (error "parameter objects do not accept arguments in Vanity")))
+           (_ (error "parameter objects do not accept arguments in Vanity")))))))
 
   ; io
   (define current-output-port 

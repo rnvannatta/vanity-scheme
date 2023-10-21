@@ -23,7 +23,7 @@
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
-(import (vanity core) (vanity compiler utils) (vanity compiler variables) (vanity compiler match) (vanity compiler getopt) (vanity compiler expand) (vanity compiler cps) (vanity compiler transpile) (vanity compiler library) (vanity compiler config))
+(import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler variables) (vanity compiler match) (vanity compiler getopt) (vanity compiler expand) (vanity compiler cps) (vanity compiler transpile) (vanity compiler library) (vanity compiler config))
 
 (define scm-files '())
 (define obj-files '())

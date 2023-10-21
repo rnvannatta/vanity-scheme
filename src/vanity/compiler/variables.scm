@@ -74,11 +74,16 @@
   (define (mangle-library lib)
     (cond ((string? lib) lib) ; TODO actually validate this is valid C
           ((pair? lib)
-            (fold string-append "_V20" ; TODO implement list?
-              (reverse
-                (map (lambda (e) (if (symbol? e) (symbol->string (mangle-symbol e))
-                                     (compiler-error "non-symbol in library path:" e)))
-                  lib))))
+           (let loop ((knil "_V20") (ks (reverse lib)))
+             (if (null? ks) knil
+                 (loop
+                   (string-append
+                     (let ((e (car ks)))
+                       (if (symbol? e)
+                           (symbol->string (mangle-symbol e))
+                           (compiler-error "non-symbol in library path:" e)))
+                     knil)
+                   (cdr ks)))))
           (else (compiler-error "library name must be a string which is a valid c identifier or a list of symbols" lib))))
   (define (lookup-inline sym)
     (case sym
