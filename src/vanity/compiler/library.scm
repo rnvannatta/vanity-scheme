@@ -1,5 +1,5 @@
 (define-library (vanity compiler library)
-  (import (vanity core) (vanity compiler utils))
+  (import (vanity core) (vanity list) (vanity compiler utils))
   (export find-library-interface! register-library-interface! header-from-library valid-import? import-basepath import->path gather-dependencies)
 
   (define library-interfaces '())

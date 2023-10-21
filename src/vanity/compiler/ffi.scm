@@ -25,7 +25,7 @@
 
 (define-library (vanity compiler ffi)
   (export mangle-foreign-function validate-foreign-function print-foreign-function resolve-foreign-import)
-  (import (vanity core) (vanity compiler utils) (vanity compiler config))
+  (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler config))
 
   ; user exposed syntax:
   ;   foreign-declare -- toplevel
@@ -289,9 +289,7 @@
       (('##foreign.import lang file)
        (if (not (equal? lang "C")) (compiler-error "Unsupported foreign function language" expr))
        (if (not (string? file)) (compiler-error "File must be a string" expr))
-       (let* #;((fd (search-open-input-file file paths))
-              (parse (deep-copy (parse-header-c fd))))
-             ((cmd (make-preprocess-command (find-file file paths)))
+       (let* ((cmd (make-preprocess-command (find-file file paths)))
               (fd (open-input-process cmd))
               (parse (deep-copy (parse-header-c fd))))
          (release-parse)

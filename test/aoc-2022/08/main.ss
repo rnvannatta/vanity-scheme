@@ -1,4 +1,4 @@
-(import (vanity core) (vanity assert))
+(import (vanity core) (vanity assert) (vanity list))
 (define input (open-input-file "input"))
 
 (define (read-grid port)

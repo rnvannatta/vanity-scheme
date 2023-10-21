@@ -1,4 +1,4 @@
-(import (vanity core))
+(import (vanity core) (vanity list))
 
 (define x (iota 5))
 (define rev (iota 5 4 -1))

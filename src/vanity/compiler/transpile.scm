@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler transpile)
-  (import (vanity core) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi))
+  (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi))
   (export bruijn-ify to-functions printout2)
 ; Strips the names from bound variables and replaces them with indices
 ; free variables are assumed to be builtin functions
