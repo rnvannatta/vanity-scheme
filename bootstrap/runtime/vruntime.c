@@ -43,6 +43,7 @@
 
 #include "vscheme/vruntime.h"
 #include "vscheme/vinlines.h"
+#include "vscheme/vhash.h"
 
 #define FORWARDED ULLONG_MAX
 
@@ -186,6 +187,7 @@ struct {
   VWORD * slot;
 } VTrackedMutations[MAX_TRACKED_MUTATIONS];
 
+/*
 static hash64 VHashSymbol(VWORD sym) {
   VBlob * blob = VDecodeBlob(sym);
   hash64 h = hash64_seed();
@@ -193,6 +195,16 @@ static hash64 VHashSymbol(VWORD sym) {
   h = string_hash64(h, blob->buf, blob->len);
 
   return hash64_to_hash48(h);
+}
+*/
+static uint64_t VHashSymbol(VWORD sym) {
+  VBlob * blob = VDecodeBlob(sym);
+  //hash64 h = hash64_seed();
+  //h = char_hash64(h, VSYMBOL);
+  //h = string_hash64(h, blob->buf, blob->len);
+  uint64_t h = vhash(blob->buf, blob->len, VSYMBOL);
+
+  return h;
 }
 
 // 1. basic loop lookup
@@ -203,7 +215,7 @@ VGlobalEntry * VGlobalTable;
 unsigned VNumGlobals;
 unsigned VNumGlobalSlots;
 
-VGlobalEntry * VInsertGlobalEntry(hash64 h, VWORD sym, VWORD val) {
+VGlobalEntry * VInsertGlobalEntry(uint64_t h, VWORD sym, VWORD val) {
   size_t i = h & (VNumGlobalSlots-1);
   while(VBits(VGlobalTable[i].symbol) != VBits(VVOID))
   {
@@ -249,7 +261,7 @@ void VResizeGlobalTable() {
 }
 
 VGlobalEntry * VLookupGlobalEntry(VWORD sym) {
-  hash64 h = VHashSymbol(sym);
+  uint64_t h = VHashSymbol(sym);
   size_t i = h & (VNumGlobalSlots-1);
 
   VGlobalEntry * place = NULL;
@@ -263,10 +275,11 @@ VGlobalEntry * VLookupGlobalEntry(VWORD sym) {
   return place;
 }
 VGlobalEntry * VLookupGlobalEntryFast(char const * sym) {
-  hash64 h = hash64_seed();
-  h = char_hash64(h, VSYMBOL);
-  h = string_hash64(h, sym, strlen(sym)+1);
-  h = hash64_to_hash48(h);
+  //hash64 h = hash64_seed();
+  //h = char_hash64(h, VSYMBOL);
+  //h = string_hash64(h, sym, strlen(sym)+1);
+  //h = hash64_to_hash48(h);
+  uint64_t h = vhash(sym, strlen(sym)+1, VSYMBOL);
 
   size_t i = h & (VNumGlobalSlots-1);
 
@@ -309,12 +322,13 @@ static void VWipeFinalizerTable(VFinalizerTable * table) {
     table->table[i] = ~0u;
 }
 
-static inline hash64 VHashPointer(VWORD ptr) {
-  return uint64_hash64(hash64_seed(), (uintptr_t)VDecodePointer(ptr));
+static inline uint64_t VHashPointer(VWORD ptr) {
+  //return uint64_hash64(hash64_seed(), (uintptr_t)VDecodePointer(ptr));
+  return vhash64_quick((uintptr_t)VDecodePointer(ptr));
 }
 
 static void VSetFinalizerHash(VFinalizerTable * table, VWORD mem, unsigned dense_index, bool dupe_test) {
-  hash64 h = VHashPointer(mem);
+  uint64_t h = VHashPointer(mem);
   unsigned i = h & (table->table_size - 1);
   unsigned tries = 0;
   while(tries++ <= table->table_size && ~table->table[i]) {
@@ -365,7 +379,7 @@ void VSetFinalizerImpl(VFinalizerTable * table, VWORD mem, VWORD finalizer) {
 
 static VFinalizerEntry * VGetFinalizer(VWORD mem, bool active_heap) {
   VFinalizerTable * table = &VHeapFinalizers[VActiveHeap ^ !active_heap];
-  hash64 h = VHashPointer(mem);
+  uint64_t h = VHashPointer(mem);
   unsigned i = h & (table->table_size - 1);
   unsigned tries = 0;
   while(tries++ < table->table_size) {
@@ -1236,7 +1250,7 @@ void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD val) {
 }
 
 static bool VDefineImpl(VWORD sym, VWORD val, bool is_set) {
-  hash64 hash = VHashSymbol(sym);
+  uint64_t hash = VHashSymbol(sym);
 
   VGlobalEntry * place = VLookupGlobalEntry(sym);
 

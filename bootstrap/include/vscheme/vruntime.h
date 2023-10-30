@@ -35,7 +35,7 @@
 #include <assert.h>
 #include <stdint.h>
 
-#include "vscheme/vhash.h"
+//#include "vscheme/vhash.h"
 
 static_assert(sizeof(char) == sizeof(int8_t));
 static_assert(sizeof(short) == sizeof(int16_t));
@@ -212,7 +212,8 @@ typedef struct VEnvironment {
 
 
 typedef struct {
-  hash64 hash;
+  //hash64 hash;
+  uint64_t hash;
   VWORD symbol;
   VWORD value;
 } VGlobalEntry;

@@ -1,0 +1,44 @@
+dumb idea: lisp for artists
+
+lisp without the parentheses
+
+the classic time suck
+
+document : declaration | expression
+
+declaration : define | statement
+
+define : 'define' VAR '=' expr ';'
+       | 'define' VAR '(' funargs ')' expr ';'
+       ;
+
+statement : expr ';'
+          | 'let' VAR '=' expr ';'
+          | 'set!' VAR '=' expr ';'
+          ;
+
+expr : LIT
+     | VAR
+     | quotation
+     | '{' begin_list '}'
+     | VAR '(' funargs ')'
+     | VAR '+' VAR
+     | VAR '-' VAR
+     | VAR '*' VAR
+     | VAR '/' VAR
+     | VAR '%' VAR
+     | VAR '**' VAR
+     | VAR 'and' VAR
+     | VAR 'or' VAR
+     | '+' VAR
+     | '-' VAR
+     | 'not' VAR
+
+     | 'car' VAR
+     | 'cdr' VAR
+     | VAR '[' expr ']
+
+     ;
+
+begin_list : define_list statement_list expr ';'
+           ;

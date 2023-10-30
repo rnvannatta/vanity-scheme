@@ -32,6 +32,7 @@ static struct { VBlob sym; char bytes[33]; } _V10string_D317 = { { VSTRING, 33 }
 static struct { VBlob sym; char bytes[33]; } _V10string_D316 = { { VSTRING, 33 }, "_V0vanity_V0compiler_V0match_V20" };
 static struct { VBlob sym; char bytes[4]; } _V0map = { { VSYMBOL, 4 }, "map" };
 static struct { VBlob sym; char bytes[4]; } _V0car = { { VSYMBOL, 4 }, "car" };
+static struct { VBlob sym; char bytes[15]; } _V0compiler__error = { { VSYMBOL, 15 }, "compiler-error" };
 static struct { VBlob sym; char bytes[6]; } _V0pair_Q = { { VSYMBOL, 6 }, "pair\?" };
 static struct { VBlob sym; char bytes[6]; } _V0cadar = { { VSYMBOL, 6 }, "cadar" };
 static struct { VBlob sym; char bytes[6]; } _V0cddar = { { VSYMBOL, 6 }, "cddar" };
@@ -774,7 +775,7 @@ static void _V0match__iter_k59(VRuntime * runtime, VEnv * upenv, int argc, VWORD
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V0match__iter_k59, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn error 14 3) (bruijn ##k.49 8 0) (##string ##string.312) (bruijn ##x.66 0 0))
+  // ((bruijn compiler-error 14 3) (bruijn ##k.49 8 0) (##string ##string.312) (bruijn ##x.66 0 0))
 V_CALL(VGetArg(upenv, 14-1, 3), runtime,
       VGetArg(upenv, 8-1, 0),
       VEncodePointer(&_V10string_D312.sym, VPOINTER_OTHER),
@@ -1277,7 +1278,7 @@ static void _V0match__iter_k93(VRuntime * runtime, VEnv * upenv, int argc, VWORD
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V0match__iter_k93, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##p.118 1 0) ((bruijn error 27 3) (bruijn ##k.119 0 0) (##string ##string.313)) ((bruijn ##k.119 0 0) #f))
+  // (if (bruijn ##p.118 1 0) ((bruijn compiler-error 27 3) (bruijn ##k.119 0 0) (##string ##string.313)) ((bruijn ##k.119 0 0) #f))
 if(VDecodeBool(
 upenv->vars[0])) {
 V_CALL(VGetArg(upenv, 27-1, 3), runtime,
@@ -1953,7 +1954,7 @@ static void _V0match__iter_k121(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V0match__iter_k121, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn error 28 3) (bruijn ##k.49 22 0) (##string ##string.315) (bruijn ##x.161 0 0))
+  // ((bruijn compiler-error 28 3) (bruijn ##k.49 22 0) (##string ##string.315) (bruijn ##x.161 0 0))
 V_CALL(VGetArg(upenv, 28-1, 3), runtime,
       VGetArg(upenv, 22-1, 0),
       VEncodePointer(&_V10string_D315.sym, VPOINTER_OTHER),
@@ -3437,7 +3438,7 @@ static void _V0gather__variables_k157(VRuntime * runtime, VEnv * upenv, int argc
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V0gather__variables_k157, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn error 12 3) (bruijn ##k.257 10 0) (##string ##string.312) (bruijn ##x.268 0 0))
+  // ((bruijn compiler-error 12 3) (bruijn ##k.257 10 0) (##string ##string.312) (bruijn ##x.268 0 0))
 V_CALL(VGetArg(upenv, 12-1, 3), runtime,
       VGetArg(upenv, 10-1, 0),
       VEncodePointer(&_V10string_D312.sym, VPOINTER_OTHER),
@@ -4392,10 +4393,10 @@ static void _V0vanity_V0compiler_V0match_V20_k5(VRuntime * runtime, VEnv * upenv
   VEnv * env = &container.env;
   env->tag = VENV; env->num_vars = 1; env->var_len = 1; env->up = upenv;
   env->vars[0] = _var0;
-  // ((bruijn ##vcore.import 2 0) (close _V0vanity_V0compiler_V0match_V20_k6) (quote error))
+  // ((bruijn ##vcore.import 2 0) (close _V0vanity_V0compiler_V0match_V20_k6) (quote compiler-error))
 V_CALL(upenv->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0match_V20_k6, env)}),
-      VEncodePointer(&_V0error.sym, VPOINTER_OTHER)
+      VEncodePointer(&_V0compiler__error.sym, VPOINTER_OTHER)
     );
  }
 }
