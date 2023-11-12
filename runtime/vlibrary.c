@@ -27,11 +27,13 @@
 #include "vscheme/vruntime.h"
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
+#include "vscheme/vhash.h"
 #include <assert.h>
 #include <errno.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <limits.h>
 
 __attribute__((used)) static void VAdd2CaseVarargs(V_CORE_ARGS, VWORD k, ...) {
     V_ARG_MIN2("+", 1, argc);
@@ -352,6 +354,10 @@ void VVectorP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("vector?", 2, argc);
   V_CALL(k, runtime, VEncodeBool(VIsVector(x)));
 }
+void VHashTableP(V_CORE_ARGS, VWORD k, VWORD x) {
+  V_ARG_CHECK2("hash-table?", 2, argc);
+  V_CALL(k, runtime, VEncodeBool(VIsHashTable(x)));
+}
 void VProcedureP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("procedure?", 2, argc);
   V_CALL(k, runtime, VEncodeBool(VWordType(x) == VPOINTER_CLOSURE));
@@ -399,6 +405,11 @@ void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   if(blob_a->len == blob_b->len)
     ret = blob_a->tag == blob_b->tag && !memcmp(blob_a->buf, blob_b->buf, blob_a->len);
   V_CALL(k, runtime, VEncodeBool(ret));
+}
+
+void VEqv(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
+  V_ARG_CHECK2("eqv?", 3, argc);
+  V_CALL(k, runtime, VInlineEqv(x, y));
 }
 
 // logic
@@ -468,6 +479,300 @@ void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vector) {
   V_ARG_CHECK2("vector-length", 2, argc);
   VVector * vec = VCheckedDecodeVector(vector, "vector-length");
   V_CALL(k, runtime, VEncodeInt(vec->len));
+}
+
+// hash tables
+static bool VHashTableSetImpl(VVector * vec, VWORD key, VWORD val) {
+  uint64_t capacity = vec->len / 3;
+  uint64_t tries = 0;
+  uint64_t index = vhash64_quick(VBits(key)) & (capacity-1);
+
+  uint64_t poverty = 0;
+  bool found = false;
+
+  while(tries <= capacity) {
+    VWORD test = vec->arr[3*index+0];
+
+    if(VBits(key) == VBits(test)) {
+      found = true;
+      break;
+    }
+    if(VBits(test) == VBits(VVOID)) {
+      found = false;
+      break;
+    }
+
+    uint64_t test_poverty = VDecodeInt(vec->arr[3*index+1]); 
+    if(poverty > test_poverty) {
+      VWORD tmpkey = key;
+      VWORD tmppov = VEncodeInt(poverty);
+      VWORD tmpval = val;
+
+      key = vec->arr[3*index+0];
+      poverty = test_poverty;
+      val = vec->arr[3*index+2];
+
+      vec->arr[3*index+0] = tmpkey;
+      vec->arr[3*index+1] = tmppov;
+      vec->arr[3*index+2] = tmpval;
+
+      VTrackMutation(vec, &vec->arr[3*index+0], tmpkey);
+      // poverty is an int, nothing to track
+      VTrackMutation(vec, &vec->arr[3*index+2], tmpval);
+    }
+
+    index = (index + 1) & (capacity-1);
+    tries++;
+    poverty++;
+  }
+
+  vec->arr[3*index+0] = key;
+  vec->arr[3*index+1] = VEncodeInt(poverty);
+  vec->arr[3*index+2] = val;
+
+  VTrackMutation(vec, &vec->arr[3*index+0], key);
+  // poverty is an int, nothing to track
+  VTrackMutation(vec, &vec->arr[3*index+2], val);
+
+  return found;
+}
+
+static void VGrowHashTable(VHashTable * table, int newlen, VVector * vec) {
+  if(newlen <= 0) VError("hash tables need length > 0");
+  if(newlen > INT_MAX/3) VError("hash table is too large ~D\n", newlen);
+  if(newlen & (newlen-1)) VError("hash table needs pow2 length ~D\n", newlen);
+
+  assert(table->occupancy < table->load_factor * newlen);
+
+  vec->tag = VVECTOR;
+  vec->len = 3*newlen;
+  for(int i = 0; i < newlen; i++) {
+    vec->arr[3*i+0] = VVOID;
+    vec->arr[3*i+1] = VEncodeInt(0);
+    vec->arr[3*i+2] = VVOID;
+  }
+
+  VVector * oldvec = VCheckedDecodeVector(table->vec, "hash-table-ref");
+  VWORD vecword = VEncodePointer(vec, VPOINTER_OTHER);
+  table->vec = vecword;
+  VTrackMutation(table, &table->vec, table->vec);
+  for(int i = 0; i < oldvec->len/3; i++) {
+    if(VBits(oldvec->arr[3*i+0]) == VBits(VVOID))
+      continue;
+    VWORD key = oldvec->arr[3*i+0];
+    VWORD val = oldvec->arr[3*i+2];
+    assert(!VHashTableSetImpl(vec, key, val));
+  }
+}
+
+void VMakeHashTable(V_CORE_ARGS, VWORD k, VWORD eq, VWORD hash, VWORD _len) {
+  VClosure * closure = VCheckedDecodeClosure(eq, "make-hash-table");
+  if(closure->func != (void*)VEq2)
+    VError("hash tables currently only support `eq?` as the comparator\n");
+
+  int len = VCheckedDecodeInt(_len, "make-hash-table");
+  if(len <= 0) VError("hash tables need length > 0");
+  if(len > INT_MAX/3) VError("hash table is too large ~D\n", len);
+  if(len & (len-1)) VError("hash table needs pow2 length ~D\n", len);
+  VVector * vec = V_ALLOCA_VECTOR(3*len);
+  vec->tag = VVECTOR;
+  vec->len = 3*len;
+  for(int i = 0; i < len; i++) {
+    vec->arr[3*i+0] = VVOID;
+    vec->arr[3*i+1] = VEncodeInt(0);
+    vec->arr[3*i+2] = VVOID;
+  }
+  VHashTable table = {
+    .tag = VHASH_TABLE,
+    .flags = HFLAG_EQ,
+    .occupancy = 0,
+    .load_factor = 0.8f,
+    .vec = VEncodePointer(vec, VPOINTER_OTHER),
+    .eq = eq,
+    .hash = hash,
+  };
+  V_CALL(k, runtime, VEncodePointer(&table, VPOINTER_OTHER));
+}
+
+void VHashTableEqvFunc(V_CORE_ARGS, VWORD k, VWORD _table) {
+  VHashTable * table = VCheckedDecodeHashTable(_table, "hash-table-equivalence-function");
+  V_CALL(k, runtime, table->eq);
+}
+void VHashTableHashFunc(V_CORE_ARGS, VWORD k, VWORD _table) {
+  VHashTable * table = VCheckedDecodeHashTable(_table, "hash-table-hash-function");
+  V_CALL(k, runtime, table->hash);
+}
+void VHashTableRef(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key, VWORD thunk) {
+  VHashTable * table = VCheckedDecodeHashTable(_table, "hash-table-ref");
+  VVector * vec = VCheckedDecodeVector(table->vec, "hash-table-ref");
+
+  assert(table->flags & HFLAG_EQ);
+
+try_again: ;
+  uint64_t capacity = vec->len / 3;
+  uint64_t tries = 0;
+  uint64_t index = vhash64_quick(VBits(key)) & (capacity-1);
+
+  bool found = false;
+  while(tries <= capacity) {
+    VWORD test = vec->arr[3*index+0];
+
+    if(VBits(key) == VBits(test)) {
+      found = true;
+      break;
+    }
+    if(VBits(test) == VBits(VVOID)) {
+      found = false;
+      break;
+    }
+
+    index = (index + 1) & (capacity-1);
+    tries++;
+  }
+  if(!found && (table->flags & HFLAG_DIRTY)) {
+    table->flags ^= HFLAG_DIRTY;
+    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
+    VGrowHashTable(table, capacity, newvec);
+    vec = newvec;
+    goto try_again;
+  }
+  if(found) {
+    V_CALL(k, runtime, vec->arr[3*index+2]);
+  } else {
+    V_CALL(thunk, runtime, k);
+  }
+}
+
+void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key, VWORD val, VWORD thunk) {
+
+  VHashTable * table = VCheckedDecodeHashTable(_table, "hash-table-set!");
+  VVector * vec = VCheckedDecodeVector(table->vec, "hash-table-set!");
+
+  assert(table->flags & HFLAG_EQ);
+  uint64_t capacity = vec->len / 3;
+
+  if(table->occupancy+1 >= table->load_factor * capacity) {
+    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity * 2);
+    VGrowHashTable(table, capacity * 2, newvec);
+
+    vec = newvec;
+    capacity = vec->len / 3;
+  }
+
+try_again: ;
+  uint64_t tries = 0;
+  uint64_t index = vhash64_quick(VBits(key)) & (capacity-1);
+
+  uint64_t poverty = 0;
+
+  bool found = false;
+
+  while(tries <= capacity) {
+    VWORD test = vec->arr[3*index+0];
+
+    if(VBits(key) == VBits(test)) {
+      found = true;
+      break;
+    }
+    if(VBits(test) == VBits(VVOID)) {
+      found = false;
+      break;
+    }
+
+    uint64_t test_poverty = VDecodeInt(vec->arr[3*index+1]); 
+    if(poverty > test_poverty) {
+      VWORD tmpkey = key;
+      VWORD tmppov = VEncodeInt(poverty);
+      VWORD tmpval = val;
+
+      key = vec->arr[3*index+0];
+      poverty = test_poverty;
+      val = vec->arr[3*index+2];
+
+      vec->arr[3*index+0] = tmpkey;
+      vec->arr[3*index+1] = tmppov;
+      vec->arr[3*index+2] = tmpval;
+
+      VTrackMutation(vec, &vec->arr[3*index+0], tmpkey);
+      // poverty is an int, nothing to track
+      VTrackMutation(vec, &vec->arr[3*index+2], tmpval);
+    }
+
+    index = (index + 1) & (capacity-1);
+    tries++;
+    poverty++;
+  }
+  if(!found && (table->flags & HFLAG_DIRTY)) {
+    table->flags ^= HFLAG_DIRTY;
+    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
+    VGrowHashTable(table, capacity, newvec);
+    vec = newvec;
+    goto try_again;
+  }
+  if(!found)
+    table->occupancy++;
+
+  vec->arr[3*index+0] = key;
+  vec->arr[3*index+1] = VEncodeInt(poverty);
+  vec->arr[3*index+2] = val;
+
+  VTrackMutation(vec, &vec->arr[3*index+0], key);
+  // poverty is an int, nothing to track
+  VTrackMutation(vec, &vec->arr[3*index+2], val);
+
+  V_CALL(k, runtime, VVOID);
+}
+void VHashTableDelete(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key) {
+  VHashTable * table = VCheckedDecodeHashTable(_table, "hash-table-delete!");
+  VVector * vec = VCheckedDecodeVector(table->vec, "hash-table-delete!");
+
+  assert(table->flags == HFLAG_EQ);
+  uint64_t capacity = vec->len / 3;
+  uint64_t tries = 0;
+  uint64_t index = vhash64_quick(VBits(key)) & (capacity-1);
+
+  bool found = false;
+
+  while(tries <= capacity) {
+    VWORD test = vec->arr[3*index+0];
+
+    if(VBits(key) == VBits(test)) {
+      found = true;
+      break;
+    }
+    if(VBits(test) == VBits(VVOID)) {
+      found = false;
+      break;
+    }
+    index = (index + 1) & (capacity-1);
+    tries++;
+  }
+  if(!found) {
+    V_CALL(k, runtime, VVOID);
+    return;
+  }
+  table->occupancy--;
+
+  vec->arr[3*index+0] = VVOID;
+  vec->arr[3*index+1] = VEncodeInt(0);
+  vec->arr[3*index+2] = VVOID;
+
+  while(true) {
+    int oldindex = index;
+    index = (index + 1) & (capacity-1);
+    VWORD test = vec->arr[3*index+0];
+    if(VBits(test) == VBits(VVOID))
+      break;
+    uint64_t poverty = VDecodeInt(vec->arr[3*index+1]);
+    if(!poverty)
+      break;
+    vec->arr[3*oldindex+0] = vec->arr[3*index+0];
+    vec->arr[3*oldindex+1] = VEncodeInt(poverty-1);
+    vec->arr[3*oldindex+2] = vec->arr[3*index+2];
+    vec->arr[3*index+0] = VVOID;
+    vec->arr[3*index+1] = VEncodeInt(0);
+    vec->arr[3*index+2] = VVOID;
+  }
 }
 
 // strings
@@ -1060,4 +1365,53 @@ void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD _prefix, ...) {
   (void)mkstemps(str->buf, strlen(s));
 
   V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
+}
+
+void VMakeRandom(V_CORE_ARGS, VWORD k, VWORD _seed, VWORD _stream) {
+  unsigned seed = VCheckedDecodeInt(_seed, "make-random");
+  unsigned stream = VCheckedDecodeInt(_stream, "make-random");
+  VBlob * buf = alloca(sizeof(VBlob)+sizeof(vrandom_state));
+  buf->tag = VRNG_STATE;
+  buf->len = sizeof(vrandom_state);
+  vsrandom((vrandom_state*)buf->buf, seed, stream);
+
+  V_CALL(k, runtime, VEncodePointer(buf, VPOINTER_OTHER));
+}
+void VRandomCopy(V_CORE_ARGS, VWORD k, VWORD rng) {
+  VBlob const * buf = VCheckedDecodePointer(rng, VRNG_STATE, "random-copy");
+  VBlob * copy = alloca(sizeof(VBlob)+sizeof(vrandom_state));
+  copy->tag = VRNG_STATE;
+  copy->len = sizeof(vrandom_state);
+  memcpy(copy->buf, buf->buf, sizeof(vrandom_state));
+
+  V_CALL(k, runtime, VEncodePointer(copy, VPOINTER_OTHER));
+}
+
+void VRandomSample(V_CORE_ARGS, VWORD k, VWORD rng) {
+  VBlob * buf = VCheckedDecodePointer(rng, VRNG_STATE, "random-sample");
+  int i = (unsigned)vrandom((vrandom_state*)buf->buf);
+
+  V_CALL(k, runtime, VEncodeInt(i));
+}
+void VRandomSampleBounded(V_CORE_ARGS, VWORD k, VWORD rng, VWORD _bounds) {
+  VBlob * buf = VCheckedDecodePointer(rng, VRNG_STATE, "random-sample-bounded");
+  int bounds = VCheckedDecodeInt(_bounds, "random-sample-bounded");
+  if(bounds <= 0) VError("random-sample-bounded: bounds must be positive ~D\n", bounds);
+  int i = (unsigned)vrandom_bounded((vrandom_state*)buf->buf, bounds);
+
+  V_CALL(k, runtime, VEncodeInt(i));
+}
+void VRandomSampleFloat(V_CORE_ARGS, VWORD k, VWORD rng) {
+  VBlob * buf = VCheckedDecodePointer(rng, VRNG_STATE, "random-sample-float");
+  double d = vrandom_double((vrandom_state*)buf->buf);
+
+  V_CALL(k, runtime, VEncodeNumber(d));
+}
+
+void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD _n) {
+  VBlob * buf = VCheckedDecodePointer(rng, VRNG_STATE, "random-advance");
+  int n = VCheckedDecodeInt(_n, "random-advance");
+  vrandom_advance((vrandom_state*)buf->buf, n);
+
+  V_CALL(k, runtime, VVOID);
 }

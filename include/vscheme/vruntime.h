@@ -75,7 +75,8 @@ enum VTOK_T {
 };
 
 enum VTAG {
-  VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VPORT, VRUNTIME,
+  // Eventually would be nice to replace RNG_STATE with typed pointer usage
+  VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VBUFFER, VRNG_STATE, VPORT, VRUNTIME, VHASH_TABLE,
   VTAG_END };
 typedef unsigned VTAG;
 enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
@@ -170,6 +171,23 @@ typedef struct VVector {
   unsigned len;
   VWORD arr[];
 } VVector;
+
+enum HASH_FLAGS_T {
+  HFLAG_CHAINED = 1,
+  HFLAG_EQ = 2,
+  HFLAG_EQV = 4,
+  HFLAG_DIRTY = 8,
+};
+
+typedef struct VHashTable {
+  VTAG tag;
+  int flags;
+  int occupancy;
+  float load_factor;
+  VWORD vec;
+  VWORD eq;
+  VWORD hash;
+} VHashTable;
 
 typedef struct VBlob {
   VTAG tag;
@@ -383,6 +401,8 @@ static inline bool VIsBlob(VWORD v) {
     switch(t) {
       case VSTRING:
       case VSYMBOL:
+      case VBUFFER:
+      case VRNG_STATE:
         return true;
       default:
         return false;
@@ -395,6 +415,8 @@ static inline bool VIsMutableBlob(VWORD v) {
     VTAG t = *(VTAG*)VDecodePointer(v);
     switch(t) {
       case VSTRING:
+      case VBUFFER:
+      case VRNG_STATE:
         return true;
       default:
         return false;
@@ -413,6 +435,10 @@ static inline bool VIsSymbol(VWORD v) {
 
 static inline bool VIsVector(VWORD v) {
   return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VVECTOR;
+}
+
+static inline bool VIsHashTable(VWORD v) {
+  return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VHASH_TABLE;
 }
 
 static inline bool VIsPort(VWORD v) {
@@ -452,6 +478,17 @@ static inline VClosure * VDecodeClosureApply(VWORD v) {
   return (VClosure*)VDecodePointer(v);
 }
 
+static inline void * VCheckedDecodePointer(VWORD v, VTAG tag, char const * proc) {
+  if(VIsPointer(v)) {
+    VTAG * ptr = (VTAG *)VDecodePointer(v);
+    if(*ptr == tag) {
+      return (void*)ptr;
+    }
+  }
+  VError("~Z: not a pointer of the right type: ~S\n", proc, v);
+  return NULL;
+}
+
 static inline void * VCheckedDecodeForeignPointer(VWORD v, char const * proc) {
   if(VWordType(v) != VPOINTER_FOREIGN) VError("~Z: not a foreign pointer: ~S\n", proc, v);
   return (void*)VDecodePointer(v);
@@ -476,6 +513,12 @@ static inline VBlob * VCheckedDecodeSymbol(VWORD v, char const * proc) {
 static inline VVector * VCheckedDecodeVector(VWORD v, char const * proc) {
   if(VIsVector(v)) return (VVector*) VDecodePointer(v);
   VError("~Z: not a vector: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VHashTable * VCheckedDecodeHashTable(VWORD v, char const * proc) {
+  if(VIsHashTable(v)) return (VHashTable*) VDecodePointer(v);
+  VError("~Z: not a hash table: ~S\n", proc, v);
   return NULL;
 }
 
@@ -578,7 +621,7 @@ static inline VBlob * VFillBlob(VBlob * blob, VTAG tag, unsigned len, char const
 
 #define V_STATIC_STRING(name, str) struct { VBlob b; char buf[sizeof str]; } name = { { .tag = VSTRING, .len = sizeof str }, str };
 
-#define V_ALLOCA_VECTOR(len) alloca(sizeof(VVector) + sizeof(VWORD[len]));
+#define V_ALLOCA_VECTOR(len) alloca(sizeof(VVector) + sizeof(VWORD[len]))
 static inline VVector * VFillVector(VVector * vec, VTAG tag, unsigned len, VWORD const * dat) {
   vec->tag = tag;
   vec->len = len;

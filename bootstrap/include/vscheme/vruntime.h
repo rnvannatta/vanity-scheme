@@ -35,8 +35,6 @@
 #include <assert.h>
 #include <stdint.h>
 
-//#include "vscheme/vhash.h"
-
 static_assert(sizeof(char) == sizeof(int8_t));
 static_assert(sizeof(short) == sizeof(int16_t));
 static_assert(sizeof(int) == sizeof(int32_t));
@@ -77,7 +75,8 @@ enum VTOK_T {
 };
 
 enum VTAG {
-  VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VPORT, VRUNTIME,
+  // Eventually would be nice to replace RNG_STATE with typed pointer usage
+  VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VBUFFER, VRNG_STATE, VPORT, VRUNTIME,
   VTAG_END };
 typedef unsigned VTAG;
 enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
@@ -212,7 +211,6 @@ typedef struct VEnvironment {
 
 
 typedef struct {
-  //hash64 hash;
   uint64_t hash;
   VWORD symbol;
   VWORD value;
@@ -386,6 +384,8 @@ static inline bool VIsBlob(VWORD v) {
     switch(t) {
       case VSTRING:
       case VSYMBOL:
+      case VBUFFER:
+      case VRNG_STATE:
         return true;
       default:
         return false;
@@ -398,6 +398,8 @@ static inline bool VIsMutableBlob(VWORD v) {
     VTAG t = *(VTAG*)VDecodePointer(v);
     switch(t) {
       case VSTRING:
+      case VBUFFER:
+      case VRNG_STATE:
         return true;
       default:
         return false;
@@ -453,6 +455,17 @@ static inline VClosure * VCheckedDecodeClosure(VWORD v, char const * proc) {
 static inline VClosure * VDecodeClosureApply(VWORD v) {
   if(VWordType(v) != VPOINTER_CLOSURE) VError("tried to call non-closure: ~s\n", v);
   return (VClosure*)VDecodePointer(v);
+}
+
+static inline void * VCheckedDecodePointer(VWORD v, VTAG tag, char const * proc) {
+  if(VIsPointer(v)) {
+    VTAG * ptr = (VTAG *)VDecodePointer(v);
+    if(*ptr == tag) {
+      return (void*)ptr;
+    }
+  }
+  VError("~Z: not a pointer of the right type: ~S\n", proc, v);
+  return NULL;
 }
 
 static inline void * VCheckedDecodeForeignPointer(VWORD v, char const * proc) {

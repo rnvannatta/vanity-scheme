@@ -33,7 +33,7 @@ VSysApply:
 	mov eax, edx
   lea r10, QWORD PTR [r10+24]
 	// usr args
-	cmp eax, 0x4
+	cmp eax, 4
 	jb few_arg
 
 	push r12

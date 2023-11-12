@@ -27,6 +27,7 @@
 #include "vscheme/vruntime.h"
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
+#include "vscheme/vhash.h"
 #include <assert.h>
 #include <errno.h>
 #include <unistd.h>
@@ -1060,4 +1061,53 @@ void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD _prefix, ...) {
   (void)mkstemps(str->buf, strlen(s));
 
   V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
+}
+
+void VMakeRandom(V_CORE_ARGS, VWORD k, VWORD _seed, VWORD _stream) {
+  unsigned seed = VCheckedDecodeInt(_seed, "make-random");
+  unsigned stream = VCheckedDecodeInt(_stream, "make-random");
+  VBlob * buf = alloca(sizeof(VBlob)+sizeof(vrandom_state));
+  buf->tag = VRNG_STATE;
+  buf->len = sizeof(vrandom_state);
+  vsrandom((vrandom_state*)buf->buf, seed, stream);
+
+  V_CALL(k, runtime, VEncodePointer(buf, VPOINTER_OTHER));
+}
+void VRandomCopy(V_CORE_ARGS, VWORD k, VWORD rng) {
+  VBlob const * buf = VCheckedDecodePointer(rng, VRNG_STATE, "random-copy");
+  VBlob * copy = alloca(sizeof(VBlob)+sizeof(vrandom_state));
+  copy->tag = VRNG_STATE;
+  copy->len = sizeof(vrandom_state);
+  memcpy(copy->buf, buf->buf, sizeof(vrandom_state));
+
+  V_CALL(k, runtime, VEncodePointer(copy, VPOINTER_OTHER));
+}
+
+void VRandomSample(V_CORE_ARGS, VWORD k, VWORD rng) {
+  VBlob * buf = VCheckedDecodePointer(rng, VRNG_STATE, "random-sample");
+  int i = (unsigned)vrandom((vrandom_state*)buf->buf);
+
+  V_CALL(k, runtime, VEncodeInt(i));
+}
+void VRandomSampleBounded(V_CORE_ARGS, VWORD k, VWORD rng, VWORD _bounds) {
+  VBlob * buf = VCheckedDecodePointer(rng, VRNG_STATE, "random-sample-bounded");
+  int bounds = VCheckedDecodeInt(_bounds, "random-sample-bounded");
+  if(bounds <= 0) VError("random-sample-bounded: bounds must be positive ~D\n", bounds);
+  int i = (unsigned)vrandom_bounded((vrandom_state*)buf->buf, bounds);
+
+  V_CALL(k, runtime, VEncodeInt(i));
+}
+void VRandomSampleFloat(V_CORE_ARGS, VWORD k, VWORD rng) {
+  VBlob * buf = VCheckedDecodePointer(rng, VRNG_STATE, "random-sample-float");
+  double d = (unsigned)vrandom_double((vrandom_state*)buf->buf);
+
+  V_CALL(k, runtime, VEncodeNumber(d));
+}
+
+void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD _n) {
+  VBlob * buf = VCheckedDecodePointer(rng, VRNG_STATE, "random-advance");
+  int n = VCheckedDecodeInt(_n, "random-advance");
+  vrandom_advance((vrandom_state*)buf->buf, n);
+
+  V_CALL(k, runtime, VVOID);
 }

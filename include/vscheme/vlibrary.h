@@ -67,6 +67,15 @@ void VListVector2(V_CORE_ARGS, VWORD k, VWORD vec);
 void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i);
 void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vec);
 
+// hash table
+
+void VMakeHashTable(V_CORE_ARGS, VWORD k, VWORD eq, VWORD hash, VWORD _len);
+void VHashTableEqvFunc(V_CORE_ARGS, VWORD k, VWORD table);
+void VHashTableHashFunc(V_CORE_ARGS, VWORD k, VWORD table);
+void VHashTableRef(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD thunk);
+void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD val, VWORD thunk);
+void VHashTableDelete(V_CORE_ARGS, VWORD k, VWORD table, VWORD key);
+
 // strings
 
 void VMakeString2(V_CORE_ARGS, VWORD k, VWORD i, ...);
@@ -122,3 +131,11 @@ void VSystem2(V_CORE_ARGS, VWORD k, VWORD cmd);
 void VOpenInputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
 void VOpenOutputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
 void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD prefix, ...);
+
+// rng
+void VMakeRandom(V_CORE_ARGS, VWORD k, VWORD seed, VWORD stream);
+void VRandomCopy(V_CORE_ARGS, VWORD k, VWORD rng);
+void VRandomSample(V_CORE_ARGS, VWORD k, VWORD rng);
+void VRandomSampleBounded(V_CORE_ARGS, VWORD k, VWORD rng, VWORD end);
+void VRandomSampleFloat(V_CORE_ARGS, VWORD k, VWORD rng);
+void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD step);

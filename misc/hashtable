@@ -1,0 +1,52 @@
+HASH TABLES:
+
+CHAINING: simple
+  ok so we have a hash function that produces an int, then we yoink out the chain, and then we assoc on the chain
+
+LINEAR PROBING: simple for eq
+  ok so we can use murmur mix to scramble the VWORD for eq
+
+THE PROBLEM WITH EQ
+THE PROBLEM WITH HASHING CLOSURES
+  eq doesn't work in general, in particular closures are problematic
+  closures are very unstable between gcs
+  hashing environs sounds terribly slow
+
+TYPES:
+  all tokens
+  all ints
+  all doubles
+  all chars
+  -- no problem, murmur3 mixer
+  strings, symbols, bytevectors
+  -- hash the buffer
+  ports
+  -- hash the file descriptor and the flags
+  pairs, vectors
+  -- eq problem
+  -- can otherwise chain hash with equal? granularity
+  closures
+  -- suffering
+
+
+DUMB SOLUTITION
+  reinsert on garbage collect
+  any objects which are eq-unstable are appended with their forwarded addresses
+  a reinsert routine is called after garbage collect
+
+ok what does reinsertion look like?
+  loop over the hash table's elements
+  if a key's hash doesn't match its position + poverty it's invalid
+  and reinsert it
+
+  that means we need to store poverty seperately rather than recomputing it
+
+NO THE DUMB SOLUTION IS THE SMART SOLUTION
+STUPDITY WINS AGAIN
+
+
+OK HERES HOW IT HAPPENS
+
+1. hash table has a "i moved addresses flag"
+2. on miss, if flag, we reinsert
+3. we need a seperate poverty
