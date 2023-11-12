@@ -24,6 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity core)
+  (import (vanity seed))
   (export
     ; predicates
     null? eof-object? boolean? pair? vector? procedure? symbol? string? exact? inexact? real? integer? char?
@@ -63,6 +64,7 @@
     read-char read-line read newline display write
     ; misc
     call/cc call-with-current-continuation call-with-values apply values
+    setter mutator ##vcore.setter ##vcore.mutator
     ; system interface
     command-line
     system
@@ -91,13 +93,20 @@
   ; equality
   (define eq? ##sys.eq?)
   (define symbol=? ##sys.symbol=?)
-  (define (eqv? x y)
-    (or (##sys.eq? x y)
-        (and (##sys.symbol? x) (##sys.symbol? y) (##sys.symbol=? x y))))
+  (define eqv? ##sys.eqv?)
+  (define (vector=? x y)
+    (if (not (= (vector-length x) (vector-length y)))
+        #f
+        (let loop ((i 0) (len (vector-length x)))
+          (cond
+            ((= i len) #t)
+            ((equal? (vector-ref x i) (vector-ref y i)) (loop (+ i 1) len))
+            (else #f)))))
   (define (equal? x y)
     (or (##sys.eq? x y)
         (and (##sys.blob? x) (##sys.blob? y) (##sys.blob=? x y))
-        (and (##sys.pair? x) (##sys.pair? y) (equal? (##sys.car x) (##sys.car y)) (equal? (##sys.cdr x) (##sys.cdr y)))))
+        (and (##sys.pair? x) (##sys.pair? y) (equal? (##sys.car x) (##sys.car y)) (equal? (##sys.cdr x) (##sys.cdr y)))
+        (and (##sys.vector? x) (##sys.vector? y) (vector=? x y))))
 
   ; logic
   (define not ##sys.not)
@@ -130,9 +139,7 @@
             (else (loop (cdr xs))))))
 
   ; math constructors
-  ;(define (inexact x) (+ x 0.0))
-  ; ERROR
-  (define (inexact x) x)
+  (define (inexact x) (##sys.+ x 0.0))
   (define exact->inexact inexact)
 
   ; math predicates
@@ -421,7 +428,7 @@
       ((table key) (##vcore.hash-table-ref table key (lambda () (error "No such key in hash table" key))))
       ((table key thunk) (##vcore.hash-table-ref table key thunk))))
   (define (hash-table-set! table key val)
-    (##vcore.hash-table-set! table key val (lambda () (error "Hash table regrowth not supported yet."))))
+    (##vcore.hash-table-set! table key val))
   (define hash-table-delete! ##vcore.hash-table-delete!)
 
   ; chars
@@ -606,6 +613,9 @@
   (define apply ##sys.apply)
   (define (values . args)
     (call/cc (lambda (k) (apply k args))))
+  
+  (define setter ##vcore.setter)
+  (define mutator ##vcore.mutator)
 
   ; system interface
   (define command-line ##sys.command-line)

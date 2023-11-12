@@ -52,6 +52,7 @@ void VCharP2(V_CORE_ARGS, VWORD k, VWORD x);
 void VEq2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
 void VSymbolEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
 void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
+void VEqv(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
 
 // logic
 void VNot2(V_CORE_ARGS, VWORD k, VWORD x);
@@ -73,7 +74,7 @@ void VMakeHashTable(V_CORE_ARGS, VWORD k, VWORD eq, VWORD hash, VWORD _len);
 void VHashTableEqvFunc(V_CORE_ARGS, VWORD k, VWORD table);
 void VHashTableHashFunc(V_CORE_ARGS, VWORD k, VWORD table);
 void VHashTableRef(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD thunk);
-void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD val, VWORD thunk);
+void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD val);
 void VHashTableDelete(V_CORE_ARGS, VWORD k, VWORD table, VWORD key);
 
 // strings
