@@ -187,21 +187,8 @@ struct {
   VWORD * slot;
 } VTrackedMutations[MAX_TRACKED_MUTATIONS];
 
-/*
-static hash64 VHashSymbol(VWORD sym) {
-  VBlob * blob = VDecodeBlob(sym);
-  hash64 h = hash64_seed();
-  h = char_hash64(h, VSYMBOL);
-  h = string_hash64(h, blob->buf, blob->len);
-
-  return hash64_to_hash48(h);
-}
-*/
 static uint64_t VHashSymbol(VWORD sym) {
   VBlob * blob = VDecodeBlob(sym);
-  //hash64 h = hash64_seed();
-  //h = char_hash64(h, VSYMBOL);
-  //h = string_hash64(h, blob->buf, blob->len);
   uint64_t h = vhash(blob->buf, blob->len, VSYMBOL);
 
   return h;
@@ -275,10 +262,6 @@ VGlobalEntry * VLookupGlobalEntry(VWORD sym) {
   return place;
 }
 VGlobalEntry * VLookupGlobalEntryFast(char const * sym) {
-  //hash64 h = hash64_seed();
-  //h = char_hash64(h, VSYMBOL);
-  //h = string_hash64(h, sym, strlen(sym)+1);
-  //h = hash64_to_hash48(h);
   uint64_t h = vhash(sym, strlen(sym)+1, VSYMBOL);
 
   size_t i = h & (VNumGlobalSlots-1);
@@ -323,7 +306,6 @@ static void VWipeFinalizerTable(VFinalizerTable * table) {
 }
 
 static inline uint64_t VHashPointer(VWORD ptr) {
-  //return uint64_hash64(hash64_seed(), (uintptr_t)VDecodePointer(ptr));
   return vhash64_quick((uintptr_t)VDecodePointer(ptr));
 }
 
@@ -610,6 +592,8 @@ VWORD VMoveDispatch(VWORD word) {
       {
         case VSTRING:
         case VSYMBOL:
+        case VBUFFER:
+        case VRNG_STATE:
         {
           VBlob * b = ptr;
           return VEncodePointer(VMoveObject(b, sizeof(VBlob) + (b->len + sizeof(VWORD) - 1)/sizeof(VWORD) * sizeof(VWORD)), VPOINTER_OTHER);
@@ -701,6 +685,8 @@ VWORD * VCheneyScan(VWORD * cur) {
     }
     case VSTRING:
     case VSYMBOL:
+    case VBUFFER:
+    case VRNG_STATE:
     {
       return cur + (sizeof(VBlob) + ((VBlob*)cur)->len + sizeof(VWORD)-1)/sizeof(VWORD);
       break;

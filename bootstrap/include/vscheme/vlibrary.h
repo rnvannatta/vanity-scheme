@@ -122,3 +122,11 @@ void VSystem2(V_CORE_ARGS, VWORD k, VWORD cmd);
 void VOpenInputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
 void VOpenOutputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
 void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD prefix, ...);
+
+// rng
+void VMakeRandom(V_CORE_ARGS, VWORD k, VWORD seed, VWORD stream);
+void VRandomCopy(V_CORE_ARGS, VWORD k, VWORD rng);
+void VRandomSample(V_CORE_ARGS, VWORD k, VWORD rng);
+void VRandomSampleBounded(V_CORE_ARGS, VWORD k, VWORD rng, VWORD end);
+void VRandomSampleFloat(V_CORE_ARGS, VWORD k, VWORD rng);
+void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD step);

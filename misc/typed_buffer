@@ -1,0 +1,31 @@
+C Pointer FFI:
+
+typedef struct VTypedPointer {
+  VTAG tag;
+  unsigned offset;
+  VWORD desc;
+  VWORD ptr;
+};
+
+desc looks like the parser:
+
+(pointer int)
+(pointer (struct foo))
+
+(struct bar (long-int long-int))
+
+ptr can either be a pointer to a blob of suitable type or a foreign pointer
+
+given a buffer view of type (pointer (struct foo)), can you pass it to a function of type void(struct foo) or just of type void(struct foo *)? How about just the latter, because passing by value is a huge undertaking. It's also a bit degenerate to automagically dereference a pointer to pass by value.
+
+functions?
+
+ptr-cast         ie (char*)ptr
+ptr-deref        ie ptr[0]
+ptr-add          ie ptr+i
+ptr-diff         ie ptr1-ptr2
+ptr-member       ie ptr->x
+ptr-ref-member   ie &ptr->x
+ptr-set-member!  ie ptr->x = y
+
+

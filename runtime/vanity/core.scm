@@ -53,6 +53,8 @@
     symbol->string
     ; vectors
     list->vector vector vector-ref vector-set! vector-length vector-for-each 
+    ; hash table
+    make-hash-table hash-table-ref hash-table-set! hash-table-delete!
     ; chars
     char->integer
     ; io
@@ -404,6 +406,23 @@
           (if (< i len)
               (begin (apply f (map (lambda (vec) (vector-ref vec i)) vecs)) (loop (+ i 1)))))))))
 
+  ; hash tables
+
+  (define make-hash-table
+    (case-lambda
+      (() (##vcore.make-hash-table ##sys.eq? #f 32))
+      ((eq) (##vcore.make-hash-table eq #f 32))
+      ((eq hash) (##vcore.make-hash-table eq hash 32))
+      ((eq hash len) (##vcore.make-hash-table eq hash len))))
+  (define hash-table-equivalence-function ##vcore.hash-table-equivalence-function)
+  (define hash-table-hash-function ##vcore.hash-table-hash-function)
+  (define hash-table-ref
+    (case-lambda
+      ((table key) (##vcore.hash-table-ref table key (lambda () (error "No such key in hash table" key))))
+      ((table key thunk) (##vcore.hash-table-ref table key thunk))))
+  (define (hash-table-set! table key val)
+    (##vcore.hash-table-set! table key val (lambda () (error "Hash table regrowth not supported yet."))))
+  (define hash-table-delete! ##vcore.hash-table-delete!)
 
   ; chars
 

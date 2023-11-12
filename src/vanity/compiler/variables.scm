@@ -275,6 +275,14 @@
          ((##sys.vector-set!) "VVectorSet2")
          ((##sys.vector-length) "VVectorLength2")
 
+         ; Hash Table
+         ((##vcore.make-hash-table) "VMakeHashTable")
+         ((##vcore.hash-table-equivalence-function) "VHashTableEqvFunc")
+         ((##vcore.hash-table-hash-function) "VHashTableHashFunc")
+         ((##vcore.hash-table-ref) "VHashTableRef")
+         ((##vcore.hash-table-set!) "VHashTableSet")
+         ((##vcore.hash-table-delete!) "VHashTableDelete")
+
          ; Strings
 
          ((##sys.make-string) "VMakeString2")
@@ -330,6 +338,14 @@
          ((##sys.open-output-process) "VOpenOutputProcess2")
          ((##sys.make-temporary-file) "VMakeTemporaryFile2")
          ((##sys.command-line) "VCommandLine2")
+
+         ; Random
+         ((##vcore.make-random) "VMakeRandom")
+         ((##vcore.random-copy) "VRandomCopy")
+         ((##vcore.random-sample!) "VRandomSample")
+         ((##vcore.random-sample-bounded!) "VRandomSampleBounded")
+         ((##vcore.random-sample-float!) "VRandomSampleFloat")
+         ((##vcore.random-advance!) "VRandomAdvance")
 
          (else #f)))
   (define (free-variables expr)
