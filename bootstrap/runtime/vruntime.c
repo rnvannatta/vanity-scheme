@@ -107,11 +107,12 @@ typedef struct VRuntime {
   bool VActiveHeap;
   // mutation info
   struct {
-    void * container;
+    VWORD * container;
     VWORD * slot;
-  } VTrackedMutations[MAX_TRACKED_MUTATIONS];
+  } * VTrackedMutations;
   unsigned VNumTrackedMutations;
   unsigned VNumUntrackedMutations;
+  unsigned VTrackedMutationsSize;
   // globals
   VGlobalEntry * VGlobalTable;
   unsigned VNumGlobals;
@@ -182,10 +183,11 @@ uint64_t VMajorGCTime;
 
 unsigned VNumTrackedMutations;
 unsigned VNumUntrackedMutations;
+unsigned VTrackedMutationsSize;
 struct {
   VWORD * container;
   VWORD * slot;
-} VTrackedMutations[MAX_TRACKED_MUTATIONS];
+} * VTrackedMutations;
 
 static uint64_t VHashSymbol(VWORD sym) {
   VBlob * blob = VDecodeBlob(sym);
@@ -605,6 +607,12 @@ VWORD VMoveDispatch(VWORD word) {
           return VEncodePointer(VMoveObject(v, sizeof(VVector) + sizeof(VWORD[v->len])), VPOINTER_OTHER);
           break;
         }
+        case VHASH_TABLE:
+        {
+          VHashTable * v = ptr;
+          return VEncodePointer(VMoveObject(v, sizeof(VHashTable)), VPOINTER_OTHER);
+          break;
+        }
         case VPORT:
         {
           VPort * p = ptr;
@@ -648,6 +656,29 @@ void VCheneyVector(VVector * vec) {
   for(int i = 0; i < vec->len; i++)
     vec->arr[i] = VMoveDispatch(vec->arr[i]);
 }
+void VCheneyHashTable(VHashTable * table) {
+  VWORD _vec = table->vec = VMoveDispatch(table->vec);
+  table->eq = VMoveDispatch(table->eq);
+  table->hash = VMoveDispatch(table->hash);
+
+  // FIXME: this should be done in a VMoveHashTable
+  // and the storage type of hash table's vector
+  // should be something other than an actual vector
+  // so as to allow us to skip scanning the vector twice
+  VVector * vec = VCheckedDecodeVector(_vec, "garbage-collect/hash-table");
+  for(int i = 0; i < vec->len/3; i++) {
+
+    VWORD key = vec->arr[3*i+0];
+    if(VBits(key) == VBits(VVOID))
+      continue;
+    vec->arr[3*i+2] = VMoveDispatch(vec->arr[3*i+2]);
+
+    VWORD key_mov = VMoveDispatch(key);
+    if(VBits(key_mov) != VBits(key))
+      table->flags |= HFLAG_DIRTY;
+    vec->arr[3*i+0] = key_mov;
+  }
+}
 
 VWORD * VCheneyScan(VWORD * cur) {
   switch(*(VTAG*)cur) {
@@ -682,6 +713,12 @@ VWORD * VCheneyScan(VWORD * cur) {
       VVector * v = ((VVector*)cur);
       VCheneyVector(v);
       return cur + (sizeof(VVector) / sizeof(VWORD)) + v->len;
+    }
+    case VHASH_TABLE:
+    {
+      VHashTable * v = ((VHashTable*)cur);
+      VCheneyHashTable(v);
+      return cur + (sizeof(VHashTable) / sizeof(VWORD));
     }
     case VSTRING:
     case VSYMBOL:
@@ -780,21 +817,23 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
     // tracked mutations can be ignored during major gcs
     // because the issue was heap pointing to stack
     // but we're crawling heap and stack this gc
-    for(unsigned i = 0; i < VNumTrackedMutations; i++) {
-      // of interest is that because container is in the heap
-      // we only need to check forwards during a major gc, technically
-      VWORD * container = VTrackedMutations[i].container;
-      VWORD * slot = VTrackedMutations[i].slot;
-      // the container may be another tracked mutation's slot
-      if(container)
-      {
-        VWORD * forward = VForwarded(container);
-        if(forward) {
-          slot = forward + (slot - container);
+    if(VTrackedMutations) {
+      for(unsigned i = 0; i < VNumTrackedMutations; i++) {
+        // of interest is that because container is in the heap
+        // we only need to check forwards during a major gc, technically
+        VWORD * container = VTrackedMutations[i].container;
+        VWORD * slot = VTrackedMutations[i].slot;
+        // the container may be another tracked mutation's slot
+        if(container)
+        {
+          VWORD * forward = VForwarded(container);
+          if(forward) {
+            slot = forward + (slot - container);
+          }
         }
-      }
 
-      *slot = VMoveDispatch(*slot);
+        *slot = VMoveDispatch(*slot);
+      }
     }
     // Finalizers are only processed during major gcs, so we need
     // to manually copy them over during minor gcs
@@ -1133,9 +1172,16 @@ void VError(const char * str, ...) {
 }
 
 
+// Its impossible for a var in the old set to point to the new set
+// except through mutation, track all such events to avoid dropping them
+// during GC
 void VTrackMutation(void * container, VWORD * slot, VWORD val) {
-  if(VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
-    VError("Unable to track mutation: overflow\n");
+  // TODO: USE A HASH TABLE TO AVOID DUPLICATE TRACKING
+  if(VNumTrackedMutations >= VTrackedMutationsSize) {
+    if(!VTrackedMutations)
+      VTrackedMutationsSize = 128;
+    VTrackedMutationsSize *= 2;
+    VTrackedMutations = realloc(VTrackedMutations, sizeof(*VTrackedMutations) * VTrackedMutationsSize);
   }
 
   if(VIsPointer(val)) {
@@ -1158,7 +1204,7 @@ void VTrackMutation(void * container, VWORD * slot, VWORD val) {
 static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val) {
   char * proc = bSetCar ? "set-car!" : "set-cdr!";
   V_ARG_CHECK2(proc, 3, argc);
-  if(VStackOverflow((char*)&runtime) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
+  if(VStackOverflow((char*)&runtime)) {
     VGarbageCollect2Args((VFunc)(bSetCar ? VSetCar2 : VSetCdr2), runtime, statics, 3, argc, k, pair, val);
   } else {
     if(VWordType(pair) != VPOINTER_PAIR) VError("%s: arg 1 not a pair\n", proc);
@@ -1182,7 +1228,7 @@ void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val) {
 
 void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
   V_ARG_CHECK2("vector-set!", 4, argc);
-  if(VStackOverflow((char*)&runtime) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
+  if(VStackOverflow((char*)&runtime)) {
     VGarbageCollect2Args((VFunc)VVectorSet2, runtime, statics, 4, argc, k, v, i, val);
   } else {
     VVector * vector = VCheckedDecodeVector(v, "vector-set!");
@@ -1201,7 +1247,7 @@ void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD val) {
   // not really a procedure but needs to abuse the procedure
   // interface to garbage collect
   if(argc != 4) VError("set!: not enough arguments? This should be impossible\n");
-  if(VStackOverflow((char*)&runtime) || VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) {
+  if(VStackOverflow((char*)&runtime)) {
     VGarbageCollect2Args((VFunc)VSetEnvVar2, runtime, statics, 4, 4, k, _up, _var, val);
   } else {
     int up = VDecodeInt(_up);
@@ -1213,24 +1259,7 @@ void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD val) {
     }
     statics->vars[var] = val;
 
-    // Its impossible for a var in the old set to point to the new set
-    // except through mutation, track all such events to avoid dropping them
-    // during GC
-    if(VIsPointer(val)) {
-      void * ptr = VDecodePointer(val);
-      if(VMemLocation(ptr) != STACK_MEM) {
-        VNumUntrackedMutations++;
-      } else if(VMemLocation(statics) != STACK_MEM) {
-        // an environment in older memory is being set to
-        // a value in the new generation, need to track it to
-        // avoid losing it
-        VTrackedMutations[VNumTrackedMutations].container = (VWORD*)statics;
-        VTrackedMutations[VNumTrackedMutations].slot = &statics->vars[var];
-        VNumTrackedMutations++;
-      } else {
-        VNumUntrackedMutations++;
-      }
-    } 
+    VTrackMutation(statics, &statics->vars[var], val);
     V_CALL(k, runtime, VVOID);
   }
 }
@@ -1245,41 +1274,18 @@ static bool VDefineImpl(VWORD sym, VWORD val, bool is_set) {
     if(is_set) return false;
 
     place = VInsertGlobalEntry(hash, sym, val);
-    if(VIsPointer(sym)) {
-      void * ptr = VDecodePointer(sym);
-      // The symbol table is not walked during minor gc so always track values
-      if(VMemLocation(ptr) != STACK_MEM) {
-        VNumUntrackedMutations++;
-      } else {
-        if(VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) VError("Mutation tracking overflow\n");
-        // symbol table is never moved, no need to worry about forwards
-        VTrackedMutations[VNumTrackedMutations].container = NULL;
-        VTrackedMutations[VNumTrackedMutations].slot = &place->symbol;
-        VNumTrackedMutations++;
-      }
-    }
+    // symbol table is never moved, no need to worry about forwards
+    VTrackMutation(NULL, &place->symbol, sym);
   }
   
   place->value = val;
-  if(VIsPointer(val)) {
-    void * ptr = VDecodePointer(val);
-    // The symbol table is not walked during minor gc so always track values
-    if(VMemLocation(ptr) != STACK_MEM) {
-      VNumUntrackedMutations++;
-    } else {
-      if(VNumTrackedMutations >= MAX_TRACKED_MUTATIONS) VError("Mutation tracking overflow\n");
-      // symbol table is never moved, no need to worry about forwards
-      VTrackedMutations[VNumTrackedMutations].container = NULL;
-      VTrackedMutations[VNumTrackedMutations].slot = &place->value;
-      VNumTrackedMutations++;
-    }
-  }
+  VTrackMutation(NULL, &place->value, val);
   return true;
 }
 
 void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
   V_ARG_CHECK2("set!", 3, argc);
-  if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
+  if(VStackOverflow((char*)&runtime) || VNumGlobals >= VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VSetGlobalVar2, runtime, statics, 3, argc, k, sym, val);
 
   if(!VDefineImpl(sym, val, true))
@@ -1290,7 +1296,7 @@ void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
 
 void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
   V_ARG_CHECK2("define", 3, argc);
-  if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
+  if(VStackOverflow((char*)&runtime) || VNumGlobals >= VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VDefineGlobalVar2, runtime, statics, 3, argc, k, sym, val);
 
   VDefineImpl(sym, val, false);
@@ -1306,7 +1312,7 @@ void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
     defines = VDecodePair(defines)->rest;
   }
   VGrowSymtable = VNumGlobals + num >= VNumGlobalSlots * 0.8;
-  if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+num >= MAX_TRACKED_MUTATIONS || VGrowSymtable) {
+  if(VStackOverflow((char*)&runtime) || VGrowSymtable) {
     VGarbageCollect2Args((VFunc)VMultiDefine2, runtime, statics, 2, argc, k, root);
   }
 
@@ -1327,7 +1333,7 @@ void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
 
 void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_ARG_CHECK2("lookup-library", 2, argc);
-  if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
+  if(VStackOverflow((char*)&runtime) || VNumGlobals >= VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VLookupLibrary2, runtime, statics, 2, argc, k, name);
 
   // TODO statically allocate this you knucklehead
@@ -1418,7 +1424,7 @@ static VFunc VFunctionImpl(VWORD name) {
 
 static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
   V_ARG_CHECK2("load-library-k", 1, argc);
-  if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
+  if(VStackOverflow((char*)&runtime) || VNumGlobals >= VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VLoadLibraryK, runtime, statics, 1, argc, loader);
 
   VWORD k = statics->vars[0];
@@ -1448,7 +1454,7 @@ static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
 
 void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_ARG_CHECK2("load-library", 2, argc);
-  if(VStackOverflow((char*)&runtime) || VNumTrackedMutations+1 >= MAX_TRACKED_MUTATIONS || VNumGlobals >= VNumGlobalSlots * 0.8)
+  if(VStackOverflow((char*)&runtime) || VNumGlobals >= VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VLoadLibrary2, runtime, statics, 2, argc, k, name);
 
 #define sym_str "##vcore.libraries"
@@ -1621,6 +1627,11 @@ void VDisplayWord(FILE * f, VWORD v, bool write) {
         case VVECTOR:
         {
           fprintf(f, "#vector");
+          break;
+        }
+        case VHASH_TABLE:
+        {
+          fprintf(f, "#hash-table");
           break;
         }
         case VPORT:

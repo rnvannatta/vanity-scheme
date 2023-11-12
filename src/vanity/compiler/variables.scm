@@ -27,6 +27,7 @@
 ;          _V10 a system variable
 ;          _V20 a library
 ;          _V30 a shim function for a ffi
+;          _V40 an intrinsic
 
 (define-library (vanity compiler variables)
   (export mangle-symbol mangle-library lookup-inline lookup-intrinsic2 free-variables)
@@ -123,7 +124,7 @@
          ((##sys.string?) "VStringP")
          ((##sys.int?) "VIntP")
          ((##sys.double?) "VDoubleP")
-       ((##sys.char?) "VCharP")
+         ((##sys.char?) "VCharP")
 
          ; Equality
          ((##sys.eq?) "VEq")

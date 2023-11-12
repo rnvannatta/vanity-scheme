@@ -67,6 +67,15 @@ void VListVector2(V_CORE_ARGS, VWORD k, VWORD vec);
 void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i);
 void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vec);
 
+// hash table
+
+void VMakeHashTable(V_CORE_ARGS, VWORD k, VWORD eq, VWORD hash, VWORD _len);
+void VHashTableEqvFunc(V_CORE_ARGS, VWORD k, VWORD table);
+void VHashTableHashFunc(V_CORE_ARGS, VWORD k, VWORD table);
+void VHashTableRef(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD thunk);
+void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD val, VWORD thunk);
+void VHashTableDelete(V_CORE_ARGS, VWORD k, VWORD table, VWORD key);
+
 // strings
 
 void VMakeString2(V_CORE_ARGS, VWORD k, VWORD i, ...);

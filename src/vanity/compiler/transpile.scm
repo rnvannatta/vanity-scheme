@@ -95,6 +95,15 @@
     (define foreign-functions '())
     (define functions '())
     (define literal-table '())
+    (define (lift-intrinsic sym intrin)
+      ; FIXME ASSOC DETECTED
+      (let* ((key (list '##intrinsic sym))
+             (lookup (assoc key literal-table)))
+        (if lookup
+            (car lookup)
+            (let ((lookup (cons key intrin)))
+              (set! literal-table (cons lookup literal-table))
+              (car lookup)))))
     ; TODO drop the unnecessary quotes from nonsymbols, ie turn '"foo" into just "foo"
     ; then split out lift-symbol into a seperate function
     (define (lift-literal x)
@@ -110,9 +119,7 @@
                (if lookup `(##string ,(cdr lookup))
                    (begin
                      (set! literal-table (cons (cons x (gensym "string")) literal-table))
-                     `(##string ,(cdar literal-table))
-                   )
-               )))
+                     `(##string ,(cdar literal-table))))))
             ((symbol? x)
              ; FIXME ASSOC DETECTED
              (if (not (assv x literal-table))
@@ -125,7 +132,7 @@
          `(,n ,(iter-apply fun body)))
         ((n '+ body)
          `(,n + ,(iter-apply fun body)))))
-    (define (iter-atom fun expr)
+    (define (iter-atom fun expr func-position?)
       (match expr
         (('bruijn . _) expr)
         (('lambda n body)
@@ -154,33 +161,44 @@
         (('quote x)
          `(quote ,(lift-literal x)))
         (('##inline f . xs)
-         `(##inline ,f . ,(map (lambda (x) (iter-atom fun x)) xs)))
-        (x (if (symbol? x) x (lift-literal x)))))
+         `(##inline ,f . ,(map (lambda (x) (iter-atom fun x #f)) xs)))
+        (x (if (symbol? x)
+               ; we don't need to create static storage for intrinsics
+               ; that are directly applied, only for intrinsics that are passed
+               ; as directly applied intrinsics never create null closures
+               (if func-position?
+                   x
+                   (let ((intrin (lookup-intrinsic2 x)))
+                     (if (not intrin)
+                         x
+                         (lift-intrinsic x intrin))))
+               (lift-literal x)))))
     (define (iter-apply fun expr)
       (match expr
         (('define k y x)
-         `(define ,k ,(lift-literal y) ,(iter-atom (mangle-symbol y) x)))
+         `(define ,k ,(lift-literal y) ,(iter-atom (mangle-symbol y) x #f)))
         (('set! k ('bruijn name . rest) x)
-         `(set! ,(iter-atom fun k) (bruijn ,name . ,rest) ,(iter-atom (mangle-symbol name) x)))
+         `(set! ,(iter-atom fun k #f) (bruijn ,name . ,rest) ,(iter-atom (mangle-symbol name) x #f)))
         (('set! k y x)
-         `(set! ,(iter-atom fun k) ,(lift-literal y) ,(iter-atom (mangle-symbol y) x)))
+         `(set! ,(iter-atom fun k #f) ,(lift-literal y) ,(iter-atom (mangle-symbol y) x #f)))
         (('if p x y)
-         `(if ,(iter-atom fun p) ,(iter-apply fun x) ,(iter-apply fun y)))
+         `(if ,(iter-atom fun p #f) ,(iter-apply fun x) ,(iter-apply fun y)))
         ((('lambda n body) . xs)
          (let ((lamb (genlambda fun)))
            (set! functions (cons `(,lamb #f (,n ,(iter-apply fun body))) functions))
-           `((close ,lamb) . ,(map (lambda (x) (iter-atom fun x)) xs))))
-        ((xs ...)
-         (map (lambda (x) (iter-atom fun x)) xs))))
+           `((close ,lamb) . ,(map (lambda (x) (iter-atom fun x #f)) xs))))
+        ((f xs ...)
+         (cons (iter-atom fun f #t)
+               (map (lambda (x) (iter-atom fun x #f)) xs)))))
     (define (iter fun expr) (match expr
         (('bruijn . _) expr)
-        (('lambda . _) (iter-atom fun expr))
-        (('case-lambda . _) (iter-atom fun expr))
-        (('continuation . _) (iter-atom fun expr))
-        (('quote . _) (iter-atom fun expr))
-        (('##inline . _) (iter-atom fun expr))
+        (('lambda . _) (iter-atom fun expr #f))
+        (('case-lambda . _) (iter-atom fun expr #f))
+        (('continuation . _) (iter-atom fun expr #f))
+        (('quote . _) (iter-atom fun expr #f))
+        (('##inline . _) (iter-atom fun expr #f))
         ((_ . _) (iter-apply fun expr))
-        (else (iter-atom fun expr))))
+        (else (iter-atom fun expr #f))))
     (define (iter-declare d)
       (match d
         (('##foreign.declare . _) d)
@@ -273,6 +291,8 @@
         (else c)))
     (define (print-literal-string x)
       (printf "VEncodePointer(&~A.sym, VPOINTER_OTHER)" (mangle-symbol x)))
+    (define (print-intrinsic x)
+      (printf "VEncodePointer(&_V40~A, VPOINTER_CLOSURE)" (mangle-symbol x)))
     (define (print-literal x)
       (cond ((integer? x) (printf "VEncodeInt(~Al)" x)) ; FIXME bounds check
             ((number? x) (printf "VEncodeNumber(~A)" x)); FIXME fractions
@@ -287,14 +307,20 @@
              (let* ((mangled (mangle-symbol (car lit)))
                     (escaped (escape-string (symbol->string (car lit))))
                     (len (+ (string-length (symbol->string (car lit))) 1)))
-               (printf "static struct { VBlob sym; char bytes[~A]; } ~A = { { VSYMBOL, ~A }, \"~A\" };~N"
+               (printf "struct { VBlob sym; char bytes[~A]; } ~A __attribute__((weak)) = { { VSYMBOL, ~A }, \"~A\" };~N"
                 len mangled len escaped)))
             ((string? (car lit))
              (let* ((mangled (mangle-symbol (cdr lit)))
                     (escaped (escape-string (car lit)))
                     (len (+ (string-length (car lit)) 1)))
+               ; strings use a gensym name, so no weak attributes here
                (printf "static struct { VBlob sym; char bytes[~A]; } ~A = { { VSTRING, ~A }, \"~A\" };~N"
                 len mangled len escaped)))
+            ; of shape (('##intrinsic intrin) . c-function)
+            ((and (pair? (car lit)) (eqv? (caar lit) '##intrinsic))
+             (printf "VClosure _V40~A __attribute__((weak)) = { VCLOSURE, (VFunc)~A, NULL };~N"
+               (mangle-symbol (cadar lit))
+               (cdr lit)))
             (else (compiler-error "print-literal-table: unknown entry in literal table" lit))))
     (define (closes? expr)
       (match expr
@@ -303,6 +329,7 @@
         (('quote . _) #f)
         (('bruijn . _) #f)
         (('##string . _) #f)
+        (('##intrinsic . _) #f)
         (('if p a b)
          (or (closes? p) (closes? a) (closes? b)))
         (('set! k y x) #t)
@@ -322,7 +349,7 @@
            (printf ",~N      ")
            (print-expr x args))
           xs)
-        (printf "~N    );~N"))
+        (printf ");~N"))
       (define (print-closure-apply f xs tail-call?)
         (match f
           (('close fun) (printf "V_CALL_FUNC(~A, env" fun))
@@ -335,7 +362,7 @@
            (printf ",~N      ")
            (print-expr x args))
           xs)
-        (printf "~N    );~N"))
+        (printf ");~N"))
       
       ; should always be a tail call eh
       (define (print-define-global k y x tail-call?)
@@ -370,16 +397,16 @@
       (define (print-inline f xs)
         (let ((inline (lookup-inline f)))
           (if (not inline) (compiler-error "unknown inline" f))
-          (printf "~A(~N" inline)
+          (printf "~A(~N        " inline)
           (if (not (null? xs))
               (begin
                 (print-expr (car xs) args)
                 (for-each
                   (lambda (x)
-                   (printf ",~N      ")
+                   (printf ",~N        ")
                    (print-expr x args))
                   (cdr xs))))
-          (printf "~N    )~N")))
+          (printf ")")))
       (match expr
         (('quote ()) (display "VNULL"))
         ; FIXME
@@ -407,12 +434,15 @@
          (print-inline f xs))
         (('##string x)
          (print-literal-string x))
+        (('##intrinsic x)
+         (print-intrinsic x))
         (('##foreign.function x)
          (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A, NULL)})" x))
         ((f xs ...)
-         (if (lookup-intrinsic2 f)
-             (print-builtin-apply f xs #f)
-             (print-closure-apply f xs #f)))
+         (cond ((lookup-intrinsic2 f) (print-builtin-apply f xs #f))
+               ((and (pair? f) (eqv? (car f) '##intrinsic))
+                (print-builtin-apply (cadr f) xs #f))
+               (else (print-closure-apply f xs #f))))
         (x (if (symbol? x) (print-global x) (print-literal x)))
         (else (compiler-error "print-expr: malformed expression" expr))))
      (define (print-fun-single name check-args? num variadic? body needs-used?)
@@ -546,8 +576,8 @@
       (printf "int main(int argc, char ** argv) {~N")
       (printf "  void (*toplevels[])() = {~N")
       (for-each (lambda (i) (printf "    toplevel~A," i)) (iota (length toplevels)))
-      (printf "  ~N};~N")
-      (printf "  VArgc = argc; VArgv = argv;")
+      (printf "~N  };~N")
+      (printf "  VArgc = argc; VArgv = argv;~N")
       (printf "  return VStart(sizeof toplevels / sizeof *toplevels, toplevels);~N")
       (displayln "}"))
 
