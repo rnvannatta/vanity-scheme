@@ -276,9 +276,24 @@
       (('cut-iter xs args f x . rest) (expand-syntax `(cut-iter ,xs (,x . ,args) ,f . ,rest)))
       (('cut . noise) (compiler-error "malformed cut" `(cut . ,noise)))
 
-      (('set! y x)
+      #;(('set! y x)
        (if (not (symbol? y)) (compiler-error "set!'s first argument is not a symbol" y))
        `(set! ,y ,(expand-syntax x)))
+      (('set! y x)
+       (if (symbol? y)
+           `(set! ,y ,(expand-syntax x))
+           (match y
+            ((get arg ...) 
+             `((##vcore.setter ,get) ,@arg ,x))
+            (else (compiler-error "malformed set!" `(set! ,y ,x))))))
+      (('set! f y x xs ...)
+       (if (symbol? y)
+           `(set! ,y (,f ,y ,x . ,xs))
+           (match y
+            ((get arg ...)
+             (let ((val (gensym "val")))
+               `((##vcore.mutator ,get) ,@arg (lambda (,val) (,f ,val ,x . ,xs)))))
+            (else (compiler-error "malformed set!" `(set! ,f ,y ,x . ,xs))))))
       (('set! . noise) (compiler-error "malformed set!" `(set! . ,noise)))
 
       (('define . ys) (compiler-error "stray define in program" `(define . ,ys)))

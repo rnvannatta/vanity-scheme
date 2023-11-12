@@ -643,7 +643,7 @@ try_again: ;
   }
 }
 
-void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key, VWORD val, VWORD thunk) {
+void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key, VWORD val) {
 
   VHashTable * table = VCheckedDecodeHashTable(_table, "hash-table-set!");
   VVector * vec = VCheckedDecodeVector(table->vec, "hash-table-set!");

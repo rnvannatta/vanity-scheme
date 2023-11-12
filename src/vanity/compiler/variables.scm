@@ -243,6 +243,7 @@
          ((##sys.eq?) "VEq2")
          ((##sys.symbol=?) "VSymbolEqv2")
          ((##sys.blob=?) "VBlobEqv2")
+         ((##sys.eqv?) "VEqv")
 
          ; Logic
          ((##sys.not) "VNot2")
