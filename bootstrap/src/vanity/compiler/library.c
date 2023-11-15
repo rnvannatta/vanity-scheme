@@ -31,52 +31,52 @@ static struct { VBlob sym; char bytes[21]; } _V10string_D215 = { { VSTRING, 21 }
 static struct { VBlob sym; char bytes[21]; } _V10string_D214 = { { VSTRING, 21 }, "_V0vanity_V0list_V20" };
 static struct { VBlob sym; char bytes[33]; } _V10string_D213 = { { VSTRING, 33 }, "_V0vanity_V0compiler_V0utils_V20" };
 static struct { VBlob sym; char bytes[35]; } _V10string_D212 = { { VSTRING, 35 }, "_V0vanity_V0compiler_V0library_V20" };
-static struct { VBlob sym; char bytes[6]; } _V0null_Q = { { VSYMBOL, 6 }, "null\?" };
-static struct { VBlob sym; char bytes[8]; } _V0call_Wcc = { { VSYMBOL, 8 }, "call/cc" };
-static struct { VBlob sym; char bytes[7]; } _V0append = { { VSYMBOL, 7 }, "append" };
-static struct { VBlob sym; char bytes[7]; } _V0equal_Q = { { VSYMBOL, 7 }, "equal\?" };
-static struct { VBlob sym; char bytes[4]; } _V0cdr = { { VSYMBOL, 4 }, "cdr" };
-static struct { VBlob sym; char bytes[4]; } _V0car = { { VSYMBOL, 4 }, "car" };
-static struct { VBlob sym; char bytes[5]; } _V0cadr = { { VSYMBOL, 5 }, "cadr" };
-static struct { VBlob sym; char bytes[15]; } _V0compiler__error = { { VSYMBOL, 15 }, "compiler-error" };
-static struct { VBlob sym; char bytes[8]; } _V0sprintf = { { VSYMBOL, 8 }, "sprintf" };
-static struct { VBlob sym; char bytes[4]; } _V0map = { { VSYMBOL, 4 }, "map" };
-static struct { VBlob sym; char bytes[5]; } _V0fold = { { VSYMBOL, 5 }, "fold" };
-static struct { VBlob sym; char bytes[6]; } _V0pair_Q = { { VSYMBOL, 6 }, "pair\?" };
-static struct { VBlob sym; char bytes[14]; } _V0string__length = { { VSYMBOL, 14 }, "string-length" };
-static struct { VBlob sym; char bytes[2]; } _V0_G = { { VSYMBOL, 2 }, ">" };
-static struct { VBlob sym; char bytes[15]; } _V0symbol___Gstring = { { VSYMBOL, 15 }, "symbol->string" };
-static struct { VBlob sym; char bytes[8]; } _V0symbol_Q = { { VSYMBOL, 8 }, "symbol\?" };
-static struct { VBlob sym; char bytes[2]; } _V0_L = { { VSYMBOL, 2 }, "<" };
-static struct { VBlob sym; char bytes[2]; } _V0_P = { { VSYMBOL, 2 }, "+" };
-static struct { VBlob sym; char bytes[11]; } _V0string__ref = { { VSYMBOL, 11 }, "string-ref" };
-static struct { VBlob sym; char bytes[3]; } _V0_L_E = { { VSYMBOL, 3 }, "<=" };
-static struct { VBlob sym; char bytes[14]; } _V0char___Ginteger = { { VSYMBOL, 14 }, "char->integer" };
-static struct { VBlob sym; char bytes[6]; } _V0assoc = { { VSYMBOL, 6 }, "assoc" };
-static struct { VBlob sym; char bytes[5]; } _V0cons = { { VSYMBOL, 5 }, "cons" };
-static struct { VBlob sym; char bytes[11]; } _V0close__port = { { VSYMBOL, 11 }, "close-port" };
-static struct { VBlob sym; char bytes[9]; } _V0read__all = { { VSYMBOL, 9 }, "read-all" };
-static struct { VBlob sym; char bytes[23]; } _V0search__open__input__file = { { VSYMBOL, 23 }, "search-open-input-file" };
+struct { VBlob sym; char bytes[6]; } _V0null_Q __attribute__((weak)) = { { VSYMBOL, 6 }, "null\?" };
+struct { VBlob sym; char bytes[8]; } _V0call_Wcc __attribute__((weak)) = { { VSYMBOL, 8 }, "call/cc" };
+struct { VBlob sym; char bytes[7]; } _V0append __attribute__((weak)) = { { VSYMBOL, 7 }, "append" };
+struct { VBlob sym; char bytes[7]; } _V0equal_Q __attribute__((weak)) = { { VSYMBOL, 7 }, "equal\?" };
+struct { VBlob sym; char bytes[4]; } _V0cdr __attribute__((weak)) = { { VSYMBOL, 4 }, "cdr" };
+struct { VBlob sym; char bytes[4]; } _V0car __attribute__((weak)) = { { VSYMBOL, 4 }, "car" };
+struct { VBlob sym; char bytes[5]; } _V0cadr __attribute__((weak)) = { { VSYMBOL, 5 }, "cadr" };
+struct { VBlob sym; char bytes[15]; } _V0compiler__error __attribute__((weak)) = { { VSYMBOL, 15 }, "compiler-error" };
+struct { VBlob sym; char bytes[8]; } _V0sprintf __attribute__((weak)) = { { VSYMBOL, 8 }, "sprintf" };
+struct { VBlob sym; char bytes[4]; } _V0map __attribute__((weak)) = { { VSYMBOL, 4 }, "map" };
+struct { VBlob sym; char bytes[5]; } _V0fold __attribute__((weak)) = { { VSYMBOL, 5 }, "fold" };
+struct { VBlob sym; char bytes[6]; } _V0pair_Q __attribute__((weak)) = { { VSYMBOL, 6 }, "pair\?" };
+struct { VBlob sym; char bytes[14]; } _V0string__length __attribute__((weak)) = { { VSYMBOL, 14 }, "string-length" };
+struct { VBlob sym; char bytes[2]; } _V0_G __attribute__((weak)) = { { VSYMBOL, 2 }, ">" };
+struct { VBlob sym; char bytes[15]; } _V0symbol___Gstring __attribute__((weak)) = { { VSYMBOL, 15 }, "symbol->string" };
+struct { VBlob sym; char bytes[8]; } _V0symbol_Q __attribute__((weak)) = { { VSYMBOL, 8 }, "symbol\?" };
+struct { VBlob sym; char bytes[2]; } _V0_L __attribute__((weak)) = { { VSYMBOL, 2 }, "<" };
+struct { VBlob sym; char bytes[2]; } _V0_P __attribute__((weak)) = { { VSYMBOL, 2 }, "+" };
+struct { VBlob sym; char bytes[11]; } _V0string__ref __attribute__((weak)) = { { VSYMBOL, 11 }, "string-ref" };
+struct { VBlob sym; char bytes[3]; } _V0_L_E __attribute__((weak)) = { { VSYMBOL, 3 }, "<=" };
+struct { VBlob sym; char bytes[14]; } _V0char___Ginteger __attribute__((weak)) = { { VSYMBOL, 14 }, "char->integer" };
+struct { VBlob sym; char bytes[6]; } _V0assoc __attribute__((weak)) = { { VSYMBOL, 6 }, "assoc" };
+struct { VBlob sym; char bytes[5]; } _V0cons __attribute__((weak)) = { { VSYMBOL, 5 }, "cons" };
+struct { VBlob sym; char bytes[11]; } _V0close__port __attribute__((weak)) = { { VSYMBOL, 11 }, "close-port" };
+struct { VBlob sym; char bytes[9]; } _V0read__all __attribute__((weak)) = { { VSYMBOL, 9 }, "read-all" };
+struct { VBlob sym; char bytes[23]; } _V0search__open__input__file __attribute__((weak)) = { { VSYMBOL, 23 }, "search-open-input-file" };
 static struct { VBlob sym; char bytes[44]; } _V10string_D211 = { { VSTRING, 44 }, "library header must only have one statement" };
 static struct { VBlob sym; char bytes[23]; } _V10string_D210 = { { VSTRING, 23 }, "unable to find library" };
 static struct { VBlob sym; char bytes[27]; } _V10string_D209 = { { VSTRING, 27 }, "library already registered" };
 static struct { VBlob sym; char bytes[8]; } _V10string_D208 = { { VSTRING, 8 }, "~A.scmh" };
 static struct { VBlob sym; char bytes[6]; } _V10string_D207 = { { VSTRING, 6 }, "~A/~A" };
 static struct { VBlob sym; char bytes[2]; } _V10string_D206 = { { VSTRING, 2 }, "." };
-static struct { VBlob sym; char bytes[14]; } _V0inline__export = { { VSYMBOL, 14 }, "inline-export" };
-static struct { VBlob sym; char bytes[14]; } _V0inline__import = { { VSYMBOL, 14 }, "inline-import" };
-static struct { VBlob sym; char bytes[7]; } _V0export = { { VSYMBOL, 7 }, "export" };
-static struct { VBlob sym; char bytes[25]; } _V0define__library__interface = { { VSYMBOL, 25 }, "define-library-interface" };
+struct { VBlob sym; char bytes[14]; } _V0inline__export __attribute__((weak)) = { { VSYMBOL, 14 }, "inline-export" };
+struct { VBlob sym; char bytes[14]; } _V0inline__import __attribute__((weak)) = { { VSYMBOL, 14 }, "inline-import" };
+struct { VBlob sym; char bytes[7]; } _V0export __attribute__((weak)) = { { VSYMBOL, 7 }, "export" };
+struct { VBlob sym; char bytes[25]; } _V0define__library__interface __attribute__((weak)) = { { VSYMBOL, 25 }, "define-library-interface" };
 static struct { VBlob sym; char bytes[20]; } _V10string_D205 = { { VSTRING, 20 }, "not a valid library" };
-static struct { VBlob sym; char bytes[15]; } _V0define__library = { { VSYMBOL, 15 }, "define-library" };
-static struct { VBlob sym; char bytes[7]; } _V0import = { { VSYMBOL, 7 }, "import" };
-static struct { VBlob sym; char bytes[20]; } _V0gather__dependencies = { { VSYMBOL, 20 }, "gather-dependencies" };
-static struct { VBlob sym; char bytes[13]; } _V0import___Gpath = { { VSYMBOL, 13 }, "import->path" };
-static struct { VBlob sym; char bytes[16]; } _V0import__basepath = { { VSYMBOL, 16 }, "import-basepath" };
-static struct { VBlob sym; char bytes[14]; } _V0valid__import_Q = { { VSYMBOL, 14 }, "valid-import\?" };
-static struct { VBlob sym; char bytes[20]; } _V0header__from__library = { { VSYMBOL, 20 }, "header-from-library" };
-static struct { VBlob sym; char bytes[28]; } _V0register__library__interface_B = { { VSYMBOL, 28 }, "register-library-interface!" };
-static struct { VBlob sym; char bytes[24]; } _V0find__library__interface_B = { { VSYMBOL, 24 }, "find-library-interface!" };
+struct { VBlob sym; char bytes[15]; } _V0define__library __attribute__((weak)) = { { VSYMBOL, 15 }, "define-library" };
+struct { VBlob sym; char bytes[7]; } _V0import __attribute__((weak)) = { { VSYMBOL, 7 }, "import" };
+struct { VBlob sym; char bytes[20]; } _V0gather__dependencies __attribute__((weak)) = { { VSYMBOL, 20 }, "gather-dependencies" };
+struct { VBlob sym; char bytes[13]; } _V0import___Gpath __attribute__((weak)) = { { VSYMBOL, 13 }, "import->path" };
+struct { VBlob sym; char bytes[16]; } _V0import__basepath __attribute__((weak)) = { { VSYMBOL, 16 }, "import-basepath" };
+struct { VBlob sym; char bytes[14]; } _V0valid__import_Q __attribute__((weak)) = { { VSYMBOL, 14 }, "valid-import\?" };
+struct { VBlob sym; char bytes[20]; } _V0header__from__library __attribute__((weak)) = { { VSYMBOL, 20 }, "header-from-library" };
+struct { VBlob sym; char bytes[28]; } _V0register__library__interface_B __attribute__((weak)) = { { VSYMBOL, 28 }, "register-library-interface!" };
+struct { VBlob sym; char bytes[24]; } _V0find__library__interface_B __attribute__((weak)) = { { VSYMBOL, 24 }, "find-library-interface!" };
 static void _V0vanity_V0compiler_V0library_V20_k43(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0library_V20_k43" };
  VRecordCall(&dbg);
@@ -89,63 +89,34 @@ static void _V0vanity_V0compiler_V0library_V20_k43(VRuntime * runtime, VEnv * up
   // ((bruijn ##k.17 13 0) (##inline ##sys.cons (##inline ##sys.cons (quote find-library-interface!) (bruijn find-library-interface! 13 4)) (##inline ##sys.cons (##inline ##sys.cons (quote register-library-interface!) (bruijn register-library-interface! 13 3)) (##inline ##sys.cons (##inline ##sys.cons (quote header-from-library) (bruijn header-from-library 13 12)) (##inline ##sys.cons (##inline ##sys.cons (quote valid-import?) (bruijn valid-import? 13 9)) (##inline ##sys.cons (##inline ##sys.cons (quote import-basepath) (bruijn import-basepath 13 11)) (##inline ##sys.cons (##inline ##sys.cons (quote import->path) (bruijn import->path 13 10)) (##inline ##sys.cons (##inline ##sys.cons (quote gather-dependencies) (bruijn gather-dependencies 13 13)) (quote ())))))))))
 V_CALL(VGetArg(upenv, 13-1, 0), runtime,
       VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0find__library__interface_B.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 13-1, 4)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0register__library__interface_B.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 13-1, 3)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0header__from__library.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 13-1, 12)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0valid__import_Q.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 13-1, 9)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0import__basepath.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 13-1, 11)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0import___Gpath.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 13-1, 10)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0gather__dependencies.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 13-1, 13)
-    )
-,
-      VNULL
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    );
+        VInlineCons(
+        VEncodePointer(&_V0find__library__interface_B.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 13-1, 4)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0register__library__interface_B.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 13-1, 3)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0header__from__library.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 13-1, 12)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0valid__import_Q.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 13-1, 9)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0import__basepath.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 13-1, 11)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0import___Gpath.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 13-1, 10)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0gather__dependencies.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 13-1, 13)),
+        VNULL))))))));
  }
 }
 static void _V0gather__dependencies_k49(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -160,8 +131,7 @@ static void _V0gather__dependencies_k49(VRuntime * runtime, VEnv * upenv, int ar
   // ((bruijn ##kk.10 6 1) (bruijn ##k.60 4 0) (bruijn ##x.63 0 0))
 V_CALL(VGetArg(upenv, 6-1, 1), runtime,
       upenv->up->up->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0gather__dependencies_k48(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -181,11 +151,8 @@ static void _V0gather__dependencies_k48(VRuntime * runtime, VEnv * upenv, int ar
 V_CALL(VGetArg(upenv, 21-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k49, env)}),
       VInlineCdr(
-upenv->up->up->vars[1]
-    )
-,
-      _var0
-    );
+        upenv->up->up->vars[1]),
+      _var0);
  }
 }
 static void _V0gather__dependencies_k47(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -204,8 +171,7 @@ static void _V0gather__dependencies_k47(VRuntime * runtime, VEnv * upenv, int ar
   // ((bruijn gather-dependencies 19 13) (close _V0gather__dependencies_k48) (bruijn ##x.65 0 0))
 V_CALL(VGetArg(upenv, 19-1, 13), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k48, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0gather__dependencies_k46(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -226,12 +192,10 @@ if(VDecodeBool(
 _var0)) {
 V_CALL(VGetArg(upenv, 19-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k47, env)}),
-      VGetArg(upenv, 5-1, 1)
-    );
+      VGetArg(upenv, 5-1, 1));
 } else {
 V_CALL(upenv->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -247,21 +211,15 @@ static void _V0gather__dependencies_lambda6(VRuntime * runtime, VEnv * upenv, in
   // (if (##inline ##sys.pair? (bruijn ##expr.12 0 1)) ((bruijn equal? 18 4) (close _V0gather__dependencies_k46) (quote import) (##inline ##sys.car (bruijn ##expr.12 0 1))) ((bruijn ##k.60 0 0) #f))
 if(VDecodeBool(
 VInlinePairP(
-_var1
-    )
-)) {
+        _var1))) {
 V_CALL(VGetArg(upenv, 18-1, 4), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k46, env)}),
       VEncodePointer(&_V0import.sym, VPOINTER_OTHER),
       VInlineCar(
-_var1
-    )
-
-    );
+        _var1));
 } else {
 V_CALL(_var0, runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -277,8 +235,7 @@ static void _V0gather__dependencies_k56(VRuntime * runtime, VEnv * upenv, int ar
   // ((bruijn ##kk.10 9 1) (bruijn ##k.51 6 0) (bruijn ##x.55 0 0))
 V_CALL(VGetArg(upenv, 9-1, 1), runtime,
       VGetArg(upenv, 6-1, 0),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0gather__dependencies_k55(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -298,8 +255,7 @@ static void _V0gather__dependencies_k55(VRuntime * runtime, VEnv * upenv, int ar
 V_CALL(VGetArg(upenv, 24-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k56, env)}),
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0gather__dependencies_k54(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -318,8 +274,7 @@ static void _V0gather__dependencies_k54(VRuntime * runtime, VEnv * upenv, int ar
   // ((bruijn gather-dependencies 22 13) (close _V0gather__dependencies_k55) (bruijn ##x.58 0 0))
 V_CALL(VGetArg(upenv, 22-1, 13), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k55, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0gather__dependencies_k53(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -338,8 +293,7 @@ static void _V0gather__dependencies_k53(VRuntime * runtime, VEnv * upenv, int ar
   // ((bruijn cdr 22 5) (close _V0gather__dependencies_k54) (bruijn statements 8 1))
 V_CALL(VGetArg(upenv, 22-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k54, env)}),
-      VGetArg(upenv, 8-1, 1)
-    );
+      VGetArg(upenv, 8-1, 1));
  }
 }
 static void _V0gather__dependencies_k52(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -358,20 +312,14 @@ static void _V0gather__dependencies_k52(VRuntime * runtime, VEnv * upenv, int ar
   // (if (##inline ##sys.pair? (bruijn ##expr.14 0 0)) ((bruijn gather-dependencies 20 13) (close _V0gather__dependencies_k53) (##inline ##sys.cdr (bruijn ##expr.14 0 0))) ((bruijn ##k.51 2 0) #f))
 if(VDecodeBool(
 VInlinePairP(
-_var0
-    )
-)) {
+        _var0))) {
 V_CALL(VGetArg(upenv, 20-1, 13), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k53, env)}),
       VInlineCdr(
-_var0
-    )
-
-    );
+        _var0));
 } else {
 V_CALL(upenv->up->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -393,14 +341,10 @@ if(VDecodeBool(
 _var0)) {
 V_CALL_FUNC(_V0gather__dependencies_k52, env, runtime,
       VInlineCdr(
-upenv->vars[1]
-    )
-
-    );
+        upenv->vars[1]));
 } else {
 V_CALL(upenv->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -416,21 +360,15 @@ static void _V0gather__dependencies_lambda7(VRuntime * runtime, VEnv * upenv, in
   // (if (##inline ##sys.pair? (bruijn ##expr.13 0 1)) ((bruijn equal? 19 4) (close _V0gather__dependencies_k51) (quote define-library) (##inline ##sys.car (bruijn ##expr.13 0 1))) ((bruijn ##k.51 0 0) #f))
 if(VDecodeBool(
 VInlinePairP(
-_var1
-    )
-)) {
+        _var1))) {
 V_CALL(VGetArg(upenv, 19-1, 4), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k51, env)}),
       VEncodePointer(&_V0define__library.sym, VPOINTER_OTHER),
       VInlineCar(
-_var1
-    )
-
-    );
+        _var1));
 } else {
 V_CALL(_var0, runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -446,8 +384,7 @@ static void _V0gather__dependencies_k59(VRuntime * runtime, VEnv * upenv, int ar
   // ((bruijn ##kk.10 5 1) (bruijn ##k.46 5 0) (bruijn ##x.49 0 0))
 V_CALL(VGetArg(upenv, 5-1, 1), runtime,
       VGetArg(upenv, 5-1, 0),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0gather__dependencies_k58(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -466,8 +403,7 @@ static void _V0gather__dependencies_k58(VRuntime * runtime, VEnv * upenv, int ar
   // ((bruijn gather-dependencies 19 13) (close _V0gather__dependencies_k59) (bruijn ##x.50 0 0))
 V_CALL(VGetArg(upenv, 19-1, 13), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k59, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0gather__dependencies_k57(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -486,8 +422,7 @@ static void _V0gather__dependencies_k57(VRuntime * runtime, VEnv * upenv, int ar
   // ((bruijn cdr 19 5) (close _V0gather__dependencies_k58) (bruijn statements 5 1))
 V_CALL(VGetArg(upenv, 19-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k58, env)}),
-      VGetArg(upenv, 5-1, 1)
-    );
+      VGetArg(upenv, 5-1, 1));
  }
 }
 static void _V0gather__dependencies_k50(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -506,8 +441,7 @@ static void _V0gather__dependencies_k50(VRuntime * runtime, VEnv * upenv, int ar
   // ((close _V0gather__dependencies_lambda7) (close _V0gather__dependencies_k57) (bruijn ##input.11 1 0))
 V_CALL_FUNC(_V0gather__dependencies_lambda7, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k57, env)}),
-      upenv->vars[0]
-    );
+      upenv->vars[0]);
  }
 }
 static void _V0gather__dependencies_k45(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -526,8 +460,7 @@ static void _V0gather__dependencies_k45(VRuntime * runtime, VEnv * upenv, int ar
   // ((close _V0gather__dependencies_lambda6) (close _V0gather__dependencies_k50) (bruijn ##input.11 0 0))
 V_CALL_FUNC(_V0gather__dependencies_lambda6, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k50, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0gather__dependencies_lambda5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -547,8 +480,7 @@ static void _V0gather__dependencies_lambda5(VRuntime * runtime, VEnv * upenv, in
   // ((bruijn car 16 6) (close _V0gather__dependencies_k45) (bruijn statements 2 1))
 V_CALL(VGetArg(upenv, 16-1, 6), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k45, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0gather__dependencies_k44(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -568,13 +500,11 @@ static void _V0gather__dependencies_k44(VRuntime * runtime, VEnv * upenv, int ar
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      VNULL
-    );
+      VNULL);
 } else {
 V_CALL(VGetArg(upenv, 15-1, 2), runtime,
       upenv->vars[0],
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_lambda5, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_lambda5, env)}));
 }
  }
 }
@@ -595,8 +525,7 @@ static void _V0gather__dependencies_lambda4(VRuntime * runtime, VEnv * upenv, in
   // ((bruijn null? 14 1) (close _V0gather__dependencies_k44) (bruijn statements 0 1))
 V_CALL(VGetArg(upenv, 14-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0gather__dependencies_k44, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k42(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -632,8 +561,7 @@ static void _V0header__from__library_k63(VRuntime * runtime, VEnv * upenv, int a
   // ((bruijn ##kk.5 5 1) (bruijn ##k.79 3 0) (bruijn ##x.83 0 0))
 V_CALL(VGetArg(upenv, 5-1, 1), runtime,
       upenv->up->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0header__from__library_k62(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -652,22 +580,16 @@ static void _V0header__from__library_k62(VRuntime * runtime, VEnv * upenv, int a
   // (if (##inline ##sys.pair? (bruijn ##expr.8 0 0)) ((bruijn iter 6 1) (close _V0header__from__library_k63) (quote ()) (quote ()) (##inline ##sys.cdr (bruijn ##expr.8 0 0))) ((bruijn ##k.79 2 0) #f))
 if(VDecodeBool(
 VInlinePairP(
-_var0
-    )
-)) {
+        _var0))) {
 V_CALL(VGetArg(upenv, 6-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0header__from__library_k63, env)}),
       VNULL,
       VNULL,
       VInlineCdr(
-_var0
-    )
-
-    );
+        _var0));
 } else {
 V_CALL(upenv->up->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -689,14 +611,10 @@ if(VDecodeBool(
 _var0)) {
 V_CALL_FUNC(_V0header__from__library_k62, env, runtime,
       VInlineCdr(
-upenv->vars[1]
-    )
-
-    );
+        upenv->vars[1]));
 } else {
 V_CALL(upenv->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -712,21 +630,15 @@ static void _V0header__from__library_lambda12(VRuntime * runtime, VEnv * upenv, 
   // (if (##inline ##sys.pair? (bruijn ##expr.7 0 1)) ((bruijn equal? 18 4) (close _V0header__from__library_k61) (quote define-library) (##inline ##sys.car (bruijn ##expr.7 0 1))) ((bruijn ##k.79 0 0) #f))
 if(VDecodeBool(
 VInlinePairP(
-_var1
-    )
-)) {
+        _var1))) {
 V_CALL(VGetArg(upenv, 18-1, 4), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0header__from__library_k61, env)}),
       VEncodePointer(&_V0define__library.sym, VPOINTER_OTHER),
       VInlineCar(
-_var1
-    )
-
-    );
+        _var1));
 } else {
 V_CALL(_var0, runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -742,8 +654,7 @@ static void _V0header__from__library_k66(VRuntime * runtime, VEnv * upenv, int a
   // ((bruijn ##kk.5 5 1) (bruijn ##k.74 2 0) (bruijn ##x.77 0 0))
 V_CALL(VGetArg(upenv, 5-1, 1), runtime,
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0header__from__library_k65(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -765,12 +676,10 @@ _var0)) {
 V_CALL(VGetArg(upenv, 20-1, 8), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0header__from__library_k66, env)}),
       VEncodePointer(&_V10string_D205.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 7-1, 1)
-    );
+      VGetArg(upenv, 7-1, 1));
 } else {
 V_CALL(upenv->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -786,21 +695,15 @@ static void _V0header__from__library_lambda13(VRuntime * runtime, VEnv * upenv, 
   // (if (##inline ##sys.pair? (bruijn ##expr.9 0 1)) ((bruijn equal? 19 4) (close _V0header__from__library_k65) (quote define-library) (##inline ##sys.car (bruijn ##expr.9 0 1))) ((bruijn ##k.74 0 0) #f))
 if(VDecodeBool(
 VInlinePairP(
-_var1
-    )
-)) {
+        _var1))) {
 V_CALL(VGetArg(upenv, 19-1, 4), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0header__from__library_k65, env)}),
       VEncodePointer(&_V0define__library.sym, VPOINTER_OTHER),
       VInlineCar(
-_var1
-    )
-
-    );
+        _var1));
 } else {
 V_CALL(_var0, runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -816,8 +719,7 @@ static void _V0header__from__library_k67(VRuntime * runtime, VEnv * upenv, int a
   // ((bruijn ##kk.5 3 1) (bruijn ##k.71 2 0) #f)
 V_CALL(upenv->up->up->vars[1], runtime,
       upenv->up->vars[0],
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0header__from__library_k64(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -836,8 +738,7 @@ static void _V0header__from__library_k64(VRuntime * runtime, VEnv * upenv, int a
   // ((close _V0header__from__library_lambda13) (close _V0header__from__library_k67) (bruijn ##input.6 1 1))
 V_CALL_FUNC(_V0header__from__library_lambda13, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0header__from__library_k67, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
  }
 }
 static void _V0header__from__library_lambda11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -852,8 +753,7 @@ static void _V0header__from__library_lambda11(VRuntime * runtime, VEnv * upenv, 
   // ((close _V0header__from__library_lambda12) (close _V0header__from__library_k64) (bruijn ##input.6 0 1))
 V_CALL_FUNC(_V0header__from__library_lambda12, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0header__from__library_k64, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0header__from__library_lambda10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -873,8 +773,7 @@ static void _V0header__from__library_lambda10(VRuntime * runtime, VEnv * upenv, 
   // ((close _V0header__from__library_lambda11) (bruijn ##k.70 0 0) (bruijn lib 3 1))
 V_CALL_FUNC(_V0header__from__library_lambda11, env, runtime,
       _var0,
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
  }
 }
 static void _V0header__from__library_k60(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -893,8 +792,7 @@ static void _V0header__from__library_k60(VRuntime * runtime, VEnv * upenv, int a
   // ((bruijn call/cc 15 2) (bruijn ##k.68 1 0) (close _V0header__from__library_lambda10))
 V_CALL(VGetArg(upenv, 15-1, 2), runtime,
       upenv->vars[0],
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0header__from__library_lambda10, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0header__from__library_lambda10, env)}));
  }
 }
 static void _V0iter_k69(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -909,47 +807,26 @@ static void _V0iter_k69(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn ##k.85 2 0) (##inline ##sys.cons (quote define-library-interface) (##inline ##sys.cons (bruijn ##x.88 0 0) (##inline ##sys.cons (##inline ##sys.cons (quote import) (bruijn imports 2 2)) (##inline ##sys.cons (##inline ##sys.cons (quote export) (bruijn exports 2 1)) (##inline ##sys.cons (##inline ##sys.cons (quote inline-import) (quote ())) (##inline ##sys.cons (##inline ##sys.cons (quote inline-export) (quote ())) (quote ()))))))))
 V_CALL(upenv->up->vars[0], runtime,
       VInlineCons(
-VEncodePointer(&_V0define__library__interface.sym, VPOINTER_OTHER),
-      VInlineCons(
-_var0,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0import.sym, VPOINTER_OTHER),
-      upenv->up->vars[2]
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0export.sym, VPOINTER_OTHER),
-      upenv->up->vars[1]
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0inline__import.sym, VPOINTER_OTHER),
-      VNULL
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0inline__export.sym, VPOINTER_OTHER),
-      VNULL
-    )
-,
-      VNULL
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    );
+        VEncodePointer(&_V0define__library__interface.sym, VPOINTER_OTHER),
+        VInlineCons(
+        _var0,
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0import.sym, VPOINTER_OTHER),
+        upenv->up->vars[2]),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0export.sym, VPOINTER_OTHER),
+        upenv->up->vars[1]),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0inline__import.sym, VPOINTER_OTHER),
+        VNULL),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0inline__export.sym, VPOINTER_OTHER),
+        VNULL),
+        VNULL)))))));
  }
 }
 static void _V0iter_k74(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -964,8 +841,7 @@ static void _V0iter_k74(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn ##kk.1 6 1) (bruijn ##k.109 4 0) (bruijn ##x.112 0 0))
 V_CALL(VGetArg(upenv, 6-1, 1), runtime,
       upenv->up->up->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0iter_k73(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -986,8 +862,7 @@ V_CALL(VGetArg(upenv, 8-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k74, env)}),
       upenv->vars[0],
       VGetArg(upenv, 7-1, 2),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0iter_k72(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1006,8 +881,7 @@ static void _V0iter_k72(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn cdr 21 5) (close _V0iter_k73) (bruijn rest 6 3))
 V_CALL(VGetArg(upenv, 21-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k73, env)}),
-      VGetArg(upenv, 6-1, 3)
-    );
+      VGetArg(upenv, 6-1, 3));
  }
 }
 static void _V0iter_k71(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1030,14 +904,10 @@ V_CALL(VGetArg(upenv, 20-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k72, env)}),
       VGetArg(upenv, 5-1, 1),
       VInlineCdr(
-upenv->vars[1]
-    )
-
-    );
+        upenv->vars[1]));
 } else {
 V_CALL(upenv->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -1053,21 +923,15 @@ static void _V0iter_lambda16(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
   // (if (##inline ##sys.pair? (bruijn ##expr.3 0 1)) ((bruijn equal? 19 4) (close _V0iter_k71) (quote export) (##inline ##sys.car (bruijn ##expr.3 0 1))) ((bruijn ##k.109 0 0) #f))
 if(VDecodeBool(
 VInlinePairP(
-_var1
-    )
-)) {
+        _var1))) {
 V_CALL(VGetArg(upenv, 19-1, 4), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k71, env)}),
       VEncodePointer(&_V0export.sym, VPOINTER_OTHER),
       VInlineCar(
-_var1
-    )
-
-    );
+        _var1));
 } else {
 V_CALL(_var0, runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -1083,8 +947,7 @@ static void _V0iter_k79(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn ##kk.1 7 1) (bruijn ##k.102 4 0) (bruijn ##x.105 0 0))
 V_CALL(VGetArg(upenv, 7-1, 1), runtime,
       upenv->up->up->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0iter_k78(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1105,8 +968,7 @@ V_CALL(VGetArg(upenv, 9-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k79, env)}),
       VGetArg(upenv, 8-1, 1),
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0iter_k77(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1125,8 +987,7 @@ static void _V0iter_k77(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn cdr 22 5) (close _V0iter_k78) (bruijn rest 7 3))
 V_CALL(VGetArg(upenv, 22-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k78, env)}),
-      VGetArg(upenv, 7-1, 3)
-    );
+      VGetArg(upenv, 7-1, 3));
  }
 }
 static void _V0iter_k76(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1149,14 +1010,10 @@ V_CALL(VGetArg(upenv, 21-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k77, env)}),
       VGetArg(upenv, 6-1, 2),
       VInlineCdr(
-upenv->vars[1]
-    )
-
-    );
+        upenv->vars[1]));
 } else {
 V_CALL(upenv->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -1172,21 +1029,15 @@ static void _V0iter_lambda17(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
   // (if (##inline ##sys.pair? (bruijn ##expr.4 0 1)) ((bruijn equal? 20 4) (close _V0iter_k76) (quote import) (##inline ##sys.car (bruijn ##expr.4 0 1))) ((bruijn ##k.102 0 0) #f))
 if(VDecodeBool(
 VInlinePairP(
-_var1
-    )
-)) {
+        _var1))) {
 V_CALL(VGetArg(upenv, 20-1, 4), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k76, env)}),
       VEncodePointer(&_V0import.sym, VPOINTER_OTHER),
       VInlineCar(
-_var1
-    )
-
-    );
+        _var1));
 } else {
 V_CALL(_var0, runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -1202,8 +1053,7 @@ static void _V0iter_k82(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn ##kk.1 5 1) (bruijn ##k.97 5 0) (bruijn ##x.100 0 0))
 V_CALL(VGetArg(upenv, 5-1, 1), runtime,
       VGetArg(upenv, 5-1, 0),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0iter_k81(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1224,8 +1074,7 @@ V_CALL(VGetArg(upenv, 7-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k82, env)}),
       VGetArg(upenv, 6-1, 1),
       VGetArg(upenv, 6-1, 2),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0iter_k80(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1244,8 +1093,7 @@ static void _V0iter_k80(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn cdr 20 5) (close _V0iter_k81) (bruijn rest 5 3))
 V_CALL(VGetArg(upenv, 20-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k81, env)}),
-      VGetArg(upenv, 5-1, 3)
-    );
+      VGetArg(upenv, 5-1, 3));
  }
 }
 static void _V0iter_k75(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1264,8 +1112,7 @@ static void _V0iter_k75(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((close _V0iter_lambda17) (close _V0iter_k80) (bruijn ##input.2 1 0))
 V_CALL_FUNC(_V0iter_lambda17, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k80, env)}),
-      upenv->vars[0]
-    );
+      upenv->vars[0]);
  }
 }
 static void _V0iter_k70(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1284,8 +1131,7 @@ static void _V0iter_k70(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((close _V0iter_lambda16) (close _V0iter_k75) (bruijn ##input.2 0 0))
 V_CALL_FUNC(_V0iter_lambda16, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k75, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0iter_lambda15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -1305,8 +1151,7 @@ static void _V0iter_lambda15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
   // ((bruijn car 17 6) (close _V0iter_k70) (bruijn rest 2 3))
 V_CALL(VGetArg(upenv, 17-1, 6), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k70, env)}),
-      upenv->up->vars[3]
-    );
+      upenv->up->vars[3]);
  }
 }
 static void _V0iter_k68(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1327,13 +1172,11 @@ if(VDecodeBool(
 _var0)) {
 V_CALL(VGetArg(upenv, 16-1, 7), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k69, env)}),
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
 } else {
 V_CALL(VGetArg(upenv, 16-1, 2), runtime,
       upenv->vars[0],
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_lambda15, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_lambda15, env)}));
 }
  }
 }
@@ -1356,8 +1199,7 @@ static void _V0iter_lambda14(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
   // ((bruijn null? 15 1) (close _V0iter_k68) (bruijn rest 0 3))
 V_CALL(VGetArg(upenv, 15-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0iter_k68, env)}),
-      _var3
-    );
+      _var3);
  }
 }
 static void _V0header__from__library_lambda9(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -1394,8 +1236,7 @@ static void _V0header__from__library_lambda8(VRuntime * runtime, VEnv * upenv, i
   // ((close _V0header__from__library_lambda9) (bruijn ##k.67 0 0) #f)
 V_CALL_FUNC(_V0header__from__library_lambda9, env, runtime,
       _var0,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k41(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1433,8 +1274,7 @@ V_CALL(VGetArg(upenv, 17-1, 9), runtime,
       VGetArg(upenv, 5-1, 0),
       VEncodePointer(&_V10string_D207.sym, VPOINTER_OTHER),
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0import__basepath_k86(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1453,8 +1293,7 @@ static void _V0import__basepath_k86(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn import-basepath 15 11) (close _V0import__basepath_k87) (bruijn ##x.120 0 0))
 V_CALL(VGetArg(upenv, 15-1, 11), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0import__basepath_k87, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0import__basepath_k85(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1473,8 +1312,7 @@ static void _V0import__basepath_k85(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn cdr 15 5) (close _V0import__basepath_k86) (bruijn import 3 1))
 V_CALL(VGetArg(upenv, 15-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0import__basepath_k86, env)}),
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
  }
 }
 static void _V0import__basepath_k84(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1494,13 +1332,11 @@ static void _V0import__basepath_k84(VRuntime * runtime, VEnv * upenv, int argc, 
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->up->vars[0], runtime,
-      VEncodePointer(&_V10string_D206.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V10string_D206.sym, VPOINTER_OTHER));
 } else {
 V_CALL(VGetArg(upenv, 14-1, 6), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0import__basepath_k85, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
 }
  }
 }
@@ -1520,8 +1356,7 @@ static void _V0import__basepath_k83(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn null? 13 1) (close _V0import__basepath_k84) (bruijn ##x.121 0 0))
 V_CALL(VGetArg(upenv, 13-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0import__basepath_k84, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0import__basepath_lambda18(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -1541,8 +1376,7 @@ static void _V0import__basepath_lambda18(VRuntime * runtime, VEnv * upenv, int a
   // ((bruijn cdr 12 5) (close _V0import__basepath_k83) (bruijn import 0 1))
 V_CALL(VGetArg(upenv, 12-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0import__basepath_k83, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k40(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1579,8 +1413,7 @@ static void _V0import___Gpath_k90(VRuntime * runtime, VEnv * upenv, int argc, VW
 V_CALL(VGetArg(upenv, 14-1, 9), runtime,
       upenv->up->up->vars[0],
       VEncodePointer(&_V10string_D208.sym, VPOINTER_OTHER),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0import___Gpath_k93(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1597,8 +1430,7 @@ V_CALL(VGetArg(upenv, 16-1, 9), runtime,
       VGetArg(upenv, 5-1, 0),
       VEncodePointer(&_V10string_D207.sym, VPOINTER_OTHER),
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0import___Gpath_k92(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1617,8 +1449,7 @@ static void _V0import___Gpath_k92(VRuntime * runtime, VEnv * upenv, int argc, VW
   // ((bruijn import->path 14 10) (close _V0import___Gpath_k93) (bruijn ##x.127 0 0))
 V_CALL(VGetArg(upenv, 14-1, 10), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0import___Gpath_k93, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0import___Gpath_k91(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1637,8 +1468,7 @@ static void _V0import___Gpath_k91(VRuntime * runtime, VEnv * upenv, int argc, VW
   // ((bruijn cdr 14 5) (close _V0import___Gpath_k92) (bruijn import 3 1))
 V_CALL(VGetArg(upenv, 14-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0import___Gpath_k92, env)}),
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
  }
 }
 static void _V0import___Gpath_k89(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1659,13 +1489,11 @@ if(VDecodeBool(
 _var0)) {
 V_CALL(VGetArg(upenv, 13-1, 6), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0import___Gpath_k90, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
 } else {
 V_CALL(VGetArg(upenv, 13-1, 6), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0import___Gpath_k91, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
 }
  }
 }
@@ -1685,8 +1513,7 @@ static void _V0import___Gpath_k88(VRuntime * runtime, VEnv * upenv, int argc, VW
   // ((bruijn null? 12 1) (close _V0import___Gpath_k89) (bruijn ##x.128 0 0))
 V_CALL(VGetArg(upenv, 12-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0import___Gpath_k89, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0import___Gpath_lambda19(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -1706,8 +1533,7 @@ static void _V0import___Gpath_lambda19(VRuntime * runtime, VEnv * upenv, int arg
   // ((bruijn cdr 11 5) (close _V0import___Gpath_k88) (bruijn import 0 1))
 V_CALL(VGetArg(upenv, 11-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0import___Gpath_k88, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k39(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1745,8 +1571,7 @@ V_CALL(VGetArg(upenv, 12-1, 11), runtime,
       upenv->up->vars[0],
       VGetArg(upenv, 11-1, 7),
       VEncodeBool(true),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0valid__import_Q_k94(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1768,12 +1593,10 @@ _var0)) {
 V_CALL(VGetArg(upenv, 11-1, 10), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0valid__import_Q_k95, env)}),
       VGetArg(upenv, 10-1, 8),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 } else {
 V_CALL(upenv->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -1794,8 +1617,7 @@ static void _V0valid__import_Q_lambda20(VRuntime * runtime, VEnv * upenv, int ar
   // ((bruijn pair? 10 12) (close _V0valid__import_Q_k94) (bruijn import 0 1))
 V_CALL(VGetArg(upenv, 10-1, 12), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0valid__import_Q_k94, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k38(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1831,8 +1653,7 @@ static void _V0valid__import__element_Q_k100(VRuntime * runtime, VEnv * upenv, i
   // ((bruijn alphanumeric? 13 6) (bruijn ##k.132 5 0) (bruijn ##x.135 0 0))
 V_CALL(VGetArg(upenv, 13-1, 6), runtime,
       VGetArg(upenv, 5-1, 0),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0valid__import__element_Q_k99(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1853,12 +1674,10 @@ if(VDecodeBool(
 _var0)) {
 V_CALL(VGetArg(upenv, 13-1, 15), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0valid__import__element_Q_k100, env)}),
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
 } else {
 V_CALL(upenv->up->up->up->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -1879,8 +1698,7 @@ static void _V0valid__import__element_Q_k98(VRuntime * runtime, VEnv * upenv, in
 V_CALL(VGetArg(upenv, 12-1, 14), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0valid__import__element_Q_k99, env)}),
       _var0,
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
  }
 }
 static void _V0valid__import__element_Q_k97(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1899,8 +1717,7 @@ static void _V0valid__import__element_Q_k97(VRuntime * runtime, VEnv * upenv, in
   // ((bruijn string-length 11 13) (close _V0valid__import__element_Q_k98) (bruijn ##x.137 0 0))
 V_CALL(VGetArg(upenv, 11-1, 13), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0valid__import__element_Q_k98, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0valid__import__element_Q_k96(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1921,12 +1738,10 @@ if(VDecodeBool(
 _var0)) {
 V_CALL(VGetArg(upenv, 10-1, 15), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0valid__import__element_Q_k97, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 } else {
 V_CALL(upenv->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -1947,8 +1762,7 @@ static void _V0valid__import__element_Q_lambda21(VRuntime * runtime, VEnv * upen
   // ((bruijn symbol? 9 16) (close _V0valid__import__element_Q_k96) (bruijn x 0 1))
 V_CALL(VGetArg(upenv, 9-1, 16), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0valid__import__element_Q_k96, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k37(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1985,12 +1799,10 @@ static void _V0andf_lambda22(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
 if(VDecodeBool(
 _var1)) {
 V_CALL(_var0, runtime,
-      _var2
-    );
+      _var2);
 } else {
 V_CALL(_var0, runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -2027,8 +1839,7 @@ static void _V0alphanumeric_Q_k102(VRuntime * runtime, VEnv * upenv, int argc, V
   // ((bruijn loop 1 1) (bruijn ##k.140 1 0) 0)
 V_CALL(upenv->vars[1], runtime,
       upenv->vars[0],
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
  }
 }
 static void _V0loop_k106(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2043,8 +1854,7 @@ static void _V0loop_k106(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn loop 5 1) (bruijn ##k.142 4 0) (bruijn ##x.145 0 0))
 V_CALL(VGetArg(upenv, 5-1, 1), runtime,
       upenv->up->up->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k105(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2066,12 +1876,10 @@ _var0)) {
 V_CALL(VGetArg(upenv, 13-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k106, env)}),
       upenv->up->up->vars[1],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
 } else {
 V_CALL(upenv->up->up->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -2091,8 +1899,7 @@ static void _V0loop_k104(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn alphanumeric-char? 11 5) (close _V0loop_k105) (bruijn ##x.146 0 0))
 V_CALL(VGetArg(upenv, 11-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k105, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k103(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2114,12 +1921,10 @@ _var0)) {
 V_CALL(VGetArg(upenv, 11-1, 19), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k104, env)}),
       upenv->up->up->up->vars[1],
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 } else {
 V_CALL(upenv->vars[0], runtime,
-      VEncodeBool(true)
-    );
+      VEncodeBool(true));
 }
  }
 }
@@ -2141,8 +1946,7 @@ static void _V0loop_lambda25(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
 V_CALL(VGetArg(upenv, 10-1, 17), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k103, env)}),
       _var1,
-      upenv->up->vars[0]
-    );
+      upenv->up->vars[0]);
  }
 }
 static void _V0alphanumeric_Q_lambda24(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -2178,8 +1982,7 @@ static void _V0alphanumeric_Q_k101(VRuntime * runtime, VEnv * upenv, int argc, V
   // ((close _V0alphanumeric_Q_lambda24) (bruijn ##k.139 1 0) #f)
 V_CALL_FUNC(_V0alphanumeric_Q_lambda24, env, runtime,
       upenv->vars[0],
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0alphanumeric_Q_lambda23(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -2199,8 +2002,7 @@ static void _V0alphanumeric_Q_lambda23(VRuntime * runtime, VEnv * upenv, int arg
   // ((bruijn string-length 7 13) (close _V0alphanumeric_Q_k101) (bruijn str 0 1))
 V_CALL(VGetArg(upenv, 7-1, 13), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0alphanumeric_Q_k101, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k35(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2238,8 +2040,7 @@ V_CALL(VGetArg(upenv, 15-1, 20), runtime,
       VGetArg(upenv, 9-1, 0),
       upenv->vars[0],
       VGetArg(upenv, 8-1, 0),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0alphanumeric__char_Q_k114(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2258,8 +2059,7 @@ static void _V0alphanumeric__char_Q_k114(VRuntime * runtime, VEnv * upenv, int a
   // ((bruijn char->integer 14 21) (close _V0alphanumeric__char_Q_k115) #\9)
 V_CALL(VGetArg(upenv, 14-1, 21), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0alphanumeric__char_Q_k115, env)}),
-      VEncodeChar('9')
-    );
+      VEncodeChar('9'));
  }
 }
 static void _V0alphanumeric__char_Q_k113(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2279,13 +2079,11 @@ static void _V0alphanumeric__char_Q_k113(VRuntime * runtime, VEnv * upenv, int a
 if(VDecodeBool(
 _var0)) {
 V_CALL(VGetArg(upenv, 7-1, 0), runtime,
-      _var0
-    );
+      _var0);
 } else {
 V_CALL(VGetArg(upenv, 13-1, 21), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0alphanumeric__char_Q_k114, env)}),
-      VEncodeChar('0')
-    );
+      VEncodeChar('0'));
 }
  }
 }
@@ -2307,8 +2105,7 @@ V_CALL(VGetArg(upenv, 12-1, 20), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0alphanumeric__char_Q_k113, env)}),
       upenv->vars[0],
       VGetArg(upenv, 5-1, 0),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0alphanumeric__char_Q_k111(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2327,8 +2124,7 @@ static void _V0alphanumeric__char_Q_k111(VRuntime * runtime, VEnv * upenv, int a
   // ((bruijn char->integer 11 21) (close _V0alphanumeric__char_Q_k112) #\Z)
 V_CALL(VGetArg(upenv, 11-1, 21), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0alphanumeric__char_Q_k112, env)}),
-      VEncodeChar('Z')
-    );
+      VEncodeChar('Z'));
  }
 }
 static void _V0alphanumeric__char_Q_k110(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2348,13 +2144,11 @@ static void _V0alphanumeric__char_Q_k110(VRuntime * runtime, VEnv * upenv, int a
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->up->up->up->vars[0], runtime,
-      _var0
-    );
+      _var0);
 } else {
 V_CALL(VGetArg(upenv, 10-1, 21), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0alphanumeric__char_Q_k111, env)}),
-      VEncodeChar('A')
-    );
+      VEncodeChar('A'));
 }
  }
 }
@@ -2376,8 +2170,7 @@ V_CALL(VGetArg(upenv, 9-1, 20), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0alphanumeric__char_Q_k110, env)}),
       upenv->vars[0],
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0alphanumeric__char_Q_k108(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2396,8 +2189,7 @@ static void _V0alphanumeric__char_Q_k108(VRuntime * runtime, VEnv * upenv, int a
   // ((bruijn char->integer 8 21) (close _V0alphanumeric__char_Q_k109) #\z)
 V_CALL(VGetArg(upenv, 8-1, 21), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0alphanumeric__char_Q_k109, env)}),
-      VEncodeChar('z')
-    );
+      VEncodeChar('z'));
  }
 }
 static void _V0alphanumeric__char_Q_k107(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2416,8 +2208,7 @@ static void _V0alphanumeric__char_Q_k107(VRuntime * runtime, VEnv * upenv, int a
   // ((bruijn char->integer 7 21) (close _V0alphanumeric__char_Q_k108) #\a)
 V_CALL(VGetArg(upenv, 7-1, 21), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0alphanumeric__char_Q_k108, env)}),
-      VEncodeChar('a')
-    );
+      VEncodeChar('a'));
  }
 }
 static void _V0alphanumeric__char_Q_lambda26(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -2437,8 +2228,7 @@ static void _V0alphanumeric__char_Q_lambda26(VRuntime * runtime, VEnv * upenv, i
   // ((bruijn char->integer 6 21) (close _V0alphanumeric__char_Q_k107) (bruijn c 0 1))
 V_CALL(VGetArg(upenv, 6-1, 21), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0alphanumeric__char_Q_k107, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k34(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2476,14 +2266,12 @@ if(VDecodeBool(
 _var0)) {
 V_CALL(VGetArg(upenv, 6-1, 5), runtime,
       upenv->vars[0],
-      _var0
-    );
+      _var0);
 } else {
 V_CALL(VGetArg(upenv, 5-1, 2), runtime,
       upenv->vars[0],
       upenv->vars[1],
-      upenv->vars[2]
-    );
+      upenv->vars[2]);
 }
  }
 }
@@ -2506,8 +2294,7 @@ static void _V0find__library__interface_B_lambda27(VRuntime * runtime, VEnv * up
 V_CALL(VGetArg(upenv, 5-1, 22), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0find__library__interface_B_k116, env)}),
       _var1,
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k33(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2544,8 +2331,7 @@ static void _V0register__library__interface_B_k120(VRuntime * runtime, VEnv * up
 V_CALL(VGetArg(upenv, 8-1, 8), runtime,
       upenv->vars[0],
       VEncodePointer(&_V10string_D209.sym, VPOINTER_OTHER),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0register__library__interface_B_k119(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2566,12 +2352,10 @@ if(VDecodeBool(
 upenv->vars[0])) {
 V_CALL(VGetArg(upenv, 7-1, 7), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0register__library__interface_B_k120, env)}),
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
 } else {
 V_CALL(_var0, runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -2613,8 +2397,7 @@ static void _V0register__library__interface_B_k123(VRuntime * runtime, VEnv * up
 V_CALL(VGetArg(upenv, 9-1, 23), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0register__library__interface_B_k124, env)}),
       _var0,
-      VGetArg(upenv, 8-1, 1)
-    );
+      VGetArg(upenv, 8-1, 1));
  }
 }
 static void _V0register__library__interface_B_k122(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2634,8 +2417,7 @@ static void _V0register__library__interface_B_k122(VRuntime * runtime, VEnv * up
 V_CALL(VGetArg(upenv, 8-1, 23), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0register__library__interface_B_k123, env)}),
       _var0,
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
  }
 }
 static void _V0register__library__interface_B_k121(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2654,8 +2436,7 @@ static void _V0register__library__interface_B_k121(VRuntime * runtime, VEnv * up
   // ((bruijn cadr 7 7) (close _V0register__library__interface_B_k122) (bruijn lib 3 1))
 V_CALL(VGetArg(upenv, 7-1, 7), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0register__library__interface_B_k122, env)}),
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
  }
 }
 static void _V0register__library__interface_B_k118(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2673,8 +2454,7 @@ static void _V0register__library__interface_B_k118(VRuntime * runtime, VEnv * up
   env->vars[0] = _var0;
   // ((close _V0register__library__interface_B_k119) (close _V0register__library__interface_B_k121))
 V_CALL_FUNC(_V0register__library__interface_B_k119, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0register__library__interface_B_k121, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0register__library__interface_B_k121, env)}));
  }
 }
 static void _V0register__library__interface_B_k117(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2694,8 +2474,7 @@ static void _V0register__library__interface_B_k117(VRuntime * runtime, VEnv * up
 V_CALL(VGetArg(upenv, 5-1, 22), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0register__library__interface_B_k118, env)}),
       _var0,
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
  }
 }
 static void _V0register__library__interface_B_lambda28(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -2715,8 +2494,7 @@ static void _V0register__library__interface_B_lambda28(VRuntime * runtime, VEnv 
   // ((bruijn cadr 4 7) (close _V0register__library__interface_B_k117) (bruijn lib 0 1))
 V_CALL(upenv->up->up->up->vars[7], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0register__library__interface_B_k117, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k32(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2754,14 +2532,12 @@ if(VDecodeBool(
 upenv->vars[0])) {
 V_CALL(VGetArg(upenv, 6-1, 25), runtime,
       _var0,
-      upenv->vars[0]
-    );
+      upenv->vars[0]);
 } else {
 V_CALL(VGetArg(upenv, 6-1, 8), runtime,
       _var0,
       VEncodePointer(&_V10string_D210.sym, VPOINTER_OTHER),
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
 }
  }
 }
@@ -2777,8 +2553,7 @@ static void _V0load__library__interface_k131(VRuntime * runtime, VEnv * upenv, i
   // ((bruijn null? 9 1) (bruijn ##k.172 1 0) (bruijn ##x.173 0 0))
 V_CALL(VGetArg(upenv, 9-1, 1), runtime,
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0load__library__interface_k130(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2799,12 +2574,10 @@ if(VDecodeBool(
 upenv->vars[0])) {
 V_CALL(VGetArg(upenv, 8-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k131, env)}),
-      upenv->up->vars[0]
-    );
+      upenv->up->vars[0]);
 } else {
 V_CALL(_var0, runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -2822,13 +2595,11 @@ if(VDecodeBool(
 upenv->vars[0])) {
 V_CALL(VGetArg(upenv, 9-1, 6), runtime,
       _var0,
-      upenv->up->up->vars[0]
-    );
+      upenv->up->up->vars[0]);
 } else {
 V_CALL(VGetArg(upenv, 9-1, 8), runtime,
       _var0,
-      VEncodePointer(&_V10string_D211.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V10string_D211.sym, VPOINTER_OTHER));
 }
  }
 }
@@ -2843,8 +2614,7 @@ static void _V0load__library__interface_k136(VRuntime * runtime, VEnv * upenv, i
  V_GC_CHECK2_VARARGS((VFunc)_V0load__library__interface_k136, runtime, upenv, 1, argc, _var0) {
   // ((bruijn ##k.166 8 0) (bruijn parse 2 0))
 V_CALL(VGetArg(upenv, 8-1, 0), runtime,
-      upenv->up->vars[0]
-    );
+      upenv->up->vars[0]);
  }
 }
 static void _V0load__library__interface_k135(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2863,8 +2633,7 @@ static void _V0load__library__interface_k135(VRuntime * runtime, VEnv * upenv, i
   // ((bruijn register-library-interface! 9 3) (close _V0load__library__interface_k136) (bruijn parse 1 0))
 V_CALL(VGetArg(upenv, 9-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k136, env)}),
-      upenv->vars[0]
-    );
+      upenv->vars[0]);
  }
 }
 static void _V0load__library__interface_k134(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2883,8 +2652,7 @@ static void _V0load__library__interface_k134(VRuntime * runtime, VEnv * upenv, i
   // ((bruijn close-port 9 24) (close _V0load__library__interface_k135) (bruijn fd 4 0))
 V_CALL(VGetArg(upenv, 9-1, 24), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k135, env)}),
-      upenv->up->up->up->vars[0]
-    );
+      upenv->up->up->up->vars[0]);
  }
 }
 static void _V0load__library__interface_k132(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2902,8 +2670,7 @@ static void _V0load__library__interface_k132(VRuntime * runtime, VEnv * upenv, i
   env->vars[0] = _var0;
   // ((close _V0load__library__interface_k133) (close _V0load__library__interface_k134))
 V_CALL_FUNC(_V0load__library__interface_k133, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k134, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k134, env)}));
  }
 }
 static void _V0load__library__interface_k129(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2921,8 +2688,7 @@ static void _V0load__library__interface_k129(VRuntime * runtime, VEnv * upenv, i
   env->vars[0] = _var0;
   // ((close _V0load__library__interface_k130) (close _V0load__library__interface_k132))
 V_CALL_FUNC(_V0load__library__interface_k130, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k132, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k132, env)}));
  }
 }
 static void _V0load__library__interface_k128(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2941,8 +2707,7 @@ static void _V0load__library__interface_k128(VRuntime * runtime, VEnv * upenv, i
   // ((bruijn pair? 6 12) (close _V0load__library__interface_k129) (bruijn parse 0 0))
 V_CALL(VGetArg(upenv, 6-1, 12), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k129, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0load__library__interface_k126(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2960,8 +2725,7 @@ static void _V0load__library__interface_k126(VRuntime * runtime, VEnv * upenv, i
   env->vars[0] = _var0;
   // ((close _V0load__library__interface_k127) (close _V0load__library__interface_k128))
 V_CALL_FUNC(_V0load__library__interface_k127, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k128, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k128, env)}));
  }
 }
 static void _V0load__library__interface_k125(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2981,8 +2745,7 @@ static void _V0load__library__interface_k125(VRuntime * runtime, VEnv * upenv, i
 V_CALL(upenv->up->up->up->vars[26], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k126, env)}),
       _var0,
-      upenv->vars[2]
-    );
+      upenv->vars[2]);
  }
 }
 static void _V0load__library__interface_lambda29(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
@@ -3003,8 +2766,7 @@ static void _V0load__library__interface_lambda29(VRuntime * runtime, VEnv * upen
   // ((bruijn import->path 2 10) (close _V0load__library__interface_k125) (bruijn import 0 1))
 V_CALL(upenv->up->vars[10], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0load__library__interface_k125, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k31(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3106,8 +2868,7 @@ V_CALL_FUNC(_V0vanity_V0compiler_V0library_V20_lambda3, env, runtime,
       VEncodeBool(false),
       VEncodeBool(false),
       VEncodeBool(false),
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k30(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3151,8 +2912,7 @@ V_CALL_FUNC(_V0vanity_V0compiler_V0library_V20_lambda2, env, runtime,
       upenv->up->up->vars[0],
       upenv->up->vars[0],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k29(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3171,8 +2931,7 @@ static void _V0vanity_V0compiler_V0library_V20_k29(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 25 0) (close _V0vanity_V0compiler_V0library_V20_k30) (quote search-open-input-file))
 V_CALL(VGetArg(upenv, 25-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k30, env)}),
-      VEncodePointer(&_V0search__open__input__file.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0search__open__input__file.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k28(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3191,8 +2950,7 @@ static void _V0vanity_V0compiler_V0library_V20_k28(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 24 0) (close _V0vanity_V0compiler_V0library_V20_k29) (quote read-all))
 V_CALL(VGetArg(upenv, 24-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k29, env)}),
-      VEncodePointer(&_V0read__all.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0read__all.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k27(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3211,8 +2969,7 @@ static void _V0vanity_V0compiler_V0library_V20_k27(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 23 0) (close _V0vanity_V0compiler_V0library_V20_k28) (quote close-port))
 V_CALL(VGetArg(upenv, 23-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k28, env)}),
-      VEncodePointer(&_V0close__port.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0close__port.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k26(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3231,8 +2988,7 @@ static void _V0vanity_V0compiler_V0library_V20_k26(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 22 0) (close _V0vanity_V0compiler_V0library_V20_k27) (quote cons))
 V_CALL(VGetArg(upenv, 22-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k27, env)}),
-      VEncodePointer(&_V0cons.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0cons.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k25(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3251,8 +3007,7 @@ static void _V0vanity_V0compiler_V0library_V20_k25(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 21 0) (close _V0vanity_V0compiler_V0library_V20_k26) (quote assoc))
 V_CALL(VGetArg(upenv, 21-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k26, env)}),
-      VEncodePointer(&_V0assoc.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0assoc.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k24(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3271,8 +3026,7 @@ static void _V0vanity_V0compiler_V0library_V20_k24(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 20 0) (close _V0vanity_V0compiler_V0library_V20_k25) (quote char->integer))
 V_CALL(VGetArg(upenv, 20-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k25, env)}),
-      VEncodePointer(&_V0char___Ginteger.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0char___Ginteger.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k23(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3291,8 +3045,7 @@ static void _V0vanity_V0compiler_V0library_V20_k23(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 19 0) (close _V0vanity_V0compiler_V0library_V20_k24) (quote <=))
 V_CALL(VGetArg(upenv, 19-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k24, env)}),
-      VEncodePointer(&_V0_L_E.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0_L_E.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k22(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3311,8 +3064,7 @@ static void _V0vanity_V0compiler_V0library_V20_k22(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 18 0) (close _V0vanity_V0compiler_V0library_V20_k23) (quote string-ref))
 V_CALL(VGetArg(upenv, 18-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k23, env)}),
-      VEncodePointer(&_V0string__ref.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0string__ref.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k21(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3331,8 +3083,7 @@ static void _V0vanity_V0compiler_V0library_V20_k21(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 17 0) (close _V0vanity_V0compiler_V0library_V20_k22) (quote +))
 V_CALL(VGetArg(upenv, 17-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k22, env)}),
-      VEncodePointer(&_V0_P.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0_P.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k20(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3351,8 +3102,7 @@ static void _V0vanity_V0compiler_V0library_V20_k20(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 16 0) (close _V0vanity_V0compiler_V0library_V20_k21) (quote <))
 V_CALL(VGetArg(upenv, 16-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k21, env)}),
-      VEncodePointer(&_V0_L.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0_L.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k19(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3371,8 +3121,7 @@ static void _V0vanity_V0compiler_V0library_V20_k19(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 15 0) (close _V0vanity_V0compiler_V0library_V20_k20) (quote symbol?))
 V_CALL(VGetArg(upenv, 15-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k20, env)}),
-      VEncodePointer(&_V0symbol_Q.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0symbol_Q.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k18(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3391,8 +3140,7 @@ static void _V0vanity_V0compiler_V0library_V20_k18(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 14 0) (close _V0vanity_V0compiler_V0library_V20_k19) (quote symbol->string))
 V_CALL(VGetArg(upenv, 14-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k19, env)}),
-      VEncodePointer(&_V0symbol___Gstring.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0symbol___Gstring.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k17(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3411,8 +3159,7 @@ static void _V0vanity_V0compiler_V0library_V20_k17(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 13 0) (close _V0vanity_V0compiler_V0library_V20_k18) (quote >))
 V_CALL(VGetArg(upenv, 13-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k18, env)}),
-      VEncodePointer(&_V0_G.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0_G.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k16(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3431,8 +3178,7 @@ static void _V0vanity_V0compiler_V0library_V20_k16(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 12 0) (close _V0vanity_V0compiler_V0library_V20_k17) (quote string-length))
 V_CALL(VGetArg(upenv, 12-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k17, env)}),
-      VEncodePointer(&_V0string__length.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0string__length.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3451,8 +3197,7 @@ static void _V0vanity_V0compiler_V0library_V20_k15(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 11 0) (close _V0vanity_V0compiler_V0library_V20_k16) (quote pair?))
 V_CALL(VGetArg(upenv, 11-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k16, env)}),
-      VEncodePointer(&_V0pair_Q.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0pair_Q.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k14(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3471,8 +3216,7 @@ static void _V0vanity_V0compiler_V0library_V20_k14(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 10 0) (close _V0vanity_V0compiler_V0library_V20_k15) (quote fold))
 V_CALL(VGetArg(upenv, 10-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k15, env)}),
-      VEncodePointer(&_V0fold.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0fold.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k13(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3491,8 +3235,7 @@ static void _V0vanity_V0compiler_V0library_V20_k13(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 9 0) (close _V0vanity_V0compiler_V0library_V20_k14) (quote map))
 V_CALL(VGetArg(upenv, 9-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k14, env)}),
-      VEncodePointer(&_V0map.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0map.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k12(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3511,8 +3254,7 @@ static void _V0vanity_V0compiler_V0library_V20_k12(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 8 0) (close _V0vanity_V0compiler_V0library_V20_k13) (quote sprintf))
 V_CALL(VGetArg(upenv, 8-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k13, env)}),
-      VEncodePointer(&_V0sprintf.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0sprintf.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3531,8 +3273,7 @@ static void _V0vanity_V0compiler_V0library_V20_k11(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 7 0) (close _V0vanity_V0compiler_V0library_V20_k12) (quote compiler-error))
 V_CALL(VGetArg(upenv, 7-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k12, env)}),
-      VEncodePointer(&_V0compiler__error.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0compiler__error.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3551,8 +3292,7 @@ static void _V0vanity_V0compiler_V0library_V20_k10(VRuntime * runtime, VEnv * up
   // ((bruijn ##vcore.import 6 0) (close _V0vanity_V0compiler_V0library_V20_k11) (quote cadr))
 V_CALL(VGetArg(upenv, 6-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k11, env)}),
-      VEncodePointer(&_V0cadr.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0cadr.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k9(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3571,8 +3311,7 @@ static void _V0vanity_V0compiler_V0library_V20_k9(VRuntime * runtime, VEnv * upe
   // ((bruijn ##vcore.import 5 0) (close _V0vanity_V0compiler_V0library_V20_k10) (quote car))
 V_CALL(VGetArg(upenv, 5-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k10, env)}),
-      VEncodePointer(&_V0car.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0car.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k8(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3591,8 +3330,7 @@ static void _V0vanity_V0compiler_V0library_V20_k8(VRuntime * runtime, VEnv * upe
   // ((bruijn ##vcore.import 4 0) (close _V0vanity_V0compiler_V0library_V20_k9) (quote cdr))
 V_CALL(upenv->up->up->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k9, env)}),
-      VEncodePointer(&_V0cdr.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0cdr.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k7(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3611,8 +3349,7 @@ static void _V0vanity_V0compiler_V0library_V20_k7(VRuntime * runtime, VEnv * upe
   // ((bruijn ##vcore.import 3 0) (close _V0vanity_V0compiler_V0library_V20_k8) (quote equal?))
 V_CALL(upenv->up->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k8, env)}),
-      VEncodePointer(&_V0equal_Q.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0equal_Q.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3631,8 +3368,7 @@ static void _V0vanity_V0compiler_V0library_V20_k6(VRuntime * runtime, VEnv * upe
   // ((bruijn ##vcore.import 2 0) (close _V0vanity_V0compiler_V0library_V20_k7) (quote append))
 V_CALL(upenv->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k7, env)}),
-      VEncodePointer(&_V0append.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0append.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3651,8 +3387,7 @@ static void _V0vanity_V0compiler_V0library_V20_k5(VRuntime * runtime, VEnv * upe
   // ((bruijn ##vcore.import 1 0) (close _V0vanity_V0compiler_V0library_V20_k6) (quote call/cc))
 V_CALL(upenv->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k6, env)}),
-      VEncodePointer(&_V0call_Wcc.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0call_Wcc.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3671,8 +3406,7 @@ static void _V0vanity_V0compiler_V0library_V20_k4(VRuntime * runtime, VEnv * upe
   // ((bruijn ##vcore.import 0 0) (close _V0vanity_V0compiler_V0library_V20_k5) (quote null?))
 V_CALL(_var0, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k5, env)}),
-      VEncodePointer(&_V0null_Q.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0null_Q.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3694,8 +3428,7 @@ static void _V0vanity_V0compiler_V0library_V20_k3(VRuntime * runtime, VEnv * upe
       VEncodePointer(&_V10string_D212.sym, VPOINTER_OTHER),
       upenv->up->vars[0],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3714,8 +3447,7 @@ static void _V0vanity_V0compiler_V0library_V20_k2(VRuntime * runtime, VEnv * upe
   // (##vcore.load-library (close _V0vanity_V0compiler_V0library_V20_k3) (##string ##string.213))
     V_CALL_FUNC(VLoadLibrary2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k3, env)}),
-      VEncodePointer(&_V10string_D213.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V10string_D213.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3734,8 +3466,7 @@ static void _V0vanity_V0compiler_V0library_V20_k1(VRuntime * runtime, VEnv * upe
   // (##vcore.load-library (close _V0vanity_V0compiler_V0library_V20_k2) (##string ##string.214))
     V_CALL_FUNC(VLoadLibrary2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k2, env)}),
-      VEncodePointer(&_V10string_D214.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V10string_D214.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3754,8 +3485,7 @@ static void _V0vanity_V0compiler_V0library_V20_lambda1(VRuntime * runtime, VEnv 
   // (##vcore.load-library (close _V0vanity_V0compiler_V0library_V20_k1) (##string ##string.215))
     V_CALL_FUNC(VLoadLibrary2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k1, env)}),
-      VEncodePointer(&_V10string_D215.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V10string_D215.sym, VPOINTER_OTHER));
  }
 }
 VFunc _V0vanity_V0compiler_V0library_V20 = (VFunc)_V0vanity_V0compiler_V0library_V20_lambda1;

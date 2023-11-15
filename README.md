@@ -25,12 +25,10 @@ For the pong demo:
 Sorry, clang isn't supported.
 
 1. Run `./configure` and answer the prompts, or just mash enter.
-	* The defaults installs to `~/.local/bin`, `~/.local/lib`, etc
-2. Run the `./linkup` script
-	* If `./linkup` reports that vsc is not valid, you'll need to expand your PATH, CPATH, LIBRARY\_PATH, and LD\_LIBRARY\_PATH
-	* You can copy the exports it prints into `~/.profile` if you like, or do it your own way
-3. Run `make hatch` to bootstrap the compiler from intermediates.
-4. Run `make clean; make install -j` to finish the bootstrap process.
+	* The defaults install prefix is `/usr/local/`
+3. Run `sudo make hatch` to bootstrap the compiler from intermediates.
+4. Run `make clean; sudo make install -j` to finish the bootstrap process.
+5. Verify the install with `make clean; make tests -j`
 
 ## Usage
 

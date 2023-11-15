@@ -27,11 +27,12 @@ runtime : lib/libvscheme.so
 # include files aren't build. Can add the -u if we
 # copy the files to the bin directory
 install : compiler runtime
-	cp -u lib/libvscheme.so ~/.local/lib/$(VSCHEME)
 	mkdir -p ~/.local/include/vscheme/
 	mkdir -p ~/.local/lib/
-	cp -r include/* ~/.local/include/.
-	cp -u bin/vsc ~/.local/bin/$(VSC)
+	cp -u lib/libvscheme.so $(INSTALL_DIR)/lib/$(VSCHEME)
+	ldconfig
+	cp -r include/* $(INSTALL_DIR)/include/.
+	cp -u bin/vsc $(INSTALL_DIR)/bin/$(VSC)
 
 tests : compiler runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \

@@ -29,16 +29,16 @@
 #include <stdarg.h>
 static struct { VBlob sym; char bytes[21]; } _V10string_D31 = { { VSTRING, 21 }, "_V0vanity_V0core_V20" };
 static struct { VBlob sym; char bytes[23]; } _V10string_D30 = { { VSTRING, 23 }, "_V0vanity_V0assert_V20" };
-static struct { VBlob sym; char bytes[4]; } _V0cdr = { { VSYMBOL, 4 }, "cdr" };
-static struct { VBlob sym; char bytes[4]; } _V0car = { { VSYMBOL, 4 }, "car" };
-static struct { VBlob sym; char bytes[4]; } _V0not = { { VSYMBOL, 4 }, "not" };
-static struct { VBlob sym; char bytes[6]; } _V0null_Q = { { VSYMBOL, 6 }, "null\?" };
-static struct { VBlob sym; char bytes[7]; } _V0equal_Q = { { VSYMBOL, 7 }, "equal\?" };
-static struct { VBlob sym; char bytes[19]; } _V0current__error__port = { { VSYMBOL, 19 }, "current-error-port" };
-static struct { VBlob sym; char bytes[7]; } _V0format = { { VSYMBOL, 7 }, "format" };
-static struct { VBlob sym; char bytes[5]; } _V0exit = { { VSYMBOL, 5 }, "exit" };
+struct { VBlob sym; char bytes[4]; } _V0cdr __attribute__((weak)) = { { VSYMBOL, 4 }, "cdr" };
+struct { VBlob sym; char bytes[4]; } _V0car __attribute__((weak)) = { { VSYMBOL, 4 }, "car" };
+struct { VBlob sym; char bytes[4]; } _V0not __attribute__((weak)) = { { VSYMBOL, 4 }, "not" };
+struct { VBlob sym; char bytes[6]; } _V0null_Q __attribute__((weak)) = { { VSYMBOL, 6 }, "null\?" };
+struct { VBlob sym; char bytes[7]; } _V0equal_Q __attribute__((weak)) = { { VSYMBOL, 7 }, "equal\?" };
+struct { VBlob sym; char bytes[19]; } _V0current__error__port __attribute__((weak)) = { { VSYMBOL, 19 }, "current-error-port" };
+struct { VBlob sym; char bytes[7]; } _V0format __attribute__((weak)) = { { VSYMBOL, 7 }, "format" };
+struct { VBlob sym; char bytes[5]; } _V0exit __attribute__((weak)) = { { VSYMBOL, 5 }, "exit" };
 static struct { VBlob sym; char bytes[41]; } _V10string_D29 = { { VSTRING, 41 }, "Assertion failed: ~A is not equal to ~A\n" };
-static struct { VBlob sym; char bytes[13]; } _V0assert__equal = { { VSYMBOL, 13 }, "assert-equal" };
+struct { VBlob sym; char bytes[13]; } _V0assert__equal __attribute__((weak)) = { { VSYMBOL, 13 }, "assert-equal" };
 static void _V0vanity_V0assert_V20_k11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V0vanity_V0assert_V20_k11" };
  VRecordCall(&dbg);
@@ -51,15 +51,10 @@ static void _V0vanity_V0assert_V20_k11(VRuntime * runtime, VEnv * upenv, int arg
   // ((bruijn ##k.3 1 0) (##inline ##sys.cons (##inline ##sys.cons (quote assert-equal) (bruijn assert-equal 1 1)) (quote ())))
 V_CALL(upenv->vars[0], runtime,
       VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0assert__equal.sym, VPOINTER_OTHER),
-      upenv->vars[1]
-    )
-,
-      VNULL
-    )
-
-    );
+        VInlineCons(
+        VEncodePointer(&_V0assert__equal.sym, VPOINTER_OTHER),
+        upenv->vars[1]),
+        VNULL));
  }
 }
 static void _V0assert__equal_k15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -74,8 +69,7 @@ static void _V0assert__equal_k15(VRuntime * runtime, VEnv * upenv, int argc, VWO
   // ((bruijn exit 6 8) (bruijn ##k.6 4 0) 1)
 V_CALL(VGetArg(upenv, 6-1, 8), runtime,
       upenv->up->up->up->vars[0],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
  }
 }
 static void _V0assert__equal_k14(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -97,8 +91,7 @@ V_CALL(VGetArg(upenv, 5-1, 7), runtime,
       _var0,
       VEncodePointer(&_V10string_D29.sym, VPOINTER_OTHER),
       upenv->up->up->vars[1],
-      upenv->up->up->vars[2]
-    );
+      upenv->up->up->vars[2]);
  }
 }
 static void _V0assert__equal_k13(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -118,12 +111,10 @@ static void _V0assert__equal_k13(VRuntime * runtime, VEnv * upenv, int argc, VWO
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->up->up->up->vars[6], runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assert__equal_k14, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assert__equal_k14, env)}));
 } else {
 V_CALL(upenv->up->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -143,8 +134,7 @@ static void _V0assert__equal_k12(VRuntime * runtime, VEnv * upenv, int argc, VWO
   // ((bruijn not 3 3) (close _V0assert__equal_k13) (bruijn ##x.10 0 0))
 V_CALL(upenv->up->up->vars[3], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assert__equal_k13, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0assert__equal_k16(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -159,8 +149,7 @@ static void _V0assert__equal_k16(VRuntime * runtime, VEnv * upenv, int argc, VWO
   // ((bruijn loop 1 1) (bruijn ##k.12 1 0) (bruijn rest 2 2))
 V_CALL(upenv->vars[1], runtime,
       upenv->vars[0],
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
  }
 }
 static void _V0loop_k21(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -175,8 +164,7 @@ static void _V0loop_k21(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn loop 6 1) (bruijn ##k.14 5 0) (bruijn ##x.17 0 0))
 V_CALL(VGetArg(upenv, 6-1, 1), runtime,
       VGetArg(upenv, 5-1, 0),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k20(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -195,8 +183,7 @@ static void _V0loop_k20(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn cdr 8 1) (close _V0loop_k21) (bruijn rest 4 1))
 V_CALL(VGetArg(upenv, 8-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k21, env)}),
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
  }
 }
 static void _V0loop_k19(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -216,8 +203,7 @@ static void _V0loop_k19(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
 V_CALL(VGetArg(upenv, 6-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k20, env)}),
       VGetArg(upenv, 5-1, 1),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k18(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -238,12 +224,10 @@ if(VDecodeBool(
 _var0)) {
 V_CALL(VGetArg(upenv, 6-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k19, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
 } else {
 V_CALL(upenv->up->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 }
  }
 }
@@ -263,8 +247,7 @@ static void _V0loop_k17(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn not 5 3) (close _V0loop_k18) (bruijn ##x.19 0 0))
 V_CALL(VGetArg(upenv, 5-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k18, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_lambda6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -284,8 +267,7 @@ static void _V0loop_lambda6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _v
   // ((bruijn null? 4 4) (close _V0loop_k17) (bruijn rest 0 1))
 V_CALL(upenv->up->up->up->vars[4], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k17, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0assert__equal_lambda5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -326,8 +308,7 @@ __attribute__((used)) static void _V20Case0__V0assert__equal_lambda4(VRuntime * 
 V_CALL(upenv->up->vars[5], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assert__equal_k12, env)}),
       _var1,
-      _var2
-    );
+      _var2);
  }
 }
 __attribute__((used)) static void _V20Case1__V0assert__equal_lambda4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, ...) {
@@ -345,8 +326,7 @@ __attribute__((used)) static void _V20Case1__V0assert__equal_lambda4(VRuntime * 
   // ((close _V0assert__equal_lambda5) (bruijn ##k.11 0 0) #f)
 V_CALL_FUNC(_V0assert__equal_lambda5, env, runtime,
       _var0,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 void _V0assert__equal_lambda4(VRuntime * runtime, VEnv * upenv, int argc, ...);
@@ -395,8 +375,7 @@ static void _V0vanity_V0assert_V20_lambda2(VRuntime * runtime, VEnv * upenv, int
   // ((close _V0vanity_V0assert_V20_lambda3) (bruijn ##k.2 0 0) #f)
 V_CALL_FUNC(_V0vanity_V0assert_V20_lambda3, env, runtime,
       _var0,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0vanity_V0assert_V20_k10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -422,8 +401,7 @@ V_CALL_FUNC(_V0vanity_V0assert_V20_lambda2, env, runtime,
       upenv->up->up->vars[0],
       upenv->up->vars[0],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0vanity_V0assert_V20_k9(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -442,8 +420,7 @@ static void _V0vanity_V0assert_V20_k9(VRuntime * runtime, VEnv * upenv, int argc
   // ((bruijn ##vcore.import 7 0) (close _V0vanity_V0assert_V20_k10) (quote exit))
 V_CALL(VGetArg(upenv, 7-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k10, env)}),
-      VEncodePointer(&_V0exit.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0exit.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0assert_V20_k8(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -462,8 +439,7 @@ static void _V0vanity_V0assert_V20_k8(VRuntime * runtime, VEnv * upenv, int argc
   // ((bruijn ##vcore.import 6 0) (close _V0vanity_V0assert_V20_k9) (quote format))
 V_CALL(VGetArg(upenv, 6-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k9, env)}),
-      VEncodePointer(&_V0format.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0format.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0assert_V20_k7(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -482,8 +458,7 @@ static void _V0vanity_V0assert_V20_k7(VRuntime * runtime, VEnv * upenv, int argc
   // ((bruijn ##vcore.import 5 0) (close _V0vanity_V0assert_V20_k8) (quote current-error-port))
 V_CALL(VGetArg(upenv, 5-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k8, env)}),
-      VEncodePointer(&_V0current__error__port.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0current__error__port.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0assert_V20_k6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -502,8 +477,7 @@ static void _V0vanity_V0assert_V20_k6(VRuntime * runtime, VEnv * upenv, int argc
   // ((bruijn ##vcore.import 4 0) (close _V0vanity_V0assert_V20_k7) (quote equal?))
 V_CALL(upenv->up->up->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k7, env)}),
-      VEncodePointer(&_V0equal_Q.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0equal_Q.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0assert_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -522,8 +496,7 @@ static void _V0vanity_V0assert_V20_k5(VRuntime * runtime, VEnv * upenv, int argc
   // ((bruijn ##vcore.import 3 0) (close _V0vanity_V0assert_V20_k6) (quote null?))
 V_CALL(upenv->up->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k6, env)}),
-      VEncodePointer(&_V0null_Q.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0null_Q.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0assert_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -542,8 +515,7 @@ static void _V0vanity_V0assert_V20_k4(VRuntime * runtime, VEnv * upenv, int argc
   // ((bruijn ##vcore.import 2 0) (close _V0vanity_V0assert_V20_k5) (quote not))
 V_CALL(upenv->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k5, env)}),
-      VEncodePointer(&_V0not.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0not.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0assert_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -562,8 +534,7 @@ static void _V0vanity_V0assert_V20_k3(VRuntime * runtime, VEnv * upenv, int argc
   // ((bruijn ##vcore.import 1 0) (close _V0vanity_V0assert_V20_k4) (quote car))
 V_CALL(upenv->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k4, env)}),
-      VEncodePointer(&_V0car.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0car.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0assert_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -582,8 +553,7 @@ static void _V0vanity_V0assert_V20_k2(VRuntime * runtime, VEnv * upenv, int argc
   // ((bruijn ##vcore.import 0 0) (close _V0vanity_V0assert_V20_k3) (quote cdr))
 V_CALL(_var0, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k3, env)}),
-      VEncodePointer(&_V0cdr.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0cdr.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0assert_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -603,8 +573,7 @@ static void _V0vanity_V0assert_V20_k1(VRuntime * runtime, VEnv * upenv, int argc
     V_CALL_FUNC(VMakeImport2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k2, env)}),
       VEncodePointer(&_V10string_D30.sym, VPOINTER_OTHER),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0vanity_V0assert_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -623,8 +592,7 @@ static void _V0vanity_V0assert_V20_lambda1(VRuntime * runtime, VEnv * upenv, int
   // (##vcore.load-library (close _V0vanity_V0assert_V20_k1) (##string ##string.31))
     V_CALL_FUNC(VLoadLibrary2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k1, env)}),
-      VEncodePointer(&_V10string_D31.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V10string_D31.sym, VPOINTER_OTHER));
  }
 }
 VFunc _V0vanity_V0assert_V20 = (VFunc)_V0vanity_V0assert_V20_lambda1;
