@@ -10,4 +10,4 @@ spadeslib.o : spadeslib.c spadeslib.h
 	gcc $< -c -o $@ -fPIC
 
 spades.o : spades.scm spadeslib.h
-	vsc $< -c -o $@
+	vsc $< -c -o $@ -O0 -g

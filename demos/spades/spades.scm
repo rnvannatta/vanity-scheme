@@ -37,12 +37,24 @@
      (let loop ((lst ($ lst x)) (xs xs))
        (if (null? xs) lst
            (loop ($ lst (car xs)) (cdr xs)))))))
-(define $-update
+(define $-set!
   (case-lambda
-    ((lst x v) (assv-update lst x v))
-    ((lst x . ys)
-     (let ((sublst ($ lst x)))
-       (assv-update lst x (apply $-update (cons sublst ys)))))))
+    ((lst x v) (set! (cdr (assv x lst)) v))
+    ((lst x0 x1 . xs)
+     (let loop ((lst lst) (xs (cons x0 (cons x1 xs))))
+       (if (null? (cddr xs)) ($-set! lst (car xs) (cadr xs))
+           (loop ($ lst (car xs)) (cdr xs)))))))
+(define $-mutate!
+  (case-lambda
+    ((lst x f)
+     (let ((ass (assv x lst)))
+       (set! (cdr ass) (f (cdr ass)))))
+    ((lst x0 x1 . xs)
+     (let loop ((lst lst) (xs (cons x0 (cons x1 xs))))
+       (if (null? (cddr xs)) ($-mutate! lst (car xs) (cadr xs))
+           (loop ($ lst (car xs)) (cdr xs)))))))
+(set! (setter $) $-set!)
+(set! (mutator $) $-mutate!)
 
 ; we have:
 ; THE WORLD
@@ -61,18 +73,22 @@
 ; UPDATE is a method that takes a WORLD and some ACTION and returns a new WORLD
 
 
-(define base-player
-  '((hand . ()) (bet . 0) (money . 40)))
+(define (base-player)
+  `((hand . ()) (bet . 0) (money . 40)))
+(define (copy x)
+  (cond ((pair? x) (cons (copy (car x)) (copy (cdr x))))
+        (else x)))
 (define (base-world)
-  `((player . ,base-player) (dealer . ,base-player) (state . betting) (deck . ,(shuffle deck)) (discard . ())))
+  `((player . ,(base-player)) (dealer . ,(base-player)) (state . betting) (deck . ,(shuffle (append deck deck)))))
 
 ; STATES
 ;   betting
 ;   dealing
+;   chicken-dinner
 ;   initial
 ;   player-turn
 ;   finish
-;   broke
+;   end
 
 (define (player-bet money)
   (printf "You have ~A guilders.~NWhat is your bet? " money)
@@ -90,43 +106,39 @@
           (else (printf "Unknown action~N")
                 (player-act state money hand peek)))))
 
-(define (deal world player n)
+(define (deal! world player n)
   (let ((deck ($ world 'deck)))
-    ($-update
-      ($-update world 'deck (drop deck n))
-      player 'hand (append (take deck n) ($ world player 'hand)))))
+    (set! ($ world 'deck) (drop deck n))
+    (set! append ($ world player 'hand) (take deck n))))
 
-(define (starting-deal world)
+(define (starting-deal! world)
   (let ((deck ($ world 'deck)))
-    ($-update
-      (deal
-        (deal world 'player 2)
-        'dealer 1)
-      'state 'initial)))
+    (deal! world 'player 2)
+    (deal! world 'dealer 1)
+    (set! ($ world 'state)
+          (if (= (best-score (score ($ world 'player 'hand))) 21)
+              'chicken-dinner
+              'initial))))
 
 (define (bust? world player)
   (> (fold min 22 (score ($ world player 'hand))) 21))
-(define (respond-bet world player bet)
+(define (respond-bet! world player bet)
   (let* ((money ($ world player 'money))
          (bet (min bet money)))
-    ($-update 
-      ($-update
-        ($-update world player 'bet bet)
-        player 'money (- money bet))
-      'state 'dealing)))
+    (set! ($ world player 'bet) bet)
+    (set! - ($ world player 'money) bet)
+    (set! ($ world 'state) 'dealing)))
 (define (respond-player world action)
   (case action
     ((hit)
-     (let ((world (deal world 'player 1)))
-       (if (bust? world 'player)
-           ($-update world 'state 'finish)
-           world)))
+     (deal! world 'player 1)
+     (if (bust? world 'player)
+         (set! ($ world 'state) 'finish)))
     ((stand)
-     ($-update world 'state 'finish))))
+     (set! ($ world 'state) 'finish))))
 (define (best-score score)
   (fold max 0 (filter (lambda (e) (<= e 21)) score)))
-(define (dealer-play world)
-  (displayln "Your hand is ~A~N" ($ world 'player 'hand))
+(define (dealer-play! world)
   (cond 
     ((bust? world 'player) (printf "You went bust!~NYou lose.~N") 'lose)
     ((bust? world 'dealer)
@@ -134,44 +146,63 @@
      (printf "The dealer went bust!~NYou win!~N")
      'win)
     ((< (fold max 0 (score ($ world 'dealer 'hand))) 17)
-     (dealer-play (deal world 'dealer 1)))
+     (printf "The dealer draws a ~A.~N" (car ($ world 'deck)))
+     (deal! world 'dealer 1)
+     (dealer-play! world))
     (else
       (let ((player-score (best-score (score ($ world 'player 'hand))))
             (dealer-score (best-score (score ($ world 'dealer 'hand)))))
-      (printf "The dealer's hand is ~A~N" ($ world 'dealer 'hand))
-      (printf "The dealer's score is ~A~N" dealer-score)
-      (printf "Your score is ~A~N" player-score)
-      (cond ((> player-score dealer-score) (displayln "You win!") 'win)
-            ((< player-score dealer-score) (displayln "You lose.") 'lose)
-            (else (displayln "Draw!") 'draw))))))
-(define (award-winnings world outcome)
-  (let ((bet ($ world 'player 'bet))
-        (world ($-update world 'player 'bet 0)))
-    (case outcome
-      ((lose)
-       (displayln "You lost your bet of ~A guilders." bet)
-       ($-update world 'dealer 'money (+ ($ world 'dealer 'money) bet)))
-      ((draw) ($-update world 'player 'money (+ ($ world 'player 'money) bet)))
-      ((win)
-       (let* ((bank ($ world 'dealer 'money))
-              (winnings (min bet bank)))
-         ($-update
-           ($-update world 'player 'money (+ winnings bet ($ world 'player 'money)))
-           'dealer 'money (- bank winnings)))))))
-#;(define (award-winnings world outcome)
+        (printf "The dealer's hand is ~A~N" ($ world 'dealer 'hand))
+        (printf "The dealer's score is ~A~N" dealer-score)
+        (printf "Your score is ~A~N" player-score)
+        (cond ((> player-score dealer-score) (displayln "You win!") 'win)
+              ((< player-score dealer-score) (displayln "You lose.") 'lose)
+              (else (displayln "Draw!") 'draw))))))
+(define (award-winnings! world outcome)
   (let ((bet ($ world 'player 'bet)))
     (set! ($ world 'player 'bet) 0)
     (case outcome
       ((lose)
-       (displayln "You lost your bet of ~A guilders." bet)
+       (printf "You lost your bet of ~A guilders.~N" bet)
        (set! + ($ world 'dealer 'money) bet))
       ((draw)
        (set! + ($ world 'player 'money) bet))
       ((win)
        (let* ((bank ($ world 'dealer 'money))
               (winnings (min bet bank)))
+         (printf "You win ~A guilders.~N" winnings)
          (set! + ($ world 'player 'money) winnings bet)
          (set! - ($ world 'dealer 'money) winnings))))))
+(define (award-dinner! world)
+  (let* ((bet ($ world 'player 'bet))
+         (dinner (max 1 (* 3 (quotient bet 2))))
+         (bank ($ world 'dealer 'money))
+         (winnings (min dinner bank)))
+    (printf "You win ~A guilders.~N" winnings)
+    (set! ($ world 'player 'bet) 0)
+    (set! + ($ world 'player 'money) winnings bet)
+    (set! - ($ world 'dealer 'money) winnings)))
+(define (clear-table! world)
+  (set! ($ world 'player 'hand) '())
+  (set! ($ world 'dealer 'hand) '())
+  (if (< (length ($ world 'deck)) 52)
+      (begin
+        (displayln "The dealer shuffles the deck")
+        (set! ($ world 'deck) (shuffle (append deck deck))))))
+(define (another-round? world)
+  (cond ((<= ($ world 'player 'money) 0)
+         (displayln "You are broke!")
+         'end)
+        ((<= ($ world 'dealer 'money) 0)
+         (displayln "You broke the dealer!")
+         'end)
+        (else
+         (printf "Another round (y/n)? ")
+         (let ((response (read-line)))
+           (cond ((equal? response "y") 'betting)
+                 ((equal? response "n") 'end)
+                 (else (displayln "Invalid response~N")
+                       (another-round? world)))))))
 ; (set! + (car x) 6)
 ; --> (((op-updater car) x) + 6)
 
@@ -184,14 +215,28 @@
 ; eg alist, record, struct
 (define (game-loop world)
   (case ($ world 'state)
-    ((betting) (game-loop (respond-bet world 'player (player-bet ($ world 'player 'money)))))
+    ((betting)
+     (respond-bet! world 'player (player-bet ($ world 'player 'money))))
     ((dealing)
-     (game-loop (starting-deal world)))
+     (starting-deal! world))
     ((player-turn initial)
-       (game-loop
-         (respond-player
-           world
-           (player-act ($ world 'state) ($ world 'player 'money) ($ world 'player 'hand) (car ($ world 'dealer 'hand))))))
-    ((broke) (printf "You won so hard you broke the bank!~N"))
-    ((finish) (award-winnings world (dealer-play world)))))
+     (respond-player
+       world
+       (player-act ($ world 'state) ($ world 'player 'money) ($ world 'player 'hand) (car ($ world 'dealer 'hand)))))
+    ; FIXME: this is incorrect, naturals should be part of standard resolve,
+    ; and the dealer gets naturals too
+    ((chicken-dinner)
+     (printf "Your hand is ~A.~N" ($ world 'player 'hand))
+     (displayln "You got blackjack!")
+     (award-dinner! world)
+     (clear-table! world)
+     (set! ($ world 'state) (another-round? world)))
+    ((finish)
+     (award-winnings! world (dealer-play! world))
+     (clear-table! world)
+     (set! ($ world 'state) (another-round? world)))
+    ((end)
+     (printf "You walk away from the table with ~A guilders in your pockets.~N" ($ world 'player 'money))
+     (exit)))
+  (game-loop world))
 (game-loop (base-world))
