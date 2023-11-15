@@ -28,9 +28,9 @@
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
 static struct { VBlob sym; char bytes[34]; } _V10string_D12 = { { VSTRING, 34 }, "_V0vanity_V0compiler_V0config_V20" };
-static struct { VBlob sym; char bytes[23]; } _V10string_D11 = { { VSTRING, 23 }, "/home/vannatta/.local/" };
-static struct { VBlob sym; char bytes[8]; } _V0version = { { VSYMBOL, 8 }, "version" };
-static struct { VBlob sym; char bytes[13]; } _V0install__root = { { VSYMBOL, 13 }, "install-root" };
+static struct { VBlob sym; char bytes[12]; } _V10string_D11 = { { VSTRING, 12 }, "/usr/local/" };
+struct { VBlob sym; char bytes[8]; } _V0version __attribute__((weak)) = { { VSYMBOL, 8 }, "version" };
+struct { VBlob sym; char bytes[13]; } _V0install__root __attribute__((weak)) = { { VSYMBOL, 13 }, "install-root" };
 static void _V0vanity_V0compiler_V0config_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_k3" };
  VRecordCall(&dbg);
@@ -43,23 +43,14 @@ static void _V0vanity_V0compiler_V0config_V20_k3(VRuntime * runtime, VEnv * upen
   // ((bruijn ##k.3 2 0) (##inline ##sys.cons (##inline ##sys.cons (quote install-root) (bruijn install-root 2 2)) (##inline ##sys.cons (##inline ##sys.cons (quote version) (bruijn version 2 1)) (quote ()))))
 V_CALL(upenv->up->vars[0], runtime,
       VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0install__root.sym, VPOINTER_OTHER),
-      upenv->up->vars[2]
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0version.sym, VPOINTER_OTHER),
-      upenv->up->vars[1]
-    )
-,
-      VNULL
-    )
-
-    )
-
-    );
+        VInlineCons(
+        VEncodePointer(&_V0install__root.sym, VPOINTER_OTHER),
+        upenv->up->vars[2]),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0version.sym, VPOINTER_OTHER),
+        upenv->up->vars[1]),
+        VNULL)));
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -98,14 +89,10 @@ static void _V0vanity_V0compiler_V0config_V20_lambda3(VRuntime * runtime, VEnv *
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0config_V20_k2, env)}),
       VEncodeInt(0l), VEncodeInt(1l),
       VInlineCons(
-VEncodeInt(0l),
-      VInlineCons(
-VEncodeInt(0l),
-      VNULL
-    )
-
-    )
-
+        VEncodeInt(0l),
+        VInlineCons(
+        VEncodeInt(0l),
+        VNULL))
     );
  }
 }
@@ -121,8 +108,7 @@ static void _V0vanity_V0compiler_V0config_V20_lambda2(VRuntime * runtime, VEnv *
 V_CALL_FUNC(_V0vanity_V0compiler_V0config_V20_lambda3, env, runtime,
       _var0,
       VEncodeBool(false),
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -140,8 +126,7 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upen
   env->vars[0] = _var0;
   // ((close _V0vanity_V0compiler_V0config_V20_lambda2) (bruijn ##k.1 1 0))
 V_CALL_FUNC(_V0vanity_V0compiler_V0config_V20_lambda2, env, runtime,
-      upenv->vars[0]
-    );
+      upenv->vars[0]);
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -160,8 +145,7 @@ static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv *
   // (##vcore.make-import (close _V0vanity_V0compiler_V0config_V20_k1) (##string ##string.12))
     V_CALL_FUNC(VMakeImport2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0config_V20_k1, env)}),
-      VEncodePointer(&_V10string_D12.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V10string_D12.sym, VPOINTER_OTHER));
  }
 }
 VFunc _V0vanity_V0compiler_V0config_V20 = (VFunc)_V0vanity_V0compiler_V0config_V20_lambda1;

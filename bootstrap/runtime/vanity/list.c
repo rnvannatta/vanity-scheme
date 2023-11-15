@@ -29,59 +29,59 @@
 #include <stdarg.h>
 static struct { VBlob sym; char bytes[21]; } _V10string_D341 = { { VSTRING, 21 }, "_V0vanity_V0core_V20" };
 static struct { VBlob sym; char bytes[21]; } _V10string_D340 = { { VSTRING, 21 }, "_V0vanity_V0list_V20" };
-static struct { VBlob sym; char bytes[4]; } _V0cdr = { { VSYMBOL, 4 }, "cdr" };
-static struct { VBlob sym; char bytes[4]; } _V0car = { { VSYMBOL, 4 }, "car" };
-static struct { VBlob sym; char bytes[5]; } _V0cons = { { VSYMBOL, 5 }, "cons" };
-static struct { VBlob sym; char bytes[5]; } _V0caar = { { VSYMBOL, 5 }, "caar" };
-static struct { VBlob sym; char bytes[6]; } _V0null_Q = { { VSYMBOL, 6 }, "null\?" };
-static struct { VBlob sym; char bytes[7]; } _V0equal_Q = { { VSYMBOL, 7 }, "equal\?" };
-static struct { VBlob sym; char bytes[5]; } _V0eqv_Q = { { VSYMBOL, 5 }, "eqv\?" };
-static struct { VBlob sym; char bytes[4]; } _V0eq_Q = { { VSYMBOL, 4 }, "eq\?" };
-static struct { VBlob sym; char bytes[2]; } _V0_E = { { VSYMBOL, 2 }, "=" };
-static struct { VBlob sym; char bytes[2]; } _V0__ = { { VSYMBOL, 2 }, "-" };
-static struct { VBlob sym; char bytes[2]; } _V0_P = { { VSYMBOL, 2 }, "+" };
-static struct { VBlob sym; char bytes[4]; } _V0not = { { VSYMBOL, 4 }, "not" };
-static struct { VBlob sym; char bytes[17]; } _V0call__with__values = { { VSYMBOL, 17 }, "call-with-values" };
-static struct { VBlob sym; char bytes[7]; } _V0values = { { VSYMBOL, 7 }, "values" };
-static struct { VBlob sym; char bytes[5]; } _V0cadr = { { VSYMBOL, 5 }, "cadr" };
-static struct { VBlob sym; char bytes[6]; } _V0caddr = { { VSYMBOL, 6 }, "caddr" };
-static struct { VBlob sym; char bytes[7]; } _V0cadddr = { { VSYMBOL, 7 }, "cadddr" };
-static struct { VBlob sym; char bytes[4]; } _V0map = { { VSYMBOL, 4 }, "map" };
-static struct { VBlob sym; char bytes[6]; } _V0apply = { { VSYMBOL, 6 }, "apply" };
-static struct { VBlob sym; char bytes[5]; } _V0list = { { VSYMBOL, 5 }, "list" };
-static struct { VBlob sym; char bytes[7]; } _V0append = { { VSYMBOL, 7 }, "append" };
-static struct { VBlob sym; char bytes[7]; } _V0length = { { VSYMBOL, 7 }, "length" };
-static struct { VBlob sym; char bytes[2]; } _V0_S = { { VSYMBOL, 2 }, "*" };
-static struct { VBlob sym; char bytes[13]; } _V0assoc__update = { { VSYMBOL, 13 }, "assoc-update" };
-static struct { VBlob sym; char bytes[12]; } _V0assv__update = { { VSYMBOL, 12 }, "assv-update" };
-static struct { VBlob sym; char bytes[12]; } _V0assq__update = { { VSYMBOL, 12 }, "assq-update" };
-static struct { VBlob sym; char bytes[7]; } _V0delete = { { VSYMBOL, 7 }, "delete" };
-static struct { VBlob sym; char bytes[7]; } _V0insert = { { VSYMBOL, 7 }, "insert" };
-static struct { VBlob sym; char bytes[11]; } _V0list__index = { { VSYMBOL, 11 }, "list-index" };
-static struct { VBlob sym; char bytes[7]; } _V0every_Q = { { VSYMBOL, 7 }, "every\?" };
-static struct { VBlob sym; char bytes[5]; } _V0any_Q = { { VSYMBOL, 5 }, "any\?" };
-static struct { VBlob sym; char bytes[12]; } _V0split__while = { { VSYMBOL, 12 }, "split-while" };
-static struct { VBlob sym; char bytes[11]; } _V0drop__while = { { VSYMBOL, 11 }, "drop-while" };
-static struct { VBlob sym; char bytes[11]; } _V0take__while = { { VSYMBOL, 11 }, "take-while" };
-static struct { VBlob sym; char bytes[10]; } _V0partition = { { VSYMBOL, 10 }, "partition" };
-static struct { VBlob sym; char bytes[7]; } _V0filter = { { VSYMBOL, 7 }, "filter" };
-static struct { VBlob sym; char bytes[6]; } _V0count = { { VSYMBOL, 6 }, "count" };
-static struct { VBlob sym; char bytes[7]; } _V0unzip5 = { { VSYMBOL, 7 }, "unzip5" };
-static struct { VBlob sym; char bytes[7]; } _V0unzip4 = { { VSYMBOL, 7 }, "unzip4" };
-static struct { VBlob sym; char bytes[7]; } _V0unzip3 = { { VSYMBOL, 7 }, "unzip3" };
-static struct { VBlob sym; char bytes[7]; } _V0unzip2 = { { VSYMBOL, 7 }, "unzip2" };
-static struct { VBlob sym; char bytes[7]; } _V0unzip1 = { { VSYMBOL, 7 }, "unzip1" };
-static struct { VBlob sym; char bytes[4]; } _V0zip = { { VSYMBOL, 4 }, "zip" };
-static struct { VBlob sym; char bytes[12]; } _V0concatenate = { { VSYMBOL, 12 }, "concatenate" };
-static struct { VBlob sym; char bytes[11]; } _V0fold__right = { { VSYMBOL, 11 }, "fold-right" };
-static struct { VBlob sym; char bytes[5]; } _V0fold = { { VSYMBOL, 5 }, "fold" };
-static struct { VBlob sym; char bytes[9]; } _V0split__at = { { VSYMBOL, 9 }, "split-at" };
-static struct { VBlob sym; char bytes[11]; } _V0drop__right = { { VSYMBOL, 11 }, "drop-right" };
-static struct { VBlob sym; char bytes[11]; } _V0take__right = { { VSYMBOL, 11 }, "take-right" };
-static struct { VBlob sym; char bytes[5]; } _V0drop = { { VSYMBOL, 5 }, "drop" };
-static struct { VBlob sym; char bytes[5]; } _V0take = { { VSYMBOL, 5 }, "take" };
-static struct { VBlob sym; char bytes[14]; } _V0list__tabulate = { { VSYMBOL, 14 }, "list-tabulate" };
-static struct { VBlob sym; char bytes[5]; } _V0iota = { { VSYMBOL, 5 }, "iota" };
+struct { VBlob sym; char bytes[4]; } _V0cdr __attribute__((weak)) = { { VSYMBOL, 4 }, "cdr" };
+struct { VBlob sym; char bytes[4]; } _V0car __attribute__((weak)) = { { VSYMBOL, 4 }, "car" };
+struct { VBlob sym; char bytes[5]; } _V0cons __attribute__((weak)) = { { VSYMBOL, 5 }, "cons" };
+struct { VBlob sym; char bytes[5]; } _V0caar __attribute__((weak)) = { { VSYMBOL, 5 }, "caar" };
+struct { VBlob sym; char bytes[6]; } _V0null_Q __attribute__((weak)) = { { VSYMBOL, 6 }, "null\?" };
+struct { VBlob sym; char bytes[7]; } _V0equal_Q __attribute__((weak)) = { { VSYMBOL, 7 }, "equal\?" };
+struct { VBlob sym; char bytes[5]; } _V0eqv_Q __attribute__((weak)) = { { VSYMBOL, 5 }, "eqv\?" };
+struct { VBlob sym; char bytes[4]; } _V0eq_Q __attribute__((weak)) = { { VSYMBOL, 4 }, "eq\?" };
+struct { VBlob sym; char bytes[2]; } _V0_E __attribute__((weak)) = { { VSYMBOL, 2 }, "=" };
+struct { VBlob sym; char bytes[2]; } _V0__ __attribute__((weak)) = { { VSYMBOL, 2 }, "-" };
+struct { VBlob sym; char bytes[2]; } _V0_P __attribute__((weak)) = { { VSYMBOL, 2 }, "+" };
+struct { VBlob sym; char bytes[4]; } _V0not __attribute__((weak)) = { { VSYMBOL, 4 }, "not" };
+struct { VBlob sym; char bytes[17]; } _V0call__with__values __attribute__((weak)) = { { VSYMBOL, 17 }, "call-with-values" };
+struct { VBlob sym; char bytes[7]; } _V0values __attribute__((weak)) = { { VSYMBOL, 7 }, "values" };
+struct { VBlob sym; char bytes[5]; } _V0cadr __attribute__((weak)) = { { VSYMBOL, 5 }, "cadr" };
+struct { VBlob sym; char bytes[6]; } _V0caddr __attribute__((weak)) = { { VSYMBOL, 6 }, "caddr" };
+struct { VBlob sym; char bytes[7]; } _V0cadddr __attribute__((weak)) = { { VSYMBOL, 7 }, "cadddr" };
+struct { VBlob sym; char bytes[4]; } _V0map __attribute__((weak)) = { { VSYMBOL, 4 }, "map" };
+struct { VBlob sym; char bytes[6]; } _V0apply __attribute__((weak)) = { { VSYMBOL, 6 }, "apply" };
+struct { VBlob sym; char bytes[5]; } _V0list __attribute__((weak)) = { { VSYMBOL, 5 }, "list" };
+struct { VBlob sym; char bytes[7]; } _V0append __attribute__((weak)) = { { VSYMBOL, 7 }, "append" };
+struct { VBlob sym; char bytes[7]; } _V0length __attribute__((weak)) = { { VSYMBOL, 7 }, "length" };
+struct { VBlob sym; char bytes[2]; } _V0_S __attribute__((weak)) = { { VSYMBOL, 2 }, "*" };
+struct { VBlob sym; char bytes[13]; } _V0assoc__update __attribute__((weak)) = { { VSYMBOL, 13 }, "assoc-update" };
+struct { VBlob sym; char bytes[12]; } _V0assv__update __attribute__((weak)) = { { VSYMBOL, 12 }, "assv-update" };
+struct { VBlob sym; char bytes[12]; } _V0assq__update __attribute__((weak)) = { { VSYMBOL, 12 }, "assq-update" };
+struct { VBlob sym; char bytes[7]; } _V0delete __attribute__((weak)) = { { VSYMBOL, 7 }, "delete" };
+struct { VBlob sym; char bytes[7]; } _V0insert __attribute__((weak)) = { { VSYMBOL, 7 }, "insert" };
+struct { VBlob sym; char bytes[11]; } _V0list__index __attribute__((weak)) = { { VSYMBOL, 11 }, "list-index" };
+struct { VBlob sym; char bytes[7]; } _V0every_Q __attribute__((weak)) = { { VSYMBOL, 7 }, "every\?" };
+struct { VBlob sym; char bytes[5]; } _V0any_Q __attribute__((weak)) = { { VSYMBOL, 5 }, "any\?" };
+struct { VBlob sym; char bytes[12]; } _V0split__while __attribute__((weak)) = { { VSYMBOL, 12 }, "split-while" };
+struct { VBlob sym; char bytes[11]; } _V0drop__while __attribute__((weak)) = { { VSYMBOL, 11 }, "drop-while" };
+struct { VBlob sym; char bytes[11]; } _V0take__while __attribute__((weak)) = { { VSYMBOL, 11 }, "take-while" };
+struct { VBlob sym; char bytes[10]; } _V0partition __attribute__((weak)) = { { VSYMBOL, 10 }, "partition" };
+struct { VBlob sym; char bytes[7]; } _V0filter __attribute__((weak)) = { { VSYMBOL, 7 }, "filter" };
+struct { VBlob sym; char bytes[6]; } _V0count __attribute__((weak)) = { { VSYMBOL, 6 }, "count" };
+struct { VBlob sym; char bytes[7]; } _V0unzip5 __attribute__((weak)) = { { VSYMBOL, 7 }, "unzip5" };
+struct { VBlob sym; char bytes[7]; } _V0unzip4 __attribute__((weak)) = { { VSYMBOL, 7 }, "unzip4" };
+struct { VBlob sym; char bytes[7]; } _V0unzip3 __attribute__((weak)) = { { VSYMBOL, 7 }, "unzip3" };
+struct { VBlob sym; char bytes[7]; } _V0unzip2 __attribute__((weak)) = { { VSYMBOL, 7 }, "unzip2" };
+struct { VBlob sym; char bytes[7]; } _V0unzip1 __attribute__((weak)) = { { VSYMBOL, 7 }, "unzip1" };
+struct { VBlob sym; char bytes[4]; } _V0zip __attribute__((weak)) = { { VSYMBOL, 4 }, "zip" };
+struct { VBlob sym; char bytes[12]; } _V0concatenate __attribute__((weak)) = { { VSYMBOL, 12 }, "concatenate" };
+struct { VBlob sym; char bytes[11]; } _V0fold__right __attribute__((weak)) = { { VSYMBOL, 11 }, "fold-right" };
+struct { VBlob sym; char bytes[5]; } _V0fold __attribute__((weak)) = { { VSYMBOL, 5 }, "fold" };
+struct { VBlob sym; char bytes[9]; } _V0split__at __attribute__((weak)) = { { VSYMBOL, 9 }, "split-at" };
+struct { VBlob sym; char bytes[11]; } _V0drop__right __attribute__((weak)) = { { VSYMBOL, 11 }, "drop-right" };
+struct { VBlob sym; char bytes[11]; } _V0take__right __attribute__((weak)) = { { VSYMBOL, 11 }, "take-right" };
+struct { VBlob sym; char bytes[5]; } _V0drop __attribute__((weak)) = { { VSYMBOL, 5 }, "drop" };
+struct { VBlob sym; char bytes[5]; } _V0take __attribute__((weak)) = { { VSYMBOL, 5 }, "take" };
+struct { VBlob sym; char bytes[14]; } _V0list__tabulate __attribute__((weak)) = { { VSYMBOL, 14 }, "list-tabulate" };
+struct { VBlob sym; char bytes[5]; } _V0iota __attribute__((weak)) = { { VSYMBOL, 5 }, "iota" };
 static void _V0vanity_V0list_V20_k55(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V0vanity_V0list_V20_k55" };
  VRecordCall(&dbg);
@@ -94,247 +94,126 @@ static void _V0vanity_V0list_V20_k55(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##k.3 30 0) (##inline ##sys.cons (##inline ##sys.cons (quote iota) (bruijn iota 30 1)) (##inline ##sys.cons (##inline ##sys.cons (quote list-tabulate) (bruijn list-tabulate 30 2)) (##inline ##sys.cons (##inline ##sys.cons (quote take) (bruijn take 30 3)) (##inline ##sys.cons (##inline ##sys.cons (quote drop) (bruijn drop 30 4)) (##inline ##sys.cons (##inline ##sys.cons (quote take-right) (bruijn take-right 30 5)) (##inline ##sys.cons (##inline ##sys.cons (quote drop-right) (bruijn drop-right 30 6)) (##inline ##sys.cons (##inline ##sys.cons (quote split-at) (bruijn split-at 30 7)) (##inline ##sys.cons (##inline ##sys.cons (quote fold) (bruijn fold 30 8)) (##inline ##sys.cons (##inline ##sys.cons (quote fold-right) (bruijn fold-right 30 9)) (##inline ##sys.cons (##inline ##sys.cons (quote concatenate) (bruijn concatenate 30 10)) (##inline ##sys.cons (##inline ##sys.cons (quote zip) (bruijn zip 30 11)) (##inline ##sys.cons (##inline ##sys.cons (quote unzip1) (bruijn unzip1 30 12)) (##inline ##sys.cons (##inline ##sys.cons (quote unzip2) (bruijn unzip2 30 13)) (##inline ##sys.cons (##inline ##sys.cons (quote unzip3) (bruijn unzip3 30 14)) (##inline ##sys.cons (##inline ##sys.cons (quote unzip4) (bruijn unzip4 30 15)) (##inline ##sys.cons (##inline ##sys.cons (quote unzip5) (bruijn unzip5 30 16)) (##inline ##sys.cons (##inline ##sys.cons (quote count) (bruijn count 30 17)) (##inline ##sys.cons (##inline ##sys.cons (quote filter) (bruijn filter 30 18)) (##inline ##sys.cons (##inline ##sys.cons (quote partition) (bruijn partition 30 19)) (##inline ##sys.cons (##inline ##sys.cons (quote take-while) (bruijn take-while 30 20)) (##inline ##sys.cons (##inline ##sys.cons (quote drop-while) (bruijn drop-while 30 21)) (##inline ##sys.cons (##inline ##sys.cons (quote split-while) (bruijn split-while 30 22)) (##inline ##sys.cons (##inline ##sys.cons (quote any?) (bruijn any? 30 23)) (##inline ##sys.cons (##inline ##sys.cons (quote every?) (bruijn every? 30 24)) (##inline ##sys.cons (##inline ##sys.cons (quote list-index) (bruijn list-index 30 25)) (##inline ##sys.cons (##inline ##sys.cons (quote insert) (bruijn insert 30 26)) (##inline ##sys.cons (##inline ##sys.cons (quote delete) (bruijn delete 30 27)) (##inline ##sys.cons (##inline ##sys.cons (quote assq-update) (bruijn assq-update 30 28)) (##inline ##sys.cons (##inline ##sys.cons (quote assv-update) (bruijn assv-update 30 29)) (##inline ##sys.cons (##inline ##sys.cons (quote assoc-update) (bruijn assoc-update 30 30)) (quote ()))))))))))))))))))))))))))))))))
 V_CALL(VGetArg(upenv, 30-1, 0), runtime,
       VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0iota.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 1)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0list__tabulate.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 2)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0take.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 3)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0drop.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 4)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0take__right.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 5)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0drop__right.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 6)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0split__at.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 7)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0fold.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 8)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0fold__right.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 9)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0concatenate.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 10)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0zip.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 11)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0unzip1.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 12)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0unzip2.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 13)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0unzip3.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 14)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0unzip4.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 15)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0unzip5.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 16)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0count.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 17)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0filter.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 18)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0partition.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 19)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0take__while.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 20)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0drop__while.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 21)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0split__while.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 22)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0any_Q.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 23)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0every_Q.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 24)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0list__index.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 25)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0insert.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 26)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0delete.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 27)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0assq__update.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 28)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0assv__update.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 29)
-    )
-,
-      VInlineCons(
-VInlineCons(
-VEncodePointer(&_V0assoc__update.sym, VPOINTER_OTHER),
-      VGetArg(upenv, 30-1, 30)
-    )
-,
-      VNULL
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    )
-
-    );
+        VInlineCons(
+        VEncodePointer(&_V0iota.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 1)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0list__tabulate.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 2)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0take.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 3)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0drop.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 4)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0take__right.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 5)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0drop__right.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 6)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0split__at.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 7)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0fold.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 8)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0fold__right.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 9)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0concatenate.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 10)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0zip.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 11)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0unzip1.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 12)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0unzip2.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 13)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0unzip3.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 14)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0unzip4.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 15)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0unzip5.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 16)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0count.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 17)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0filter.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 18)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0partition.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 19)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0take__while.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 20)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0drop__while.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 21)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0split__while.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 22)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0any_Q.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 23)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0every_Q.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 24)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0list__index.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 25)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0insert.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 26)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0delete.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 27)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0assq__update.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 28)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0assv__update.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 29)),
+        VInlineCons(
+        VInlineCons(
+        VEncodePointer(&_V0assoc__update.sym, VPOINTER_OTHER),
+        VGetArg(upenv, 30-1, 30)),
+        VNULL)))))))))))))))))))))))))))))));
  }
 }
 static void _V0assoc__update_k57(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -350,8 +229,7 @@ static void _V0assoc__update_k57(VRuntime * runtime, VEnv * upenv, int argc, VWO
 V_CALL(VGetArg(upenv, 33-1, 3), runtime,
       upenv->up->vars[0],
       _var0,
-      VNULL
-    );
+      VNULL);
  }
 }
 static void _V0assoc__update_k61(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -367,8 +245,7 @@ static void _V0assoc__update_k61(VRuntime * runtime, VEnv * upenv, int argc, VWO
 V_CALL(VGetArg(upenv, 36-1, 3), runtime,
       VGetArg(upenv, 5-1, 0),
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0assoc__update_k60(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -387,8 +264,7 @@ static void _V0assoc__update_k60(VRuntime * runtime, VEnv * upenv, int argc, VWO
   // ((bruijn cdr 35 1) (close _V0assoc__update_k61) (bruijn lst 4 1))
 V_CALL(VGetArg(upenv, 35-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assoc__update_k61, env)}),
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
  }
 }
 static void _V0assoc__update_k64(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -404,8 +280,7 @@ static void _V0assoc__update_k64(VRuntime * runtime, VEnv * upenv, int argc, VWO
 V_CALL(VGetArg(upenv, 37-1, 3), runtime,
       VGetArg(upenv, 6-1, 0),
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0assoc__update_k63(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -426,8 +301,7 @@ V_CALL(VGetArg(upenv, 35-1, 30), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assoc__update_k64, env)}),
       _var0,
       VGetArg(upenv, 5-1, 2),
-      VGetArg(upenv, 5-1, 3)
-    );
+      VGetArg(upenv, 5-1, 3));
  }
 }
 static void _V0assoc__update_k62(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -446,8 +320,7 @@ static void _V0assoc__update_k62(VRuntime * runtime, VEnv * upenv, int argc, VWO
   // ((bruijn cdr 35 1) (close _V0assoc__update_k63) (bruijn lst 4 1))
 V_CALL(VGetArg(upenv, 35-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assoc__update_k63, env)}),
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
  }
 }
 static void _V0assoc__update_k59(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -469,13 +342,11 @@ _var0)) {
 V_CALL(VGetArg(upenv, 34-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assoc__update_k60, env)}),
       upenv->up->up->vars[2],
-      upenv->up->up->vars[3]
-    );
+      upenv->up->up->vars[3]);
 } else {
 V_CALL(VGetArg(upenv, 34-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assoc__update_k62, env)}),
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
 }
  }
 }
@@ -496,8 +367,7 @@ static void _V0assoc__update_k58(VRuntime * runtime, VEnv * upenv, int argc, VWO
 V_CALL(upenv->up->vars[4], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assoc__update_k59, env)}),
       upenv->up->vars[2],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0assoc__update_k56(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -519,13 +389,11 @@ _var0)) {
 V_CALL(VGetArg(upenv, 32-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assoc__update_k57, env)}),
       upenv->vars[2],
-      upenv->vars[3]
-    );
+      upenv->vars[3]);
 } else {
 V_CALL(VGetArg(upenv, 32-1, 4), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assoc__update_k58, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -546,8 +414,7 @@ V_CALL(VGetArg(upenv, 30-1, 30), runtime,
       _var1,
       _var2,
       _var3,
-      VGetArg(upenv, 31-1, 6)
-    );
+      VGetArg(upenv, 31-1, 6));
  }
 }
 __attribute__((used)) static void _V20Case1__V0assoc__update_lambda4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4) {
@@ -565,8 +432,7 @@ __attribute__((used)) static void _V20Case1__V0assoc__update_lambda4(VRuntime * 
   // ((bruijn null? 31 5) (close _V0assoc__update_k56) (bruijn lst 0 1))
 V_CALL(VGetArg(upenv, 31-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assoc__update_k56, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 void _V0assoc__update_lambda4(VRuntime * runtime, VEnv * upenv, int argc, ...);
@@ -613,8 +479,7 @@ static void _V0assv__update_k66(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 32-1, 3), runtime,
       upenv->up->vars[0],
       _var0,
-      VNULL
-    );
+      VNULL);
  }
 }
 static void _V0assv__update_k70(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -630,8 +495,7 @@ static void _V0assv__update_k70(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 35-1, 3), runtime,
       VGetArg(upenv, 5-1, 0),
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0assv__update_k69(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -650,8 +514,7 @@ static void _V0assv__update_k69(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn cdr 34 1) (close _V0assv__update_k70) (bruijn lst 4 1))
 V_CALL(VGetArg(upenv, 34-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assv__update_k70, env)}),
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
  }
 }
 static void _V0assv__update_k73(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -667,8 +530,7 @@ static void _V0assv__update_k73(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 36-1, 3), runtime,
       VGetArg(upenv, 6-1, 0),
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0assv__update_k72(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -689,8 +551,7 @@ V_CALL(VGetArg(upenv, 34-1, 30), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assv__update_k73, env)}),
       _var0,
       VGetArg(upenv, 5-1, 2),
-      VGetArg(upenv, 5-1, 3)
-    );
+      VGetArg(upenv, 5-1, 3));
  }
 }
 static void _V0assv__update_k71(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -709,8 +570,7 @@ static void _V0assv__update_k71(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn cdr 34 1) (close _V0assv__update_k72) (bruijn lst 4 1))
 V_CALL(VGetArg(upenv, 34-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assv__update_k72, env)}),
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
  }
 }
 static void _V0assv__update_k68(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -732,13 +592,11 @@ _var0)) {
 V_CALL(VGetArg(upenv, 33-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assv__update_k69, env)}),
       upenv->up->up->vars[2],
-      upenv->up->up->vars[3]
-    );
+      upenv->up->up->vars[3]);
 } else {
 V_CALL(VGetArg(upenv, 33-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assv__update_k71, env)}),
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
 }
  }
 }
@@ -759,8 +617,7 @@ static void _V0assv__update_k67(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 32-1, 7), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assv__update_k68, env)}),
       upenv->up->vars[2],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0assv__update_k65(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -782,13 +639,11 @@ _var0)) {
 V_CALL(VGetArg(upenv, 31-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assv__update_k66, env)}),
       upenv->vars[2],
-      upenv->vars[3]
-    );
+      upenv->vars[3]);
 } else {
 V_CALL(VGetArg(upenv, 31-1, 4), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assv__update_k67, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -811,8 +666,7 @@ static void _V0assv__update_lambda5(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn null? 30 5) (close _V0assv__update_k65) (bruijn lst 0 1))
 V_CALL(VGetArg(upenv, 30-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assv__update_k65, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0list_V20_k53(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -849,8 +703,7 @@ static void _V0assq__update_k75(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 31-1, 3), runtime,
       upenv->up->vars[0],
       _var0,
-      VNULL
-    );
+      VNULL);
  }
 }
 static void _V0assq__update_k79(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -866,8 +719,7 @@ static void _V0assq__update_k79(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 34-1, 3), runtime,
       VGetArg(upenv, 5-1, 0),
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0assq__update_k78(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -886,8 +738,7 @@ static void _V0assq__update_k78(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn cdr 33 1) (close _V0assq__update_k79) (bruijn lst 4 1))
 V_CALL(VGetArg(upenv, 33-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assq__update_k79, env)}),
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
  }
 }
 static void _V0assq__update_k82(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -903,8 +754,7 @@ static void _V0assq__update_k82(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 35-1, 3), runtime,
       VGetArg(upenv, 6-1, 0),
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0assq__update_k81(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -925,8 +775,7 @@ V_CALL(VGetArg(upenv, 33-1, 30), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assq__update_k82, env)}),
       _var0,
       VGetArg(upenv, 5-1, 2),
-      VGetArg(upenv, 5-1, 3)
-    );
+      VGetArg(upenv, 5-1, 3));
  }
 }
 static void _V0assq__update_k80(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -945,8 +794,7 @@ static void _V0assq__update_k80(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn cdr 33 1) (close _V0assq__update_k81) (bruijn lst 4 1))
 V_CALL(VGetArg(upenv, 33-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assq__update_k81, env)}),
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
  }
 }
 static void _V0assq__update_k77(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -968,13 +816,11 @@ _var0)) {
 V_CALL(VGetArg(upenv, 32-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assq__update_k78, env)}),
       upenv->up->up->vars[2],
-      upenv->up->up->vars[3]
-    );
+      upenv->up->up->vars[3]);
 } else {
 V_CALL(VGetArg(upenv, 32-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assq__update_k80, env)}),
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
 }
  }
 }
@@ -995,8 +841,7 @@ static void _V0assq__update_k76(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 31-1, 8), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assq__update_k77, env)}),
       upenv->up->vars[2],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0assq__update_k74(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1018,13 +863,11 @@ _var0)) {
 V_CALL(VGetArg(upenv, 30-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assq__update_k75, env)}),
       upenv->vars[2],
-      upenv->vars[3]
-    );
+      upenv->vars[3]);
 } else {
 V_CALL(VGetArg(upenv, 30-1, 4), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assq__update_k76, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -1047,8 +890,7 @@ static void _V0assq__update_lambda6(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn null? 29 5) (close _V0assq__update_k74) (bruijn lst 0 1))
 V_CALL(VGetArg(upenv, 29-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0assq__update_k74, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0list_V20_k52(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1085,8 +927,7 @@ static void _V0delete_k87(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
 V_CALL(VGetArg(upenv, 33-1, 3), runtime,
       VGetArg(upenv, 5-1, 0),
       upenv->up->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0delete_k86(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1106,8 +947,7 @@ static void _V0delete_k86(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
 V_CALL(VGetArg(upenv, 31-1, 27), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0delete_k87, env)}),
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0delete_k85(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1127,8 +967,7 @@ static void _V0delete_k85(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
 V_CALL(VGetArg(upenv, 31-1, 10), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0delete_k86, env)}),
       upenv->up->up->vars[2],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
  }
 }
 static void _V0delete_k84(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1147,8 +986,7 @@ static void _V0delete_k84(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
   // ((bruijn cdr 30 1) (close _V0delete_k85) (bruijn lst 2 1))
 V_CALL(VGetArg(upenv, 30-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0delete_k85, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0delete_k83(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1169,13 +1007,11 @@ if(VDecodeBool(
 _var0)) {
 V_CALL(VGetArg(upenv, 29-1, 1), runtime,
       upenv->vars[0],
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 } else {
 V_CALL(VGetArg(upenv, 29-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0delete_k84, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -1198,8 +1034,7 @@ static void _V0delete_lambda7(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
 V_CALL(VGetArg(upenv, 28-1, 9), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0delete_k83, env)}),
       _var2,
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
  }
 }
 static void _V0vanity_V0list_V20_k51(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1236,8 +1071,7 @@ static void _V0insert_k92(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
 V_CALL(VGetArg(upenv, 32-1, 3), runtime,
       VGetArg(upenv, 5-1, 0),
       upenv->up->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0insert_k91(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1258,8 +1092,7 @@ V_CALL(VGetArg(upenv, 30-1, 26), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0insert_k92, env)}),
       upenv->vars[0],
       _var0,
-      upenv->up->up->up->vars[3]
-    );
+      upenv->up->up->up->vars[3]);
  }
 }
 static void _V0insert_k90(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1279,8 +1112,7 @@ static void _V0insert_k90(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
 V_CALL(VGetArg(upenv, 30-1, 10), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0insert_k91, env)}),
       upenv->up->up->vars[2],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
  }
 }
 static void _V0insert_k89(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1299,8 +1131,7 @@ static void _V0insert_k89(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
   // ((bruijn cdr 29 1) (close _V0insert_k90) (bruijn lst 2 1))
 V_CALL(VGetArg(upenv, 29-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0insert_k90, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0insert_k88(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1322,13 +1153,11 @@ _var0)) {
 V_CALL(VGetArg(upenv, 28-1, 3), runtime,
       upenv->vars[0],
       upenv->vars[3],
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 } else {
 V_CALL(VGetArg(upenv, 28-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0insert_k89, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -1352,8 +1181,7 @@ static void _V0insert_lambda8(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
 V_CALL(VGetArg(upenv, 27-1, 9), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0insert_k88, env)}),
       _var2,
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
  }
 }
 static void _V0vanity_V0list_V20_k50(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1390,8 +1218,7 @@ static void _V0list__index_k93(VRuntime * runtime, VEnv * upenv, int argc, VWORD
 V_CALL(upenv->vars[1], runtime,
       upenv->vars[0],
       VEncodeInt(0l),
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
  }
 }
 static void _V0loop_k98(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1407,8 +1234,7 @@ static void _V0loop_k98(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
 V_CALL(VGetArg(upenv, 6-1, 1), runtime,
       VGetArg(upenv, 5-1, 0),
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k97(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1427,8 +1253,7 @@ static void _V0loop_k97(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn cdr 32 1) (close _V0loop_k98) (bruijn lst 4 2))
 V_CALL(VGetArg(upenv, 32-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k98, env)}),
-      upenv->up->up->up->vars[2]
-    );
+      upenv->up->up->up->vars[2]);
  }
 }
 static void _V0loop_k96(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1448,14 +1273,12 @@ static void _V0loop_k96(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->up->up->vars[0], runtime,
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
 } else {
 V_CALL(VGetArg(upenv, 31-1, 11), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k97, env)}),
       upenv->up->up->vars[1],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
 }
  }
 }
@@ -1475,8 +1298,7 @@ static void _V0loop_k95(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   // ((bruijn p 4 1) (close _V0loop_k96) (bruijn ##x.144 0 0))
 V_CALL(upenv->up->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k96, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k94(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1496,13 +1318,11 @@ static void _V0loop_k94(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 } else {
 V_CALL(VGetArg(upenv, 29-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k95, env)}),
-      upenv->vars[2]
-    );
+      upenv->vars[2]);
 }
  }
 }
@@ -1524,8 +1344,7 @@ static void _V0loop_lambda11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
   // ((bruijn null? 28 5) (close _V0loop_k94) (bruijn p 2 1))
 V_CALL(VGetArg(upenv, 28-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k94, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0list__index_lambda10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -1563,8 +1382,7 @@ static void _V0list__index_lambda9(VRuntime * runtime, VEnv * upenv, int argc, V
   // ((close _V0list__index_lambda10) (bruijn ##k.136 0 0) #f)
 V_CALL_FUNC(_V0list__index_lambda10, env, runtime,
       _var0,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0vanity_V0list_V20_k49(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1600,8 +1418,7 @@ static void _V0every_Q_k99(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
   // ((bruijn not 26 12) (bruijn ##k.145 1 0) (bruijn ##x.146 0 0))
 V_CALL(VGetArg(upenv, 26-1, 12), runtime,
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0every_Q_k100(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1616,8 +1433,7 @@ static void _V0every_Q_k100(VRuntime * runtime, VEnv * upenv, int argc, VWORD _v
   // ((bruijn not 27 12) (bruijn ##k.147 1 0) (bruijn ##x.148 0 0))
 V_CALL(VGetArg(upenv, 27-1, 12), runtime,
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0every_Q_lambda13(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -1637,8 +1453,7 @@ static void _V0every_Q_lambda13(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn p 1 1) (close _V0every_Q_k100) (bruijn e 0 1))
 V_CALL(upenv->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0every_Q_k100, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0every_Q_lambda12(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
@@ -1660,8 +1475,7 @@ static void _V0every_Q_lambda12(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 24-1, 23), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0every_Q_k99, env)}),
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0every_Q_lambda13, env)}),
-      _var2
-    );
+      _var2);
  }
 }
 static void _V0vanity_V0list_V20_k48(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1698,8 +1512,7 @@ static void _V0any_Q_k104(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
 V_CALL(VGetArg(upenv, 27-1, 23), runtime,
       upenv->up->up->up->vars[0],
       upenv->up->up->up->vars[1],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0any_Q_k103(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1719,13 +1532,11 @@ static void _V0any_Q_k103(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->up->up->vars[0], runtime,
-      VEncodeBool(true)
-    );
+      VEncodeBool(true));
 } else {
 V_CALL(VGetArg(upenv, 27-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0any_Q_k104, env)}),
-      upenv->up->up->vars[2]
-    );
+      upenv->up->up->vars[2]);
 }
  }
 }
@@ -1745,8 +1556,7 @@ static void _V0any_Q_k102(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
   // ((bruijn p 2 1) (close _V0any_Q_k103) (bruijn ##x.153 0 0))
 V_CALL(upenv->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0any_Q_k103, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0any_Q_k101(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1766,13 +1576,11 @@ static void _V0any_Q_k101(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
 } else {
 V_CALL(VGetArg(upenv, 25-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0any_Q_k102, env)}),
-      upenv->vars[2]
-    );
+      upenv->vars[2]);
 }
  }
 }
@@ -1794,8 +1602,7 @@ static void _V0any_Q_lambda14(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
   // ((bruijn null? 24 5) (close _V0any_Q_k101) (bruijn p 0 1))
 V_CALL(VGetArg(upenv, 24-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0any_Q_k101, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0list_V20_k47(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1831,8 +1638,7 @@ static void _V0split__while_k108(VRuntime * runtime, VEnv * upenv, int argc, VWO
   // ((bruijn not 27 12) (bruijn ##k.162 2 0) (bruijn ##x.163 0 0))
 V_CALL(VGetArg(upenv, 27-1, 12), runtime,
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0split__while_k107(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1851,8 +1657,7 @@ static void _V0split__while_k107(VRuntime * runtime, VEnv * upenv, int argc, VWO
   // ((bruijn pred 3 1) (close _V0split__while_k108) (bruijn ##x.164 0 0))
 V_CALL(upenv->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__while_k108, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0split__while_k106(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1872,13 +1677,11 @@ static void _V0split__while_k106(VRuntime * runtime, VEnv * upenv, int argc, VWO
 if(VDecodeBool(
 upenv->vars[0])) {
 V_CALL(_var0, runtime,
-      upenv->vars[0]
-    );
+      upenv->vars[0]);
 } else {
 V_CALL(VGetArg(upenv, 25-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__while_k107, env)}),
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
 }
  }
 }
@@ -1895,8 +1698,7 @@ static void _V0split__while_k110(VRuntime * runtime, VEnv * upenv, int argc, VWO
 V_CALL(VGetArg(upenv, 26-1, 22), runtime,
       upenv->vars[0],
       upenv->up->up->up->vars[1],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0split__while_lambda16(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1915,8 +1717,7 @@ static void _V0split__while_lambda16(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn cdr 26 1) (close _V0split__while_k110) (bruijn lst 3 2))
 V_CALL(VGetArg(upenv, 26-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__while_k110, env)}),
-      upenv->up->up->vars[2]
-    );
+      upenv->up->up->vars[2]);
  }
 }
 static void _V0split__while_k112(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1932,8 +1733,7 @@ static void _V0split__while_k112(VRuntime * runtime, VEnv * upenv, int argc, VWO
 V_CALL(VGetArg(upenv, 28-1, 14), runtime,
       upenv->up->vars[0],
       _var0,
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
  }
 }
 static void _V0split__while_k111(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1953,8 +1753,7 @@ static void _V0split__while_k111(VRuntime * runtime, VEnv * upenv, int argc, VWO
 V_CALL(VGetArg(upenv, 27-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__while_k112, env)}),
       _var0,
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
  }
 }
 static void _V0split__while_lambda17(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
@@ -1975,8 +1774,7 @@ static void _V0split__while_lambda17(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn car 26 2) (close _V0split__while_k111) (bruijn lst 3 2))
 V_CALL(VGetArg(upenv, 26-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__while_k111, env)}),
-      upenv->up->up->vars[2]
-    );
+      upenv->up->up->vars[2]);
  }
 }
 static void _V0split__while_k109(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -1998,14 +1796,12 @@ _var0)) {
 V_CALL(VGetArg(upenv, 25-1, 14), runtime,
       upenv->up->vars[0],
       VNULL,
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
 } else {
 V_CALL(VGetArg(upenv, 25-1, 13), runtime,
       upenv->up->vars[0],
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__while_lambda16, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__while_lambda17, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__while_lambda17, env)}));
 }
  }
 }
@@ -2024,8 +1820,7 @@ static void _V0split__while_k105(VRuntime * runtime, VEnv * upenv, int argc, VWO
   env->vars[0] = _var0;
   // ((close _V0split__while_k106) (close _V0split__while_k109))
 V_CALL_FUNC(_V0split__while_k106, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__while_k109, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__while_k109, env)}));
  }
 }
 static void _V0split__while_lambda15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
@@ -2046,8 +1841,7 @@ static void _V0split__while_lambda15(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn null? 23 5) (close _V0split__while_k105) (bruijn lst 0 2))
 V_CALL(VGetArg(upenv, 23-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__while_k105, env)}),
-      _var2
-    );
+      _var2);
  }
 }
 static void _V0vanity_V0list_V20_k46(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2083,8 +1877,7 @@ static void _V0drop__while_k116(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn not 26 12) (bruijn ##k.169 2 0) (bruijn ##x.170 0 0))
 V_CALL(VGetArg(upenv, 26-1, 12), runtime,
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0drop__while_k115(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2103,8 +1896,7 @@ static void _V0drop__while_k115(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn pred 3 1) (close _V0drop__while_k116) (bruijn ##x.171 0 0))
 V_CALL(upenv->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0drop__while_k116, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0drop__while_k114(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2124,13 +1916,11 @@ static void _V0drop__while_k114(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 if(VDecodeBool(
 upenv->vars[0])) {
 V_CALL(_var0, runtime,
-      upenv->vars[0]
-    );
+      upenv->vars[0]);
 } else {
 V_CALL(VGetArg(upenv, 24-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0drop__while_k115, env)}),
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
 }
  }
 }
@@ -2147,8 +1937,7 @@ static void _V0drop__while_k118(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 24-1, 21), runtime,
       upenv->up->up->vars[0],
       upenv->up->up->vars[1],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0drop__while_k117(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2168,13 +1957,11 @@ static void _V0drop__while_k117(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->up->vars[0], runtime,
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
 } else {
 V_CALL(VGetArg(upenv, 24-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0drop__while_k118, env)}),
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
 }
  }
 }
@@ -2193,8 +1980,7 @@ static void _V0drop__while_k113(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   env->vars[0] = _var0;
   // ((close _V0drop__while_k114) (close _V0drop__while_k117))
 V_CALL_FUNC(_V0drop__while_k114, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0drop__while_k117, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0drop__while_k117, env)}));
  }
 }
 static void _V0drop__while_lambda18(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
@@ -2215,8 +2001,7 @@ static void _V0drop__while_lambda18(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn null? 22 5) (close _V0drop__while_k113) (bruijn lst 0 2))
 V_CALL(VGetArg(upenv, 22-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0drop__while_k113, env)}),
-      _var2
-    );
+      _var2);
  }
 }
 static void _V0vanity_V0list_V20_k45(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2252,8 +2037,7 @@ static void _V0take__while_k122(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn not 25 12) (bruijn ##k.178 2 0) (bruijn ##x.179 0 0))
 V_CALL(VGetArg(upenv, 25-1, 12), runtime,
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0take__while_k121(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2272,8 +2056,7 @@ static void _V0take__while_k121(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn pred 3 1) (close _V0take__while_k122) (bruijn ##x.180 0 0))
 V_CALL(upenv->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take__while_k122, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0take__while_k120(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2293,13 +2076,11 @@ static void _V0take__while_k120(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 if(VDecodeBool(
 upenv->vars[0])) {
 V_CALL(_var0, runtime,
-      upenv->vars[0]
-    );
+      upenv->vars[0]);
 } else {
 V_CALL(VGetArg(upenv, 23-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take__while_k121, env)}),
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
 }
  }
 }
@@ -2316,8 +2097,7 @@ static void _V0take__while_k126(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 26-1, 3), runtime,
       VGetArg(upenv, 5-1, 0),
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0take__while_k125(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2337,8 +2117,7 @@ static void _V0take__while_k125(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 24-1, 20), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take__while_k126, env)}),
       upenv->up->up->up->vars[1],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0take__while_k124(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2357,8 +2136,7 @@ static void _V0take__while_k124(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn cdr 24 1) (close _V0take__while_k125) (bruijn lst 3 2))
 V_CALL(VGetArg(upenv, 24-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take__while_k125, env)}),
-      upenv->up->up->vars[2]
-    );
+      upenv->up->up->vars[2]);
  }
 }
 static void _V0take__while_k123(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2378,13 +2156,11 @@ static void _V0take__while_k123(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->up->vars[0], runtime,
-      VNULL
-    );
+      VNULL);
 } else {
 V_CALL(VGetArg(upenv, 23-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take__while_k124, env)}),
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
 }
  }
 }
@@ -2403,8 +2179,7 @@ static void _V0take__while_k119(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   env->vars[0] = _var0;
   // ((close _V0take__while_k120) (close _V0take__while_k123))
 V_CALL_FUNC(_V0take__while_k120, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take__while_k123, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take__while_k123, env)}));
  }
 }
 static void _V0take__while_lambda19(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
@@ -2425,8 +2200,7 @@ static void _V0take__while_lambda19(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn null? 21 5) (close _V0take__while_k119) (bruijn lst 0 2))
 V_CALL(VGetArg(upenv, 21-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take__while_k119, env)}),
-      _var2
-    );
+      _var2);
  }
 }
 static void _V0vanity_V0list_V20_k44(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2463,8 +2237,7 @@ static void _V0partition_k128(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
 V_CALL(VGetArg(upenv, 22-1, 19), runtime,
       upenv->vars[0],
       upenv->up->up->vars[1],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0partition_lambda21(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2483,8 +2256,7 @@ static void _V0partition_lambda21(VRuntime * runtime, VEnv * upenv, int argc, VW
   // ((bruijn cdr 22 1) (close _V0partition_k128) (bruijn lst 2 2))
 V_CALL(VGetArg(upenv, 22-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0partition_k128, env)}),
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
  }
 }
 static void _V0partition_k132(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2500,8 +2272,7 @@ static void _V0partition_k132(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
 V_CALL(VGetArg(upenv, 26-1, 14), runtime,
       upenv->up->up->up->vars[0],
       _var0,
-      upenv->up->up->up->vars[2]
-    );
+      upenv->up->up->up->vars[2]);
  }
 }
 static void _V0partition_k131(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2521,8 +2292,7 @@ static void _V0partition_k131(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
 V_CALL(VGetArg(upenv, 25-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0partition_k132, env)}),
       _var0,
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
  }
 }
 static void _V0partition_k134(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2538,8 +2308,7 @@ static void _V0partition_k134(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
 V_CALL(VGetArg(upenv, 26-1, 14), runtime,
       upenv->up->up->up->vars[0],
       upenv->up->up->up->vars[1],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0partition_k133(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2559,8 +2328,7 @@ static void _V0partition_k133(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
 V_CALL(VGetArg(upenv, 25-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0partition_k134, env)}),
       _var0,
-      upenv->up->up->vars[2]
-    );
+      upenv->up->up->vars[2]);
  }
 }
 static void _V0partition_k130(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2581,13 +2349,11 @@ if(VDecodeBool(
 _var0)) {
 V_CALL(VGetArg(upenv, 24-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0partition_k131, env)}),
-      upenv->up->up->up->vars[2]
-    );
+      upenv->up->up->up->vars[2]);
 } else {
 V_CALL(VGetArg(upenv, 24-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0partition_k133, env)}),
-      upenv->up->up->up->vars[2]
-    );
+      upenv->up->up->up->vars[2]);
 }
  }
 }
@@ -2607,8 +2373,7 @@ static void _V0partition_k129(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
   // ((bruijn pred 3 1) (close _V0partition_k130) (bruijn ##x.191 0 0))
 V_CALL(upenv->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0partition_k130, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0partition_lambda22(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
@@ -2629,8 +2394,7 @@ static void _V0partition_lambda22(VRuntime * runtime, VEnv * upenv, int argc, VW
   // ((bruijn car 22 2) (close _V0partition_k129) (bruijn lst 2 2))
 V_CALL(VGetArg(upenv, 22-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0partition_k129, env)}),
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
  }
 }
 static void _V0partition_k127(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2652,14 +2416,12 @@ _var0)) {
 V_CALL(VGetArg(upenv, 21-1, 14), runtime,
       upenv->vars[0],
       VNULL,
-      VNULL
-    );
+      VNULL);
 } else {
 V_CALL(VGetArg(upenv, 21-1, 13), runtime,
       upenv->vars[0],
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0partition_lambda21, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0partition_lambda22, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0partition_lambda22, env)}));
 }
  }
 }
@@ -2681,8 +2443,7 @@ static void _V0partition_lambda20(VRuntime * runtime, VEnv * upenv, int argc, VW
   // ((bruijn null? 20 5) (close _V0partition_k127) (bruijn lst 0 2))
 V_CALL(VGetArg(upenv, 20-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0partition_k127, env)}),
-      _var2
-    );
+      _var2);
  }
 }
 static void _V0vanity_V0list_V20_k43(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2719,8 +2480,7 @@ static void _V0filter_k140(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 25-1, 3), runtime,
       VGetArg(upenv, 6-1, 0),
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0filter_k139(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2740,8 +2500,7 @@ static void _V0filter_k139(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 23-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0filter_k140, env)}),
       VGetArg(upenv, 5-1, 1),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0filter_k138(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2760,8 +2519,7 @@ static void _V0filter_k138(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
   // ((bruijn cdr 23 1) (close _V0filter_k139) (bruijn lst 4 2))
 V_CALL(VGetArg(upenv, 23-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0filter_k139, env)}),
-      upenv->up->up->up->vars[2]
-    );
+      upenv->up->up->up->vars[2]);
  }
 }
 static void _V0filter_k141(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2777,8 +2535,7 @@ static void _V0filter_k141(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 22-1, 18), runtime,
       upenv->up->up->up->vars[0],
       upenv->up->up->up->vars[1],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0filter_k137(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2799,13 +2556,11 @@ if(VDecodeBool(
 _var0)) {
 V_CALL(VGetArg(upenv, 22-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0filter_k138, env)}),
-      upenv->up->up->vars[2]
-    );
+      upenv->up->up->vars[2]);
 } else {
 V_CALL(VGetArg(upenv, 22-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0filter_k141, env)}),
-      upenv->up->up->vars[2]
-    );
+      upenv->up->up->vars[2]);
 }
  }
 }
@@ -2825,8 +2580,7 @@ static void _V0filter_k136(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
   // ((bruijn pred 2 1) (close _V0filter_k137) (bruijn ##x.199 0 0))
 V_CALL(upenv->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0filter_k137, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0filter_k135(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2846,13 +2600,11 @@ static void _V0filter_k135(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      upenv->vars[2]
-    );
+      upenv->vars[2]);
 } else {
 V_CALL(VGetArg(upenv, 20-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0filter_k136, env)}),
-      upenv->vars[2]
-    );
+      upenv->vars[2]);
 }
  }
 }
@@ -2874,8 +2626,7 @@ static void _V0filter_lambda23(VRuntime * runtime, VEnv * upenv, int argc, VWORD
   // ((bruijn null? 19 5) (close _V0filter_k135) (bruijn lst 0 2))
 V_CALL(VGetArg(upenv, 19-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0filter_k135, env)}),
-      _var2
-    );
+      _var2);
  }
 }
 static void _V0vanity_V0list_V20_k42(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2913,8 +2664,7 @@ V_CALL(upenv->vars[1], runtime,
       upenv->vars[0],
       VEncodeInt(0l),
       upenv->up->vars[1],
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
  }
 }
 static void _V0loop_k146(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2930,12 +2680,10 @@ static void _V0loop_k146(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 if(VDecodeBool(
 upenv->vars[0])) {
 V_CALL(_var0, runtime,
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
 } else {
 V_CALL(_var0, runtime,
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
 }
  }
 }
@@ -2953,8 +2701,7 @@ V_CALL(VGetArg(upenv, 7-1, 1), runtime,
       VGetArg(upenv, 6-1, 0),
       upenv->vars[0],
       VGetArg(upenv, 6-1, 2),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k148(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2973,8 +2720,7 @@ static void _V0loop_k148(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn cdr 25 1) (close _V0loop_k149) (bruijn lst 5 3))
 V_CALL(VGetArg(upenv, 25-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k149, env)}),
-      VGetArg(upenv, 5-1, 3)
-    );
+      VGetArg(upenv, 5-1, 3));
  }
 }
 static void _V0loop_k147(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -2994,8 +2740,7 @@ static void _V0loop_k147(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 24-1, 11), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k148, env)}),
       upenv->up->up->up->vars[1],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k145(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3013,8 +2758,7 @@ static void _V0loop_k145(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   env->vars[0] = _var0;
   // ((close _V0loop_k146) (close _V0loop_k147))
 V_CALL_FUNC(_V0loop_k146, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k147, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k147, env)}));
  }
 }
 static void _V0loop_k144(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3033,8 +2777,7 @@ static void _V0loop_k144(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn pred 2 2) (close _V0loop_k145) (bruijn ##x.210 0 0))
 V_CALL(upenv->up->vars[2], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k145, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k143(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3054,13 +2797,11 @@ static void _V0loop_k143(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 } else {
 V_CALL(VGetArg(upenv, 21-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k144, env)}),
-      upenv->vars[3]
-    );
+      upenv->vars[3]);
 }
  }
 }
@@ -3083,8 +2824,7 @@ static void _V0loop_lambda26(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
   // ((bruijn null? 20 5) (close _V0loop_k143) (bruijn lst 0 3))
 V_CALL(VGetArg(upenv, 20-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k143, env)}),
-      _var3
-    );
+      _var3);
  }
 }
 static void _V0count_lambda25(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -3122,8 +2862,7 @@ static void _V0count_lambda24(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
   // ((close _V0count_lambda25) (bruijn ##k.200 0 0) #f)
 V_CALL_FUNC(_V0count_lambda25, env, runtime,
       _var0,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0vanity_V0list_V20_k41(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3163,8 +2902,7 @@ V_CALL(VGetArg(upenv, 22-1, 14), runtime,
       upenv->up->up->vars[0],
       upenv->up->vars[0],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0unzip5_k155(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3179,8 +2917,7 @@ static void _V0unzip5_k155(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
   // ((bruijn cadddr 23 17) (bruijn ##k.217 1 0) (bruijn ##x.218 0 0))
 V_CALL(VGetArg(upenv, 23-1, 17), runtime,
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0unzip5_lambda28(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -3200,8 +2937,7 @@ static void _V0unzip5_lambda28(VRuntime * runtime, VEnv * upenv, int argc, VWORD
   // ((bruijn cdr 22 1) (close _V0unzip5_k155) (bruijn e 0 1))
 V_CALL(VGetArg(upenv, 22-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip5_k155, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0unzip5_k153(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3221,8 +2957,7 @@ static void _V0unzip5_k153(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 21-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip5_k154, env)}),
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip5_lambda28, env)}),
-      upenv->up->up->up->vars[1]
-    );
+      upenv->up->up->up->vars[1]);
  }
 }
 static void _V0unzip5_k152(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3242,8 +2977,7 @@ static void _V0unzip5_k152(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 20-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip5_k153, env)}),
       VGetArg(upenv, 20-1, 17),
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
  }
 }
 static void _V0unzip5_k151(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3263,8 +2997,7 @@ static void _V0unzip5_k151(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 19-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip5_k152, env)}),
       VGetArg(upenv, 19-1, 16),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0unzip5_k150(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3284,8 +3017,7 @@ static void _V0unzip5_k150(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 18-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip5_k151, env)}),
       VGetArg(upenv, 18-1, 15),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
  }
 }
 static void _V0unzip5_lambda27(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -3306,8 +3038,7 @@ static void _V0unzip5_lambda27(VRuntime * runtime, VEnv * upenv, int argc, VWORD
 V_CALL(VGetArg(upenv, 17-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip5_k150, env)}),
       VGetArg(upenv, 17-1, 2),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0list_V20_k40(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3346,8 +3077,7 @@ V_CALL(VGetArg(upenv, 20-1, 14), runtime,
       upenv->up->up->vars[0],
       upenv->up->vars[0],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0unzip4_k158(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3367,8 +3097,7 @@ static void _V0unzip4_k158(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 19-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip4_k159, env)}),
       VGetArg(upenv, 19-1, 17),
-      upenv->up->up->vars[1]
-    );
+      upenv->up->up->vars[1]);
  }
 }
 static void _V0unzip4_k157(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3388,8 +3117,7 @@ static void _V0unzip4_k157(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 18-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip4_k158, env)}),
       VGetArg(upenv, 18-1, 16),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0unzip4_k156(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3409,8 +3137,7 @@ static void _V0unzip4_k156(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 17-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip4_k157, env)}),
       VGetArg(upenv, 17-1, 15),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
  }
 }
 static void _V0unzip4_lambda29(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -3431,8 +3158,7 @@ static void _V0unzip4_lambda29(VRuntime * runtime, VEnv * upenv, int argc, VWORD
 V_CALL(VGetArg(upenv, 16-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip4_k156, env)}),
       VGetArg(upenv, 16-1, 2),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0list_V20_k39(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3470,8 +3196,7 @@ V_CALL(VGetArg(upenv, 18-1, 14), runtime,
       upenv->up->up->vars[0],
       upenv->up->vars[0],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0unzip3_k161(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3491,8 +3216,7 @@ static void _V0unzip3_k161(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 17-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip3_k162, env)}),
       VGetArg(upenv, 17-1, 16),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0unzip3_k160(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3512,8 +3236,7 @@ static void _V0unzip3_k160(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 16-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip3_k161, env)}),
       VGetArg(upenv, 16-1, 15),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
  }
 }
 static void _V0unzip3_lambda30(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -3534,8 +3257,7 @@ static void _V0unzip3_lambda30(VRuntime * runtime, VEnv * upenv, int argc, VWORD
 V_CALL(VGetArg(upenv, 15-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip3_k160, env)}),
       VGetArg(upenv, 15-1, 2),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0list_V20_k38(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3572,8 +3294,7 @@ static void _V0unzip2_k164(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 16-1, 14), runtime,
       upenv->up->vars[0],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0unzip2_k163(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3593,8 +3314,7 @@ static void _V0unzip2_k163(VRuntime * runtime, VEnv * upenv, int argc, VWORD _va
 V_CALL(VGetArg(upenv, 15-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip2_k164, env)}),
       VGetArg(upenv, 15-1, 15),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
  }
 }
 static void _V0unzip2_lambda31(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -3615,8 +3335,7 @@ static void _V0unzip2_lambda31(VRuntime * runtime, VEnv * upenv, int argc, VWORD
 V_CALL(VGetArg(upenv, 14-1, 18), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0unzip2_k163, env)}),
       VGetArg(upenv, 14-1, 2),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0list_V20_k37(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3653,8 +3372,7 @@ static void _V0unzip1_lambda32(VRuntime * runtime, VEnv * upenv, int argc, VWORD
 V_CALL(VGetArg(upenv, 13-1, 18), runtime,
       _var0,
       VGetArg(upenv, 13-1, 2),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0list_V20_k36(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3694,8 +3412,7 @@ V_CALL(VGetArg(upenv, 12-1, 19), runtime,
       _var0,
       VGetArg(upenv, 12-1, 18),
       VGetArg(upenv, 12-1, 20),
-      _varargs
-    );
+      _varargs);
  }
 }
 static void _V0vanity_V0list_V20_k35(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3732,8 +3449,7 @@ static void _V0concatenate_k168(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 15-1, 21), runtime,
       upenv->up->up->up->vars[0],
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0concatenate_k167(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3752,8 +3468,7 @@ static void _V0concatenate_k167(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn concatenate 13 10) (close _V0concatenate_k168) (bruijn ##x.237 0 0))
 V_CALL(VGetArg(upenv, 13-1, 10), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0concatenate_k168, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0concatenate_k166(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3772,8 +3487,7 @@ static void _V0concatenate_k166(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn cdr 13 1) (close _V0concatenate_k167) (bruijn lst-of-lsts 2 1))
 V_CALL(VGetArg(upenv, 13-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0concatenate_k167, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0concatenate_k165(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3793,13 +3507,11 @@ static void _V0concatenate_k165(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      VNULL
-    );
+      VNULL);
 } else {
 V_CALL(VGetArg(upenv, 12-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0concatenate_k166, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -3820,8 +3532,7 @@ static void _V0concatenate_lambda34(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn null? 11 5) (close _V0concatenate_k165) (bruijn lst-of-lsts 0 1))
 V_CALL(VGetArg(upenv, 11-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0concatenate_k165, env)}),
-      _var1
-    );
+      _var1);
  }
 }
 static void _V0vanity_V0list_V20_k34(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3858,8 +3569,7 @@ static void _V0fold__right_k172(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(upenv->up->up->up->vars[1], runtime,
       upenv->up->up->up->vars[0],
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0fold__right_k171(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3879,8 +3589,7 @@ static void _V0fold__right_k171(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(VGetArg(upenv, 12-1, 9), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0fold__right_k172, env)}),
       upenv->up->up->vars[2],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0fold__right_k170(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3899,8 +3608,7 @@ static void _V0fold__right_k170(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn cdr 12 1) (close _V0fold__right_k171) (bruijn ks 2 3))
 V_CALL(VGetArg(upenv, 12-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0fold__right_k171, env)}),
-      upenv->up->vars[3]
-    );
+      upenv->up->vars[3]);
  }
 }
 static void _V0fold__right_k169(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3920,13 +3628,11 @@ static void _V0fold__right_k169(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      upenv->vars[2]
-    );
+      upenv->vars[2]);
 } else {
 V_CALL(VGetArg(upenv, 11-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0fold__right_k170, env)}),
-      upenv->vars[3]
-    );
+      upenv->vars[3]);
 }
  }
 }
@@ -3949,8 +3655,7 @@ static void _V0fold__right_lambda35(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn null? 10 5) (close _V0fold__right_k169) (bruijn ks 0 3))
 V_CALL(VGetArg(upenv, 10-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0fold__right_k169, env)}),
-      _var3
-    );
+      _var3);
  }
 }
 static void _V0vanity_V0list_V20_k33(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3988,8 +3693,7 @@ V_CALL(VGetArg(upenv, 12-1, 8), runtime,
       upenv->up->up->up->vars[0],
       upenv->up->up->up->vars[1],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0fold_k175(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4008,8 +3712,7 @@ static void _V0fold_k175(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn cdr 12 1) (close _V0fold_k176) (bruijn ks 3 3))
 V_CALL(VGetArg(upenv, 12-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0fold_k176, env)}),
-      upenv->up->up->vars[3]
-    );
+      upenv->up->up->vars[3]);
  }
 }
 static void _V0fold_k174(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4029,8 +3732,7 @@ static void _V0fold_k174(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(upenv->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0fold_k175, env)}),
       _var0,
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
  }
 }
 static void _V0fold_k173(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4050,13 +3752,11 @@ static void _V0fold_k173(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      upenv->vars[2]
-    );
+      upenv->vars[2]);
 } else {
 V_CALL(VGetArg(upenv, 10-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0fold_k174, env)}),
-      upenv->vars[3]
-    );
+      upenv->vars[3]);
 }
  }
 }
@@ -4079,8 +3779,7 @@ static void _V0fold_lambda36(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
   // ((bruijn null? 9 5) (close _V0fold_k173) (bruijn ks 0 3))
 V_CALL(VGetArg(upenv, 9-1, 5), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0fold_k173, env)}),
-      _var3
-    );
+      _var3);
  }
 }
 static void _V0vanity_V0list_V20_k32(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4117,8 +3816,7 @@ static void _V0split__at_k179(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
 V_CALL(VGetArg(upenv, 11-1, 7), runtime,
       upenv->up->vars[0],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0split__at_k178(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4138,8 +3836,7 @@ static void _V0split__at_k178(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
 V_CALL(VGetArg(upenv, 11-1, 10), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__at_k179, env)}),
       upenv->up->up->vars[2],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
  }
 }
 static void _V0split__at_lambda38(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4158,8 +3855,7 @@ static void _V0split__at_lambda38(VRuntime * runtime, VEnv * upenv, int argc, VW
   // ((bruijn cdr 10 1) (close _V0split__at_k178) (bruijn lst 2 1))
 V_CALL(VGetArg(upenv, 10-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__at_k178, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0split__at_k181(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4175,8 +3871,7 @@ static void _V0split__at_k181(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
 V_CALL(VGetArg(upenv, 12-1, 14), runtime,
       upenv->up->vars[0],
       _var0,
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
  }
 }
 static void _V0split__at_k180(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4196,8 +3891,7 @@ static void _V0split__at_k180(VRuntime * runtime, VEnv * upenv, int argc, VWORD 
 V_CALL(VGetArg(upenv, 11-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__at_k181, env)}),
       _var0,
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
  }
 }
 static void _V0split__at_lambda39(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
@@ -4218,8 +3912,7 @@ static void _V0split__at_lambda39(VRuntime * runtime, VEnv * upenv, int argc, VW
   // ((bruijn car 10 2) (close _V0split__at_k180) (bruijn lst 2 1))
 V_CALL(VGetArg(upenv, 10-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__at_k180, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0split__at_k177(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4241,14 +3934,12 @@ _var0)) {
 V_CALL(VGetArg(upenv, 9-1, 14), runtime,
       upenv->vars[0],
       VNULL,
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 } else {
 V_CALL(VGetArg(upenv, 9-1, 13), runtime,
       upenv->vars[0],
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__at_lambda38, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__at_lambda39, env)})
-    );
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__at_lambda39, env)}));
 }
  }
 }
@@ -4271,8 +3962,7 @@ static void _V0split__at_lambda37(VRuntime * runtime, VEnv * upenv, int argc, VW
 V_CALL(VGetArg(upenv, 8-1, 8), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0split__at_k177, env)}),
       _var2,
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
  }
 }
 static void _V0vanity_V0list_V20_k31(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4309,8 +3999,7 @@ static void _V0drop__right_k183(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(upenv->up->vars[1], runtime,
       upenv->up->vars[0],
       upenv->up->up->vars[1],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0drop__right_k182(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4329,8 +4018,7 @@ static void _V0drop__right_k182(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn length 9 22) (close _V0drop__right_k183) (bruijn lst 2 1))
 V_CALL(VGetArg(upenv, 9-1, 22), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0drop__right_k183, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0loop_k188(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4346,8 +4034,7 @@ static void _V0loop_k188(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 14-1, 3), runtime,
       VGetArg(upenv, 5-1, 0),
       upenv->up->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k187(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4367,8 +4054,7 @@ static void _V0loop_k187(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 5-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k188, env)}),
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k186(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4388,8 +4074,7 @@ static void _V0loop_k186(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 12-1, 10), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k187, env)}),
       upenv->up->up->vars[2],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
  }
 }
 static void _V0loop_k185(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4408,8 +4093,7 @@ static void _V0loop_k185(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn cdr 11 1) (close _V0loop_k186) (bruijn lst 2 1))
 V_CALL(VGetArg(upenv, 11-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k186, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0loop_k184(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4429,13 +4113,11 @@ static void _V0loop_k184(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      VNULL
-    );
+      VNULL);
 } else {
 V_CALL(VGetArg(upenv, 10-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k185, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -4458,8 +4140,7 @@ static void _V0loop_lambda42(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
 V_CALL(VGetArg(upenv, 9-1, 8), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k184, env)}),
       _var2,
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
  }
 }
 static void _V0drop__right_lambda41(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -4497,8 +4178,7 @@ static void _V0drop__right_lambda40(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((close _V0drop__right_lambda41) (bruijn ##k.256 0 0) #f)
 V_CALL_FUNC(_V0drop__right_lambda41, env, runtime,
       _var0,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0vanity_V0list_V20_k30(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4535,8 +4215,7 @@ static void _V0take__right_k190(VRuntime * runtime, VEnv * upenv, int argc, VWOR
 V_CALL(upenv->up->vars[1], runtime,
       upenv->up->vars[0],
       upenv->up->up->vars[1],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0take__right_k189(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4555,8 +4234,7 @@ static void _V0take__right_k189(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   // ((bruijn length 8 22) (close _V0take__right_k190) (bruijn lst 2 1))
 V_CALL(VGetArg(upenv, 8-1, 22), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take__right_k190, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0loop_k193(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4572,8 +4250,7 @@ static void _V0loop_k193(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(upenv->up->up->up->vars[1], runtime,
       upenv->up->up->vars[0],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k192(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4593,8 +4270,7 @@ static void _V0loop_k192(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 10-1, 10), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k193, env)}),
       upenv->up->vars[2],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
  }
 }
 static void _V0loop_k191(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4614,13 +4290,11 @@ static void _V0loop_k191(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 } else {
 V_CALL(VGetArg(upenv, 9-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k192, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -4643,8 +4317,7 @@ static void _V0loop_lambda45(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
 V_CALL(VGetArg(upenv, 8-1, 8), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k191, env)}),
       _var2,
-      upenv->up->vars[2]
-    );
+      upenv->up->vars[2]);
  }
 }
 static void _V0take__right_lambda44(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -4682,8 +4355,7 @@ static void _V0take__right_lambda43(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((close _V0take__right_lambda44) (bruijn ##k.266 0 0) #f)
 V_CALL_FUNC(_V0take__right_lambda44, env, runtime,
       _var0,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0vanity_V0list_V20_k29(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4720,8 +4392,7 @@ static void _V0drop_k196(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 7-1, 4), runtime,
       upenv->up->up->vars[0],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0drop_k195(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4741,8 +4412,7 @@ static void _V0drop_k195(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 7-1, 10), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0drop_k196, env)}),
       upenv->up->vars[2],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
  }
 }
 static void _V0drop_k194(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4762,13 +4432,11 @@ static void _V0drop_k194(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 } else {
 V_CALL(VGetArg(upenv, 6-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0drop_k195, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -4791,8 +4459,7 @@ static void _V0drop_lambda46(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
 V_CALL(VGetArg(upenv, 5-1, 8), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0drop_k194, env)}),
       _var2,
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
  }
 }
 static void _V0vanity_V0list_V20_k28(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4829,8 +4496,7 @@ static void _V0take_k201(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 9-1, 3), runtime,
       VGetArg(upenv, 5-1, 0),
       upenv->up->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0take_k200(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4850,8 +4516,7 @@ static void _V0take_k200(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 7-1, 3), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take_k201, env)}),
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0take_k199(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4871,8 +4536,7 @@ static void _V0take_k199(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 7-1, 10), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take_k200, env)}),
       upenv->up->up->vars[2],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
  }
 }
 static void _V0take_k198(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4891,8 +4555,7 @@ static void _V0take_k198(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn cdr 6 1) (close _V0take_k199) (bruijn lst 2 1))
 V_CALL(VGetArg(upenv, 6-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take_k199, env)}),
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0take_k197(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4912,13 +4575,11 @@ static void _V0take_k197(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      VNULL
-    );
+      VNULL);
 } else {
 V_CALL(VGetArg(upenv, 5-1, 2), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take_k198, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -4941,8 +4602,7 @@ static void _V0take_lambda47(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
 V_CALL(upenv->up->up->up->vars[8], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0take_k197, env)}),
       _var2,
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
  }
 }
 static void _V0vanity_V0list_V20_k27(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4978,8 +4638,7 @@ static void _V0list__tabulate_k202(VRuntime * runtime, VEnv * upenv, int argc, V
   // ((bruijn loop 1 1) (bruijn ##k.285 1 0) 0)
 V_CALL(upenv->vars[1], runtime,
       upenv->vars[0],
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
  }
 }
 static void _V0loop_k206(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4995,8 +4654,7 @@ static void _V0loop_k206(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 9-1, 3), runtime,
       upenv->up->up->up->vars[0],
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k205(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5015,8 +4673,7 @@ static void _V0loop_k205(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn loop 4 1) (close _V0loop_k206) (bruijn ##x.291 0 0))
 V_CALL(upenv->up->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k206, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k204(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5036,8 +4693,7 @@ static void _V0loop_k204(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 7-1, 11), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k205, env)}),
       upenv->up->vars[1],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
  }
 }
 static void _V0loop_k203(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5057,13 +4713,11 @@ static void _V0loop_k203(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      VNULL
-    );
+      VNULL);
 } else {
 V_CALL(upenv->up->up->vars[2], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k204, env)}),
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -5085,8 +4739,7 @@ static void _V0loop_lambda50(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
 V_CALL(VGetArg(upenv, 5-1, 8), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k203, env)}),
       _var1,
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0list__tabulate_lambda49(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -5124,8 +4777,7 @@ static void _V0list__tabulate_lambda48(VRuntime * runtime, VEnv * upenv, int arg
   // ((close _V0list__tabulate_lambda49) (bruijn ##k.284 0 0) #f)
 V_CALL_FUNC(_V0list__tabulate_lambda49, env, runtime,
       _var0,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0vanity_V0list_V20_k26(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5161,8 +4813,7 @@ static void _V0iota_k207(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn loop 1 1) (bruijn ##k.293 1 0) 0)
 V_CALL(upenv->vars[1], runtime,
       upenv->vars[0],
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
  }
 }
 static void _V0loop_k210(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5178,8 +4829,7 @@ static void _V0loop_k210(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 7-1, 3), runtime,
       upenv->up->up->vars[0],
       upenv->up->up->vars[1],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k209(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5198,8 +4848,7 @@ static void _V0loop_k209(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn loop 3 1) (close _V0loop_k210) (bruijn ##x.298 0 0))
 V_CALL(upenv->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k210, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k208(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5219,14 +4868,12 @@ static void _V0loop_k208(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      VNULL
-    );
+      VNULL);
 } else {
 V_CALL(VGetArg(upenv, 5-1, 11), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k209, env)}),
       upenv->vars[1],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
 }
  }
 }
@@ -5248,8 +4895,7 @@ static void _V0loop_lambda53(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
 V_CALL(upenv->up->up->up->vars[8], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k208, env)}),
       _var1,
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0iota_lambda52(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -5281,8 +4927,7 @@ static void _V0iota_k211(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn loop 1 1) (bruijn ##k.300 1 0) 0)
 V_CALL(upenv->vars[1], runtime,
       upenv->vars[0],
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
  }
 }
 static void _V0loop_k215(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5298,8 +4943,7 @@ static void _V0loop_k215(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 8-1, 3), runtime,
       upenv->up->up->up->vars[0],
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k214(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5318,8 +4962,7 @@ static void _V0loop_k214(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn loop 4 1) (close _V0loop_k215) (bruijn ##x.306 0 0))
 V_CALL(upenv->up->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k215, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k213(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5339,8 +4982,7 @@ static void _V0loop_k213(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 6-1, 11), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k214, env)}),
       upenv->up->vars[1],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
  }
 }
 static void _V0loop_k212(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5360,14 +5002,12 @@ static void _V0loop_k212(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      VNULL
-    );
+      VNULL);
 } else {
 V_CALL(VGetArg(upenv, 5-1, 11), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k213, env)}),
       upenv->vars[1],
-      upenv->up->up->vars[2]
-    );
+      upenv->up->up->vars[2]);
 }
  }
 }
@@ -5389,8 +5029,7 @@ static void _V0loop_lambda55(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
 V_CALL(upenv->up->up->up->vars[8], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k212, env)}),
       _var1,
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0iota_lambda54(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -5422,8 +5061,7 @@ static void _V0iota_k216(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn loop 1 1) (bruijn ##k.308 1 0) 0)
 V_CALL(upenv->vars[1], runtime,
       upenv->vars[0],
-      VEncodeInt(0l)
-    );
+      VEncodeInt(0l));
  }
 }
 static void _V0loop_k221(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5439,8 +5077,7 @@ static void _V0loop_k221(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 9-1, 3), runtime,
       VGetArg(upenv, 5-1, 0),
       upenv->up->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k220(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5459,8 +5096,7 @@ static void _V0loop_k220(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
   // ((bruijn loop 5 1) (close _V0loop_k221) (bruijn ##x.314 0 0))
 V_CALL(VGetArg(upenv, 5-1, 1), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k221, env)}),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0loop_k219(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5480,8 +5116,7 @@ static void _V0loop_k219(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 7-1, 11), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k220, env)}),
       upenv->up->up->vars[1],
-      VEncodeInt(1l)
-    );
+      VEncodeInt(1l));
  }
 }
 static void _V0loop_k218(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5501,8 +5136,7 @@ static void _V0loop_k218(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 V_CALL(VGetArg(upenv, 6-1, 11), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k219, env)}),
       _var0,
-      upenv->up->up->up->vars[2]
-    );
+      upenv->up->up->up->vars[2]);
  }
 }
 static void _V0loop_k217(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5522,14 +5156,12 @@ static void _V0loop_k217(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0
 if(VDecodeBool(
 _var0)) {
 V_CALL(upenv->vars[0], runtime,
-      VNULL
-    );
+      VNULL);
 } else {
 V_CALL(VGetArg(upenv, 5-1, 23), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k218, env)}),
       upenv->up->up->vars[3],
-      upenv->vars[1]
-    );
+      upenv->vars[1]);
 }
  }
 }
@@ -5551,8 +5183,7 @@ static void _V0loop_lambda57(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
 V_CALL(upenv->up->up->up->vars[8], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k217, env)}),
       _var1,
-      upenv->up->vars[1]
-    );
+      upenv->up->vars[1]);
  }
 }
 static void _V0iota_lambda56(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -5592,8 +5223,7 @@ __attribute__((used)) static void _V20Case0__V0iota_lambda51(VRuntime * runtime,
   // ((close _V0iota_lambda52) (bruijn ##k.292 0 0) #f)
 V_CALL_FUNC(_V0iota_lambda52, env, runtime,
       _var0,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 __attribute__((used)) static void _V20Case1__V0iota_lambda51(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
@@ -5609,8 +5239,7 @@ __attribute__((used)) static void _V20Case1__V0iota_lambda51(VRuntime * runtime,
   // ((close _V0iota_lambda54) (bruijn ##k.299 0 0) #f)
 V_CALL_FUNC(_V0iota_lambda54, env, runtime,
       _var0,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 __attribute__((used)) static void _V20Case2__V0iota_lambda51(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
@@ -5627,8 +5256,7 @@ __attribute__((used)) static void _V20Case2__V0iota_lambda51(VRuntime * runtime,
   // ((close _V0iota_lambda56) (bruijn ##k.307 0 0) #f)
 V_CALL_FUNC(_V0iota_lambda56, env, runtime,
       _var0,
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 void _V0iota_lambda51(VRuntime * runtime, VEnv * upenv, int argc, ...);
@@ -5752,8 +5380,7 @@ V_CALL_FUNC(_V0vanity_V0list_V20_lambda3, env, runtime,
       VEncodeBool(false),
       VEncodeBool(false),
       VEncodeBool(false),
-      VEncodeBool(false)
-    );
+      VEncodeBool(false));
  }
 }
 static void _V0vanity_V0list_V20_k25(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5794,8 +5421,7 @@ V_CALL_FUNC(_V0vanity_V0list_V20_lambda2, env, runtime,
       upenv->up->up->vars[0],
       upenv->up->vars[0],
       upenv->vars[0],
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0vanity_V0list_V20_k24(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5814,8 +5440,7 @@ static void _V0vanity_V0list_V20_k24(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 22 0) (close _V0vanity_V0list_V20_k25) (quote *))
 V_CALL(VGetArg(upenv, 22-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k25, env)}),
-      VEncodePointer(&_V0_S.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0_S.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k23(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5834,8 +5459,7 @@ static void _V0vanity_V0list_V20_k23(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 21 0) (close _V0vanity_V0list_V20_k24) (quote length))
 V_CALL(VGetArg(upenv, 21-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k24, env)}),
-      VEncodePointer(&_V0length.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0length.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k22(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5854,8 +5478,7 @@ static void _V0vanity_V0list_V20_k22(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 20 0) (close _V0vanity_V0list_V20_k23) (quote append))
 V_CALL(VGetArg(upenv, 20-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k23, env)}),
-      VEncodePointer(&_V0append.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0append.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k21(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5874,8 +5497,7 @@ static void _V0vanity_V0list_V20_k21(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 19 0) (close _V0vanity_V0list_V20_k22) (quote list))
 V_CALL(VGetArg(upenv, 19-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k22, env)}),
-      VEncodePointer(&_V0list.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0list.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k20(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5894,8 +5516,7 @@ static void _V0vanity_V0list_V20_k20(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 18 0) (close _V0vanity_V0list_V20_k21) (quote apply))
 V_CALL(VGetArg(upenv, 18-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k21, env)}),
-      VEncodePointer(&_V0apply.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0apply.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k19(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5914,8 +5535,7 @@ static void _V0vanity_V0list_V20_k19(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 17 0) (close _V0vanity_V0list_V20_k20) (quote map))
 V_CALL(VGetArg(upenv, 17-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k20, env)}),
-      VEncodePointer(&_V0map.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0map.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k18(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5934,8 +5554,7 @@ static void _V0vanity_V0list_V20_k18(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 16 0) (close _V0vanity_V0list_V20_k19) (quote cadddr))
 V_CALL(VGetArg(upenv, 16-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k19, env)}),
-      VEncodePointer(&_V0cadddr.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0cadddr.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k17(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5954,8 +5573,7 @@ static void _V0vanity_V0list_V20_k17(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 15 0) (close _V0vanity_V0list_V20_k18) (quote caddr))
 V_CALL(VGetArg(upenv, 15-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k18, env)}),
-      VEncodePointer(&_V0caddr.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0caddr.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k16(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5974,8 +5592,7 @@ static void _V0vanity_V0list_V20_k16(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 14 0) (close _V0vanity_V0list_V20_k17) (quote cadr))
 V_CALL(VGetArg(upenv, 14-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k17, env)}),
-      VEncodePointer(&_V0cadr.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0cadr.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -5994,8 +5611,7 @@ static void _V0vanity_V0list_V20_k15(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 13 0) (close _V0vanity_V0list_V20_k16) (quote values))
 V_CALL(VGetArg(upenv, 13-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k16, env)}),
-      VEncodePointer(&_V0values.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0values.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k14(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6014,8 +5630,7 @@ static void _V0vanity_V0list_V20_k14(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 12 0) (close _V0vanity_V0list_V20_k15) (quote call-with-values))
 V_CALL(VGetArg(upenv, 12-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k15, env)}),
-      VEncodePointer(&_V0call__with__values.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0call__with__values.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k13(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6034,8 +5649,7 @@ static void _V0vanity_V0list_V20_k13(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 11 0) (close _V0vanity_V0list_V20_k14) (quote not))
 V_CALL(VGetArg(upenv, 11-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k14, env)}),
-      VEncodePointer(&_V0not.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0not.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k12(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6054,8 +5668,7 @@ static void _V0vanity_V0list_V20_k12(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 10 0) (close _V0vanity_V0list_V20_k13) (quote +))
 V_CALL(VGetArg(upenv, 10-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k13, env)}),
-      VEncodePointer(&_V0_P.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0_P.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6074,8 +5687,7 @@ static void _V0vanity_V0list_V20_k11(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 9 0) (close _V0vanity_V0list_V20_k12) (quote -))
 V_CALL(VGetArg(upenv, 9-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k12, env)}),
-      VEncodePointer(&_V0__.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0__.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6094,8 +5706,7 @@ static void _V0vanity_V0list_V20_k10(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn ##vcore.import 8 0) (close _V0vanity_V0list_V20_k11) (quote =))
 V_CALL(VGetArg(upenv, 8-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k11, env)}),
-      VEncodePointer(&_V0_E.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0_E.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k9(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6114,8 +5725,7 @@ static void _V0vanity_V0list_V20_k9(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn ##vcore.import 7 0) (close _V0vanity_V0list_V20_k10) (quote eq?))
 V_CALL(VGetArg(upenv, 7-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k10, env)}),
-      VEncodePointer(&_V0eq_Q.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0eq_Q.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k8(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6134,8 +5744,7 @@ static void _V0vanity_V0list_V20_k8(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn ##vcore.import 6 0) (close _V0vanity_V0list_V20_k9) (quote eqv?))
 V_CALL(VGetArg(upenv, 6-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k9, env)}),
-      VEncodePointer(&_V0eqv_Q.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0eqv_Q.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k7(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6154,8 +5763,7 @@ static void _V0vanity_V0list_V20_k7(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn ##vcore.import 5 0) (close _V0vanity_V0list_V20_k8) (quote equal?))
 V_CALL(VGetArg(upenv, 5-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k8, env)}),
-      VEncodePointer(&_V0equal_Q.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0equal_Q.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6174,8 +5782,7 @@ static void _V0vanity_V0list_V20_k6(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn ##vcore.import 4 0) (close _V0vanity_V0list_V20_k7) (quote null?))
 V_CALL(upenv->up->up->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k7, env)}),
-      VEncodePointer(&_V0null_Q.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0null_Q.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6194,8 +5801,7 @@ static void _V0vanity_V0list_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn ##vcore.import 3 0) (close _V0vanity_V0list_V20_k6) (quote caar))
 V_CALL(upenv->up->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k6, env)}),
-      VEncodePointer(&_V0caar.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0caar.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6214,8 +5820,7 @@ static void _V0vanity_V0list_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn ##vcore.import 2 0) (close _V0vanity_V0list_V20_k5) (quote cons))
 V_CALL(upenv->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k5, env)}),
-      VEncodePointer(&_V0cons.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0cons.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6234,8 +5839,7 @@ static void _V0vanity_V0list_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn ##vcore.import 1 0) (close _V0vanity_V0list_V20_k4) (quote car))
 V_CALL(upenv->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k4, env)}),
-      VEncodePointer(&_V0car.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0car.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6254,8 +5858,7 @@ static void _V0vanity_V0list_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn ##vcore.import 0 0) (close _V0vanity_V0list_V20_k3) (quote cdr))
 V_CALL(_var0, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k3, env)}),
-      VEncodePointer(&_V0cdr.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V0cdr.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0list_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6275,8 +5878,7 @@ static void _V0vanity_V0list_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
     V_CALL_FUNC(VMakeImport2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k2, env)}),
       VEncodePointer(&_V10string_D340.sym, VPOINTER_OTHER),
-      _var0
-    );
+      _var0);
  }
 }
 static void _V0vanity_V0list_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -6295,8 +5897,7 @@ static void _V0vanity_V0list_V20_lambda1(VRuntime * runtime, VEnv * upenv, int a
   // (##vcore.load-library (close _V0vanity_V0list_V20_k1) (##string ##string.341))
     V_CALL_FUNC(VLoadLibrary2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k1, env)}),
-      VEncodePointer(&_V10string_D341.sym, VPOINTER_OTHER)
-    );
+      VEncodePointer(&_V10string_D341.sym, VPOINTER_OTHER));
  }
 }
 VFunc _V0vanity_V0list_V20 = (VFunc)_V0vanity_V0list_V20_lambda1;

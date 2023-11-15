@@ -94,6 +94,9 @@
   (define eq? ##sys.eq?)
   (define symbol=? ##sys.symbol=?)
   (define eqv? ##sys.eqv?)
+  #;(define (eqv? a b)
+    (or (##sys.eq? a b)
+        (and (##sys.symbol? a) (##sys.symbol? b) (##sys.symbol=? a b))))
   (define (vector=? x y)
     (if (not (= (vector-length x) (vector-length y)))
         #f
