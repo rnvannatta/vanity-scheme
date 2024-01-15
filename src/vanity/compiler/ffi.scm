@@ -120,9 +120,9 @@
          'unsigned-long)
 
         (('int 2 #f #f _)
-         'long)
+         'long-long)
         (('int 2 #f #t #f)
-         'unsigned-long)
+         'unsigned-long-long)
 
         (('int 0 #t #f _)
          'short)
@@ -320,6 +320,8 @@
                      (unsigned-int . "VEncodeInt")
                      ; no long yet
                      ; no unsigned long yet
+                     ; no long-long yet
+                     ; no unsigned long-long yet
                      (double . "VEncodeDouble")
                      (float . "VEncodeDouble")
                      ; no strict float yet
@@ -343,8 +345,10 @@
                      (unsigned-short . "VCheckedDecodeUnsignedShort")
                      (int . "VCheckedDecodeInt")
                      (unsigned-int . "VCheckedDecodeInt")
-                     (long . "VCheckedDecodeLong")
-                     (unsigned-long . "VCheckedDecodeUnsignedLong")
+                     (long . "VCheckedDecodeInt")
+                     (unsigned-long . "VCheckedDecodeInt")
+                     (long-long . "VCheckedDecodeInt")
+                     (unsigned-long-long . "VCheckedDecodeInt")
                      (double . "VCheckedDecodeNumber")
                      (float . "VCheckedDecodeNumber")
                      ; no strict float yet
