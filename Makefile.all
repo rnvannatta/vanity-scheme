@@ -6,7 +6,7 @@ vpath %.scmh build/include $(INCLUDES)
 DEP = $(addprefix build/, $(RUNTIME_SRC:.c=.d) $(RUNTIME_LISP_SRC:.scm=.d) $(SRC:.scm=.d))
 OBJ = $(addprefix build/, $(SRC:.scm=.o)) build/ffi.tab.o build/ffi.lex.o
 RUNTIME_OBJ = $(addprefix build/, $(RUNTIME_SRC:.c=.o))
-RUNTIME_OBJ += $(addprefix build/, $(ASSEMBLY_SRC:.s=.o))
+RUNTIME_OBJ += $(addprefix build/, $(ASSEMBLY_SRC:.S=.o))
 RUNTIME_OBJ +=  $(addprefix build/, $(RUNTIME_LISP_SRC:.scm=.o))
 
 BOOT = $(addprefix bin/bootstrap/src/, $(SRC:.scm=.c))
@@ -66,14 +66,14 @@ bin/bootstrap/src/%.c : src/%.scm
 	@{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
 bin/bootstrap/runtime/%.c : runtime/%.c
 	cp $< $@
-bin/bootstrap/runtime/%.s : runtime/%.s
+bin/bootstrap/runtime/%.S : runtime/%.S
 	cp $< $@
 
 deps : $(DEP)
 
 build/%.d : runtime/%.c
 	gcc $< -MG -MM -MF $@ -MT $@ -MT $(@:.d=.o) $(CFLAGS) $(IFLAGS)
-build/%.d : runtime/%.s
+build/%.d : runtime/%.S
 	echo '$(@,.d=.o) $@: $<' > $@
 build/%.d : src/%.scm
 	@mkdir -p `dirname $@`
@@ -119,7 +119,7 @@ build/%.o : runtime/%.scm
 build/%.o : runtime/%.c build/%.d 
 	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
 
-build/%.o : runtime/%.s 
+build/%.o : runtime/%.S 
 	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
 
 build/%.o : src/%.scm

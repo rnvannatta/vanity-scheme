@@ -10,6 +10,8 @@ config.sh
 *.o
 *.so
 a.out
+*.exe
+*.dll
 core
 .gdb_history
 src/vanity/compiler/config.scm
