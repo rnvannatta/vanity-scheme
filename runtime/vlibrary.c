@@ -99,7 +99,7 @@ asm(
 ".intel_syntax noprefix\n"
 ".globl VAdd2\n"
 "VAdd2:\n"
-" cmp edx, 3\n"
+" cmp " ARGC_REG ", 3\n"
 " je VAdd2Case2\n"
 " jmp VAdd2CaseVarargs\n"
 );
@@ -198,7 +198,7 @@ asm(
 ".intel_syntax noprefix\n"
 ".globl VSub2\n"
 "VSub2:\n"
-" cmp edx, 3\n"
+" cmp " ARGC_REG ", 3\n"
 " je VSub2Case2\n"
 " jmp VSub2CaseVarargs\n"
 );
@@ -1032,8 +1032,18 @@ SYSV_CALL static void VOpenStream2(VRuntime * runtime, VWORD k, VWORD path, char
   errno = 0;
   FILE * f = fopen(str->buf, mode);
   // ENFILE error can be fixed by running a garbage collect
+  // second return value is backwards, it returns true if the
+  // value should be handed to the user
+  // 
   VWORD ok = VEncodeBool(errno != ENFILE && errno != EMFILE);
-  if(!f) V_CALL(k, runtime, VFALSE, ok);
+  if(!f) {
+    if(errno == ENFILE || errno == EMFILE) {
+      V_CALL(k, runtime, VFALSE, ok);
+    } else {
+      // unrecoverable error, just return VFALSE
+      V_CALL(k, runtime, VFALSE, VTRUE);
+    }
+  }
 
   VPort port = VMakePortStream(f, flags);
   V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER), ok);
@@ -1075,7 +1085,20 @@ SYSV_CALL void VOpenOutputString2(V_CORE_ARGS, VWORD k) {
   FILE * f = tmpfile();
   // ENFILE error can be fixed by running a garbage collect
   VWORD ok = VEncodeBool(errno != ENFILE && errno != EMFILE);
-  if(!f) V_CALL(k, runtime, VFALSE, ok);
+  if(!f) {
+    if(errno == ENFILE || errno == EMFILE) {
+      V_CALL(k, runtime, VFALSE, ok);
+    } else {
+#ifdef _WIN64
+      // Windows tmpfile() doesn't set errno! >:(
+      V_CALL(k, runtime, VFALSE, VFALSE);
+#endif
+#ifdef __linux__
+      // unrecoverable error: return false to the user
+      V_CALL(k, runtime, VFALSE, VTRUE);
+#endif
+    }
+  }
 
   VPort port = VMakePortStream(f, PFLAG_WRITE | PFLAG_OSTRING);
   V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER), ok);

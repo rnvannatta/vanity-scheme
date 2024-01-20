@@ -238,7 +238,12 @@
 
 
 
-    (define (printout2 debug? shared? literal-table foreign-functions functions declares toplevels)
+  (define gendllmain
+    (let ((x 0))
+      (lambda ()
+        (set! x (+ x 1))
+        (sprintf "VDllMain~A" x))))
+  (define (printout2 debug? shared? literal-table foreign-functions functions declares toplevels)
     (define (print-global sym)
       (let ((builtin (lookup-intrinsic2 sym)))
         (if builtin
@@ -292,23 +297,26 @@
     (define (print-literal-string x)
       (printf "VEncodePointer(&~A.sym, VPOINTER_OTHER)" (mangle-symbol x)))
     (define (print-intrinsic x)
-      (printf "VEncodePointer(&_V40~A, VPOINTER_CLOSURE)" (mangle-symbol x)))
+       (printf "_V40~A" (mangle-symbol x)))
     (define (print-literal x)
       (cond ((integer? x) (printf "VEncodeInt(~Al)" x)) ; FIXME bounds check
-            ((number? x) (printf "VEncodeNumber(~A)" x)); FIXME fractions
+            ((number? x) (printf "VEncodeNumber(~A)" x))
             ((char? x) (printf "VEncodeChar('~A')" (escape-char x)))
             ((eq? x #t) (printf "VEncodeBool(true)"))
             ((eq? x #f) (printf "VEncodeBool(false)"))
             ((symbol? x)
-             (printf "VEncodePointer(&~A.sym, VPOINTER_OTHER)" (mangle-symbol x)))
+             (display (mangle-symbol x)))
             (else (compiler-error "print-literal: unknown literal type" x))))
     (define (print-literal-declaration lit)
       (cond ((symbol? (car lit))
              (let* ((mangled (mangle-symbol (car lit)))
                     (escaped (escape-string (symbol->string (car lit))))
                     (len (+ (string-length (symbol->string (car lit))) 1)))
-               (printf "struct { VBlob sym; char bytes[~A]; } ~A __attribute__((weak)) = { { VSYMBOL, ~A }, \"~A\" };~N"
-                len mangled len escaped)))
+               (begin
+                 (printf "VWEAK VWORD ~A;" mangled)
+                 (printf "VWEAK struct { VBlob sym; char bytes[~A]; } _VW~A = { { VSYMBOL, ~A }, \"~A\" };~N"
+                  len mangled len escaped))
+))
             ((string? (car lit))
              (let* ((mangled (mangle-symbol (cdr lit)))
                     (escaped (escape-string (car lit)))
@@ -318,10 +326,25 @@
                 len mangled len escaped)))
             ; of shape (('##intrinsic intrin) . c-function)
             ((and (pair? (car lit)) (eqv? (caar lit) '##intrinsic))
-             (printf "VClosure _V40~A __attribute__((weak)) = { VCLOSURE, (VFunc)~A, NULL };~N"
-               (mangle-symbol (cadar lit))
-               (cdr lit)))
+             (let ((mangled (mangle-symbol (cadar lit))))
+               (begin
+                 (printf "VWEAK VWORD _V40~A;" mangled)
+                 (printf "VWEAK VClosure _VW_V40~A = { VCLOSURE, (VFunc)~A, NULL };~N"
+                   mangled
+                   (cdr lit)))))
             (else (compiler-error "print-literal-table: unknown entry in literal table" lit))))
+    (define (print-dllmain literals)
+      (define (print-init lit)
+        (cond ((symbol? (car lit))
+               (let* ((mangled (mangle-symbol (car lit))))
+                 (printf "  ~A = VEncodePointer(VLookupConstant(\"~A\", &_VW~A), VPOINTER_OTHER);~N" mangled mangled mangled)))
+              ((and (pair? (car lit)) (eqv? (caar lit) '##intrinsic))
+               (let ((mangled (mangle-symbol (cadar lit))))
+                 (printf "  _V40~A = VEncodePointer(VLookupConstant(\"_V40~A\", &_VW_V40~A), VPOINTER_CLOSURE);~N" mangled mangled mangled)))
+              (else #f)))
+      (printf "static __attribute__((constructor)) void ~A() {~N" (gendllmain))
+      (for-each print-init literals)
+      (printf "}~N"))
     (define (closes? expr)
       (match expr
         (('close fun) #t)
@@ -534,10 +557,10 @@
          (lambda (e)
           (match e
             ((name _ (num '+ _))
-             (printf "\"    cmp edx, ~A\\n\"~N" num)
+             (printf "\"    cmp \" ARGC_REG \", ~A\\n\"~N" num)
              (printf "\"    jge ~A\\n\"~N" name))
             ((name _ (num _))
-             (printf "\"    cmp edx, ~A\\n\"~N" num)
+             (printf "\"    cmp \" ARGC_REG \", ~A\\n\"~N" num)
              (printf "\"    je ~A\\n\"~N" name))))
          cases)
        (printf "\"    jmp _V20CaseError_~A\\n\"~N" name)
@@ -588,6 +611,7 @@
       (displayln "#include \"vscheme/vinlines.h\"")
       (displayln "#include <stdarg.h>")
       (for-each print-literal-declaration literal-table)
+      (print-dllmain literal-table)
       (for-each print-foreign-declare declares)
       (for-each print-foreign-function foreign-functions)
       (for-each print-fun functions)

@@ -26,117 +26,117 @@
  */
 #pragma once
 // math
-void VAdd2(V_CORE_ARGS, VWORD k, ...);
-void VSub2(V_CORE_ARGS, VWORD k, VWORD x, ...);
-void VMul2(V_CORE_ARGS, VWORD k, ...);
-void VCmp2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+SYSV_CALL void VAdd2(V_CORE_ARGS, VWORD k, ...);
+SYSV_CALL void VSub2(V_CORE_ARGS, VWORD k, VWORD x, ...);
+SYSV_CALL void VMul2(V_CORE_ARGS, VWORD k, ...);
+SYSV_CALL void VCmp2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
 
-void VQuot2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-void VRem2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-void VDiv2(V_CORE_ARGS, VWORD k, VWORD x, ...);
+SYSV_CALL void VQuot2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
+SYSV_CALL void VRem2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
+SYSV_CALL void VDiv2(V_CORE_ARGS, VWORD k, VWORD x, ...);
 
 // predicates
-void VNullP2(V_CORE_ARGS, VWORD k, VWORD x);
-void VEofP2(V_CORE_ARGS, VWORD k, VWORD x);
-void VPairP2(V_CORE_ARGS, VWORD k, VWORD x);
-void VVectorP2(V_CORE_ARGS, VWORD k, VWORD x);
-void VProcedureP2(V_CORE_ARGS, VWORD k, VWORD x);
-void VBlobP2(V_CORE_ARGS, VWORD k, VWORD x);
-void VSymbolP2(V_CORE_ARGS, VWORD k, VWORD x);
-void VStringP2(V_CORE_ARGS, VWORD k, VWORD x);
-void VDoubleP2(V_CORE_ARGS, VWORD k, VWORD x);
-void VIntP2(V_CORE_ARGS, VWORD k, VWORD x);
-void VCharP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VNullP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VEofP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VPairP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VVectorP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VProcedureP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VBlobP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VSymbolP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VStringP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VDoubleP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VIntP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VCharP2(V_CORE_ARGS, VWORD k, VWORD x);
 
 // equality
-void VEq2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-void VSymbolEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-void VEqv(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
+SYSV_CALL void VEq2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
+SYSV_CALL void VSymbolEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
+SYSV_CALL void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
+SYSV_CALL void VEqv(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
 
 // logic
-void VNot2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VNot2(V_CORE_ARGS, VWORD k, VWORD x);
 
 // lists
-void VCons2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-void VCar2(V_CORE_ARGS, VWORD k, VWORD x);
-void VCdr2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VCons2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
+SYSV_CALL void VCar2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VCdr2(V_CORE_ARGS, VWORD k, VWORD x);
 
 // vectors
 
-void VListVector2(V_CORE_ARGS, VWORD k, VWORD vec);
-void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i);
-void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vec);
+SYSV_CALL void VListVector2(V_CORE_ARGS, VWORD k, VWORD vec);
+SYSV_CALL void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i);
+SYSV_CALL void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vec);
 
 // hash table
 
-void VMakeHashTable(V_CORE_ARGS, VWORD k, VWORD eq, VWORD hash, VWORD _len);
-void VHashTableEqvFunc(V_CORE_ARGS, VWORD k, VWORD table);
-void VHashTableHashFunc(V_CORE_ARGS, VWORD k, VWORD table);
-void VHashTableRef(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD thunk);
-void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD val);
-void VHashTableDelete(V_CORE_ARGS, VWORD k, VWORD table, VWORD key);
+SYSV_CALL void VMakeHashTable(V_CORE_ARGS, VWORD k, VWORD eq, VWORD hash, VWORD _len);
+SYSV_CALL void VHashTableEqvFunc(V_CORE_ARGS, VWORD k, VWORD table);
+SYSV_CALL void VHashTableHashFunc(V_CORE_ARGS, VWORD k, VWORD table);
+SYSV_CALL void VHashTableRef(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD thunk);
+SYSV_CALL void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD val);
+SYSV_CALL void VHashTableDelete(V_CORE_ARGS, VWORD k, VWORD table, VWORD key);
 
 // strings
 
-void VMakeString2(V_CORE_ARGS, VWORD k, VWORD i, ...);
-void VSubstring2(V_CORE_ARGS, VWORD k, VWORD str, ...);
-void VStringCopy2(V_CORE_ARGS, VWORD k, VWORD dst, VWORD src, VWORD at, ...);
-void VStringLength2(V_CORE_ARGS, VWORD k, VWORD str);
-void VStringRef2(V_CORE_ARGS, VWORD k, VWORD str, VWORD i);
-void VStringSet2(V_CORE_ARGS, VWORD k, VWORD str, VWORD i, VWORD c);
+SYSV_CALL void VMakeString2(V_CORE_ARGS, VWORD k, VWORD i, ...);
+SYSV_CALL void VSubstring2(V_CORE_ARGS, VWORD k, VWORD str, ...);
+SYSV_CALL void VStringCopy2(V_CORE_ARGS, VWORD k, VWORD dst, VWORD src, VWORD at, ...);
+SYSV_CALL void VStringLength2(V_CORE_ARGS, VWORD k, VWORD str);
+SYSV_CALL void VStringRef2(V_CORE_ARGS, VWORD k, VWORD str, VWORD i);
+SYSV_CALL void VStringSet2(V_CORE_ARGS, VWORD k, VWORD str, VWORD i, VWORD c);
 
-void VStringNumber2(V_CORE_ARGS, VWORD k, VWORD str);
+SYSV_CALL void VStringNumber2(V_CORE_ARGS, VWORD k, VWORD str);
 //void VNumberString2(V_CORE_ARGS, VWORD k, VWORD num);
-void VStringSymbol2(V_CORE_ARGS, VWORD k, VWORD str);
-void VSymbolString2(V_CORE_ARGS, VWORD k, VWORD sym);
+SYSV_CALL void VStringSymbol2(V_CORE_ARGS, VWORD k, VWORD str);
+SYSV_CALL void VSymbolString2(V_CORE_ARGS, VWORD k, VWORD sym);
 
 // chars
 
-void VCharInt2(V_CORE_ARGS, VWORD k, VWORD c);
+SYSV_CALL void VCharInt2(V_CORE_ARGS, VWORD k, VWORD c);
 //void VIntChar2(V_CORE_ARGS, VWORD k, VWORD int);
 
 // ports
-void VStdinPort(V_CORE_ARGS, VWORD k);
-void VStdoutPort(V_CORE_ARGS, VWORD k);
-void VStderrPort(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VStdinPort(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VStdoutPort(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VStderrPort(V_CORE_ARGS, VWORD k);
 
-void VDupStdin2(V_CORE_ARGS, VWORD k);
-void VDupStdout2(V_CORE_ARGS, VWORD k);
-void VDupStderr2(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VDupStdin2(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VDupStdout2(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VDupStderr2(V_CORE_ARGS, VWORD k);
 
-void VOpenInputStream2(V_CORE_ARGS, VWORD k, VWORD path);
-void VOpenOutputStream2(V_CORE_ARGS, VWORD k, VWORD path);
-void VCloseStream2(V_CORE_ARGS, VWORD k, VWORD port);
+SYSV_CALL void VOpenInputStream2(V_CORE_ARGS, VWORD k, VWORD path);
+SYSV_CALL void VOpenOutputStream2(V_CORE_ARGS, VWORD k, VWORD path);
+SYSV_CALL void VCloseStream2(V_CORE_ARGS, VWORD k, VWORD port);
 
-void VOpenOutputString2(V_CORE_ARGS, VWORD k);
-void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD port);
+SYSV_CALL void VOpenOutputString2(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD port);
 
 // input
-void VReadChar2(V_CORE_ARGS, VWORD k, VWORD port);
-void VReadLine2(V_CORE_ARGS, VWORD k, VWORD port);
-void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
+SYSV_CALL void VReadChar2(V_CORE_ARGS, VWORD k, VWORD port);
+SYSV_CALL void VReadLine2(V_CORE_ARGS, VWORD k, VWORD port);
+SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
 
 // output
-void VDisplay2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port);
-void VWrite2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port);
-void VNewline2(V_CORE_ARGS, VWORD k, VWORD port);
+SYSV_CALL void VDisplay2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port);
+SYSV_CALL void VWrite2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port);
+SYSV_CALL void VNewline2(V_CORE_ARGS, VWORD k, VWORD port);
 
 // control flow
-void VCallCC2(V_CORE_ARGS, VWORD k, VWORD proc);
-void VCallValues2(V_CORE_ARGS, VWORD k, VWORD producer, VWORD consumer);
-void VApply2(V_CORE_ARGS, VWORD k, VWORD proc, ...);
+SYSV_CALL void VCallCC2(V_CORE_ARGS, VWORD k, VWORD proc);
+SYSV_CALL void VCallValues2(V_CORE_ARGS, VWORD k, VWORD producer, VWORD consumer);
+SYSV_CALL void VApply2(V_CORE_ARGS, VWORD k, VWORD proc, ...);
 
 // system
-void VSystem2(V_CORE_ARGS, VWORD k, VWORD cmd);
-void VOpenInputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
-void VOpenOutputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
-void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD prefix, ...);
+SYSV_CALL void VSystem2(V_CORE_ARGS, VWORD k, VWORD cmd);
+SYSV_CALL void VOpenInputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
+SYSV_CALL void VOpenOutputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
+SYSV_CALL void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD prefix, ...);
 
 // rng
-void VMakeRandom(V_CORE_ARGS, VWORD k, VWORD seed, VWORD stream);
-void VRandomCopy(V_CORE_ARGS, VWORD k, VWORD rng);
-void VRandomSample(V_CORE_ARGS, VWORD k, VWORD rng);
-void VRandomSampleBounded(V_CORE_ARGS, VWORD k, VWORD rng, VWORD end);
-void VRandomSampleFloat(V_CORE_ARGS, VWORD k, VWORD rng);
-void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD step);
+SYSV_CALL void VMakeRandom(V_CORE_ARGS, VWORD k, VWORD seed, VWORD stream);
+SYSV_CALL void VRandomCopy(V_CORE_ARGS, VWORD k, VWORD rng);
+SYSV_CALL void VRandomSample(V_CORE_ARGS, VWORD k, VWORD rng);
+SYSV_CALL void VRandomSampleBounded(V_CORE_ARGS, VWORD k, VWORD rng, VWORD end);
+SYSV_CALL void VRandomSampleFloat(V_CORE_ARGS, VWORD k, VWORD rng);
+SYSV_CALL void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD step);

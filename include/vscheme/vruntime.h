@@ -116,15 +116,19 @@ struct VJmpBuf {
   __m128 xmm13;
   __m128 xmm14;
   __m128 xmm15;
-
-  uint64_t retaddr;
 };
 typedef struct VJmpBuf VJmpBuf[1];
-static_assert(sizeof(struct VJmpBuf) == 256);
+static_assert(sizeof(struct VJmpBuf) == 240);
 
 int VSetJmp(struct VJmpBuf buf[1]);
 void VLongJmp(struct VJmpBuf buf[1], int ret);
+#endif
 
+#ifdef __linux__
+#define VWEAK __attribute__((weak))
+#endif
+#ifdef _WIN64
+#define VWEAK __declspec(selectany)
 #endif
 
 enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
@@ -178,6 +182,12 @@ typedef struct VRuntime VRuntime;
 typedef struct VEnv VEnv;
 #define V_CORE_ARGS VRuntime * runtime, VEnv * statics, int argc
 typedef SYSV_CALL void (*VFunc)(V_CORE_ARGS, ...);
+#ifdef __linux__
+#define ARGC_REG "edx"
+#endif
+#ifdef _WIN64
+#define ARGC_REG "r8d"
+#endif
 
 typedef struct VWORD {
   uint64_t integer;
@@ -690,6 +700,10 @@ SYSV_CALL static inline VPair * VFillPair(VPair * pair, VWORD a, VWORD b) {
 }
 
 /* ======================== Misc ======================= */
+
+// stores constants like the literal 'foo or the value of ##sys.+
+// necessary because Windows doesn't have weak symbols lmao
+SYSV_CALL void * VLookupConstant(char * name, void * val);
 
 SYSV_CALL static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
   if(VBits(a) == VBits(b))

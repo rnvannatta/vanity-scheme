@@ -33,6 +33,7 @@
 #include <debugapi.h>
 #include <libloaderapi.h>
 #include <processthreadsapi.h>
+#include <psapi.h>
 #endif
 
 #include <stdbool.h>
@@ -285,6 +286,51 @@ SYSV_CALL VGlobalEntry * VLookupGlobalEntryFast(char const * sym) {
   }
   return place;
 }
+
+static size_t VConstantTableSize;
+static size_t VConstantTableOccupancy;
+static struct VConstantSlot { char * name; void * val; } * VConstantTable;
+SYSV_CALL static void VInsertConstantImpl(char * name, void * val) {
+  uint64_t h = vhash(name, strlen(name)+1, 1337);
+  size_t i = h & (VConstantTableSize - 1);
+  while(VConstantTable[i].name) {
+    i = (i + 1) & (VConstantTableSize - 1);
+  }
+  VConstantTable[i].name = name;
+  VConstantTable[i].val = val;
+}
+SYSV_CALL static void VInsertConstant(char * name, void * val) {
+  if(VConstantTableOccupancy >= 0.8 * VConstantTableSize) {
+    struct VConstantSlot * oldconsts = VConstantTable;
+    size_t oldsize = VConstantTableSize;
+    if(!VConstantTableSize)
+      VConstantTableSize = 16;
+    VConstantTableSize *= 2;
+    VConstantTable = calloc(VConstantTableSize, sizeof(struct VConstantSlot));
+    for(int i = 0; i < oldsize; i++) {
+      if(oldconsts[i].name)
+        VInsertConstantImpl(oldconsts[i].name, oldconsts[i].val);
+    }
+  }
+  VInsertConstantImpl(name, val);
+  VConstantTableOccupancy++;
+}
+SYSV_CALL void * VLookupConstant(char * name, void * val) {
+  if(!VConstantTableSize) {
+    VInsertConstant(name, val);
+    return val;
+  }
+  uint64_t h = vhash(name, strlen(name)+1, 1337);
+  size_t i = h & (VConstantTableSize - 1);
+  while(VConstantTable[i].name) {
+    if(!strcmp(VConstantTable[i].name, name)) {
+      return VConstantTable[i].val;
+    }
+    i = (i + 1) & (VConstantTableSize - 1);
+  }
+  VInsertConstant(name, val);
+  return val;
+} 
 
 // okay: so finalizers to managed memory can be detected as stale when they remain after a gc
 // specifically, after gc, a finalizer to managed memory points to a forwarded address
@@ -636,7 +682,7 @@ SYSV_CALL VWORD VMoveDispatch(VWORD word) {
     case VENVIRONMENT:
       return VEncodePointer(VCheckedMoveEnviron(ptr), VPOINTER_OTHER);
     default:
-      fprintf(stderr, "Unknown type %016lx in VMoveDispatch. Heap corruption?\n", type);
+      fprintf(stderr, "Unknown type %016llx in VMoveDispatch. Heap corruption?\n", (unsigned long long)type);
       abort();
   }
 }
@@ -1418,6 +1464,44 @@ SYSV_CALL void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...) {
   V_CALL(k, runtime, VEncodeClosure(&ret));
 }
 
+#ifdef _WIN64
+SYSV_CALL static void * VDLSym(char const * name) {
+  HMODULE hmod = GetModuleHandle(NULL);
+  void * ptr = GetProcAddress(hmod, name);
+  if(ptr) return ptr;
+
+  // not embedded in the exe. time to enumerate the dlls :/
+  HMODULE * modules, module_array[128];
+  DWORD size, size_again;
+  HANDLE me = GetCurrentProcess();
+  if(!EnumProcessModules(me, NULL, 0, &size)) {
+    return NULL;
+  }
+  if(size <= sizeof module_array)
+    modules = module_array;
+  else
+    modules = malloc(size);
+
+  if(!EnumProcessModules(me, modules, size, &size_again))
+    return NULL;
+  if(size != size_again)
+    return NULL;
+
+  for(int i = 0; i < size / sizeof(HMODULE); i++) {
+    char buf[256];
+    GetModuleBaseName(me, modules[i], buf, sizeof buf);
+
+    ptr = GetProcAddress(modules[i], name);
+    if(ptr) break;
+  }
+
+  if(size > sizeof module_array)
+    free(modules);
+
+  return ptr;
+}
+#endif
+
 SYSV_CALL static VFunc VFunctionImpl(VWORD name) {
   VBlob * blob = VCheckedDecodeString(name, "function");
 
@@ -1426,8 +1510,9 @@ SYSV_CALL static VFunc VFunctionImpl(VWORD name) {
   void * ptr = dlsym(RTLD_DEFAULT, str);
 #endif
 #ifdef _WIN64
-  HMODULE hmod = GetModuleHandle(NULL);
-  void * ptr = GetProcAddress(hmod, str);
+  //HMODULE hmod = GetModuleHandle(NULL);
+  //void * ptr = GetProcAddress(hmod, str);
+  void * ptr = VDLSym(str);
 #endif
 
   if(!ptr) {
@@ -1684,10 +1769,6 @@ SYSV_CALL static void VGetStackInfo(char ** start, size_t * size) {
   GetCurrentThreadStackLimits(&lo, &hi);
   *start = (char*)hi;
   *size = (char*)hi - (char*)lo;
-
-  printf("stack lo: %p\n", lo);
-  printf("stack hi: %p\n", hi);
-  printf("stack size %lld\n", *size);
 #endif
 
 #ifndef __x86_64__

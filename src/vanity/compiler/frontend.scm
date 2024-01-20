@@ -38,7 +38,8 @@
 (define optimization 1)
 (define api 1)
 (define out-file #f)
-(define cc "gcc")
+(define platform "linux")
+(define cc #f)
 
 (define c-options '())
 (define paths (list (sprintf "~A/include" install-root)))
@@ -105,6 +106,7 @@
   (displayln "  --shared        Compile as shared library")
   (displayln "  --keep-temps    Keep temporary compilation files, such as C intermediates")
   ;(displayln "  --api=<num>    Compile with major api version 0 or 1")
+  (displayln "  --platform=<os> Which OS to make executables for. Either 'linux' or 'windows'.")
   (displayln "  --cc=<compiler> Use the C compiler of your choice. The default is gcc")
   (displayln "  --help          You know about this")
   (displayln "  --version       Show version and build info"))
@@ -112,7 +114,7 @@
   (printf "Vanity Scheme Compiler ~A.~A~N" (car version) (cadr version))
   (displayln "Copyright (C) 2023 Richard Van Natta"))
 
-(let loop ((args (getopt "vghtco:I:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (benchmark #f benchmark)))))
+(let loop ((args (getopt "vghtco:I:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (benchmark #f benchmark)))))
   (if (not (null? args))
       (begin
         (case (caar args)
@@ -146,6 +148,7 @@
           ((version) (display-version) (exit 0))
           ((shared) (set! shared? #t))
           ((api) (set! api (string->number (cdar args))))
+          ((platform) (set! platform (cdar args)))
           ((cc) (set! cc (cdar args)))
           ((keep-temps) (set! keep? #t))
           ((makefile) (set! makefile? #t))
@@ -153,6 +156,11 @@
           ((benchmark) (set! benchmark? #t))
           (else (write (caar args)) (newline) (compiler-error "Unknown CLI option" (cdar args))))
         (loop (cdr args)))))
+(if (not cc)
+    (set! cc
+      (cond ((equal? platform "linux") "gcc")
+            ((equal? platform "windows") "/usr/bin/x86_64-w64-mingw32-gcc")
+            (else (compiler-error "Unknown --platform, only 'linux' and 'windows' are valid" platform)))))
 
 (define (count-true . args)
   (let loop ((args args) (ct 0))
@@ -221,9 +229,13 @@
         (object? (list out-file))
         (else (map (lambda (file) (make-temporary-file (string-append "/tmp/" (basename file)) ".o")) scm-files))))
 
+(define base-cc-flags
+  (if (equal? platform "linux")
+      " -rdynamic -Wmissing-braces -masm=intel"
+      (sprintf " -Wl,--export-all-symbols -Wl,--stack,8388608 -Wmissing-braces -masm=intel -I~A/x86_64-w64-mingw32/include/" install-root)))
 (define cc-command-flags
   (string-append
-    " -rdynamic -Wmissing-braces -masm=intel"
+    base-cc-flags
     (sprintf " -O~A" optimization)
     (if debug? " -g" "")
     (if shared? " -fPIC" "")))
@@ -281,11 +293,13 @@
     (let ()
       (define link-command-flags
         (string-append
-          " -rdynamic -Wmissing-braces -masm=intel"
+          base-cc-flags
           (sprintf " -O~A" optimization)
           (if debug? " -g" "")
           ; TODO way to not link vscheme in
-          " -lvscheme"
+          (if (equal? platform "linux")
+              " -lvscheme"
+              (sprintf " -L~A/x86_64-w64-mingw32/lib/ -lvscheme" install-root))
           (if shared? " -fPIC -shared" " -Wl,--no-as-needed")))
       (define link-command
         (if out-file

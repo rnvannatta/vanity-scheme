@@ -38,8 +38,11 @@
 static_assert(sizeof(char) == sizeof(int8_t));
 static_assert(sizeof(short) == sizeof(int16_t));
 static_assert(sizeof(int) == sizeof(int32_t));
-// not true on windows, bleh! need to fix this one the most
-static_assert(sizeof(long) == sizeof(int64_t));
+static_assert(sizeof(long) == sizeof(int64_t) || sizeof(long) == sizeof(int32_t));
+static_assert(sizeof(long long) == sizeof(int64_t));
+
+//#define SYSV_CALL __attribute__((sysv_abi))
+#define SYSV_CALL
 
 /* ======================== Structures and Enums ======================= */
 
@@ -79,6 +82,55 @@ enum VTAG {
   VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VBUFFER, VRNG_STATE, VPORT, VRUNTIME, VHASH_TABLE,
   VTAG_END };
 typedef unsigned VTAG;
+
+#ifdef __linux__
+#define VJmpBuf jmp_buf
+#define VSetJmp setjmp
+#define VLongJmp longjmp
+#endif
+#ifdef _WIN64
+// Thank you for the stack unwinding that causes stack overflows, Windows
+#include <xmmintrin.h>
+struct VJmpBuf {
+  uint64_t rip;
+  uint64_t rsp;
+
+  uint64_t rbx;
+  uint64_t rbp;
+
+  uint64_t rdi;
+  uint64_t rsi;
+
+  uint64_t r12;
+  uint64_t r13;
+  uint64_t r14;
+  uint64_t r15;
+
+  __m128 xmm6;
+  __m128 xmm7;
+  __m128 xmm8;
+  __m128 xmm9;
+  __m128 xmm10;
+  __m128 xmm11;
+  __m128 xmm12;
+  __m128 xmm13;
+  __m128 xmm14;
+  __m128 xmm15;
+};
+typedef struct VJmpBuf VJmpBuf[1];
+static_assert(sizeof(struct VJmpBuf) == 240);
+
+int VSetJmp(struct VJmpBuf buf[1]);
+void VLongJmp(struct VJmpBuf buf[1], int ret);
+#endif
+
+#ifdef __linux__
+#define VWEAK __attribute__((weak))
+#endif
+#ifdef _WIN64
+#define VWEAK __declspec(selectany)
+#endif
+
 enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
 
 #define LITERAL_TYPE_MASK (15ul*TAG_BIAS)
@@ -129,18 +181,24 @@ enum V_TYPE_T { VIMM_TOK = 1*TAG_BIAS, VIMM_INT = 2*TAG_BIAS, VIMM_CHAR = 3*TAG_
 typedef struct VRuntime VRuntime;
 typedef struct VEnv VEnv;
 #define V_CORE_ARGS VRuntime * runtime, VEnv * statics, int argc
-typedef void (*VFunc)(V_CORE_ARGS, ...);
+typedef SYSV_CALL void (*VFunc)(V_CORE_ARGS, ...);
+#ifdef __linux__
+#define ARGC_REG "edx"
+#endif
+#ifdef _WIN64
+#define ARGC_REG "r8d"
+#endif
 
 typedef struct VWORD {
   uint64_t integer;
 } VWORD;
 
-static inline uint64_t VBits(VWORD v) {
+SYSV_CALL static inline uint64_t VBits(VWORD v) {
   uint64_t bits;
   memcpy(&bits, &v, sizeof v);
   return bits;
 }
-static inline VWORD VWord(uint64_t bits) {
+SYSV_CALL static inline VWORD VWord(uint64_t bits) {
   VWORD v;
   memcpy(&v, &bits, sizeof bits);
   return v;
@@ -237,65 +295,64 @@ typedef struct VDebugInfo {
   char const * name;
 } VDebugInfo;
 
-static inline bool VIsEq(VWORD a, VWORD b) { return VBits(a) == VBits(b); }
-void VError(const char *, ...);
+SYSV_CALL static inline bool VIsEq(VWORD a, VWORD b) { return VBits(a) == VBits(b); }
+SYSV_CALL void VError(const char *, ...);
 
 /* ======================== Encoding and Decoding ======================= */
 
 // Immediate types
 
-static inline VWORD VEncodeToken(unsigned tok) { return VWord(LITERAL_HEADER | VIMM_TOK | tok); }
+SYSV_CALL static inline VWORD VEncodeToken(unsigned tok) { return VWord(LITERAL_HEADER | VIMM_TOK | tok); }
 
-static inline unsigned VDecodeToken(VWORD v) {
+SYSV_CALL static inline unsigned VDecodeToken(VWORD v) {
   return (unsigned)(VBits(v) & 0xFFFFFFFF);
 }
 
-static inline VWORD VEncodeInt(int i) {
+SYSV_CALL static inline VWORD VEncodeInt(int i) {
   return VWord(LITERAL_HEADER | VIMM_INT | (UINT32_MAX & (unsigned)i));
 }
 
-static inline int VDecodeInt(VWORD v) {
-  //return ((int64_t)VBits(v) << 32) >> 32;
+SYSV_CALL static inline int VDecodeInt(VWORD v) {
   return VBits(v) & UINT32_MAX;
 }
 
-static inline VWORD VEncodeChar(char c) {
+SYSV_CALL static inline VWORD VEncodeChar(char c) {
   return VWord(LITERAL_HEADER | VIMM_CHAR | (unsigned char)c);
 }
 
-static inline char VDecodeChar(VWORD v) {
+SYSV_CALL static inline char VDecodeChar(VWORD v) {
   return (char)(VBits(v) & 0xFF);
 }
 
 // TODO remove usage of this function
-static inline VWORD VEncodeNumber(double d) {
+SYSV_CALL static inline VWORD VEncodeNumber(double d) {
   VWORD v;
   memcpy(&v, &d, sizeof v);
   return v;
 }
-static inline VWORD VEncodeDouble(double d) {
+SYSV_CALL static inline VWORD VEncodeDouble(double d) {
   VWORD v;
   memcpy(&v, &d, sizeof v);
   return v;
 }
 
-static inline double VDecodeNumber(VWORD v) {
+SYSV_CALL static inline double VDecodeNumber(VWORD v) {
   double d;
   memcpy(&d, &v, sizeof v);
   return d;
 }
 
-static inline VWORD VEncodeBool(bool b) {
+SYSV_CALL static inline VWORD VEncodeBool(bool b) {
   return b ? VTRUE : VFALSE;
 }
 
-static inline bool VDecodeBool(VWORD v) {
+SYSV_CALL static inline bool VDecodeBool(VWORD v) {
   return VBits(v) != VBits(VFALSE);
 }
 
 // Pointer types
 
-static inline VWORD VEncodePointer(void * v, enum VPOINTER_T type) {
+SYSV_CALL static inline VWORD VEncodePointer(void * v, enum VPOINTER_T type) {
   uint64_t bits = (uint64_t)(intptr_t)v;
   bits &= ~POINTER_MIRROR;
   bits |= type;
@@ -304,51 +361,51 @@ static inline VWORD VEncodePointer(void * v, enum VPOINTER_T type) {
 }
 
 static_assert(-1ll == -1ll >> 63ll);
-static inline VWORD * VDecodePointer(VWORD v) {
+SYSV_CALL static inline VWORD * VDecodePointer(VWORD v) {
   int64_t bits = (int64_t)VBits(v);
   bits = (bits << 16) >> 16;
   return (VWORD*)(intptr_t)bits;
 }
 
-static inline VWORD VEncodeClosure(VClosure * c) {
+SYSV_CALL static inline VWORD VEncodeClosure(VClosure * c) {
   return VEncodePointer(c, VPOINTER_CLOSURE);
 }
 
-static inline VClosure * VDecodeClosure(VWORD v) {
+SYSV_CALL static inline VClosure * VDecodeClosure(VWORD v) {
   return (VClosure*)VDecodePointer(v);
 }
 
-static inline VWORD VEncodePair(VPair * p) {
+SYSV_CALL static inline VWORD VEncodePair(VPair * p) {
   return VEncodePointer(p, VPOINTER_PAIR);
 }
-static inline VPair * VDecodePair(VWORD v) {
+SYSV_CALL static inline VPair * VDecodePair(VWORD v) {
   return (VPair*)VDecodePointer(v);
 }
 
-static inline VWORD VEncodeForeignPointer(void * v) {
+SYSV_CALL static inline VWORD VEncodeForeignPointer(void * v) {
   return VEncodePointer(v, VPOINTER_FOREIGN);
 }
 
-static inline VBlob * VDecodeBlob(VWORD v) {
+SYSV_CALL static inline VBlob * VDecodeBlob(VWORD v) {
   return (VBlob*) VDecodePointer(v);
 }
-static inline VBlob * VDecodeString(VWORD v) {
+SYSV_CALL static inline VBlob * VDecodeString(VWORD v) {
   return (VBlob*) VDecodePointer(v);
 }
-static inline VBlob * VDecodeSymbol(VWORD v) {
+SYSV_CALL static inline VBlob * VDecodeSymbol(VWORD v) {
   return (VBlob*) VDecodePointer(v);
 }
 
-static inline VVector * VDecodeVector(VWORD v) {
+SYSV_CALL static inline VVector * VDecodeVector(VWORD v) {
   return (VVector*) VDecodePointer(v);
 }
 
 /* ======================== Type Checking ======================= */
 
-static inline bool VIsToken(VWORD v, int tok) { return VBits(v) == (LITERAL_HEADER | VIMM_TOK | tok); }
+SYSV_CALL static inline bool VIsToken(VWORD v, int tok) { return VBits(v) == (LITERAL_HEADER | VIMM_TOK | tok); }
 
 // TODO replace all uses with VIsDouble
-static inline bool VIsNumber(VWORD v) {
+SYSV_CALL static inline bool VIsNumber(VWORD v) {
   uint64_t bits;
   memcpy(&bits, &v, sizeof v);
   // either a standard number, or an inf, or the canonical NAN
@@ -363,11 +420,11 @@ static inline bool VIsNumber(VWORD v) {
     return true;
   }
 }
-static inline bool VIsDouble(VWORD v) {
+SYSV_CALL static inline bool VIsDouble(VWORD v) {
   return VIsNumber(v);
 }
 
-static inline uint64_t VWordType(VWORD v) {
+SYSV_CALL static inline uint64_t VWordType(VWORD v) {
   uint64_t bits = VBits(v);
   if(VIsDouble(v)) {
     return VIMM_DOUBLE;
@@ -376,26 +433,26 @@ static inline uint64_t VWordType(VWORD v) {
   }
 }
 
-static inline bool VIsPointer(VWORD v) {
+SYSV_CALL static inline bool VIsPointer(VWORD v) {
   return !VIsDouble(v) && (VBits(v) & POINTER_TEST_BIT);
 }
 #define VIsManagedPointer VIsPointer
-static inline bool VIsForeignPointer(VWORD v) {
+SYSV_CALL static inline bool VIsForeignPointer(VWORD v) {
   return !VIsDouble(v) && (VBits(v) & VPOINTER_FOREIGN) == VPOINTER_FOREIGN;
 }
-static inline bool VIsAnyPointer(VWORD v) {
+SYSV_CALL static inline bool VIsAnyPointer(VWORD v) {
   uint64_t bits = VBits(v);
   return !VIsDouble(v) && ((bits & POINTER_TEST_BIT) || (bits & VPOINTER_FOREIGN) == VPOINTER_FOREIGN);
 }
 
-static inline void VCheckWordType(VWORD v, enum VIMMERAL_T type) {
+SYSV_CALL static inline void VCheckWordType(VWORD v, enum VIMMERAL_T type) {
   if(VWordType(v) != type)
   {
     VError("incorrect type\n");
   }
 }
 
-static inline bool VIsBlob(VWORD v) {
+SYSV_CALL static inline bool VIsBlob(VWORD v) {
   if(VIsPointer(v)) {
     VTAG t = *(VTAG*)VDecodePointer(v);
     switch(t) {
@@ -410,7 +467,7 @@ static inline bool VIsBlob(VWORD v) {
   }
   return false;
 }
-static inline bool VIsMutableBlob(VWORD v) {
+SYSV_CALL static inline bool VIsMutableBlob(VWORD v) {
   if(VIsPointer(v)) {
     VTAG t = *(VTAG*)VDecodePointer(v);
     switch(t) {
@@ -425,60 +482,60 @@ static inline bool VIsMutableBlob(VWORD v) {
   return false;
 }
 
-static inline bool VIsString(VWORD v) {
+SYSV_CALL static inline bool VIsString(VWORD v) {
   return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VSTRING;
 }
 
-static inline bool VIsSymbol(VWORD v) {
+SYSV_CALL static inline bool VIsSymbol(VWORD v) {
   return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VSYMBOL;
 }
 
-static inline bool VIsVector(VWORD v) {
+SYSV_CALL static inline bool VIsVector(VWORD v) {
   return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VVECTOR;
 }
 
-static inline bool VIsHashTable(VWORD v) {
+SYSV_CALL static inline bool VIsHashTable(VWORD v) {
   return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VHASH_TABLE;
 }
 
-static inline bool VIsPort(VWORD v) {
+SYSV_CALL static inline bool VIsPort(VWORD v) {
   return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VPORT;
 }
 
 /* ======================== Checked Decoding ======================= */
 
-static inline int VCheckedDecodeInt(VWORD v, char const * proc) {
+SYSV_CALL static inline int VCheckedDecodeInt(VWORD v, char const * proc) {
   if(VWordType(v) != VIMM_INT) VError("~Z: not an int: ~S\n", proc, v);
   return VDecodeInt(v);
 }
 
-static inline double VCheckedDecodeDouble(VWORD v, char const * proc) {
+SYSV_CALL static inline double VCheckedDecodeDouble(VWORD v, char const * proc) {
   if(!VIsDouble(v)) VError("~Z: not a double: ~S\n", proc, v);
   return VDecodeNumber(v);
 }
 
-static inline double VCheckedDecodeNumber(VWORD v, char const * proc) {
+SYSV_CALL static inline double VCheckedDecodeNumber(VWORD v, char const * proc) {
   if(VIsDouble(v)) return VDecodeNumber(v);
   if(VWordType(v) != VIMM_INT) VError("~Z: neither an int nor a double: ~S\n", proc, v);
   return VDecodeInt(v);
 
 }
 
-static inline char VCheckedDecodeChar(VWORD v, char const * proc) {
+SYSV_CALL static inline char VCheckedDecodeChar(VWORD v, char const * proc) {
   if(VWordType(v) != VIMM_CHAR) VError("~Z: not a char: ~S\n", proc, v);
   return VDecodeChar(v);
 }
 
-static inline VClosure * VCheckedDecodeClosure(VWORD v, char const * proc) {
+SYSV_CALL static inline VClosure * VCheckedDecodeClosure(VWORD v, char const * proc) {
   if(VWordType(v) != VPOINTER_CLOSURE) VError("~Z: not a closure: ~S\n", proc, v);
   return (VClosure*)VDecodePointer(v);
 }
-static inline VClosure * VDecodeClosureApply(VWORD v) {
+SYSV_CALL static inline VClosure * VDecodeClosureApply(VWORD v) {
   if(VWordType(v) != VPOINTER_CLOSURE) VError("tried to call non-closure: ~s\n", v);
   return (VClosure*)VDecodePointer(v);
 }
 
-static inline void * VCheckedDecodePointer(VWORD v, VTAG tag, char const * proc) {
+SYSV_CALL static inline void * VCheckedDecodePointer(VWORD v, VTAG tag, char const * proc) {
   if(VIsPointer(v)) {
     VTAG * ptr = (VTAG *)VDecodePointer(v);
     if(*ptr == tag) {
@@ -489,40 +546,40 @@ static inline void * VCheckedDecodePointer(VWORD v, VTAG tag, char const * proc)
   return NULL;
 }
 
-static inline void * VCheckedDecodeForeignPointer(VWORD v, char const * proc) {
+SYSV_CALL static inline void * VCheckedDecodeForeignPointer(VWORD v, char const * proc) {
   if(VWordType(v) != VPOINTER_FOREIGN) VError("~Z: not a foreign pointer: ~S\n", proc, v);
   return (void*)VDecodePointer(v);
 }
 
-static inline VBlob * VCheckedDecodeBlob(VWORD v, char const * proc) {
+SYSV_CALL static inline VBlob * VCheckedDecodeBlob(VWORD v, char const * proc) {
   if(VIsBlob(v)) return (VBlob*) VDecodePointer(v);
   VError("~Z: not a blob: ~S\n", proc, v);
   return NULL;
 }
-static inline VBlob * VCheckedDecodeString(VWORD v, char const * proc) {
+SYSV_CALL static inline VBlob * VCheckedDecodeString(VWORD v, char const * proc) {
   if(VIsString(v)) return (VBlob*) VDecodePointer(v);
   VError("~Z: not a string: ~S\n", proc, v);
   return NULL;
 }
-static inline VBlob * VCheckedDecodeSymbol(VWORD v, char const * proc) {
+SYSV_CALL static inline VBlob * VCheckedDecodeSymbol(VWORD v, char const * proc) {
   if(VIsSymbol(v)) return (VBlob*) VDecodePointer(v);
   VError("~Z: not a symbol: ~S\n", proc, v);
   return NULL;
 }
 
-static inline VVector * VCheckedDecodeVector(VWORD v, char const * proc) {
+SYSV_CALL static inline VVector * VCheckedDecodeVector(VWORD v, char const * proc) {
   if(VIsVector(v)) return (VVector*) VDecodePointer(v);
   VError("~Z: not a vector: ~S\n", proc, v);
   return NULL;
 }
 
-static inline VHashTable * VCheckedDecodeHashTable(VWORD v, char const * proc) {
+SYSV_CALL static inline VHashTable * VCheckedDecodeHashTable(VWORD v, char const * proc) {
   if(VIsHashTable(v)) return (VHashTable*) VDecodePointer(v);
   VError("~Z: not a hash table: ~S\n", proc, v);
   return NULL;
 }
 
-static inline VPort * VCheckedDecodePort(VWORD v, char const * proc) {
+SYSV_CALL static inline VPort * VCheckedDecodePort(VWORD v, char const * proc) {
   if(VIsPort(v)) return (VPort*) VDecodePointer(v);
   VError("~Z: not a port: ~S\n", proc, v);
   return NULL;
@@ -530,10 +587,10 @@ static inline VPort * VCheckedDecodePort(VWORD v, char const * proc) {
 
 /* ======================== C FFI Decoding ======================= */
 
-static inline bool VCheckedDecodeBool(VWORD v, char const * proc) {
+SYSV_CALL static inline bool VCheckedDecodeBool(VWORD v, char const * proc) {
   return VDecodeBool(v);
 }
-static inline VWORD VCheckedDecodeVWORD(VWORD v, char const * proc) {
+SYSV_CALL static inline VWORD VCheckedDecodeVWORD(VWORD v, char const * proc) {
   return v;
 }
 
@@ -544,7 +601,7 @@ static inline VWORD VCheckedDecodeVWORD(VWORD v, char const * proc) {
 #define UINT64_MIN 0
 
 #define V_MAKE_DECODE_INT(type, Type, TYPE) \
- static inline type VCheckedDecode ## Type(VWORD v, char const * proc) { \
+ SYSV_CALL static inline type VCheckedDecode ## Type(VWORD v, char const * proc) { \
     if(VWordType(v) != VIMM_INT) VError("~Z: not an int: ~S\n", proc, v); \
     int dec = VDecodeInt(v); \
     if(!(TYPE ## _MIN < dec && dec <= TYPE ## _MAX)) VError("~Z: overflow casting to " # type ": ~S\n", proc, v); \
@@ -557,17 +614,7 @@ V_MAKE_DECODE_INT(int16_t, Short, INT16);
 V_MAKE_DECODE_INT(uint8_t, UnsignedChar, UINT8);
 V_MAKE_DECODE_INT(uint16_t, UnsignedShort, UINT16);
 
-static inline int64_t VCheckedDecodeLong(VWORD v, char const * proc) {
-  if(VWordType(v) != VIMM_INT) VError("~Z: not an int: ~S\n", proc, v);
-  return VDecodeInt(v);
-}
-static inline uint64_t VCheckedDecodeUnsignedLong(VWORD v, char const * proc) {
-  if(VWordType(v) != VIMM_INT) VError("~Z: not an int: ~S\n", proc, v);
-  int32_t i = VDecodeInt(v);
-  unsigned u = i;
-  return u;
-}
-static inline char * VCheckedDecodeCString(VWORD v, char const * proc) {
+SYSV_CALL static inline char * VCheckedDecodeCString(VWORD v, char const * proc) {
   if(VIsString(v)) {
     return VDecodeBlob(v)->buf;
   } else if(VIsForeignPointer(v)) {
@@ -576,7 +623,7 @@ static inline char * VCheckedDecodeCString(VWORD v, char const * proc) {
   VError("~Z: not castable to c string: ~S\n", proc, v);
   return NULL;
 }
-static inline char const * VCheckedDecodeConstCString(VWORD v, char const * proc) {
+SYSV_CALL static inline char const * VCheckedDecodeConstCString(VWORD v, char const * proc) {
   if(VIsString(v) || VIsSymbol(v)) {
     return VDecodeBlob(v)->buf;
   } else if(VIsForeignPointer(v)) {
@@ -586,7 +633,7 @@ static inline char const * VCheckedDecodeConstCString(VWORD v, char const * proc
   return NULL;
 }
 
-static inline void * VCheckedDecodeVoidPtr(VWORD v, char const * proc) {
+SYSV_CALL static inline void * VCheckedDecodeVoidPtr(VWORD v, char const * proc) {
   // void pointers accept any non-const foreign ponters and
   // any non-const buffers, so any buffer except symbols
   if(VIsForeignPointer(v)) {
@@ -597,7 +644,7 @@ static inline void * VCheckedDecodeVoidPtr(VWORD v, char const * proc) {
   VError("~Z: not castable to void pointer: ~S\n", proc, v);
   return NULL;
 }
-static inline void const * VCheckedDecodeConstVoidPtr(VWORD v, char const * proc) {
+SYSV_CALL static inline void const * VCheckedDecodeConstVoidPtr(VWORD v, char const * proc) {
   // const void pointers accept any foreign ponters and
   // any buffers, including constant buffers
   if(VIsForeignPointer(v)) {
@@ -612,7 +659,7 @@ static inline void const * VCheckedDecodeConstVoidPtr(VWORD v, char const * proc
 /* ======================== Construction ======================= */
 
 #define V_ALLOCA_BLOB(len) alloca(sizeof(VBlob) + len);
-static inline VBlob * VFillBlob(VBlob * blob, VTAG tag, unsigned len, char const * dat) {
+SYSV_CALL static inline VBlob * VFillBlob(VBlob * blob, VTAG tag, unsigned len, char const * dat) {
   blob->tag = tag;
   blob->len = len;
   memcpy(blob->buf, dat, len);
@@ -622,18 +669,18 @@ static inline VBlob * VFillBlob(VBlob * blob, VTAG tag, unsigned len, char const
 #define V_STATIC_STRING(name, str) struct { VBlob b; char buf[sizeof str]; } name = { { .tag = VSTRING, .len = sizeof str }, str };
 
 #define V_ALLOCA_VECTOR(len) alloca(sizeof(VVector) + sizeof(VWORD[len]))
-static inline VVector * VFillVector(VVector * vec, VTAG tag, unsigned len, VWORD const * dat) {
+SYSV_CALL static inline VVector * VFillVector(VVector * vec, VTAG tag, unsigned len, VWORD const * dat) {
   vec->tag = tag;
   vec->len = len;
   memcpy(vec->arr, dat, sizeof(VWORD[len]));
   return vec;
 }
 
-static inline VPort VMakePortStream(FILE * stream, unsigned flags) {
+SYSV_CALL static inline VPort VMakePortStream(FILE * stream, unsigned flags) {
   return (VPort) { .tag = VPORT, .stream = stream, .flags = flags };
 }
 
-static inline VClosure VMakeClosure2(VFunc f, VEnv * env) {
+SYSV_CALL static inline VClosure VMakeClosure2(VFunc f, VEnv * env) {
   return (VClosure) {
     .tag = VCLOSURE,
     .func = f,
@@ -641,11 +688,11 @@ static inline VClosure VMakeClosure2(VFunc f, VEnv * env) {
   };
 }
 
-static inline VPair VMakePair(VWORD a, VWORD b) {
+SYSV_CALL static inline VPair VMakePair(VWORD a, VWORD b) {
   return (VPair) { .tag = VPAIR, .first = a, .rest = b };
 }
 
-static inline VPair * VFillPair(VPair * pair, VWORD a, VWORD b) {
+SYSV_CALL static inline VPair * VFillPair(VPair * pair, VWORD a, VWORD b) {
   pair->tag = VPAIR;
   pair->first = a;
   pair->rest = b;
@@ -654,7 +701,11 @@ static inline VPair * VFillPair(VPair * pair, VWORD a, VWORD b) {
 
 /* ======================== Misc ======================= */
 
-static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
+// stores constants like the literal 'foo or the value of ##sys.+
+// necessary because Windows doesn't have weak symbols lmao
+SYSV_CALL void * VLookupConstant(char * name, void * val);
+
+SYSV_CALL static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
   if(VBits(a) == VBits(b))
     return true;
   VBlob * blob_a = (VBlob*)VDecodePointer(a);
@@ -662,8 +713,8 @@ static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
   return !strcmp(blob_a->buf, blob_b->buf);
 }
 
-VGlobalEntry * VLookupGlobalEntry(VWORD sym);
-static inline VWORD VLookupGlobalVar(VWORD sym) {
+SYSV_CALL VGlobalEntry * VLookupGlobalEntry(VWORD sym);
+SYSV_CALL static inline VWORD VLookupGlobalVar(VWORD sym) {
   VGlobalEntry * place = VLookupGlobalEntry(sym);
   if(place)
     return place->value;
@@ -671,8 +722,8 @@ static inline VWORD VLookupGlobalVar(VWORD sym) {
   return VVOID;
 }
 
-VGlobalEntry * VLookupGlobalEntryFast(char const * sym);
-static inline VWORD VLookupGlobalVarFast(char const * sym) {
+SYSV_CALL VGlobalEntry * VLookupGlobalEntryFast(char const * sym);
+SYSV_CALL static inline VWORD VLookupGlobalVarFast(char const * sym) {
   VGlobalEntry * place = VLookupGlobalEntryFast(sym);
   if(place)
     return place->value;
@@ -680,9 +731,11 @@ static inline VWORD VLookupGlobalVarFast(char const * sym) {
   return VVOID;
 }
 
-void VSysApply(VFunc func, VEnvironment * environ);
+// inline ASM written against SysV
+#undef environ
+SYSV_CALL void VSysApply(VFunc func, VEnvironment * environ);
 
-static inline VWORD VGetArg(VEnv * env, int up, int var) {
+SYSV_CALL static inline VWORD VGetArg(VEnv * env, int up, int var) {
   while(up) {
     env = env->up;
     up--;
@@ -693,7 +746,7 @@ static inline VWORD VGetArg(VEnv * env, int up, int var) {
 #define V_CALL_HISTORY_LEN 16
 extern VDebugInfo * VCallHistory[V_CALL_HISTORY_LEN];
 extern unsigned VCallHistoryCursor;
-static inline void VRecordCall(VDebugInfo * debug) {
+SYSV_CALL static inline void VRecordCall(VDebugInfo * debug) {
   VCallHistory[++VCallHistoryCursor % V_CALL_HISTORY_LEN] = debug;
 }
 
@@ -722,7 +775,7 @@ static inline void VRecordCall(VDebugInfo * debug) {
     (_closure->func)(runtime, _closure->env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
   } while(0)
 
-static inline void VReturnWord(VWORD k, VRuntime * runtime, VWORD ret) {
+SYSV_CALL static inline void VReturnWord(VWORD k, VRuntime * runtime, VWORD ret) {
   VClosure * _k = VDecodeClosure(k); \
   (_k->func)(runtime, _k->env, 1, ret);
 }
@@ -750,7 +803,7 @@ static inline void VReturnWord(VWORD k, VRuntime * runtime, VWORD ret) {
 extern char* VStackStart;
 extern ssize_t VStackLen;
 
-static inline bool VStackOverflow(char * VStackStop) {
+SYSV_CALL static inline bool VStackOverflow(char * VStackStop) {
   ptrdiff_t size = VStackStart - VStackStop;
 #ifndef __x86_64__
   // stack may grow upwards on some platforms
@@ -759,8 +812,8 @@ static inline bool VStackOverflow(char * VStackStop) {
   assert(size >= 0);
   return size > VStackLen;
 }
-void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv);
-void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...);
+SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv);
+SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...);
 
 #define V_GC_CHECK2(func, runtime, statics, argc, argv) \
   if(VStackOverflow((char*)&runtime)) { \
@@ -780,50 +833,50 @@ void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed
   } else
 
 // Root level continuation
-void VNext2(V_CORE_ARGS, ...);
+SYSV_CALL void VNext2(V_CORE_ARGS, ...);
 // Default exception continuation
-void VAbort2(V_CORE_ARGS, ...);
+SYSV_CALL void VAbort2(V_CORE_ARGS, ...);
 // Exit PROCEDURE, expects a continuation in slot 1
-void VExit2(V_CORE_ARGS, VWORD k, VWORD e);
+SYSV_CALL void VExit2(V_CORE_ARGS, VWORD k, VWORD e);
 
-void VDisplayWord(FILE * f, VWORD v, bool write);
+SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write);
 
-void VFPrintfC(FILE * f, char const * str, ...);
+SYSV_CALL void VFPrintfC(FILE * f, char const * str, ...);
 
-void VTrackMutation(void * container, VWORD * slot, VWORD val);
-static inline void VSetFirst(VPair * p, VWORD w) {
+SYSV_CALL void VTrackMutation(void * container, VWORD * slot, VWORD val);
+SYSV_CALL static inline void VSetFirst(VPair * p, VWORD w) {
   VTrackMutation(p, &p->first, w);
   p->first = w;
 }
-static inline void VSetRest(VPair * p, VWORD w) {
+SYSV_CALL static inline void VSetRest(VPair * p, VWORD w) {
   VTrackMutation(p, &p->rest, w);
   p->rest = w;
 }
 
-void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major);
-void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer);
-void VHasFinalizer(V_CORE_ARGS, VWORD k, VWORD mem);
-void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem);
+SYSV_CALL void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major);
+SYSV_CALL void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer);
+SYSV_CALL void VHasFinalizer(V_CORE_ARGS, VWORD k, VWORD mem);
+SYSV_CALL void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem);
 
-void VSetCar2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
-void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
-void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i, VWORD val);
+SYSV_CALL void VSetCar2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
+SYSV_CALL void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
+SYSV_CALL void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i, VWORD val);
 
-void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD up, VWORD var, VWORD val);
-void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val);
-void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val);
-void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines);
+SYSV_CALL void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD up, VWORD var, VWORD val);
+SYSV_CALL void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val);
+SYSV_CALL void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val);
+SYSV_CALL void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines);
 
-void VFunction2(V_CORE_ARGS, VWORD k, VWORD name);
+SYSV_CALL void VFunction2(V_CORE_ARGS, VWORD k, VWORD name);
 
-void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name);
+SYSV_CALL void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name);
 
-void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...);
-void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD lib);
+SYSV_CALL void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...);
+SYSV_CALL void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD lib);
 
-int VStart(int nargs, void(* const * toplevels)());
+SYSV_CALL int VStart(int nargs, void(* const * toplevels)());
 
 extern int VArgc;
 extern char ** VArgv;
 
-void VCommandLine2(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k);
