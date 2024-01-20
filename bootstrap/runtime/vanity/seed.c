@@ -29,21 +29,32 @@
 #include <stdarg.h>
 static struct { VBlob sym; char bytes[21]; } _V10string_D55 = { { VSTRING, 21 }, "_V0vanity_V0seed_V20" };
 static struct { VBlob sym; char bytes[40]; } _V10string_D54 = { { VSTRING, 40 }, "set!: procedure doesn't have a setter: " };
-VClosure _V40_V10sys_Deq_Q __attribute__((weak)) = { VCLOSURE, (VFunc)VEq2, NULL };
+VWEAK VWORD _V40_V10sys_Deq_Q;VWEAK VClosure _VW_V40_V10sys_Deq_Q = { VCLOSURE, (VFunc)VEq2, NULL };
 static struct { VBlob sym; char bytes[41]; } _V10string_D53 = { { VSTRING, 41 }, "set!: procedure doesn't have a mutator: " };
-struct { VBlob sym; char bytes[16]; } _V10vcore_Dmutator __attribute__((weak)) = { { VSYMBOL, 16 }, "##vcore.mutator" };
-struct { VBlob sym; char bytes[15]; } _V10vcore_Dsetter __attribute__((weak)) = { { VSYMBOL, 15 }, "##vcore.setter" };
-VClosure _V40_V10sys_Dset__car_B __attribute__((weak)) = { VCLOSURE, (VFunc)VSetCar2, NULL };
-VClosure _V40_V10sys_Dcar __attribute__((weak)) = { VCLOSURE, (VFunc)VCar2, NULL };
-VClosure _V40_V10sys_Dset__cdr_B __attribute__((weak)) = { VCLOSURE, (VFunc)VSetCdr2, NULL };
-VClosure _V40_V10sys_Dcdr __attribute__((weak)) = { VCLOSURE, (VFunc)VCdr2, NULL };
-VClosure _V40_V10sys_Dvector__set_B __attribute__((weak)) = { VCLOSURE, (VFunc)VVectorSet2, NULL };
-VClosure _V40_V10sys_Dvector__ref __attribute__((weak)) = { VCLOSURE, (VFunc)VVectorRef2, NULL };
-VClosure _V40_V10sys_Dstring__set_B __attribute__((weak)) = { VCLOSURE, (VFunc)VStringSet2, NULL };
-VClosure _V40_V10sys_Dstring__ref __attribute__((weak)) = { VCLOSURE, (VFunc)VStringRef2, NULL };
+VWEAK VWORD _V10vcore_Dmutator;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V10vcore_Dmutator = { { VSYMBOL, 16 }, "##vcore.mutator" };
+VWEAK VWORD _V10vcore_Dsetter;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V10vcore_Dsetter = { { VSYMBOL, 15 }, "##vcore.setter" };
+VWEAK VWORD _V40_V10sys_Dset__car_B;VWEAK VClosure _VW_V40_V10sys_Dset__car_B = { VCLOSURE, (VFunc)VSetCar2, NULL };
+VWEAK VWORD _V40_V10sys_Dcar;VWEAK VClosure _VW_V40_V10sys_Dcar = { VCLOSURE, (VFunc)VCar2, NULL };
+VWEAK VWORD _V40_V10sys_Dset__cdr_B;VWEAK VClosure _VW_V40_V10sys_Dset__cdr_B = { VCLOSURE, (VFunc)VSetCdr2, NULL };
+VWEAK VWORD _V40_V10sys_Dcdr;VWEAK VClosure _VW_V40_V10sys_Dcdr = { VCLOSURE, (VFunc)VCdr2, NULL };
+VWEAK VWORD _V40_V10sys_Dvector__set_B;VWEAK VClosure _VW_V40_V10sys_Dvector__set_B = { VCLOSURE, (VFunc)VVectorSet2, NULL };
+VWEAK VWORD _V40_V10sys_Dvector__ref;VWEAK VClosure _VW_V40_V10sys_Dvector__ref = { VCLOSURE, (VFunc)VVectorRef2, NULL };
+VWEAK VWORD _V40_V10sys_Dstring__set_B;VWEAK VClosure _VW_V40_V10sys_Dstring__set_B = { VCLOSURE, (VFunc)VStringSet2, NULL };
+VWEAK VWORD _V40_V10sys_Dstring__ref;VWEAK VClosure _VW_V40_V10sys_Dstring__ref = { VCLOSURE, (VFunc)VStringRef2, NULL };
+static __attribute__((constructor)) void VDllMain1() {
+  _V40_V10sys_Deq_Q = VEncodePointer(VLookupConstant("_V40_V10sys_Deq_Q", &_VW_V40_V10sys_Deq_Q), VPOINTER_CLOSURE);
+  _V10vcore_Dmutator = VEncodePointer(VLookupConstant("_V10vcore_Dmutator", &_VW_V10vcore_Dmutator), VPOINTER_OTHER);
+  _V10vcore_Dsetter = VEncodePointer(VLookupConstant("_V10vcore_Dsetter", &_VW_V10vcore_Dsetter), VPOINTER_OTHER);
+  _V40_V10sys_Dset__car_B = VEncodePointer(VLookupConstant("_V40_V10sys_Dset__car_B", &_VW_V40_V10sys_Dset__car_B), VPOINTER_CLOSURE);
+  _V40_V10sys_Dcar = VEncodePointer(VLookupConstant("_V40_V10sys_Dcar", &_VW_V40_V10sys_Dcar), VPOINTER_CLOSURE);
+  _V40_V10sys_Dset__cdr_B = VEncodePointer(VLookupConstant("_V40_V10sys_Dset__cdr_B", &_VW_V40_V10sys_Dset__cdr_B), VPOINTER_CLOSURE);
+  _V40_V10sys_Dcdr = VEncodePointer(VLookupConstant("_V40_V10sys_Dcdr", &_VW_V40_V10sys_Dcdr), VPOINTER_CLOSURE);
+  _V40_V10sys_Dvector__set_B = VEncodePointer(VLookupConstant("_V40_V10sys_Dvector__set_B", &_VW_V40_V10sys_Dvector__set_B), VPOINTER_CLOSURE);
+  _V40_V10sys_Dvector__ref = VEncodePointer(VLookupConstant("_V40_V10sys_Dvector__ref", &_VW_V40_V10sys_Dvector__ref), VPOINTER_CLOSURE);
+  _V40_V10sys_Dstring__set_B = VEncodePointer(VLookupConstant("_V40_V10sys_Dstring__set_B", &_VW_V40_V10sys_Dstring__set_B), VPOINTER_CLOSURE);
+  _V40_V10sys_Dstring__ref = VEncodePointer(VLookupConstant("_V40_V10sys_Dstring__ref", &_VW_V40_V10sys_Dstring__ref), VPOINTER_CLOSURE);
+}
 static void _V0vanity_V0seed_V20_k9(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k9" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k9, got ~D~N"
   "-- expected 1~N"
@@ -56,8 +67,6 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0vanity_V0seed_V20_k8(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k8" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k8, got ~D~N"
   "-- expected 1~N"
@@ -71,13 +80,11 @@ static void _V0vanity_V0seed_V20_k8(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn set-setter! 4 1) (close _V0vanity_V0seed_V20_k9) (##intrinsic ##sys.string-ref) (##intrinsic ##sys.string-set!))
 V_CALL(upenv->up->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_k9, env)}),
-      VEncodePointer(&_V40_V10sys_Dstring__ref, VPOINTER_CLOSURE),
-      VEncodePointer(&_V40_V10sys_Dstring__set_B, VPOINTER_CLOSURE));
+      _V40_V10sys_Dstring__ref,
+      _V40_V10sys_Dstring__set_B);
  }
 }
 static void _V0vanity_V0seed_V20_k7(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k7" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k7, got ~D~N"
   "-- expected 1~N"
@@ -91,13 +98,11 @@ static void _V0vanity_V0seed_V20_k7(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn set-setter! 3 1) (close _V0vanity_V0seed_V20_k8) (##intrinsic ##sys.vector-ref) (##intrinsic ##sys.vector-set!))
 V_CALL(upenv->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_k8, env)}),
-      VEncodePointer(&_V40_V10sys_Dvector__ref, VPOINTER_CLOSURE),
-      VEncodePointer(&_V40_V10sys_Dvector__set_B, VPOINTER_CLOSURE));
+      _V40_V10sys_Dvector__ref,
+      _V40_V10sys_Dvector__set_B);
  }
 }
 static void _V0vanity_V0seed_V20_k6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k6" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k6, got ~D~N"
   "-- expected 1~N"
@@ -111,13 +116,11 @@ static void _V0vanity_V0seed_V20_k6(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn set-setter! 2 1) (close _V0vanity_V0seed_V20_k7) (##intrinsic ##sys.cdr) (##intrinsic ##sys.set-cdr!))
 V_CALL(upenv->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_k7, env)}),
-      VEncodePointer(&_V40_V10sys_Dcdr, VPOINTER_CLOSURE),
-      VEncodePointer(&_V40_V10sys_Dset__cdr_B, VPOINTER_CLOSURE));
+      _V40_V10sys_Dcdr,
+      _V40_V10sys_Dset__cdr_B);
  }
 }
 static void _V0vanity_V0seed_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k5" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k5, got ~D~N"
   "-- expected 1~N"
@@ -131,13 +134,11 @@ static void _V0vanity_V0seed_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, 
   // ((bruijn set-setter! 1 1) (close _V0vanity_V0seed_V20_k6) (##intrinsic ##sys.car) (##intrinsic ##sys.set-car!))
 V_CALL(upenv->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_k6, env)}),
-      VEncodePointer(&_V40_V10sys_Dcar, VPOINTER_CLOSURE),
-      VEncodePointer(&_V40_V10sys_Dset__car_B, VPOINTER_CLOSURE));
+      _V40_V10sys_Dcar,
+      _V40_V10sys_Dset__car_B);
  }
 }
 static void _V0vanity_V0seed_V20_lambda4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_lambda4" };
- VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0seed_V20_lambda4, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -152,8 +153,6 @@ V_CALL(_var1, runtime,
  }
 }
 static void _V0vanity_V0seed_V20_k19(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k19" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k19, got ~D~N"
   "-- expected 1~N"
@@ -166,8 +165,6 @@ V_CALL(VGetArg(upenv, 5-1, 0), runtime,
  }
 }
 static void _V0vanity_V0seed_V20_k21(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k21" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k21, got ~D~N"
   "-- expected 1~N"
@@ -183,8 +180,6 @@ static void _V0vanity_V0seed_V20_k21(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0vanity_V0seed_V20_k20(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k20" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k20, got ~D~N"
   "-- expected 1~N"
@@ -202,8 +197,6 @@ V_CALL(upenv->vars[3], runtime,
  }
 }
 static void _V0vanity_V0seed_V20_lambda6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_lambda6" };
- VRecordCall(&dbg);
  if(argc != 4) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_lambda6, got ~D~N"
   "-- expected 4~N"
@@ -225,8 +218,6 @@ static void _V0vanity_V0seed_V20_lambda6(VRuntime * runtime, VEnv * upenv, int a
  }
 }
 static void _V0vanity_V0seed_V20_k18(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k18" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k18, got ~D~N"
   "-- expected 1~N"
@@ -240,13 +231,11 @@ static void _V0vanity_V0seed_V20_k18(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn set-mutator! 4 1) (close _V0vanity_V0seed_V20_k19) (##intrinsic ##sys.string-ref) (close _V0vanity_V0seed_V20_lambda6))
 V_CALL(upenv->up->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_k19, env)}),
-      VEncodePointer(&_V40_V10sys_Dstring__ref, VPOINTER_CLOSURE),
+      _V40_V10sys_Dstring__ref,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_lambda6, env)}));
  }
 }
 static void _V0vanity_V0seed_V20_k23(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k23" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k23, got ~D~N"
   "-- expected 1~N"
@@ -262,8 +251,6 @@ static void _V0vanity_V0seed_V20_k23(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0vanity_V0seed_V20_k22(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k22" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k22, got ~D~N"
   "-- expected 1~N"
@@ -281,8 +268,6 @@ V_CALL(upenv->vars[3], runtime,
  }
 }
 static void _V0vanity_V0seed_V20_lambda7(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_lambda7" };
- VRecordCall(&dbg);
  if(argc != 4) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_lambda7, got ~D~N"
   "-- expected 4~N"
@@ -304,8 +289,6 @@ static void _V0vanity_V0seed_V20_lambda7(VRuntime * runtime, VEnv * upenv, int a
  }
 }
 static void _V0vanity_V0seed_V20_k17(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k17" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k17, got ~D~N"
   "-- expected 1~N"
@@ -319,13 +302,11 @@ static void _V0vanity_V0seed_V20_k17(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn set-mutator! 3 1) (close _V0vanity_V0seed_V20_k18) (##intrinsic ##sys.vector-ref) (close _V0vanity_V0seed_V20_lambda7))
 V_CALL(upenv->up->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_k18, env)}),
-      VEncodePointer(&_V40_V10sys_Dvector__ref, VPOINTER_CLOSURE),
+      _V40_V10sys_Dvector__ref,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_lambda7, env)}));
  }
 }
 static void _V0vanity_V0seed_V20_k24(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k24" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k24, got ~D~N"
   "-- expected 1~N"
@@ -340,8 +321,6 @@ static void _V0vanity_V0seed_V20_k24(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0vanity_V0seed_V20_lambda8(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_lambda8" };
- VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_lambda8, got ~D~N"
   "-- expected 3~N"
@@ -362,8 +341,6 @@ V_CALL(_var2, runtime,
  }
 }
 static void _V0vanity_V0seed_V20_k16(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k16" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k16, got ~D~N"
   "-- expected 1~N"
@@ -377,13 +354,11 @@ static void _V0vanity_V0seed_V20_k16(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn set-mutator! 2 1) (close _V0vanity_V0seed_V20_k17) (##intrinsic ##sys.cdr) (close _V0vanity_V0seed_V20_lambda8))
 V_CALL(upenv->up->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_k17, env)}),
-      VEncodePointer(&_V40_V10sys_Dcdr, VPOINTER_CLOSURE),
+      _V40_V10sys_Dcdr,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_lambda8, env)}));
  }
 }
 static void _V0vanity_V0seed_V20_k25(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k25" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k25, got ~D~N"
   "-- expected 1~N"
@@ -398,8 +373,6 @@ static void _V0vanity_V0seed_V20_k25(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0vanity_V0seed_V20_lambda9(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_lambda9" };
- VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_lambda9, got ~D~N"
   "-- expected 3~N"
@@ -420,8 +393,6 @@ V_CALL(_var2, runtime,
  }
 }
 static void _V0vanity_V0seed_V20_k15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k15" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k15, got ~D~N"
   "-- expected 1~N"
@@ -435,13 +406,11 @@ static void _V0vanity_V0seed_V20_k15(VRuntime * runtime, VEnv * upenv, int argc,
   // ((bruijn set-mutator! 1 1) (close _V0vanity_V0seed_V20_k16) (##intrinsic ##sys.car) (close _V0vanity_V0seed_V20_lambda9))
 V_CALL(upenv->vars[1], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_k16, env)}),
-      VEncodePointer(&_V40_V10sys_Dcar, VPOINTER_CLOSURE),
+      _V40_V10sys_Dcar,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_lambda9, env)}));
  }
 }
 static void _V0vanity_V0seed_V20_lambda5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_lambda5" };
- VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0seed_V20_lambda5, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
@@ -456,8 +425,6 @@ V_CALL(VGetArg(upenv, 9-1, 3), runtime,
  }
 }
 static void _V0vanity_V0seed_V20_k27(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k27" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k27, got ~D~N"
   "-- expected 1~N"
@@ -468,18 +435,16 @@ static void _V0vanity_V0seed_V20_k27(VRuntime * runtime, VEnv * upenv, int argc,
 V_CALL(VGetArg(upenv, 10-1, 0), runtime,
       VInlineCons(
         VInlineCons(
-        VEncodePointer(&_V10vcore_Dsetter.sym, VPOINTER_OTHER),
+        _V10vcore_Dsetter,
         VGetArg(upenv, 10-1, 2)),
         VInlineCons(
         VInlineCons(
-        VEncodePointer(&_V10vcore_Dmutator.sym, VPOINTER_OTHER),
+        _V10vcore_Dmutator,
         VGetArg(upenv, 10-1, 5)),
         VNULL)));
  }
 }
 static void _V0vanity_V0seed_V20_k26(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k26" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k26, got ~D~N"
   "-- expected 1~N"
@@ -499,8 +464,6 @@ static void _V0vanity_V0seed_V20_k26(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0vanity_V0seed_V20_lambda10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_lambda10" };
- VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_lambda10, got ~D~N"
   "-- expected 3~N"
@@ -516,8 +479,6 @@ static void _V0vanity_V0seed_V20_lambda10(VRuntime * runtime, VEnv * upenv, int 
  }
 }
 static void _V0vanity_V0seed_V20_k14(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k14" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k14, got ~D~N"
   "-- expected 1~N"
@@ -535,8 +496,6 @@ V_CALL_FUNC(_V0vanity_V0seed_V20_lambda5, env, runtime,
  }
 }
 static void _V10vcore_Dmutator_k31(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10vcore_Dmutator_k31" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V10vcore_Dmutator_k31, got ~D~N"
   "-- expected 1~N"
@@ -549,8 +508,6 @@ static void _V10vcore_Dmutator_k31(VRuntime * runtime, VEnv * upenv, int argc, V
  }
 }
 static void _V10vcore_Dmutator_k30(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10vcore_Dmutator_k30" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V10vcore_Dmutator_k30, got ~D~N"
   "-- expected 1~N"
@@ -568,8 +525,6 @@ static void _V10vcore_Dmutator_k30(VRuntime * runtime, VEnv * upenv, int argc, V
  }
 }
 static void _V10vcore_Dmutator_k29(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10vcore_Dmutator_k29" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V10vcore_Dmutator_k29, got ~D~N"
   "-- expected 1~N"
@@ -588,8 +543,6 @@ static void _V10vcore_Dmutator_k29(VRuntime * runtime, VEnv * upenv, int argc, V
  }
 }
 static void _V10vcore_Dmutator_k28(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10vcore_Dmutator_k28" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V10vcore_Dmutator_k28, got ~D~N"
   "-- expected 1~N"
@@ -608,8 +561,6 @@ static void _V10vcore_Dmutator_k28(VRuntime * runtime, VEnv * upenv, int argc, V
  }
 }
 static void _V10vcore_Dmutator_lambda12(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10vcore_Dmutator_lambda12" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V10vcore_Dmutator_lambda12, got ~D~N"
   "-- expected 1~N"
@@ -626,8 +577,6 @@ static void _V10vcore_Dmutator_lambda12(VRuntime * runtime, VEnv * upenv, int ar
  }
 }
 static void _V10vcore_Dmutator_lambda11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
- static VDebugInfo dbg = { "_V10vcore_Dmutator_lambda11" };
- VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V10vcore_Dmutator_lambda11, got ~D~N"
   "-- expected 2~N"
@@ -648,8 +597,6 @@ static void _V10vcore_Dmutator_lambda11(VRuntime * runtime, VEnv * upenv, int ar
  }
 }
 static void _V0vanity_V0seed_V20_k13(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k13" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k13, got ~D~N"
   "-- expected 1~N"
@@ -669,8 +616,6 @@ static void _V0vanity_V0seed_V20_k13(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0vanity_V0seed_V20_k12(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k12" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k12, got ~D~N"
   "-- expected 1~N"
@@ -690,8 +635,6 @@ static void _V0vanity_V0seed_V20_k12(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0vanity_V0seed_V20_k11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k11" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k11, got ~D~N"
   "-- expected 1~N"
@@ -705,14 +648,12 @@ static void _V0vanity_V0seed_V20_k11(VRuntime * runtime, VEnv * upenv, int argc,
   // (##vcore.make-hash-table (close _V0vanity_V0seed_V20_k12) (##intrinsic ##sys.eq?) #f 32)
     V_CALL_FUNC(VMakeHashTable, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_k12, env)}),
-      VEncodePointer(&_V40_V10sys_Deq_Q, VPOINTER_CLOSURE),
+      _V40_V10sys_Deq_Q,
       VEncodeBool(false),
       VEncodeInt(32l));
  }
 }
 static void _V0vanity_V0seed_V20_k10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k10" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k10, got ~D~N"
   "-- expected 1~N"
@@ -732,8 +673,6 @@ static void _V0vanity_V0seed_V20_k10(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0vanity_V0seed_V20_lambda13(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_lambda13" };
- VRecordCall(&dbg);
  if(argc != 3) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_lambda13, got ~D~N"
   "-- expected 3~N"
@@ -749,8 +688,6 @@ static void _V0vanity_V0seed_V20_lambda13(VRuntime * runtime, VEnv * upenv, int 
  }
 }
 static void _V0vanity_V0seed_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k4" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k4, got ~D~N"
   "-- expected 1~N"
@@ -768,8 +705,6 @@ V_CALL_FUNC(_V0vanity_V0seed_V20_lambda4, env, runtime,
  }
 }
 static void _V10vcore_Dsetter_k35(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10vcore_Dsetter_k35" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V10vcore_Dsetter_k35, got ~D~N"
   "-- expected 1~N"
@@ -782,8 +717,6 @@ static void _V10vcore_Dsetter_k35(VRuntime * runtime, VEnv * upenv, int argc, VW
  }
 }
 static void _V10vcore_Dsetter_k34(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10vcore_Dsetter_k34" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V10vcore_Dsetter_k34, got ~D~N"
   "-- expected 1~N"
@@ -801,8 +734,6 @@ static void _V10vcore_Dsetter_k34(VRuntime * runtime, VEnv * upenv, int argc, VW
  }
 }
 static void _V10vcore_Dsetter_k33(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10vcore_Dsetter_k33" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V10vcore_Dsetter_k33, got ~D~N"
   "-- expected 1~N"
@@ -821,8 +752,6 @@ static void _V10vcore_Dsetter_k33(VRuntime * runtime, VEnv * upenv, int argc, VW
  }
 }
 static void _V10vcore_Dsetter_k32(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10vcore_Dsetter_k32" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V10vcore_Dsetter_k32, got ~D~N"
   "-- expected 1~N"
@@ -841,8 +770,6 @@ static void _V10vcore_Dsetter_k32(VRuntime * runtime, VEnv * upenv, int argc, VW
  }
 }
 static void _V10vcore_Dsetter_lambda15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10vcore_Dsetter_lambda15" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V10vcore_Dsetter_lambda15, got ~D~N"
   "-- expected 1~N"
@@ -859,8 +786,6 @@ static void _V10vcore_Dsetter_lambda15(VRuntime * runtime, VEnv * upenv, int arg
  }
 }
 static void _V10vcore_Dsetter_lambda14(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
- static VDebugInfo dbg = { "_V10vcore_Dsetter_lambda14" };
- VRecordCall(&dbg);
  if(argc != 2) {
   VError("Not enough arguments to _V10vcore_Dsetter_lambda14, got ~D~N"
   "-- expected 2~N"
@@ -881,8 +806,6 @@ static void _V10vcore_Dsetter_lambda14(VRuntime * runtime, VEnv * upenv, int arg
  }
 }
 static void _V0vanity_V0seed_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k3" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k3, got ~D~N"
   "-- expected 1~N"
@@ -902,8 +825,6 @@ static void _V0vanity_V0seed_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0vanity_V0seed_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k2" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k2, got ~D~N"
   "-- expected 1~N"
@@ -923,8 +844,6 @@ static void _V0vanity_V0seed_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0vanity_V0seed_V20_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_lambda3" };
- VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0seed_V20_lambda3, runtime, upenv, 7, argc, _var0, _var1, _var2, _var3, _var4, _var5, _var6) {
   struct { VEnv env; VWORD argv[7]; } container;
   VEnv * env = &container.env;
@@ -939,14 +858,12 @@ static void _V0vanity_V0seed_V20_lambda3(VRuntime * runtime, VEnv * upenv, int a
   // (##vcore.make-hash-table (close _V0vanity_V0seed_V20_k2) (##intrinsic ##sys.eq?) #f 32)
     V_CALL_FUNC(VMakeHashTable, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0seed_V20_k2, env)}),
-      VEncodePointer(&_V40_V10sys_Deq_Q, VPOINTER_CLOSURE),
+      _V40_V10sys_Deq_Q,
       VEncodeBool(false),
       VEncodeInt(32l));
  }
 }
 static void _V0vanity_V0seed_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_lambda2" };
- VRecordCall(&dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0seed_V20_lambda2, runtime, upenv, 1, argc, _var0) {
   struct { VEnv env; VWORD argv[1]; } container;
   VEnv * env = &container.env;
@@ -964,8 +881,6 @@ V_CALL_FUNC(_V0vanity_V0seed_V20_lambda3, env, runtime,
  }
 }
 static void _V0vanity_V0seed_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_k1" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_k1, got ~D~N"
   "-- expected 1~N"
@@ -982,8 +897,6 @@ V_CALL_FUNC(_V0vanity_V0seed_V20_lambda2, env, runtime,
  }
 }
 static void _V0vanity_V0seed_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0seed_V20_lambda1" };
- VRecordCall(&dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0seed_V20_lambda1, got ~D~N"
   "-- expected 1~N"

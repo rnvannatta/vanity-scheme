@@ -25,8 +25,16 @@
  * If not, visit <https://github.com/rnvannatta>
  */
 #define _GNU_SOURCE
+#ifdef __linux__
 #include <dlfcn.h>
 #include <pthread.h>
+#endif
+#ifdef _WIN64
+#include <debugapi.h>
+#include <libloaderapi.h>
+#include <processthreadsapi.h>
+#include <psapi.h>
+#endif
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -88,7 +96,7 @@ typedef struct {
 typedef struct VRuntime {
   VTAG tag;
   // the heart
-  jmp_buf VRoot;
+  VJmpBuf VRoot;
   // what is preserved
   VWORD VGCResumeCont;
   int VExitCode;
@@ -137,7 +145,7 @@ typedef struct VRuntime {
 } VRuntime;
 
 // terrible, horrible, this goes away if we replace all these globals with a function param
-jmp_buf VRoot;
+VJmpBuf VRoot;
 
 char * VStackStart;
 ssize_t VStackSize;
@@ -155,7 +163,7 @@ struct {
   size_t size;
 } VHeaps[2];
 
-void VSwapHeap() {
+SYSV_CALL void VSwapHeap() {
   VActiveHeap = !VActiveHeap;
 
   VHeap = VHeaps[VActiveHeap].begin;
@@ -164,7 +172,7 @@ void VSwapHeap() {
 }
 
 enum MEMORY_LOCATION { STACK_MEM = 1, HEAP_MEM = 2, OLD_HEAP_MEM = 4, STATIC_MEM = 8 };
-static unsigned VMemLocation(void * obj) {
+SYSV_CALL static unsigned VMemLocation(void * obj) {
   if(VStackStart - VStackSize <= (char*)obj && (char*)obj < VStackStart)
     return STACK_MEM;
   else if(VHeaps[VActiveHeap].begin <= obj && obj < VHeaps[VActiveHeap].end)
@@ -189,7 +197,7 @@ struct {
   VWORD * slot;
 } * VTrackedMutations;
 
-static uint64_t VHashSymbol(VWORD sym) {
+SYSV_CALL static uint64_t VHashSymbol(VWORD sym) {
   VBlob * blob = VDecodeBlob(sym);
   uint64_t h = vhash(blob->buf, blob->len, VSYMBOL);
 
@@ -204,7 +212,7 @@ VGlobalEntry * VGlobalTable;
 unsigned VNumGlobals;
 unsigned VNumGlobalSlots;
 
-VGlobalEntry * VInsertGlobalEntry(uint64_t h, VWORD sym, VWORD val) {
+SYSV_CALL VGlobalEntry * VInsertGlobalEntry(uint64_t h, VWORD sym, VWORD val) {
   size_t i = h & (VNumGlobalSlots-1);
   while(VBits(VGlobalTable[i].symbol) != VBits(VVOID))
   {
@@ -219,13 +227,13 @@ VGlobalEntry * VInsertGlobalEntry(uint64_t h, VWORD sym, VWORD val) {
   return &VGlobalTable[i];
 }
 
-void VInitGlobalTable() {
+SYSV_CALL void VInitGlobalTable() {
   VNumGlobalSlots = 32;
   VGlobalTable = malloc(sizeof(VGlobalEntry[VNumGlobalSlots]));
   for(int i = 0; i < VNumGlobalSlots; i++) VGlobalTable[i].symbol = VVOID;
 }
 
-void VResizeGlobalTable() {
+SYSV_CALL void VResizeGlobalTable() {
   VGlobalEntry * newtable = malloc(sizeof(VGlobalEntry[VNumGlobalSlots*2]));
   for(int i = 0; i < VNumGlobalSlots*2; i++)
   {
@@ -249,7 +257,7 @@ void VResizeGlobalTable() {
   free(oldtable);
 }
 
-VGlobalEntry * VLookupGlobalEntry(VWORD sym) {
+SYSV_CALL VGlobalEntry * VLookupGlobalEntry(VWORD sym) {
   uint64_t h = VHashSymbol(sym);
   size_t i = h & (VNumGlobalSlots-1);
 
@@ -263,7 +271,7 @@ VGlobalEntry * VLookupGlobalEntry(VWORD sym) {
   }
   return place;
 }
-VGlobalEntry * VLookupGlobalEntryFast(char const * sym) {
+SYSV_CALL VGlobalEntry * VLookupGlobalEntryFast(char const * sym) {
   uint64_t h = vhash(sym, strlen(sym)+1, VSYMBOL);
 
   size_t i = h & (VNumGlobalSlots-1);
@@ -278,6 +286,51 @@ VGlobalEntry * VLookupGlobalEntryFast(char const * sym) {
   }
   return place;
 }
+
+static size_t VConstantTableSize;
+static size_t VConstantTableOccupancy;
+static struct VConstantSlot { char * name; void * val; } * VConstantTable;
+SYSV_CALL static void VInsertConstantImpl(char * name, void * val) {
+  uint64_t h = vhash(name, strlen(name)+1, 1337);
+  size_t i = h & (VConstantTableSize - 1);
+  while(VConstantTable[i].name) {
+    i = (i + 1) & (VConstantTableSize - 1);
+  }
+  VConstantTable[i].name = name;
+  VConstantTable[i].val = val;
+}
+SYSV_CALL static void VInsertConstant(char * name, void * val) {
+  if(VConstantTableOccupancy >= 0.8 * VConstantTableSize) {
+    struct VConstantSlot * oldconsts = VConstantTable;
+    size_t oldsize = VConstantTableSize;
+    if(!VConstantTableSize)
+      VConstantTableSize = 16;
+    VConstantTableSize *= 2;
+    VConstantTable = calloc(VConstantTableSize, sizeof(struct VConstantSlot));
+    for(int i = 0; i < oldsize; i++) {
+      if(oldconsts[i].name)
+        VInsertConstantImpl(oldconsts[i].name, oldconsts[i].val);
+    }
+  }
+  VInsertConstantImpl(name, val);
+  VConstantTableOccupancy++;
+}
+SYSV_CALL void * VLookupConstant(char * name, void * val) {
+  if(!VConstantTableSize) {
+    VInsertConstant(name, val);
+    return val;
+  }
+  uint64_t h = vhash(name, strlen(name)+1, 1337);
+  size_t i = h & (VConstantTableSize - 1);
+  while(VConstantTable[i].name) {
+    if(!strcmp(VConstantTable[i].name, name)) {
+      return VConstantTable[i].val;
+    }
+    i = (i + 1) & (VConstantTableSize - 1);
+  }
+  VInsertConstant(name, val);
+  return val;
+} 
 
 // okay: so finalizers to managed memory can be detected as stale when they remain after a gc
 // specifically, after gc, a finalizer to managed memory points to a forwarded address
@@ -300,18 +353,18 @@ VGlobalEntry * VLookupGlobalEntryFast(char const * sym) {
 
 VFinalizerTable VHeapFinalizers[2];
 
-static void VWipeFinalizerTable(VFinalizerTable * table) {
+SYSV_CALL static void VWipeFinalizerTable(VFinalizerTable * table) {
   table->num_finalizers = 0;
   table->new_finalizers_start = 0;
   for(unsigned i = 0; i < table->table_size; i++)
     table->table[i] = ~0u;
 }
 
-static inline uint64_t VHashPointer(VWORD ptr) {
+SYSV_CALL static inline uint64_t VHashPointer(VWORD ptr) {
   return vhash64_quick((uintptr_t)VDecodePointer(ptr));
 }
 
-static void VSetFinalizerHash(VFinalizerTable * table, VWORD mem, unsigned dense_index, bool dupe_test) {
+SYSV_CALL static void VSetFinalizerHash(VFinalizerTable * table, VWORD mem, unsigned dense_index, bool dupe_test) {
   uint64_t h = VHashPointer(mem);
   unsigned i = h & (table->table_size - 1);
   unsigned tries = 0;
@@ -324,7 +377,7 @@ static void VSetFinalizerHash(VFinalizerTable * table, VWORD mem, unsigned dense
   table->table[i] = dense_index;
 }
 
-void VSetFinalizerImpl(VFinalizerTable * table, VWORD mem, VWORD finalizer) {
+SYSV_CALL void VSetFinalizerImpl(VFinalizerTable * table, VWORD mem, VWORD finalizer) {
   // in order to track table entries, we need this to be constant in frame
   // which means we need to trigger a gc if we cannot fit into dense
   if(table->num_finalizers >= table->dense_size) {
@@ -361,7 +414,7 @@ void VSetFinalizerImpl(VFinalizerTable * table, VWORD mem, VWORD finalizer) {
   VSetFinalizerHash(table, mem, dense_index, true);
 }
 
-static VFinalizerEntry * VGetFinalizer(VWORD mem, bool active_heap) {
+SYSV_CALL static VFinalizerEntry * VGetFinalizer(VWORD mem, bool active_heap) {
   VFinalizerTable * table = &VHeapFinalizers[VActiveHeap ^ !active_heap];
   uint64_t h = VHashPointer(mem);
   unsigned i = h & (table->table_size - 1);
@@ -378,14 +431,14 @@ static VFinalizerEntry * VGetFinalizer(VWORD mem, bool active_heap) {
   return NULL;
 }
 
-static void VMarkForeignFinalizer(VWORD mem, bool active_heap) {
+SYSV_CALL static void VMarkForeignFinalizer(VWORD mem, bool active_heap) {
   VFinalizerEntry * entry = VGetFinalizer(mem, active_heap);
   if(entry) {
     entry->foreign_marked = true;
   }
 }
 
-void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer) {
+SYSV_CALL void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer) {
   V_ARG_CHECK2("set-finalizer!", 3, argc);
   if(!(VIsPointer(mem) || VIsForeignPointer(mem)))
     VError("set-finalizer!: Finalizers can only be set on addresses ~S\n", mem);
@@ -400,7 +453,7 @@ void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer) {
   V_CALL(k, runtime, VVOID);
 }
 
-void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem) {
+SYSV_CALL void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem) {
   V_GC_CHECK2_VARARGS((VFunc)VFinalize, runtime, statics, 2, argc, k, mem) {
     V_ARG_CHECK2("finalize!", 2, argc);
     if(!(VIsPointer(mem) || VIsForeignPointer(mem)))
@@ -417,13 +470,13 @@ void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem) {
   }
 }
 
-void VHasFinalizer(V_CORE_ARGS, VWORD k, VWORD mem) {
+SYSV_CALL void VHasFinalizer(V_CORE_ARGS, VWORD k, VWORD mem) {
   if(!(VIsPointer(mem) || VIsForeignPointer(mem)))
     VError("has-finalizer?: Not an address ~S\n", mem);
   V_CALL(k, runtime, VEncodeBool(VGetFinalizer(mem, true)));
 }
 
-void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major) {
+SYSV_CALL void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major) {
   VClosure * cl = VDecodeClosure(k);
   if(VDecodeBool(major)) {
     VForceMajorGC = true;
@@ -432,7 +485,7 @@ void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major) {
 }
 
 // continuation to run finalizers that didn't survive a gc
-static void VApplyFinalizer(V_CORE_ARGS, ...) {
+SYSV_CALL static void VApplyFinalizer(V_CORE_ARGS, ...) {
   VWORD k = statics->vars[0];
   VWORD mem = statics->vars[1];
 
@@ -443,19 +496,19 @@ VWORD VGCResumeCont;
 int VExitCode = 0;
 
 
-void * VForwarded(void * address) {
+SYSV_CALL void * VForwarded(void * address) {
   if(*(uint64_t*)address == FORWARDED)
     return *(void**)(address + sizeof(VWORD));
   else
     return NULL;
 }
 
-void VForward(void * old, void const * forward) {
+SYSV_CALL void VForward(void * old, void const * forward) {
   *(uint64_t*)old = FORWARDED;
   *(void const**)(old + sizeof(VWORD)) = forward;
 }
 
-static void * VAllocHeap(size_t size) {
+SYSV_CALL static void * VAllocHeap(size_t size) {
   if(VHeapPos + size >= VHeapEnd) {
     return NULL;
   }
@@ -464,7 +517,7 @@ static void * VAllocHeap(size_t size) {
   return ret;
 }
 
-static void * VMoveObject(void * obj, size_t size) {
+SYSV_CALL static void * VMoveObject(void * obj, size_t size) {
   void * collected = VAllocHeap(size);
   if(!collected) {
     fprintf(stderr, "Heap Overflow! This shouldn't have happened\n");
@@ -476,12 +529,12 @@ static void * VMoveObject(void * obj, size_t size) {
   return collected;
 }
 
-static bool VNeedsMove(void * obj) {
+SYSV_CALL static bool VNeedsMove(void * obj) {
   return VMemLocation(obj) == STACK_MEM || VMemLocation(obj) == OLD_HEAP_MEM;
 }
 
 // Checks for forwarding and heap presence first
-void * VCheckedMoveObject(void * obj, size_t size) {
+SYSV_CALL void * VCheckedMoveObject(void * obj, size_t size) {
   void * forwarded = VForwarded(obj);
   if(forwarded)
     return forwarded;
@@ -491,7 +544,7 @@ void * VCheckedMoveObject(void * obj, size_t size) {
 }
 
 // Checks for forwarding and heap presence first
-VEnv * VCheckedMoveEnv(VEnv * env) {
+SYSV_CALL VEnv * VCheckedMoveEnv(VEnv * env) {
   // Only copying the actual live variables to compact the stack frame
   // Stack frames can have more slots than variables from stack frame reuse
   VEnv * ret = VCheckedMoveObject(env, sizeof(VEnv) + sizeof(VWORD[env->num_vars]));
@@ -514,7 +567,7 @@ VEnv * VCheckedMoveEnv(VEnv * env) {
 }
 
 // Checks for forwarding and heap presence first
-VEnvironment * VCheckedMoveEnviron(VEnvironment * env) {
+SYSV_CALL VEnvironment * VCheckedMoveEnviron(VEnvironment * env) {
   VEnvironment * ret = VCheckedMoveObject(env, sizeof(VEnvironment) + sizeof(VWORD[env->argc]));
 
   if(ret->static_chain) {
@@ -522,21 +575,22 @@ VEnvironment * VCheckedMoveEnviron(VEnvironment * env) {
   }
 
   if(ret->runtime) {
+    printf("%p\n", ret->runtime);
     VError("Whoops forgot to implement runtime gc\n");
   }
 
   return ret;
 }
 
-VClosure * VMoveClosure(VClosure * closure) {
+SYSV_CALL VClosure * VMoveClosure(VClosure * closure) {
   closure = VMoveObject(closure, sizeof(VClosure));
   if(closure->env)
     closure->env = VCheckedMoveEnv(closure->env);
   return closure;
 }
 
-VWORD VMoveDispatch(VWORD word);
-VPair * VMovePair(VPair * pair) {
+SYSV_CALL VWORD VMoveDispatch(VWORD word);
+SYSV_CALL VPair * VMovePair(VPair * pair) {
   VPair * ret = VMoveObject(pair, sizeof(VPair));
 
   VPair * old = ret;
@@ -559,7 +613,7 @@ VPair * VMovePair(VPair * pair) {
   return ret;
 }
 
-VWORD VMoveDispatch(VWORD word) {
+SYSV_CALL VWORD VMoveDispatch(VWORD word) {
   if(!VIsPointer(word)) {
     if(VIsForeignPointer(word))
       VMarkForeignFinalizer(word, false);
@@ -628,35 +682,35 @@ VWORD VMoveDispatch(VWORD word) {
     case VENVIRONMENT:
       return VEncodePointer(VCheckedMoveEnviron(ptr), VPOINTER_OTHER);
     default:
-      fprintf(stderr, "Unknown type %016lx in VMoveDispatch. Heap corruption?\n", type);
+      fprintf(stderr, "Unknown type %016llx in VMoveDispatch. Heap corruption?\n", (unsigned long long)type);
       abort();
   }
 }
 
-void VCheneyEnvironment(VEnvironment * env) {
+SYSV_CALL void VCheneyEnvironment(VEnvironment * env) {
   for(int i = 0; i < env->argc; i++) {
     env->argv[i] = VMoveDispatch(env->argv[i]);
   }
 }
 
-void VCheneyEnv(VEnv * env) {
+SYSV_CALL void VCheneyEnv(VEnv * env) {
   for(int i = 0; i < env->num_vars; i++) {
     env->vars[i] = VMoveDispatch(env->vars[i]);
   }
 }
 
-void VCheneyClosure(VClosure * closure) {
+SYSV_CALL void VCheneyClosure(VClosure * closure) {
 }
 
-void VCheneyPair(VPair * pair) {
+SYSV_CALL void VCheneyPair(VPair * pair) {
   pair->first = VMoveDispatch(pair->first);
 }
 
-void VCheneyVector(VVector * vec) {
+SYSV_CALL void VCheneyVector(VVector * vec) {
   for(int i = 0; i < vec->len; i++)
     vec->arr[i] = VMoveDispatch(vec->arr[i]);
 }
-void VCheneyHashTable(VHashTable * table) {
+SYSV_CALL void VCheneyHashTable(VHashTable * table) {
   VWORD _vec = table->vec = VMoveDispatch(table->vec);
   table->eq = VMoveDispatch(table->eq);
   table->hash = VMoveDispatch(table->hash);
@@ -680,7 +734,7 @@ void VCheneyHashTable(VHashTable * table) {
   }
 }
 
-VWORD * VCheneyScan(VWORD * cur) {
+SYSV_CALL VWORD * VCheneyScan(VWORD * cur) {
   switch(*(VTAG*)cur) {
     case VENVIRONMENT:
     {
@@ -739,15 +793,16 @@ VWORD * VCheneyScan(VWORD * cur) {
   return NULL;
 }
 
-static void VGCResumeFunc(V_CORE_ARGS, ...) {
+#undef environ
+SYSV_CALL static void VGCResumeFunc(V_CORE_ARGS, ...) {
   VFunc f = VCheckedDecodeForeignPointer(statics->vars[0], "gc-resume");
   VEnvironment * e = (void*)VDecodePointer(statics->vars[1]);
-  VSysApply((VFunc)f, e);
+  VSysApply(f, e);
 }
 
 static bool VGrowSymtable;
 static unsigned VGCsSinceMajor;
-void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...) {
+SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...) {
   VWORD argv[argc];
   va_list list;
   va_start(list, argc);
@@ -769,10 +824,12 @@ void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed
   va_end(list);
   VGarbageCollect2(f, runtime, statics, argc, argv);
 }
-VWORD VCleanupFinalizers(VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables);
-void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv) {
+SYSV_CALL VWORD VCleanupFinalizers(VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables);
+SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv) {
+#ifdef __linux__
   struct timespec start_time, end_time;
   clock_gettime(CLOCK_MONOTONIC, &start_time);
+#endif
   ptrdiff_t stack_len = (char*)&f - VStackStart;
   if(stack_len < 0) stack_len = -stack_len;
   size_t environ_size = sizeof(VEnvironment) + sizeof(VWORD[argc]);
@@ -803,13 +860,6 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
   environ->static_chain = statics;
   environ->argc = argc;
   memcpy(environ->argv, argv, sizeof(VWORD[argc]));
-  /*
-  printf("garbage collect got %d args:\n", environ->argc);
-  for(int i = 0; i < argc; i++) {
-    VDisplayWord(stdout, environ->argv[i], true);
-    printf("\n");
-  }
-  */
 
   VWORD * cur = (VWORD*)VHeapPos;
 
@@ -935,6 +985,7 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
     //fprintf(stderr, "Growing heap!\n");
   }
 
+#ifdef __linux__
   clock_gettime(CLOCK_MONOTONIC, &end_time);
   long diff_sec = end_time.tv_sec - start_time.tv_sec;
   long diff_nsec = end_time.tv_nsec - start_time.tv_nsec;
@@ -943,12 +994,13 @@ void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWO
     VMajorGCTime += diff_nsec;
   else
     VMinorGCTime += diff_nsec;
+#endif
 
-  longjmp(VRoot, VJMP_GC);
+  VLongJmp(VRoot, VJMP_GC);
 }
 
 // The last thing that happens in garbage collection before resuming
-VWORD VCleanupFinalizers(VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables) {
+SYSV_CALL VWORD VCleanupFinalizers(VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables) {
   while(*dead_tables) {
     VFinalizerTable * dead_table = *dead_tables;
     for(unsigned i = 0; i < dead_table->num_finalizers; i++) {
@@ -971,7 +1023,6 @@ VWORD VCleanupFinalizers(VWORD k, VFinalizerTable * new_table, VFinalizerTable *
         VEnv * e = VAllocHeap(sizeof(VEnv) + sizeof(VWORD[2]));
         VClosure * newk = VAllocHeap(sizeof(VClosure));
         // no. it's not okay if the alloc fails
-        //printf("found an object with a finalizer, it didn't get copied\n");
         if(e && newk) {
           e->tag = VENV;
           e->num_vars = 2;
@@ -997,7 +1048,7 @@ VWORD VCleanupFinalizers(VWORD k, VFinalizerTable * new_table, VFinalizerTable *
 VDebugInfo * VCallHistory[V_CALL_HISTORY_LEN];
 unsigned VCallHistoryCursor;
 
-static void VPrintCallHistory() {
+SYSV_CALL static void VPrintCallHistory() {
   fprintf(stderr, "Call History (most recent to least recent)\n");
   unsigned i;
   for(i = 0; i < 32; i++) {
@@ -1009,20 +1060,20 @@ static void VPrintCallHistory() {
 }
 
 
-static void VNext2K(V_CORE_ARGS, ...) {
-  VNextRuntime = runtime;
-  longjmp(VRoot, VJMP_FINISH);
+SYSV_CALL static void VNext2K(V_CORE_ARGS, ...) {
+  VNextRuntime = NULL;
+  VLongJmp(VRoot, VJMP_FINISH);
 }
 
-void VNext2(V_CORE_ARGS, ...) {
-  // Always GC before a longjmp as all the datas on the stack
+SYSV_CALL void VNext2(V_CORE_ARGS, ...) {
+  // Always GC before a VLongJmp as all the datas on the stack
   VGarbageCollect2(VNext2K, runtime, statics, 0, NULL);
 }
 
-static void VExitK(V_CORE_ARGS, ...) {
+SYSV_CALL static void VExitK(V_CORE_ARGS, ...) {
   VFinalizerTable * table = &VHeapFinalizers[VActiveHeap];
   if(table->num_finalizers == 0)
-    longjmp(VRoot, VJMP_EXIT);
+    VLongJmp(VRoot, VJMP_EXIT);
 
   VClosure * closure = alloca(sizeof(VClosure));
   *closure = VMakeClosure2(VExitK, NULL);
@@ -1041,8 +1092,6 @@ static void VExitK(V_CORE_ARGS, ...) {
 
     any_finalizers = true;
     VWORD mem = entry->mem;
-    //printf("found an object with a finalizer while exiting, time to die\n");
-    //printf("exit finalizing object at dense index %u\n", i);
     
     VEnv * e = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
     e->tag = VENV;
@@ -1058,10 +1107,10 @@ static void VExitK(V_CORE_ARGS, ...) {
   if(any_finalizers)
     V_CALL(k, runtime, VVOID);
   else
-    longjmp(VRoot, VJMP_EXIT);
+    VLongJmp(VRoot, VJMP_EXIT);
 }
 
-void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
+SYSV_CALL void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
   V_ARG_RANGE2("exit", 1, 2, argc);
   VExitCode = 0;
   if(argc == 2) {
@@ -1073,15 +1122,20 @@ void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
   VGarbageCollect2(VExitK, runtime, NULL, 0, NULL);
 }
 
-void VAbort2(V_CORE_ARGS, ...) {
+SYSV_CALL void VAbort2(V_CORE_ARGS, ...) {
   VPrintCallHistory();
   fflush(stderr);
   fflush(stdout);
+#ifdef __linux__
   raise(SIGTRAP);
-  longjmp(VRoot, VJMP_ERROR);
+#endif
+#ifdef _WIN64
+  DebugBreak();
+#endif
+  VLongJmp(VRoot, VJMP_ERROR);
 }
 
-void VVFPrintfC(FILE * f, char const * str, va_list args) {
+SYSV_CALL void VVFPrintfC(FILE * f, char const * str, va_list args) {
   char c;
   while((c = *str++)) {
     switch(c) {
@@ -1155,14 +1209,14 @@ void VVFPrintfC(FILE * f, char const * str, va_list args) {
   }
 }
 
-void VFPrintfC(FILE * f, char const * str, ...) {
+SYSV_CALL void VFPrintfC(FILE * f, char const * str, ...) {
   va_list args;;
   va_start(args, str);
   VVFPrintfC(f, str, args);
   va_end(args);
 }
 
-void VError(const char * str, ...) {
+SYSV_CALL void VError(const char * str, ...) {
   va_list args;
   va_start(args, str);
   VVFPrintfC(stderr, str, args);
@@ -1175,7 +1229,7 @@ void VError(const char * str, ...) {
 // Its impossible for a var in the old set to point to the new set
 // except through mutation, track all such events to avoid dropping them
 // during GC
-void VTrackMutation(void * container, VWORD * slot, VWORD val) {
+SYSV_CALL void VTrackMutation(void * container, VWORD * slot, VWORD val) {
   // TODO: USE A HASH TABLE TO AVOID DUPLICATE TRACKING
   if(VNumTrackedMutations >= VTrackedMutationsSize) {
     if(!VTrackedMutations)
@@ -1201,7 +1255,7 @@ void VTrackMutation(void * container, VWORD * slot, VWORD val) {
   } 
 }
 
-static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val) {
+SYSV_CALL static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val) {
   char * proc = bSetCar ? "set-car!" : "set-cdr!";
   V_ARG_CHECK2(proc, 3, argc);
   if(VStackOverflow((char*)&runtime)) {
@@ -1219,14 +1273,14 @@ static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val)
     V_CALL(k, runtime, VVOID);
   }
 }
-void VSetCar2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val) {
+SYSV_CALL void VSetCar2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val) {
   VSetPair2(runtime, statics, argc, true, k, pair, val);
 }
-void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val) {
+SYSV_CALL void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val) {
   VSetPair2(runtime, statics, argc, false, k, pair, val);
 }
 
-void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
+SYSV_CALL void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
   V_ARG_CHECK2("vector-set!", 4, argc);
   if(VStackOverflow((char*)&runtime)) {
     VGarbageCollect2Args((VFunc)VVectorSet2, runtime, statics, 4, argc, k, v, i, val);
@@ -1243,7 +1297,7 @@ void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
   }
 }
 
-void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD val) {
+SYSV_CALL void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD val) {
   // not really a procedure but needs to abuse the procedure
   // interface to garbage collect
   if(argc != 4) VError("set!: not enough arguments? This should be impossible\n");
@@ -1264,7 +1318,7 @@ void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD val) {
   }
 }
 
-static bool VDefineImpl(VWORD sym, VWORD val, bool is_set) {
+SYSV_CALL static bool VDefineImpl(VWORD sym, VWORD val, bool is_set) {
   uint64_t hash = VHashSymbol(sym);
 
   VGlobalEntry * place = VLookupGlobalEntry(sym);
@@ -1283,7 +1337,7 @@ static bool VDefineImpl(VWORD sym, VWORD val, bool is_set) {
   return true;
 }
 
-void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
+SYSV_CALL void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
   V_ARG_CHECK2("set!", 3, argc);
   if(VStackOverflow((char*)&runtime) || VNumGlobals >= VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VSetGlobalVar2, runtime, statics, 3, argc, k, sym, val);
@@ -1294,7 +1348,7 @@ void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
 }
 
 
-void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
+SYSV_CALL void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
   V_ARG_CHECK2("define", 3, argc);
   if(VStackOverflow((char*)&runtime) || VNumGlobals >= VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VDefineGlobalVar2, runtime, statics, 3, argc, k, sym, val);
@@ -1303,7 +1357,7 @@ void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
   V_CALL(k, runtime, VVOID);
 }
 
-void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
+SYSV_CALL void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
   V_ARG_CHECK2("multidefine", 2, argc);
   int num = 0;
   VWORD root = defines;
@@ -1331,7 +1385,7 @@ void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
   V_CALL(k, runtime, VVOID);
 }
 
-void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
+SYSV_CALL void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_ARG_CHECK2("lookup-library", 2, argc);
   if(VStackOverflow((char*)&runtime) || VNumGlobals >= VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VLookupLibrary2, runtime, statics, 2, argc, k, name);
@@ -1368,7 +1422,7 @@ void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_CALL(k, runtime, lib);
 }
 
-static void VMakeImportLambda(V_CORE_ARGS, VWORD k, VWORD x) {
+SYSV_CALL static void VMakeImportLambda(V_CORE_ARGS, VWORD k, VWORD x) {
   int cur = 2, end = statics->var_len;
   VWORD * rest = statics->vars;
   VWORD args = VNULL;
@@ -1392,7 +1446,7 @@ static void VMakeImportLambda(V_CORE_ARGS, VWORD k, VWORD x) {
   }
 }
 
-void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...) {
+SYSV_CALL void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...) {
   V_ARG_MIN2("make-import", 2, argc);
   VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[argc]));
   env->tag = VENV;
@@ -1410,11 +1464,57 @@ void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...) {
   V_CALL(k, runtime, VEncodeClosure(&ret));
 }
 
-static VFunc VFunctionImpl(VWORD name) {
+#ifdef _WIN64
+SYSV_CALL static void * VDLSym(char const * name) {
+  HMODULE hmod = GetModuleHandle(NULL);
+  void * ptr = GetProcAddress(hmod, name);
+  if(ptr) return ptr;
+
+  // not embedded in the exe. time to enumerate the dlls :/
+  HMODULE * modules, module_array[128];
+  DWORD size, size_again;
+  HANDLE me = GetCurrentProcess();
+  if(!EnumProcessModules(me, NULL, 0, &size)) {
+    return NULL;
+  }
+  if(size <= sizeof module_array)
+    modules = module_array;
+  else
+    modules = malloc(size);
+
+  if(!EnumProcessModules(me, modules, size, &size_again))
+    return NULL;
+  if(size != size_again)
+    return NULL;
+
+  for(int i = 0; i < size / sizeof(HMODULE); i++) {
+    char buf[256];
+    GetModuleBaseName(me, modules[i], buf, sizeof buf);
+
+    ptr = GetProcAddress(modules[i], name);
+    if(ptr) break;
+  }
+
+  if(size > sizeof module_array)
+    free(modules);
+
+  return ptr;
+}
+#endif
+
+SYSV_CALL static VFunc VFunctionImpl(VWORD name) {
   VBlob * blob = VCheckedDecodeString(name, "function");
 
   const char * str = blob->buf;
+#ifdef __linux__
   void * ptr = dlsym(RTLD_DEFAULT, str);
+#endif
+#ifdef _WIN64
+  //HMODULE hmod = GetModuleHandle(NULL);
+  //void * ptr = GetProcAddress(hmod, str);
+  void * ptr = VDLSym(str);
+#endif
+
   if(!ptr) {
     VError("function: failed to dlsym function ~z (did you remember to load or link the file it's in?)\n", str);
   }
@@ -1422,7 +1522,7 @@ static VFunc VFunctionImpl(VWORD name) {
   return *fun;
 }
 
-static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
+SYSV_CALL static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
   V_ARG_CHECK2("load-library-k", 1, argc);
   if(VStackOverflow((char*)&runtime) || VNumGlobals >= VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VLoadLibraryK, runtime, statics, 1, argc, loader);
@@ -1452,7 +1552,7 @@ static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
   V_CALL(k, runtime, loader);
 }
 
-void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
+SYSV_CALL void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_ARG_CHECK2("load-library", 2, argc);
   if(VStackOverflow((char*)&runtime) || VNumGlobals >= VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VLoadLibrary2, runtime, statics, 2, argc, k, name);
@@ -1513,7 +1613,7 @@ void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   }
 }
 
-void VDisplayWord(FILE * f, VWORD v, bool write) {
+SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write) {
   uint64_t type = VWordType(v);
   switch(type) {
     case VIMM_NUMBER:
@@ -1651,31 +1751,33 @@ void VDisplayWord(FILE * f, VWORD v, bool write) {
   }
 }
 
-static void VGetStackInfo(char ** start, size_t * size) {
+SYSV_CALL static void VGetStackInfo(char ** start, size_t * size) {
+#ifdef __linux__
   int ret;
   pthread_attr_t attribs;
   ret = pthread_attr_init(&attribs);
   ret = pthread_getattr_np(pthread_self(), &attribs);
-  
   if(ret) printf("pthread error\n");
   ret = pthread_attr_getstack(&attribs, (void**)start, size);
   if(ret) printf("pthread error\n");
   ret = pthread_attr_destroy(&attribs);
   if(ret) printf("pthread error\n");
+  *start += *size;
+#endif
+#ifdef _WIN64
+  ULONG_PTR lo, hi;
+  GetCurrentThreadStackLimits(&lo, &hi);
+  *start = (char*)hi;
+  *size = (char*)hi - (char*)lo;
+#endif
 
 #ifndef __x86_64__
   // stack may grow upwards on some platforms
   static_assert(0);
 #endif
-#ifndef __linux__
-  // pthreads yes, but also the indexing of *start initially pointing
-  // to the bottom of the stack
-  static_assert(0);
-#endif
-  *start += *size;
 }
 
-int VStart(int nargs, void(* const * toplevels)()) {
+SYSV_CALL int VStart(int nargs, void(* const * toplevels)()) {
   char * start;
   size_t stacksize;
   VGetStackInfo(&start, &stacksize);
@@ -1683,9 +1785,6 @@ int VStart(int nargs, void(* const * toplevels)()) {
   VStackStart = start;
   VStackSize = (ssize_t)stacksize;
   VStackLen = (ssize_t)stacksize - 1024*1024;
-
-  VStackSize = 8 * 1024 * 1024;
-  VStackLen = 7 * 1024 * 1024;
 
   if(!VHeaps[0].begin)
   {
@@ -1706,7 +1805,7 @@ int VStart(int nargs, void(* const * toplevels)()) {
   for(int i = 0; i < nargs; i++)
   {
     void (*func)() = toplevels[i];
-    int which = setjmp(VRoot);
+    int which = VSetJmp(VRoot);
     switch(which) {
       case 0:
         func();
@@ -1737,7 +1836,7 @@ int VStart(int nargs, void(* const * toplevels)()) {
   return 0;
 }
 
-void VFunction2(V_CORE_ARGS, VWORD k, VWORD name) {
+SYSV_CALL void VFunction2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_ARG_CHECK2("function", 2, argc);
 
   VFunc fun = VFunctionImpl(name);
@@ -1749,7 +1848,7 @@ void VFunction2(V_CORE_ARGS, VWORD k, VWORD name) {
 int VArgc;
 char ** VArgv;
 
-void VCommandLine2(V_CORE_ARGS, VWORD k) {
+SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k) {
   V_ARG_CHECK2("command-line", 1, argc);
 
   VWORD ret = VNULL;

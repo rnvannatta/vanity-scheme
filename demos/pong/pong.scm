@@ -136,10 +136,10 @@
     ;
     ; every app should have a framelimiter to avoid roasting $2000 gpus
     ; like Jeff Bezos' Amazon New World
-    (if (< time (/ 300))
+    (if (< time (/ 480))
         (begin
-          (floatsleep (- (/ 300) time))
-          (set! time (/ 300))))
+          (floatsleep (- (/ 480) time))
+          (set! time (/ 480))))
 
     (call-with-values
       (lambda () (move-ball time paddle-y ball ball-vel nbounces))

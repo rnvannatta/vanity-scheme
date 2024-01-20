@@ -1,7 +1,9 @@
 .intel_syntax noprefix
 .section .text
 .globl VSysApply
+#if __linux__
 .type VSysApply, @function
+#endif
 // Signature: void VSysApply(VFunc * func, VEnvironment * environ);
 // where VFunc is void(*)(VRuntime * runtime, VStaticEnv * statics, unsigned argc, ...)
 // and the ... are all uint64s. VEnvironment is just a struct containing the arguments to be applied in order
@@ -81,4 +83,6 @@ no_arg:
 tailcall:
   xor eax, eax
 	jmp r11
+#if __linux__
 .section .note.GNU-stack,"",@progbits
+#endif

@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include <time.h>
+#include <math.h>
 #include <SDL2/SDL.h>
 
 struct Window {
@@ -70,17 +70,6 @@ void close_window(struct Window * win) {
   SDL_Quit();
 }
 
-void microsleep(int seconds, int microseconds) {
-  long long nanoseconds = microseconds * 1000ll;
-  seconds += nanoseconds / (1000 * 1000 * 1000);
-  nanoseconds %= (1000 * 1000 * 1000);
-
-  struct timespec req;
-  req.tv_sec = seconds;
-  req.tv_nsec = nanoseconds;
-  nanosleep(&req, NULL);
-}
-
 static inline unsigned char unorm8(float f) {
   if(f > 1.0f) f = 1.0f;
   if(f < 0.0f) f = 0.0f;
@@ -106,15 +95,36 @@ void present_window(struct Window * win) {
   SDL_RenderPresent(win->renderer);
 }
 
+#ifdef __linux__
+#include <time.h>
 struct FrameTimer {
   struct timespec last;
 };
+#endif
+#ifdef _WIN64
+#include <profileapi.h>
+#include <synchapi.h>
+struct FrameTimer {
+  LARGE_INTEGER last;
+  double freq;
+};
+#endif
+
 struct FrameTimer * make_frametimer_impl() {
   struct FrameTimer * ret = malloc(sizeof(struct FrameTimer));
+#ifdef __linux__
   clock_gettime(CLOCK_MONOTONIC, &ret->last);
+#endif
+#ifdef _WIN64
+  LARGE_INTEGER freq;
+  QueryPerformanceFrequency(&freq);
+  QueryPerformanceCounter(&ret->last);
+  ret->freq = freq.QuadPart;
+#endif
   return ret;
 }
 double frametimer_lap(struct FrameTimer * ft) {
+#ifdef __linux__
   struct timespec begin = ft->last;
   clock_gettime(CLOCK_MONOTONIC, &ft->last);
   struct timespec end = ft->last;
@@ -122,13 +132,28 @@ double frametimer_lap(struct FrameTimer * ft) {
   long secs = end.tv_sec - begin.tv_sec;
   long nsecs = end.tv_nsec - begin.tv_nsec;
   return secs + nsecs / (1000.0 * 1000 * 1000);
+#endif
+#ifdef _WIN64
+  LARGE_INTEGER begin = ft->last;
+  QueryPerformanceCounter(&ft->last);
+  LARGE_INTEGER end = ft->last;
+
+  return (double)(end.QuadPart - begin.QuadPart) / ft->freq;
+
+
+#endif
 }
 void close_frametimer_impl(struct FrameTimer * ft) {
   free(ft);
 }
 void floatsleep(double seconds) {
+#ifdef __linux__
   struct timespec req;
   req.tv_sec = fmod(seconds, 1.0);
   req.tv_nsec = floor((seconds - req.tv_sec) * (1000 * 1000 * 1000));
   nanosleep(&req, NULL);
+#endif
+#ifdef _WIN64
+  Sleep(seconds * 1000);
+#endif
 }

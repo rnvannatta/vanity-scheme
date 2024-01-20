@@ -68,7 +68,7 @@ enum lex_t {
 //   characters
 //   vectors
 
-static int VLexStart(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexStart(int c, bool * satisfied, bool * unget) {
   switch(c) {
     case '(':
       *satisfied = true;
@@ -125,7 +125,7 @@ static int VLexStart(int c, bool * satisfied, bool * unget) {
   }
 }
 
-static int VLexDot(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexDot(int c, bool * satisfied, bool * unget) {
   if('0' <= c && c <= '9') {
     return LEX_NUMBER;
   }
@@ -148,7 +148,7 @@ static int VLexDot(int c, bool * satisfied, bool * unget) {
       return LEX_ERROR;
   }
 }
-static int VLex2Dot(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLex2Dot(int c, bool * satisfied, bool * unget) {
   switch(c) {
     case '.':
       *satisfied = true;
@@ -159,7 +159,7 @@ static int VLex2Dot(int c, bool * satisfied, bool * unget) {
   }
 }
 
-static int VLexSharp(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexSharp(int c, bool * satisfied, bool * unget) {
   switch(c) {
     case 't':
       *satisfied = true;
@@ -180,7 +180,7 @@ static int VLexSharp(int c, bool * satisfied, bool * unget) {
   }
 }
 
-static int VLexUnquote(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexUnquote(int c, bool * satisfied, bool * unget) {
   switch(c) {
     case '@':
       *satisfied = true;
@@ -192,7 +192,7 @@ static int VLexUnquote(int c, bool * satisfied, bool * unget) {
   }
 }
 
-static int VLexComment(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexComment(int c, bool * satisfied, bool * unget) {
   switch(c) {
     case '\n':
       return LEX_START;
@@ -201,7 +201,7 @@ static int VLexComment(int c, bool * satisfied, bool * unget) {
   }
 }
 
-static int VLexSign(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexSign(int c, bool * satisfied, bool * unget) {
   if('0' <= c && c <= '9') return LEX_NUMBER;
   switch(c) {
     case '(':
@@ -223,7 +223,7 @@ static int VLexSign(int c, bool * satisfied, bool * unget) {
   }
 }
 
-static int VLexNumber(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexNumber(int c, bool * satisfied, bool * unget) {
   if('0' <= c && c <= '9') {
     return LEX_NUMBER;
   }
@@ -250,7 +250,7 @@ static int VLexNumber(int c, bool * satisfied, bool * unget) {
   }
 }
 
-static int VLexDouble(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexDouble(int c, bool * satisfied, bool * unget) {
   if('0' <= c && c <= '9') {
     return LEX_DOUBLE;
   }
@@ -274,7 +274,7 @@ static int VLexDouble(int c, bool * satisfied, bool * unget) {
   
 }
 
-static int VLexSymbol(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexSymbol(int c, bool * satisfied, bool * unget) {
   if('0' <= c && c <= '9') return LEX_SYMBOL;
   if('a' <= c && c <= 'z') return LEX_SYMBOL;
   if('A' <= c && c <= 'Z') return LEX_SYMBOL;
@@ -318,7 +318,7 @@ static int VLexSymbol(int c, bool * satisfied, bool * unget) {
   }
 }
 
-static int VLexString(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexString(int c, bool * satisfied, bool * unget) {
   switch(c) {
     case '"':
       *satisfied = true;
@@ -330,11 +330,11 @@ static int VLexString(int c, bool * satisfied, bool * unget) {
   }
 }
 
-static int VLexStringEscape(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexStringEscape(int c, bool * satisfied, bool * unget) {
   return LEX_STRING;
 }
 
-static int VLexChar(int c, bool * satisfied, bool * unget) {
+SYSV_CALL static int VLexChar(int c, bool * satisfied, bool * unget) {
   if('a' <= c && c <= 'z') {
     return LEX_NAMED_CHAR;
   } else {
@@ -343,7 +343,7 @@ static int VLexChar(int c, bool * satisfied, bool * unget) {
   }
 }
 
-static int VLexNamedChar(int c, bool *satisfied, bool *unget) {
+SYSV_CALL static int VLexNamedChar(int c, bool *satisfied, bool *unget) {
   if('a' <= c && c <= 'z') return LEX_NAMED_CHAR;
   if('A' <= c && c <= 'F') return LEX_NAMED_CHAR;
   if('0' <= c && c <= '9') return LEX_NAMED_CHAR;
@@ -367,7 +367,7 @@ static int VLexNamedChar(int c, bool *satisfied, bool *unget) {
 
 static size_t lex_size = 0;
 static char * lex_buf = NULL;
-static int VLex(FILE * f) {
+SYSV_CALL static int VLex(FILE * f) {
   bool satisfied = false;
   bool unget = false;
   int c;
@@ -442,7 +442,7 @@ static int VLex(FILE * f) {
   }
 }
 
-static VWORD VTreeify(VPair * root) {
+SYSV_CALL static VWORD VTreeify(VPair * root) {
   VPair * cur = root;
   while(VBits(root->rest) != VBits(VNULL)) {
     VPair * p = (VPair*)VDecodePointer(root->rest);
@@ -547,7 +547,7 @@ static VWORD VTreeify(VPair * root) {
     return VDecodePair(root->first)->first;
 }
 
-static VWORD ParseChar(char const * buf) {
+SYSV_CALL static VWORD ParseChar(char const * buf) {
   // #\c
   // need to check that it didn't parse as #\, forbidden
   // FIXME don't do null terminated lexings I guess
@@ -570,7 +570,7 @@ static VWORD ParseChar(char const * buf) {
   return VEncodeChar(ret);
 }
 
-static char DecodeEscape(char c) {
+SYSV_CALL static char DecodeEscape(char c) {
   switch(c) {
     case 'a': return '\a';
     case 'b': return '\b';
@@ -586,7 +586,7 @@ static char DecodeEscape(char c) {
   }
 }
 
-static char * ParseString(char * buf) {
+SYSV_CALL static char * ParseString(char * buf) {
   buf = buf+1;
   char const * read = buf;
   char * write = buf;
@@ -609,8 +609,8 @@ static char * ParseString(char * buf) {
 
 // ============================================================================
 
-void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
-void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD _read_more, VWORD _root) {
+SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
+SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD _read_more, VWORD _root) {
   V_ARG_CHECK2("##sys.read-iter", 5, argc);
 
   VPort * port = VCheckedDecodePort(_port, "read");
@@ -827,7 +827,7 @@ void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD _read_mor
   }
 }
 
-void VRead2(V_CORE_ARGS, VWORD k, VWORD port) {
+SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port) {
   V_ARG_CHECK2("read", 2, argc);
   int depth = 0;
   bool read_more = false;

@@ -1,4 +1,4 @@
-.PHONY : clean deps cleandeps compiler runtime install tests config lay_egg boot_dirs testffi
+.PHONY : clean deps cleandeps compiler runtime windows_runtime install tests tests_windows config lay_egg boot_dirs testffi
 
 boot_dirs :
 	mkdir -p bin/bootstrap/src
@@ -11,7 +11,7 @@ hatch :
 	@$(MAKE) $@ -f Makefile.bootstrap --no-print-directory --no-builtin-rules
 	@$(MAKE) clean --no-print-directory --no-builtin-rules
 
-compiler runtime deps install tests lay_egg testffi : Makefile.all
+compiler runtime windows_runtime deps install tests tests_windows lay_egg testffi : Makefile.all
 	@mkdir -p lib bin/bootstrap/vanity/compiler bin/bootstrap/scheme build/vanity/compiler build/scheme
 	@if ! $(MAKE) deps -f Makefile.all --no-print-directory --no-builtin-rules; \
 	then \
@@ -24,7 +24,7 @@ compiler runtime deps install tests lay_egg testffi : Makefile.all
 clean :
 	-\rm -rf bin/* build/*
 	-\rm -f test_bin/*
-	-\rm -f lib/*
+	-\rm -rf lib/*
 
 cleandeps :
 	-find build -type f -name '*.d' -exec \rm -f {} +
