@@ -4,18 +4,21 @@ A self hosted R7RS scheme compiler vanity project that I started writing July 20
 
 It would be a mistake to use this compiler in its current state, but you can have fun looking at the code!
 
-It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. However, I wouldn't recommend doing that now as I need to do a pass on the language's ABI. The main reason I started this is a burning desire for parallelism (which I haven't implemented yet).
+It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. The main reason I started this is a burning desire for parallelism (which I haven't implemented yet).
 
-The compiler is free software under GPL v3.0, and the runtime is free software under LGPL v3.0. So, just as with gcc, you may use the compiler to build and link nonfree software if you do not statically link the runtime library.
+It is capable of producing executables which run on Linux and Windows, using GCC and MinGW. The compiler itself only runs on Linux.
+
+The compiler is free software under GPL v2.0, and the runtime is free software under LGPL v3.1. So, just as with gcc, you may use the compiler to build and link nonfree software if you do not statically link the runtime library.
 
 ## Install Instructions
 
-At the moment, x64 Linux is a requirement, as there are multiple nonportable bits of runtime, and a bit of assembly as well. I'm not sure if I can say this compiler works on machines other than my own. I did successfully run the full bootstrap procedure on a laptop.
+At the moment, x64 Linux is a requirement.
 
 Dependencies:
+* gcc
+* mingw-w64
 * gnumake
 * rsync
-* gcc
 * flex
 * bison
 
@@ -27,7 +30,7 @@ Sorry, clang isn't supported.
 1. Run `./configure` and answer the prompts, or just mash enter.
 	* The defaults install prefix is `/usr/local/`
 3. Run `sudo make hatch` to bootstrap the compiler from intermediates.
-4. Run `make clean; sudo make install -j` to finish the bootstrap process.
+4. Run `sudo make clean; make tests -j; sudo make install -j` to finish the bootstrap process.
 5. Verify the install with `make clean; make tests -j`
 
 ## Usage
@@ -52,6 +55,16 @@ The interface of the compiler is similar to gcc, try compiling and running this 
 ```
 
 The `(vanity core)` library contains a good chunk of R7RS, though not all of it, plus a few additional critical procedures for the compiler, like `system`, `make-temporary-file`, and the almighty `printf`. The `(scheme r7rs)` library has my bonus procedures removed.
+
+The compiler is able to import C functions and C header files with one line. Try this with `vsc -Wc,-lm example.scm && ./a.out`.
+
+```
+(import (vanity core))
+(define atan2 (##foreign.function "C" "double atan2(double y, double x);"))
+(displayln (* (/ 180 3.1416) (atan2 -1 1)))
+```
+
+Check `demos/pong` for a complete example. Use `make a.out` for the Linux version, and `make a.exe` for the windows version. To run the windows version you will need to copy SDL2.dll and vscheme.dll into the pong folder. vscheme.dll can be found in `/usr/local/x86_64-w64-mingw32/lib`.
 
 There's also a bit of cool syntax in the compiler: pattern matching! Here's an example that expands let expressions:
 
@@ -93,8 +106,9 @@ A rough ordering of the next few improvements I'll be making:
 2. DONE: Implement a foreign function interface.
 3. DONE: Implement finalizers.
 4. DONE: Emit header files for compiled libraries.
-5. Implement Fibers.
-6. Add a repl via bytecode
+5. DONE: Windows cross compilation.
+6. Implement Fibers.
+7. Add a repl via bytecode
 
 Progress is very slow as I am moonlighting this project while daylighting as a graphics programmer.
 
@@ -140,6 +154,6 @@ As continuation passing style folds the program inside out and all procedures ga
 
 Things like `read-line` only grabbing 256 characters. Have fun!
 
-### No Compile Time Checking
+### Little Compile Time Checking
 
-There's no header files so missing symbols and basic but detectable errors are all runtime.
+There is no type checking at compile time, and header files currently only have lists of symbols not function shape.
