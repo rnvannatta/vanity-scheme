@@ -1,11 +1,11 @@
-; Copyright 2023 Richard N Van Natta
+; Copyright 2023-2024 Richard N Van Natta
 ;
 ; This file is part of the Vanity Scheme Runtime.
 ;
 ; The Vanity Scheme Runtime is free software: you can redistribute it
 ; and/or modify it under the terms of the GNU Lesser General Public
 ; License as published by the Free Software Foundation, either version
-; 3 of the License, or (at your option) any later version.
+; 2.1 of the License, or (at your option) any later version.
 ; 
 ; The Vanity Scheme Runtime is distributed in the hope that it will be
 ; useful, but WITHOUT ANY WARRANTY; without even the implied warranty
@@ -17,9 +17,9 @@
 ;
 ; If not, see <https://www.gnu.org/licenses/>.
 ;
-; This work is published with additional permission under GNU GPL
-; Version 3.0 Section 7, the Vanity Scheme Macro Exceptions, which
-; should have been included with the Vanity Scheme Runtime.
+; This work is published with additional permission, the Vanity Scheme
+; Runtime Library Exceptions, which should have been included with the
+; Vanity Scheme Compiler.
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
