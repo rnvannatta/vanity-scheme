@@ -248,7 +248,7 @@
       (let ((builtin (lookup-intrinsic2 sym)))
         (if builtin
             (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A,NULL)})" builtin)
-            (printf "VLookupGlobalVarFast(\"~A\")" sym))))
+            (printf "VLookupGlobalVarFast2(runtime, \"~A\")" sym))))
     (define (print-string s)
       (display #\")
       (let loop ((i 0))
@@ -480,7 +480,7 @@
         (if debug?
           (begin
             (printf " static VDebugInfo dbg = { \"~A\" };~N" name)
-            (printf " VRecordCall(&dbg);~N")))
+            (printf " VRecordCall2(runtime, &dbg);~N")))
         (if check-args?
             (if variadic?
                 (begin
@@ -574,9 +574,11 @@
        (else (print-fun-case fun))))
 
     (define (print-toplevel i expr)
-      (printf "void toplevel~A() {~N" i)
+      (printf "void toplevel~A(V_CORE_ARGS, VWORD _k) {~N" i)
       (displayln "    VEnv * env = NULL;")
-      (displayln "    VRuntime * runtime = NULL;")
+      ; One source of ick here is that the expr is hardcoded to use VNext rather than
+      ; just using a continuation. That's something to consider to fix to make this better.
+      ; Maybe it's fine. It's probably fine.
       (print-expr expr '())
       (displayln "}"))
 
@@ -597,11 +599,12 @@
       (for-each (cut print-toplevel <> <>) (iota (length toplevels)) toplevels)
 
       (printf "int main(int argc, char ** argv) {~N")
-      (printf "  void (*toplevels[])() = {~N")
+      (printf "  VThunk toplevels[] = {~N")
       (for-each (lambda (i) (printf "    toplevel~A," i)) (iota (length toplevels)))
       (printf "~N  };~N")
-      (printf "  VArgc = argc; VArgv = argv;~N")
-      (printf "  return VStart(sizeof toplevels / sizeof *toplevels, toplevels);~N")
+      (displayln "  VRuntime * runtime;")
+      (displayln "  VInitRuntime2(&runtime, argc, argv);")
+      (printf "  return VDecodeExitCode(VStart2(runtime, sizeof toplevels / sizeof *toplevels, toplevels));~N")
       (displayln "}"))
 
     (let ((print-main? (not (null? toplevels)))

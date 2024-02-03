@@ -557,6 +557,32 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "src/ffi.l"
 #line 2 "src/ffi.l"
+/* Copyright 2023-2024 Richard N Van Natta
+ *
+ * This file is part of the Vanity Scheme Compiler.
+ *
+ * The Vanity Scheme Compiler is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 2 of the
+ * License, or (at your option) any later version.
+ * 
+ * The Vanity Scheme Compiler is distributed in the hope that it will be
+ * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with the Vanity Scheme Compiler.
+ *
+ * If not, see <https://www.gnu.org/licenses/>.
+ *
+ * This work is published with additional permission, the Vanity Scheme
+ * Runtime Library Exceptions, which should have been included with the
+ * Vanity Scheme Compiler.
+ *
+ * If not, visit <https://github.com/rnvannatta>
+ */
+
 #include <stdlib.h>
 #include "vscheme/vruntime.h"
 #include "vscheme/vmemory.h"
@@ -593,8 +619,8 @@ enum keyword_t {
 extern VMemoryPool parse_pool;
 extern _Bool is_typedef(char const * symbol);
 
-#line 597 "<stdout>"
-#line 598 "<stdout>"
+#line 623 "<stdout>"
+#line 624 "<stdout>"
 
 #define INITIAL 0
 
@@ -814,9 +840,9 @@ YY_DECL
 		}
 
 	{
-#line 44 "src/ffi.l"
+#line 70 "src/ffi.l"
 
-#line 820 "<stdout>"
+#line 846 "<stdout>"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -876,144 +902,144 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 45 "src/ffi.l"
+#line 71 "src/ffi.l"
 { return *yytext; }
 	YY_BREAK
 /* TODO: bad form, read keywords from hash table instead */
 case 2:
 YY_RULE_SETUP
-#line 48 "src/ffi.l"
+#line 74 "src/ffi.l"
 { yylval.keyword_val = T_VOID; return T_TYPE; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 49 "src/ffi.l"
+#line 75 "src/ffi.l"
 { yylval.keyword_val = T_CHAR; return T_TYPE; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 50 "src/ffi.l"
+#line 76 "src/ffi.l"
 { yylval.keyword_val = T_INT; return T_TYPE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 51 "src/ffi.l"
+#line 77 "src/ffi.l"
 { yylval.keyword_val = T_FLOAT; return T_TYPE; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 52 "src/ffi.l"
+#line 78 "src/ffi.l"
 { yylval.keyword_val = T_DOUBLE; return T_TYPE; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 53 "src/ffi.l"
+#line 79 "src/ffi.l"
 { yylval.keyword_val = T_BOOL; return T_TYPE; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 54 "src/ffi.l"
+#line 80 "src/ffi.l"
 { yylval.keyword_val = T_COMPLEX; return T_TYPE; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 55 "src/ffi.l"
+#line 81 "src/ffi.l"
 { yylval.keyword_val = T_IMAGINARY; return T_TYPE; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 57 "src/ffi.l"
+#line 83 "src/ffi.l"
 { yylval.keyword_val = T_SHORT; return T_TYPE; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 58 "src/ffi.l"
+#line 84 "src/ffi.l"
 { yylval.keyword_val = T_LONG; return T_TYPE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 59 "src/ffi.l"
+#line 85 "src/ffi.l"
 { yylval.keyword_val = T_SIGNED; return T_TYPE; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 60 "src/ffi.l"
+#line 86 "src/ffi.l"
 { yylval.keyword_val = T_UNSIGNED; return T_TYPE; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 62 "src/ffi.l"
+#line 88 "src/ffi.l"
 { yylval.keyword_val = T_CONST; return T_QUALIFIER; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 63 "src/ffi.l"
+#line 89 "src/ffi.l"
 { yylval.keyword_val = T_RESTRICT; return T_QUALIFIER; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 64 "src/ffi.l"
+#line 90 "src/ffi.l"
 { yylval.keyword_val = T_VOLATILE; return T_QUALIFIER; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 66 "src/ffi.l"
+#line 92 "src/ffi.l"
 { yylval.keyword_val = T_INLINE; return T_FUNCTION_QUALIFIER; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 68 "src/ffi.l"
+#line 94 "src/ffi.l"
 { return T_STRUCT; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 69 "src/ffi.l"
+#line 95 "src/ffi.l"
 { return T_ENUM; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 71 "src/ffi.l"
+#line 97 "src/ffi.l"
 { yylval.keyword_val = T_REGISTER; return T_STORAGE; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 72 "src/ffi.l"
+#line 98 "src/ffi.l"
 { yylval.keyword_val = T_AUTO; return T_STORAGE; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 73 "src/ffi.l"
+#line 99 "src/ffi.l"
 { yylval.keyword_val = T_STATIC; return T_STORAGE; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 74 "src/ffi.l"
+#line 100 "src/ffi.l"
 { yylval.keyword_val = T_EXTERN; return T_STORAGE; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 75 "src/ffi.l"
+#line 101 "src/ffi.l"
 { yylval.keyword_val = T_TYPEDEF; return T_STORAGE; }
 	YY_BREAK
 /* no doubles or strings */
 case 25:
 YY_RULE_SETUP
-#line 78 "src/ffi.l"
+#line 104 "src/ffi.l"
 { yylval.int_val = strtoul(yytext, NULL, 0); return T_INTEGER; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 79 "src/ffi.l"
+#line 105 "src/ffi.l"
 { yylval.int_val = strtoul(yytext, NULL, 0); return T_INTEGER; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 80 "src/ffi.l"
+#line 106 "src/ffi.l"
 { yylval.int_val = strtoul(yytext, NULL, 0); return T_INTEGER; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 82 "src/ffi.l"
+#line 108 "src/ffi.l"
 { yylval.vword_val = VPoolString(&parse_pool, yytext); return is_typedef(yytext) ? T_TYPENAME : T_VARIABLE; }
 	YY_BREAK
 /* yicky way to get rid of pragma onces */
@@ -1022,44 +1048,44 @@ YY_RULE_SETUP
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
-#line 87 "src/ffi.l"
+#line 113 "src/ffi.l"
 
 	YY_BREAK
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
-#line 89 "src/ffi.l"
+#line 115 "src/ffi.l"
 
 	YY_BREAK
 case 31:
 /* rule 31 can match eol */
 YY_RULE_SETUP
-#line 90 "src/ffi.l"
+#line 116 "src/ffi.l"
 
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 91 "src/ffi.l"
+#line 117 "src/ffi.l"
 
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 92 "src/ffi.l"
+#line 118 "src/ffi.l"
 
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 93 "src/ffi.l"
+#line 119 "src/ffi.l"
 
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 95 "src/ffi.l"
+#line 121 "src/ffi.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1063 "<stdout>"
+#line 1089 "<stdout>"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2067,7 +2093,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 95 "src/ffi.l"
+#line 121 "src/ffi.l"
 
 
 int yywrap(void) {

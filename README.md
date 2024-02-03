@@ -4,7 +4,7 @@ A self hosted R7RS scheme compiler vanity project that I started writing July 20
 
 It would be a mistake to use this compiler in its current state, but you can have fun looking at the code!
 
-It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. The main reason I started this is a burning desire for parallelism (which I haven't implemented yet).
+It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. The compiler is very similar to Chicken Scheme. The main reason I started this is a burning desire for true parallelism (which I haven't implemented yet).
 
 It is capable of producing executables which run on Linux and Windows, using GCC and MinGW. The compiler itself only runs on Linux.
 
@@ -30,7 +30,7 @@ Sorry, clang isn't supported.
 1. Run `./configure` and answer the prompts, or just mash enter.
 	* The defaults install prefix is `/usr/local/`
 3. Run `sudo make hatch` to bootstrap the compiler from intermediates.
-4. Run `sudo make clean; make tests -j; sudo make install -j` to finish the bootstrap process.
+4. Run `make all -j && sudo make install -j` to finish the bootstrap process.
 5. Verify the install with `make clean; make tests -j`
 
 ## Usage
