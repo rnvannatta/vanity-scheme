@@ -482,7 +482,7 @@ SYSV_CALL void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vector) {
 }
 
 // hash tables
-SYSV_CALL static bool VHashTableSetImpl(VVector * vec, VWORD key, VWORD val) {
+SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VVector * vec, VWORD key, VWORD val) {
   uint64_t capacity = vec->len / 3;
   uint64_t tries = 0;
   uint64_t index = vhash64_quick(VBits(key)) & (capacity-1);
@@ -516,9 +516,9 @@ SYSV_CALL static bool VHashTableSetImpl(VVector * vec, VWORD key, VWORD val) {
       vec->arr[3*index+1] = tmppov;
       vec->arr[3*index+2] = tmpval;
 
-      VTrackMutation(vec, &vec->arr[3*index+0], tmpkey);
+      VTrackMutation(runtime, vec, &vec->arr[3*index+0], tmpkey);
       // poverty is an int, nothing to track
-      VTrackMutation(vec, &vec->arr[3*index+2], tmpval);
+      VTrackMutation(runtime, vec, &vec->arr[3*index+2], tmpval);
     }
 
     index = (index + 1) & (capacity-1);
@@ -530,14 +530,14 @@ SYSV_CALL static bool VHashTableSetImpl(VVector * vec, VWORD key, VWORD val) {
   vec->arr[3*index+1] = VEncodeInt(poverty);
   vec->arr[3*index+2] = val;
 
-  VTrackMutation(vec, &vec->arr[3*index+0], key);
+  VTrackMutation(runtime, vec, &vec->arr[3*index+0], key);
   // poverty is an int, nothing to track
-  VTrackMutation(vec, &vec->arr[3*index+2], val);
+  VTrackMutation(runtime, vec, &vec->arr[3*index+2], val);
 
   return found;
 }
 
-SYSV_CALL static void VGrowHashTable(VHashTable * table, int newlen, VVector * vec) {
+SYSV_CALL static void VGrowHashTable(VRuntime * runtime, VHashTable * table, int newlen, VVector * vec) {
   if(newlen <= 0) VError("hash tables need length > 0");
   if(newlen > INT_MAX/3) VError("hash table is too large ~D\n", newlen);
   if(newlen & (newlen-1)) VError("hash table needs pow2 length ~D\n", newlen);
@@ -555,13 +555,13 @@ SYSV_CALL static void VGrowHashTable(VHashTable * table, int newlen, VVector * v
   VVector * oldvec = VCheckedDecodeVector(table->vec, "hash-table-ref");
   VWORD vecword = VEncodePointer(vec, VPOINTER_OTHER);
   table->vec = vecword;
-  VTrackMutation(table, &table->vec, table->vec);
+  VTrackMutation(runtime, table, &table->vec, table->vec);
   for(int i = 0; i < oldvec->len/3; i++) {
     if(VBits(oldvec->arr[3*i+0]) == VBits(VVOID))
       continue;
     VWORD key = oldvec->arr[3*i+0];
     VWORD val = oldvec->arr[3*i+2];
-    assert(!VHashTableSetImpl(vec, key, val));
+    assert(!VHashTableSetImpl(runtime, vec, key, val));
   }
 }
 
@@ -632,7 +632,7 @@ try_again: ;
   if(!found && (table->flags & HFLAG_DIRTY)) {
     table->flags ^= HFLAG_DIRTY;
     VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
-    VGrowHashTable(table, capacity, newvec);
+    VGrowHashTable(runtime, table, capacity, newvec);
     vec = newvec;
     goto try_again;
   }
@@ -653,7 +653,7 @@ SYSV_CALL void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key, VWOR
 
   if(table->occupancy+1 >= table->load_factor * capacity) {
     VVector * newvec = V_ALLOCA_VECTOR(3 * capacity * 2);
-    VGrowHashTable(table, capacity * 2, newvec);
+    VGrowHashTable(runtime, table, capacity * 2, newvec);
 
     vec = newvec;
     capacity = vec->len / 3;
@@ -693,9 +693,9 @@ try_again: ;
       vec->arr[3*index+1] = tmppov;
       vec->arr[3*index+2] = tmpval;
 
-      VTrackMutation(vec, &vec->arr[3*index+0], tmpkey);
+      VTrackMutation(runtime, vec, &vec->arr[3*index+0], tmpkey);
       // poverty is an int, nothing to track
-      VTrackMutation(vec, &vec->arr[3*index+2], tmpval);
+      VTrackMutation(runtime, vec, &vec->arr[3*index+2], tmpval);
     }
 
     index = (index + 1) & (capacity-1);
@@ -705,7 +705,7 @@ try_again: ;
   if(!found && (table->flags & HFLAG_DIRTY)) {
     table->flags ^= HFLAG_DIRTY;
     VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
-    VGrowHashTable(table, capacity, newvec);
+    VGrowHashTable(runtime, table, capacity, newvec);
     vec = newvec;
     goto try_again;
   }
@@ -716,9 +716,9 @@ try_again: ;
   vec->arr[3*index+1] = VEncodeInt(poverty);
   vec->arr[3*index+2] = val;
 
-  VTrackMutation(vec, &vec->arr[3*index+0], key);
+  VTrackMutation(runtime, vec, &vec->arr[3*index+0], key);
   // poverty is an int, nothing to track
-  VTrackMutation(vec, &vec->arr[3*index+2], val);
+  VTrackMutation(runtime, vec, &vec->arr[3*index+2], val);
 
   V_CALL(k, runtime, VVOID);
 }

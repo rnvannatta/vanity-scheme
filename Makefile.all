@@ -24,10 +24,12 @@ VSC = vsc.$(MAJOR)
 
 include config.mk
 
-.PHONY : deps install compiler runtime windows_runtime tests install_compiler lay_egg testffi
+.PHONY : deps all install compiler runtime windows_runtime tests tests_linux tests_windows install_compiler lay_egg testffi
 compiler : bin/vsc
 runtime : lib/libvscheme.so
 windows_runtime : lib/x86_64-w64-mingw32/vscheme.dll
+tests : tests_linux tests_windows
+all : compiler runtime windows_runtime
 
 # the include copy doesn't have an -u on it because
 # include files aren't build. Can add the -u if we
@@ -42,7 +44,7 @@ install : compiler runtime windows_runtime
 	ln -sfn $(INSTALL_DIR)/include/vscheme $(INSTALL_DIR)/x86_64-w64-mingw32/include/vscheme
 	cp -u lib/x86_64-w64-mingw32/vscheme.dll $(INSTALL_DIR)/x86_64-w64-mingw32/lib/
 
-tests : compiler runtime
+tests_linux : compiler runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
 		echo "bin/vsc $$test && ./a.out" ; \
     OVERRIDE=`realpath lib/` ; \

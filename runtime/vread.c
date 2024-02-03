@@ -365,9 +365,7 @@ SYSV_CALL static int VLexNamedChar(int c, bool *satisfied, bool *unget) {
   }
 }
 
-static size_t lex_size = 0;
-static char * lex_buf = NULL;
-SYSV_CALL static int VLex(FILE * f) {
+SYSV_CALL static int VLex(VRuntime * runtime, FILE * f) {
   bool satisfied = false;
   bool unget = false;
   int c;
@@ -424,15 +422,15 @@ SYSV_CALL static int VLex(FILE * f) {
     }
     if(lex_state != LEX_START && lex_state != LEX_COMMENT && !unget) {
       // account for null terminal at end
-      if(buf_cursor+1 >= lex_size) {
-        lex_size = lex_size ? 2*lex_size : 2;
-        lex_buf = realloc(lex_buf, lex_size);
+      if(buf_cursor+1 >= runtime->lex_size) {
+        runtime->lex_size = runtime->lex_size ? 2*runtime->lex_size : 2;
+        runtime->lex_buf = realloc(runtime->lex_buf, runtime->lex_size);
       }
-      lex_buf[buf_cursor++] = c;
+      runtime->lex_buf[buf_cursor++] = c;
     }
   }
   if(unget) ungetc(c, f);
-  lex_buf[buf_cursor++] = '\0';
+  runtime->lex_buf[buf_cursor++] = '\0';
   switch(lex_state) {
     case LEX_START:
     case LEX_COMMENT:
@@ -442,7 +440,7 @@ SYSV_CALL static int VLex(FILE * f) {
   }
 }
 
-SYSV_CALL static VWORD VTreeify(VPair * root) {
+SYSV_CALL static VWORD VTreeify(VRuntime * runtime, VPair * root) {
   VPair * cur = root;
   while(VBits(root->rest) != VBits(VNULL)) {
     VPair * p = (VPair*)VDecodePointer(root->rest);
@@ -468,9 +466,9 @@ SYSV_CALL static VWORD VTreeify(VPair * root) {
         root->rest = p->rest;
         p->tag = VPAIR;
         p->first = VNULL;
-        VSetRest(p, cur->first);
+        VSetRest(runtime, p, cur->first);
         //p->rest = cur->first;
-        VSetFirst(cur, VEncodePair(p));
+        VSetFirst(runtime, cur, VEncodePair(p));
         cur->first = VEncodePair(p);
 
         // the secret suace, now we're incrementing on to the list in car(p), ie if close-paren was ( NULL . REM )
@@ -483,7 +481,7 @@ SYSV_CALL static VWORD VTreeify(VPair * root) {
         if(VWordType(cur->first) != VPOINTER_PAIR) VError("read: improper dot syntax (... .)\n");
         if(VBits(curfirst->rest) != VBits(VNULL)) VError("read: improper dot syntax: multiple elements trail '.'\n", cur->first);
         // we've turned (x . ()) into x, so future conses will be a proper list
-        VSetFirst(cur, curfirst->first);
+        VSetFirst(runtime, cur, curfirst->first);
         //cur->first = curfirst->first;
 
         // a side effect of the way we've parsed is (. x) is a synonym for x. interesting. that actually feels reasonable
@@ -497,7 +495,7 @@ SYSV_CALL static VWORD VTreeify(VPair * root) {
             VError("read: trailing code comment (... #;) or #;EOF\n");
           }
         }
-        VSetFirst(cur, curfirst->rest);
+        VSetFirst(runtime, cur, curfirst->rest);
         //cur->first = curfirst->rest;
       } else if(VWordType(p->first) == VPOINTER_PAIR) {
         root->rest = p->rest;
@@ -515,15 +513,15 @@ SYSV_CALL static VWORD VTreeify(VPair * root) {
         // an rcons with first having a pair with a symbol is an 'abbreviation' which
         // should be arranged to (abbr x)
         p->tag = VPAIR;
-        VSetFirst(p, second->first);
-        VSetRest(p, second_enc);
+        VSetFirst(runtime, p, second->first);
+        VSetRest(runtime, p, second_enc);
         //p->first = second->first;
         //p->rest = second_enc;
 
-        VSetFirst(second, curfirst->first);
+        VSetFirst(runtime, second, curfirst->first);
         //second->first = curfirst->first;
         second->rest = VNULL;
-        VSetFirst(curfirst, VEncodePair(p));
+        VSetFirst(runtime, curfirst, VEncodePair(p));
         //curfirst->first = VEncodePair(p);
 
 
@@ -534,8 +532,8 @@ SYSV_CALL static VWORD VTreeify(VPair * root) {
       // token
       root->rest = p->rest; // don't care, dropping root
 
-      VSetRest(p, cur->first);
-      VSetFirst(cur, VEncodePair(p));
+      VSetRest(runtime, p, cur->first);
+      VSetFirst(runtime, cur, VEncodePair(p));
       //p->rest = cur->first;
       //cur->first = VEncodePair(p);
     }
@@ -625,13 +623,13 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
 #define myalloca(x) (alloced = alloca(x))
   VWORD elem;
   do {
-    if(VStackOverflow(alloced)) {
+    if(VStackOverflow(runtime->VStackStart, runtime->VStackLen, alloced)) {
       fprintf(stderr, "gc during read\n");
-      VTrackMutation(root, &root->rest, root->rest);
+      VTrackMutation(runtime, root, &root->rest, root->rest);
       VGarbageCollect2Args((VFunc)VReadIter2, runtime, statics, 5, argc, k, _port, VEncodeInt(depth), VEncodeBool(read_more), _root);
     }
 
-    int token = VLex(f);
+    int token = VLex(runtime, f);
     if(token != LEX_EOF)
       read_more = false;
     switch(token)
@@ -721,7 +719,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       }
       case LEX_CHAR:
       {
-        elem = ParseChar(lex_buf);
+        elem = ParseChar(runtime->lex_buf);
 
         VPair * pair = myalloca(sizeof(VPair));
         *pair = VMakePair(elem, root->rest);
@@ -732,10 +730,10 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       {
         errno = 0;
         char * end;
-        double d = strtod(lex_buf, &end);
-        if(errno || lex_buf == end)
+        double d = strtod(runtime->lex_buf, &end);
+        if(errno || runtime->lex_buf == end)
         {
-          VError("read: failed to parse as number: ~z\n", lex_buf);
+          VError("read: failed to parse as number: ~z\n", runtime->lex_buf);
           depth = 0;
           break;
         }
@@ -757,10 +755,10 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       {
         errno = 0;
         char * end;
-        double d = strtod(lex_buf, &end);
-        if(errno || lex_buf == end)
+        double d = strtod(runtime->lex_buf, &end);
+        if(errno || runtime->lex_buf == end)
         {
-          VError("read: failed to parse as number: ~z\n", lex_buf);
+          VError("read: failed to parse as number: ~z\n", runtime->lex_buf);
           depth = 0;
           break;
         }
@@ -773,7 +771,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       }
       case LEX_STRING:
       {
-        char * str = ParseString(lex_buf);
+        char * str = ParseString(runtime->lex_buf);
 
         size_t len = strlen(str) + 1;
         VBlob * blob = myalloca(sizeof(VBlob) + len);
@@ -787,9 +785,9 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       }
       case LEX_SYMBOL:
       {
-        size_t len = strlen(lex_buf) + 1;
+        size_t len = strlen(runtime->lex_buf) + 1;
         VBlob * blob = myalloca(sizeof(VBlob) + len);
-        VFillBlob(blob, VSYMBOL, len, lex_buf);
+        VFillBlob(blob, VSYMBOL, len, runtime->lex_buf);
         elem = VEncodePointer(blob, VPOINTER_OTHER);
 
         VPair * pair = myalloca(sizeof(VPair));
@@ -812,13 +810,13 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       default:
       case LEX_ERROR:
       {
-        VError("read: failed to lex: ~z\n", lex_buf);
+        VError("read: failed to lex: ~z\n", runtime->lex_buf);
         depth = 0;
         break;
       }
     }
   } while(depth > 0 || read_more);
-  VWORD ret = VTreeify(root);
+  VWORD ret = VTreeify(runtime, root);
   if(VIsEq(ret, VVOID)) {
     // read a comment, try again
     VRead2(runtime, statics, 2, k, _port);

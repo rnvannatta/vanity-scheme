@@ -1,12 +1,12 @@
 /*
- * Copyright 2023 Richard N Van Natta
+ * Copyright 2023-2024 Richard N Van Natta
  *
  * This file is part of the Vanity Scheme Runtime.
  *
  * The Vanity Scheme Runtime is free software: you can redistribute it
  * and/or modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either version
- * 3 of the License, or (at your option) any later version.
+ * 2.1 of the License, or (at your option) any later version.
  * 
  * The Vanity Scheme Runtime is distributed in the hope that it will be
  * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
@@ -18,12 +18,13 @@
  *
  * If not, see <https://www.gnu.org/licenses/>.
  *
- * This work is published with additional permission under GNU GPL
- * Version 3.0 Section 7, the Vanity Scheme Macro Exceptions, which
- * should have been included with the Vanity Scheme Runtime.
+ * This work is published with additional permission, the Vanity Scheme
+ * Runtime Library Exceptions, which should have been included with the
+ * Vanity Scheme Compiler.
  *
  * If not, visit <https://github.com/rnvannatta>
  */
+ 
 #pragma once
 #include <stdbool.h>
 #include <stdio.h>
@@ -84,6 +85,7 @@ enum VTAG {
 typedef unsigned VTAG;
 
 #ifdef __linux__
+#include <setjmp.h>
 #define VJmpBuf jmp_buf
 #define VSetJmp setjmp
 #define VLongJmp longjmp
@@ -178,20 +180,21 @@ enum V_TYPE_T { VIMM_TOK = 1*TAG_BIAS, VIMM_INT = 2*TAG_BIAS, VIMM_CHAR = 3*TAG_
 #define VEOF VWord(LITERAL_HEADER | VIMM_TOK | VTOK_EOF)
 #define VTOMBSTONE VWord(LITERAL_HEADER | VIMM_TOK | VTOK_TOMBSTONE)
 
+typedef struct VWORD {
+  uint64_t integer;
+} VWORD;
+
 typedef struct VRuntime VRuntime;
 typedef struct VEnv VEnv;
 #define V_CORE_ARGS VRuntime * runtime, VEnv * statics, int argc
 typedef SYSV_CALL void (*VFunc)(V_CORE_ARGS, ...);
+typedef SYSV_CALL void (*VThunk)(V_CORE_ARGS, VWORD k);
 #ifdef __linux__
 #define ARGC_REG "edx"
 #endif
 #ifdef _WIN64
 #define ARGC_REG "r8d"
 #endif
-
-typedef struct VWORD {
-  uint64_t integer;
-} VWORD;
 
 SYSV_CALL static inline uint64_t VBits(VWORD v) {
   uint64_t bits;
@@ -291,12 +294,85 @@ typedef struct {
   VWORD value;
 } VGlobalEntry;
 
+#define V_CALL_HISTORY_LEN 16
 typedef struct VDebugInfo {
   char const * name;
 } VDebugInfo;
 
+typedef struct VFinalizerEntry VFinalizerEntry;
+typedef struct VFinalizerTable {
+  // split into a dense table and a hashmap
+  // allows us to simply order when finalizers
+  // were created in the dense table
+  // when finalizers are run the dense table
+  // is tombstoned and the table is compacted in order
+  // next major gc
+  VFinalizerEntry * dense;
+  unsigned * table;
+  unsigned num_finalizers;
+  unsigned dense_size;
+  unsigned table_size;
+  // from new_finalizers_start to num_finalizers
+  // are all the finalizers added since last gc
+  unsigned new_finalizers_start;
+} VFinalizerTable;
+
 SYSV_CALL static inline bool VIsEq(VWORD a, VWORD b) { return VBits(a) == VBits(b); }
 SYSV_CALL void VError(const char *, ...);
+
+typedef struct VRuntime {
+  VTAG tag;
+  // the heart
+  VJmpBuf VRoot;
+  // what is preserved when jumping
+  VWORD VGCResumeCont;
+  VWORD VExitCode;
+  // stack info
+  char * VStackStart;
+  ssize_t VStackLen;
+  ssize_t VStackSize;
+  // heap info
+  bool VForceMajorGC;
+  bool VActiveHeap;
+  unsigned VGCsSinceMajor;
+  void * VHeap;
+  void * VHeapPos;
+  void * VHeapEnd;
+  struct {
+    void * begin;
+    void * end;
+    size_t size;
+  } VHeaps[2];
+  // mutation info
+  unsigned VNumTrackedMutations;
+  unsigned VNumUntrackedMutations;
+  unsigned VTrackedMutationsSize;
+  struct {
+    VWORD * container;
+    VWORD * slot;
+  } * VTrackedMutations;
+  // global vars info
+  VGlobalEntry * VGlobalTable;
+  unsigned VNumGlobals;
+  unsigned VNumGlobalSlots;
+  bool VGrowSymtable;
+  // finalizers
+  VFinalizerTable VHeapFinalizers[2];
+  // gc info
+  unsigned VNumMinorGCs;
+  unsigned VNumMajorGCs;
+  uint64_t VMinorGCTime;
+  uint64_t VMajorGCTime;
+  // debug info
+  VDebugInfo * VCallHistory[V_CALL_HISTORY_LEN];
+  unsigned VCallHistoryCursor;
+  // args
+  int VArgc;
+  char ** VArgv;
+  // parsing
+  size_t lex_size;
+  char * lex_buf;
+} VRuntime;
 
 /* ======================== Encoding and Decoding ======================= */
 
@@ -713,25 +789,15 @@ SYSV_CALL static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
   return !strcmp(blob_a->buf, blob_b->buf);
 }
 
-SYSV_CALL VGlobalEntry * VLookupGlobalEntry(VWORD sym);
-SYSV_CALL static inline VWORD VLookupGlobalVar(VWORD sym) {
-  VGlobalEntry * place = VLookupGlobalEntry(sym);
-  if(place)
-    return place->value;
-  VError("Symbol not found: ~a\n", sym);
-  return VVOID;
-}
-
-SYSV_CALL VGlobalEntry * VLookupGlobalEntryFast(char const * sym);
-SYSV_CALL static inline VWORD VLookupGlobalVarFast(char const * sym) {
-  VGlobalEntry * place = VLookupGlobalEntryFast(sym);
+SYSV_CALL VGlobalEntry * VLookupGlobalEntryFast2(VRuntime * runtime, char const * sym);
+SYSV_CALL static inline VWORD VLookupGlobalVarFast2(VRuntime * runtime, char const * sym) {
+  VGlobalEntry * place = VLookupGlobalEntryFast2(runtime, sym);
   if(place)
     return place->value;
   VError("Symbol not found: ~z\n", sym);
   return VVOID;
 }
 
-// inline ASM written against SysV
 #undef environ
 SYSV_CALL void VSysApply(VFunc func, VEnvironment * environ);
 
@@ -743,11 +809,8 @@ SYSV_CALL static inline VWORD VGetArg(VEnv * env, int up, int var) {
   return env->vars[var];
 }
 
-#define V_CALL_HISTORY_LEN 16
-extern VDebugInfo * VCallHistory[V_CALL_HISTORY_LEN];
-extern unsigned VCallHistoryCursor;
-SYSV_CALL static inline void VRecordCall(VDebugInfo * debug) {
-  VCallHistory[++VCallHistoryCursor % V_CALL_HISTORY_LEN] = debug;
+SYSV_CALL static inline void VRecordCall2(VRuntime * runtime, VDebugInfo * debug) {
+  runtime->VCallHistory[++runtime->VCallHistoryCursor % V_CALL_HISTORY_LEN] = debug;
 }
 
 #define V_GATHER_VARARGS_VARIADIC(_varargs, numfixed, argc, start) do { \
@@ -800,10 +863,10 @@ SYSV_CALL static inline void VReturnWord(VWORD k, VRuntime * runtime, VWORD ret)
       VError("Incorrect number of arguments to ~Z, got ~D, need between ~D and ~D\n", func, num_vars, nargmin, nargmax); \
     } } while(0)
 
-extern char* VStackStart;
-extern ssize_t VStackLen;
+//extern char* VStackStart;
+//extern ssize_t VStackLen;
 
-SYSV_CALL static inline bool VStackOverflow(char * VStackStop) {
+SYSV_CALL static inline bool VStackOverflow(char * VStackStart, ssize_t VStackLen, char * VStackStop) {
   ptrdiff_t size = VStackStart - VStackStop;
 #ifndef __x86_64__
   // stack may grow upwards on some platforms
@@ -816,11 +879,11 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
 SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...);
 
 #define V_GC_CHECK2(func, runtime, statics, argc, argv) \
-  if(VStackOverflow((char*)&runtime)) { \
+  if(VStackOverflow(runtime->VStackStart, runtime->VStackLen, (char*)&runtime)) { \
     VGarbageCollect2(func, runtime, statics, argc, argv); \
   } else
 #define V_GC_CHECK2_LIST(func, runtime, statics, argc, argv) \
-  if(VStackOverflow((char*)&runtime)) { \
+  if(VStackOverflow(runtime->VStackStart, runtime->VStackLen, (char*)&runtime)) { \
     VWORD args[argc]; \
     for(int i = 0; i < argc; i++) \
       args[i] = va_arg(argv, VWORD); \
@@ -828,9 +891,25 @@ SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics,
     VGarbageCollect2(func, runtime, statics, argc, args); \
   } else
 #define V_GC_CHECK2_VARARGS(func, runtime, statics, fixed_args, argc, ...) \
-  if(VStackOverflow((char*)&runtime)) { \
+  if(VStackOverflow(runtime->VStackStart, runtime->VStackLen, (char*)&runtime)) { \
     VGarbageCollect2Args(func, runtime, statics, fixed_args, argc, __VA_ARGS__); \
   } else
+
+SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write);
+
+SYSV_CALL void VFPrintfC(FILE * f, char const * str, ...);
+
+SYSV_CALL void VTrackMutation(VRuntime * runtime, void * container, VWORD * slot, VWORD val);
+SYSV_CALL static inline void VSetFirst(VRuntime * runtime, VPair * p, VWORD w) {
+  VTrackMutation(runtime, p, &p->first, w);
+  p->first = w;
+}
+SYSV_CALL static inline void VSetRest(VRuntime * runtime, VPair * p, VWORD w) {
+  VTrackMutation(runtime, p, &p->rest, w);
+  p->rest = w;
+}
+
+/* ======================== Core Functions ======================= */
 
 // Root level continuation
 SYSV_CALL void VNext2(V_CORE_ARGS, ...);
@@ -839,19 +918,6 @@ SYSV_CALL void VAbort2(V_CORE_ARGS, ...);
 // Exit PROCEDURE, expects a continuation in slot 1
 SYSV_CALL void VExit2(V_CORE_ARGS, VWORD k, VWORD e);
 
-SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write);
-
-SYSV_CALL void VFPrintfC(FILE * f, char const * str, ...);
-
-SYSV_CALL void VTrackMutation(void * container, VWORD * slot, VWORD val);
-SYSV_CALL static inline void VSetFirst(VPair * p, VWORD w) {
-  VTrackMutation(p, &p->first, w);
-  p->first = w;
-}
-SYSV_CALL static inline void VSetRest(VPair * p, VWORD w) {
-  VTrackMutation(p, &p->rest, w);
-  p->rest = w;
-}
 
 SYSV_CALL void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major);
 SYSV_CALL void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer);
@@ -876,7 +942,10 @@ SYSV_CALL void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD lib);
 
 SYSV_CALL int VStart(int nargs, void(* const * toplevels)());
 
-extern int VArgc;
-extern char ** VArgv;
+SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv);
+SYSV_CALL VWORD VStart2(VRuntime * runtime, int num_toplevels, VThunk const * toplevels);
+static inline int VDecodeExitCode(VWORD v) {
+  return (VWordType(v) == VIMM_INT && VDecodeInt(v)) || !VDecodeBool(v);
+}
 
 SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k);
