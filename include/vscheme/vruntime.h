@@ -949,3 +949,38 @@ static inline int VDecodeExitCode(VWORD v) {
 }
 
 SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k);
+
+/* ======================== Fibering ======================= */
+
+#ifdef __linux__
+typedef struct VFiberContext VFiberContext;
+typedef struct VFiberState {
+  uint64_t rip;
+  uint64_t rsp;
+
+  uint64_t rbx;
+  uint64_t rbp;
+
+  uint64_t r12;
+  uint64_t r13;
+  uint64_t r14;
+  uint64_t r15;
+} VFiberState;
+typedef struct VFiber {
+  // intrusive linked list for fibers
+  VFiberContext * context;
+  uint64_t ret;
+  struct VFiber * waiter;
+  bool alive;
+  bool reaped;
+  VFiberState state;
+} VFiber;
+
+void VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads);
+void VCloseFiberWorkers(VFiberContext * context);
+
+VFiber * VPushFiber(VFiberContext * context, char * stack, size_t stacklen, uint64_t (*func)(VFiber * me, void * data), void *data);
+uint64_t VFiberWait(VFiberContext * context, VFiber * waitee, VFiber * me);
+
+void VFiberSleep(VFiber * me, double seconds);
+#endif
