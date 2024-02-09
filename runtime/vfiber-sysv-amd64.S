@@ -41,6 +41,25 @@ VSwitchFiber:
 	mov QWORD PTR [rsi+48], r14
 	mov QWORD PTR [rsi+56], r15
 
+  // it's ok for another thread to
+  // run this fiber
+  mov eax, 0
+  xchg DWORD PTR [rsi+64], eax
+
+  // need to wait for the fiber to be ready
+  // it will be soon if it's on the queue
+wait_loop:
+  mov eax, DWORD PTR [rdi+64]
+  test eax, eax
+  jne wait_loop
+
+  // claim the thread now
+  mov eax, 1
+  xchg DWORD PTR [rdi+64], eax
+  // it's a logic error if someone else claimed it
+  test eax, eax
+  jne fiber_error
+
 	mov rsp, QWORD PTR [rdi+ 8]
 	mov rbx, QWORD PTR [rdi+16]
 	mov rbp, QWORD PTR [rdi+24]
@@ -52,6 +71,7 @@ VSwitchFiber:
 
 	mov rax, QWORD PTR [rdi+ 0]
 	mov [rsp], rax
+
 
 	xor eax, eax
 	ret
@@ -66,6 +86,7 @@ VFiberStart:
 	push rax
 	mov rdi, r13
 	call r12
+fiber_error:
 	// the func better not return OR ELSE
 	call abort@plt
 .section .note.GNU-stack,"",@progbits

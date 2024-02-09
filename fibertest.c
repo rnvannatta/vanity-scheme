@@ -18,8 +18,8 @@ void foo(void* dat) {
 
 uint64_t fibrous(VFiber * me, void *data) {
   //printf("hayo from the fiber\n");
-  //sleep(1);
-  VFiberSleep(me, 1);
+  //usleep(500 * 1000);
+  VFiberSleep(me, 0.5);
   return *(int*)data;
 }
 uint64_t fibby(VFiber * me, void *data) {
@@ -33,8 +33,7 @@ uint64_t fiberish(VFiber * me, void *data) {
   int arrs[4] = { 1, 2, 3, 4 };
   printf("nesting\n");
   for(int i = 0; i < 4; i++) {
-    char * stack = malloc(4096);
-    futures[i] = VPushFiber(me->context, stack, 4096, fibrous, &arrs[i]);
+    futures[i] = VPushFiber(me->context, fibrous, &arrs[i]);
   }
   for(int i = 0; i < 4; i++) {
     printf("from the fiber %d %llu\n", *(int*)data, VFiberWait(me->context, futures[i], me));
@@ -57,7 +56,7 @@ int main() {
   // higher level fiber testing
   */
   VFiberContext * context;
-  VLaunchFiberWorkers(&context, 8);
+  VLaunchFiberWorkers(&context, 8, 4096);
 
 #if 0
   int leet = 1337;
@@ -69,7 +68,14 @@ int main() {
   int arrs[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
   for(int i = 0; i < 8; i++) {
     char * stack = malloc(4096);
-    futures[i] = VPushFiber(context, stack, 4096, fiberish, &arrs[i]);
+    futures[i] = VPushFiber(context, fiberish, &arrs[i]);
+  }
+  for(int i = 0; i < 8; i++) {
+    printf("%llu\n", VFiberWait(context, futures[i], NULL));
+  }
+  for(int i = 0; i < 8; i++) {
+    char * stack = malloc(4096);
+    futures[i] = VPushFiber(context, fiberish, &arrs[i]);
   }
   for(int i = 0; i < 8; i++) {
     printf("%llu\n", VFiberWait(context, futures[i], NULL));
