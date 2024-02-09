@@ -35,6 +35,7 @@
 #include <stdarg.h>
 #include <assert.h>
 #include <stdint.h>
+#include <stdatomic.h>
 
 static_assert(sizeof(char) == sizeof(int8_t));
 static_assert(sizeof(short) == sizeof(int16_t));
@@ -953,6 +954,30 @@ SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k);
 /* ======================== Fibering ======================= */
 
 #ifdef __linux__
+typedef struct VListNode VListNode;
+typedef struct VFiber VFiber;
+typedef struct VListPtr {
+  union {
+    struct {
+      VListNode * ptr;
+      uint64_t ver;
+    };
+    __int128 i;
+  };
+} VListPtr;
+typedef struct VListNodePool {
+  VListPtr nodes;
+} VListNodePool;
+typedef struct VQueue {
+  VListPtr head;
+  VListPtr tail;
+  VListNodePool pool;
+} VQueue;
+typedef struct VStack {
+  VListPtr head;
+  VListNodePool pool;
+} VStack;
+
 typedef struct VFiberContext VFiberContext;
 typedef struct VFiberState {
   uint64_t rip;
@@ -965,21 +990,23 @@ typedef struct VFiberState {
   uint64_t r13;
   uint64_t r14;
   uint64_t r15;
+  _Atomic uint32_t running;
 } VFiberState;
 typedef struct VFiber {
-  // intrusive linked list for fibers
   VFiberContext * context;
+  uint64_t (*startup_func)(struct VFiber * me, void * startup_data);
+  void * startup_data;
+  char * stack;
   uint64_t ret;
-  struct VFiber * waiter;
-  bool alive;
-  bool reaped;
+  struct VFiber * _Atomic waiter;
+  _Atomic bool alive;
   VFiberState state;
 } VFiber;
 
-void VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads);
+void VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_t stacksize);
 void VCloseFiberWorkers(VFiberContext * context);
 
-VFiber * VPushFiber(VFiberContext * context, char * stack, size_t stacklen, uint64_t (*func)(VFiber * me, void * data), void *data);
+VFiber * VPushFiber(VFiberContext * context, uint64_t (*func)(VFiber * me, void * data), void *data);
 uint64_t VFiberWait(VFiberContext * context, VFiber * waitee, VFiber * me);
 
 void VFiberSleep(VFiber * me, double seconds);
