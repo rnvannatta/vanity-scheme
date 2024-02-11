@@ -314,7 +314,7 @@
                     (len (+ (string-length (symbol->string (car lit))) 1)))
                (begin
                  (printf "VWEAK VWORD ~A;" mangled)
-                 (printf "VWEAK struct { VBlob sym; char bytes[~A]; } _VW~A = { { VSYMBOL, ~A }, \"~A\" };~N"
+                 (printf "VWEAK struct { VBlob sym; char bytes[~A]; } _VW~A = { { .base = { .tag = VSYMBOL }, ~A }, \"~A\" };~N"
                   len mangled len escaped))
 ))
             ((string? (car lit))
@@ -322,14 +322,14 @@
                     (escaped (escape-string (car lit)))
                     (len (+ (string-length (car lit)) 1)))
                ; strings use a gensym name, so no weak attributes here
-               (printf "static struct { VBlob sym; char bytes[~A]; } ~A = { { VSTRING, ~A }, \"~A\" };~N"
+               (printf "static struct { VBlob sym; char bytes[~A]; } ~A = { { .base = { .tag = VSTRING }, ~A }, \"~A\" };~N"
                 len mangled len escaped)))
             ; of shape (('##intrinsic intrin) . c-function)
             ((and (pair? (car lit)) (eqv? (caar lit) '##intrinsic))
              (let ((mangled (mangle-symbol (cadar lit))))
                (begin
                  (printf "VWEAK VWORD _V40~A;" mangled)
-                 (printf "VWEAK VClosure _VW_V40~A = { VCLOSURE, (VFunc)~A, NULL };~N"
+                 (printf "VWEAK VClosure _VW_V40~A = { .base = { .tag = VCLOSURE }, (VFunc)~A, NULL };~N"
                    mangled
                    (cdr lit)))))
             (else (compiler-error "print-literal-table: unknown entry in literal table" lit))))
@@ -509,7 +509,7 @@
               (printf "  struct { VEnv env; VWORD argv[~A]; } container;~N" (if variadic? (+ num 1) num))
               (printf "  VEnv * env = &container.env;~N")
               (let ((nargs (if variadic? (+ num 1) num)))
-                (printf "  env->tag = VENV; env->num_vars = ~A; env->var_len = ~A; env->up = upenv;~N" nargs nargs))
+                (printf "  VInitEnv(env, ~A, ~A, upenv);~N" nargs nargs))
               (for-each
                 (lambda (i arg)
                   (printf "  env->vars[~A] = ~A;~N" i arg))

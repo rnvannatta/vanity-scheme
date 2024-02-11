@@ -403,7 +403,7 @@ SYSV_CALL void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   VBlob * blob_b = VCheckedDecodeBlob(y, "blob=?");
   bool ret = false;
   if(blob_a->len == blob_b->len)
-    ret = blob_a->tag == blob_b->tag && !memcmp(blob_a->buf, blob_b->buf, blob_a->len);
+    ret = blob_a->base.tag == blob_b->base.tag && !memcmp(blob_a->buf, blob_b->buf, blob_a->len);
   V_CALL(k, runtime, VEncodeBool(ret));
 }
 
@@ -451,7 +451,7 @@ SYSV_CALL void VListVector2(V_CORE_ARGS, VWORD k, VWORD lst) {
     if(VBits(v) != VBits(VNULL)) VError("list->vector: not a null-terminated list\n");
 
     VVector * vec = V_ALLOCA_VECTOR(len);
-    vec->tag = VVECTOR;
+    vec->base = VMakeSmallObject(VVECTOR);
     vec->len = len;
 
     v = lst;
@@ -544,7 +544,7 @@ SYSV_CALL static void VGrowHashTable(VRuntime * runtime, VHashTable * table, int
 
   assert(table->occupancy < table->load_factor * newlen);
 
-  vec->tag = VVECTOR;
+  vec->base = VMakeSmallObject(VVECTOR);
   vec->len = 3*newlen;
   for(int i = 0; i < newlen; i++) {
     vec->arr[3*i+0] = VVOID;
@@ -575,7 +575,7 @@ SYSV_CALL void VMakeHashTable(V_CORE_ARGS, VWORD k, VWORD eq, VWORD hash, VWORD 
   if(len > INT_MAX/3) VError("hash table is too large ~D\n", len);
   if(len & (len-1)) VError("hash table needs pow2 length ~D\n", len);
   VVector * vec = V_ALLOCA_VECTOR(3*len);
-  vec->tag = VVECTOR;
+  vec->base = VMakeSmallObject(VVECTOR);
   vec->len = 3*len;
   for(int i = 0; i < len; i++) {
     vec->arr[3*i+0] = VVOID;
@@ -583,7 +583,7 @@ SYSV_CALL void VMakeHashTable(V_CORE_ARGS, VWORD k, VWORD eq, VWORD hash, VWORD 
     vec->arr[3*i+2] = VVOID;
   }
   VHashTable table = {
-    .tag = VHASH_TABLE,
+    .base = VMakeSmallObject(VHASH_TABLE),
     .flags = HFLAG_EQ,
     .occupancy = 0,
     .load_factor = 0.8f,
@@ -795,7 +795,7 @@ SYSV_CALL void VMakeString2(V_CORE_ARGS, VWORD k, VWORD len, ...) {
   }
 
   VBlob * str = alloca(sizeof(VBlob) + i + 1);
-  str->tag = VSTRING;
+  str->base = VMakeSmallObject(VSTRING);
   str->len = i + 1;
   str->buf[i] = '\0';
   memset(str->buf, c, i);
@@ -833,7 +833,7 @@ SYSV_CALL void VSubstring2(V_CORE_ARGS, VWORD k, VWORD string, ...) {
   if(start > end) VError("substring: start greater than end");
   int len = end - start;
   VBlob * copy = alloca(sizeof(VBlob) + len + 1);
-  copy->tag = VSTRING;
+  copy->base = VMakeSmallObject(VSTRING);
   copy->len = len + 1;
   copy->buf[len] = '\0';
   memcpy(copy->buf, str->buf + start, len);
@@ -1063,7 +1063,7 @@ SYSV_CALL void VCloseStream2(V_CORE_ARGS, VWORD k, VWORD _port) {
 
   if(VWordType(_port) != VPOINTER_OTHER) VError("close-port: not a port\n");
   VPort * port = (VPort*)VDecodePointer(_port);
-  if(port->tag != VPORT) VError("close-port: not a port\n");
+  if(port->base.tag != VPORT) VError("close-port: not a port\n");
 
   if(port->flags && !(port->flags & PFLAG_NOCLOSE)) {
     if(port->flags & PFLAG_PROCESS)
@@ -1107,14 +1107,14 @@ SYSV_CALL void VOpenOutputString2(V_CORE_ARGS, VWORD k) {
 SYSV_CALL void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD _port) {
   V_ARG_CHECK2("get-output-string", 2, argc);
   VPort * port = (VPort*)VDecodePointer(_port);
-  if(port->tag != VPORT) VError("get-output-string: not a port\n");
+  if(port->base.tag != VPORT) VError("get-output-string: not a port\n");
   if(!(port->flags & PFLAG_OSTRING)) VError("get-output-string: not an output string port\n");
 
   FILE * f = port->stream;
   int len = ftell(f);
   rewind(f);
   VBlob * str = alloca(sizeof(VBlob) + len + 1);
-  str->tag = VSTRING;
+  str->base = VMakeSmallObject(VSTRING);
   str->len = len+1;
   fread(str->buf, len, 1, f);
   str->buf[len] = '\0';
@@ -1128,7 +1128,7 @@ SYSV_CALL void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD _port) {
 SYSV_CALL void VReadChar2(V_CORE_ARGS, VWORD k, VWORD _port) {
   V_ARG_CHECK2("read-char", 2, argc);
   VPort * port = (VPort*)VDecodePointer(_port);
-  if(!port || port->tag != VPORT) VError("read-char: not a port ~S~N", _port);
+  if(!port || port->base.tag != VPORT) VError("read-char: not a port ~S~N", _port);
   if(!(port->flags & PFLAG_READ)) VError("read-char: not an readable port ~S~N", _port);
 
   FILE * f = port->stream;
@@ -1145,12 +1145,12 @@ SYSV_CALL void VReadLine2(V_CORE_ARGS, VWORD k, VWORD _port) {
   V_ARG_CHECK2("read-line", 2, argc);
   V_GC_CHECK2_VARARGS((VFunc)VReadLine2, runtime, statics, 2, argc, k, _port) {
     VPort * port = (VPort*)VDecodePointer(_port);
-    if(!port || port->tag != VPORT) VError("read-line: not a port ~S~N", _port);
+    if(!port || port->base.tag != VPORT) VError("read-line: not a port ~S~N", _port);
     if(!(port->flags & PFLAG_READ)) VError("read-line: not an readable port ~S~N", _port);
 
     FILE * f = port->stream;
     VBlob * str = alloca(sizeof(VBlob) + 256);
-    str->tag = VSTRING;
+    str->base = VMakeSmallObject(VSTRING);
     if(!fgets(str->buf, 256, f)) {
       V_CALL(k, runtime, VEOF);
     } else {
@@ -1214,7 +1214,7 @@ SYSV_CALL static void VCallCCLambda2(V_CORE_ARGS, VWORD k, ...) {
     VClosure * realk_real = VDecodeClosureApply(realk);
 
     VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc-1]));
-    environ->tag = VENVIRONMENT;
+    environ->base = VMakeSmallObject(VENVIRONMENT);
     environ->argc = argc-1;
     environ->runtime = runtime;
     environ->static_chain = realk_real->env;
@@ -1236,7 +1236,7 @@ SYSV_CALL void VCallCC2(V_CORE_ARGS, VWORD k, VWORD _proc) {
   V_ARG_CHECK2("call/cc", 2, argc);
   
   VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[1]));
-  env->tag = VENV; env->num_vars = 1; env->var_len = 1; env->up = NULL;
+  env->base = VMakeSmallObject(VENV); env->num_vars = 1; env->var_len = 1; env->up = NULL;
   env->vars[0] = k;
   VClosure k_wrapped = VMakeClosure2((VFunc)VCallCCLambda2, env);
 
@@ -1248,7 +1248,7 @@ SYSV_CALL void VCallValuesK2(V_CORE_ARGS, ...) {
   VClosure * consumer = VCheckedDecodeClosure(statics->vars[1], "call/values");
 
   VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc+1]));
-  environ->tag = VENVIRONMENT;
+  environ->base = VMakeSmallObject(VENVIRONMENT);
   environ->argc = argc+1;
   environ->runtime = runtime;
   environ->static_chain = consumer->env;
@@ -1270,7 +1270,7 @@ SYSV_CALL void VCallValues2(V_CORE_ARGS, VWORD _k, VWORD _producer, VWORD _consu
   V_ARG_CHECK2("call-with-values", 3, argc);
 
   VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
-  env->tag = VENV; env->num_vars = 2; env->var_len = 2; env->up = NULL;
+  env->base = VMakeSmallObject(VENV); env->num_vars = 2; env->var_len = 2; env->up = NULL;
   env->vars[0] = _k;
   env->vars[1] = _consumer;
   VClosure consume = VMakeClosure2((VFunc)VCallValuesK2, env);
@@ -1304,7 +1304,7 @@ SYSV_CALL void VApply2(V_CORE_ARGS, VWORD k, VWORD _proc, ...) {
       VError("apply: not a null terminated list ~S~N\n", lst);
 
     VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[nargs]));
-    environ->tag = VENVIRONMENT;
+    environ->base = VMakeSmallObject(VENVIRONMENT);
     environ->argc = nargs;
     environ->runtime = runtime;
     environ->static_chain = proc->env;
@@ -1376,7 +1376,7 @@ SYSV_CALL void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD _prefix, ...) {
     VError("make-temporary-file: temporary filename length of ~D exceeds max length of ~D\n", (int)len, (int)PATH_MAX);
 
   VBlob * str = alloca(sizeof(VBlob) + len);
-  str->tag = VSTRING;
+  str->base = VMakeSmallObject(VSTRING);
   str->len = len;
   strcpy(str->buf, p);
   strcat(str->buf, x);
@@ -1400,7 +1400,7 @@ SYSV_CALL void VMakeRandom(V_CORE_ARGS, VWORD k, VWORD _seed, VWORD _stream) {
   unsigned seed = VCheckedDecodeInt(_seed, "make-random");
   unsigned stream = VCheckedDecodeInt(_stream, "make-random");
   VBlob * buf = alloca(sizeof(VBlob)+sizeof(vrandom_state));
-  buf->tag = VRNG_STATE;
+  buf->base = VMakeSmallObject(VRNG_STATE);
   buf->len = sizeof(vrandom_state);
   vsrandom((vrandom_state*)buf->buf, seed, stream);
 
@@ -1409,7 +1409,7 @@ SYSV_CALL void VMakeRandom(V_CORE_ARGS, VWORD k, VWORD _seed, VWORD _stream) {
 SYSV_CALL void VRandomCopy(V_CORE_ARGS, VWORD k, VWORD rng) {
   VBlob const * buf = VCheckedDecodePointer(rng, VRNG_STATE, "random-copy");
   VBlob * copy = alloca(sizeof(VBlob)+sizeof(vrandom_state));
-  copy->tag = VRNG_STATE;
+  copy->base = VMakeSmallObject(VRNG_STATE);
   copy->len = sizeof(vrandom_state);
   memcpy(copy->buf, buf->buf, sizeof(vrandom_state));
 

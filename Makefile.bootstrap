@@ -16,7 +16,7 @@ hatch :
 	ln -sf "$(INSTALL_DIR)/lib/$(VSCHEME)" $(INSTALL_DIR)/lib/libvscheme.so
 	ln -sf "$(INSTALL_DIR)/bin/vsc.$(MAJOR)" $(INSTALL_DIR)/bin/vsc
 	cp -ar bootstrap/include/* $(INSTALL_DIR)/include/
-	gcc -rdynamic -o lib/libvscheme.so $(addprefix bootstrap/runtime/, $(RUNTIME_LISP_SRC:.scm=.c)) $(addprefix bootstrap/runtime/, $(RUNTIME_SRC)) bootstrap/runtime/vapply-sysv-amd64.S -Ibootstrap/include $(LIBS) $(CFLAGS) -fPIC -shared -Wno-missing-braces -masm=intel
+	gcc -rdynamic -o lib/libvscheme.so $(addprefix bootstrap/runtime/, $(RUNTIME_LISP_SRC:.scm=.c)) $(addprefix bootstrap/runtime/, $(RUNTIME_SRC)) bootstrap/runtime/vfiber-sysv-amd64.S bootstrap/runtime/vapply-sysv-amd64.S -Ibootstrap/include $(LIBS) $(CFLAGS) -fPIC -shared -Wno-missing-braces -masm=intel
 	cp -a lib/libvscheme.so $(INSTALL_DIR)/lib/$(VSCHEME)
 	ldconfig
 	gcc -rdynamic -o bin/vsc $(STRAP) $(CFLAGS) bootstrap/src/ffi.tab.c bootstrap/src/ffi.lex.c -Ibootstrap/include -lvscheme -Wl,--no-as-needed -Wno-missing-braces

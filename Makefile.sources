@@ -1,5 +1,6 @@
 SRC := $(addprefix vanity/compiler/, variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm transpile.scm frontend.scm ffi.scm library.scm config.scm)
 RUNTIME_SRC := vruntime.c vlibrary.c vread.c vfiber.c
+PRIVATE_HEADERS := vruntime_private.h
 ASSEMBLY_SRC := vapply-sysv-amd64.S vfiber-sysv-amd64.S
 WINDOWS_ASSEMBLY_SRC := vapply-windows-amd64.S
 

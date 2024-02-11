@@ -350,6 +350,9 @@
          ((##vcore.random-sample-float!) "VRandomSampleFloat")
          ((##vcore.random-advance!) "VRandomAdvance")
 
+         ; Fibers
+         ((##vcore.fiber-fork) "VFiberFork")
+
          (else #f)))
   (define (free-variables expr)
     (define (merge a b)

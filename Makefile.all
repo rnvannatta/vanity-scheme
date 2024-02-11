@@ -15,7 +15,7 @@ WINDOWS_RUNTIME_OBJ += $(addprefix build/x86_64-w64-mingw32/, $(WINDOWS_ASSEMBLY
 WINDOWS_RUNTIME_OBJ +=  $(addprefix build/x86_64-w64-mingw32/, $(RUNTIME_LISP_SRC:.scm=.o))
 
 BOOT = $(addprefix bin/bootstrap/src/, $(SRC:.scm=.c))
-BOOT += $(addprefix bin/bootstrap/runtime/, $(ASSEMBLY_SRC) $(WINDOWS_ASSEMBLY_SRC) $(RUNTIME_SRC) $(RUNTIME_LISP_SRC:.scm=.c))
+BOOT += $(addprefix bin/bootstrap/runtime/, $(ASSEMBLY_SRC) $(WINDOWS_ASSEMBLY_SRC) $(RUNTIME_SRC) $(PRIVATE_HEADERS) $(RUNTIME_LISP_SRC:.scm=.c))
 
 STRAP = $(addprefix bootstrap/src/, $(SRC:.scm=.c))
 
@@ -91,6 +91,8 @@ bin/bootstrap/src/%.c : src/%.scm
 	vsc -t $< -o $@ $(SCMFLAGS) -Ibuild/include
 	@{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
 bin/bootstrap/runtime/%.c : runtime/%.c
+	cp $< $@
+bin/bootstrap/runtime/%.h : runtime/%.h
 	cp $< $@
 bin/bootstrap/runtime/%.S : runtime/%.S
 	cp $< $@

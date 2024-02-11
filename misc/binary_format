@@ -4,7 +4,7 @@ inspired by protobuf and bson
 all entries consist of a type byte followed by a value if that type has it
 
 1. varint encoding: big endian
-number of extra data bytes in bottom nybble of type word
+number of bytes minus one in bottom nybble of type word, ie F3DEADBEEF indicates a 32 bit int
 sign extended top byte
 trailing bytes
 

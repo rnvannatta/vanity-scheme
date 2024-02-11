@@ -35,6 +35,7 @@
 #include <stdarg.h>
 #include <assert.h>
 #include <stdint.h>
+#include <stdatomic.h>
 
 static_assert(sizeof(char) == sizeof(int8_t));
 static_assert(sizeof(short) == sizeof(int16_t));
@@ -75,6 +76,7 @@ enum VTOK_T {
   // TO ONLY BE USED BY THE LEXER
   VTOK_LEX_OPENPAREN, VTOK_LEX_CLOSEPAREN, VTOK_LEX_VECPAREN, VTOK_LEX_DOT, VTOK_LEX_COMMENT,
   VTOK_LEX_QUOTE, VTOK_LEX_QUASIQUOTE, VTOK_LEX_UNQUOTE, VTOK_LEX_UNQUOTE_SPLICING,
+  VTOK_ERROR,
   VNUM_TOKS
 };
 
@@ -82,7 +84,21 @@ enum VTAG {
   // Eventually would be nice to replace RNG_STATE with typed pointer usage
   VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VBUFFER, VRNG_STATE, VPORT, VRUNTIME, VHASH_TABLE,
   VTAG_END };
+static_assert(VTAG_END < 255);
 typedef unsigned VTAG;
+typedef unsigned short VNEWTAG;
+
+typedef struct VObject {
+  unsigned short tag;
+  unsigned char flags;
+  unsigned char pincount;
+  int forward_offset;
+} VObject;
+typedef struct VSmallObject {
+  unsigned short tag;
+  unsigned char flags;
+  unsigned char pincount;
+} VSmallObject;
 
 #ifdef __linux__
 #include <setjmp.h>
@@ -179,6 +195,7 @@ enum V_TYPE_T { VIMM_TOK = 1*TAG_BIAS, VIMM_INT = 2*TAG_BIAS, VIMM_CHAR = 3*TAG_
 #define VVOID VWord(LITERAL_HEADER | VIMM_TOK | VTOK_VOID)
 #define VEOF VWord(LITERAL_HEADER | VIMM_TOK | VTOK_EOF)
 #define VTOMBSTONE VWord(LITERAL_HEADER | VIMM_TOK | VTOK_TOMBSTONE)
+#define VERROR VWord(LITERAL_HEADER| VIMM_TOK | VTOK_ERROR);
 
 typedef struct VWORD {
   uint64_t integer;
@@ -208,7 +225,7 @@ SYSV_CALL static inline VWORD VWord(uint64_t bits) {
 }
 
 typedef struct VEnv {
-  VTAG tag;
+  VSmallObject base;
   unsigned short num_vars;
   unsigned short var_len;
   struct VEnv * up;
@@ -216,19 +233,19 @@ typedef struct VEnv {
 } VEnv;
 
 typedef struct VClosure {
-  VTAG tag;
+  VObject base;
   VFunc func;
   VEnv * env;
 } VClosure;
 
 typedef struct VPair {
-  VTAG tag;
+  VObject base;
   VWORD first;
   VWORD rest;
 } VPair;
 
 typedef struct VVector {
-  VTAG tag;
+  VSmallObject base;
   unsigned len;
   VWORD arr[];
 } VVector;
@@ -241,7 +258,7 @@ enum HASH_FLAGS_T {
 };
 
 typedef struct VHashTable {
-  VTAG tag;
+  VSmallObject base;
   int flags;
   int occupancy;
   float load_factor;
@@ -251,7 +268,7 @@ typedef struct VHashTable {
 } VHashTable;
 
 typedef struct VBlob {
-  VTAG tag;
+  VSmallObject base;
   unsigned len;
   char buf[];
 } VBlob;
@@ -265,22 +282,20 @@ enum PORT_FLAG_T {
 };
 
 typedef struct VPort {
-  VTAG tag;
+  VObject base;
   FILE * stream;
   unsigned flags;
 } VPort;
 
 typedef struct VDynamic {
-  VTAG tag;
+  VObject base;
   VWORD key;
   VWORD val;
   struct VDynamic * up;
 } VDynamic;
 
-typedef struct VRuntime VRuntime;
-
 typedef struct VEnvironment {
-  VTAG tag;                 //  0
+  VSmallObject base;        //  0
   unsigned argc;            //  4
   VRuntime * runtime;       //  8
   VEnv * static_chain;      // 16
@@ -299,81 +314,19 @@ typedef struct VDebugInfo {
   char const * name;
 } VDebugInfo;
 
-typedef struct VFinalizerEntry VFinalizerEntry;
-typedef struct VFinalizerTable {
-  // split into a dense table and a hashmap
-  // allows us to simply order when finalizers
-  // were created in the dense table
-  // when finalizers are run the dense table
-  // is tombstoned and the table is compacted in order
-  // next major gc
-  VFinalizerEntry * dense;
-  unsigned * table;
-  unsigned num_finalizers;
-  unsigned dense_size;
-  unsigned table_size;
-  // from new_finalizers_start to num_finalizers
-  // are all the finalizers added since last gc
-  unsigned new_finalizers_start;
-} VFinalizerTable;
-
 SYSV_CALL static inline bool VIsEq(VWORD a, VWORD b) { return VBits(a) == VBits(b); }
 SYSV_CALL void VError(const char *, ...);
 
-typedef struct VRuntime {
-  VTAG tag;
-  // the heart
-  VJmpBuf VRoot;
-  // what is preserved when jumping
-  VWORD VGCResumeCont;
-  VWORD VExitCode;
-  // stack info
+// Used in inline functions
+typedef struct VPublicRuntime {
+  VObject base;
   char * VStackStart;
   ssize_t VStackLen;
   ssize_t VStackSize;
-  // heap info
-  bool VForceMajorGC;
-  bool VActiveHeap;
-  unsigned VGCsSinceMajor;
-  void * VHeap;
-  void * VHeapPos;
-  void * VHeapEnd;
-  struct {
-    void * begin;
-    void * end;
-    size_t size;
-  } VHeaps[2];
-  // mutation info
-  unsigned VNumTrackedMutations;
-  unsigned VNumUntrackedMutations;
-  unsigned VTrackedMutationsSize;
-  struct {
-    VWORD * container;
-    VWORD * slot;
-  } * VTrackedMutations;
-  // global vars info
-  VGlobalEntry * VGlobalTable;
-  unsigned VNumGlobals;
-  unsigned VNumGlobalSlots;
-  bool VGrowSymtable;
-  // finalizers
-  VFinalizerTable VHeapFinalizers[2];
-  // gc info
-  unsigned VNumMinorGCs;
-  unsigned VNumMajorGCs;
-  uint64_t VMinorGCTime;
-  uint64_t VMajorGCTime;
-  // debug info
   VDebugInfo * VCallHistory[V_CALL_HISTORY_LEN];
   unsigned VCallHistoryCursor;
-  // args
-  int VArgc;
-  char ** VArgv;
-  // parsing
-  size_t lex_size;
-  char * lex_buf;
-} VRuntime;
-
+} VPublicRuntime;
+typedef struct VRuntime VRuntime;
 /* ======================== Encoding and Decoding ======================= */
 
 // Immediate types
@@ -530,7 +483,7 @@ SYSV_CALL static inline void VCheckWordType(VWORD v, enum VIMMERAL_T type) {
 
 SYSV_CALL static inline bool VIsBlob(VWORD v) {
   if(VIsPointer(v)) {
-    VTAG t = *(VTAG*)VDecodePointer(v);
+    VNEWTAG t = *(VNEWTAG*)VDecodePointer(v);
     switch(t) {
       case VSTRING:
       case VSYMBOL:
@@ -545,7 +498,7 @@ SYSV_CALL static inline bool VIsBlob(VWORD v) {
 }
 SYSV_CALL static inline bool VIsMutableBlob(VWORD v) {
   if(VIsPointer(v)) {
-    VTAG t = *(VTAG*)VDecodePointer(v);
+    VNEWTAG t = *(VNEWTAG*)VDecodePointer(v);
     switch(t) {
       case VSTRING:
       case VBUFFER:
@@ -559,23 +512,23 @@ SYSV_CALL static inline bool VIsMutableBlob(VWORD v) {
 }
 
 SYSV_CALL static inline bool VIsString(VWORD v) {
-  return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VSTRING;
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VSTRING;
 }
 
 SYSV_CALL static inline bool VIsSymbol(VWORD v) {
-  return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VSYMBOL;
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VSYMBOL;
 }
 
 SYSV_CALL static inline bool VIsVector(VWORD v) {
-  return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VVECTOR;
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VVECTOR;
 }
 
 SYSV_CALL static inline bool VIsHashTable(VWORD v) {
-  return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VHASH_TABLE;
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VHASH_TABLE;
 }
 
 SYSV_CALL static inline bool VIsPort(VWORD v) {
-  return VIsPointer(v) && *(VTAG*)VDecodePointer(v) == VPORT;
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VPORT;
 }
 
 /* ======================== Checked Decoding ======================= */
@@ -611,9 +564,9 @@ SYSV_CALL static inline VClosure * VDecodeClosureApply(VWORD v) {
   return (VClosure*)VDecodePointer(v);
 }
 
-SYSV_CALL static inline void * VCheckedDecodePointer(VWORD v, VTAG tag, char const * proc) {
+SYSV_CALL static inline void * VCheckedDecodePointer(VWORD v, VNEWTAG tag, char const * proc) {
   if(VIsPointer(v)) {
-    VTAG * ptr = (VTAG *)VDecodePointer(v);
+    VNEWTAG * ptr = (VNEWTAG*)VDecodePointer(v);
     if(*ptr == tag) {
       return (void*)ptr;
     }
@@ -734,42 +687,62 @@ SYSV_CALL static inline void const * VCheckedDecodeConstVoidPtr(VWORD v, char co
 
 /* ======================== Construction ======================= */
 
+static VObject VMakeObject(VNEWTAG tag) {
+  return (VObject) {
+    .tag = tag,
+    .flags = 0,
+    .pincount = 0,
+    .forward_offset = 0
+  };
+}
+static VSmallObject VMakeSmallObject(VNEWTAG tag) {
+  return (VSmallObject) {
+    .tag = tag,
+    .flags = 0,
+    .pincount = 0,
+  };
+}
+
 #define V_ALLOCA_BLOB(len) alloca(sizeof(VBlob) + len);
-SYSV_CALL static inline VBlob * VFillBlob(VBlob * blob, VTAG tag, unsigned len, char const * dat) {
-  blob->tag = tag;
+SYSV_CALL static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned len, char const * dat) {
+  blob->base = VMakeSmallObject(tag);
   blob->len = len;
   memcpy(blob->buf, dat, len);
   return blob;
 }
 
-#define V_STATIC_STRING(name, str) struct { VBlob b; char buf[sizeof str]; } name = { { .tag = VSTRING, .len = sizeof str }, str };
+#define V_STATIC_STRING(name, str) struct { VBlob b; char buf[sizeof str]; } name = { { .base = { .tag =VSTRING, .flags = 0, .pincount = 0, }, .len = sizeof str }, str };
 
 #define V_ALLOCA_VECTOR(len) alloca(sizeof(VVector) + sizeof(VWORD[len]))
-SYSV_CALL static inline VVector * VFillVector(VVector * vec, VTAG tag, unsigned len, VWORD const * dat) {
-  vec->tag = tag;
+SYSV_CALL static inline VVector * VFillVector(VVector * vec, VNEWTAG tag, unsigned len, VWORD const * dat) {
+  vec->base = VMakeSmallObject(tag);
   vec->len = len;
   memcpy(vec->arr, dat, sizeof(VWORD[len]));
   return vec;
 }
 
+SYSV_CALL static inline void VInitEnv(VEnv * env, unsigned short num_vars, unsigned short var_len, VEnv * upenv) {
+  *env = (VEnv) { .base = VMakeSmallObject(VENV), .num_vars = num_vars, .var_len = var_len, .up = upenv };
+}
+
 SYSV_CALL static inline VPort VMakePortStream(FILE * stream, unsigned flags) {
-  return (VPort) { .tag = VPORT, .stream = stream, .flags = flags };
+  return (VPort) { .base = VMakeObject(VPORT), .stream = stream, .flags = flags };
 }
 
 SYSV_CALL static inline VClosure VMakeClosure2(VFunc f, VEnv * env) {
   return (VClosure) {
-    .tag = VCLOSURE,
+    .base = VMakeObject(VCLOSURE),
     .func = f,
     .env = env,
   };
 }
 
 SYSV_CALL static inline VPair VMakePair(VWORD a, VWORD b) {
-  return (VPair) { .tag = VPAIR, .first = a, .rest = b };
+  return (VPair) { .base = VMakeObject(VPAIR), .first = a, .rest = b };
 }
 
 SYSV_CALL static inline VPair * VFillPair(VPair * pair, VWORD a, VWORD b) {
-  pair->tag = VPAIR;
+  pair->base = VMakeObject(VPAIR);
   pair->first = a;
   pair->rest = b;
   return pair;
@@ -809,7 +782,9 @@ SYSV_CALL static inline VWORD VGetArg(VEnv * env, int up, int var) {
   return env->vars[var];
 }
 
-SYSV_CALL static inline void VRecordCall2(VRuntime * runtime, VDebugInfo * debug) {
+SYSV_CALL void VRecordCallNoInline(VRuntime * runtime, VDebugInfo * debug);
+SYSV_CALL static inline void VRecordCall2(VRuntime * _runtime, VDebugInfo * debug) {
+  VPublicRuntime * runtime = (VPublicRuntime*)_runtime;
   runtime->VCallHistory[++runtime->VCallHistoryCursor % V_CALL_HISTORY_LEN] = debug;
 }
 
@@ -866,24 +841,28 @@ SYSV_CALL static inline void VReturnWord(VWORD k, VRuntime * runtime, VWORD ret)
 //extern char* VStackStart;
 //extern ssize_t VStackLen;
 
-SYSV_CALL static inline bool VStackOverflow(char * VStackStart, ssize_t VStackLen, char * VStackStop) {
-  ptrdiff_t size = VStackStart - VStackStop;
+SYSV_CALL static inline bool VStackOverflow(VRuntime * _runtime) {
+  VPublicRuntime * runtime = (VPublicRuntime*)_runtime;
+  char * VStackStop = (char*)&runtime; 
+  ptrdiff_t size = runtime->VStackStart - VStackStop;
 #ifndef __x86_64__
   // stack may grow upwards on some platforms
   static_assert(0);
 #endif
-  assert(size >= 0);
-  return size > VStackLen;
+  return size > runtime->VStackLen;
 }
+SYSV_CALL bool VStackOverflowNoInline(VRuntime * runtime);
+SYSV_CALL bool VStackOverflowNoInline2(VRuntime * runtime, char * VStackStop);
+
 SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv);
 SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...);
 
 #define V_GC_CHECK2(func, runtime, statics, argc, argv) \
-  if(VStackOverflow(runtime->VStackStart, runtime->VStackLen, (char*)&runtime)) { \
+  if(VStackOverflow(runtime)) { \
     VGarbageCollect2(func, runtime, statics, argc, argv); \
   } else
 #define V_GC_CHECK2_LIST(func, runtime, statics, argc, argv) \
-  if(VStackOverflow(runtime->VStackStart, runtime->VStackLen, (char*)&runtime)) { \
+  if(VStackOverflow(runtime)) { \
     VWORD args[argc]; \
     for(int i = 0; i < argc; i++) \
       args[i] = va_arg(argv, VWORD); \
@@ -891,7 +870,7 @@ SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics,
     VGarbageCollect2(func, runtime, statics, argc, args); \
   } else
 #define V_GC_CHECK2_VARARGS(func, runtime, statics, fixed_args, argc, ...) \
-  if(VStackOverflow(runtime->VStackStart, runtime->VStackLen, (char*)&runtime)) { \
+  if(VStackOverflow(runtime)) { \
     VGarbageCollect2Args(func, runtime, statics, fixed_args, argc, __VA_ARGS__); \
   } else
 
@@ -912,7 +891,7 @@ SYSV_CALL static inline void VSetRest(VRuntime * runtime, VPair * p, VWORD w) {
 /* ======================== Core Functions ======================= */
 
 // Root level continuation
-SYSV_CALL void VNext2(V_CORE_ARGS, ...);
+SYSV_CALL void VNext2(V_CORE_ARGS, VWORD e);
 // Default exception continuation
 SYSV_CALL void VAbort2(V_CORE_ARGS, ...);
 // Exit PROCEDURE, expects a continuation in slot 1
@@ -945,7 +924,75 @@ SYSV_CALL int VStart(int nargs, void(* const * toplevels)());
 SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv);
 SYSV_CALL VWORD VStart2(VRuntime * runtime, int num_toplevels, VThunk const * toplevels);
 static inline int VDecodeExitCode(VWORD v) {
-  return (VWordType(v) == VIMM_INT && VDecodeInt(v)) || !VDecodeBool(v);
+  if(VIsToken(v, VTOK_ERROR))
+    return 1;
+  if(VWordType(v) == VIMM_INT)
+    return VDecodeInt(v);
+  return !VDecodeBool(v);
 }
 
 SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k);
+
+/* ======================== Fibering ======================= */
+
+#ifdef __linux__
+typedef struct VListNode VListNode;
+typedef struct VFiber VFiber;
+typedef struct VListPtr {
+  union {
+    struct {
+      VListNode * ptr;
+      uint64_t ver;
+    };
+    __int128 i;
+  };
+} VListPtr;
+typedef struct VListNodePool {
+  VListPtr nodes;
+} VListNodePool;
+typedef struct VQueue {
+  VListPtr head;
+  VListPtr tail;
+  VListNodePool pool;
+} VQueue;
+typedef struct VStack {
+  VListPtr head;
+  VListNodePool pool;
+} VStack;
+
+typedef struct VFiberContext VFiberContext;
+typedef struct VFiberState {
+  uint64_t rip;
+  uint64_t rsp;
+
+  uint64_t rbx;
+  uint64_t rbp;
+
+  uint64_t r12;
+  uint64_t r13;
+  uint64_t r14;
+  uint64_t r15;
+  _Atomic uint32_t running;
+} VFiberState;
+typedef struct VFiber {
+  VFiberContext * context;
+  uint64_t (*startup_func)(struct VFiber * me, void * startup_data);
+  void * startup_data;
+  char * stack;
+  size_t stacksize;
+  uint64_t ret;
+  struct VFiber * _Atomic waiter;
+  _Atomic bool alive;
+  VFiberState state;
+} VFiber;
+
+void VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_t stacksize);
+void VCloseFiberWorkers(VFiberContext * context);
+
+VFiber * VPushFiber(VFiberContext * context, uint64_t (*func)(VFiber * me, void * data), void *data);
+uint64_t VFiberWait(VFiberContext * context, VFiber * waitee, VFiber * me);
+
+void VFiberSleep(VFiber * me, double seconds);
+
+SYSV_CALL void VFiberFork(V_CORE_ARGS, VWORD k, ...);
+#endif

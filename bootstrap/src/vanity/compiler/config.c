@@ -27,17 +27,15 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
-static struct { VBlob sym; char bytes[34]; } _V10string_D12 = { { VSTRING, 34 }, "_V0vanity_V0compiler_V0config_V20" };
-static struct { VBlob sym; char bytes[12]; } _V10string_D11 = { { VSTRING, 12 }, "/usr/local/" };
-VWEAK VWORD _V0version;VWEAK struct { VBlob sym; char bytes[8]; } _VW_V0version = { { VSYMBOL, 8 }, "version" };
-VWEAK VWORD _V0install__root;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0install__root = { { VSYMBOL, 13 }, "install-root" };
+static struct { VBlob sym; char bytes[34]; } _V10string_D12 = { { .base = { .tag = VSTRING }, 34 }, "_V0vanity_V0compiler_V0config_V20" };
+static struct { VBlob sym; char bytes[12]; } _V10string_D11 = { { .base = { .tag = VSTRING }, 12 }, "/usr/local/" };
+VWEAK VWORD _V0version;VWEAK struct { VBlob sym; char bytes[8]; } _VW_V0version = { { .base = { .tag = VSYMBOL }, 8 }, "version" };
+VWEAK VWORD _V0install__root;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0install__root = { { .base = { .tag = VSYMBOL }, 13 }, "install-root" };
 static __attribute__((constructor)) void VDllMain1() {
   _V0version = VEncodePointer(VLookupConstant("_V0version", &_VW_V0version), VPOINTER_OTHER);
   _V0install__root = VEncodePointer(VLookupConstant("_V0install__root", &_VW_V0install__root), VPOINTER_OTHER);
 }
 static void _V0vanity_V0compiler_V0config_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_k3" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0compiler_V0config_V20_k3, got ~D~N"
   "-- expected 1~N"
@@ -58,8 +56,6 @@ V_CALL(upenv->up->vars[0], runtime,
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_k2" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0compiler_V0config_V20_k2, got ~D~N"
   "-- expected 1~N"
@@ -68,7 +64,7 @@ static void _V0vanity_V0compiler_V0config_V20_k2(VRuntime * runtime, VEnv * upen
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0compiler_V0config_V20_k2, runtime, upenv, 1, argc, _var0) {
   struct { VEnv env; VWORD argv[1]; } container;
   VEnv * env = &container.env;
-  env->tag = VENV; env->num_vars = 1; env->var_len = 1; env->up = upenv;
+  VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // (set! (close _V0vanity_V0compiler_V0config_V20_k3) (bruijn install-root 1 2) (##string ##string.11))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
@@ -79,12 +75,10 @@ static void _V0vanity_V0compiler_V0config_V20_k2(VRuntime * runtime, VEnv * upen
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_lambda3" };
- VRecordCall2(runtime, &dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0compiler_V0config_V20_lambda3, runtime, upenv, 3, argc, _var0, _var1, _var2) {
   struct { VEnv env; VWORD argv[3]; } container;
   VEnv * env = &container.env;
-  env->tag = VENV; env->num_vars = 3; env->var_len = 3; env->up = upenv;
+  VInitEnv(env, 3, 3, upenv);
   env->vars[0] = _var0;
   env->vars[1] = _var1;
   env->vars[2] = _var2;
@@ -101,12 +95,10 @@ static void _V0vanity_V0compiler_V0config_V20_lambda3(VRuntime * runtime, VEnv *
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_lambda2" };
- VRecordCall2(runtime, &dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0compiler_V0config_V20_lambda2, runtime, upenv, 1, argc, _var0) {
   struct { VEnv env; VWORD argv[1]; } container;
   VEnv * env = &container.env;
-  env->tag = VENV; env->num_vars = 1; env->var_len = 1; env->up = upenv;
+  VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((close _V0vanity_V0compiler_V0config_V20_lambda3) (bruijn ##k.2 0 0) #f #f)
 V_CALL_FUNC(_V0vanity_V0compiler_V0config_V20_lambda3, env, runtime,
@@ -116,8 +108,6 @@ V_CALL_FUNC(_V0vanity_V0compiler_V0config_V20_lambda3, env, runtime,
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_k1" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0compiler_V0config_V20_k1, got ~D~N"
   "-- expected 1~N"
@@ -126,7 +116,7 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upen
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0compiler_V0config_V20_k1, runtime, upenv, 1, argc, _var0) {
   struct { VEnv env; VWORD argv[1]; } container;
   VEnv * env = &container.env;
-  env->tag = VENV; env->num_vars = 1; env->var_len = 1; env->up = upenv;
+  VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((close _V0vanity_V0compiler_V0config_V20_lambda2) (bruijn ##k.1 1 0))
 V_CALL_FUNC(_V0vanity_V0compiler_V0config_V20_lambda2, env, runtime,
@@ -134,8 +124,6 @@ V_CALL_FUNC(_V0vanity_V0compiler_V0config_V20_lambda2, env, runtime,
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_lambda1" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0compiler_V0config_V20_lambda1, got ~D~N"
   "-- expected 1~N"
@@ -144,7 +132,7 @@ static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv *
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0compiler_V0config_V20_lambda1, runtime, upenv, 1, argc, _var0) {
   struct { VEnv env; VWORD argv[1]; } container;
   VEnv * env = &container.env;
-  env->tag = VENV; env->num_vars = 1; env->var_len = 1; env->up = upenv;
+  VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // (##vcore.make-import (close _V0vanity_V0compiler_V0config_V20_k1) (##string ##string.12))
     V_CALL_FUNC(VMakeImport2, NULL, runtime,
