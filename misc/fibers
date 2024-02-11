@@ -58,3 +58,34 @@ fiber storage:
 -- pinned region is ???
 -- we can defer allocating heaps and pinned region until they're needed
 -- we dont actually need 2 heaps except during gc, can return the second heap back to the fiber pool
+
+
+======================== SO FAR ========================
+
+fibers at a low level have registers, a stack
+at a low level a fiber is pushed to the scheduling queue
+a fiber worker wakes up and grabs it
+when the fiber exits it writes out a return code
+the fiber must be waited on to extract the return code and return resources
+
+fibers cannot run on the main thread, the main thread stalls when it yields
+
+per fiber our lithp creates a derivative runtime from the main runtime
+the init fiber task launches VStart all the same with the derived runtime
+
+for parallel-for fibers, the calling thread is paused
+
+(exit) in a fiber ends the fiber, returning that value, otherwise the value is
+the normal return
+
+Things forbidden during fiber execution:
+  binding globals
+  setting globals
+  setting shared parent memory
+  importing
+
+for async fibers... we need to pin memory? mark sweep gc?
+
+16 bit refcount
+8 bit bits: what bits do we need? marked, immutable
+8 bit pincount

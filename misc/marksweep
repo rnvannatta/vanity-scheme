@@ -1,0 +1,62 @@
+mark and sweep gc:
+
+why?
+
+1. allows us to pin memory for async fibers
+2. uses less memory than semi space
+
+how?
+
+first, divide 32 bit tag into
+
+16 bits: type
+8 bits: flags
+8 bits: pin count
+
+we need an additional 32 bits for a forward offset
+
+flags: marked, immutable, has_finalizer, static
+
+marking algorithm uses pointer reversal
+
+how it works:
+
+reverse(slot)
+  object * o = *slot
+  word w = o->slots[0];
+  *slot = w;
+  o->slots[0] = encode(slot)
+
+descend(obj, slot_idx) 
+  obj * child = obj->slots[slod_idx]
+  reverse(obj->slots[slot_idx])
+  return child
+  
+ascend(obj)
+  slot * parent_slot = o->slots[0]
+  word w = *parent_slot
+  o->slots[0] = w;
+  return compute_parent(parent_slot) // need additional offset
+
+==================================================================
+
+sweeping: use the 'lisp-2' algo from wikipedia
+
+1. iterate over heap with live and dead pointers
+  when a living object is encountered, write into its forward_offset
+  the difference between iself and the dead pointer, then increment the dead pointer
+
+2. iterate over heap and offset object pointers by the offsets in their pointed-to's
+
+3. iterate over heap and shift objects by their offset pointers
+
+if a pin is encountered in phase 1
+  when you find dead space, write in a pin record
+
+  when live == dead, just increment both
+  otherwise
+    write the address and size of the pin in the pin record
+
+  when assigning a live object a dead address
+  if it overlaps the current pin record, look past the current pin record and try again
+  keep trying until eventually live == dead

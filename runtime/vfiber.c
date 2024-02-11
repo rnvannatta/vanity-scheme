@@ -266,6 +266,7 @@ static VFiber * VFiberSelect(VFiberContext * context, bool must_succeed) {
     fiber->stack = VStackPop(&context->stackstack);
     if(!fiber->stack)
       fiber->stack = malloc(context->stacksize);
+    fiber->stacksize = context->stacksize;
     fiber->state.rsp = (uint64_t)(fiber->stack + context->stacksize - 16);
   }
   return fiber;
@@ -415,6 +416,8 @@ VFiber * VPushFiber(VFiberContext * context, uint64_t (*func)(VFiber * me, void 
   memset(fiber, 0, sizeof *fiber);
 
   fiber->context = context;
+  fiber->stack = NULL;
+  fiber->stacksize = 0;
   fiber->startup_func = func;
   fiber->startup_data = data;
   fiber->state.rip = (uint64_t)(void*)VFiberStart;
@@ -475,5 +478,6 @@ void VCloseFiberWorkers(VFiberContext * context) {
   }
   pthread_cond_destroy(&context->sleeper_cond);
   pthread_mutex_destroy(&context->mutex);
+  free(context);
 }
 #endif

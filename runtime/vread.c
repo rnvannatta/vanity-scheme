@@ -28,6 +28,7 @@
 #include <errno.h>
 
 #include "vscheme/vruntime.h"
+#include "vruntime_private.h"
 
 enum lex_t {
   LEX_START,
@@ -444,7 +445,7 @@ SYSV_CALL static VWORD VTreeify(VRuntime * runtime, VPair * root) {
   VPair * cur = root;
   while(VBits(root->rest) != VBits(VNULL)) {
     VPair * p = (VPair*)VDecodePointer(root->rest);
-    if(p->tag == VCONST_PAIR) {
+    if(p->base.tag == VCONST_PAIR) {
       // open paren or close paren
       if(VIsToken(p->first, VTOK_LEX_OPENPAREN)) {
         // open paren
@@ -464,7 +465,7 @@ SYSV_CALL static VWORD VTreeify(VRuntime * runtime, VPair * root) {
       } else if(VIsToken(p->first, VTOK_LEX_CLOSEPAREN)) {
         // close paren
         root->rest = p->rest;
-        p->tag = VPAIR;
+        p->base = VMakeObject(VPAIR);
         p->first = VNULL;
         VSetRest(runtime, p, cur->first);
         //p->rest = cur->first;
@@ -512,7 +513,7 @@ SYSV_CALL static VWORD VTreeify(VRuntime * runtime, VPair * root) {
         // instead pass the pair and the symbol we need to allocate in first
         // an rcons with first having a pair with a symbol is an 'abbreviation' which
         // should be arranged to (abbr x)
-        p->tag = VPAIR;
+        p->base = VMakeObject(VPAIR);
         VSetFirst(runtime, p, second->first);
         VSetRest(runtime, p, second_enc);
         //p->first = second->first;
@@ -623,7 +624,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
 #define myalloca(x) (alloced = alloca(x))
   VWORD elem;
   do {
-    if(VStackOverflow(runtime->VStackStart, runtime->VStackLen, alloced)) {
+    if(VStackOverflowNoInline2(runtime, alloced)) {
       fprintf(stderr, "gc during read\n");
       VTrackMutation(runtime, root, &root->rest, root->rest);
       VGarbageCollect2Args((VFunc)VReadIter2, runtime, statics, 5, argc, k, _port, VEncodeInt(depth), VEncodeBool(read_more), _root);
@@ -640,7 +641,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
         // using CONST_PAIR as a marker to indicate beginning or end of a list
         // a const pair with a VTOK_LEX_OPENPAREN in the CAR indicates a open paren, ie beginning
         *pair = VMakePair(VEncodeToken(VTOK_LEX_OPENPAREN), root->rest);
-        pair->tag = VCONST_PAIR;
+        pair->base = VMakeObject(VCONST_PAIR);
         root->rest = VEncodePair(pair);
         depth++;
         break;
@@ -653,7 +654,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
         // a const pair with not VTOK_LEX_OPENPAREN in the CAR indicates the end of a list, the contents of car indicate the tail
         // ie null for a proper list or nonnull for a dotted list
         *pair = VMakePair(VEncodeToken(VTOK_LEX_CLOSEPAREN), root->rest);
-        pair->tag = VCONST_PAIR;
+        pair->base = VMakeObject(VCONST_PAIR);
         root->rest = VEncodePair(pair);
         depth--;
         break;
@@ -663,7 +664,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
         if(depth == 0) VError("read: stray '.'\n");
         VPair * pair = myalloca(sizeof(VPair));
         *pair = VMakePair(VEncodeToken(VTOK_LEX_DOT), root->rest);
-        pair->tag = VCONST_PAIR;
+        pair->base = VMakeObject(VCONST_PAIR);
         root->rest = VEncodePair(pair);
         break;
       }
@@ -671,7 +672,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       {
         VPair * pair = myalloca(sizeof(VPair));
         *pair = VMakePair(VEncodeToken(VTOK_LEX_COMMENT), root->rest);
-        pair->tag = VCONST_PAIR;
+        pair->base = VMakeObject(VCONST_PAIR);
         root->rest = VEncodePair(pair);
         read_more = true;
         break;
@@ -702,7 +703,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
         VPair * pair = myalloca(sizeof(VPair)), *second = myalloca(sizeof(VPair));
         *second = VMakePair(VEncodePointer(sym, VPOINTER_OTHER), VNULL);
         *pair = VMakePair(VEncodePair(second), root->rest);
-        pair->tag = VCONST_PAIR;
+        pair->base = VMakeObject(VCONST_PAIR);
         root->rest = VEncodePair(pair);
         read_more = true;
         break;
