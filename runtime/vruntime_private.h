@@ -29,6 +29,7 @@
 #include "vscheme/vruntime.h"
 typedef struct VFiberContext VFiberContext;
 typedef struct VFiber VFiber;
+typedef struct VStack VStack;
 
 typedef struct VFinalizerEntry VFinalizerEntry;
 typedef struct VFinalizerTable {
@@ -48,6 +49,7 @@ typedef struct VFinalizerTable {
   unsigned new_finalizers_start;
 } VFinalizerTable;
 
+typedef struct VRuntime VRuntime;
 typedef struct VRuntime {
   VPublicRuntime public;
   // the heart
@@ -95,5 +97,14 @@ typedef struct VRuntime {
   char * lex_buf;
   // fibers
   VFiber * my_fiber;
+  VFiber * main_fiber;
   VFiberContext * fiber_context;
+
+  VStack * fiber_runtimes;
+  VStack * fiber_heaps;
+
+  bool owns_heap[2];
+
+  int num_half_reaped_fibers;
+  VRuntime ** half_reaped_fibers;
 } VRuntime;

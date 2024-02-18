@@ -1214,7 +1214,7 @@ SYSV_CALL static void VCallCCLambda2(V_CORE_ARGS, VWORD k, ...) {
     VClosure * realk_real = VDecodeClosureApply(realk);
 
     VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc-1]));
-    environ->base = VMakeSmallObject(VENVIRONMENT);
+    environ->base = VMakeObject(VENVIRONMENT);
     environ->argc = argc-1;
     environ->runtime = runtime;
     environ->static_chain = realk_real->env;
@@ -1248,7 +1248,7 @@ SYSV_CALL void VCallValuesK2(V_CORE_ARGS, ...) {
   VClosure * consumer = VCheckedDecodeClosure(statics->vars[1], "call/values");
 
   VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc+1]));
-  environ->base = VMakeSmallObject(VENVIRONMENT);
+  environ->base = VMakeObject(VENVIRONMENT);
   environ->argc = argc+1;
   environ->runtime = runtime;
   environ->static_chain = consumer->env;
@@ -1304,7 +1304,7 @@ SYSV_CALL void VApply2(V_CORE_ARGS, VWORD k, VWORD _proc, ...) {
       VError("apply: not a null terminated list ~S~N\n", lst);
 
     VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[nargs]));
-    environ->base = VMakeSmallObject(VENVIRONMENT);
+    environ->base = VMakeObject(VENVIRONMENT);
     environ->argc = nargs;
     environ->runtime = runtime;
     environ->static_chain = proc->env;

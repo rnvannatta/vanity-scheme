@@ -1,0 +1,1 @@
+(define-library-interface (vanity pretty-print) (import (vanity core)) (export pretty-print) (inline-import) (inline-export))

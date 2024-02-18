@@ -30,7 +30,7 @@
 // Signature: void VSysApply(VFunc * func, VEnvironment * environ);
 // where VFunc is void(*)(VRuntime * runtime, VStaticEnv * statics, unsigned argc, ...)
 // and the ... are all uint64s. VEnvironment is just a struct containing the arguments to be applied in order
-// Well not so fast: VEnvironment is { TAG, argc, runtime, statics, argv... }
+// Well not so fast: VEnvironment is { TAG, runtime, statics, argc, argv... }
 // Register usage:
 // ax : loop variable for number of args, greater than 3 if uses stack
 // di : 1st funcall arg 'runtime'
@@ -54,9 +54,9 @@ VSysApply:
 	// sys arg 2, statics 
 	mov rsi, QWORD PTR [r10+16]
 	// sys arg 3, argc 
-	mov edx, DWORD PTR [r10+4]
+	mov edx, DWORD PTR [r10+24]
 	mov eax, edx
-  lea r10, QWORD PTR [r10+24]
+  lea r10, QWORD PTR [r10+32]
 	// usr args
 	cmp eax, 4
 	jb few_arg

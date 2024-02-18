@@ -41,9 +41,16 @@ VSwitchFiber:
 	mov QWORD PTR [rsi+48], r14
 	mov QWORD PTR [rsi+56], r15
 
+  // a temporary stack in case we get a signal during the
+  // brief interchange period. Once we release the lock on
+  // this fiber, it would be an error for a signal to write
+  // to this fiber's stack we saved as it's already in use
+  mov rsp, QWORD PTR [rsi+72]
+  xor eax, eax
+  mov QWORD PTR [rsi+72], rax
+
   // it's ok for another thread to
   // run this fiber
-  mov eax, 0
   xchg DWORD PTR [rsi+64], eax
 
   // need to wait for the fiber to be ready
@@ -59,6 +66,10 @@ wait_loop:
   // it's a logic error if someone else claimed it
   test eax, eax
   jne fiber_error
+
+  // save the temporary stack in our new fiber so we
+  // can swap to it when we switch
+  mov QWORD PTR [rdi+72], rsp
 
 	mov rsp, QWORD PTR [rdi+ 8]
 	mov rbx, QWORD PTR [rdi+16]

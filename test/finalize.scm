@@ -8,3 +8,5 @@
         (display "hello" port)
         ; whoops no close-port uwu
         (loop (+ i 1))))))
+
+(define lmao (open-output-string))

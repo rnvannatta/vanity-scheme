@@ -44,6 +44,16 @@
         (('quote _) x)
         (() (compiler-error "stray () in program"))
         (else x)))
+    (define (iter-let args body vals k)
+      (let loop ((appl '()) (vals vals))
+       (cond
+         ((null? vals)
+          (let ((appl (reverse appl)))
+            `((lambda ,args ,(iter2 body k)) . ,appl)))
+         ((application? (car vals))
+          (let ((x (gensym "x")))
+               (iter2 (car vals) `(continuation (,x) ,(loop (cons x appl) (cdr vals))))))
+         (else (loop (cons (iter-atom (car vals)) appl) (cdr vals))))))
     (define (iter-combination args cont)
       (let loop ((appl '()) (args args))
        (cond
@@ -94,10 +104,12 @@
                     (let ((sym (gensym "p")))
                      (iter2 x `(continuation (,sym) ,(iter2 `(or ,sym ,y) cont)))))
                    (else (iter2 `(if ,x ,x ,y) cont))))
-            (((lambda (x) body) val)
+            ((('lambda (x) body) val)
              (if (application? val)
                  (iter2 val `(continuation (,x) ,(iter2 body cont)))
-                 (iter-combination expr cont)))
+                 (iter-let (list x) body (list val) cont)))
+            ((('lambda args body) . vals)
+             (iter-let args body vals cont))
             (else (iter-combination expr cont)))
           `(,cont ,(iter-atom expr))))
 
@@ -160,7 +172,7 @@
       ((f . xs) (and (pure-in? x f) (pure-in? x xs)))
       (else #t)))
   (define (substitute-lambda x atom args body)
-    (if (memtail x args) body
+    (if (memtail x args) `(,args ,body)
         `(,args ,(substitute x atom body))))
   (define (substitute x atom expr)
     (match expr
@@ -233,32 +245,36 @@
                    (= 0 (fold + 0 (map (lambda (x) (ref-count x f)) xs))))
               f
               `(,lamb ,xs (,f . ,ys))))
-         (opt-body `(,lamb ,xs ,opt-body))))))
+         (opt-body `(,lamb ,xs ,opt-body))))
+      (else (compiler-error "optimize-lambda: malformed lambda" expr))))
   (define (taillength lst)
     (let loop ((lst lst) (len 0))
       (if (pair? lst)
           (loop (cdr lst) (+ len 1))
           len)))
 
-  ; This optimization MIGHT be worth it to combine continuations which get
-  ; optimized into let forms from inlining
-  #;(define (optimize-let-chain let-expr)
-    (match let-expr
-      ((('continuation (xs ...)
-          (('continuation (x2) body) e2))
-        . es)
-       (if (and (not (memv x2 xs))
-                (let loop ((xs xs))
-                  (cond ((null? xs) #t)
-                        ((= 0 (ref-count (car xs) e2)) (loop (cdr xs)))
-                        (else #f))))
-           (optimize-let-chain `((continuation (,@xs ,x2) ,(optimize-apply body)) ,@es ,e2))
-           (map optimize-atom let-expr)))
-      ((l . xs) `(,(optimize-atom l) . ,(map optimize-atom xs)))))
+  ; There is a bug somewhere in here...
+  (define (inline-let expr done-ys done-xs ys xs)
+    (if (null? ys)
+        (if (null? done-ys)
+            (optimize-apply expr)
+            `(,(optimize-atom `(lambda ,(reverse done-ys) ,expr)) . ,(reverse done-xs)))
+        (let* ((y (car ys)) (x (car xs)) (ys (cdr ys)) (xs (cdr xs)))
+          (let ((refs (ref-count y expr)))
+            (cond ((= refs 0) (inline-let expr done-ys done-xs ys xs))
+                  ; we don't care whether the data the variable addresses is pure, just whether
+                  ; the variable is pure, which can be determined statically.
+                  ; ... and now that I think about it, any variable which is impure is used twice
+                  ; or can be eliminated, but eliminating that variable requires eliminating the
+                  ; set! expressions
+                  ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1)) (pure-in? y expr))
+                   (inline-let (substitute y x expr) done-ys done-xs ys xs))
+                  (else (inline-let expr (cons y done-ys) (cons x done-xs) ys xs)))))))
   (define (optimize-let let-expr)
     (match let-expr
       ((('continuation (y) expr) x)
        (let ((refs (ref-count y expr)))
+         
          (cond ((= refs 0) (optimize-apply expr))
                ; we don't care whether the data the variable addresses is pure, just whether
                ; the variable is pure, which can be determined statically.
@@ -268,14 +284,21 @@
                ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1)) (pure-in? y expr))
                 (optimize-apply (substitute y x expr)))
                (else `(,(optimize-atom `(continuation (,y) ,expr)) ,(optimize-atom x))))))
+      ((('lambda () expr))
+       (optimize-apply expr))
       ((('lambda (ys ...) expr) xs ...)
        (if (not (= (length ys) (length xs))) (compiler-error "Not enough arguments to lambda"))
-       #;(optimize-let-chain let-expr)
-       (map optimize-atom let-expr))
+       (map optimize-atom let-expr)
+       ; There is a bug somewhere in this inline-let which is extremely subtle
+       ; as it causes a miscompile that only rears its head after a few bootstrap iterations
+       #;(inline-let expr '() '() ys (map optimize-atom xs)))
+      ((('continuation () body))
+       (optimize-apply body))
       ((('lambda ys expr) . xs)
        (if (not (<= (taillength ys) (length xs))) (compiler-error "Not enough arguments to lambda"))
        `(,(optimize-atom `(lambda ,ys ,expr)) . ,(map optimize-atom xs)))
-      ((('continuation . _) . _) (compiler-error "Not enough arguments to continuation. Codegen bug."))))
+      ((('continuation . _) . _) (compiler-error "Not enough arguments to continuation. Codegen bug."))
+      (else (compiler-error "optimize-let: malformed let statement"))))
   ; only optimizes 'applications', ie (f x y). But due to how codegen works, (if p (f a) (y b)) is also an application
   (define (optimize-apply expr)
     (match expr
@@ -297,7 +320,8 @@
       ((f k . xs)
        (if (and (symbol? f) (lookup-inline f))
            (optimize-apply `(,(optimize-atom k) (##inline ,f . ,(map optimize-atom xs))))
-           (cons (optimize-atom f) (cons (optimize-atom k) (map optimize-atom xs)))))))
+           (cons (optimize-atom f) (cons (optimize-atom k) (map optimize-atom xs)))))
+      (else (compiler-error "optimize-apply: malformed application" expr))))
   (define (optimize-atom expr)
     (match expr
       (('quote . _) expr)

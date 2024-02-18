@@ -82,18 +82,48 @@ enum VTOK_T {
 
 enum VTAG {
   // Eventually would be nice to replace RNG_STATE with typed pointer usage
-  VTAG_START = 33, VENVIRONMENT = 33, VENV, VCONTENV, VCLOSURE, VPAIR, VCONST_PAIR, VVECTOR, VRECORD, VSYMBOL, VSTRING, VBUFFER, VRNG_STATE, VPORT, VRUNTIME, VHASH_TABLE,
-  VTAG_END };
+  VTAG_START = 33,
+  VENVIRONMENT = 33,
+  VENV,
+  VCONTENV,
+  VCLOSURE,
+  VPAIR,
+  VCONST_PAIR,
+  VVECTOR,
+  VRECORD,
+  VSYMBOL,
+  VSTRING,
+  VBUFFER,
+  VRNG_STATE,
+  VPORT,
+  VRUNTIME,
+  VHASH_TABLE,
+  VTAG_END
+};
 static_assert(VTAG_END < 255);
 typedef unsigned VTAG;
 typedef unsigned short VNEWTAG;
+
+enum VOBJECT_FLAGS {
+  VFLAG_STATIC = 1,
+  VFLAG_IMMUTABLE = 2,
+  VFLAG_FINALIZER = 4,
+  VFLAG_MARKED = 8,
+};
 
 typedef struct VObject {
   unsigned short tag;
   unsigned char flags;
   unsigned char pincount;
+  // used for a couple purposes in mark and compact gc
+  // first, during mark it holds offset information for pointer-reversal
+  // second, during compact it holds the future location of the object
   int forward_offset;
 } VObject;
+// temporary stopgap
+// used in 4 objects: env, blob, vector, hash table
+// how? how do I get this eliminated? seems impossible
+// I think I have to manually edit the bootstrap code... ew
 typedef struct VSmallObject {
   unsigned short tag;
   unsigned char flags;
@@ -295,11 +325,11 @@ typedef struct VDynamic {
 } VDynamic;
 
 typedef struct VEnvironment {
-  VSmallObject base;        //  0
-  unsigned argc;            //  4
-  VRuntime * runtime;       //  8
-  VEnv * static_chain;      // 16
-  VWORD argv[];             // 24+
+  VObject base;        //  0
+  VRuntime * runtime;  //  8
+  VEnv * static_chain; // 16
+  unsigned argc;       // 24
+  VWORD argv[];        // 32+
 } VEnvironment;
 
 
@@ -938,27 +968,6 @@ SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k);
 #ifdef __linux__
 typedef struct VListNode VListNode;
 typedef struct VFiber VFiber;
-typedef struct VListPtr {
-  union {
-    struct {
-      VListNode * ptr;
-      uint64_t ver;
-    };
-    __int128 i;
-  };
-} VListPtr;
-typedef struct VListNodePool {
-  VListPtr nodes;
-} VListNodePool;
-typedef struct VQueue {
-  VListPtr head;
-  VListPtr tail;
-  VListNodePool pool;
-} VQueue;
-typedef struct VStack {
-  VListPtr head;
-  VListNodePool pool;
-} VStack;
 
 typedef struct VFiberContext VFiberContext;
 typedef struct VFiberState {
@@ -973,7 +982,9 @@ typedef struct VFiberState {
   uint64_t r14;
   uint64_t r15;
   _Atomic uint32_t running;
+  uint64_t signal_stack;
 } VFiberState;
+enum { FIBER_NORMAL, FIBER_EXITED, FIBER_WAITED_ON };
 typedef struct VFiber {
   VFiberContext * context;
   uint64_t (*startup_func)(struct VFiber * me, void * startup_data);
@@ -982,15 +993,16 @@ typedef struct VFiber {
   size_t stacksize;
   uint64_t ret;
   struct VFiber * _Atomic waiter;
-  _Atomic bool alive;
+  _Atomic int status;
   VFiberState state;
 } VFiber;
 
-void VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_t stacksize);
+VFiber * VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_t stacksize);
 void VCloseFiberWorkers(VFiberContext * context);
 
-VFiber * VPushFiber(VFiberContext * context, uint64_t (*func)(VFiber * me, void * data), void *data);
+VFiber * VPushFiber(VFiberContext * context, VFiber * me, uint64_t (*func)(VFiber * me, void * data), void *data);
 uint64_t VFiberWait(VFiberContext * context, VFiber * waitee, VFiber * me);
+bool VTryFiberWait(VFiberContext * context, VFiber * waitee, VFiber * me, uint64_t * ret);
 
 void VFiberSleep(VFiber * me, double seconds);
 

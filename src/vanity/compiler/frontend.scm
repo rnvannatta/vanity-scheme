@@ -23,7 +23,7 @@
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
-(import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler variables) (vanity compiler match) (vanity compiler getopt) (vanity compiler expand) (vanity compiler cps) (vanity compiler transpile) (vanity compiler library) (vanity compiler config))
+(import (vanity core) (vanity list) (vanity pretty-print) (vanity compiler utils) (vanity compiler variables) (vanity compiler match) (vanity compiler getopt) (vanity compiler expand) (vanity compiler cps) (vanity compiler transpile) (vanity compiler library) (vanity compiler config))
 
 (define scm-files '())
 (define obj-files '())
@@ -260,11 +260,11 @@
               (let* ((fd (open-input-file scm-file))
                      (file (if fd (append (read-all fd)) (compiler-error "file does not exist" scm-file)))
                      (expanded  (map (lambda (e) (expand-toplevel e (cons path paths))) file)))
-                (if (eq? expand? 0) (for-each write expanded)
+                (if (eq? expand? 0) (for-each pretty-print expanded)
                     (let ((cps (map (lambda (expr) (annotate-lambdas (to-cps expr))) (apply append expanded))))
-                     (if (eq? expand? 1) (for-each write cps)
+                     (if (eq? expand? 1) (for-each pretty-print cps)
                          (let ((opt (map (lambda (expr) (deannotate-lambdas (optimize expr))) cps)))
-                          (if (eq? expand? 2) (for-each write opt)
+                          (if (eq? expand? 2) (for-each pretty-print opt)
                               (let* ((bruijn (map bruijn-ify opt))
                                      (funs (to-functions bruijn)))
                                 (apply printout2 (cons debug? (cons shared? funs))))))))))))))
