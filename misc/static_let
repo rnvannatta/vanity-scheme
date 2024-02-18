@@ -1,0 +1,62 @@
+static let
+
+problem: garbage collecting (vanity core) is stupid
+and will become increasingly stupid with the addition of async
+
+solution: static-let
+
+a let expression allocated in static memory
+
+requirements: all variables in the let expression, including upenv, are also static memory
+
+for example
+
+(static-letrec
+  ((odd (lambda (x) (even? (- x 1))))
+   (even (lambda (x) (odd? (- x 1))))
+   (one 1))
+)
+
+If static-letrec's upenv is static then all these variable types are static:
+  literals
+  lambda expressions
+  static-let expressions
+
+This necessitates special treatment of import statements
+Import statements need to communicate whether a variable is static
+So we need header file information to say whether a given import is static
+
+Then, as a sweed optimization we can include in every environment a pointer to its static start
+
+Libraries are automatically split into static and dynamic sections
+1. variables which mutate are nonstatic
+2. variables who are assigned from combinations are nonstatic
+3. variables who are an imported value that aren't static are nonstatic
+4. variables who are lambdas that capture nonstatic varibles are nonstatic
+all other variables are static
+
+One more gotcha: a static let's continuation must also be static
+- That is, for a toplevel definition it's VNext
+
+The main purpose however is not toplevel, but library definitions. Library instantiation needs to return somewhere
+So a simple solution is to store the continuation in the runtime and extract it to return
+
+ie instead of
+
+(declare "_V20_V0mylib"
+  (lambda (k1)
+    (make-import
+      (continuation (import)
+        ((lambda (myfunc)
+          (set! (continuation (_) (k1 `((myfunc . ,myfunc)))) myfunc (lambda (x) x))) #f))
+      "_V20_V0mylib")))
+
+We have
+
+(declare "_V20_V0mylib"
+  (static-lambda ()
+    (static-let ((k (##vcore.getlibraryk)) (myfunc #f))
+      (make-import
+        (continuation (import)
+          (set! (continuation (_) (k1 `((myfunc . ,myfunc)))) myfunc (lambda (x) x)))
+        "_V20_V0mylib))))

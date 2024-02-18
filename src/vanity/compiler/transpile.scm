@@ -51,7 +51,8 @@
         (((xs ...) body) `(,(length xs) ,(iter (cons xs env) body)))
         ((xs body)
          (let ((proper-xs (undot xs)))
-          `(,(- (length proper-xs) 1) + ,(iter (cons proper-xs env) body))))))
+          `(,(- (length proper-xs) 1) + ,(iter (cons proper-xs env) body))))
+        (else (compiler-error "bruijnify-pass: No matching lambda"))))
     (define (iter env expr)
       (match expr
         (('lambda (xs ...) body)
@@ -314,7 +315,7 @@
                     (len (+ (string-length (symbol->string (car lit))) 1)))
                (begin
                  (printf "VWEAK VWORD ~A;" mangled)
-                 (printf "VWEAK struct { VBlob sym; char bytes[~A]; } _VW~A = { { .base = { .tag = VSYMBOL }, ~A }, \"~A\" };~N"
+                 (printf "VWEAK struct { VBlob sym; char bytes[~A]; } _VW~A = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, ~A }, \"~A\" };~N"
                   len mangled len escaped))
 ))
             ((string? (car lit))
@@ -322,14 +323,14 @@
                     (escaped (escape-string (car lit)))
                     (len (+ (string-length (car lit)) 1)))
                ; strings use a gensym name, so no weak attributes here
-               (printf "static struct { VBlob sym; char bytes[~A]; } ~A = { { .base = { .tag = VSTRING }, ~A }, \"~A\" };~N"
+               (printf "static struct { VBlob sym; char bytes[~A]; } ~A = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, ~A }, \"~A\" };~N"
                 len mangled len escaped)))
             ; of shape (('##intrinsic intrin) . c-function)
             ((and (pair? (car lit)) (eqv? (caar lit) '##intrinsic))
              (let ((mangled (mangle-symbol (cadar lit))))
                (begin
                  (printf "VWEAK VWORD _V40~A;" mangled)
-                 (printf "VWEAK VClosure _VW_V40~A = { .base = { .tag = VCLOSURE }, (VFunc)~A, NULL };~N"
+                 (printf "VWEAK VClosure _VW_V40~A = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)~A, NULL };~N"
                    mangled
                    (cdr lit)))))
             (else (compiler-error "print-literal-table: unknown entry in literal table" lit))))

@@ -51,6 +51,7 @@
 
 #include "vscheme/vruntime.h"
 #include "vruntime_private.h"
+#include "vqueue_private.h"
 #include "vscheme/vinlines.h"
 #include "vscheme/vhash.h"
 
@@ -84,16 +85,26 @@ typedef struct VFinalizerEntry {
 #define MAX_TRACKED_MUTATIONS 256
 
 
-enum MEMORY_LOCATION { STACK_MEM = 1, HEAP_MEM = 2, OLD_HEAP_MEM = 4, STATIC_MEM = 8 };
+// Anything < HEAP MEM needs to be collected during a GC
+enum MEMORY_LOCATION { FIBER_MEM = 1, OLD_HEAP_MEM = 2, STACK_MEM = 4, HEAP_MEM = 8, STATIC_MEM = 16 };
 SYSV_CALL static unsigned VMemLocation(VRuntime * runtime, void * obj) {
+  if(((VObject*)obj)->flags & VFLAG_STATIC)
+    return STATIC_MEM;
+
   if(runtime->public.VStackStart - runtime->public.VStackSize <= (char*)obj && (char*)obj < runtime->public.VStackStart)
     return STACK_MEM;
-  else if(runtime->VHeaps[runtime->VActiveHeap].begin <= obj && obj < runtime->VHeaps[runtime->VActiveHeap].end)
+  if(runtime->VHeaps[runtime->VActiveHeap].begin <= obj && obj < runtime->VHeaps[runtime->VActiveHeap].end)
     return HEAP_MEM;
-  else if(runtime->VHeaps[!runtime->VActiveHeap].begin <= obj && obj < runtime->VHeaps[!runtime->VActiveHeap].end)
+  if(runtime->VHeaps[!runtime->VActiveHeap].begin <= obj && obj < runtime->VHeaps[!runtime->VActiveHeap].end)
     return OLD_HEAP_MEM;
-  else
-    return STATIC_MEM;
+
+  for(int i = 0; i < runtime->num_half_reaped_fibers; i++) {
+    VRuntime * fiber_runtime = runtime->half_reaped_fibers[i];
+    if(fiber_runtime->VHeaps[fiber_runtime->VActiveHeap].begin <= obj && obj < fiber_runtime->VHeaps[fiber_runtime->VActiveHeap].end)
+      return FIBER_MEM;
+  }
+
+  return STATIC_MEM;
 }
 
 SYSV_CALL static uint64_t VHashSymbol(VWORD sym) {
@@ -424,7 +435,7 @@ SYSV_CALL static void * VMoveObject(VRuntime * runtime, void * obj, size_t size)
 }
 
 SYSV_CALL static bool VNeedsMove(VRuntime * runtime, void * obj) {
-  return VMemLocation(runtime, obj) == STACK_MEM || VMemLocation(runtime, obj) == OLD_HEAP_MEM;
+  return VMemLocation(runtime, obj) < HEAP_MEM;
 }
 
 // Checks for forwarding and heap presence first
@@ -447,13 +458,13 @@ SYSV_CALL static VEnv * VCheckedMoveEnv(VRuntime * runtime, VEnv * env) {
 
   VEnv * old = ret;
   while(old->up) {
-    if(!VNeedsMove(runtime, old->up))
-      break;
     void * forward = VForwarded(old->up);
     if(forward) {
       old->up = forward;
       break;
     }
+    if(!VNeedsMove(runtime, old->up))
+      break;
     old->up = VMoveObject(runtime, old->up, sizeof(VEnv) + sizeof(VWORD[old->up->num_vars]));
     old->up->var_len = old->up->num_vars;
     old = old->up;
@@ -491,13 +502,13 @@ SYSV_CALL static VPair * VMovePair(VRuntime * runtime, VPair * pair) {
   while(VWordType(old->rest) == VPOINTER_PAIR) {
     void * rest = VDecodePointer(old->rest);
 
-    if(!VNeedsMove(runtime, rest))
-      break;
     void * forward = VForwarded(rest);
     if(forward) {
       old->rest = VEncodePair(forward);
       break;
     }
+    if(!VNeedsMove(runtime, rest))
+      break;
 
     rest = VMoveObject(runtime, rest, sizeof(VPair));
     old->rest = VEncodePair(rest);
@@ -514,13 +525,14 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
     return word;
   }
   void * ptr = VDecodePointer(word);
+  void * forward = VForwarded(ptr);
+  if(forward) {
+    uint64_t type = VWordType(word);
+    return VEncodePointer(forward, type);
+  }
   if(!VNeedsMove(runtime, ptr))
     return word;
   uint64_t type = VWordType(word);
-  void * forward = VForwarded(ptr);
-  if(forward) {
-    return VEncodePointer(forward, type);
-  }
 
   VNEWTAG tag = *(VNEWTAG*)ptr;
   if(!(VTAG_START <= tag && tag < VTAG_END)) {
@@ -691,9 +703,25 @@ SYSV_CALL static void VGCResumeFunc(V_CORE_ARGS, ...) {
   VSysApply(f, e);
 }
 
+static inline bool VIsMain(VRuntime * runtime) {
+  return runtime->my_fiber == runtime->main_fiber;
+}
+
 SYSV_CALL static void VSwapHeap(VRuntime * runtime) {
   runtime->VActiveHeap = !runtime->VActiveHeap;
-
+#ifdef __linux__
+  bool i = runtime->VActiveHeap;
+  if(!VIsMain(runtime) && !runtime->owns_heap[i]) {
+    size_t size = runtime->public.VStackLen * 8;
+    char * heap = VStackPop(runtime->fiber_heaps);
+    if(!heap) {
+      heap = malloc(size);
+    }
+    runtime->VHeaps[i].begin = heap;
+    runtime->VHeaps[i].end = runtime->VHeaps[i].begin + size;
+    runtime->VHeaps[i].size = size;
+  }
+#endif
   runtime->VHeap = runtime->VHeaps[runtime->VActiveHeap].begin;
   runtime->VHeapPos = runtime->VHeap;
   runtime->VHeapEnd = runtime->VHeaps[runtime->VActiveHeap].end;
@@ -732,7 +760,14 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   size_t environ_size = sizeof(VEnvironment) + sizeof(VWORD[argc]);
   stack_len += environ_size;
 
-  size_t after_gc_size = runtime->VHeapPos - runtime->VHeap + stack_len;
+  size_t fiber_size = 0;
+  if(runtime->num_half_reaped_fibers) {
+    for(int i = 0; i < runtime->num_half_reaped_fibers; i++) {
+      fiber_size += runtime->half_reaped_fibers[i]->VHeapPos - runtime->half_reaped_fibers[i]->VHeap;
+    }
+  }
+
+  size_t after_gc_size = runtime->VHeapPos - runtime->VHeap + stack_len + fiber_size;
   bool is_unplanned_major = runtime->VHeap + after_gc_size >= runtime->VHeapEnd - runtime->public.VStackSize;
   bool is_major = runtime->VForceMajorGC || is_unplanned_major;
   static VDebugInfo major_info = { "Garbage Collection (major)" };
@@ -746,9 +781,22 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   } else {
     runtime->VNumMinorGCs++;
   }
+
   if(after_gc_size > runtime->VHeaps[runtime->VActiveHeap].size) {
-    fprintf(stderr, "Garbage collector may overflow: this should be impossible.\n");
-    abort();
+    if(!runtime->num_half_reaped_fibers) {
+      fprintf(stderr, "Garbage collector may overflow: this should be impossible.\n");
+      abort();
+    }
+    fprintf(stderr, "resizing heap from big fiber returnz %lld\n", (long long)after_gc_size);
+    free(runtime->VHeaps[runtime->VActiveHeap].begin);
+    while(after_gc_size > runtime->VHeaps[runtime->VActiveHeap].size) {
+      runtime->VHeaps[runtime->VActiveHeap].size *= 2;
+    }
+    runtime->VHeaps[runtime->VActiveHeap].begin = malloc(runtime->VHeaps[runtime->VActiveHeap].size);
+    runtime->VHeaps[runtime->VActiveHeap].end = runtime->VHeaps[runtime->VActiveHeap].begin + runtime->VHeaps[runtime->VActiveHeap].size;
+    runtime->VHeap = runtime->VHeaps[runtime->VActiveHeap].begin;
+    runtime->VHeapPos = runtime->VHeap;
+    runtime->VHeapEnd = runtime->VHeaps[runtime->VActiveHeap].end;
   }
 
   VEnvironment * environ = alloca(environ_size);
@@ -865,22 +913,53 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   // If after a GC, we are still in a state where the next garbage collect can overflow the heap
   // we need to grow the heap
   // or if we are doing too many major gcs, grow the heap to avoid thrashing
-  bool grow_heap = false;
-  if(is_unplanned_major) {
-    // TODO do binomial statistic test here
-    if(runtime->VGCsSinceMajor < 20)
-      grow_heap = true;
-    runtime->VGCsSinceMajor = 0;
-  } else {
-    runtime->VGCsSinceMajor++;
-  }
 
-  if(grow_heap || (runtime->VHeapPos - runtime->VHeap) + runtime->public.VStackSize > runtime->VHeaps[!runtime->VActiveHeap].size) {
-    free(runtime->VHeaps[!runtime->VActiveHeap].begin);
-    runtime->VHeaps[!runtime->VActiveHeap].size *= 2;
-    runtime->VHeaps[!runtime->VActiveHeap].begin = malloc(runtime->VHeaps[!runtime->VActiveHeap].size);
-    runtime->VHeaps[!runtime->VActiveHeap].end = runtime->VHeaps[!runtime->VActiveHeap].begin + runtime->VHeaps[!runtime->VActiveHeap].size;
-    //fprintf(stderr, "Growing heap!\n");
+  // We'll have to seperate this in a function and call it at beginning of GC when we add fiber reaping
+#ifdef __linux__
+  if(!VIsMain(runtime)) {
+    int inactive = !runtime->VActiveHeap;
+    if(!runtime->owns_heap[inactive] && (runtime->VHeapPos - runtime->VHeap) + runtime->public.VStackSize > runtime->public.VStackLen * 8) {
+      runtime->owns_heap[inactive] = true;
+      VStackPush(runtime->fiber_heaps, runtime->VHeaps[inactive].begin);
+      runtime->VHeaps[inactive].begin = NULL;
+    }
+
+    if(runtime->owns_heap[inactive]) {
+      if((runtime->VHeapPos - runtime->VHeap) + runtime->public.VStackSize > runtime->VHeaps[inactive].size) {
+        if(runtime->VHeaps[inactive].begin)
+          free(runtime->VHeaps[inactive].begin);
+        runtime->VHeaps[inactive].size *= 2;
+        runtime->VHeaps[inactive].begin = malloc(runtime->VHeaps[inactive].size);
+        runtime->VHeaps[inactive].end = runtime->VHeaps[inactive].begin + runtime->VHeaps[inactive].size;
+      }
+    } else {
+      if(runtime->VHeaps[inactive].begin)
+        VStackPush(runtime->fiber_heaps, runtime->VHeaps[inactive].begin);
+      runtime->VHeaps[inactive].begin = NULL;
+      runtime->VHeaps[inactive].end = NULL;
+      runtime->VHeaps[inactive].size = 0;
+    }
+  }
+  else
+#endif
+  {
+    bool grow_heap = false;
+    if(is_unplanned_major) {
+      // TODO do binomial statistic test here
+      if(runtime->VGCsSinceMajor < 20)
+        grow_heap = true;
+      runtime->VGCsSinceMajor = 0;
+    } else {
+      runtime->VGCsSinceMajor++;
+    }
+
+    if(grow_heap || (runtime->VHeapPos - runtime->VHeap) + runtime->public.VStackSize > runtime->VHeaps[!runtime->VActiveHeap].size) {
+      free(runtime->VHeaps[!runtime->VActiveHeap].begin);
+      runtime->VHeaps[!runtime->VActiveHeap].size *= 2;
+      runtime->VHeaps[!runtime->VActiveHeap].begin = malloc(runtime->VHeaps[!runtime->VActiveHeap].size);
+      runtime->VHeaps[!runtime->VActiveHeap].end = runtime->VHeaps[!runtime->VActiveHeap].begin + runtime->VHeaps[!runtime->VActiveHeap].size;
+      //fprintf(stderr, "Growing heap!\n");
+    }
   }
 
 #ifdef __linux__
@@ -943,6 +1022,188 @@ SYSV_CALL static VWORD VCleanupFinalizers(VRuntime * runtime, VWORD k, VFinalize
   return k;
 }
 
+/*********************** BULK COPY *************************/
+
+static inline size_t VEnvironSize(VObject const * o) {
+  VEnvironment const * environ = (VEnvironment const*)o;
+  return sizeof(VEnvironment) + sizeof(VWORD[environ->argc]);
+}
+static inline size_t VEnvSize(VObject const * o) {
+  VEnv const * env = (VEnv const*)o;
+  return sizeof(VEnv) + sizeof(VWORD[env->var_len]);
+}
+static inline size_t VVectorSize(VObject const * o) {
+  VVector const * vec = (VVector const*)o;
+  return sizeof(VVector) + sizeof(VWORD[vec->len]);
+}
+static inline size_t VBlobSize(VObject const * o) {
+  VBlob const * blob = (VBlob const*)o;
+  return sizeof(VBlob) + blob->len;
+}
+
+static inline size_t VObjectSize(VObject const * o) {
+  switch(o->tag) {
+    case VENVIRONMENT:
+      return VEnvironSize(o);
+    case VENV:
+      return VEnvSize(o);
+    case VCONTENV:
+      assert(0);
+      return 0;
+    case VCLOSURE:
+      return sizeof(VClosure);
+    case VCONST_PAIR:
+    case VPAIR:
+      return sizeof(VPair);
+    case VVECTOR:
+      return VVectorSize(o);
+    case VRECORD:
+      assert(0);
+      return 0;
+    case VSYMBOL:
+    case VSTRING:
+    case VBUFFER:
+    case VRNG_STATE:
+      return VBlobSize(o);
+      break;
+    case VPORT:
+      return sizeof(VPort);
+    case VRUNTIME:
+      return sizeof(VRuntime);
+    case VHASH_TABLE:
+      return sizeof(VHashTable);
+    default:
+      VError("Unknown object (tag: ~D) in heap.\n", o->tag);
+      return 0;
+  }
+}
+
+void VShiftPointer(void ** ptr, void const * old, void const * oldend, ptrdiff_t shift) {
+  if(old <= *ptr && *ptr < oldend)
+    *ptr += shift;
+}
+
+void VShiftWord(VWORD * word, void const * old, void const * oldend, ptrdiff_t shift) {
+  if(!VIsPointer(*word))
+    return;
+  void * ptr = VDecodePointer(*word);
+  if(old < ptr && ptr < oldend) {
+    uint64_t bits = VBits(*word);
+    bits += shift;
+    *word = VWord(bits);
+  }
+}
+
+static inline void VShiftEnvironment(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  VEnvironment * environ = (VEnvironment*)o;
+
+  VShiftPointer((void**)&environ->runtime, old, oldend, shift);
+  VShiftPointer((void**)&environ->static_chain, old, oldend, shift);
+  for(int i = 0; i < environ->argc; i++)
+    VShiftWord(&environ->argv[i], old, oldend, shift);
+}
+
+static inline void VShiftEnv(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  VEnv * env = (VEnv*)o;
+  VShiftPointer((void**)&env->up, old, oldend, shift);
+  for(int i = 0; i < env->num_vars; i++) {
+    VShiftWord(&env->vars[i], old, oldend, shift);
+  }
+}
+
+static inline void VShiftClosure(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  VClosure * closure = (VClosure*)o;
+  VShiftPointer((void**)&closure->env, old, oldend, shift);
+}
+
+static inline void VShiftPair(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  VPair * pair = (VPair*)o;
+  VShiftWord(&pair->first, old, oldend, shift);
+  VShiftWord(&pair->rest, old, oldend, shift);
+}
+
+static inline void VShiftVector(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  VVector * vec = (VVector*)o;
+  for(int i = 0; i < vec->len; i++) {
+    VShiftWord(&vec->arr[i], old, oldend, shift);
+  }
+}
+
+static inline void VShiftRuntime(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  VError("why is a runtime on the heap?\n");
+}
+
+static inline void VShiftHashTable(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  VHashTable * table = (VHashTable*)o;
+  VShiftWord(&table->vec, old, oldend, shift);
+  VShiftWord(&table->eq, old, oldend, shift);
+  VShiftWord(&table->hash, old, oldend, shift);
+}
+
+// adds shift to all pointers inside o that fall within the range [old,oldend), nonrecursively
+static inline void VShiftObject(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  switch(o->tag) {
+    case VSYMBOL:
+    case VSTRING:
+    case VBUFFER:
+    case VRNG_STATE:
+    case VPORT:
+      /* no pointers in these objects! */
+      return;
+    case VENVIRONMENT:
+      VShiftEnvironment(o, old, oldend, shift);
+      return;
+    case VENV:
+      VShiftEnv(o, old, oldend, shift);
+      return;
+    case VCONTENV:
+      assert(0);
+      return;
+    case VCLOSURE:
+      VShiftClosure(o, old, oldend, shift);
+      return;
+    case VCONST_PAIR:
+    case VPAIR:
+      VShiftPair(o, old, oldend, shift);
+      return;
+    case VVECTOR:
+      VShiftVector(o, old, oldend, shift);
+      return;
+    case VRECORD:
+      assert(0);
+      return;
+    case VRUNTIME:
+      VShiftRuntime(o, old, oldend, shift);
+      return;
+    case VHASH_TABLE:
+      VShiftHashTable(o, old, oldend, shift);
+      return;
+    default:
+      VError("Unknown object (tag: ~D) in heap.\n", o->tag);
+      return;
+  }
+}
+
+// Copies a heap in its entirety
+// Assumes that dst has no references to src
+// This makes sense for the limitations of fibers
+// And fibers have a full gc run at exit so the heap is all valid
+void VCopyHeap(char * dst, char const * src, size_t len) {
+  char const * cur = src;
+  char const * end = src+len;
+  while(cur < end) {
+    VObject const * o = (VObject const*)cur;
+    size_t objsize = VObjectSize(o);
+
+    memcpy(dst, o, objsize);
+    VObject * newo = (VObject*)dst;
+    VShiftObject(newo, src, end, dst - cur);
+
+    dst += objsize;
+    cur += objsize;
+  }
+}
+
 /////////////////////////////////////////////////////////////
 //                   END GARBAGE COLLECTOR                 //
 /////////////////////////////////////////////////////////////
@@ -969,16 +1230,31 @@ SYSV_CALL void VNext2(V_CORE_ARGS, VWORD e) {
   else
     runtime->VExitCode = VVOID;
   // Always GC before a VLongJmp as all the datas on the stack
+  if(!VIsMain(runtime))
+    runtime->VForceMajorGC = true;
   VGarbageCollect2(VNext2K, runtime, statics, 0, NULL);
 }
 
-SYSV_CALL static void VExitK(V_CORE_ARGS, ...) {
+SYSV_CALL static void VExitK(V_CORE_ARGS, VWORD before_finalizers) {
   VFinalizerTable * table = &runtime->VHeapFinalizers[runtime->VActiveHeap];
   if(table->num_finalizers == 0)
     VLongJmp(runtime->VRoot, VJMP_EXIT);
 
+#ifdef __linux__
+  if(!VIsMain(runtime)) {
+    if(table->num_finalizers == VDecodeInt(before_finalizers))
+      VLongJmp(runtime->VRoot, VJMP_EXIT);
+    runtime->VForceMajorGC = true;
+    VWORD num_finalizers = VEncodeInt(table->num_finalizers);
+    VGarbageCollect2((VFunc)VExitK, runtime, NULL, 1, &num_finalizers);
+  }
+#endif
+
+  // The main thread needs to finalize anything stored in global variables
+  // Which isn't a matter of simply unbinding the globals because that would
+  // break the finalizers
   VClosure * closure = alloca(sizeof(VClosure));
-  *closure = VMakeClosure2(VExitK, NULL);
+  *closure = VMakeClosure2((VFunc)VExitK, NULL);
   VWORD k = VEncodeClosure(closure);
 
   // num_finalizers includes tombstones
@@ -1018,7 +1294,16 @@ SYSV_CALL void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
   if(argc == 2) {
     runtime->VExitCode = e;
   }
-  VGarbageCollect2(VExitK, runtime, NULL, 0, NULL);
+#ifdef __linux__
+  if(VIsMain(runtime)) {
+    // only fibers need to return meaningful data, normal exits coerce
+    // to integer early so finalizers run
+    runtime->VExitCode = VEncodeInt(VDecodeExitCode(runtime->VExitCode));
+  }
+#endif
+  runtime->VForceMajorGC = true;
+  VWORD num_finalizers = VEncodeInt(runtime->VHeapFinalizers[runtime->VActiveHeap].num_finalizers);
+  VGarbageCollect2((VFunc)VExitK, runtime, NULL, 1, &num_finalizers);
 }
 
 SYSV_CALL void VAbort2(V_CORE_ARGS, ...) {
@@ -1132,6 +1417,7 @@ SYSV_CALL void VError(const char * str, ...) {
 // Its impossible for a var in the old set to point to the new set
 // except through mutation, track all such events to avoid dropping them
 // during GC
+// null is an acceptable value for container: the mutation will always be tracked
 SYSV_CALL void VTrackMutation(VRuntime * runtime, void * container, VWORD * slot, VWORD val) {
   // TODO: USE A HASH TABLE TO AVOID DUPLICATE TRACKING
   if(runtime->VNumTrackedMutations >= runtime->VTrackedMutationsSize) {
@@ -1145,7 +1431,7 @@ SYSV_CALL void VTrackMutation(VRuntime * runtime, void * container, VWORD * slot
     void * ptr = VDecodePointer(val);
     if(VMemLocation(runtime, ptr) != STACK_MEM) {
       runtime->VNumUntrackedMutations++;
-    } else if(VMemLocation(runtime, container) != STACK_MEM) {
+    } else if(!container || VMemLocation(runtime, container) != STACK_MEM) {
       // a slot in older memory is being set to
       // a value in the new generation, need to track it to
       // avoid losing it
@@ -1711,9 +1997,20 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   r->lex_buf = NULL;
 
   // fiber implementation
-#ifdef __linux__
   r->fiber_context = NULL;
   r->my_fiber = NULL;
+  r->main_fiber = NULL;
+#ifdef __linux__
+  r->owns_heap[0] = false;
+  r->owns_heap[1] = false;
+
+  r->fiber_runtimes = malloc(sizeof(VStack));
+  VStackInit(r->fiber_runtimes);
+  r->fiber_heaps = malloc(sizeof(VStack));
+  VStackInit(r->fiber_heaps);
+
+  r->num_half_reaped_fibers = 0;
+  r->half_reaped_fibers = NULL;
 #endif
 }
 
@@ -1820,7 +2117,7 @@ SYSV_CALL VWORD VStart3(VRuntime * runtime, int num_toplevels, VWORD const * top
   VExit2(runtime, NULL, 2, VVOID, runtime->VExitCode);
 end:
 #ifdef __linux__
-  if(!runtime->my_fiber && runtime->fiber_context)
+  if(VIsMain(runtime) && runtime->fiber_context)
     VCloseFiberWorkers(runtime->fiber_context);
 #endif
   return ret;
@@ -1854,7 +2151,7 @@ SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k) {
   V_CALL(k, runtime, ret);
 }
 
-SYSV_CALL bool VStackOverflowNoInline(VRuntime * runtime) {
+SYSV_CALL bool __attribute__((noinline)) VStackOverflowNoInline(VRuntime * runtime) {
   char * VStackStop = (char*)&runtime;
   ptrdiff_t size = runtime->public.VStackStart - VStackStop;
 #ifndef __x86_64__
@@ -1862,7 +2159,7 @@ SYSV_CALL bool VStackOverflowNoInline(VRuntime * runtime) {
 #endif
   return size > runtime->public.VStackLen;
 }
-SYSV_CALL bool VStackOverflowNoInline2(VRuntime * runtime, char * VStackStop) {
+SYSV_CALL bool __attribute__((noinline)) VStackOverflowNoInline2(VRuntime * runtime, char * VStackStop) {
   ptrdiff_t size = runtime->public.VStackStart - VStackStop;
 #ifndef __x86_64__
   static_assert(0);
@@ -1889,7 +2186,7 @@ SYSV_CALL void VRecordCallNoInline(VRuntime * runtime, VDebugInfo * debug) {
 typedef struct VLaunchFiberData {
   VWORD thunk;
   VRuntime const * base_runtime;
-  VRuntime my_runtime;
+  VRuntime * my_runtime;
 } VLaunchFiberData;
 
 static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * fiber) {
@@ -1908,13 +2205,6 @@ static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * f
   r->VActiveHeap = true;
   r->VGCsSinceMajor = 0;
 
-  size_t size = r->public.VStackLen * 8;
-  for(int i = 0; i < 2; i++) {
-    r->VHeaps[i].begin = malloc(size);
-    r->VHeaps[i].end = r->VHeaps[i].begin + size;
-    r->VHeaps[i].size = size;
-  }
-  VSwapHeap(r);
 
   r->VNumTrackedMutations = 0;
   r->VNumUntrackedMutations = 0;
@@ -1940,12 +2230,31 @@ static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * f
   r->lex_buf = NULL;
 
   r->my_fiber = fiber;
+  r->main_fiber = runtime->main_fiber;
   r->fiber_context = runtime->fiber_context;
+
+  r->fiber_runtimes = runtime->fiber_runtimes;
+  r->fiber_heaps = runtime->fiber_heaps;
+
+  for(int i = 0; i < 2; i++) {
+    r->VHeaps[i].begin = NULL;
+    r->VHeaps[i].end = NULL;
+    r->VHeaps[i].size = 0;
+  }
+  r->VActiveHeap = false;
+  r->VHeap = NULL;
+  r->VHeapPos = NULL;
+  r->VHeapEnd = NULL;
+  VSwapHeap(r);
 }
 static void VFreeFiberRuntime(VRuntime * r) {
   for(int i = 0; i < 2; i++) {
-    if(r->VHeaps[i].begin)
-      free(r->VHeaps[i].begin);
+    if(r->VHeaps[i].begin) {
+      if(r->owns_heap[i])
+        free(r->VHeaps[i].begin);
+      else
+        VStackPush(r->fiber_heaps, r->VHeaps[i].begin);
+    }
   }
   for(int i = 0; i < 2; i++) {
     if(r->VHeapFinalizers[i].dense)
@@ -1960,44 +2269,150 @@ static void VFreeFiberRuntime(VRuntime * r) {
 static uint64_t VLaunchFiber(VFiber * me, void * _data) {
   VLaunchFiberData * data = _data;
 
-  // need to copy runtime and make changes
-  // then run thunk with a continuation to yield here
-  VInitFiberRuntime(&data->my_runtime, data->base_runtime, me);
-  VWORD ret = VStart3(&data->my_runtime, 1, &data->thunk);
+  data->my_runtime = VStackPop(data->base_runtime->fiber_runtimes);
+  if(!data->my_runtime) {
+    data->my_runtime = malloc(sizeof(VRuntime));
+  }
+
+  VInitFiberRuntime(data->my_runtime, data->base_runtime, me);
+  VWORD ret = VStart3(data->my_runtime, 1, &data->thunk);
 
   return VBits(ret);
 }
 
+// extracts the return value, copying over data structures if needed
+// and frees the runtime
+static size_t VReapSpaceNeeded(VWORD fiber_ret, VRuntime * fiber_runtime) {
+  if(!VIsPointer(fiber_ret))
+    return 0;
+  return fiber_runtime->VHeapPos - fiber_runtime->VHeap;
+}
+static void VReapFiberRuntime(VRuntime * runtime, char * buf, VRuntime * fiber_runtime) {
+  if(buf)
+    VCopyHeap(buf, fiber_runtime->VHeap, fiber_runtime->VHeapPos - fiber_runtime->VHeap);
+  if(fiber_runtime->VHeapFinalizers[fiber_runtime->VActiveHeap].num_finalizers)
+    VError("fiber finalizer returns not supported yet\n");
+  VFreeFiberRuntime(fiber_runtime);
+  VStackPush(runtime->fiber_runtimes, fiber_runtime);
+}
+
+static void VPushHalfReapedFibers(VRuntime * runtime, int numfibers, VLaunchFiberData * datas) {
+  if(!numfibers)
+    return;
+  assert(runtime->num_half_reaped_fibers == 0);
+  assert(!runtime->half_reaped_fibers);
+  runtime->num_half_reaped_fibers = numfibers;
+  VRuntime ** runtimes = runtime->half_reaped_fibers = malloc(sizeof(VRuntime*[numfibers]));
+  for(int i = 0; i < numfibers; i++) {
+    runtimes[i] = datas[i].my_runtime;
+  }
+}
+
+// TODO need to keep massaging this into a GCable function
+static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfibers, VWORD k, VLaunchFiberData * datas) {
+  VFiber * me = runtime->my_fiber;
+  VFiber * fibers[numfibers];
+
+  VWORD ret = VNULL;
+  for(int i = 0; i < numfibers; i++) {
+    ret = VInlineCons(VVOID, ret);
+  }
+
+  int pushnum = 0;
+  int waitnum = 0;
+  int halfreapnum = 0;
+  int reapnum = 0;
+
+  VWORD cur_wait = ret;
+  VWORD cur_reap = ret;
+  char * stackstop = alloca(1);
+  bool reapoverflow = false;
+  while(halfreapnum < numfibers) {
+    // spin up a fiber
+    if(pushnum < numfibers) {
+      fibers[pushnum] = VPushFiber(runtime->fiber_context, me, VLaunchFiber, &datas[pushnum]);
+      pushnum++;
+    }
+
+    // see if we have any opportunistic waits
+    VPair * waitpair = VDecodePair(cur_wait);
+    while(waitnum < pushnum && VTryFiberWait(runtime->fiber_context, fibers[waitnum], me, (uint64_t*)&waitpair->first)) {
+      cur_wait = VInlineCdr(cur_wait);
+      waitpair = VDecodePair(cur_wait);
+      waitnum++;
+    }
+
+    // try to reap threads
+    while(halfreapnum < waitnum) {
+      VPair * reappair = VDecodePair(cur_reap);
+      VWORD fiber_ret = VInlineCar(cur_reap);
+      if(VIsToken(fiber_ret, VTOK_ERROR))
+        VError("fiber-split: a fiber errored\n");
+      if(VIsToken(fiber_ret, VTOK_VOID))
+        VError("fiber-split: a fiber returned but did not return a value\n");
+
+      VRuntime * fiber_runtime = datas[halfreapnum].my_runtime;
+      size_t reapsize = VReapSpaceNeeded(fiber_ret, fiber_runtime);
+      if(reapsize) {
+        printf("copying over a harvest of %lu\n", reapsize);
+      }
+      if(!reapoverflow && !VStackOverflowNoInline2(runtime, stackstop - reapsize)) {
+        char * buf = reapsize ? alloca(reapsize) : NULL;
+        if(buf) stackstop = buf;
+        VShiftWord(&reappair->first, fiber_runtime->VHeap, fiber_runtime->VHeapEnd, buf - (char*)fiber_runtime->VHeap);
+        VReapFiberRuntime(runtime, buf, fiber_runtime);
+        reapnum++;
+      } else {
+        reapoverflow = true;
+      }
+      cur_reap = VInlineCdr(cur_reap);
+      halfreapnum++;
+    }
+
+    if(pushnum == numfibers && waitnum < numfibers) {
+      // no more fibers to push so at this point we start spinning on waits
+      waitpair->first = VWord(VFiberWait(runtime->fiber_context, fibers[waitnum], me));
+      cur_wait = VInlineCdr(cur_wait);
+      waitnum++;
+    }
+  }
+
+  VPushHalfReapedFibers(runtime, numfibers - reapnum, datas + reapnum);
+
+  if(reapoverflow) {
+    VClosure * _k = VDecodeClosure(k);
+    VGarbageCollect2(_k->func, runtime, _k->env, 1, &ret);
+  } else {
+    V_CALL(k, runtime, ret);
+  }
+  assert(0);
+  return 0;
+}
+
 SYSV_CALL void VFiberFork(V_CORE_ARGS, VWORD k, ...) {
   V_ARG_MIN2("fiber-split", 1, argc);
-  if(!runtime->fiber_context)
-    VLaunchFiberWorkers(&runtime->fiber_context, 8, 2 * 1024 * 1024);
-  VWORD ret = VNULL;
+  if(!runtime->fiber_context) {
+    runtime->my_fiber = VLaunchFiberWorkers(&runtime->fiber_context, 8, 2 * 1024 * 1024);
+    runtime->main_fiber = runtime->my_fiber;
+  }
   if(argc > 1) {
     VLaunchFiberData datas[argc-1];
-    VFiber * fibers[argc-1];
+
     va_list args;
     va_start(args, k);
     for(int i = 0; i < argc-1; i++) {
       datas[i].thunk = va_arg(args, VWORD);
       datas[i].base_runtime = runtime;
-      fibers[i] = VPushFiber(runtime->fiber_context, VLaunchFiber, &datas[i]);
+      datas[i].my_runtime = NULL;
     }
     va_end(args);
-    for(int i = argc-2; i >= 0; i--) {
-      VWORD fiber_ret = VWord(VFiberWait(runtime->fiber_context, fibers[i], NULL));
-      if(VIsToken(fiber_ret, VTOK_ERROR))
-        VError("fiber-split: a fiber errored\n");
-      if(VIsToken(fiber_ret, VTOK_VOID))
-        VError("fiber-split: a fiber returned but did not return a value\n");
-      if(VIsPointer(fiber_ret))
-        VError("fiber-split: pointer returns not supported yet\n");
-      ret = VInlineCons(fiber_ret, ret);
-      VFreeFiberRuntime(&datas[i].my_runtime);
-    }
-  }
 
-  V_CALL(k, runtime, ret);
+    VWrappedFiberFork(runtime, NULL, argc-1, k, datas);
+  } else {
+    V_CALL(k, runtime, VNULL);
+  }
+  assert(0);
+
   VError("fiber-split: unsupported platform\n");
 }
 #endif

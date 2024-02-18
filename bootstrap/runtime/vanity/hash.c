@@ -27,16 +27,16 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
-static struct { VBlob sym; char bytes[21]; } _V10string_D20 = { { .base = { .tag = VSTRING }, 21 }, "_V0vanity_V0hash_V20" };
-VWEAK VWORD _V40_V10vcore_Dmake__random;VWEAK VClosure _VW_V40_V10vcore_Dmake__random = { .base = { .tag = VCLOSURE }, (VFunc)VMakeRandom, NULL };
-VWEAK VWORD _V40_V10vcore_Drandom__copy;VWEAK VClosure _VW_V40_V10vcore_Drandom__copy = { .base = { .tag = VCLOSURE }, (VFunc)VRandomCopy, NULL };
-VWEAK VWORD _V40_V10vcore_Drandom__sample__float_B;VWEAK VClosure _VW_V40_V10vcore_Drandom__sample__float_B = { .base = { .tag = VCLOSURE }, (VFunc)VRandomSampleFloat, NULL };
-VWEAK VWORD _V40_V10vcore_Drandom__advance_B;VWEAK VClosure _VW_V40_V10vcore_Drandom__advance_B = { .base = { .tag = VCLOSURE }, (VFunc)VRandomAdvance, NULL };
-VWEAK VWORD _V0random__advance_B;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0random__advance_B = { { .base = { .tag = VSYMBOL }, 16 }, "random-advance!" };
-VWEAK VWORD _V0random__sample__float_B;VWEAK struct { VBlob sym; char bytes[21]; } _VW_V0random__sample__float_B = { { .base = { .tag = VSYMBOL }, 21 }, "random-sample-float!" };
-VWEAK VWORD _V0random__sample_B;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V0random__sample_B = { { .base = { .tag = VSYMBOL }, 15 }, "random-sample!" };
-VWEAK VWORD _V0random__copy;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0random__copy = { { .base = { .tag = VSYMBOL }, 12 }, "random-copy" };
-VWEAK VWORD _V0make__random;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0make__random = { { .base = { .tag = VSYMBOL }, 12 }, "make-random" };
+static struct { VBlob sym; char bytes[21]; } _V10string_D18 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0hash_V20" };
+VWEAK VWORD _V40_V10vcore_Dmake__random;VWEAK VClosure _VW_V40_V10vcore_Dmake__random = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMakeRandom, NULL };
+VWEAK VWORD _V40_V10vcore_Drandom__copy;VWEAK VClosure _VW_V40_V10vcore_Drandom__copy = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRandomCopy, NULL };
+VWEAK VWORD _V40_V10vcore_Drandom__sample__float_B;VWEAK VClosure _VW_V40_V10vcore_Drandom__sample__float_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRandomSampleFloat, NULL };
+VWEAK VWORD _V40_V10vcore_Drandom__advance_B;VWEAK VClosure _VW_V40_V10vcore_Drandom__advance_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRandomAdvance, NULL };
+VWEAK VWORD _V0random__advance_B;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0random__advance_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "random-advance!" };
+VWEAK VWORD _V0random__sample__float_B;VWEAK struct { VBlob sym; char bytes[21]; } _VW_V0random__sample__float_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 21 }, "random-sample-float!" };
+VWEAK VWORD _V0random__sample_B;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V0random__sample_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "random-sample!" };
+VWEAK VWORD _V0random__copy;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0random__copy = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "random-copy" };
+VWEAK VWORD _V0make__random;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0make__random = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "make-random" };
 static __attribute__((constructor)) void VDllMain1() {
   _V40_V10vcore_Dmake__random = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__random", &_VW_V40_V10vcore_Dmake__random), VPOINTER_CLOSURE);
   _V40_V10vcore_Drandom__copy = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__copy", &_VW_V40_V10vcore_Drandom__copy), VPOINTER_CLOSURE);
@@ -49,38 +49,42 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0make__random = VEncodePointer(VLookupConstant("_V0make__random", &_VW_V0make__random), VPOINTER_OTHER);
 }
 static void _V0vanity_V0hash_V20_k6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k6" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0hash_V20_k6, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0hash_V20_k6, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn ##k.3 5 0) (##inline ##sys.cons (##inline ##sys.cons (quote make-random) (bruijn make-random 5 1)) (##inline ##sys.cons (##inline ##sys.cons (quote random-copy) (bruijn random-copy 5 2)) (##inline ##sys.cons (##inline ##sys.cons (quote random-sample!) (bruijn random-sample! 5 3)) (##inline ##sys.cons (##inline ##sys.cons (quote random-sample-float!) (bruijn random-sample-float! 5 4)) (##inline ##sys.cons (##inline ##sys.cons (quote random-advance!) (bruijn random-advance! 5 5)) (quote ())))))))
-V_CALL(VGetArg(upenv, 5-1, 0), runtime,
+  // ((bruijn ##k.1 7 0) (##inline ##sys.cons (##inline ##sys.cons 'make-random (bruijn make-random 5 0)) (##inline ##sys.cons (##inline ##sys.cons 'random-copy (bruijn random-copy 5 1)) (##inline ##sys.cons (##inline ##sys.cons 'random-sample! (bruijn random-sample! 5 2)) (##inline ##sys.cons (##inline ##sys.cons 'random-sample-float! (bruijn random-sample-float! 5 3)) (##inline ##sys.cons (##inline ##sys.cons 'random-advance! (bruijn random-advance! 5 4)) '()))))))
+V_CALL(VGetArg(upenv, 7-1, 0), runtime,
       VInlineCons(
         VInlineCons(
         _V0make__random,
-        VGetArg(upenv, 5-1, 1)),
+        VGetArg(upenv, 5-1, 0)),
         VInlineCons(
         VInlineCons(
         _V0random__copy,
-        VGetArg(upenv, 5-1, 2)),
+        VGetArg(upenv, 5-1, 1)),
         VInlineCons(
         VInlineCons(
         _V0random__sample_B,
-        VGetArg(upenv, 5-1, 3)),
+        VGetArg(upenv, 5-1, 2)),
         VInlineCons(
         VInlineCons(
         _V0random__sample__float_B,
-        VGetArg(upenv, 5-1, 4)),
+        VGetArg(upenv, 5-1, 3)),
         VInlineCons(
         VInlineCons(
         _V0random__advance_B,
-        VGetArg(upenv, 5-1, 5)),
+        VGetArg(upenv, 5-1, 4)),
         VNULL))))));
  }
 }
 static void _V0vanity_V0hash_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k5" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0hash_V20_k5, got ~D~N"
   "-- expected 1~N"
@@ -91,15 +95,17 @@ static void _V0vanity_V0hash_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0hash_V20_k6) (bruijn random-advance! 4 5) (##intrinsic ##vcore.random-advance!))
+  // (set! (close _V0vanity_V0hash_V20_k6) (bruijn random-advance! 4 4) (##intrinsic ##vcore.random-advance!))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0hash_V20_k6, env)}),
-      VEncodeInt(4l), VEncodeInt(5l),
+      VEncodeInt(4l), VEncodeInt(4l),
       _V40_V10vcore_Drandom__advance_B
     );
  }
 }
 static void _V0vanity_V0hash_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k4" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0hash_V20_k4, got ~D~N"
   "-- expected 1~N"
@@ -110,49 +116,55 @@ static void _V0vanity_V0hash_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0hash_V20_k5) (bruijn random-sample-float! 3 4) (##intrinsic ##vcore.random-sample-float!))
+  // (set! (close _V0vanity_V0hash_V20_k5) (bruijn random-sample-float! 3 3) (##intrinsic ##vcore.random-sample-float!))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0hash_V20_k5, env)}),
-      VEncodeInt(3l), VEncodeInt(4l),
+      VEncodeInt(3l), VEncodeInt(3l),
       _V40_V10vcore_Drandom__sample__float_B
     );
  }
 }
-__attribute__((used)) static void _V20CaseError__V0random__sample_B_lambda4(VRuntime * runtime, VEnv * upenv, int argc, ...) {
- // (_V0random__sample_B_lambda4 #t (2 (##vcore.random-sample! (bruijn ##k.18 0 0) (bruijn rng 0 1))) (3 (##vcore.random-sample-bounded! (bruijn ##k.19 0 0) (bruijn rng 0 1) (bruijn end 0 2))))
- VError("Not enough arguments to _V0random__sample_B_lambda4, got ~D~N"
+__attribute__((used)) static void _V20CaseError__V0random__sample_B_lambda3(VRuntime * runtime, VEnv * upenv, int argc, ...) {
+ // (_V0random__sample_B_lambda3 #t (2 (##vcore.random-sample! (bruijn ##k.16 0 0) (bruijn rng 0 1))) (3 (##vcore.random-sample-bounded! (bruijn ##k.17 0 0) (bruijn rng 0 1) (bruijn end 0 2))))
+ VError("Not enough arguments to _V0random__sample_B_lambda3, got ~D~N"
  "-- expected 2~N"
  "-- expected 3~N"
  , argc);
 }
-__attribute__((used)) static void _V20Case0__V0random__sample_B_lambda4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
- V_GC_CHECK2_VARARGS((VFunc)_V20Case0__V0random__sample_B_lambda4, runtime, upenv, 2, argc, _var0, _var1) {
-  // (##vcore.random-sample! (bruijn ##k.18 0 0) (bruijn rng 0 1))
+__attribute__((used)) static void _V20Case0__V0random__sample_B_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V20Case0__V0random__sample_B_lambda3" };
+ VRecordCall2(runtime, &dbg);
+ V_GC_CHECK2_VARARGS((VFunc)_V20Case0__V0random__sample_B_lambda3, runtime, upenv, 2, argc, _var0, _var1) {
+  // (##vcore.random-sample! (bruijn ##k.16 0 0) (bruijn rng 0 1))
     V_CALL_FUNC(VRandomSample, NULL, runtime,
       _var0,
       _var1);
  }
 }
-__attribute__((used)) static void _V20Case1__V0random__sample_B_lambda4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
- V_GC_CHECK2_VARARGS((VFunc)_V20Case1__V0random__sample_B_lambda4, runtime, upenv, 3, argc, _var0, _var1, _var2) {
-  // (##vcore.random-sample-bounded! (bruijn ##k.19 0 0) (bruijn rng 0 1) (bruijn end 0 2))
+__attribute__((used)) static void _V20Case1__V0random__sample_B_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V20Case1__V0random__sample_B_lambda3" };
+ VRecordCall2(runtime, &dbg);
+ V_GC_CHECK2_VARARGS((VFunc)_V20Case1__V0random__sample_B_lambda3, runtime, upenv, 3, argc, _var0, _var1, _var2) {
+  // (##vcore.random-sample-bounded! (bruijn ##k.17 0 0) (bruijn rng 0 1) (bruijn end 0 2))
     V_CALL_FUNC(VRandomSampleBounded, NULL, runtime,
       _var0,
       _var1,
       _var2);
  }
 }
-void _V0random__sample_B_lambda4(VRuntime * runtime, VEnv * upenv, int argc, ...);
+void _V0random__sample_B_lambda3(VRuntime * runtime, VEnv * upenv, int argc, ...);
 asm(
 ".intel_syntax noprefix\n"
-"_V0random__sample_B_lambda4:\n"
+"_V0random__sample_B_lambda3:\n"
 "    cmp " ARGC_REG ", 2\n"
-"    je _V20Case0__V0random__sample_B_lambda4\n"
+"    je _V20Case0__V0random__sample_B_lambda3\n"
 "    cmp " ARGC_REG ", 3\n"
-"    je _V20Case1__V0random__sample_B_lambda4\n"
-"    jmp _V20CaseError__V0random__sample_B_lambda4\n"
+"    je _V20Case1__V0random__sample_B_lambda3\n"
+"    jmp _V20CaseError__V0random__sample_B_lambda3\n"
 );
 static void _V0vanity_V0hash_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k3" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0hash_V20_k3, got ~D~N"
   "-- expected 1~N"
@@ -163,15 +175,17 @@ static void _V0vanity_V0hash_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0hash_V20_k4) (bruijn random-sample! 2 3) (close _V0random__sample_B_lambda4))
+  // (set! (close _V0vanity_V0hash_V20_k4) (bruijn random-sample! 2 2) (close _V0random__sample_B_lambda3))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0hash_V20_k4, env)}),
-      VEncodeInt(2l), VEncodeInt(3l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0random__sample_B_lambda4, env)})
+      VEncodeInt(2l), VEncodeInt(2l),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0random__sample_B_lambda3, env)})
     );
  }
 }
 static void _V0vanity_V0hash_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k2" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0hash_V20_k2, got ~D~N"
   "-- expected 1~N"
@@ -182,50 +196,37 @@ static void _V0vanity_V0hash_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0hash_V20_k3) (bruijn random-copy 1 2) (##intrinsic ##vcore.random-copy))
+  // (set! (close _V0vanity_V0hash_V20_k3) (bruijn random-copy 1 1) (##intrinsic ##vcore.random-copy))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0hash_V20_k3, env)}),
-      VEncodeInt(1l), VEncodeInt(2l),
+      VEncodeInt(1l), VEncodeInt(1l),
       _V40_V10vcore_Drandom__copy
     );
  }
 }
-static void _V0vanity_V0hash_V20_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5) {
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0hash_V20_lambda3, runtime, upenv, 6, argc, _var0, _var1, _var2, _var3, _var4, _var5) {
-  struct { VEnv env; VWORD argv[6]; } container;
+static void _V0vanity_V0hash_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_lambda2" };
+ VRecordCall2(runtime, &dbg);
+ V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0hash_V20_lambda2, runtime, upenv, 5, argc, _var0, _var1, _var2, _var3, _var4) {
+  struct { VEnv env; VWORD argv[5]; } container;
   VEnv * env = &container.env;
-  VInitEnv(env, 6, 6, upenv);
+  VInitEnv(env, 5, 5, upenv);
   env->vars[0] = _var0;
   env->vars[1] = _var1;
   env->vars[2] = _var2;
   env->vars[3] = _var3;
   env->vars[4] = _var4;
-  env->vars[5] = _var5;
-  // (set! (close _V0vanity_V0hash_V20_k2) (bruijn make-random 0 1) (##intrinsic ##vcore.make-random))
+  // (set! (close _V0vanity_V0hash_V20_k2) (bruijn make-random 0 0) (##intrinsic ##vcore.make-random))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0hash_V20_k2, env)}),
-      VEncodeInt(0l), VEncodeInt(1l),
+      VEncodeInt(0l), VEncodeInt(0l),
       _V40_V10vcore_Dmake__random
     );
  }
 }
-static void _V0vanity_V0hash_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0hash_V20_lambda2, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // ((close _V0vanity_V0hash_V20_lambda3) (bruijn ##k.2 0 0) #f #f #f #f #f)
-V_CALL_FUNC(_V0vanity_V0hash_V20_lambda3, env, runtime,
-      _var0,
-      VEncodeBool(false),
-      VEncodeBool(false),
-      VEncodeBool(false),
-      VEncodeBool(false),
-      VEncodeBool(false));
- }
-}
 static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k1" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0hash_V20_k1, got ~D~N"
   "-- expected 1~N"
@@ -236,12 +237,18 @@ static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((close _V0vanity_V0hash_V20_lambda2) (bruijn ##k.1 1 0))
+  // ((close _V0vanity_V0hash_V20_lambda2) #f #f #f #f #f)
 V_CALL_FUNC(_V0vanity_V0hash_V20_lambda2, env, runtime,
-      upenv->vars[0]);
+      VEncodeBool(false),
+      VEncodeBool(false),
+      VEncodeBool(false),
+      VEncodeBool(false),
+      VEncodeBool(false));
  }
 }
 static void _V0vanity_V0hash_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_lambda1" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VError("Not enough arguments to _V0vanity_V0hash_V20_lambda1, got ~D~N"
   "-- expected 1~N"
@@ -252,10 +259,10 @@ static void _V0vanity_V0hash_V20_lambda1(VRuntime * runtime, VEnv * upenv, int a
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.make-import (close _V0vanity_V0hash_V20_k1) (##string ##string.20))
+  // (##vcore.make-import (close _V0vanity_V0hash_V20_k1) (##string ##string.18))
     V_CALL_FUNC(VMakeImport2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0hash_V20_k1, env)}),
-      VEncodePointer(&_V10string_D20.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10string_D18.sym, VPOINTER_OTHER));
  }
 }
 VFunc _V0vanity_V0hash_V20 = (VFunc)_V0vanity_V0hash_V20_lambda1;
