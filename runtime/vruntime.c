@@ -579,6 +579,11 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
           return VEncodePointer(VMoveObject(runtime, p, sizeof(VPort)), VPOINTER_OTHER);
           break;
         }
+        case VFUTURE:
+        {
+          VFuture * f = ptr;
+          return VEncodePointer(VMoveObject(runtime, f, sizeof(VFuture)), VPOINTER_OTHER);
+        }
         default:
           fprintf(stderr, "Unknown tag %u in VMoveDispatch. Heap corruption?\n", tag);
           abort();
@@ -637,6 +642,15 @@ SYSV_CALL static void VCheneyHashTable(VRuntime * runtime, VHashTable * table) {
   }
 }
 
+SYSV_CALL static void VCheneyFuture(VRuntime * runtime, VFuture * future) {
+  // If the future is eligible for gc, then we're back in the main thread
+  // and it should have been collected
+  assert(!future->fiber);
+  if(!future->fiber) {
+    future->val = VMoveDispatch(runtime, future->val);
+  }
+}
+
 SYSV_CALL static VWORD * VCheneyScan(VRuntime * runtime, VWORD * cur) {
   switch(*(VNEWTAG*)cur) {
     case VENVIRONMENT:
@@ -688,6 +702,13 @@ SYSV_CALL static VWORD * VCheneyScan(VRuntime * runtime, VWORD * cur) {
     case VPORT:
     {
       return cur + (sizeof(VPort))/sizeof(VWORD);
+      break;
+    }
+    case VFUTURE:
+    {
+      VFuture * f = (VFuture*)cur;
+      VCheneyFuture(runtime, f);
+      return cur + (sizeof(VFuture))/sizeof(VWORD);
       break;
     }
   }
@@ -1072,6 +1093,8 @@ static inline size_t VObjectSize(VObject const * o) {
       return sizeof(VRuntime);
     case VHASH_TABLE:
       return sizeof(VHashTable);
+    case VFUTURE:
+      return sizeof(VFuture);
     default:
       VError("Unknown object (tag: ~D) in heap.\n", o->tag);
       return 0;
@@ -1139,6 +1162,13 @@ static inline void VShiftHashTable(VObject * o, void const * old, void const * o
   VShiftWord(&table->eq, old, oldend, shift);
   VShiftWord(&table->hash, old, oldend, shift);
 }
+static inline void VShiftFuture(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  // If the future is eligible for gc, then we're back in the main thread
+  // and it should have been collected
+  VFuture * future = (VFuture*)o;
+  if(!future->fiber)
+    VShiftWord(&future->val, old, oldend, shift);
+}
 
 // adds shift to all pointers inside o that fall within the range [old,oldend), nonrecursively
 static inline void VShiftObject(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
@@ -1177,6 +1207,9 @@ static inline void VShiftObject(VObject * o, void const * old, void const * olde
       return;
     case VHASH_TABLE:
       VShiftHashTable(o, old, oldend, shift);
+      return;
+    case VFUTURE:
+      VShiftFuture(o, old, oldend, shift);
       return;
     default:
       VError("Unknown object (tag: ~D) in heap.\n", o->tag);
@@ -2000,6 +2033,8 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   r->fiber_context = NULL;
   r->my_fiber = NULL;
   r->main_fiber = NULL;
+
+  r->my_future = false;
 #ifdef __linux__
   r->owns_heap[0] = false;
   r->owns_heap[1] = false;
@@ -2066,6 +2101,11 @@ end:
 #endif
   return ret;
 }
+
+static SYSV_CALL void VResumeThunk(V_CORE_ARGS, ...) {
+  V_CALL(statics->vars[0], runtime, statics->vars[1]);
+}
+
 SYSV_CALL VWORD VStart3(VRuntime * runtime, int num_toplevels, VWORD const * toplevels) {
   if(!runtime->VGlobalTable)
   {
@@ -2095,6 +2135,26 @@ SYSV_CALL VWORD VStart3(VRuntime * runtime, int num_toplevels, VWORD const * top
       case VJMP_FINISH:
       {
         ret = runtime->VExitCode;
+        if(runtime->my_future) {
+          VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+          VInitEnv(env, 2, 2, NULL);
+          env->vars[0] = next;
+          env->vars[1] = ret;
+
+          VClosure _thunk = VMakeClosure2((VFunc)VResumeThunk, env);
+          VWORD thunk = VEncodeClosure(&_thunk);
+          
+          V_CALL_FUNC(VAwait, NULL, runtime, thunk, VEncodePointer(runtime->my_future, VPOINTER_OTHER));
+        }
+        break;
+      }
+      case VJMP_AWAIT:
+      {
+        if(!runtime->my_future)
+          VError("async control flow error: tried to await-join without a future in flight?\n");
+        runtime->my_future = NULL;
+        ret = runtime->VExitCode;
+        goto end;
         break;
       }
       case VJMP_ERROR:
@@ -2182,6 +2242,10 @@ SYSV_CALL void VRecordCallNoInline(VRuntime * runtime, VDebugInfo * debug) {
 
 //   calling parent continuations? hrm I don't think that's forbidden. but ew
 
+// TODO:
+// 1. add finalizer passing
+// 2. shore up UB?
+
 #ifdef __linux__
 typedef struct VLaunchFiberData {
   VWORD thunk;
@@ -2233,6 +2297,7 @@ static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * f
   r->main_fiber = runtime->main_fiber;
   r->fiber_context = runtime->fiber_context;
 
+  r->my_future = NULL;
   r->fiber_runtimes = runtime->fiber_runtimes;
   r->fiber_heaps = runtime->fiber_heaps;
 
@@ -2307,6 +2372,17 @@ static void VPushHalfReapedFibers(VRuntime * runtime, int numfibers, VLaunchFibe
     runtimes[i] = datas[i].my_runtime;
   }
 }
+static void VPushHalfReapedRuntimes(VRuntime * runtime, int numfibers, VRuntime ** _runtimes) {
+  if(!numfibers)
+    return;
+  assert(runtime->num_half_reaped_fibers == 0);
+  assert(!runtime->half_reaped_fibers);
+  runtime->num_half_reaped_fibers = numfibers;
+  VRuntime ** runtimes = runtime->half_reaped_fibers = malloc(sizeof(VRuntime*[numfibers]));
+  for(int i = 0; i < numfibers; i++) {
+    runtimes[i] = _runtimes[i];
+  }
+}
 
 // TODO need to keep massaging this into a GCable function
 static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfibers, VWORD k, VLaunchFiberData * datas) {
@@ -2353,9 +2429,6 @@ static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfiber
 
       VRuntime * fiber_runtime = datas[halfreapnum].my_runtime;
       size_t reapsize = VReapSpaceNeeded(fiber_ret, fiber_runtime);
-      if(reapsize) {
-        printf("copying over a harvest of %lu\n", reapsize);
-      }
       if(!reapoverflow && !VStackOverflowNoInline2(runtime, stackstop - reapsize)) {
         char * buf = reapsize ? alloca(reapsize) : NULL;
         if(buf) stackstop = buf;
@@ -2389,33 +2462,200 @@ static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfiber
   return 0;
 }
 
-SYSV_CALL void VFiberFork(V_CORE_ARGS, VWORD k, ...) {
-  V_ARG_MIN2("fiber-split", 1, argc);
-  if(!runtime->fiber_context) {
-    runtime->my_fiber = VLaunchFiberWorkers(&runtime->fiber_context, 8, 2 * 1024 * 1024);
-    runtime->main_fiber = runtime->my_fiber;
-  }
-  if(argc > 1) {
-    VLaunchFiberData datas[argc-1];
 
-    va_list args;
-    va_start(args, k);
-    for(int i = 0; i < argc-1; i++) {
-      datas[i].thunk = va_arg(args, VWORD);
-      datas[i].base_runtime = runtime;
-      datas[i].my_runtime = NULL;
+#endif
+
+SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst) {
+#ifdef __linux__
+  V_ARG_CHECK2("fiber-fork", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)VFiberForkList, runtime, statics, 2, argc, k, lst) {
+    if(!runtime->fiber_context) {
+      runtime->my_fiber = VLaunchFiberWorkers(&runtime->fiber_context, 8, 2 * 1024 * 1024);
+      runtime->main_fiber = runtime->my_fiber;
     }
-    va_end(args);
+    int nfibers = 0;
+    VWORD cur = lst;
+    while(!VIsToken(cur, VTOK_NULL)) {
+      if(VWordType(cur) != VPOINTER_PAIR)
+        VError("fiber-fork: not a proper list ~S\n", lst);
+      if(VWordType(VInlineCar(cur)) != VPOINTER_CLOSURE)
+        VError("fiber-fork: not a procedure ~S\n", VInlineCar(cur));
+      nfibers++;
+      cur = VInlineCdr(cur);
+    }
+    if(nfibers > 0) {
+      VLaunchFiberData datas[nfibers];
 
-    VWrappedFiberFork(runtime, NULL, argc-1, k, datas);
-  } else {
-    V_CALL(k, runtime, VNULL);
+      for(int i = 0; i < nfibers; i++) {
+        datas[i].thunk = VInlineCar(lst);
+        datas[i].base_runtime = runtime;
+        datas[i].my_runtime = NULL;
+        lst = VInlineCdr(lst);
+      }
+
+      VWrappedFiberFork(runtime, NULL, nfibers, k, datas);
+    } else {
+      V_CALL(k, runtime, VNULL);
+    }
   }
+#endif
+  VError("fiber-fork: unsupported platform\n");
   assert(0);
+}
 
-  VError("fiber-split: unsupported platform\n");
+///////////////////// AWAIT //////////////////////////
+
+#ifdef __linux__
+typedef struct VLaunchAwaiterData {
+  VWORD k;
+  VWORD future;
+  VRuntime * base_runtime;
+  VRuntime * my_runtime;
+} VLaunchAwaiterData;
+
+static uint64_t VLaunchAwaiter(VFiber * me, void * _data) {
+  VLaunchAwaiterData * data = _data;
+
+  data->my_runtime = VStackPop(data->base_runtime->fiber_runtimes);
+  if(!data->my_runtime) {
+    data->my_runtime = malloc(sizeof(VRuntime));
+  }
+
+  VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+  VInitEnv(env, 2, 2, NULL);
+  env->vars[0] = data->k;
+  env->vars[1] = data->future;
+
+  VClosure _thunk = VMakeClosure2((VFunc)VResumeThunk, env);
+  VWORD thunk = VEncodeClosure(&_thunk);
+
+  VInitFiberRuntime(data->my_runtime, data->base_runtime, me);
+  data->my_runtime->my_future = (VFuture*)VDecodePointer(data->future);
+  VWORD ret = VStart3(data->my_runtime, 1, &thunk);
+
+  return VBits(ret);
 }
 #endif
+
+// async first launches the thunk fiber, which is just (thunk)
+// then it launches the continuation fiber, which is (k future)
+// then it waits on the continuation fiber
+// the continuation fiber returns a zero arg continuation to resume at
+// then it garbage collects with the two runtimes and a resume at the zero arg continuation
+SYSV_CALL void VAsync(V_CORE_ARGS, VWORD k, VWORD future_thunk) {
+#ifdef __linux__
+  V_ARG_CHECK2("async", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)VAsync, runtime, statics, 2, argc, k, future_thunk) {
+    if(!runtime->fiber_context) {
+      runtime->my_fiber = VLaunchFiberWorkers(&runtime->fiber_context, 8, 2 * 1024 * 1024);
+      runtime->main_fiber = runtime->my_fiber;
+    }
+    if(VWordType(future_thunk) != VPOINTER_CLOSURE)
+      VError("async: not a procedure ~S\n", future_thunk);
+    VLaunchFiberData thunk_data = {
+      .thunk = future_thunk,
+      .base_runtime = runtime,
+      .my_runtime = NULL,
+    };
+    VFiber * future_fiber = VPushFiber(runtime->fiber_context, runtime->my_fiber, VLaunchFiber, &thunk_data);
+    VFuture future = {
+      .base = { .tag = VFUTURE, .flags = 0, .pincount = 0, .forward_offset = 0 },
+      .lock = NULL,
+      .val = VVOID,
+    };
+    atomic_init(&future.fiber, future_fiber);
+    VFiberLockCreate(&future.lock);
+
+    VLaunchAwaiterData awaiter_data = {
+      .k = k,
+      .future = VEncodePointer(&future, VPOINTER_OTHER),
+      .base_runtime = runtime,
+      .my_runtime = NULL,
+    };
+    VFiber * awaiter_fiber = VPushFiber(runtime->fiber_context, runtime->my_fiber, VLaunchAwaiter, &awaiter_data);
+
+    VWORD resume_thunk = VWord(VFiberWait(runtime->fiber_context, awaiter_fiber, runtime->my_fiber));
+
+    if(atomic_load(&future.fiber))
+      VError("async control flow error: async-join occured even though the future hasn't been awaited\n");
+
+    VRuntime * runtimes[2] = {
+      awaiter_data.my_runtime,
+      thunk_data.my_runtime,
+    };
+
+    VPushHalfReapedRuntimes(runtime, 2, runtimes);
+    VClosure * _resume_thunk = VDecodeClosure(resume_thunk);
+    VGarbageCollect2(_resume_thunk->func, runtime, _resume_thunk->env, 0, NULL);
+  }
+#endif
+  VError("async: unsupported platform\n");
+  assert(0);
+}
+
+#ifdef __linux__
+static SYSV_CALL void VAwaitRejoinK(V_CORE_ARGS, VWORD resume_thunk) {
+  runtime->VExitCode = resume_thunk;
+  VLongJmp(runtime->VRoot, VJMP_AWAIT);
+}
+#endif
+
+// locks the future
+// if the fiber hasn't exited, waits on it
+//   and updates the future to hold its value
+//   then unlocks the future
+//   asserts that this future is the fiber's future
+//   longjmps returning a thunk to continue at returning the future's value
+// otherwise returns the fiber value
+// the spawning thread is responsible for reaping the future's context
+SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD _future) {
+#ifdef __linux__
+  V_ARG_CHECK2("await", 2, argc);
+  VFuture * future = VCheckedDecodeFuture(_future, "await");
+
+  VFiber * fiber = atomic_load(&future->fiber);
+  if(fiber) {
+    VFiberAcquire(future->lock, runtime->fiber_context, runtime->my_fiber);
+    fiber = atomic_load(&future->fiber);
+    if(fiber) {
+      future->val = VWord(VFiberWait(runtime->fiber_context, fiber, runtime->my_fiber));
+      assert(atomic_exchange(&future->fiber, NULL));
+    }
+    VFiberRelease(future->lock, runtime->fiber_context, runtime->my_fiber);
+  }
+
+  bool join_threads = false;
+  if(fiber) {
+    //if(runtime->my_future != future)
+      //VError("await: must await inverse order of async launches\n");
+
+    if(runtime->my_future == future) {
+      join_threads = true;
+    }
+  }
+  if(runtime->my_future) {
+    if(!atomic_load(&runtime->my_future->fiber)) {
+      join_threads = true;
+    }
+  }
+  if(join_threads) {
+    // garbage collect with a resume to yield the future's value into k
+    VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+    VInitEnv(env, 2, 2, NULL);
+    env->vars[0] = k;
+    env->vars[1] = future->val;
+
+    VClosure _thunk = VMakeClosure2((VFunc)VResumeThunk, env);
+    VWORD thunk = VEncodeClosure(&_thunk);
+
+    VGarbageCollect2((VFunc)VAwaitRejoinK, runtime, NULL, 1, &thunk);
+  } else {
+    V_CALL(k, runtime, future->val);
+  }
+#endif
+  VError("await: unsupported platform\n");
+  assert(0);
+}
 
 // ======================================================
 // ------------------- DEBUGGING STUFF ------------------

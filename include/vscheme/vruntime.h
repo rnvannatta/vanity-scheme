@@ -98,6 +98,7 @@ enum VTAG {
   VPORT,
   VRUNTIME,
   VHASH_TABLE,
+  VFUTURE,
   VTAG_END
 };
 static_assert(VTAG_END < 255);
@@ -179,7 +180,7 @@ void VLongJmp(struct VJmpBuf buf[1], int ret);
 #define VWEAK __declspec(selectany)
 #endif
 
-enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT };
+enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT, VJMP_AWAIT };
 
 #define LITERAL_TYPE_MASK (15ul*TAG_BIAS)
 
@@ -316,6 +317,15 @@ typedef struct VPort {
   FILE * stream;
   unsigned flags;
 } VPort;
+
+typedef struct VFiber VFiber;
+typedef struct VFiberLock VFiberLock;
+typedef struct VFuture {
+  VObject base;
+  VFiberLock * lock;
+  VFiber * _Atomic fiber;
+  VWORD val;
+} VFuture;
 
 typedef struct VDynamic {
   VObject base;
@@ -560,6 +570,9 @@ SYSV_CALL static inline bool VIsHashTable(VWORD v) {
 SYSV_CALL static inline bool VIsPort(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VPORT;
 }
+SYSV_CALL static inline bool VIsFuture(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VFUTURE;
+}
 
 /* ======================== Checked Decoding ======================= */
 
@@ -641,6 +654,12 @@ SYSV_CALL static inline VHashTable * VCheckedDecodeHashTable(VWORD v, char const
 SYSV_CALL static inline VPort * VCheckedDecodePort(VWORD v, char const * proc) {
   if(VIsPort(v)) return (VPort*) VDecodePointer(v);
   VError("~Z: not a port: ~S\n", proc, v);
+  return NULL;
+}
+
+SYSV_CALL static inline VFuture * VCheckedDecodeFuture(VWORD v, char const * proc) {
+  if(VIsFuture(v)) return (VFuture*) VDecodePointer(v);
+  VError("~Z: not a future: ~S\n", proc, v);
   return NULL;
 }
 
@@ -1006,5 +1025,13 @@ bool VTryFiberWait(VFiberContext * context, VFiber * waitee, VFiber * me, uint64
 
 void VFiberSleep(VFiber * me, double seconds);
 
-SYSV_CALL void VFiberFork(V_CORE_ARGS, VWORD k, ...);
+typedef struct VFiberLock VFiberLock;
+void VFiberLockCreate(VFiberLock ** lock);
+void VFiberLockDestroy(VFiberLock * lock);
+void VFiberAcquire(VFiberLock * lock, VFiberContext * context, VFiber * me);
+void VFiberRelease(VFiberLock * lock, VFiberContext * context, VFiber * me);
+
 #endif
+SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst);
+SYSV_CALL void VAsync(V_CORE_ARGS, VWORD k, VWORD future_thunk);
+SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD future);

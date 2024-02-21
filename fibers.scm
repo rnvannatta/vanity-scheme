@@ -24,33 +24,21 @@
   (define (estimate-pi n seed)
     (define rng (make-random seed 1))
     (define (test-pi)
-      (let ((x (- (* 2 (random-sample-float! rng)) 1)) (y (- (* 2 (random-sample-float! rng)) 1)))
+      (let ((x (random-sample-float! rng)) (y (random-sample-float! rng)))
         (if (<= (+ (* x x) (* y y)) 1) 1 0)))
     (let loop ((i 0) (acc 0))
-      (if (>= i n)
+      (if (= i n)
           (* 4 (/ acc n))
           (loop (+ i 1) (+ acc (test-pi)))))))
 
-;(displayln (estimate-pi 1000 666))
-
 (import (picompute))
-(define trials 1000000)
+(define numtrials 10000000)
+(define numfibers 64)
 (displayln
-  (/ 
-  (apply +
-  (##vcore.fiber-fork
-    (lambda () (estimate-pi trials 1))
-    (lambda () (estimate-pi trials 2))
-    (lambda () (estimate-pi trials 3))
-    (lambda () (estimate-pi trials 4))
-    (lambda () (estimate-pi trials 5))
-    (lambda () (estimate-pi trials 6))
-    (lambda () (estimate-pi trials 7))
-    (lambda () (estimate-pi trials 8))
-    )) 8))
+  (/ (fold + 0 (fiber-map (lambda (e) (estimate-pi (/ numtrials numfibers) e)) (iota numfibers))) numfibers))
 #;(define (test2) (iota 10000))
 #;(define (test)
-  (##vcore.fiber-fork
+  (fiber-fork
     test2
     test2
     test2
@@ -61,7 +49,7 @@
     test2))
 
 #;(displayln
-  (##vcore.fiber-fork
+  (fiber-fork
     test
     test
     test
