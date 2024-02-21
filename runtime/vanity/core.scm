@@ -72,6 +72,8 @@
     open-output-process
     make-temporary-file
     exit
+    ; fibers
+    fiber-fork fiber-fork-list fiber-map
     ; not r5rs
     atom? displayln writeln format printf sprintf error
   )
@@ -725,4 +727,15 @@
                   (write (car irritants) err)
                   (loop (cdr irritants)))))))
       (newline err)
-      (##sys.abort))))
+      (##sys.abort)))
+
+  (define fiber-fork-list ##vcore.fiber-fork-list)
+  (define (fiber-fork . args)
+    (##vcore.fiber-fork-list args))
+  (define fiber-map
+    (case-lambda
+      ((f lst) (fiber-fork-list (map (lambda (e) (lambda () (f e))) lst)))
+      ((f as bs) (fiber-fork-list (map (lambda (a b) (lambda () (f a b))) as bs)))
+      ((f as bs cs) (fiber-fork-list (map (lambda (a b c) (lambda () (f a b c))) as bs cs)))
+      ((f as . args) (fiber-fork-list (apply map (lambda args (lambda () (apply f args))) as args)))))
+)

@@ -351,7 +351,9 @@
          ((##vcore.random-advance!) "VRandomAdvance")
 
          ; Fibers
-         ((##vcore.fiber-fork) "VFiberFork")
+         ((##vcore.fiber-fork-list) "VFiberForkList")
+         ((##vcore.async) "VAsync")
+         ((##vcore.await) "VAwait")
 
          (else #f)))
   (define (free-variables expr)

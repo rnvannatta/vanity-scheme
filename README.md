@@ -1,10 +1,12 @@
 # Vanity Scheme
 
-A self hosted R7RS scheme compiler vanity project that I started writing July 2022.
+An R7RS scheme compiler vanity project, with Cilk-inspired structured parallelism, that I started writing July 2022.
 
 It would be a mistake to use this compiler in its current state, but you can have fun looking at the code!
 
-It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. The compiler is very similar to Chicken Scheme. The main reason I started this is a burning desire for true parallelism (which I haven't implemented yet).
+It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. The compiler is very similar to Chicken Scheme.
+
+The parallelism model uses cooperative M:N fibers with a continuation-stealing scheduler. There are two principle parallelism operators: `fiber-fork` and `async`/`await`. `fiber-fork` pauses the current fiber, launching N child fibers and waiting on them. `async` launches a child fiber and returns a future, while `await` waits on the future. `await` can be safely called multiple times from multiple fibers.
 
 It is capable of producing executables which run on Linux and Windows, using GCC and MinGW. The compiler itself only runs on Linux.
 
@@ -12,7 +14,7 @@ The compiler is free software under GPL v2.0, and the runtime is free software u
 
 ## Install Instructions
 
-At the moment, x64 Linux is a requirement.
+At the moment, x64 Linux is a requirement to run the compiler.
 
 Dependencies:
 * gcc
@@ -36,6 +38,47 @@ Sorry, clang isn't supported.
 ## Usage
 
 The interface of the compiler is similar to gcc, try compiling and running this snippet with `vsc -O3 example.scm && ./a.out`. View all the options with `vsc --help`.
+
+```
+; Approximate pi inefficiently but in parallel!
+(define-library (picompute)
+  (import (vanity core) (vanity hash))
+  (export estimate-pi)
+  (define (estimate-pi n seed)
+    (define rng (make-random seed 1))
+    (define (test-pi)
+      (let ((x (random-sample-float! rng))
+            (y (random-sample-float! rng)))
+        (if (<= (+ (* x x) (* y y)) 1) 1 0)))
+    (let loop ((i 0) (acc 0))
+      (if (= i n)
+          (* 4 (/ acc n))
+          (loop (+ i 1) (+ acc (test-pi)))))))
+(import (picompute) (vanity core) (vanity list))
+(define numtrials 10000000)
+(define numfibers 64)
+(printf "Pi is approximately ~A\n"
+  (/ (fold + 0
+       ; The magical step! fiber-map will launch and collect 64 fibers
+       ; Note that 64 fibers won't be in flight at once unless you have
+       ; a threadripper, Vanity uses continuation-stealing, so the resource
+       ; usage is bounded by how many cpu cores you have.
+       (fiber-map (lambda (seed) (estimate-pi (/ numtrials numfibers) seed))
+                  (iota numfibers)))
+     numfibers))
+```
+
+Here's a toy demonstration of async/await usage:
+
+```
+(import (vanity core) (vanity list))
+(let ((x (async (iota 100)))
+      (y (async (iota 100 100))))
+  (await y)
+  (displayln (append (await x) (await y))))
+```
+
+Note that because of implementation quirks, it's more memory efficient to await in reverse order of async launches. It causes the fibers to retire more efficiently. `fiber-fork` is much more resource efficient than async, so that should be used whenever the workload is conducive. async should be primarily used for long-running tasks, for example loading level data across several frames in a video game.
 
 ```
 (define-library (powerset)
