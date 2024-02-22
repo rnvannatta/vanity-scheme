@@ -34,10 +34,10 @@
 (import (picompute))
 (define numtrials 10000000)
 (define numfibers 64)
-(displayln
+#;(displayln
   (/ (fold + 0 (fiber-map (lambda (e) (estimate-pi (/ numtrials numfibers) e)) (iota numfibers))) numfibers))
-#;(define (test2) (iota 10000))
-#;(define (test)
+(define (test2) (iota 10000))
+(define (test)
   (fiber-fork
     test2
     test2
@@ -48,7 +48,7 @@
     test2
     test2))
 
-#;(displayln
+(displayln
   (fiber-fork
     test
     test

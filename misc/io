@@ -1,0 +1,7 @@
+Nonblocking IO for Fibers
+
+slow io approach:
+  manually do buffering as a replacement for FILE pointers (ugh)
+  when its time to do a write, ie the buffer is being flushed
+  try to do it
+  if EWOULDBLOCK then send the request to the reactor queue

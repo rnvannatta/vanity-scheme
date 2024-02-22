@@ -72,13 +72,14 @@ Here's a toy demonstration of async/await usage:
 
 ```
 (import (vanity core) (vanity list))
-(let ((x (async (iota 100)))
-      (y (async (iota 100 100))))
+(let* ((x (async (lambda () (iota 100))))
+       (y (async (lambda () (iota 100 100)))))
+  (displayln "doing important work...")
   (await y)
   (displayln (append (await x) (await y))))
 ```
 
-Note that because of implementation quirks, it's more memory efficient to await in reverse order of async launches. It causes the fibers to retire more efficiently. `fiber-fork` is much more resource efficient than async, so that should be used whenever the workload is conducive. async should be primarily used for long-running tasks, for example loading level data across several frames in a video game.
+Note that because of implementation quirks, it's more memory efficient to `await` in reverse order of `async` launches. It causes the fibers to retire more efficiently. `fiber-fork` is much more resource efficient than `async`, so that should be used whenever the workload is conducive. `async` should be primarily used for long-running tasks, for example loading level data across several frames in a video game.
 
 ```
 (define-library (powerset)

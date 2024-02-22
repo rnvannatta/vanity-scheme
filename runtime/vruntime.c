@@ -864,6 +864,23 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
         VSetFinalizerImpl(table, mem, finalizer);
       }
     }
+  }
+  // all finalizers returned from a fiber are living, but it's tricky to handle them anyway
+  if(runtime->num_half_reaped_fibers) {
+    VFinalizerTable * table = &runtime->VHeapFinalizers[runtime->VActiveHeap];
+    for(int j = 0; j < runtime->num_half_reaped_fibers; j++) {
+      VRuntime * fiber_runtime = runtime->half_reaped_fibers[j];
+      VFinalizerTable const * fiber_table = &fiber_runtime->VHeapFinalizers[fiber_runtime->VActiveHeap];
+      for(unsigned i = 0; i < fiber_table->num_finalizers; i++) {
+        VFinalizerEntry * entry = fiber_table->dense + i;
+        VWORD finalizer = entry->finalizer = VMoveDispatch(runtime, entry->finalizer);
+        VWORD mem = VMoveDispatch(runtime, entry->mem);
+        VSetFinalizerImpl(table, mem, finalizer);
+      }
+    }
+  }
+  {
+    VFinalizerTable * table = &runtime->VHeapFinalizers[runtime->VActiveHeap];
     table->new_finalizers_start = table->num_finalizers;
   }
   runtime->VNumTrackedMutations = 0;
@@ -930,6 +947,10 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
       stop = runtime->VHeapPos;
     }
   }
+
+  runtime->num_half_reaped_fibers = 0;
+  free(runtime->half_reaped_fibers);
+  runtime->half_reaped_fibers = NULL;
 
   // If after a GC, we are still in a state where the next garbage collect can overflow the heap
   // we need to grow the heap
@@ -2352,11 +2373,35 @@ static size_t VReapSpaceNeeded(VWORD fiber_ret, VRuntime * fiber_runtime) {
     return 0;
   return fiber_runtime->VHeapPos - fiber_runtime->VHeap;
 }
+
+static void VReapFiberFinalizers(VRuntime * runtime, char * buf, VRuntime * fiber_runtime) {
+  VFinalizerTable * my_table = &runtime->VHeapFinalizers[runtime->VActiveHeap];
+  VFinalizerTable const * table = &fiber_runtime->VHeapFinalizers[fiber_runtime->VActiveHeap];
+  int num_finalizers = table->num_finalizers;
+
+  ptrdiff_t shift = buf - (char*)fiber_runtime->VHeap;
+  void const * oldheap = fiber_runtime->VHeap;
+  void const * oldend = fiber_runtime->VHeapPos;
+
+  for(int i = 0; i < num_finalizers; i++) {
+    VFinalizerEntry * entry = &table->dense[i];
+    if(!VDecodeBool(entry->mem)) continue;
+    VWORD mem = entry->mem;
+    VWORD finalizer = entry->finalizer;
+
+    VShiftWord(&mem, oldheap, oldend, shift);
+    VShiftWord(&finalizer, oldheap, oldend, shift);
+
+    VSetFinalizerImpl(my_table, mem, finalizer);
+  }
+}
+
 static void VReapFiberRuntime(VRuntime * runtime, char * buf, VRuntime * fiber_runtime) {
   if(buf)
     VCopyHeap(buf, fiber_runtime->VHeap, fiber_runtime->VHeapPos - fiber_runtime->VHeap);
-  if(fiber_runtime->VHeapFinalizers[fiber_runtime->VActiveHeap].num_finalizers)
-    VError("fiber finalizer returns not supported yet\n");
+  if(fiber_runtime->VHeapFinalizers[fiber_runtime->VActiveHeap].num_finalizers) {
+    VReapFiberFinalizers(runtime, buf, fiber_runtime);
+  }
   VFreeFiberRuntime(fiber_runtime);
   VStackPush(runtime->fiber_runtimes, fiber_runtime);
 }

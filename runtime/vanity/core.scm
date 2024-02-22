@@ -73,7 +73,7 @@
     make-temporary-file
     exit
     ; fibers
-    fiber-fork fiber-fork-list fiber-map
+    fiber-fork fiber-fork-list fiber-map async await
     ; not r5rs
     atom? displayln writeln format printf sprintf error
   )
@@ -738,4 +738,6 @@
       ((f as bs) (fiber-fork-list (map (lambda (a b) (lambda () (f a b))) as bs)))
       ((f as bs cs) (fiber-fork-list (map (lambda (a b c) (lambda () (f a b c))) as bs cs)))
       ((f as . args) (fiber-fork-list (apply map (lambda args (lambda () (apply f args))) as args)))))
+  (define async ##vcore.async)
+  (define await ##vcore.await)
 )
