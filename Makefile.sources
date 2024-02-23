@@ -16,7 +16,7 @@ HOME_DIR := $(shell echo ~)
 INSTALL_DIR := $(HOME_DIR)/.local
 
 LIBS := -lm -ldl -lpthread -latomic
-CFLAGS := -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=cast-function-type -Wno-missing-field-initializers -Werror=varargs -masm=intel
+CFLAGS := -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=cast-function-type -Wno-missing-field-initializers -Werror=varargs -masm=intel -fno-strict-aliasing
 
 INCLUDES := include $(HOME_DIR)/.local/include
 IFLAGS := $(addprefix -I, $(INCLUDES))
