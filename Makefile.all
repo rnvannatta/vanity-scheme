@@ -46,34 +46,42 @@ install : compiler runtime windows_runtime
 
 tests_linux : compiler runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
+    ( EXE=`mktemp` ; \
 		echo "bin/vsc $$test && ./a.out" ; \
     OVERRIDE=`realpath lib/` ; \
-		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc $$test -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
+		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
 			echo "COMPILE FAILURE: $$test"; \
+      \rm -f $$EXE ; \
 			exit 1; \
 	  fi ; \
-    EXE=`realpath a.out` ; \
 		if ! (cd `dirname $$test` ; LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH $$EXE) ; then \
 			echo "FAILURE: $$test"; \
+      \rm -f $$EXE ; \
 			exit 1; \
-		fi \
-	done
+		fi ; \
+    \rm -f $$EXE ; ) & \
+	done ; \
+	wait
 
 tests_windows : compiler windows_runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
+    ( EXE=`mktemp` ; \
 		echo "bin/vsc $$test && wine ./a.exe" ; \
     OVERRIDE=`realpath lib/` ; \
-		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc $$test -Wc,-Iinclude -Iinclude --platform=windows) ; then \
+		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Iinclude -Iinclude --platform=windows) ; then \
 			echo "COMPILE FAILURE: $$test"; \
+      \rm -f $$EXE ; \
 			exit 1; \
 	  fi ; \
 		ln -sf `realpath lib/x86_64-w64-mingw32/vscheme.dll` `dirname $$test`/; \
-    EXE=`realpath a.exe` ; \
 		if ! (cd `dirname $$test` ; wine $$EXE) ; then \
 			echo "FAILURE: $$test"; \
+      \rm -f $$EXE ; \
 			exit 1; \
-		fi \
-	done
+		fi ; \
+    \rm -f $$EXE ; ) & \
+	done ; \
+	wait
 
 lay_egg : $(BOOT)
 	cp -r include bin/bootstrap/.
