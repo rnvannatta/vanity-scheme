@@ -51,7 +51,10 @@ VSwitchFiber:
 
   // it's ok for another thread to
   // run this fiber
-  xchg DWORD PTR [rsi+64], eax
+  lock xchg DWORD PTR [rsi+64], eax
+  // it's a logic error if the thread wasn't marked as running
+  test eax, eax
+  je fiber_error
 
   // need to wait for the fiber to be ready
   // it will be soon if it's on the queue
@@ -62,7 +65,7 @@ wait_loop:
 
   // claim the thread now
   mov eax, 1
-  xchg DWORD PTR [rdi+64], eax
+  lock xchg DWORD PTR [rdi+64], eax
   // it's a logic error if someone else claimed it
   test eax, eax
   jne fiber_error

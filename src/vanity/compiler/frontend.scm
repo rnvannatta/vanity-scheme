@@ -23,7 +23,7 @@
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
-(import (vanity core) (vanity list) (vanity pretty-print) (vanity compiler utils) (vanity compiler variables) (vanity compiler match) (vanity compiler getopt) (vanity compiler expand) (vanity compiler cps) (vanity compiler transpile) (vanity compiler library) (vanity compiler config))
+(import (vanity core) (vanity list) (vanity pretty-print) (vanity compiler utils) (vanity compiler variables) (vanity compiler match) (vanity compiler getopt) (vanity compiler expand) (vanity compiler cps) (vanity compiler transpile) (vanity compiler bytecode) (vanity compiler library) (vanity compiler config))
 
 (define scm-files '())
 (define obj-files '())
@@ -31,6 +31,7 @@
 (define expand? #f)
 (define keep? #f)
 (define header? #f)
+(define bytecode? #f)
 (define transpile? #f)
 (define object? #f)
 (define debug? #f)
@@ -114,7 +115,7 @@
   (printf "Vanity Scheme Compiler ~A.~A~N" (car version) (cadr version))
   (displayln "Copyright (C) 2023 Richard Van Natta"))
 
-(let loop ((args (getopt "vghtco:I:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (benchmark #f benchmark)))))
+(let loop ((args (getopt "vghtco:I:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark)))))
   (if (not (null? args))
       (begin
         (case (caar args)
@@ -154,6 +155,7 @@
           ((makefile) (set! makefile? #t))
           ((maketarget) (set! maketargets (cons (cdar args) maketargets)))
           ((benchmark) (set! benchmark? #t))
+          ((bytecode) (set! bytecode? #t))
           (else (write (caar args)) (newline) (compiler-error "Unknown CLI option" (cdar args))))
         (loop (cdr args)))))
 (if (not cc)
@@ -166,15 +168,15 @@
   (let loop ((args args) (ct 0))
     (if (null? args) ct
         (loop (cdr args) (+ ct (if (car args) 1 0))))))
-(if (> (count-true makefile? header? transpile? object? expand?) 1) (compiler-error "Only one of '-h' or '-c' or '-t' or '-E' or '--makefile' can be set"))
+(if (> (count-true makefile? header? bytecode? transpile? object? expand?) 1) (compiler-error "Only one of '-h' or '-c' or '-t' or '-E' or '--makefile' can be set"))
 
 (if (and (null? scm-files) (null? obj-files)) (compiler-error "No input file provided"))
 
-(if (and (or makefile? header? transpile? object? expand?) (not (null? obj-files))) (compiler-error "Cannot specify '-h' '-c' or '-t' or '-E' or '--makefile' with object files"))
-(if (and (or makefile? header? transpile? object? expand?) out-file (not (null? (cdr scm-files)))) (compiler-error "Cannot specify '-h' or '-c' or '-t' or '-E' or '--makefile' with '-o' and multiple files"))
+(if (and (or makefile? header? bytecode? transpile? object? expand?) (not (null? obj-files))) (compiler-error "Cannot specify '-h' '-c' or '-t' or '-E' or '--makefile' with object files"))
+(if (and (or makefile? header? bytecode? transpile? object? expand?) out-file (not (null? (cdr scm-files)))) (compiler-error "Cannot specify '-h' or '-c' or '-t' or '-E' or '--makefile' with '-o' and multiple files"))
 
 ; TEMPORARY
-(if (and (or makefile? header? transpile? object? expand?) (not (null? (cdr scm-files)))) (compiler-error "FIXME: -h and -c and -t and -E can only handle one file"))
+(if (and (or makefile? header? bytecode? transpile? object? expand?) (not (null? (cdr scm-files)))) (compiler-error "FIXME: -h and -c and -t and -E can only handle one file"))
 
 (if (not out-file)
     (set! out-file
@@ -182,6 +184,7 @@
             (transpile? (change-extension (basename (car scm-files)) ".c"))
             (expand? (change-extension (basename (car scm-files)) ".escm"))
             (header? (change-extension (basename (car scm-files)) ".scmh"))
+            (bytecode? (change-extension (basename (car scm-files)) ".scmb"))
             (makefile? out-file)
             (else #f))))
 
@@ -222,10 +225,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define cc-files
-  (if (or header? transpile? expand?) (list out-file)
+  (if (or header? bytecode? transpile? expand?) (list out-file)
       (map (lambda (file) (make-temporary-file (string-append "/tmp/" (basename file)) ".c")) scm-files)))
 (define cc-obj-files
-  (cond ((or header? transpile? expand?) (list #f))
+  (cond ((or header? bytecode? transpile? expand?) (list #f))
         (object? (list out-file))
         (else (map (lambda (file) (make-temporary-file (string-append "/tmp/" (basename file)) ".o")) scm-files))))
 
@@ -267,15 +270,19 @@
                           (if (eq? expand? 2) (for-each pretty-print opt)
                               (let* ((bruijn (map bruijn-ify opt))
                                      (funs (to-functions bruijn)))
-                                (apply printout2 (cons debug? (cons shared? funs))))))))))))))
+                                (if bytecode?
+                                    (apply print-bytecode (cons debug? (cons shared? funs)))
+                                    (apply printout2 (cons debug? (cons shared? funs)))))))))))))))
       scm-files
       cc-files
       cc-obj-files)))
+
+
 ; 2. compile
 (for-each
   (lambda (scm-file cc-file obj-file)
     (let ((path (realbasepath scm-file)))
-      (if (and (not header?) (not transpile?) (not expand?))
+      (if (and (not header?) (not bytecode?) (not transpile?) (not expand?))
           (begin
             (if verbose? (displayln (sprintf "~A -I~A ~A -c -o ~A ~A" cc path cc-command obj-file cc-file)))
             (system (sprintf "~A -I~A ~A -c -o ~A ~A" cc path cc-command obj-file cc-file))))))
@@ -289,7 +296,7 @@
 (define (delete-file f)  (system (sprintf "/bin/rm ~A" f)))
 
 ; 3. link
-(if (and (not header?) (not transpile?) (not expand?) (not object?))
+(if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not object?))
     (let ()
       (define link-command-flags
         (string-append
@@ -317,7 +324,7 @@
       (system link-command)))
 
 ; 4. cleanup
-(if (and (not header?) (not transpile?) (not expand?) (not keep?))
+(if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not keep?))
     (for-each delete-file cc-files))
-(if (and (not header?) (not transpile?) (not expand?) (not object?) (not keep?))
+(if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not object?) (not keep?))
     (for-each delete-file cc-obj-files))

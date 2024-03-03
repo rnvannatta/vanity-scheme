@@ -30,6 +30,7 @@
 typedef struct VFiberContext VFiberContext;
 typedef struct VFiber VFiber;
 typedef struct VStack VStack;
+typedef struct VFuture VFuture;
 
 typedef struct VFinalizerEntry VFinalizerEntry;
 typedef struct VFinalizerTable {
@@ -104,6 +105,7 @@ typedef struct VRuntime {
   VStack * fiber_heaps;
 
   bool owns_heap[2];
+  VFuture * my_future;
 
   int num_half_reaped_fibers;
   VRuntime ** half_reaped_fibers;

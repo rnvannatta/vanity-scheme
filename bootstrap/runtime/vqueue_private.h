@@ -33,9 +33,17 @@ typedef struct VListPtr {
       VListNode * ptr;
       uint64_t ver;
     };
+#ifdef __linux__
     __int128 i;
+#endif
+    _Alignas(16) struct {
+      int64_t lo;
+      int64_t hi;
+    };
   };
 } VListPtr;
+static_assert(sizeof(VListPtr) == 16);
+static_assert(_Alignof(VListPtr) == 16);
 
 typedef struct VListNodePool {
   VListPtr nodes;

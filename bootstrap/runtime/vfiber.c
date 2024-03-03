@@ -29,6 +29,10 @@
 #include <pthread.h>
 #include <signal.h>
 #endif
+#ifdef _WIN64
+#include <windef.h>
+#include <intrin.h>
+#endif
 #include "vscheme/vruntime.h"
 #include "vqueue_private.h"
 #include <time.h>
@@ -37,10 +41,21 @@
 #include <stdint.h>
 #include <stdatomic.h>
 #include <x86intrin.h>
-#ifdef __linux__
 // ======================================================
 // ------------------- QUEUES ---------------------------
 // ======================================================
+
+#ifdef __linux
+unsigned char InterlockedCompareExchange128(volatile __int64_t * dst, __int64_t hi, __int64_t lo, __int64_t * expected) {
+  unsigned char ret;
+  asm volatile(
+    "lock cmpxchg16b %0\n\t"
+    "setz %b1\n\t"
+    : "+m" (((__int128*)dst)[0]), "=r" (ret), "+d" (expected[1]), "+a" (expected[0])
+    : "c" (hi), "b" (lo)
+  );
+  return ret;
+}
 
 typedef struct VListNode {
   void * data;
@@ -52,11 +67,24 @@ void VListNodePoolInit(VListNodePool * pool) {
   pool->nodes.ptr = NULL;
   pool->nodes.ver = 0;
 }
+void VListNodePoolDeinit(VListNodePool * pool) {
+  while(pool->nodes.ptr) {
+    void * ptr = pool->nodes.ptr;
+    pool->nodes.ptr = pool->nodes.ptr->next.ptr;
+    free(ptr);
+  }
+  pool->nodes.ptr = NULL;
+}
+
 void VStackInit(VStack * stack) {
   stack->head.ptr = NULL;
   stack->head.ver = 0;
 
   VListNodePoolInit(&stack->pool);
+}
+void VStackDeinit(VStack * stack) {
+  assert(stack->head.ptr == NULL);
+  VListNodePoolDeinit(&stack->pool);
 }
 void VQueueInit(VQueue * queue) {
   VListNode * root = malloc(sizeof(VListNode));
@@ -70,9 +98,35 @@ void VQueueInit(VQueue * queue) {
   VListNodePoolInit(&queue->pool);
 }
 
+void VQueueDeinit(VQueue * queue) {
+  assert(queue->head.ptr == queue->tail.ptr);
+  free(queue->head.ptr);
+  queue->head.ptr = NULL;
+  queue->tail.ptr = NULL;
+  VListNodePoolDeinit(&queue->pool);
+}
+
 static bool CasQueuePtr(VListPtr * dst, VListPtr * expected, VListNode * val) {
   VListPtr newptr = { { .ptr = val, .ver = expected->ver+1 } };
+/*
+#ifdef __linux__
   return __atomic_compare_exchange_n(&dst->i, &expected->i, newptr.i, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
+#endif
+#ifdef _WIN64
+*/
+  return InterlockedCompareExchange128(&dst->lo, newptr.hi, newptr.lo, &expected->lo);
+//#endif
+}
+static VListPtr AtomicLoadPtr(VListPtr * ptr) {
+#ifdef __linux__
+  return (VListPtr) { { .i = __atomic_load_n(&ptr->i, __ATOMIC_SEQ_CST) } };
+#endif
+#ifdef _WIN64
+  VListPtr ret = { { .lo = 0, .hi = 0 } };
+  InterlockedCompareExchange128(&ptr->lo, ret.hi, ret.lo, &ret->lo);
+  return ret;
+#endif
+
 }
 
 static VListNode * VAllocNode(VListNodePool * pool) {
@@ -140,8 +194,8 @@ void * VStackPop(VStack * stack) {
   return data;
 }
 
-#define HINULL ((void*)~0ull)
 void * VQueuePop(VQueue * queue) {
+  atomic_thread_fence(memory_order_seq_cst);
   for(;;) {
     VListPtr head, tail, next;
     head.i = __atomic_load_n(&queue->head.i, __ATOMIC_SEQ_CST);
@@ -170,6 +224,7 @@ void * VQueuePop(VQueue * queue) {
   return NULL;
 }
 void VQueuePush(VQueue * queue, void * fiber) {
+  atomic_thread_fence(memory_order_seq_cst);
   VListNode * newnode = VAllocNode(&queue->pool);
   newnode->data = fiber;
   newnode->next.ptr = NULL;
@@ -194,13 +249,14 @@ void VQueuePush(VQueue * queue, void * fiber) {
     }
   }
 }
+#endif
 
 // ======================================================
 // ------------------- FIBERS ---------------------------
 // ======================================================
-
+#ifdef __linux__
 // Super low level fiber primitives. Do not call yourself.
-void VSwitchFiber(VFiberState const * to, VFiberState * from);
+__attribute__((returns_twice)) void VSwitchFiber(VFiberState const * to, VFiberState * from);
 
 // A weirdass non-function that calls the function in r12 with the argument in r13
 // If the function returns the fiber aborts the entire program. With a coathanger.
@@ -244,7 +300,7 @@ typedef struct VFiberContext {
 } VFiberContext;
 
 static void VAllocFiberStack(VFiberContext * context, VFiber * fiber) {
-  assert(!fiber->stack);
+  assert(!fiber->stack && !fiber->state.rsp);
 
   fiber->stack = VStackPop(&context->stackstack);
   if(!fiber->stack)
@@ -262,38 +318,8 @@ static VFiber * VFiberSelect(VFiberContext * context, bool must_succeed) {
   }
   if(fiber && !fiber->stack) {
     VAllocFiberStack(context, fiber);
-    /*
-    fiber->stack = VStackPop(&context->stackstack);
-    if(!fiber->stack)
-      fiber->stack = malloc(context->stacksize);
-    fiber->stacksize = context->stacksize;
-    fiber->state.rsp = (uint64_t)(fiber->stack + context->stacksize - 16);
-    */
   }
   return fiber;
-}
-
-void VFiberSleep(VFiber * me, double seconds) {
-  VFiberContext * context = me->context;
-  struct timespec begin, cur;
-  clock_gettime(CLOCK_MONOTONIC_RAW, &begin);
-
-
-  clock_gettime(CLOCK_MONOTONIC_RAW, &cur);
-  double elapsed = (cur.tv_sec - begin.tv_sec) + (cur.tv_nsec - begin.tv_nsec) / (1000.0 * 1000 * 1000);
-
-  while(elapsed < seconds) {
-    VFiber const * fiber = VFiberSelect(context, false);
-    if(fiber) {
-      VQueuePush(&context->queue, me);
-      VSwitchFiber(&fiber->state, &me->state);
-    }
-    clock_gettime(CLOCK_MONOTONIC_RAW, &cur);
-    elapsed = (cur.tv_sec - begin.tv_sec) + (cur.tv_nsec - begin.tv_nsec) / (1000.0 * 1000 * 1000);
-    if(elapsed >= seconds)
-      break;
-    __builtin_ia32_pause();
-  }
 }
 
 int VSleeperFiberYield(VFiber * me) {
@@ -316,6 +342,7 @@ int VSleeperFiberYield(VFiber * me) {
   if(fiber) {
     VQueuePush(&context->sleeper_queue, me);
     VSwitchFiber(&fiber->state, &me->state);
+    ret = atomic_load(&context->fiber_signal);
   }
 
   return ret;
@@ -333,13 +360,7 @@ void VFiberExit(VFiberContext * context, VFiber * me, uint64_t ret) {
       VFiber * waiter = atomic_load(&me->waiter);
       assert(waiter);
       atomic_store(&me->status, FIBER_EXITED);
-      if(waiter != HINULL) {
-        fiber = waiter;
-      } else {
-        pthread_mutex_lock(&context->mutex);
-        pthread_cond_signal(&context->main_thread_cond);
-        pthread_mutex_unlock(&context->mutex);
-      }
+      fiber = waiter;
       break;
     }
     assert(status == FIBER_NORMAL);
@@ -356,6 +377,8 @@ void VFiberExit(VFiberContext * context, VFiber * me, uint64_t ret) {
 
 uint64_t VFiberWait(VFiberContext * context, VFiber * waitee, VFiber * me) {
   uint64_t ret = 0;
+
+  assert(atomic_exchange(&waitee->waiter, me) == NULL);
 
   int status = atomic_load(&waitee->status);
   if(!me) {
@@ -447,9 +470,9 @@ VFiber * VPushFiber(VFiberContext * context, VFiber * me, uint64_t (*func)(VFibe
   fiber->state.rsp = (uint64_t)(NULL);
   fiber->state.r12 = (uint64_t)(void*)VFiberPreamble;
   fiber->state.r13 = (uint64_t)fiber;
-  atomic_init(&fiber->state.running, false);
-  atomic_init(&fiber->status, FIBER_NORMAL);
-  atomic_init(&fiber->waiter, me ? me : HINULL);
+  atomic_store(&fiber->state.running, false);
+  atomic_store(&fiber->status, FIBER_NORMAL);
+  atomic_store(&fiber->waiter, NULL);
 
   // true for continuation stealing
   // false for child stealing, you monster
@@ -468,6 +491,7 @@ VFiber * VPushFiber(VFiberContext * context, VFiber * me, uint64_t (*func)(VFibe
   return fiber;
 }
 
+#define HINULL ((void*)(~0ULL))
 VFiber * VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_t stacksize) {
   VFiberContext * context = *context_out = malloc(sizeof(VFiberContext) + numthreads*sizeof(VFiberWorkerData));
   pthread_cond_init(&context->sleeper_cond, NULL);
@@ -478,20 +502,24 @@ VFiber * VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_
   VStackInit(&context->blank_fiber_stack);
   VQueueInit(&context->queue);
   VQueueInit(&context->sleeper_queue);
-  atomic_init(&context->fiber_signal, 0);
+  atomic_store(&context->fiber_signal, 0);
   context->num_worker_threads = numthreads;
 
   memset(&context->main_fiber, 0, sizeof(VFiber));
-  atomic_init(&context->main_fiber.state.running, true);
-  atomic_init(&context->main_fiber.status, FIBER_NORMAL);
-  atomic_init(&context->main_fiber.waiter, NULL);
+  atomic_store(&context->main_fiber.state.running, true);
+  atomic_store(&context->main_fiber.status, FIBER_NORMAL);
+  atomic_store(&context->main_fiber.waiter, NULL);
+  context->main_fiber.stack = HINULL;
   context->main_fiber.state.signal_stack = (uint64_t)context->signal_stack;
 
   for(int i = 0; i < numthreads; i++) {
     context->threads[i].context = context;
-    memset(&context->threads[i].me, '0', sizeof context->threads[i].me);
+    memset(&context->threads[i].me, 0, sizeof context->threads[i].me);
     context->threads[i].me.context = context;
-    atomic_init(&context->threads[i].me.status, FIBER_NORMAL);
+    context->threads[i].me.stack = HINULL;
+    atomic_store(&context->threads[i].me.state.running, true);
+    atomic_store(&context->threads[i].me.waiter, NULL);
+    atomic_store(&context->threads[i].me.status, FIBER_NORMAL);
     int ret = pthread_create(&context->threads[i].id, NULL, VSleeperFiberMain, &context->threads[i]);
     if(ret) {
       fprintf(stderr, "Couldn't create requested number of fiber works. Time to die!\n");
@@ -515,4 +543,74 @@ void VCloseFiberWorkers(VFiberContext * context) {
   pthread_mutex_destroy(&context->mutex);
   free(context);
 }
+
+// ======================================================
+// --------------------- LOCKS --------------------------
+// ======================================================
+
+// When a fiber tries to lock, it, atomically, either
+// succeeds or pushes itself to a queue waiting on the lock
+
+// When a fiber unlocks, it atomically pops the queue,
+// and if anyone is waiting, it notifies them
+typedef struct VFiberLock {
+  _Atomic int queue_busy;
+  int now_serving;
+  int next_ticket;
+  // a bit silly to use a spinlock with a waitfree queue haha
+  VQueue queue;
+} VFiberLock;
+
+void VFiberLockCreate(VFiberLock ** _lock) {
+  VFiberLock * lock = *_lock = malloc(sizeof(VFiberLock));
+  atomic_store(&lock->queue_busy, 0);
+  lock->now_serving = 0;
+  lock->next_ticket = 0;
+  VQueueInit(&lock->queue);
+}
+void VFiberLockDestroy(VFiberLock * lock) {
+  assert(!atomic_load(&lock->queue_busy));
+  assert(lock->now_serving == lock->next_ticket);
+  VQueueDeinit(&lock->queue);
+  free(lock);
+  lock = NULL;
+}
+
+void VFiberAcquire(VFiberLock * lock, VFiberContext * context, VFiber * me) {
+  do {
+    while(atomic_load(&lock->queue_busy))
+      __builtin_ia32_pause();
+  } while(atomic_exchange(&lock->queue_busy, 1) != 0);
+
+  int my_ticket = lock->next_ticket++;
+  if(lock->now_serving != my_ticket) {
+    VQueuePush(&lock->queue, me);
+    atomic_store(&lock->queue_busy, 0);
+    VFiber * next = VFiberSelect(context, true);
+    VSwitchFiber(&next->state, &me->state);
+    return;
+  }
+
+  atomic_store(&lock->queue_busy, 0);
+}
+
+void VFiberRelease(VFiberLock * lock, VFiberContext * context, VFiber * me) {
+  do {
+    while(atomic_load(&lock->queue_busy))
+      __builtin_ia32_pause();
+  } while(atomic_exchange(&lock->queue_busy, 1) != 0);
+
+  lock->now_serving++;
+  VFiber * waiter = VQueuePop(&lock->queue);
+  atomic_store(&lock->queue_busy, 0);
+
+  if(waiter) {
+    VQueuePush(&context->queue, waiter);
+
+    pthread_mutex_lock(&context->mutex);
+    pthread_cond_signal(&context->sleeper_cond);
+    pthread_mutex_unlock(&context->mutex);
+  }
+}
+
 #endif

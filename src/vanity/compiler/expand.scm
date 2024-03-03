@@ -46,12 +46,92 @@
   ; call/cc - DONE
   ; match syntax - DONE
   ; vectors and records - VECTORS DONE
-  ; interning
+  ; interning - DONE
 
-  ; makefile
-  ; global defines, main entrypoint
+  ; makefile - DONE
+  ; global defines, main entrypoint - DONE
   ; define syntatic sugar - DONE
   ; record? - do it with $
+
+  ; returns true if val can be directly assigned in a simple letrec primitive
+  ; without mutation.
+  ; ie (letrec* ((even? (lambda (x) blah)) (odd? (lambda (x) blah))) blah)
+  ; can be. but:
+  ; (letrec* ((satan (cons 'evil (lambda (x) satan)))) blah)
+  ; cannot and must compile to a more general form using mutation:
+  ; (letrec ((satan #f)) (set! satan (cons 'evil (lambda (x) satan))) (lambda () blah))
+  ; in order to be a primitive letrec binding, a value must either be a lambda, or
+  ; another literal, or a combination that has neither lambdas nor contains the xs
+  (define (primitive-letrec? val xs)
+    (call/cc
+      (lambda (return)
+        (define (advanced-letrec-one val)
+          (match val
+            (('quote . _) #t)
+            (('lambda . _) 
+             (return #f))
+            (('case-lambda . _)
+             (return #f))
+            (('##foreign.function . _) #t)
+            (('letrec . _)
+             (return #f))
+            ((_ . _) (map advanced-letrec-one val))
+            (x
+             (if (and (symbol? x) (memv x xs))
+                 (return #f)
+                 #t))))
+        (match val
+            (('quote . _) #t)
+            (('lambda . _) #t)
+            (('case-lambda . _) #t)
+            (('##foreign.function . _) #t)
+            ((_ . _) (advanced-letrec-one val))
+            (x (not (and (symbol? x) (memv x xs))))))))
+
+  (define (expand-letrec* orig-xs vals body)
+    (let loop ((body `((let () . ,body)))
+               (done-vals '())
+               (vals (reverse (map expand-syntax vals)))
+               (xs (reverse orig-xs)))
+      (cond ((null? vals)
+             `(letrec ,(map list orig-xs done-vals)
+                ,(expand-syntax `(begin . ,body))))
+            ((primitive-letrec? (car vals) orig-xs)
+             (loop
+               body
+               (cons (car vals) done-vals)
+               (cdr vals)
+               (cdr xs)))
+            (else
+             (loop
+               (cons `(set! ,(car xs) ,(car vals)) body)
+               (cons #f done-vals)
+               (cdr vals)
+               (cdr xs))))))
+  (define (expand-letrec orig-xs vals body)
+    (let loop ((inner-let '())
+               (body `((let () . ,body)))
+               (done-vals '())
+               (vals (reverse (map expand-syntax vals)))
+               (xs (reverse orig-xs)))
+      (cond ((null? vals)
+             `(letrec ,(map list orig-xs done-vals)
+                ,(expand-syntax `(let ,inner-let (begin . ,body)))))
+            ((primitive-letrec? (car vals) orig-xs)
+             (loop
+               inner-let
+               body
+               (cons (car vals) done-vals)
+               (cdr vals)
+               (cdr xs)))
+            (else
+             (let ((tmp (gensym "tmp")))
+               (loop
+                 (cons `(,tmp ,(car vals)) inner-let)
+                 (cons `(set! ,(car xs) ,tmp) body)
+                 (cons #f done-vals)
+                 (cdr vals)
+                 (cdr xs)))))))
 
   (define (collect-defines body)
     (let loop ((defines '()) (body body))
@@ -62,10 +142,11 @@
          (loop (cons `(define ,x ,body) defines) rest))
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
         (else
-          (match (reverse defines)
-            (() `(begin . ,body))
-            ((('define xs vals) ...)
-             `(letrec* ,(map list xs vals) . ,body)))))))
+          (let ((body (expand-syntax `(begin . ,body))))
+            (match (reverse defines)
+              (() body)
+              ((('define xs vals) ...)
+               (expand-syntax `(letrec* ,(map list xs vals) ,body)))))))))
 
   (define (expand-quasiquote quotation expr)
     ; bug with chicken is why we use quasiquotes on quotes, unquotes, and unquote-splicings
@@ -119,9 +200,6 @@
     (define basic-library
        (expand-syntax
          `(lambda ()
-            ; unquote splicing seems cleaner, need to implement that huh
-            ;,@(map expand-library-expr (cddr lib))
-            ;,(list (make-library-output exports))
             . ,(append (apply append (map expand-library-expr (cddr lib)))
                        (list (make-library-output exports))))))
     (define free-vars
@@ -161,7 +239,7 @@
        `(,args ,(expand-syntax body)))
       ((args . body)
        (if (not (valid-args? args)) (compiler-error "invalid lambda args" args))
-       (expand-lambda `(,args ,(collect-defines body))))
+       `(,args ,(collect-defines body)))
       (_ (compiler-error "invalid lambda" `(lambda . ,expr)))))
   (define (expand-let expr)
     (match expr
@@ -227,11 +305,15 @@
       (('let*-values ((xs producer) . rest) . body)
        (expand-syntax `(call-with-values (lambda () ,producer) (lambda ,xs (let*-values ,rest . ,body)))))
       (('let*-values () . body) (expand-syntax `(begin . ,body)))
-      (('let*-values . noise) (compiler-error "malformed let-values*" `(letrec . ,noise)))
+      (('let*-values . noise) (compiler-error "malformed let-values*" `(let*-values . ,noise)))
 
-      (('letrec ((xs vals) ...) . body) (expand-syntax `((lambda ,xs ,@(map (lambda (x val) `(set! ,x ,val)) xs vals) . ,body) . ,(map (lambda (val) #f) xs))))
-      (('letrec . noise) (compiler-error "malformed letrec" `(letrec . ,noise)))
-      (('letrec* . rest) (expand-syntax `(letrec . ,rest)))
+      (('letrec* ((xs vals) ...) . body)
+       (expand-letrec* xs vals body)
+       #;(expand-syntax `((lambda ,xs ,@(map (lambda (x val) `(set! ,x ,val)) xs vals) . ,body) . ,(map (lambda (val) #f) xs))))
+      (('letrec* . noise) (compiler-error "malformed letrec*" `(letrec . ,noise)))
+      (('letrec ((xs vals) ...) . body)
+       (expand-letrec xs vals body))
+      (('letrec* . noise) (compiler-error "malformed letrec" `(letrec . ,noise)))
 
       (('let* ((x val) rest ...) . body) (expand-syntax `(let ((,x ,val)) (let* ,rest . ,body))))
       (('let* () . body) (expand-syntax `(begin . ,body)))
