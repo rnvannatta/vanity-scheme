@@ -30,7 +30,7 @@
     (define (application? x)
       (and (pair? x) (not (memv (car x) '(quote lambda case-lambda ##foreign.function)))))
     (define (combination? x)
-      (and (pair? x) (not (memv (car x) '(quote lambda case-lambda ##foreign.function begin if or)))))
+      (and (pair? x) (not (memv (car x) '(quote lambda case-lambda ##foreign.function begin if or letrec)))))
     (define (iter-atom x)
       (define (iter-lambda args body)
         (let ((k (gensym "k")))
@@ -54,6 +54,14 @@
           (let ((x (gensym "x")))
                (iter2 (car vals) `(continuation (,x) ,(loop (cons x appl) (cdr vals))))))
          (else (loop (cons (iter-atom (car vals)) appl) (cdr vals))))))
+    (define (iter-letrec args body vals k)
+      (let loop ((done-vals '()) (vals vals))
+        (cond ((null? vals)
+               `(letrec ,(map list args (reverse done-vals)) ,(iter2 body k)))
+              ((application? (car vals))
+               (let ((x (gensym "x")))
+                 (iter2 (car vals) `(continuation (,x) ,(loop (cons x done-vals) (cdr vals))))))
+              (else (loop (cons (iter-atom (car vals)) done-vals) (cdr vals))))))
     (define (iter-combination args cont)
       (let loop ((appl '()) (args args))
        (cond
@@ -110,6 +118,8 @@
                  (iter-let (list x) body (list val) cont)))
             ((('lambda args body) . vals)
              (iter-let args body vals cont))
+            (('letrec ((xs vals) ...) body)
+             (iter-letrec xs body vals cont))
             (else (iter-combination expr cont)))
           `(,cont ,(iter-atom expr))))
 
@@ -139,7 +149,8 @@
 
 
   (define (ref-count-lambda x args body)
-    (if (memtail x args) 0
+    (if (memtail x args)
+        0
         (ref-count x body)))
   (define (ref-count x expr)
     (match expr
@@ -151,6 +162,10 @@
        (apply + (map (lambda (args body) (ref-count-lambda x args body)) args body)))
       (('##foreign.function . _) 0)
       (('quote x) 0)
+      (('letrec ((args vals) ...) body)
+       (if (memtail x args)
+           0
+           (fold + (ref-count x body) (map (lambda (val) (ref-count x val)) vals))))
       ((f . xs) (+ (ref-count x f) (ref-count x xs)))
       (y (if (eqv? x y) 1 0))))
   (define (pure-in-lambda? x args body)
@@ -169,6 +184,10 @@
       (('set! k y . body)
        (if (eqv? x y) #f
            (and (pure-in? x k) (pure-in? x body))))
+      (('letrec ((args vals) ...) body)
+       (if (memtail x args)
+           #t
+           (fold (lambda (a b) (and a b)) (pure-in? x body) (map (lambda (val) (pure-in? x val)) vals))))
       ((f . xs) (and (pure-in? x f) (pure-in? x xs)))
       (else #t)))
   (define (substitute-lambda x atom args body)
@@ -184,45 +203,15 @@
        (cons 'case-lambda (map (lambda (args body) (substitute-lambda x atom args body)) args body)))
       (('##foreign.function . _) expr)
       (('quote x) expr)
+      (('letrec ((args vals) ...) body)
+       (if (memtail x args)
+           expr
+           `(letrec ,(map list args (map (lambda (val) (substitute x atom val)) vals))
+              ,(substitute x atom body))))
       ((f . xs) (cons (substitute x atom f) (substitute x atom xs)))
       (y (if (eqv? x y) atom y))))
 
-  (define (alpha-convert expr)
-    (define (make-conversion sym)
-      (let ((str (symbol->string sym)))
-        (gensym
-          (if (eq? #\# (string-ref str 0))
-              (string->symbol (substring str 2))
-              sym))))
-    (define (make-substitutes args)
-      (cond ((null? args) '())
-            ((symbol? args) (make-substitutes (cons args '())))
-            (else
-              (cons (cons (car args) (make-conversion (car args))) (make-substitutes (cdr args))))))
-    expr
-    #;(let loop ((substitutes '()) (expr expr))
-      (define (alpha-convert-lambda subs args body)
-        (let ((newsubs (make-substitutes (cdr args))))
-            `(,(cons (car args) (loop newsubs (cdr args))) ,(loop (append newsubs subs) body))))
-      (match expr
-        ; continuations are by construction unique and don't need to be alpha converted
-        (('lambda args body)
-         (cons 'lambda (alpha-convert-lambda substitutes args body))
-         #;(let ((newsubs (make-substitutes args)))
-          `(lambda ,(cons k (loop newsubs args)) ,(loop (append newsubs substitutes) body))))
-        (('continuation x body)
-         `(continuation ,x ,(loop substitutes body)))
-        (('case-lambda (args body) ...)
-         (cons 'case-lambda (map (lambda (args body) (alpha-convert-lambda substitutes args body)) args body)))
-        (('quote x) expr)
-        ((f . xs) (cons (loop substitutes f) (loop substitutes xs)))
-        (y (if (symbol? y)
-               (let ((sub (assv y substitutes)))
-                 (if sub (cdr sub) y))
-               y)
-        ))
-    )
-  )
+  (define (alpha-convert expr) expr)
 
   ; things that are still considered 'applications' for the purposes of CPS
   ; `if` is considered an application because it's of the form (if p (f args) (g args))
@@ -230,7 +219,7 @@
   ;   (and a b) to (if a (k b) #f)
   ;   (or a b) to (if a (k a) (k b))
   (define (special-apply? tok)
-    (eqv? tok 'if))
+    (memv tok '(if letrec)))
   (define (optimize-lambda expr)
     (match expr
       ((lamb xs body)
@@ -267,7 +256,13 @@
                   ; ... and now that I think about it, any variable which is impure is used twice
                   ; or can be eliminated, but eliminating that variable requires eliminating the
                   ; set! expressions
-                  ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1)) (pure-in? y expr))
+                  ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1))
+                        ; there's a bug with doing this with lambdas:
+                        ; (let ((f (lambda (y) x))) (let ((x 0)) (f 2)))
+                        ; we need complete alpha conversion to avoid this bug
+                        ; was probs the bug I had...
+                        (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
+                        (pure-in? y expr))
                    (inline-let (substitute y x expr) done-ys done-xs ys xs))
                   (else (inline-let expr (cons y done-ys) (cons x done-xs) ys xs)))))))
   (define (optimize-let let-expr)
@@ -281,7 +276,12 @@
                ; ... and now that I think about it, any variable which is impure is used twice
                ; or can be eliminated, but eliminating that variable requires eliminating the
                ; set! expressions
-               ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1)) (pure-in? y expr))
+               ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1))
+                     ; there's a bug with doing this with lambdas:
+                     ; (let ((f (lambda (y) x))) (let ((x 0)) (f 2)))
+                     ; we need complete alpha conversion to avoid this bug
+                     (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
+                     (pure-in? y expr))
                 (optimize-apply (substitute y x expr)))
                (else `(,(optimize-atom `(continuation (,y) ,expr)) ,(optimize-atom x))))))
       ((('lambda () expr))
@@ -299,12 +299,19 @@
        `(,(optimize-atom `(lambda ,ys ,expr)) . ,(map optimize-atom xs)))
       ((('continuation . _) . _) (compiler-error "Not enough arguments to continuation. Codegen bug."))
       (else (compiler-error "optimize-let: malformed let statement"))))
+  (define (optimize-letrec letrec-expr)
+    ; we could potentially inline letrec stuff but that's pretty hard and inlining normal lets is bugged
+    (match letrec-expr
+      (('letrec ((args vals) ...) expr)
+       `(letrec ,(map list args (map optimize-atom vals)) ,(optimize-apply expr)))))
   ; only optimizes 'applications', ie (f x y). But due to how codegen works, (if p (f a) (y b)) is also an application
   (define (optimize-apply expr)
     (match expr
       ; Simplifying ((continuation (x) (x args ...)) y) to (y args)
       ((('continuation . _) . _) (optimize-let expr))
       ((('lambda . _) . _) (optimize-let expr))
+
+      (('letrec . _) (optimize-letrec expr))
 
       (('if #t a b) (optimize-apply a))
       (('if #f a b) (optimize-apply b))
@@ -350,7 +357,7 @@
       ((_ . _) (optimize-apply expr))
       (else expr)))
   (define (optimize expr)
-    (let ((expr (alpha-convert expr)))
+    (let ((expr expr))
       (match expr
           (('##foreign.declare . _) expr)
           (('##vcore.declare f l)

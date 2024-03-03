@@ -15,43 +15,65 @@ LAMBDA2: 1 ((lookup *) (close LAMBDA1) (lookup y) (lookup y))
 
 TOPLEVEL1: ((lookup *) (close LAMBDA2) (lookup x) (lookup x))
 
-we can run this in a forth style interpreter:
+We can write a bytecode asm for this:
 
-TOPLEVEL1:
-  RESERVE 4
-  LOOKUP *
-  CLOSE LAMBDA2
-  LOOKUP X
-  LOOKUP X
-  CALL 4
+.symbol *
+.symbol +
+.symbol x
+.symbol y
+.closure closure-next ##sys.next
 
-LAMBDA1:
-  RESERVE 4
-  LOOKUP +
-  FUNCTION ##sys.next
-  BRUIJN 1 0
-  BRUIJN 0 0
-  CALL 4
+.func toplevel1 0
+  save
+  lookup $0 *
+  close $1 lambda2
+  lookup $2 x
+  lookup $3 x
+  call 4
 
-We still need to compile a very small snippet of code at runtime:
+.func lambda2 1
+  save
+  lookup $0 *
+  close $1 lambda1
+  lookup $2 y
+  lookup $3 y
+  call 4
+
+.func lambda1 1
+  lookup $0 +
+  mov $1 CLOSURE closure-next
+  bruijn $2 1 0
+  bruijn $3 0 0
+  call 4
+
+We still need to compile a very small snippet of code to translate between tape interpreter and C:
 
 ```
-LAMBDA1:
-  mov [rdx+8], LAMBDA_ONE_TAPE_OFFSET
-  jmp [rdx+16]
+lambda1_c:
+  mov [rdi+tapefunc_offset], lambda1
+  jmp VTapeInterpreter
 ```
-where rdx is holding VRuntime*
+where rdi is holding VRuntime*
+
+Machine description:
+  you have general purpose registers from $0 to $32767
+  there are a few more more registers: $argc, $env, and $r which hold the number of args, the saved environment and return value from inline calls
+  the argument chain is accessed through bruijn
+
+A note on tape addresses: you can have multiple variables with the same name, but only one per type. IE:
+
+.symbol +
+.func + 3
+
+operators which only accept eg symbols, like `lookup` only look for the symbol +
+operators like mov which move anything need a type
 
 Needed instructions:
-RESERVE N - reserves space for the stack
-APPLY - makes a C funcall with all the args on the stack
-LOOKUP TAPE -  replaces a symbol at the tape location with its bound value
-BRUIJN I J - finds a variable in the static chain
-CLOSE ADDR - pushes a fresh closure on the stack
-JNE TAPE - pops the top of stack, if false jumps to a tape location
+lookup reg tape - calls VLookupGlobal with a pointer to the symbol on the tape
+bruijn reg i j - finds a variable in the static chain
+save - saves the arguments to an environment buffer, which is written to the $env register
+close reg tape - creates a fresh closure, requires save to have been called earlier
 
-PUSH TAPE - pushes a word from the tape onto the stack, ie a double or a symbol
-IMM VAL - pushes an immediate onto the stack
-
-APPLY - c funcall with closure on the stack
-APPLY TAPE - c funcall with closure on the tape
+call n - calls a function with n arguments, the first argument is the function to call
+mov reg imm - writes the immediate to the register
+mov reg TYPE tape - writes the tape address to the register
