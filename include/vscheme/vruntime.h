@@ -132,48 +132,6 @@ typedef struct VSmallObject {
 } VSmallObject;
 
 #ifdef __linux__
-#include <setjmp.h>
-#define VJmpBuf jmp_buf
-#define VSetJmp setjmp
-#define VLongJmp longjmp
-#endif
-#ifdef _WIN64
-// Thank you for the stack unwinding that causes stack overflows, Windows
-#include <xmmintrin.h>
-struct VJmpBuf {
-  uint64_t rip;
-  uint64_t rsp;
-
-  uint64_t rbx;
-  uint64_t rbp;
-
-  uint64_t rdi;
-  uint64_t rsi;
-
-  uint64_t r12;
-  uint64_t r13;
-  uint64_t r14;
-  uint64_t r15;
-
-  __m128 xmm6;
-  __m128 xmm7;
-  __m128 xmm8;
-  __m128 xmm9;
-  __m128 xmm10;
-  __m128 xmm11;
-  __m128 xmm12;
-  __m128 xmm13;
-  __m128 xmm14;
-  __m128 xmm15;
-};
-typedef struct VJmpBuf VJmpBuf[1];
-static_assert(sizeof(struct VJmpBuf) == 240);
-
-int VSetJmp(struct VJmpBuf buf[1]);
-void VLongJmp(struct VJmpBuf buf[1], int ret);
-#endif
-
-#ifdef __linux__
 #define VWEAK __attribute__((weak))
 #endif
 #ifdef _WIN64
@@ -244,6 +202,7 @@ typedef SYSV_CALL void (*VThunk)(V_CORE_ARGS, VWORD k);
 #define ARGC_REG "r8d"
 #endif
 
+#ifdef DONT_INLINE
 SYSV_CALL static inline uint64_t VBits(VWORD v) {
   uint64_t bits;
   memcpy(&bits, &v, sizeof v);
@@ -254,6 +213,10 @@ SYSV_CALL static inline VWORD VWord(uint64_t bits) {
   memcpy(&v, &bits, sizeof bits);
   return v;
 }
+#else
+#define VBits(_v) ((_v).integer)
+#define VWord(_bits) ((VWORD){ .integer = _bits })
+#endif
 
 typedef struct VEnv {
   VSmallObject base;
@@ -393,6 +356,19 @@ SYSV_CALL static inline char VDecodeChar(VWORD v) {
   return (char)(VBits(v) & 0xFF);
 }
 
+#ifdef DONT_INLINE
+SYSV_CALL static inline VWORD VEncodeBool(bool b) {
+  return b ? VTRUE : VFALSE;
+}
+
+SYSV_CALL static inline bool VDecodeBool(VWORD v) {
+  return VBits(v) != VBits(VFALSE);
+}
+#else
+#define VEncodeBool(_b) (_b ? VTRUE : VFALSE)
+#define VDecodeBool(_v) (VBits(_v) != VBits(VFALSE))
+#endif
+
 // TODO remove usage of this function
 SYSV_CALL static inline VWORD VEncodeNumber(double d) {
   VWORD v;
@@ -411,16 +387,9 @@ SYSV_CALL static inline double VDecodeNumber(VWORD v) {
   return d;
 }
 
-SYSV_CALL static inline VWORD VEncodeBool(bool b) {
-  return b ? VTRUE : VFALSE;
-}
-
-SYSV_CALL static inline bool VDecodeBool(VWORD v) {
-  return VBits(v) != VBits(VFALSE);
-}
-
 // Pointer types
 
+#ifdef DONT_INLINE
 SYSV_CALL static inline VWORD VEncodePointer(void * v, enum VPOINTER_T type) {
   uint64_t bits = (uint64_t)(intptr_t)v;
   bits &= ~POINTER_MIRROR;
@@ -450,6 +419,16 @@ SYSV_CALL static inline VWORD VEncodePair(VPair * p) {
 SYSV_CALL static inline VPair * VDecodePair(VWORD v) {
   return (VPair*)VDecodePointer(v);
 }
+#else
+#define VEncodePointer(_v, _type) VWord( (((uint64_t)(intptr_t)_v) & ~POINTER_MIRROR) | _type | LITERAL_HEADER)
+#define VDecodePointer(_v) ((VWORD*)(intptr_t)( (VBits(_v) << 16) >> 16))
+
+#define VEncodeClosure(_c) (VEncodePointer(_c, VPOINTER_CLOSURE))
+#define VDecodeClosure(_c) ((VClosure*)VDecodePointer(_c))
+
+#define VEncodePair(_p) (VEncodePointer(_p, VPOINTER_PAIR))
+#define VDecodePair(_p) ((VPair*)VDecodePointer(_p))
+#endif
 
 SYSV_CALL static inline VWORD VEncodeForeignPointer(void * v) {
   return VEncodePointer(v, VPOINTER_FOREIGN);
@@ -736,7 +715,12 @@ SYSV_CALL static inline void const * VCheckedDecodeConstVoidPtr(VWORD v, char co
 
 /* ======================== Construction ======================= */
 
-static VObject VMakeObject(VNEWTAG tag) {
+#ifdef DONT_INLINE
+
+//#define ALWAYS_INLINE __attribute__((always_inline))
+#define ALWAYS_INLINE
+
+ALWAYS_INLINE static inline VObject VMakeObject(VNEWTAG tag) {
   return (VObject) {
     .tag = tag,
     .flags = 0,
@@ -744,12 +728,50 @@ static VObject VMakeObject(VNEWTAG tag) {
     .forward_offset = 0
   };
 }
-static VSmallObject VMakeSmallObject(VNEWTAG tag) {
+ALWAYS_INLINE static inline VSmallObject VMakeSmallObject(VNEWTAG tag) {
   return (VSmallObject) {
     .tag = tag,
     .flags = 0,
     .pincount = 0,
   };
+}
+
+ALWAYS_INLINE SYSV_CALL static inline void VInitEnv(VEnv * env, unsigned short num_vars, unsigned short var_len, VEnv * upenv) {
+  *env = (VEnv) { .base = VMakeSmallObject(VENV), .num_vars = num_vars, .var_len = var_len, .up = upenv };
+}
+
+ALWAYS_INLINE SYSV_CALL static inline VPort VMakePortStream(FILE * stream, unsigned flags) {
+  return (VPort) { .base = VMakeObject(VPORT), .stream = stream, .flags = flags };
+}
+
+ALWAYS_INLINE SYSV_CALL static inline VClosure VMakeClosure2(VFunc f, VEnv * env) {
+  return (VClosure) {
+    .base = VMakeObject(VCLOSURE),
+    .func = f,
+    .env = env,
+  };
+}
+
+ALWAYS_INLINE SYSV_CALL static inline VPair VMakePair(VWORD a, VWORD b) {
+  return (VPair) { .base = VMakeObject(VPAIR), .first = a, .rest = b };
+}
+#else
+#define VMakeObject(_tag) ((VObject) { .tag = _tag, .flags = 0, .pincount = 0, .forward_offset = 0 })
+#define VMakeSmallObject(_tag) ((VSmallObject) { .tag = _tag, .flags = 0, .pincount = 0 })
+#define VInitEnv(_env, _num_vars, _var_len, _upenv) \
+  do { *_env = (VEnv) { .base = VMakeSmallObject(VENV), .num_vars = _num_vars, .var_len = _var_len, .up = _upenv }; } while(0)
+#define VMakePortStream(_stream, _flags) ((VPort) { .base = VMakeObject(VPORT), .stream = _stream, .flags = _flags })
+#define VMakeClosure2(_f, _env) ((VClosure) { .base = VMakeObject(VCLOSURE), .func = _f, .env = _env }) 
+#define VMakePair(_a, _b) ((VPair) { .base = VMakeObject(VPAIR), .first = _a, .rest = _b })
+#endif
+
+/*******************************************************************************/
+
+SYSV_CALL static inline VPair * VFillPair(VPair * pair, VWORD a, VWORD b) {
+  pair->base = VMakeObject(VPAIR);
+  pair->first = a;
+  pair->rest = b;
+  return pair;
 }
 
 #define V_ALLOCA_BLOB(len) alloca(sizeof(VBlob) + len);
@@ -768,33 +790,6 @@ SYSV_CALL static inline VVector * VFillVector(VVector * vec, VNEWTAG tag, unsign
   vec->len = len;
   memcpy(vec->arr, dat, sizeof(VWORD[len]));
   return vec;
-}
-
-SYSV_CALL static inline void VInitEnv(VEnv * env, unsigned short num_vars, unsigned short var_len, VEnv * upenv) {
-  *env = (VEnv) { .base = VMakeSmallObject(VENV), .num_vars = num_vars, .var_len = var_len, .up = upenv };
-}
-
-SYSV_CALL static inline VPort VMakePortStream(FILE * stream, unsigned flags) {
-  return (VPort) { .base = VMakeObject(VPORT), .stream = stream, .flags = flags };
-}
-
-SYSV_CALL static inline VClosure VMakeClosure2(VFunc f, VEnv * env) {
-  return (VClosure) {
-    .base = VMakeObject(VCLOSURE),
-    .func = f,
-    .env = env,
-  };
-}
-
-SYSV_CALL static inline VPair VMakePair(VWORD a, VWORD b) {
-  return (VPair) { .base = VMakeObject(VPAIR), .first = a, .rest = b };
-}
-
-SYSV_CALL static inline VPair * VFillPair(VPair * pair, VWORD a, VWORD b) {
-  pair->base = VMakeObject(VPAIR);
-  pair->first = a;
-  pair->rest = b;
-  return pair;
 }
 
 /* ======================== Misc ======================= */
@@ -984,54 +979,6 @@ SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k);
 
 /* ======================== Fibering ======================= */
 
-#ifdef __linux__
-typedef struct VListNode VListNode;
-typedef struct VFiber VFiber;
-
-typedef struct VFiberContext VFiberContext;
-typedef struct VFiberState {
-  uint64_t rip;
-  uint64_t rsp;
-
-  uint64_t rbx;
-  uint64_t rbp;
-
-  uint64_t r12;
-  uint64_t r13;
-  uint64_t r14;
-  uint64_t r15;
-  _Atomic uint32_t running;
-  uint64_t signal_stack;
-} VFiberState;
-enum { FIBER_NORMAL, FIBER_EXITED, FIBER_WAITED_ON };
-typedef struct VFiber {
-  VFiberContext * context;
-  uint64_t (*startup_func)(struct VFiber * me, void * startup_data);
-  void * startup_data;
-  char * stack;
-  size_t stacksize;
-  uint64_t ret;
-  struct VFiber * _Atomic waiter;
-  _Atomic int status;
-  VFiberState state;
-} VFiber;
-
-VFiber * VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_t stacksize);
-void VCloseFiberWorkers(VFiberContext * context);
-
-VFiber * VPushFiber(VFiberContext * context, VFiber * me, uint64_t (*func)(VFiber * me, void * data), void *data);
-uint64_t VFiberWait(VFiberContext * context, VFiber * waitee, VFiber * me);
-bool VTryFiberWait(VFiberContext * context, VFiber * waitee, VFiber * me, uint64_t * ret);
-
-void VFiberSleep(VFiber * me, double seconds);
-
-typedef struct VFiberLock VFiberLock;
-void VFiberLockCreate(VFiberLock ** lock);
-void VFiberLockDestroy(VFiberLock * lock);
-void VFiberAcquire(VFiberLock * lock, VFiberContext * context, VFiber * me);
-void VFiberRelease(VFiberLock * lock, VFiberContext * context, VFiber * me);
-
-#endif
 SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst);
 SYSV_CALL void VAsync(V_CORE_ARGS, VWORD k, VWORD future_thunk);
 SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD future);

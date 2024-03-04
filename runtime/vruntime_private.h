@@ -27,6 +27,7 @@
 #define _GNU_SOURCE
 #pragma once
 #include "vscheme/vruntime.h"
+#include "vsetjmp_private.h"
 typedef struct VFiberContext VFiberContext;
 typedef struct VFiber VFiber;
 typedef struct VStack VStack;

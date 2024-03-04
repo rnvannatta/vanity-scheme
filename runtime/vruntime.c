@@ -50,6 +50,7 @@
 #include <signal.h>
 
 #include "vscheme/vruntime.h"
+#include "vsetjmp_private.h"
 #include "vruntime_private.h"
 #include "vqueue_private.h"
 #include "vscheme/vinlines.h"
