@@ -3,84 +3,61 @@
 #include <unistd.h>
 
 #include "vscheme/vruntime.h"
+#include "runtime/vqueue_private.h"
 
-VFiber fiber;
-VFiber me;
+VFiber test, main_fiber;
 
-void VSwitchFiber(VFiber const * to, VFiber * from);
-void VInitFiber(VFiber * fiber, char * stack, size_t stacklen, void (*func)(void * data), void * data);
+static void MyFiberTest(void * _me) {
+  VFiber * me = _me;
+  printf("hey from the fiber\n");
 
-void foo(void* dat) {
-  printf("%s\n", (char*)dat);
-  VSwitchFiber(&me, &fiber);
-  exit(1);
+  VSwitchFiber(&main_fiber.state, &test.state);
+  
+  printf("never shoulda come here\n");
+  abort();
 }
 
-uint64_t fibrous(VFiber * me, void *data) {
-  //printf("hayo from the fiber\n");
-  //usleep(500 * 1000);
-  VFiberSleep(me, 0.5);
-  return *(int*)data;
-}
-uint64_t fibby(VFiber * me, void *data) {
-  //printf("hayo from the fiber\n");
-  sleep(2);
-  return *(int*)data;
+void MyInitFiber(VFiberState * fiber, char * stack, void(*func)(void*), void * data) {
+  memset(fiber, 0, sizeof *fiber);
+  fiber->regs.rip = (uint64_t)(void*)VFiberStart;
+  fiber->regs.rsp = (uint64_t)(void*)stack;
+  fiber->regs.r12 = (uint64_t)func;
+  fiber->regs.r13 = (uint64_t)data;
+
+  atomic_store(&fiber->running, false);
 }
 
-uint64_t fiberish(VFiber * me, void *data) {
-  VFiber * futures[8];
-  int arrs[4] = { 1, 2, 3, 4 };
-  printf("nesting\n");
-  for(int i = 0; i < 4; i++) {
-    futures[i] = VPushFiber(me->context, fibrous, &arrs[i]);
-  }
-  for(int i = 0; i < 4; i++) {
-    printf("from the fiber %d %llu\n", *(int*)data, VFiberWait(me->context, futures[i], me));
-  }
-  return *(int*)data;
+void MyMainFiber(VFiberState * fiber) {
+  memset(fiber, 0, sizeof *fiber);
+  atomic_store(&fiber->running, true);
+}
+
+uint64_t FiberFuncer(VFiber * me, void * _data) {
+  int * data = _data;
+  return *data * *data;
 }
 
 int main() {
-  char * stack = malloc(4096);
-  (void)stack;
-  // lowlevel context switching testing
-  /*
-  char * str = "Hello, World!";
-  VInitFiber(&fiber, stack, 4096, foo, str);
+  MyMainFiber(&main_fiber.state);
+  char stack[4096];
+  MyInitFiber(&test.state, stack + 4080, MyFiberTest, &test);
 
-  VSwitchFiber(&fiber, &me);
+  VSwitchFiber(&test.state, &main_fiber.state);
+  printf("and we're back\n");
 
-  printf("returned from fiber\n");
-
-  // higher level fiber testing
-  */
   VFiberContext * context;
-  VLaunchFiberWorkers(&context, 8, 4096);
+  VFiber * me = VLaunchFiberWorkers(&context, 8, 1024 * 1024 * 2);
 
-#if 0
-  int leet = 1337;
-
-  VFiber * future = VPushFiber(context, stack, 4096, fibby, &leet);
-  printf("%llu\n", VFiberWait(context, future, NULL));
-#else
-  VFiber * futures[8];
-  int arrs[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-  for(int i = 0; i < 8; i++) {
-    char * stack = malloc(4096);
-    futures[i] = VPushFiber(context, fiberish, &arrs[i]);
+  VFiber * fibers[10];
+  int datas[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  for(int i = 0; i < 10; i++) {
+    fibers[i] = VPushFiber(context, me, FiberFuncer, &datas[i]);
   }
-  for(int i = 0; i < 8; i++) {
-    printf("%llu\n", VFiberWait(context, futures[i], NULL));
+  int rets[10];
+  for(int i = 0; i < 10; i++) {
+    rets[i] = VFiberWait(context, fibers[i], me);
+    printf("from fiber %d: %d\n", i, rets[i]);
   }
-  for(int i = 0; i < 8; i++) {
-    char * stack = malloc(4096);
-    futures[i] = VPushFiber(context, fiberish, &arrs[i]);
-  }
-  for(int i = 0; i < 8; i++) {
-    printf("%llu\n", VFiberWait(context, futures[i], NULL));
-  }
-#endif
 
   VCloseFiberWorkers(context);
 }

@@ -224,9 +224,8 @@
     (match expr
       ((lamb xs body)
        (match (optimize-apply body)
-         ; a nice party trick: is this still necessary outside of niche usage?
-         ; is there a more general usage of this?
-         ; this was more important previously because the to cps routine was garbage
+         ; eta conversion... when does this happen? it used to happen regularly before I
+         ; upgraded my cps routine. but it still rarely happens
          ((f . ys)
           (if (and (not (special-apply? f))
                    (equal? xs ys)

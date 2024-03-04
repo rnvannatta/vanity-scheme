@@ -10,7 +10,7 @@ The parallelism model uses cooperative M:N fibers with a continuation-stealing s
 
 It is capable of producing executables which run on Linux and Windows, using GCC and MinGW. The compiler itself only runs on Linux.
 
-The compiler is free software under GPL v2.0, and the runtime is free software under LGPL v3.1. So, just as with gcc, you may use the compiler to build and link nonfree software if you do not statically link the runtime library.
+The compiler is free software under GPL v2.0, and the runtime is free software under LGPL v2.1. So, just as with gcc, you may use the compiler to build and link nonfree software if you do not statically link the runtime library.
 
 ## Install Instructions
 
