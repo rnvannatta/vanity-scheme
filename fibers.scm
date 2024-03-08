@@ -34,8 +34,13 @@
 (import (picompute))
 (define numtrials 10000000)
 (define numfibers 64)
-(displayln
-  (/ (fold + 0 (fiber-map (lambda (e) (estimate-pi (/ numtrials numfibers) e)) (iota numfibers))) numfibers))
+
+#;(define future (async (lambda () (fiber-map (lambda (e) (estimate-pi (/ numtrials numfibers) e)) (iota numfibers)))))
+#;(displayln
+  (/ (fold + 0 (await future)) numfibers))
+(let ((future (async (lambda () (fiber-map (lambda (e) (estimate-pi (/ numtrials numfibers) e)) (iota numfibers))))))
+  (displayln
+    (/ (fold + 0 (await future)) numfibers)))
 ;(define (test2) (iota 10000))
 #;(define (test)
   (fiber-fork

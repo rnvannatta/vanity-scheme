@@ -27,20 +27,24 @@
  #define _GNU_SOURCE
 #ifdef __linux__
 #include <pthread.h>
+#include <errno.h>
 #include <signal.h>
 #endif
 #ifdef _WIN64
 #include <windef.h>
+#include <winnt.h>
 #include <intrin.h>
 
 #include <processthreadsapi.h>
 #include <synchapi.h>
 #include <handleapi.h>
+#include <errhandlingapi.h>
 #endif
 
 #include "vscheme/vruntime.h"
 #include "vsetjmp_private.h"
 #include "vqueue_private.h"
+#include "vruntime_private.h"
 #include <time.h>
 #include <stdbool.h>
 #include <string.h>
@@ -50,6 +54,255 @@
 // ======================================================
 // ------------------- QUEUES ---------------------------
 // ======================================================
+
+#ifdef _WIN64
+
+typedef struct _CLIENT_ID
+{
+   HANDLE UniqueProcess;
+   HANDLE UniqueThread;
+} CLIENT_ID, *PCLIENT_ID;
+
+#ifndef __UNICODE_STRING_DEFINED__
+#define __UNICODE_STRING_DEFINED__
+typedef struct _UNICODE_STRING {
+  USHORT Length;        /* bytes */
+  USHORT MaximumLength; /* bytes */
+  PWSTR  Buffer;
+} UNICODE_STRING, *PUNICODE_STRING;
+#endif
+
+typedef struct _GDI_TEB_BATCH
+{
+    ULONG  Offset;
+    HANDLE HDC;
+    ULONG  Buffer[0x136];
+} GDI_TEB_BATCH;
+
+typedef struct _PEB_LDR_DATA
+{
+    ULONG               Length;
+    BOOLEAN             Initialized;
+    PVOID               SsHandle;
+    LIST_ENTRY          InLoadOrderModuleList;
+    LIST_ENTRY          InMemoryOrderModuleList;
+    LIST_ENTRY          InInitializationOrderModuleList;
+    PVOID               EntryInProgress;
+    BOOLEAN             ShutdownInProgress;
+    HANDLE              ShutdownThreadId;
+} PEB_LDR_DATA, *PPEB_LDR_DATA;
+
+typedef struct _ARM64EC_NT_CONTEXT ARM64EC_NT_CONTEXT;
+typedef struct _CHPE_V2_CPU_AREA_INFO
+{
+    BOOLEAN             InSimulation;         /* 000 */
+    BOOLEAN             InSyscallCallback;    /* 001 */
+    ULONG64             EmulatorStackBase;    /* 008 */
+    ULONG64             EmulatorStackLimit;   /* 010 */
+    ARM64EC_NT_CONTEXT *ContextAmd64;         /* 018 */
+    ULONG              *SuspendDoorbell;      /* 020 */
+    ULONG64             LoadingModuleModflag; /* 028 */
+    void               *EmulatorData[4];      /* 030 */
+    ULONG64             EmulatorDataInline;   /* 050 */
+} CHPE_V2_CPU_AREA_INFO, *PCHPE_V2_CPU_AREA_INFO;
+
+typedef struct _TEB_ACTIVE_FRAME_CONTEXT
+{
+    ULONG       Flags;
+    const char *FrameName;
+} TEB_ACTIVE_FRAME_CONTEXT, *PTEB_ACTIVE_FRAME_CONTEXT;
+
+typedef struct _TEB_FLS_DATA
+{
+    LIST_ENTRY      fls_list_entry;
+    void          **fls_data_chunks[8];
+} TEB_FLS_DATA, *PTEB_FLS_DATA;
+
+typedef struct _TEB_ACTIVE_FRAME
+{
+    ULONG                     Flags;
+    struct _TEB_ACTIVE_FRAME *Previous;
+    TEB_ACTIVE_FRAME_CONTEXT *Context;
+} TEB_ACTIVE_FRAME, *PTEB_ACTIVE_FRAME;
+
+typedef struct _PEB *PPEB;
+
+typedef struct _RTL_ACTIVATION_CONTEXT_STACK_FRAME
+{
+    struct _RTL_ACTIVATION_CONTEXT_STACK_FRAME *Previous;
+    struct _ACTIVATION_CONTEXT                 *ActivationContext;
+    ULONG                                       Flags;
+} RTL_ACTIVATION_CONTEXT_STACK_FRAME, *PRTL_ACTIVATION_CONTEXT_STACK_FRAME;
+
+typedef struct _ACTIVATION_CONTEXT_STACK
+{
+    RTL_ACTIVATION_CONTEXT_STACK_FRAME *ActiveFrame;
+    LIST_ENTRY                          FrameListCache;
+    ULONG                               Flags;
+    ULONG                               NextCookieSequenceNumber;
+    ULONG_PTR                           StackId;
+} ACTIVATION_CONTEXT_STACK, *PACTIVATION_CONTEXT_STACK;
+
+typedef struct _TEB
+{                                                                 /* win32/win64 */
+    NT_TIB                       Tib;                               /* 000/0000 */
+    PVOID                        EnvironmentPointer;                /* 01c/0038 */
+    CLIENT_ID                    ClientId;                          /* 020/0040 */
+    PVOID                        ActiveRpcHandle;                   /* 028/0050 */
+    PVOID                        ThreadLocalStoragePointer;         /* 02c/0058 */
+    PPEB                         Peb;                               /* 030/0060 */
+    ULONG                        LastErrorValue;                    /* 034/0068 */
+    ULONG                        CountOfOwnedCriticalSections;      /* 038/006c */
+    PVOID                        CsrClientThread;                   /* 03c/0070 */
+    PVOID                        Win32ThreadInfo;                   /* 040/0078 */
+    ULONG                        User32Reserved[26];                /* 044/0080 */
+    ULONG                        UserReserved[5];                   /* 0ac/00e8 */
+    PVOID                        WOW32Reserved;                     /* 0c0/0100 */
+    ULONG                        CurrentLocale;                     /* 0c4/0108 */
+    ULONG                        FpSoftwareStatusRegister;          /* 0c8/010c */
+    PVOID                        ReservedForDebuggerInstrumentation[16]; /* 0cc/0110 */
+#ifdef _WIN64
+    PVOID                        SystemReserved1[30];               /*    /0190 */
+#else
+    PVOID                        SystemReserved1[26];               /* 10c/     used for krnl386 private data in Wine */
+#endif
+    char                         PlaceholderCompatibilityMode;      /* 174/0280 */
+    BOOLEAN                      PlaceholderHydrationAlwaysExplicit;/* 175/0281 */
+    char                         PlaceholderReserved[10];           /* 176/0282 */
+    DWORD                        ProxiedProcessId;                  /* 180/028c */
+    ACTIVATION_CONTEXT_STACK     ActivationContextStack;            /* 184/0290 */
+    UCHAR                        WorkingOnBehalfOfTicket[8];        /* 19c/02b8 */
+    LONG                         ExceptionCode;                     /* 1a4/02c0 */
+    ACTIVATION_CONTEXT_STACK    *ActivationContextStackPointer;     /* 1a8/02c8 */
+    ULONG_PTR                    InstrumentationCallbackSp;         /* 1ac/02d0 */
+    ULONG_PTR                    InstrumentationCallbackPreviousPc; /* 1b0/02d8 */
+    ULONG_PTR                    InstrumentationCallbackPreviousSp; /* 1b4/02e0 */
+#ifdef _WIN64
+    ULONG                        TxFsContext;                       /*    /02e8 */
+    BOOLEAN                      InstrumentationCallbackDisabled;   /*    /02ec */
+    BOOLEAN                      UnalignedLoadStoreExceptions;      /*    /02ed */
+#else
+    BOOLEAN                      InstrumentationCallbackDisabled;   /* 1b8/     */
+    BYTE                         SpareBytes1[23];                   /* 1b9/     */
+    ULONG                        TxFsContext;                       /* 1d0/     */
+#endif
+    GDI_TEB_BATCH                GdiTebBatch;                       /* 1d4/02f0 used for ntdll private data in Wine */
+    CLIENT_ID                    RealClientId;                      /* 6b4/07d8 */
+    HANDLE                       GdiCachedProcessHandle;            /* 6bc/07e8 */
+    ULONG                        GdiClientPID;                      /* 6c0/07f0 */
+    ULONG                        GdiClientTID;                      /* 6c4/07f4 */
+    PVOID                        GdiThreadLocaleInfo;               /* 6c8/07f8 */
+    ULONG_PTR                    Win32ClientInfo[62];               /* 6cc/0800 used for user32 private data in Wine */
+    PVOID                        glDispatchTable[233];              /* 7c4/09f0 */
+    PVOID                        glReserved1[29];                   /* b68/1138 */
+    PVOID                        glReserved2;                       /* bdc/1220 */
+    PVOID                        glSectionInfo;                     /* be0/1228 */
+    PVOID                        glSection;                         /* be4/1230 */
+    PVOID                        glTable;                           /* be8/1238 */
+    PVOID                        glCurrentRC;                       /* bec/1240 */
+    PVOID                        glContext;                         /* bf0/1248 */
+    ULONG                        LastStatusValue;                   /* bf4/1250 */
+    UNICODE_STRING               StaticUnicodeString;               /* bf8/1258 */
+    WCHAR                        StaticUnicodeBuffer[261];          /* c00/1268 */
+    PVOID                        DeallocationStack;                 /* e0c/1478 */
+    PVOID                        TlsSlots[64];                      /* e10/1480 */
+    LIST_ENTRY                   TlsLinks;                          /* f10/1680 */
+    PVOID                        Vdm;                               /* f18/1690 */
+    PVOID                        ReservedForNtRpc;                  /* f1c/1698 */
+    PVOID                        DbgSsReserved[2];                  /* f20/16a0 */
+    ULONG                        HardErrorMode;                     /* f28/16b0 */
+#ifdef _WIN64
+    PVOID                        Instrumentation[11];               /*    /16b8 */
+#else
+    PVOID                        Instrumentation[9];                /* f2c/ */
+#endif
+    GUID                         ActivityId;                        /* f50/1710 */
+    PVOID                        SubProcessTag;                     /* f60/1720 */
+    PVOID                        PerflibData;                       /* f64/1728 */
+    PVOID                        EtwTraceData;                      /* f68/1730 */
+    PVOID                        WinSockData;                       /* f6c/1738 */
+    ULONG                        GdiBatchCount;                     /* f70/1740 */
+    ULONG                        IdealProcessorValue;               /* f74/1744 */
+    ULONG                        GuaranteedStackBytes;              /* f78/1748 */
+    PVOID                        ReservedForPerf;                   /* f7c/1750 */
+    PVOID                        ReservedForOle;                    /* f80/1758 */
+    ULONG                        WaitingOnLoaderLock;               /* f84/1760 */
+    PVOID                        SavedPriorityState;                /* f88/1768 */
+    ULONG_PTR                    ReservedForCodeCoverage;           /* f8c/1770 */
+    PVOID                        ThreadPoolData;                    /* f90/1778 */
+    PVOID                       *TlsExpansionSlots;                 /* f94/1780 */
+#ifdef _WIN64
+    union {
+        PVOID                    DeallocationBStore;                /*    /1788 */
+        CHPE_V2_CPU_AREA_INFO   *ChpeV2CpuAreaInfo;                 /*    /1788 */
+    } DUMMYUNIONNAME;
+    PVOID                        BStoreLimit;                       /*    /1790 */
+#endif
+    ULONG                        MuiGeneration;                     /* f98/1798 */
+    ULONG                        IsImpersonating;                   /* f9c/179c */
+    PVOID                        NlsCache;                          /* fa0/17a0 */
+    PVOID                        ShimData;                          /* fa4/17a8 */
+    ULONG                        HeapVirtualAffinity;               /* fa8/17b0 */
+    PVOID                        CurrentTransactionHandle;          /* fac/17b8 */
+    TEB_ACTIVE_FRAME            *ActiveFrame;                       /* fb0/17c0 */
+    TEB_FLS_DATA                *FlsSlots;                          /* fb4/17c8 */
+    PVOID                        PreferredLanguages;                /* fb8/17d0 */
+    PVOID                        UserPrefLanguages;                 /* fbc/17d8 */
+    PVOID                        MergedPrefLanguages;               /* fc0/17e0 */
+    ULONG                        MuiImpersonation;                  /* fc4/17e8 */
+    USHORT                       CrossTebFlags;                     /* fc8/17ec */
+    USHORT                       SameTebFlags;                      /* fca/17ee */
+    PVOID                        TxnScopeEnterCallback;             /* fcc/17f0 */
+    PVOID                        TxnScopeExitCallback;              /* fd0/17f8 */
+    PVOID                        TxnScopeContext;                   /* fd4/1800 */
+    ULONG                        LockCount;                         /* fd8/1808 */
+    LONG                         WowTebOffset;                      /* fdc/180c */
+    PVOID                        ResourceRetValue;                  /* fe0/1810 */
+    PVOID                        ReservedForWdf;                    /* fe4/1818 */
+    ULONGLONG                    ReservedForCrt;                    /* fe8/1820 */
+    GUID                         EffectiveContainerId;              /* ff0/1828 */
+} TEB, *PTEB;
+
+__attribute__((returns_twice)) void VSwitchFiber(VFiberState const * to, VFiberState * from) {
+  from->tib.except = NtCurrentTeb()->Tib.ExceptionList;
+  from->tib.stack_limit = NtCurrentTeb()->Tib.StackLimit;
+  from->tib.fls_slots = NtCurrentTeb()->FlsSlots;
+
+  NtCurrentTeb()->Tib.FiberData = (void*)to;
+  NtCurrentTeb()->Tib.ExceptionList = to->tib.except;
+  NtCurrentTeb()->Tib.StackBase = to->tib.stack_base;
+  NtCurrentTeb()->Tib.StackLimit = to->tib.stack_limit;
+  NtCurrentTeb()->DeallocationStack = to->tib.stack_alloc;
+  NtCurrentTeb()->FlsSlots = to->tib.fls_slots;
+
+  VSwitchFiberAsm(to, from);
+}
+#endif
+
+#ifdef _WIN64
+static void MyConvertToFiber(VFiberState * state) {
+  NtCurrentTeb()->Tib.FiberData = state;
+
+  state->tib.except = NtCurrentTeb()->Tib.ExceptionList;
+  state->tib.stack_base = NtCurrentTeb()->Tib.StackBase;
+  state->tib.stack_limit = NtCurrentTeb()->Tib.StackLimit;
+  state->tib.stack_alloc = NtCurrentTeb()->DeallocationStack;
+  state->tib.fls_slots = NtCurrentTeb()->FlsSlots;
+}
+static void MyConvertFromFiber() {
+  NtCurrentTeb()->Tib.FiberData = NULL;
+}
+
+static void MyCreateFiber(VFiberState * state, char * stack_base, char * stack_limit, char * stack_alloc) {
+  state->tib.except = (void*)-1;
+  state->tib.stack_base = stack_base;
+  state->tib.stack_limit = stack_limit;
+  state->tib.stack_alloc = stack_alloc;
+  state->tib.fls_slots = NULL;
+}
+#endif
+
+#define myassert(x) do { if(!(x)) { printf("assertion failed: %s, %s:%d\n", #x, __FILE__, __LINE__); assert(0); } } while(0)
 
 // The debian bookworm build of mingw-w64 is missing this function because of merge errors
 // Avoids different code on windings which is cool I guess...
@@ -68,7 +321,6 @@ typedef struct VListNode {
   void * data;
   VListPtr next;
 } VListNode;
-
 
 void VListNodePoolInit(VListNodePool * pool) {
   pool->nodes.ptr = NULL;
@@ -90,7 +342,7 @@ void VStackInit(VStack * stack) {
   VListNodePoolInit(&stack->pool);
 }
 void VStackDeinit(VStack * stack) {
-  assert(stack->head.ptr == NULL);
+  myassert(stack->head.ptr == NULL);
   VListNodePoolDeinit(&stack->pool);
 }
 void VQueueInit(VQueue * queue) {
@@ -106,7 +358,7 @@ void VQueueInit(VQueue * queue) {
 }
 
 void VQueueDeinit(VQueue * queue) {
-  assert(queue->head.ptr == queue->tail.ptr);
+  myassert(queue->head.ptr == queue->tail.ptr);
   free(queue->head.ptr);
   queue->head.ptr = NULL;
   queue->tail.ptr = NULL;
@@ -257,7 +509,8 @@ typedef struct VFiberWorkerData {
   pthread_t id;
 #endif
 #ifdef _WIN64
-  HANDLE id;
+  HANDLE handle;
+  DWORD id;
 #endif
 } VFiberWorkerData;
 
@@ -282,20 +535,33 @@ typedef struct VFiberContext {
   VQueue sleeper_queue; 
   // nonzero indicates fibers should wrap up work
   _Atomic int fiber_signal;
-  VFiber main_fiber;
   char signal_stack[1024*1024];
   int num_worker_threads;
+
+  // These are used when closing. The main fiber needs
+  // to be run on the main thread, so the two have to swap
+  // to each other
+  VFiber * _Atomic main_fiber;
+  VFiber * _Atomic main_thread_fiber;
+
   VFiberWorkerData threads[];
 } VFiberContext;
 
 static void VAllocFiberStack(VFiberContext * context, VFiber * fiber) {
-  assert(!fiber->stack && !fiber->state.regs.rsp);
+  myassert(!fiber->stack && !fiber->state.regs.rsp);
 
   fiber->stack = VStackPop(&context->stackstack);
   if(!fiber->stack)
     fiber->stack = malloc(context->stacksize);
   fiber->stacksize = context->stacksize;
-  fiber->state.regs.rsp = (uint64_t)(fiber->stack + context->stacksize - 16);
+  // on linux technically only need 16 bytes, but fuck it
+  fiber->state.regs.rsp = (uint64_t)(fiber->stack + context->stacksize - 16 * 16);
+
+#ifdef _WIN64
+  fiber->state.tib.stack_base = fiber->stack + context->stacksize;
+  fiber->state.tib.stack_alloc = fiber->stack;
+  fiber->state.tib.stack_limit = fiber->stack;
+#endif
 }
 
 static VFiber * VFiberSelect(VFiberContext * context, bool must_succeed) {
@@ -317,16 +583,16 @@ void VFiberExit(VFiberContext * context, VFiber * me, uint64_t ret) {
   VFiber const * fiber = NULL;
   for(;;) {
     int status = atomic_load(&me->status);
-    assert(status != FIBER_EXITED);
+    myassert(status != FIBER_EXITED);
     if(status == FIBER_WAITED_ON) {
       // it's our problem to call the waiter
       VFiber * waiter = atomic_load(&me->waiter);
-      assert(waiter);
+      myassert(waiter);
       atomic_store(&me->status, FIBER_EXITED);
       fiber = waiter;
       break;
     }
-    assert(status == FIBER_NORMAL);
+    myassert(status == FIBER_NORMAL);
     if(atomic_compare_exchange_strong(&me->status, &status, FIBER_EXITED)) {
       // if this succeeds, not our problem to call the waiter
       break;
@@ -341,11 +607,11 @@ void VFiberExit(VFiberContext * context, VFiber * me, uint64_t ret) {
 uint64_t VFiberWait(VFiberContext * context, VFiber * waitee, VFiber * me) {
   uint64_t ret = 0;
 
-  assert(atomic_exchange(&waitee->waiter, me) == NULL);
+  myassert(atomic_exchange(&waitee->waiter, me) == NULL);
 
   int status = atomic_load(&waitee->status);
   if(!me) {
-    assert(0);
+    myassert(!me);
   } else {
     if(status == FIBER_NORMAL) {
       if(atomic_compare_exchange_strong(&waitee->status, &status, FIBER_WAITED_ON)) {
@@ -411,15 +677,18 @@ VFiber * VPushFiber(VFiberContext * context, VFiber * me, uint64_t (*func)(VFibe
   atomic_store(&fiber->status, FIBER_NORMAL);
   atomic_store(&fiber->waiter, NULL);
 
-  // true for continuation stealing
-  // false for child stealing, you monster
-  if(true) {
-    VAllocFiberStack(context, fiber);
-    VQueuePush(&context->queue, me);
-    VSwitchFiber(&fiber->state, &me->state);
-  } else {
-    VQueuePush(&context->queue, fiber);
-  }
+#ifdef _WIN64
+  MyCreateFiber(&fiber->state, NULL, NULL, NULL);
+#endif
+
+  // We do continuation stealing, so we immediately
+  // jump into the worker: this minimizes the number
+  // of fibers in the queue. If we instead pushed the
+  // worker, we would for a parallel for push all them
+  // to the thread which would be bad
+  VAllocFiberStack(context, fiber);
+  VQueuePush(&context->queue, me);
+  VSwitchFiber(&fiber->state, &me->state);
 
 #ifdef __linux__
   pthread_mutex_lock(&context->mutex);
@@ -438,26 +707,28 @@ VFiber * VPushFiber(VFiberContext * context, VFiber * me, uint64_t (*func)(VFibe
 int VSleeperFiberYield(VFiber * me) {
   VFiberContext * context = me->context;
 
-  VFiber const * fiber = NULL;
+  VFiber const * fiber = VFiberSelect(context, false);
   volatile int ret = atomic_load(&context->fiber_signal);
-  while(!(fiber = VFiberSelect(context, false)) && !(ret = atomic_load(&context->fiber_signal))) {
+  if(!fiber && !ret) {
 #ifdef __linux__
-      pthread_mutex_lock(&context->mutex);
-      struct timespec waittime;
-      waittime.tv_sec = 0;
-      waittime.tv_nsec = 10000;
+    pthread_mutex_lock(&context->mutex);
+    struct timespec waittime;
+    waittime.tv_sec = 0;
+    waittime.tv_nsec = 10000;
+    while(!ret && !fiber) {
+      pthread_cond_timedwait(&context->sleeper_cond, &context->mutex, &waittime);
       ret = atomic_load(&context->fiber_signal);
-      if(!ret) {
-          pthread_cond_timedwait(&context->sleeper_cond, &context->mutex, &waittime);
-      }
-      pthread_mutex_unlock(&context->mutex);
+      fiber = VFiberSelect(context, false);
+    }
+    pthread_mutex_unlock(&context->mutex);
 #endif
 #ifdef _WIN64
     EnterCriticalSection(&context->mutex);
     ret = atomic_load(&context->fiber_signal);
-    if(!ret) {
+    while(!ret && !fiber) {
       SleepConditionVariableCS(&context->sleeper_cond, &context->mutex, +1);
-      //printf("wakeup");
+      ret = atomic_load(&context->fiber_signal);
+      fiber = VFiberSelect(context, false);
     }
     LeaveCriticalSection(&context->mutex);
 #endif
@@ -471,7 +742,6 @@ int VSleeperFiberYield(VFiber * me) {
   return ret;
 }
 
-
 #ifdef __linux__
 static void *
 #endif
@@ -480,6 +750,7 @@ static DWORD
 #endif
 VSleeperFiberMain(void * _data) {
   VFiberWorkerData * data = _data;
+
 #ifdef __linux__
   sigset_t mask;
   sigfillset(&mask);
@@ -494,22 +765,45 @@ VSleeperFiberMain(void * _data) {
   while(!exit) {
     exit = VSleeperFiberYield(&data->me);
   }
-  return NULL;
+  pthread_t myid = pthread_self();
 #endif
 
 #ifdef _WIN64
+  MyConvertToFiber(&data->me.state);
+
   int exit = 0;
   while(!exit) {
     exit = VSleeperFiberYield(&data->me);
   }
-  printf("goodbye!\n");
+
+  MyConvertFromFiber();
+  DWORD myid = GetCurrentThreadId();
+#endif
+
+  VFiberContext * context = data->me.context;
+  if(myid == context->threads[context->num_worker_threads].id) {
+    atomic_store(&context->main_thread_fiber, &data->me);
+
+    VFiber * main_fiber = NULL;
+    while(!(main_fiber = atomic_load(&context->main_fiber)))
+      __builtin_ia32_pause();
+    
+    VSwitchFiber(&main_fiber->state, &data->me.state);
+  }
+
+#ifdef __linux__
+  return NULL;
+#endif
+#ifdef _WIN64
   return 0;
 #endif
 }
 
 #define HINULL ((void*)(~0ULL))
 VFiber * VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_t stacksize) {
-  VFiberContext * context = *context_out = malloc(sizeof(VFiberContext) + numthreads*sizeof(VFiberWorkerData));
+  size_t context_size = sizeof(VFiberContext) + (1+numthreads)*sizeof(VFiberWorkerData);
+  VFiberContext * context = *context_out = malloc(context_size);
+  memset(context, 0, context_size);
 #ifdef __linux__
   pthread_cond_init(&context->sleeper_cond, NULL);
   pthread_mutex_init(&context->mutex, NULL);
@@ -525,14 +819,26 @@ VFiber * VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_
   VQueueInit(&context->queue);
   VQueueInit(&context->sleeper_queue);
   atomic_store(&context->fiber_signal, 0);
+  atomic_store(&context->main_fiber, NULL);
+  atomic_store(&context->main_thread_fiber, NULL);
   context->num_worker_threads = numthreads;
 
-  memset(&context->main_fiber, 0, sizeof(VFiber));
-  atomic_store(&context->main_fiber.state.running, true);
-  atomic_store(&context->main_fiber.status, FIBER_NORMAL);
-  atomic_store(&context->main_fiber.waiter, NULL);
-  context->main_fiber.stack = HINULL;
-  context->main_fiber.state.signal_stack = (uint64_t)context->signal_stack;
+  VFiberWorkerData * main_fiber = &context->threads[numthreads];
+  memset(main_fiber, 0, sizeof(VFiberWorkerData));
+  atomic_store(&main_fiber->me.state.running, true);
+  atomic_store(&main_fiber->me.status, FIBER_NORMAL);
+  atomic_store(&main_fiber->me.waiter, NULL);
+  main_fiber->me.stack = HINULL;
+  main_fiber->me.state.signal_stack = (uint64_t)context->signal_stack;
+
+#ifdef __linux__
+  main_fiber->id = pthread_self();
+#endif
+#ifdef _WIN64
+  main_fiber->id = GetCurrentThreadId();
+  main_fiber->handle = NULL;
+  MyConvertToFiber(&main_fiber->me.state);
+#endif
 
   for(int i = 0; i < numthreads; i++) {
     context->threads[i].context = context;
@@ -542,12 +848,13 @@ VFiber * VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_
     atomic_store(&context->threads[i].me.state.running, true);
     atomic_store(&context->threads[i].me.waiter, NULL);
     atomic_store(&context->threads[i].me.status, FIBER_NORMAL);
+
 #ifdef __linux__
     int ret = pthread_create(&context->threads[i].id, NULL, VSleeperFiberMain, &context->threads[i]);
     bool ok = !ret;
 #endif
 #ifdef _WIN64
-    HANDLE tid = context->threads[i].id = CreateThread(NULL, 0, VSleeperFiberMain, &context->threads[i], 0, NULL);
+    HANDLE tid = context->threads[i].handle = CreateThread(NULL, 1024 * 1024 * 2, VSleeperFiberMain, &context->threads[i], 0, &context->threads[i].id);
     bool ok = tid;
 #endif
     if(!ok) {
@@ -556,34 +863,67 @@ VFiber * VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_
       abort();
     }
   }
-  return &context->main_fiber;
+  return &main_fiber->me;
 }
 
-void VCloseFiberWorkers(VFiberContext * context) {
+void VCloseFiberWorkers(VFiber * me, VFiberContext * context) {
 #ifdef __linux__
   pthread_mutex_lock(&context->mutex);
   atomic_store(&context->fiber_signal, 1);
   pthread_cond_broadcast(&context->sleeper_cond);
   pthread_mutex_unlock(&context->mutex);
 
+  pthread_t myid = pthread_self();
+#endif
+#ifdef _WIN64
+  MyConvertFromFiber();
+
+  EnterCriticalSection(&context->mutex);
+  atomic_store(&context->fiber_signal, 1);
+  WakeAllConditionVariable(&context->sleeper_cond);
+  LeaveCriticalSection(&context->mutex);
+
+  DWORD myid = GetCurrentThreadId();
+#endif
+
+  // switch back to the main thread so we can properly close all the others
+  // and be back on the main thread which may have some special features
+  if(myid != context->threads[context->num_worker_threads].id) {
+    atomic_store(&context->main_fiber, me);
+
+    VFiber * main_thread_fiber = NULL;
+    while(!(main_thread_fiber = atomic_load(&context->main_thread_fiber)))
+      __builtin_ia32_pause();
+    
+    VSwitchFiber(&main_thread_fiber->state, &me->state);
+
+#ifdef __linux__
+    myid = pthread_self();
+#endif
+#ifdef _WIN64
+    myid = GetCurrentThreadId();
+#endif
+  }
+
+#ifdef __linux__
   for(int i = 0; i < context->num_worker_threads; i++) {
-    pthread_join(context->threads[i].id, NULL);
+    assert(context->threads[i].id != myid);
+    int err = pthread_join(context->threads[i].id, NULL);
+    assert(!err);
   }
   pthread_cond_destroy(&context->sleeper_cond);
   pthread_mutex_destroy(&context->mutex);
 #endif
-#ifdef _WIN64
-  EnterCriticalSection(&context->mutex);
-  atomic_store(&context->fiber_signal, 1);
-  printf("signalling threads\n");
-  WakeAllConditionVariable(&context->sleeper_cond);
-  LeaveCriticalSection(&context->mutex);
 
+#ifdef _WIN64
   for(int i = 0; i < context->num_worker_threads; i++) {
-    printf("closing thread %p\n", context->threads[i].id);
-    WaitForSingleObject(context->threads[i].id, -1);
-    //CloseHandle(context->threads[i].id);
+    assert(context->threads[i].id != myid);
+
+    WaitForSingleObject(context->threads[i].handle, -1);
+    CloseHandle(context->threads[i].handle);
   }
+
+
 
   DeleteCriticalSection(&context->mutex);
 #endif
@@ -595,7 +935,6 @@ void VCloseFiberWorkers(VFiberContext * context) {
 // --------------------- LOCKS --------------------------
 // ======================================================
 
-#ifdef __linux__
 // When a fiber tries to lock, it, atomically, either
 // succeeds or pushes itself to a queue waiting on the lock
 
@@ -617,8 +956,8 @@ void VFiberLockCreate(VFiberLock ** _lock) {
   VQueueInit(&lock->queue);
 }
 void VFiberLockDestroy(VFiberLock * lock) {
-  assert(!atomic_load(&lock->queue_busy));
-  assert(lock->now_serving == lock->next_ticket);
+  myassert(!atomic_load(&lock->queue_busy));
+  myassert(lock->now_serving == lock->next_ticket);
   VQueueDeinit(&lock->queue);
   free(lock);
   lock = NULL;
@@ -655,10 +994,15 @@ void VFiberRelease(VFiberLock * lock, VFiberContext * context, VFiber * me) {
   if(waiter) {
     VQueuePush(&context->queue, waiter);
 
+#ifdef __linux__
     pthread_mutex_lock(&context->mutex);
     pthread_cond_signal(&context->sleeper_cond);
     pthread_mutex_unlock(&context->mutex);
+#endif
+#ifdef _WIN64
+    EnterCriticalSection(&context->mutex);
+    WakeConditionVariable(&context->sleeper_cond);
+    LeaveCriticalSection(&context->mutex);
+#endif
   }
 }
-
-#endif

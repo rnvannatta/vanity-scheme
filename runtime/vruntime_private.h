@@ -111,3 +111,5 @@ typedef struct VRuntime {
   int num_half_reaped_fibers;
   VRuntime ** half_reaped_fibers;
 } VRuntime;
+
+SYSV_CALL void VGetStackInfo(char ** start, size_t * size);

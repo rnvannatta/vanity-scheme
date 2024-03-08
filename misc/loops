@@ -1,0 +1,77 @@
+the l00p question
+
+guile has a silly optimization: contification
+
+as they word it: if a lambda is always called with the same continuation, it can be written into that continuation
+
+(define (fact n acc)
+  (if (= n 0)
+      acc
+      (fact (- n 1) (* acc n))))
+
+=>
+
+(define (fact k n acc)
+  (= (lambda (x)
+       (if x acc (- (lambda (y) (* (lambda (z) (fact k y z)) acc n)) n 1)))
+     n 0))
+
+No it's not the same, it's just elimination of the continuation variable
+
+In guile contification is special because continuations are special: it uses a stack
+instead of compiling to pure lambdas like I do.
+
+(define (g k x) (- k x 1))
+(define (f k x) (g k 13))
+
+(define (f k x) ((lambda (x) (- k x 1)) 13))
+
+anyway loops
+
+so in our fact-code the recursive call is simple after inlining:
+
+(define (fact k n acc)
+  (if (##inline = n 0)
+      (k acc)
+      (fact k (##inline - n 1) (##inline * acc n))))
+
+
+we can rewrite to
+
+(define (fact k n acc)
+  (##let-loop
+    (if (##inline = n 0)
+        (k acc)
+        (##loop k (##inline - n 1) (##inline * acc n)))))
+
+(define (iota k x)
+  (let loop ((k k) (n 0))
+    (if (##inline = n x)
+        (k '())
+        (loop (lambda (x) (cons k n x)) (##inline + n 1)))))
+
+
+(define (map k f xs)
+  (if (##inline null? xs)
+      (k '())
+      (f (lambda (x) (map (lambda (rest) (cons k x rest)) f (##inline cdr xs))) (##inline car xs))))
+
+-------------------------------------------------------------------------------------------------------
+
+ON CONTINUATIONS
+
+(f (x) (y))
+=>
+(x (lambda (xp) (y (lambda (yp) (f k xp yp)))))
+=>
+(let ((k1 (lambda (xp) (y (lambda (yp) (f k xp yp))))))
+  (x k1))
+MUDA
+
+(x (y (z)))
+=>
+(z (lambda (zp) (y (lambda (yp) (x k yp)) zp)))
+(letrec ((k1 (lambda (yp) (x k yp)))
+         (k2 (lambda (zp) (y k1 zp))))
+  (z k2))
+; from 2 env frames to 1
