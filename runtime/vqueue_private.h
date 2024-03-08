@@ -31,7 +31,13 @@
 
 typedef struct VFiberState VFiberState;
 // Super low level primitives. Do not call yourself
+#ifdef __linux__
 __attribute__((returns_twice)) void VSwitchFiber(VFiberState const * to, VFiberState * from);
+#endif
+#ifdef _WIN64
+__attribute__((returns_twice)) void VSwitchFiberAsm(VFiberState const * to, VFiberState * from);
+__attribute__((returns_twice)) void VSwitchFiber(VFiberState const * to, VFiberState * from);
+#endif
 
 // A weirdass non-function that calls the function in r12 with the argument in r13
 // if the function returns the fiber aborts the entire program. With a coathanger.
@@ -83,17 +89,32 @@ typedef struct VFiber VFiber;
 
 typedef struct VFiberContext VFiberContext;
 
+#ifdef _WIN64
+typedef struct FiberTIB {
+  void * except;
+  char * stack_base;
+  char * stack_limit;
+  char * stack_alloc;
+  void * fls_slots;
+
+  void * padding;
+} FiberTIB;
+#endif
+
 typedef struct VFiberState {
   VRegisters regs;
   _Atomic uint32_t running;
   uint64_t signal_stack;
+#ifdef _WIN64
+  FiberTIB tib;
+#endif
 } VFiberState;
 
 #ifdef __linux__
 static_assert(sizeof(struct VFiberState) == 80);
 #endif
 #ifdef _WIN64
-static_assert(sizeof(struct VFiberState) == 256);
+static_assert(sizeof(struct VFiberState) == 256 + sizeof(FiberTIB));
 #endif
 
 enum { FIBER_NORMAL, FIBER_EXITED, FIBER_WAITED_ON };
@@ -110,7 +131,7 @@ typedef struct VFiber {
 } VFiber;
 
 VFiber * VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_t stacksize);
-void VCloseFiberWorkers(VFiberContext * context);
+void VCloseFiberWorkers(VFiber * me, VFiberContext * context);
 
 VFiber * VPushFiber(VFiberContext * context, VFiber * me, uint64_t (*func)(VFiber * me, void * data), void *data);
 uint64_t VFiberWait(VFiberContext * context, VFiber * waitee, VFiber * me);

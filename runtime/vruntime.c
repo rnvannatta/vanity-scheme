@@ -731,7 +731,6 @@ static inline bool VIsMain(VRuntime * runtime) {
 
 SYSV_CALL static void VSwapHeap(VRuntime * runtime) {
   runtime->VActiveHeap = !runtime->VActiveHeap;
-#ifdef __linux__
   bool i = runtime->VActiveHeap;
   if(!VIsMain(runtime) && !runtime->owns_heap[i]) {
     size_t size = runtime->public.VStackLen * 8;
@@ -743,7 +742,6 @@ SYSV_CALL static void VSwapHeap(VRuntime * runtime) {
     runtime->VHeaps[i].end = runtime->VHeaps[i].begin + size;
     runtime->VHeaps[i].size = size;
   }
-#endif
   runtime->VHeap = runtime->VHeaps[runtime->VActiveHeap].begin;
   runtime->VHeapPos = runtime->VHeap;
   runtime->VHeapEnd = runtime->VHeaps[runtime->VActiveHeap].end;
@@ -958,7 +956,6 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   // or if we are doing too many major gcs, grow the heap to avoid thrashing
 
   // We'll have to seperate this in a function and call it at beginning of GC when we add fiber reaping
-#ifdef __linux__
   if(!VIsMain(runtime)) {
     int inactive = !runtime->VActiveHeap;
     if(!runtime->owns_heap[inactive] && (runtime->VHeapPos - runtime->VHeap) + runtime->public.VStackSize > runtime->public.VStackLen * 8) {
@@ -984,7 +981,6 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     }
   }
   else
-#endif
   {
     bool grow_heap = false;
     if(is_unplanned_major) {
@@ -1295,7 +1291,6 @@ SYSV_CALL static void VExitK(V_CORE_ARGS, VWORD before_finalizers) {
   if(table->num_finalizers == 0)
     VLongJmp(runtime->VRoot, VJMP_EXIT);
 
-#ifdef __linux__
   if(!VIsMain(runtime)) {
     if(table->num_finalizers == VDecodeInt(before_finalizers))
       VLongJmp(runtime->VRoot, VJMP_EXIT);
@@ -1303,7 +1298,6 @@ SYSV_CALL static void VExitK(V_CORE_ARGS, VWORD before_finalizers) {
     VWORD num_finalizers = VEncodeInt(table->num_finalizers);
     VGarbageCollect2((VFunc)VExitK, runtime, NULL, 1, &num_finalizers);
   }
-#endif
 
   // The main thread needs to finalize anything stored in global variables
   // Which isn't a matter of simply unbinding the globals because that would
@@ -1349,13 +1343,11 @@ SYSV_CALL void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
   if(argc == 2) {
     runtime->VExitCode = e;
   }
-#ifdef __linux__
   if(VIsMain(runtime)) {
     // only fibers need to return meaningful data, normal exits coerce
     // to integer early so finalizers run
     runtime->VExitCode = VEncodeInt(VDecodeExitCode(runtime->VExitCode));
   }
-#endif
   runtime->VForceMajorGC = true;
   VWORD num_finalizers = VEncodeInt(runtime->VHeapFinalizers[runtime->VActiveHeap].num_finalizers);
   VGarbageCollect2((VFunc)VExitK, runtime, NULL, 1, &num_finalizers);
@@ -1563,6 +1555,10 @@ SYSV_CALL void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD va
 }
 
 SYSV_CALL static bool VDefineImpl(VRuntime * runtime, VWORD sym, VWORD val, bool is_set) {
+  if(!VIsMain(runtime)) {
+    VError("define-global: not permitted inside of a fiber or during active asynchronous execution\n");
+  }
+
   uint64_t hash = VHashSymbol(sym);
 
   VGlobalEntry * place = VLookupGlobalEntry(runtime, sym);
@@ -1754,8 +1750,6 @@ SYSV_CALL static VFunc VFunctionImpl(VWORD name) {
   void * ptr = dlsym(RTLD_DEFAULT, str);
 #endif
 #ifdef _WIN64
-  //HMODULE hmod = GetModuleHandle(NULL);
-  //void * ptr = GetProcAddress(hmod, str);
   void * ptr = VDLSym(str);
 #endif
 
@@ -1959,6 +1953,11 @@ SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write) {
           fprintf(f, "#port");
           break;
         }
+        case VFUTURE:
+        {
+          fprintf(f, "#future");
+          break;
+        }
         default:
           fprintf(f, "#pointer");
           break;
@@ -1971,7 +1970,7 @@ SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write) {
   }
 }
 
-SYSV_CALL static void VGetStackInfo(char ** start, size_t * size) {
+SYSV_CALL void VGetStackInfo(char ** start, size_t * size) {
 #ifdef __linux__
   int ret;
   pthread_attr_t attribs;
@@ -2057,7 +2056,6 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   r->main_fiber = NULL;
 
   r->my_future = false;
-#ifdef __linux__
   r->owns_heap[0] = false;
   r->owns_heap[1] = false;
 
@@ -2068,7 +2066,6 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
 
   r->num_half_reaped_fibers = 0;
   r->half_reaped_fibers = NULL;
-#endif
 }
 
 SYSV_CALL VWORD VStart2(VRuntime * runtime, int num_toplevels, VThunk const * toplevels) {
@@ -2117,10 +2114,8 @@ SYSV_CALL VWORD VStart2(VRuntime * runtime, int num_toplevels, VThunk const * to
   }
   VExit2(runtime, NULL, 2, VVOID, VEncodeInt(0));
 end:
-#ifdef __linux__
   if(runtime->fiber_context)
-    VCloseFiberWorkers(runtime->fiber_context);
-#endif
+    VCloseFiberWorkers(runtime->my_fiber, runtime->fiber_context);
   return ret;
 }
 
@@ -2198,10 +2193,8 @@ SYSV_CALL VWORD VStart3(VRuntime * runtime, int num_toplevels, VWORD const * top
   // to int main()
   VExit2(runtime, NULL, 2, VVOID, runtime->VExitCode);
 end:
-#ifdef __linux__
   if(VIsMain(runtime) && runtime->fiber_context)
-    VCloseFiberWorkers(runtime->fiber_context);
-#endif
+    VCloseFiberWorkers(runtime->my_fiber, runtime->fiber_context);
   return ret;
 }
 
@@ -2268,7 +2261,6 @@ SYSV_CALL void VRecordCallNoInline(VRuntime * runtime, VDebugInfo * debug) {
 // 1. add finalizer passing
 // 2. shore up UB?
 
-#ifdef __linux__
 typedef struct VLaunchFiberData {
   VWORD thunk;
   VRuntime const * base_runtime;
@@ -2508,11 +2500,7 @@ static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfiber
   return 0;
 }
 
-
-#endif
-
 SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst) {
-#ifdef __linux__
   V_ARG_CHECK2("fiber-fork", 2, argc);
   V_GC_CHECK2_VARARGS((VFunc)VFiberForkList, runtime, statics, 2, argc, k, lst) {
     if(!runtime->fiber_context) {
@@ -2544,14 +2532,12 @@ SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst) {
       V_CALL(k, runtime, VNULL);
     }
   }
-#endif
   VError("fiber-fork: unsupported platform\n");
   assert(0);
 }
 
 ///////////////////// AWAIT //////////////////////////
 
-#ifdef __linux__
 typedef struct VLaunchAwaiterData {
   VWORD k;
   VWORD future;
@@ -2581,7 +2567,6 @@ static uint64_t VLaunchAwaiter(VFiber * me, void * _data) {
 
   return VBits(ret);
 }
-#endif
 
 // async first launches the thunk fiber, which is just (thunk)
 // then it launches the continuation fiber, which is (k future)
@@ -2589,7 +2574,6 @@ static uint64_t VLaunchAwaiter(VFiber * me, void * _data) {
 // the continuation fiber returns a zero arg continuation to resume at
 // then it garbage collects with the two runtimes and a resume at the zero arg continuation
 SYSV_CALL void VAsync(V_CORE_ARGS, VWORD k, VWORD future_thunk) {
-#ifdef __linux__
   V_ARG_CHECK2("async", 2, argc);
   V_GC_CHECK2_VARARGS((VFunc)VAsync, runtime, statics, 2, argc, k, future_thunk) {
     if(!runtime->fiber_context) {
@@ -2634,17 +2618,14 @@ SYSV_CALL void VAsync(V_CORE_ARGS, VWORD k, VWORD future_thunk) {
     VClosure * _resume_thunk = VDecodeClosure(resume_thunk);
     VGarbageCollect2(_resume_thunk->func, runtime, _resume_thunk->env, 0, NULL);
   }
-#endif
   VError("async: unsupported platform\n");
   assert(0);
 }
 
-#ifdef __linux__
 static SYSV_CALL void VAwaitRejoinK(V_CORE_ARGS, VWORD resume_thunk) {
   runtime->VExitCode = resume_thunk;
   VLongJmp(runtime->VRoot, VJMP_AWAIT);
 }
-#endif
 
 // locks the future
 // if the fiber hasn't exited, waits on it
@@ -2655,7 +2636,6 @@ static SYSV_CALL void VAwaitRejoinK(V_CORE_ARGS, VWORD resume_thunk) {
 // otherwise returns the fiber value
 // the spawning thread is responsible for reaping the future's context
 SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD _future) {
-#ifdef __linux__
   V_ARG_CHECK2("await", 2, argc);
   VFuture * future = VCheckedDecodeFuture(_future, "await");
 
@@ -2698,7 +2678,6 @@ SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD _future) {
   } else {
     V_CALL(k, runtime, future->val);
   }
-#endif
   VError("await: unsupported platform\n");
   assert(0);
 }
