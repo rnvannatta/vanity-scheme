@@ -3,7 +3,7 @@
   (define counter
     (let ((count 0))
       (lambda ()
-        (set! count (##sys.+ count 1))
+        (set! count (##vcore.+ count 1))
         count))))
 
 (define-library (foo)

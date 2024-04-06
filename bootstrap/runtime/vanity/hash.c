@@ -27,7 +27,7 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
-static struct { VBlob sym; char bytes[21]; } _V10string_D13 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0hash_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10string_D14 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0hash_V20" };
 VWEAK VWORD _V0random__advance_B;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0random__advance_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "random-advance!" };
 VWEAK VWORD _V0random__sample__float_B;VWEAK struct { VBlob sym; char bytes[21]; } _VW_V0random__sample__float_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 21 }, "random-sample-float!" };
 VWEAK VWORD _V0random__sample_B;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V0random__sample_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "random-sample!" };
@@ -49,7 +49,7 @@ static __attribute__((constructor)) void VDllMain1() {
   _V40_V10vcore_Dmake__random = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__random", &_VW_V40_V10vcore_Dmake__random), VPOINTER_CLOSURE);
 }
 __attribute__((used)) static void _V20CaseError__V0vanity_V0hash_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, ...) {
- // (_V0vanity_V0hash_V20_lambda2 #t (2 (##vcore.random-sample! (bruijn ##k.2 0 0) (bruijn rng 0 1))) (3 (##vcore.random-sample-bounded! (bruijn ##k.3 0 0) (bruijn rng 0 1) (bruijn end 0 2))))
+ // (_V0vanity_V0hash_V20_lambda2 #t (2 (##vcore.random-sample! (bruijn ##k.3 0 0) (bruijn rng 0 1))) (3 (##vcore.random-sample-bounded! (bruijn ##k.4 0 0) (bruijn rng 0 1) (bruijn end 0 2))))
  VError("Not enough arguments to _V0vanity_V0hash_V20_lambda2, got ~D~N"
  "-- expected 2~N"
  "-- expected 3~N"
@@ -59,7 +59,7 @@ __attribute__((used)) static void _V20Case0__V0vanity_V0hash_V20_lambda2(VRuntim
  static VDebugInfo dbg = { "_V20Case0__V0vanity_V0hash_V20_lambda2" };
  VRecordCall2(runtime, &dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V20Case0__V0vanity_V0hash_V20_lambda2, runtime, upenv, 2, argc, _var0, _var1) {
-  // (##vcore.random-sample! (bruijn ##k.2 0 0) (bruijn rng 0 1))
+  // (##vcore.random-sample! (bruijn ##k.3 0 0) (bruijn rng 0 1))
     V_CALL_FUNC(VRandomSample, NULL, runtime,
       _var0,
       _var1);
@@ -69,7 +69,7 @@ __attribute__((used)) static void _V20Case1__V0vanity_V0hash_V20_lambda2(VRuntim
  static VDebugInfo dbg = { "_V20Case1__V0vanity_V0hash_V20_lambda2" };
  VRecordCall2(runtime, &dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V20Case1__V0vanity_V0hash_V20_lambda2, runtime, upenv, 3, argc, _var0, _var1, _var2) {
-  // (##vcore.random-sample-bounded! (bruijn ##k.3 0 0) (bruijn rng 0 1) (bruijn end 0 2))
+  // (##vcore.random-sample-bounded! (bruijn ##k.4 0 0) (bruijn rng 0 1) (bruijn end 0 2))
     V_CALL_FUNC(VRandomSampleBounded, NULL, runtime,
       _var0,
       _var1,
@@ -79,6 +79,9 @@ __attribute__((used)) static void _V20Case1__V0vanity_V0hash_V20_lambda2(VRuntim
 void _V0vanity_V0hash_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, ...);
 asm(
 ".intel_syntax noprefix\n"
+#ifdef __linux__
+".type _V0vanity_V0hash_V20_lambda2, @function\n"
+#endif
 "_V0vanity_V0hash_V20_lambda2:\n"
 "    cmp " ARGC_REG ", 2\n"
 "    je _V20Case0__V0vanity_V0hash_V20_lambda2\n"
@@ -99,7 +102,7 @@ static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (letrec 5 ((##intrinsic ##vcore.make-random) (##intrinsic ##vcore.random-copy) (close _V0vanity_V0hash_V20_lambda2) (##intrinsic ##vcore.random-sample-float!) (##intrinsic ##vcore.random-advance!)) ((bruijn ##k.1 2 0) (##inline ##sys.cons (##inline ##sys.cons 'make-random (bruijn make-random 0 0)) (##inline ##sys.cons (##inline ##sys.cons 'random-copy (bruijn random-copy 0 1)) (##inline ##sys.cons (##inline ##sys.cons 'random-sample! (bruijn random-sample! 0 2)) (##inline ##sys.cons (##inline ##sys.cons 'random-sample-float! (bruijn random-sample-float! 0 3)) (##inline ##sys.cons (##inline ##sys.cons 'random-advance! (bruijn random-advance! 0 4)) '())))))))
+  // (letrec 5 ((##intrinsic ##vcore.make-random) (##intrinsic ##vcore.random-copy) (close _V0vanity_V0hash_V20_lambda2) (##intrinsic ##vcore.random-sample-float!) (##intrinsic ##vcore.random-advance!)) ((bruijn ##k.2 2 0) (##inline ##vcore.cons (##inline ##vcore.cons 'make-random (bruijn make-random 0 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-copy (bruijn random-copy 0 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-sample! (bruijn random-sample! 0 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-sample-float! (bruijn random-sample-float! 0 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-advance! (bruijn random-advance! 0 4)) '())))))))
     // OH NO A LETREC!
     {
     VEnv * upenv = env;
@@ -111,7 +114,7 @@ static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
     env->vars[2] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0hash_V20_lambda2, env)});
     env->vars[3] = _V40_V10vcore_Drandom__sample__float_B;
     env->vars[4] = _V40_V10vcore_Drandom__advance_B;
-V_CALL(upenv->up->vars[0], runtime,
+    V_CALL(upenv->up->vars[0], runtime,
       VInlineCons(
         VInlineCons(
         _V0make__random,
@@ -149,10 +152,10 @@ static void _V0vanity_V0hash_V20_lambda1(VRuntime * runtime, VEnv * upenv, int a
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.make-import (close _V0vanity_V0hash_V20_k1) (##string ##string.13))
+  // (##vcore.make-import (close _V0vanity_V0hash_V20_k1) (##string ##string.14))
     V_CALL_FUNC(VMakeImport2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0hash_V20_k1, env)}),
-      VEncodePointer(&_V10string_D13.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10string_D14.sym, VPOINTER_OTHER));
  }
 }
 VFunc _V0vanity_V0hash_V20 = (VFunc)_V0vanity_V0hash_V20_lambda1;

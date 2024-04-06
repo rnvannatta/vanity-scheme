@@ -27,8 +27,8 @@
 .section .text
 // rcx: fiber we're going to
 // rdx: fiber we're coming from
-.globl VSwitchFiber
-VSwitchFiber:
+.globl VSwitchFiberAsm
+VSwitchFiberAsm:
 	mov rax, [rsp]
 	mov QWORD PTR [rdx+ 0], rax
 	mov QWORD PTR [rdx+ 8], rsp
@@ -112,7 +112,6 @@ wait_loop:
 
 	mov rax, QWORD PTR [rcx+ 0]
 	mov [rsp], rax
-
 
 	xor eax, eax
 	ret

@@ -23,7 +23,7 @@
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
-(import (vanity core) (vanity list) (vanity pretty-print) (vanity compiler utils) (vanity compiler variables) (vanity compiler match) (vanity compiler getopt) (vanity compiler expand) (vanity compiler cps) (vanity compiler transpile) (vanity compiler bytecode) (vanity compiler library) (vanity compiler config))
+(import (vanity core) (vanity list) (vanity pretty-print) (vanity compiler utils) (vanity compiler variables) (vanity compiler match) (vanity compiler getopt) (vanity compiler expand) (vanity compiler cps) (vanity compiler lower) (vanity compiler transpile) (vanity compiler bytecode) (vanity compiler library) (vanity compiler config))
 
 (define scm-files '())
 (define obj-files '())
@@ -184,7 +184,7 @@
             (transpile? (change-extension (basename (car scm-files)) ".c"))
             (expand? (change-extension (basename (car scm-files)) ".escm"))
             (header? (change-extension (basename (car scm-files)) ".scmh"))
-            (bytecode? (change-extension (basename (car scm-files)) ".scmb"))
+            (bytecode? (change-extension (basename (car scm-files)) ".vasm"))
             (makefile? out-file)
             (else #f))))
 
@@ -266,12 +266,14 @@
                 (if (eq? expand? 0) (for-each pretty-print expanded)
                     (let ((cps (map (lambda (expr) (annotate-lambdas (to-cps expr))) (apply append expanded))))
                      (if (eq? expand? 1) (for-each pretty-print cps)
-                         (let ((opt (map (lambda (expr) (deannotate-lambdas (optimize expr))) cps)))
+                         (let ((opt (map (lambda (expr) (deannotate-lambdas (optimize expr (not bytecode?)))) cps)))
                           (if (eq? expand? 2) (for-each pretty-print opt)
                               (let* ((bruijn (map bruijn-ify opt))
-                                     (funs (to-functions bruijn)))
+                                     (funs (to-functions bruijn (not bytecode?))))
                                 (if bytecode?
-                                    (apply print-bytecode (cons debug? (cons shared? funs)))
+                                    (begin
+                                      (write-bytecode (apply to-bytecode (cons debug? (cons shared? funs))))
+                                      (not (null? (take-right funs 1))))
                                     (apply printout2 (cons debug? (cons shared? funs)))))))))))))))
       scm-files
       cc-files

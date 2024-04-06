@@ -63,7 +63,7 @@ tests_linux : compiler runtime
 	done ; \
 	wait
 
-tests_windows : compiler windows_runtime
+tests_windows : compiler runtime windows_runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
     ( EXE=`mktemp` ; \
 		echo "bin/vsc $$test && wine ./a.exe" ; \
@@ -172,7 +172,7 @@ build/%.o : runtime/%.c
 	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
 
 build/x86_64-w64-mingw32/%.o : runtime/%.c
-	/usr/bin/x86_64-w64-mingw32-gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
+	/usr/bin/x86_64-w64-mingw32-gcc -c $< -o $@ $(CFLAGS) $(IFLAGS) -Wa,--no-warn
 
 build/%.o : runtime/%.S 
 	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)

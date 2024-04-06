@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler cps)
-  (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables))
+  (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity intrinsics))
   (export to-cps optimize alpha-convert annotate-lambdas deannotate-lambdas)
   (define (to-cps expr)
     (define (application? x)
@@ -124,12 +124,14 @@
           `(,cont ,(iter-atom expr))))
 
     (define (to-cps-impl expr)
-      (iter2 expr '##sys.next))
+      (let ((next (gensym "next")))
+        `(lambda (,next)
+          ,(iter2 expr next))))
     (match expr
       (('##foreign.declare . _) expr)
       (('##vcore.declare f l)
-       ; (to-cps-impl l) returns (##sys.next (lambda ...)) because lambda expressions are atoms
-       `(##vcore.declare ,f ,(cadr (to-cps-impl l))))
+       ; (to-cps-impl l) returns (lambda (k) (k (lambda ...))) because lambda expressions are atoms
+       `(##vcore.declare ,f ,(cadr (caddr (to-cps-impl l)))))
       (else (to-cps-impl expr))))
 
   ; like member but checks dotted lists. not semipredicate safe
@@ -143,9 +145,8 @@
               (memtail x (cdr lst)))
           (if (equal? x lst) lst #f)))
   (define (annotate-lambdas expr) expr)
-
-  (define (deannotate-lambdas expr)
-    expr)
+  (define (alpha-convert expr) expr)
+  (define (deannotate-lambdas expr) expr)
 
 
   (define (ref-count-lambda x args body)
@@ -211,8 +212,6 @@
       ((f . xs) (cons (substitute x atom f) (substitute x atom xs)))
       (y (if (eqv? x y) atom y))))
 
-  (define (alpha-convert expr) expr)
-
   ; things that are still considered 'applications' for the purposes of CPS
   ; `if` is considered an application because it's of the form (if p (f args) (g args))
   ; right now and and or compile to `if` statements:
@@ -220,131 +219,131 @@
   ;   (or a b) to (if a (k a) (k b))
   (define (special-apply? tok)
     (memv tok '(if letrec)))
-  (define (optimize-lambda expr)
-    (match expr
-      ((lamb xs body)
-       (match (optimize-apply body)
-         ; eta conversion... when does this happen? it used to happen regularly before I
-         ; upgraded my cps routine. but it still rarely happens
-         ((f . ys)
-          (if (and (not (special-apply? f))
-                   (equal? xs ys)
-                   ; ie if the lambda is (lambda (x) (x x)), we need to not optimize that
-                   (= 0 (fold + 0 (map (lambda (x) (ref-count x f)) xs))))
-              f
-              `(,lamb ,xs (,f . ,ys))))
-         (opt-body `(,lamb ,xs ,opt-body))))
-      (else (compiler-error "optimize-lambda: malformed lambda" expr))))
   (define (taillength lst)
     (let loop ((lst lst) (len 0))
       (if (pair? lst)
           (loop (cdr lst) (+ len 1))
           len)))
-
-  ; There is a bug somewhere in here...
-  (define (inline-let expr done-ys done-xs ys xs)
-    (if (null? ys)
-        (if (null? done-ys)
-            (optimize-apply expr)
-            `(,(optimize-atom `(lambda ,(reverse done-ys) ,expr)) . ,(reverse done-xs)))
-        (let* ((y (car ys)) (x (car xs)) (ys (cdr ys)) (xs (cdr xs)))
-          (let ((refs (ref-count y expr)))
-            (cond ((= refs 0) (inline-let expr done-ys done-xs ys xs))
-                  ; we don't care whether the data the variable addresses is pure, just whether
-                  ; the variable is pure, which can be determined statically.
-                  ; ... and now that I think about it, any variable which is impure is used twice
-                  ; or can be eliminated, but eliminating that variable requires eliminating the
-                  ; set! expressions
-                  ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1))
-                        ; there's a bug with doing this with lambdas:
-                        ; (let ((f (lambda (y) x))) (let ((x 0)) (f 2)))
-                        ; we need complete alpha conversion to avoid this bug
-                        ; was probs the bug I had...
-                        (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
-                        (pure-in? y expr))
-                   (inline-let (substitute y x expr) done-ys done-xs ys xs))
-                  (else (inline-let expr (cons y done-ys) (cons x done-xs) ys xs)))))))
-  (define (optimize-let let-expr)
-    (match let-expr
-      ((('continuation (y) expr) x)
-       (let ((refs (ref-count y expr)))
-         
-         (cond ((= refs 0) (optimize-apply expr))
-               ; we don't care whether the data the variable addresses is pure, just whether
-               ; the variable is pure, which can be determined statically.
-               ; ... and now that I think about it, any variable which is impure is used twice
-               ; or can be eliminated, but eliminating that variable requires eliminating the
-               ; set! expressions
-               ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1))
-                     ; there's a bug with doing this with lambdas:
-                     ; (let ((f (lambda (y) x))) (let ((x 0)) (f 2)))
-                     ; we need complete alpha conversion to avoid this bug
-                     (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
-                     (pure-in? y expr))
-                (optimize-apply (substitute y x expr)))
-               (else `(,(optimize-atom `(continuation (,y) ,expr)) ,(optimize-atom x))))))
-      ((('lambda () expr))
-       (optimize-apply expr))
-      ((('lambda (ys ...) expr) xs ...)
-       (if (not (= (length ys) (length xs))) (compiler-error "Not enough arguments to lambda"))
-       (map optimize-atom let-expr)
-       ; There is a bug somewhere in this inline-let which is extremely subtle
-       ; as it causes a miscompile that only rears its head after a few bootstrap iterations
-       #;(inline-let expr '() '() ys (map optimize-atom xs)))
-      ((('continuation () body))
-       (optimize-apply body))
-      ((('lambda ys expr) . xs)
-       (if (not (<= (taillength ys) (length xs))) (compiler-error "Not enough arguments to lambda"))
-       `(,(optimize-atom `(lambda ,ys ,expr)) . ,(map optimize-atom xs)))
-      ((('continuation . _) . _) (compiler-error "Not enough arguments to continuation. Codegen bug."))
-      (else (compiler-error "optimize-let: malformed let statement"))))
-  (define (optimize-letrec letrec-expr)
-    ; we could potentially inline letrec stuff but that's pretty hard and inlining normal lets is bugged
-    (match letrec-expr
-      (('letrec ((args vals) ...) expr)
-       `(letrec ,(map list args (map optimize-atom vals)) ,(optimize-apply expr)))))
-  ; only optimizes 'applications', ie (f x y). But due to how codegen works, (if p (f a) (y b)) is also an application
-  (define (optimize-apply expr)
-    (match expr
-      ; Simplifying ((continuation (x) (x args ...)) y) to (y args)
-      ((('continuation . _) . _) (optimize-let expr))
-      ((('lambda . _) . _) (optimize-let expr))
-
-      (('letrec . _) (optimize-letrec expr))
-
-      (('if #t a b) (optimize-apply a))
-      (('if #f a b) (optimize-apply b))
-      (('if p a b)
-       `(if ,p ,(optimize-apply a) ,(optimize-apply b)))
-
-      ; Inlining builtins
-      ; TODO: this doesn't take into account 'cost'. TODO account for function cost to avoid
-      ; inlining so many functions that the garbage collect fails. One thing we could do is
-      ; switch to manually inserting GC points based on estimated cost, then all optimizations
-      ; of this form would always save stack space. Well cdr and car never alloc so its a win
-      ; but cons allocs
-      ((f k . xs)
-       (if (and (symbol? f) (lookup-inline f))
-           (optimize-apply `(,(optimize-atom k) (##inline ,f . ,(map optimize-atom xs))))
-           (cons (optimize-atom f) (cons (optimize-atom k) (map optimize-atom xs)))))
-      (else (compiler-error "optimize-apply: malformed application" expr))))
-  (define (optimize-atom expr)
-    (match expr
-      (('quote . _) expr)
-      (('##foreign.function . _) expr)
-      (('##inline . _) expr)
-
-      (('lambda . _) (optimize-lambda expr))
-      (('continuation . _) (optimize-lambda expr))
-      (('case-lambda (args body) ...)
-       `(case-lambda . ,(map (lambda (args body) `(,args ,(optimize-apply body))) args body)))
-      (else expr)))
   ; need to rewrite the optimize-impl to be more like an evaluator
   ; it's a crappy normal order evaluator rn
   ; so the expression ((if p f g) x) doesn't fully simplify without 2 invocations
   ; because in a (continuation (x) (k x)) k isn't a symbol yet but a lambda term
   ; FIXME split this into optimize-apply and optimize-atom
-  (define (optimize-impl expr)
+  (define (optimize-impl expr inlining?)
+    (define (optimize-lambda expr)
+      (match expr
+        ((lamb xs body)
+         (match (optimize-apply body)
+           ; eta conversion... when does this happen? it used to happen regularly before I
+           ; upgraded my cps routine. but it still rarely happens
+           ((f . ys)
+            (if (and (not (special-apply? f))
+                     (equal? xs ys)
+                     ; ie if the lambda is (lambda (x) (x x)), we need to not optimize that
+                     (= 0 (fold + 0 (map (lambda (x) (ref-count x f)) xs))))
+                f
+                `(,lamb ,xs (,f . ,ys))))
+           (opt-body `(,lamb ,xs ,opt-body))))
+        (else (compiler-error "optimize-lambda: malformed lambda" expr))))
+
+    ; There is a bug somewhere in here...
+    (define (inline-let expr done-ys done-xs ys xs)
+      (if (null? ys)
+          (if (null? done-ys)
+              (optimize-apply expr)
+              `(,(optimize-atom `(lambda ,(reverse done-ys) ,expr)) . ,(reverse done-xs)))
+          (let* ((y (car ys)) (x (car xs)) (ys (cdr ys)) (xs (cdr xs)))
+            (let ((refs (ref-count y expr)))
+              (cond ((= refs 0) (inline-let expr done-ys done-xs ys xs))
+                    ; we don't care whether the data the variable addresses is pure, just whether
+                    ; the variable is pure, which can be determined statically.
+                    ; ... and now that I think about it, any variable which is impure is used twice
+                    ; or can be eliminated, but eliminating that variable requires eliminating the
+                    ; set! expressions
+                    ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1))
+                          ; there's a bug with doing this with lambdas:
+                          ; (let ((f (lambda (y) x))) (let ((x 0)) (f 2)))
+                          ; we need complete alpha conversion to avoid this bug
+                          ; was probs the bug I had...
+                          (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
+                          (pure-in? y expr))
+                     (inline-let (substitute y x expr) done-ys done-xs ys xs))
+                    (else (inline-let expr (cons y done-ys) (cons x done-xs) ys xs)))))))
+    (define (optimize-let let-expr)
+      (match let-expr
+        ((('continuation (y) expr) x)
+         (let ((refs (ref-count y expr)))
+           
+           (cond ((= refs 0) (optimize-apply expr))
+                 ; we don't care whether the data the variable addresses is pure, just whether
+                 ; the variable is pure, which can be determined statically.
+                 ; ... and now that I think about it, any variable which is impure is used twice
+                 ; or can be eliminated, but eliminating that variable requires eliminating the
+                 ; set! expressions
+                 ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1))
+                       ; there's a bug with doing this with lambdas:
+                       ; (let ((f (lambda (y) x))) (let ((x 0)) (f 2)))
+                       ; we need complete alpha conversion to avoid this bug
+                       (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
+                       (pure-in? y expr))
+                  (optimize-apply (substitute y x expr)))
+                 (else `(,(optimize-atom `(continuation (,y) ,expr)) ,(optimize-atom x))))))
+        ((('lambda () expr))
+         (optimize-apply expr))
+        ((('lambda (ys ...) expr) xs ...)
+         (if (not (= (length ys) (length xs))) (compiler-error "Not enough arguments to lambda"))
+         (map optimize-atom let-expr)
+         ; There is a bug somewhere in this inline-let which is extremely subtle
+         ; as it causes a miscompile that only rears its head after a few bootstrap iterations
+         #;(inline-let expr '() '() ys (map optimize-atom xs)))
+        ((('continuation () body))
+         (optimize-apply body))
+        ((('lambda ys expr) . xs)
+         (if (not (<= (taillength ys) (length xs))) (compiler-error "Not enough arguments to lambda"))
+         `(,(optimize-atom `(lambda ,ys ,expr)) . ,(map optimize-atom xs)))
+        ((('continuation . _) . _) (compiler-error "Not enough arguments to continuation. Codegen bug."))
+        (else (compiler-error "optimize-let: malformed let statement"))))
+    (define (optimize-letrec letrec-expr)
+      ; we could potentially inline letrec stuff but that's pretty hard and inlining normal lets is bugged
+      (match letrec-expr
+        (('letrec ((args vals) ...) expr)
+         `(letrec ,(map list args (map optimize-atom vals)) ,(optimize-apply expr)))))
+    ; only optimizes 'applications', ie (f x y). But due to how codegen works, (if p (f a) (y b)) is also an application
+    (define (optimize-apply expr)
+      (match expr
+        ; Simplifying ((continuation (x) (x args ...)) y) to (y args)
+        ((('continuation . _) . _) (optimize-let expr))
+        ((('lambda . _) . _) (optimize-let expr))
+
+        (('letrec . _) (optimize-letrec expr))
+
+        (('if #t a b) (optimize-apply a))
+        (('if #f a b) (optimize-apply b))
+        (('if p a b)
+         `(if ,p ,(optimize-apply a) ,(optimize-apply b)))
+
+        ; Inlining builtins
+        ; TODO: this doesn't take into account 'cost'. TODO account for function cost to avoid
+        ; inlining so many functions that the garbage collect fails. One thing we could do is
+        ; switch to manually inserting GC points based on estimated cost, then all optimizations
+        ; of this form would always save stack space. Well cdr and car never alloc so its a win
+        ; but cons allocs
+        ((f k . xs)
+         (if (and inlining? (symbol? f) (lookup-inline-name f))
+             (optimize-apply `(,(optimize-atom k) (##inline ,f . ,(map optimize-atom xs))))
+             (cons (optimize-atom f) (cons (optimize-atom k) (map optimize-atom xs)))))
+        (else (compiler-error "optimize-apply: malformed application" expr))))
+    (define (optimize-atom expr)
+      (match expr
+        (('quote . _) expr)
+        (('##foreign.function . _) expr)
+        (('##inline . _) expr)
+
+        (('lambda . _) (optimize-lambda expr))
+        (('continuation . _) (optimize-lambda expr))
+        (('case-lambda (args body) ...)
+         `(case-lambda . ,(map (lambda (args body) `(,args ,(optimize-apply body))) args body)))
+        (else expr)))
     ; In order to maintain CPS, atoms have to map to atoms, and applications have to map to applications
     ; applications consist of applying a set of atoms together, applications do not apply applications
     (match expr
@@ -355,11 +354,11 @@
       (('continuation . _) (optimize-lambda expr))
       ((_ . _) (optimize-apply expr))
       (else expr)))
-  (define (optimize expr)
+  (define (optimize expr inlining?)
     (let ((expr expr))
       (match expr
           (('##foreign.declare . _) expr)
           (('##vcore.declare f l)
-           `(##vcore.declare ,f ,(optimize-impl l)))
-          (else (optimize-impl expr)))))
+           `(##vcore.declare ,f ,(optimize-impl l inlining?)))
+          (else (optimize-impl expr inlining?)))))
 )

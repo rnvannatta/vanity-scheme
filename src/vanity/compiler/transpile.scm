@@ -24,226 +24,8 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler transpile)
-  (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi))
-  (export bruijn-ify to-functions printout2)
-; Strips the names from bound variables and replaces them with indices
-; free variables are assumed to be builtin functions
-  (define (list-index p l)
-    (let loop ((l l) (i 0))
-      (cond ((null? l) #f)
-            ((p (car l)) i)
-            (else (loop (cdr l) (+ i 1))))))
-
-  (define (bruijn-ify expr)
-    (define (lookup depth env x)
-      (cond
-        ((null? env) x)
-        ((list-index (lambda (e) (eqv? x e)) (car env)) => (lambda (idx) (list 'bruijn x depth idx)))
-        (else (lookup (+ 1 depth) (cdr env) x))))
-    (define (undot lst)
-      (if (pair? lst)
-          (cons (car lst)
-                (undot (cdr lst)))
-          (if (null? lst) '()
-              (cons lst '()))))
-    (define (bruijn-lambda env lamb)
-      (match lamb
-        (((xs ...) body) `(,(length xs) ,(iter (cons xs env) body)))
-        ((xs body)
-         (let ((proper-xs (undot xs)))
-          `(,(- (length proper-xs) 1) + ,(iter (cons proper-xs env) body))))
-        (else (compiler-error "bruijnify-pass: No matching lambda"))))
-    (define (iter env expr)
-      (match expr
-        (('lambda (xs ...) body)
-         `(lambda ,(length xs) ,(iter (cons xs env) body)))
-        (('lambda xs body)
-         (let ((proper-xs (undot xs)))
-          `(lambda ,(- (length proper-xs) 1) + ,(iter (cons proper-xs env) body))))
-        (('case-lambda . cases)
-         `(case-lambda . ,(map (lambda (e) (bruijn-lambda env e)) cases)))
-        (('continuation (x) body)
-         `(continuation 1 ,(iter (cons (list x) env) body)))
-        (('letrec ((xs vals) ...) body)
-         `(letrec ,(length xs) ,(map (lambda (e) (iter (cons xs env) e)) vals) ,(iter (cons xs env) body)))
-        (('##foreign.function . _) expr)
-        (('quote . _) expr)
-        (('##inline f . xs)
-         `(##inline ,f . ,(map (lambda (x) (iter env x)) xs)))
-        ((f xs ...)
-         (cons (iter env f) (map (lambda (x) (iter env x)) xs)))
-        (x
-         (if (symbol? x) (lookup 0 env x) x))
-        (else (compiler-error "bruijnify-pass: No matching case" expr))))
-    (define (doit expr)
-      (iter '() expr))
-    (match expr
-      (('##foreign.declare . _) expr)
-      (('##vcore.declare f l)
-       `(##vcore.declare ,f ,(doit l)))
-      (else (doit expr))))
-
-  ; replaces lambdas and defines with explicit close statements on functions, and
-  ; gathers the functions into a list, and gathers literals into a list and replaces
-  ; with references
-  (define curlambda 0)
-  (define curcont 0)
-  (define (to-functions exprs)
-    (define (genlambda fun)
-        (set! curlambda (+ curlambda 1))
-        (string->symbol (sprintf "~A_lambda~A" fun curlambda)))
-    (define (gencont fun)
-        (set! curcont (+ curcont 1))
-        (string->symbol (sprintf "~A_k~A" fun curcont)))
-    (define foreign-functions '())
-    (define functions '())
-    (define literal-table '())
-    (define (lift-intrinsic sym intrin)
-      ; FIXME ASSOC DETECTED
-      (let* ((key (list '##intrinsic sym))
-             (lookup (assoc key literal-table)))
-        (if lookup
-            (car lookup)
-            (let ((lookup (cons key intrin)))
-              (set! literal-table (cons lookup literal-table))
-              (car lookup)))))
-    ; TODO drop the unnecessary quotes from nonsymbols, ie turn '"foo" into just "foo"
-    ; then split out lift-symbol into a seperate function
-    (define (lift-literal x)
-      (cond ((integer? x) x)
-            ((number? x) x)
-            ((char? x) x)
-            ((eq? x #t) x)
-            ((eq? x #f) x)
-            ((null? x) x)
-            ((string? x)
-             ; FIXME ASSOC DETECTED
-             (let ((lookup (assoc x literal-table)))
-               (if lookup `(##string ,(cdr lookup))
-                   (begin
-                     (set! literal-table (cons (cons x (gensym "string")) literal-table))
-                     `(##string ,(cdar literal-table))))))
-            ((symbol? x)
-             ; FIXME ASSOC DETECTED
-             (if (not (assv x literal-table))
-                 (set! literal-table (cons (cons x '()) literal-table)))
-             x)
-            (else (compiler-error "literal-lifting: unknown literal type" x))))
-    (define (iter-lambda fun lamb) 
-      (match lamb
-        ((n body)
-         `(,n ,(iter-apply fun body)))
-        ((n '+ body)
-         `(,n + ,(iter-apply fun body)))))
-    (define (iter-atom fun expr func-position?)
-      (match expr
-        (('bruijn . _) expr)
-        (('lambda n body)
-         (let ((lamb (genlambda fun)))
-           (set! functions (cons `(,lamb #t (,n ,(iter-apply fun body))) functions))
-           `(close ,lamb)))
-        (('lambda n '+ body)
-         (let ((lamb (genlambda fun)))
-           (set! functions (cons `(,lamb #t (,n + ,(iter-apply fun body))) functions))
-           `(close ,lamb)))
-        (('case-lambda . cases)
-         (let ((lamb (genlambda fun)))
-           (set! functions (cons `(,lamb #t . ,(map (lambda (e) (iter-lambda fun e)) cases)) functions))
-           `(close ,lamb)))
-        (('continuation n body)
-         (let ((k (gencont fun)))
-           (set! functions (cons `(,k #t (,n ,(iter-apply fun body))) functions))
-           `(close ,k)))
-        ; TODO replace lang with C
-        (('##foreign.function lang decl ret name . args)
-         (let ((mangled (mangle-foreign-function name)))
-           ; FIXME ASSOC DETECTED
-           (if (not (assoc mangled foreign-functions))
-               (set! foreign-functions (cons expr foreign-functions)))
-           `(##foreign.function ,mangled)))
-        (('quote x)
-         `(quote ,(lift-literal x)))
-        (('##inline f . xs)
-         `(##inline ,f . ,(map (lambda (x) (iter-atom fun x #f)) xs)))
-        (x (if (symbol? x)
-               ; we don't need to create static storage for intrinsics
-               ; that are directly applied, only for intrinsics that are passed
-               ; as directly applied intrinsics never create null closures
-               (if func-position?
-                   x
-                   (let ((intrin (lookup-intrinsic2 x)))
-                     (if (not intrin)
-                         x
-                         (lift-intrinsic x intrin))))
-               (lift-literal x)))))
-    (define (iter-apply fun expr)
-      (match expr
-        (('define k y x)
-         `(define ,k ,(lift-literal y) ,(iter-atom (mangle-symbol y) x #f)))
-        (('set! k ('bruijn name . rest) x)
-         `(set! ,(iter-atom fun k #f) (bruijn ,name . ,rest) ,(iter-atom (mangle-symbol name) x #f)))
-        (('set! k y x)
-         `(set! ,(iter-atom fun k #f) ,(lift-literal y) ,(iter-atom (mangle-symbol y) x #f)))
-        (('if p x y)
-         `(if ,(iter-atom fun p #f) ,(iter-apply fun x) ,(iter-apply fun y)))
-        ((('lambda n body) . xs)
-         (let ((lamb (genlambda fun)))
-           (set! functions (cons `(,lamb #f (,n ,(iter-apply fun body))) functions))
-           `((close ,lamb) . ,(map (lambda (x) (iter-atom fun x #f)) xs))))
-        (('letrec n xs body)
-         `(letrec ,n ,(map (lambda (x) (iter-atom fun x #f)) xs)
-            ,(iter-apply fun body)))
-        ((f xs ...)
-         (cons (iter-atom fun f #t)
-               (map (lambda (x) (iter-atom fun x #f)) xs)))))
-    (define (iter fun expr) (match expr
-        (('bruijn . _) expr)
-        (('lambda . _) (iter-atom fun expr #f))
-        (('case-lambda . _) (iter-atom fun expr #f))
-        (('continuation . _) (iter-atom fun expr #f))
-        (('quote . _) (iter-atom fun expr #f))
-        (('##inline . _) (iter-atom fun expr #f))
-        ((_ . _) (iter-apply fun expr))
-        (else (iter-atom fun expr #f))))
-    (define (iter-declare d)
-      (match d
-        (('##foreign.declare . _) d)
-        (('##vcore.declare f l)
-         (list '##vcore.declare  f (cadr (iter f l))))))
-    ; TODO lift these three up and out
-    (define (make-list n k)
-      (if (= 0 n)
-          '()
-          (cons k (make-list (- n 1) k))))
-    (define (list-set! l x v)
-      (if (= x 0)
-          (set-car! l v)
-          (list-set! (cdr l) (- x 1) v)))
-    (define (multi-partition f n l)
-      (let loop ((ret (make-list n '())) (l l))
-        (if (null? l)
-            (apply values (map reverse ret))
-            (begin
-              (let ((split (f (car l))))
-                (list-set! ret split (cons (car l) (list-ref ret split))))
-              (loop ret (cdr l))))))
-    (call-with-values
-      (lambda ()
-        (multi-partition
-          (lambda (e)
-            (match e
-              (('##foreign.declare . _) 1)
-              (('##vcore.declare . _) 1)
-              (else 0)))
-          2 exprs))
-      (lambda (globals declares)
-        (let ((toplevels (map (lambda (e) (iter "global" e)) globals))
-              (declares (map iter-declare declares)))
-          (list literal-table foreign-functions functions declares toplevels)))))
-
-
-
-
+  (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi) (vanity intrinsics))
+  (export printout2)
   (define gendllmain
     (let ((x 0))
       (lambda ()
@@ -251,7 +33,7 @@
         (sprintf "VDllMain~A" x))))
   (define (printout2 debug? shared? literal-table foreign-functions functions declares toplevels)
     (define (print-global sym)
-      (let ((builtin (lookup-intrinsic2 sym)))
+      (let ((builtin (lookup-intrinsic-name sym)))
         (if builtin
             (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A,NULL)})" builtin)
             (printf "VLookupGlobalVarFast2(runtime, \"~A\")" sym))))
@@ -372,7 +154,7 @@
         (else (compiler-error "closes?: unknown form" expr))))
     (define (print-expr expr args)
       (define (print-builtin-apply f xs tail-call?)
-        (printf "    V_CALL_FUNC(~A, NULL, runtime" (lookup-intrinsic2 f))
+        (printf "    V_CALL_FUNC(~A, NULL, runtime" (lookup-intrinsic-name f))
         (for-each
           (lambda (x)
            (printf ",~N      ")
@@ -381,9 +163,9 @@
         (printf ");~N"))
       (define (print-closure-apply f xs tail-call?)
         (match f
-          (('close fun) (printf "V_CALL_FUNC(~A, env" fun))
+          (('close fun) (printf "    V_CALL_FUNC(~A, env" fun))
           (else
-            (display "V_CALL(")
+            (display "    V_CALL(")
             (print-expr f args)))
         (printf ", runtime")
         (for-each
@@ -441,7 +223,7 @@
                (compiler-error "set!'s first argument is not a symbol")))
               (else (compiler-error "print-set: unknown form" y))))
       (define (print-inline f xs)
-        (let ((inline (lookup-inline f)))
+        (let ((inline (lookup-inline-name f)))
           (if (not inline) (compiler-error "unknown inline" f))
           (printf "~A(~N        " inline)
           (if (not (null? xs))
@@ -487,7 +269,7 @@
         (('letrec n xs body)
          (print-letrec n xs body args))
         ((f xs ...)
-         (cond ((lookup-intrinsic2 f) (print-builtin-apply f xs #f))
+         (cond ((lookup-intrinsic-name f) (print-builtin-apply f xs #f))
                ((and (pair? f) (eqv? (car f) '##intrinsic))
                 (print-builtin-apply (cadr f) xs #f))
                (else (print-closure-apply f xs #f))))
@@ -577,6 +359,11 @@
        (printf "void ~A(VRuntime * runtime, VEnv * upenv, int argc, ...);~N" name)
        (printf "asm(~N")
        (printf "\".intel_syntax noprefix\\n\"~N")
+
+       (printf "#ifdef __linux__~N")
+       (printf "\".type ~A, @function\\n\"~N" name)
+       (printf "#endif~N")
+
        (printf "\"~A:\\n\"~N" name)
        (for-each
          (lambda (e)
@@ -601,10 +388,7 @@
     (define (print-toplevel i expr)
       (printf "void toplevel~A(V_CORE_ARGS, VWORD _k) {~N" i)
       (displayln "    VEnv * env = NULL;")
-      ; One source of ick here is that the expr is hardcoded to use VNext rather than
-      ; just using a continuation. That's something to consider to fix to make this better.
-      ; Maybe it's fine. It's probably fine.
-      (print-expr expr '())
+      (print-expr `(,expr (bruijn k 0 0)) '("_k"))
       (displayln "}"))
 
     ; Kind of gross to do it this way but whatever

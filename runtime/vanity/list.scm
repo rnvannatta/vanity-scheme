@@ -102,7 +102,7 @@
     (case-lambda
       ((kons knil ks)
        (if (null? ks) knil
-           (kons (car ks) (fold-right knil (cdr ks)))))))
+           (kons (car ks) (fold-right kons knil (cdr ks)))))))
   (define (concatenate lst-of-lsts)
     (if (null? lst-of-lsts)
         '()

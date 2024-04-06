@@ -133,7 +133,7 @@
                  (cdr vals)
                  (cdr xs)))))))
 
-  (define (collect-defines body)
+  (define (expand-body body)
     (let loop ((defines '()) (body body))
       (match body
         ((('define (f . xs) . body) . rest) (loop (cons `(define ,f (lambda ,xs . ,body)) defines) rest))
@@ -141,6 +141,10 @@
          (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
          (loop (cons `(define ,x ,body) defines) rest))
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
+        ((('begin x) . rest)
+         (loop defines `(,x . ,rest)))
+        ((('begin x . ys) . rest)
+         (loop defines `(,x (begin . ,ys) . ,rest)))
         (else
           (let ((body (expand-syntax `(begin . ,body))))
             (match (reverse defines)
@@ -151,16 +155,16 @@
   (define (expand-quasiquote quotation expr)
     ; bug with chicken is why we use quasiquotes on quotes, unquotes, and unquote-splicings
     (match expr
-      (('quasiquote x) `(##sys.cons `quasiquote (##sys.cons ,(expand-quasiquote (+ quotation 1) x) '())))
+      (('quasiquote x) `(##vcore.cons `quasiquote (##vcore.cons ,(expand-quasiquote (+ quotation 1) x) '())))
       (('unquote x)
        (if (= quotation 1) x
-           `(##sys.cons `unquote (##sys.cons ,(expand-quasiquote (- quotation 1) x) '()))))
+           `(##vcore.cons `unquote (##vcore.cons ,(expand-quasiquote (- quotation 1) x) '()))))
       ((('unquote-splicing x) . y)
        (if (= quotation 1)
            ; FIXME dont' like this naked append, need long and short function
            `(append ,x ,(expand-quasiquote quotation y))
-           `(##sys.cons (##sys.cons `unquote-splicing (##sys.cons ,(expand-quasiquote (- quotation 1) x) '()) ,(expand-quasiquote quotation y)))))
-      ((a . b) `(##sys.cons ,(expand-quasiquote quotation a) ,(expand-quasiquote quotation b)))
+           `(##vcore.cons (##vcore.cons `unquote-splicing (##vcore.cons ,(expand-quasiquote (- quotation 1) x) '()) ,(expand-quasiquote quotation y)))))
+      ((a . b) `(##vcore.cons ,(expand-quasiquote quotation a) ,(expand-quasiquote quotation b)))
       (x `',x)))
 
   ; pretty ugly code
@@ -194,6 +198,8 @@
          (list `(define ,f ,(expand-syntax `(case-lambda . ,body)))))
         (('define x y) (list `(define ,x ,(expand-syntax y))))
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
+        (('begin x) (expand-library-expr x))
+        (('begin x . xs) (append (expand-library-expr x) (expand-library-expr (cons 'begin xs))))
         ; TODO why not? we've done everything we need for expressions in libraries
         (else (compiler-error "expressions not permitted in libraries yet" expr))))
     ; still has free variables
@@ -234,12 +240,9 @@
              (valid-args? (cdr args)))))
   (define (expand-lambda expr)
     (match expr
-      ((args body)
-       (if (not (valid-args? args)) (compiler-error "invalid lambda args" args))
-       `(,args ,(expand-syntax body)))
       ((args . body)
        (if (not (valid-args? args)) (compiler-error "invalid lambda args" args))
-       `(,args ,(collect-defines body)))
+       `(,args ,(expand-body body)))
       (_ (compiler-error "invalid lambda" `(lambda . ,expr)))))
   (define (expand-let expr)
     (match expr
@@ -286,6 +289,11 @@
       (('##foreign.import lang str)
        (resolve-foreign-import expr paths))
 
+      (('foreign-declare . rest)
+       (expand-toplevel (cons '##foreign.declare rest) paths))
+      (('foreign-import . rest)
+       (expand-toplevel (cons '##foreign.import rest) paths))
+
       (expr (list (expand-syntax expr)))))
 
   (define (expand-syntax expr)
@@ -297,7 +305,7 @@
       (('case-lambda . _) (compiler-error "malformed case-lambda" expr))
 
       (('quasiquote x) (expand-syntax (expand-quasiquote 1 x)))
-      (('quote (a . b)) (expand-syntax `(##sys.qcons (quote ,a) (quote ,b))))
+      (('quote (a . b)) (expand-syntax `(##vcore.qcons (quote ,a) (quote ,b))))
       (('quote x) `(quote ,x))
 
       (('let . _) (expand-let (cdr expr)))
@@ -308,8 +316,7 @@
       (('let*-values . noise) (compiler-error "malformed let-values*" `(let*-values . ,noise)))
 
       (('letrec* ((xs vals) ...) . body)
-       (expand-letrec* xs vals body)
-       #;(expand-syntax `((lambda ,xs ,@(map (lambda (x val) `(set! ,x ,val)) xs vals) . ,body) . ,(map (lambda (val) #f) xs))))
+       (expand-letrec* xs vals body))
       (('letrec* . noise) (compiler-error "malformed letrec*" `(letrec . ,noise)))
       (('letrec ((xs vals) ...) . body)
        (expand-letrec xs vals body))
@@ -384,6 +391,8 @@
 
       (('##foreign.function . _)
        (validate-foreign-function expr))
+      (('foreign-function . rest)
+       (expand-syntax (cons '##foreign.function rest)))
 
       ((f args ...)
        (if (and (atom? f) (not (symbol? f))) (compiler-error "function application's first arg is not a function" f))

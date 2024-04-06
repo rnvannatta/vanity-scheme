@@ -27,8 +27,8 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
-static struct { VBlob sym; char bytes[21]; } _V10string_D380 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
-static struct { VBlob sym; char bytes[21]; } _V10string_D379 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0scheme_V0r7rs_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10string_D381 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10string_D380 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0scheme_V0r7rs_V20" };
 VWEAK VWORD _V0error;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0error = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "error" };
 VWEAK VWORD _V0exit;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0exit = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "exit" };
 VWEAK VWORD _V0command__line;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0command__line = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "command-line" };
@@ -285,8 +285,8 @@ static void _V0scheme_V0r7rs_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
  static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_lambda2" };
  VRecordCall2(runtime, &dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0scheme_V0r7rs_V20_lambda2, runtime, upenv, 125, argc, _var0, _var1, _var2, _var3, _var4, _var5, _var6, _var7, _var8, _var9, _var10, _var11, _var12, _var13, _var14, _var15, _var16, _var17, _var18, _var19, _var20, _var21, _var22, _var23, _var24, _var25, _var26, _var27, _var28, _var29, _var30, _var31, _var32, _var33, _var34, _var35, _var36, _var37, _var38, _var39, _var40, _var41, _var42, _var43, _var44, _var45, _var46, _var47, _var48, _var49, _var50, _var51, _var52, _var53, _var54, _var55, _var56, _var57, _var58, _var59, _var60, _var61, _var62, _var63, _var64, _var65, _var66, _var67, _var68, _var69, _var70, _var71, _var72, _var73, _var74, _var75, _var76, _var77, _var78, _var79, _var80, _var81, _var82, _var83, _var84, _var85, _var86, _var87, _var88, _var89, _var90, _var91, _var92, _var93, _var94, _var95, _var96, _var97, _var98, _var99, _var100, _var101, _var102, _var103, _var104, _var105, _var106, _var107, _var108, _var109, _var110, _var111, _var112, _var113, _var114, _var115, _var116, _var117, _var118, _var119, _var120, _var121, _var122, _var123, _var124) {
-  // ((bruijn ##k.1 128 0) (##inline ##sys.cons (##inline ##sys.cons 'null? (bruijn null? 0 124)) (##inline ##sys.cons (##inline ##sys.cons 'eof-object? (bruijn eof-object? 0 0)) (##inline ##sys.cons (##inline ##sys.cons 'boolean? (bruijn boolean? 0 123)) (##inline ##sys.cons (##inline ##sys.cons 'pair? (bruijn pair? 0 1)) (##inline ##sys.cons (##inline ##sys.cons 'vector? (bruijn vector? 0 122)) (##inline ##sys.cons (##inline ##sys.cons 'procedure? (bruijn procedure? 0 2)) (##inline ##sys.cons (##inline ##sys.cons 'symbol? (bruijn symbol? 0 121)) (##inline ##sys.cons (##inline ##sys.cons 'string? (bruijn string? 0 3)) (##inline ##sys.cons (##inline ##sys.cons 'exact? (bruijn exact? 0 120)) (##inline ##sys.cons (##inline ##sys.cons 'inexact? (bruijn inexact? 0 4)) (##inline ##sys.cons (##inline ##sys.cons 'real? (bruijn real? 0 119)) (##inline ##sys.cons (##inline ##sys.cons 'integer? (bruijn integer? 0 5)) (##inline ##sys.cons (##inline ##sys.cons 'char? (bruijn char? 0 118)) (##inline ##sys.cons (##inline ##sys.cons 'eq? (bruijn eq? 0 6)) (##inline ##sys.cons (##inline ##sys.cons 'symbol=? (bruijn symbol=? 0 117)) (##inline ##sys.cons (##inline ##sys.cons 'eqv? (bruijn eqv? 0 7)) (##inline ##sys.cons (##inline ##sys.cons 'equal? (bruijn equal? 0 116)) (##inline ##sys.cons (##inline ##sys.cons 'not (bruijn not 0 8)) (##inline ##sys.cons (##inline ##sys.cons '< (bruijn < 0 115)) (##inline ##sys.cons (##inline ##sys.cons '= (bruijn = 0 9)) (##inline ##sys.cons (##inline ##sys.cons '> (bruijn > 0 114)) (##inline ##sys.cons (##inline ##sys.cons '<= (bruijn <= 0 10)) (##inline ##sys.cons (##inline ##sys.cons '>= (bruijn >= 0 113)) (##inline ##sys.cons (##inline ##sys.cons 'inexact (bruijn inexact 0 11)) (##inline ##sys.cons (##inline ##sys.cons 'exact->inexact (bruijn exact->inexact 0 112)) (##inline ##sys.cons (##inline ##sys.cons 'number? (bruijn number? 0 12)) (##inline ##sys.cons (##inline ##sys.cons 'complex? (bruijn complex? 0 111)) (##inline ##sys.cons (##inline ##sys.cons '+ (bruijn + 0 13)) (##inline ##sys.cons (##inline ##sys.cons '- (bruijn - 0 110)) (##inline ##sys.cons (##inline ##sys.cons '* (bruijn * 0 14)) (##inline ##sys.cons (##inline ##sys.cons '/ (bruijn / 0 109)) (##inline ##sys.cons (##inline ##sys.cons 'quotient (bruijn quotient 0 15)) (##inline ##sys.cons (##inline ##sys.cons 'remainder (bruijn remainder 0 108)) (##inline ##sys.cons (##inline ##sys.cons 'max (bruijn max 0 16)) (##inline ##sys.cons (##inline ##sys.cons 'min (bruijn min 0 107)) (##inline ##sys.cons (##inline ##sys.cons 'cons (bruijn cons 0 17)) (##inline ##sys.cons (##inline ##sys.cons 'car (bruijn car 0 106)) (##inline ##sys.cons (##inline ##sys.cons 'cdr (bruijn cdr 0 18)) (##inline ##sys.cons (##inline ##sys.cons 'set-car! (bruijn set-car! 0 105)) (##inline ##sys.cons (##inline ##sys.cons 'set-cdr! (bruijn set-cdr! 0 19)) (##inline ##sys.cons (##inline ##sys.cons 'caar (bruijn caar 0 104)) (##inline ##sys.cons (##inline ##sys.cons 'cadr (bruijn cadr 0 20)) (##inline ##sys.cons (##inline ##sys.cons 'cdar (bruijn cdar 0 103)) (##inline ##sys.cons (##inline ##sys.cons 'cddr (bruijn cddr 0 21)) (##inline ##sys.cons (##inline ##sys.cons 'caaar (bruijn caaar 0 102)) (##inline ##sys.cons (##inline ##sys.cons 'caadr (bruijn caadr 0 22)) (##inline ##sys.cons (##inline ##sys.cons 'cadar (bruijn cadar 0 101)) (##inline ##sys.cons (##inline ##sys.cons 'caddr (bruijn caddr 0 23)) (##inline ##sys.cons (##inline ##sys.cons 'cdaar (bruijn cdaar 0 100)) (##inline ##sys.cons (##inline ##sys.cons 'cdadr (bruijn cdadr 0 24)) (##inline ##sys.cons (##inline ##sys.cons 'cddar (bruijn cddar 0 99)) (##inline ##sys.cons (##inline ##sys.cons 'cdddr (bruijn cdddr 0 25)) (##inline ##sys.cons (##inline ##sys.cons 'caaaar (bruijn caaaar 0 98)) (##inline ##sys.cons (##inline ##sys.cons 'caaadr (bruijn caaadr 0 26)) (##inline ##sys.cons (##inline ##sys.cons 'caadar (bruijn caadar 0 97)) (##inline ##sys.cons (##inline ##sys.cons 'caaddr (bruijn caaddr 0 27)) (##inline ##sys.cons (##inline ##sys.cons 'cadaar (bruijn cadaar 0 96)) (##inline ##sys.cons (##inline ##sys.cons 'cadadr (bruijn cadadr 0 28)) (##inline ##sys.cons (##inline ##sys.cons 'caddar (bruijn caddar 0 95)) (##inline ##sys.cons (##inline ##sys.cons 'cadddr (bruijn cadddr 0 29)) (##inline ##sys.cons (##inline ##sys.cons 'cdaaar (bruijn cdaaar 0 94)) (##inline ##sys.cons (##inline ##sys.cons 'cdaadr (bruijn cdaadr 0 30)) (##inline ##sys.cons (##inline ##sys.cons 'cdadar (bruijn cdadar 0 93)) (##inline ##sys.cons (##inline ##sys.cons 'cdaddr (bruijn cdaddr 0 31)) (##inline ##sys.cons (##inline ##sys.cons 'cddaar (bruijn cddaar 0 92)) (##inline ##sys.cons (##inline ##sys.cons 'cddadr (bruijn cddadr 0 32)) (##inline ##sys.cons (##inline ##sys.cons 'cdddar (bruijn cdddar 0 91)) (##inline ##sys.cons (##inline ##sys.cons 'cddddr (bruijn cddddr 0 33)) (##inline ##sys.cons (##inline ##sys.cons 'list (bruijn list 0 90)) (##inline ##sys.cons (##inline ##sys.cons 'length (bruijn length 0 34)) (##inline ##sys.cons (##inline ##sys.cons 'list-ref (bruijn list-ref 0 89)) (##inline ##sys.cons (##inline ##sys.cons 'map (bruijn map 0 35)) (##inline ##sys.cons (##inline ##sys.cons 'for-each (bruijn for-each 0 88)) (##inline ##sys.cons (##inline ##sys.cons 'append (bruijn append 0 36)) (##inline ##sys.cons (##inline ##sys.cons 'reverse (bruijn reverse 0 87)) (##inline ##sys.cons (##inline ##sys.cons 'memq (bruijn memq 0 37)) (##inline ##sys.cons (##inline ##sys.cons 'memv (bruijn memv 0 86)) (##inline ##sys.cons (##inline ##sys.cons 'member (bruijn member 0 38)) (##inline ##sys.cons (##inline ##sys.cons 'assq (bruijn assq 0 85)) (##inline ##sys.cons (##inline ##sys.cons 'assv (bruijn assv 0 39)) (##inline ##sys.cons (##inline ##sys.cons 'assoc (bruijn assoc 0 84)) (##inline ##sys.cons (##inline ##sys.cons 'string->list (bruijn string->list 0 78)) (##inline ##sys.cons (##inline ##sys.cons 'list->string (bruijn list->string 0 83)) (##inline ##sys.cons (##inline ##sys.cons 'make-string (bruijn make-string 0 40)) (##inline ##sys.cons (##inline ##sys.cons 'substring (bruijn substring 0 82)) (##inline ##sys.cons (##inline ##sys.cons 'string-copy (bruijn string-copy 0 41)) (##inline ##sys.cons (##inline ##sys.cons 'string-copy! (bruijn string-copy! 0 81)) (##inline ##sys.cons (##inline ##sys.cons 'string-ref (bruijn string-ref 0 42)) (##inline ##sys.cons (##inline ##sys.cons 'string-set! (bruijn string-set! 0 80)) (##inline ##sys.cons (##inline ##sys.cons 'string-length (bruijn string-length 0 43)) (##inline ##sys.cons (##inline ##sys.cons 'string->symbol (bruijn string->symbol 0 79)) (##inline ##sys.cons (##inline ##sys.cons 'string->number (bruijn string->number 0 44)) (##inline ##sys.cons (##inline ##sys.cons 'string->list (bruijn string->list 0 78)) (##inline ##sys.cons (##inline ##sys.cons 'string-append (bruijn string-append 0 45)) (##inline ##sys.cons (##inline ##sys.cons 'symbol->string (bruijn symbol->string 0 77)) (##inline ##sys.cons (##inline ##sys.cons 'list->vector (bruijn list->vector 0 46)) (##inline ##sys.cons (##inline ##sys.cons 'vector (bruijn vector 0 76)) (##inline ##sys.cons (##inline ##sys.cons 'vector-ref (bruijn vector-ref 0 47)) (##inline ##sys.cons (##inline ##sys.cons 'vector-set! (bruijn vector-set! 0 75)) (##inline ##sys.cons (##inline ##sys.cons 'vector-length (bruijn vector-length 0 48)) (##inline ##sys.cons (##inline ##sys.cons 'vector-for-each (bruijn vector-for-each 0 74)) (##inline ##sys.cons (##inline ##sys.cons 'char->integer (bruijn char->integer 0 49)) (##inline ##sys.cons (##inline ##sys.cons 'current-output-port (bruijn current-output-port 0 73)) (##inline ##sys.cons (##inline ##sys.cons 'current-error-port (bruijn current-error-port 0 50)) (##inline ##sys.cons (##inline ##sys.cons 'current-input-port (bruijn current-input-port 0 72)) (##inline ##sys.cons (##inline ##sys.cons 'open-input-file (bruijn open-input-file 0 51)) (##inline ##sys.cons (##inline ##sys.cons 'open-output-file (bruijn open-output-file 0 71)) (##inline ##sys.cons (##inline ##sys.cons 'close-port (bruijn close-port 0 52)) (##inline ##sys.cons (##inline ##sys.cons 'open-output-string (bruijn open-output-string 0 70)) (##inline ##sys.cons (##inline ##sys.cons 'get-output-string (bruijn get-output-string 0 53)) (##inline ##sys.cons (##inline ##sys.cons 'with-output-to-file (bruijn with-output-to-file 0 69)) (##inline ##sys.cons (##inline ##sys.cons 'with-input-from-file (bruijn with-input-from-file 0 54)) (##inline ##sys.cons (##inline ##sys.cons 'read-char (bruijn read-char 0 68)) (##inline ##sys.cons (##inline ##sys.cons 'read-line (bruijn read-line 0 55)) (##inline ##sys.cons (##inline ##sys.cons 'read (bruijn read 0 67)) (##inline ##sys.cons (##inline ##sys.cons 'newline (bruijn newline 0 56)) (##inline ##sys.cons (##inline ##sys.cons 'display (bruijn display 0 66)) (##inline ##sys.cons (##inline ##sys.cons 'write (bruijn write 0 57)) (##inline ##sys.cons (##inline ##sys.cons 'call/cc (bruijn call/cc 0 65)) (##inline ##sys.cons (##inline ##sys.cons 'call-with-current-continuation (bruijn call-with-current-continuation 0 58)) (##inline ##sys.cons (##inline ##sys.cons 'call-with-values (bruijn call-with-values 0 64)) (##inline ##sys.cons (##inline ##sys.cons 'apply (bruijn apply 0 59)) (##inline ##sys.cons (##inline ##sys.cons 'values (bruijn values 0 63)) (##inline ##sys.cons (##inline ##sys.cons 'command-line (bruijn command-line 0 60)) (##inline ##sys.cons (##inline ##sys.cons 'exit (bruijn exit 0 62)) (##inline ##sys.cons (##inline ##sys.cons 'error (bruijn error 0 61)) '())))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
-V_CALL(VGetArg(upenv, 128-1, 0), runtime,
+  // ((bruijn ##k.2 128 0) (##inline ##vcore.cons (##inline ##vcore.cons 'null? (bruijn null? 0 124)) (##inline ##vcore.cons (##inline ##vcore.cons 'eof-object? (bruijn eof-object? 0 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'boolean? (bruijn boolean? 0 123)) (##inline ##vcore.cons (##inline ##vcore.cons 'pair? (bruijn pair? 0 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector? (bruijn vector? 0 122)) (##inline ##vcore.cons (##inline ##vcore.cons 'procedure? (bruijn procedure? 0 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol? (bruijn symbol? 0 121)) (##inline ##vcore.cons (##inline ##vcore.cons 'string? (bruijn string? 0 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact? (bruijn exact? 0 120)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact? (bruijn inexact? 0 4)) (##inline ##vcore.cons (##inline ##vcore.cons 'real? (bruijn real? 0 119)) (##inline ##vcore.cons (##inline ##vcore.cons 'integer? (bruijn integer? 0 5)) (##inline ##vcore.cons (##inline ##vcore.cons 'char? (bruijn char? 0 118)) (##inline ##vcore.cons (##inline ##vcore.cons 'eq? (bruijn eq? 0 6)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol=? (bruijn symbol=? 0 117)) (##inline ##vcore.cons (##inline ##vcore.cons 'eqv? (bruijn eqv? 0 7)) (##inline ##vcore.cons (##inline ##vcore.cons 'equal? (bruijn equal? 0 116)) (##inline ##vcore.cons (##inline ##vcore.cons 'not (bruijn not 0 8)) (##inline ##vcore.cons (##inline ##vcore.cons '< (bruijn < 0 115)) (##inline ##vcore.cons (##inline ##vcore.cons '= (bruijn = 0 9)) (##inline ##vcore.cons (##inline ##vcore.cons '> (bruijn > 0 114)) (##inline ##vcore.cons (##inline ##vcore.cons '<= (bruijn <= 0 10)) (##inline ##vcore.cons (##inline ##vcore.cons '>= (bruijn >= 0 113)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact (bruijn inexact 0 11)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact->inexact (bruijn exact->inexact 0 112)) (##inline ##vcore.cons (##inline ##vcore.cons 'number? (bruijn number? 0 12)) (##inline ##vcore.cons (##inline ##vcore.cons 'complex? (bruijn complex? 0 111)) (##inline ##vcore.cons (##inline ##vcore.cons '+ (bruijn + 0 13)) (##inline ##vcore.cons (##inline ##vcore.cons '- (bruijn - 0 110)) (##inline ##vcore.cons (##inline ##vcore.cons '* (bruijn * 0 14)) (##inline ##vcore.cons (##inline ##vcore.cons '/ (bruijn / 0 109)) (##inline ##vcore.cons (##inline ##vcore.cons 'quotient (bruijn quotient 0 15)) (##inline ##vcore.cons (##inline ##vcore.cons 'remainder (bruijn remainder 0 108)) (##inline ##vcore.cons (##inline ##vcore.cons 'max (bruijn max 0 16)) (##inline ##vcore.cons (##inline ##vcore.cons 'min (bruijn min 0 107)) (##inline ##vcore.cons (##inline ##vcore.cons 'cons (bruijn cons 0 17)) (##inline ##vcore.cons (##inline ##vcore.cons 'car (bruijn car 0 106)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdr (bruijn cdr 0 18)) (##inline ##vcore.cons (##inline ##vcore.cons 'set-car! (bruijn set-car! 0 105)) (##inline ##vcore.cons (##inline ##vcore.cons 'set-cdr! (bruijn set-cdr! 0 19)) (##inline ##vcore.cons (##inline ##vcore.cons 'caar (bruijn caar 0 104)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadr (bruijn cadr 0 20)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdar (bruijn cdar 0 103)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddr (bruijn cddr 0 21)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaar (bruijn caaar 0 102)) (##inline ##vcore.cons (##inline ##vcore.cons 'caadr (bruijn caadr 0 22)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadar (bruijn cadar 0 101)) (##inline ##vcore.cons (##inline ##vcore.cons 'caddr (bruijn caddr 0 23)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaar (bruijn cdaar 0 100)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdadr (bruijn cdadr 0 24)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddar (bruijn cddar 0 99)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdddr (bruijn cdddr 0 25)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaaar (bruijn caaaar 0 98)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaadr (bruijn caaadr 0 26)) (##inline ##vcore.cons (##inline ##vcore.cons 'caadar (bruijn caadar 0 97)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaddr (bruijn caaddr 0 27)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadaar (bruijn cadaar 0 96)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadadr (bruijn cadadr 0 28)) (##inline ##vcore.cons (##inline ##vcore.cons 'caddar (bruijn caddar 0 95)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadddr (bruijn cadddr 0 29)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaaar (bruijn cdaaar 0 94)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaadr (bruijn cdaadr 0 30)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdadar (bruijn cdadar 0 93)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaddr (bruijn cdaddr 0 31)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddaar (bruijn cddaar 0 92)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddadr (bruijn cddadr 0 32)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdddar (bruijn cdddar 0 91)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddddr (bruijn cddddr 0 33)) (##inline ##vcore.cons (##inline ##vcore.cons 'list (bruijn list 0 90)) (##inline ##vcore.cons (##inline ##vcore.cons 'length (bruijn length 0 34)) (##inline ##vcore.cons (##inline ##vcore.cons 'list-ref (bruijn list-ref 0 89)) (##inline ##vcore.cons (##inline ##vcore.cons 'map (bruijn map 0 35)) (##inline ##vcore.cons (##inline ##vcore.cons 'for-each (bruijn for-each 0 88)) (##inline ##vcore.cons (##inline ##vcore.cons 'append (bruijn append 0 36)) (##inline ##vcore.cons (##inline ##vcore.cons 'reverse (bruijn reverse 0 87)) (##inline ##vcore.cons (##inline ##vcore.cons 'memq (bruijn memq 0 37)) (##inline ##vcore.cons (##inline ##vcore.cons 'memv (bruijn memv 0 86)) (##inline ##vcore.cons (##inline ##vcore.cons 'member (bruijn member 0 38)) (##inline ##vcore.cons (##inline ##vcore.cons 'assq (bruijn assq 0 85)) (##inline ##vcore.cons (##inline ##vcore.cons 'assv (bruijn assv 0 39)) (##inline ##vcore.cons (##inline ##vcore.cons 'assoc (bruijn assoc 0 84)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->list (bruijn string->list 0 78)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->string (bruijn list->string 0 83)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-string (bruijn make-string 0 40)) (##inline ##vcore.cons (##inline ##vcore.cons 'substring (bruijn substring 0 82)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-copy (bruijn string-copy 0 41)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-copy! (bruijn string-copy! 0 81)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-ref (bruijn string-ref 0 42)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-set! (bruijn string-set! 0 80)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-length (bruijn string-length 0 43)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->symbol (bruijn string->symbol 0 79)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->number (bruijn string->number 0 44)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->list (bruijn string->list 0 78)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-append (bruijn string-append 0 45)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol->string (bruijn symbol->string 0 77)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->vector (bruijn list->vector 0 46)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector (bruijn vector 0 76)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-ref (bruijn vector-ref 0 47)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-set! (bruijn vector-set! 0 75)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-length (bruijn vector-length 0 48)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-for-each (bruijn vector-for-each 0 74)) (##inline ##vcore.cons (##inline ##vcore.cons 'char->integer (bruijn char->integer 0 49)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-output-port (bruijn current-output-port 0 73)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-error-port (bruijn current-error-port 0 50)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-input-port (bruijn current-input-port 0 72)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-input-file (bruijn open-input-file 0 51)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-file (bruijn open-output-file 0 71)) (##inline ##vcore.cons (##inline ##vcore.cons 'close-port (bruijn close-port 0 52)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-string (bruijn open-output-string 0 70)) (##inline ##vcore.cons (##inline ##vcore.cons 'get-output-string (bruijn get-output-string 0 53)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-output-to-file (bruijn with-output-to-file 0 69)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-input-from-file (bruijn with-input-from-file 0 54)) (##inline ##vcore.cons (##inline ##vcore.cons 'read-char (bruijn read-char 0 68)) (##inline ##vcore.cons (##inline ##vcore.cons 'read-line (bruijn read-line 0 55)) (##inline ##vcore.cons (##inline ##vcore.cons 'read (bruijn read 0 67)) (##inline ##vcore.cons (##inline ##vcore.cons 'newline (bruijn newline 0 56)) (##inline ##vcore.cons (##inline ##vcore.cons 'display (bruijn display 0 66)) (##inline ##vcore.cons (##inline ##vcore.cons 'write (bruijn write 0 57)) (##inline ##vcore.cons (##inline ##vcore.cons 'call/cc (bruijn call/cc 0 65)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-current-continuation (bruijn call-with-current-continuation 0 58)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-values (bruijn call-with-values 0 64)) (##inline ##vcore.cons (##inline ##vcore.cons 'apply (bruijn apply 0 59)) (##inline ##vcore.cons (##inline ##vcore.cons 'values (bruijn values 0 63)) (##inline ##vcore.cons (##inline ##vcore.cons 'command-line (bruijn command-line 0 60)) (##inline ##vcore.cons (##inline ##vcore.cons 'exit (bruijn exit 0 62)) (##inline ##vcore.cons (##inline ##vcore.cons 'error (bruijn error 0 61)) '())))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+    V_CALL(VGetArg(upenv, 128-1, 0), runtime,
       VInlineCons(
         VInlineCons(
         _V0null_Q,
@@ -807,8 +807,8 @@ static void _V0scheme_V0r7rs_V20_k127(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((close _V0scheme_V0r7rs_V20_lambda2) (bruijn ##x.2 124 0) (bruijn ##x.3 123 0) (bruijn ##x.4 122 0) (bruijn ##x.5 121 0) (bruijn ##x.6 120 0) (bruijn ##x.7 119 0) (bruijn ##x.8 118 0) (bruijn ##x.9 117 0) (bruijn ##x.10 116 0) (bruijn ##x.11 115 0) (bruijn ##x.12 114 0) (bruijn ##x.13 113 0) (bruijn ##x.14 112 0) (bruijn ##x.15 111 0) (bruijn ##x.16 110 0) (bruijn ##x.17 109 0) (bruijn ##x.18 108 0) (bruijn ##x.19 107 0) (bruijn ##x.20 106 0) (bruijn ##x.21 105 0) (bruijn ##x.22 104 0) (bruijn ##x.23 103 0) (bruijn ##x.24 102 0) (bruijn ##x.25 101 0) (bruijn ##x.26 100 0) (bruijn ##x.27 99 0) (bruijn ##x.28 98 0) (bruijn ##x.29 97 0) (bruijn ##x.30 96 0) (bruijn ##x.31 95 0) (bruijn ##x.32 94 0) (bruijn ##x.33 93 0) (bruijn ##x.34 92 0) (bruijn ##x.35 91 0) (bruijn ##x.36 90 0) (bruijn ##x.37 89 0) (bruijn ##x.38 88 0) (bruijn ##x.39 87 0) (bruijn ##x.40 86 0) (bruijn ##x.41 85 0) (bruijn ##x.42 84 0) (bruijn ##x.43 83 0) (bruijn ##x.44 82 0) (bruijn ##x.45 81 0) (bruijn ##x.46 80 0) (bruijn ##x.47 79 0) (bruijn ##x.48 78 0) (bruijn ##x.49 77 0) (bruijn ##x.50 76 0) (bruijn ##x.51 75 0) (bruijn ##x.52 74 0) (bruijn ##x.53 73 0) (bruijn ##x.54 72 0) (bruijn ##x.55 71 0) (bruijn ##x.56 70 0) (bruijn ##x.57 69 0) (bruijn ##x.58 68 0) (bruijn ##x.59 67 0) (bruijn ##x.60 66 0) (bruijn ##x.61 65 0) (bruijn ##x.62 64 0) (bruijn ##x.63 63 0) (bruijn ##x.64 62 0) (bruijn ##x.65 61 0) (bruijn ##x.66 60 0) (bruijn ##x.67 59 0) (bruijn ##x.68 58 0) (bruijn ##x.69 57 0) (bruijn ##x.70 56 0) (bruijn ##x.71 55 0) (bruijn ##x.72 54 0) (bruijn ##x.73 53 0) (bruijn ##x.74 52 0) (bruijn ##x.75 51 0) (bruijn ##x.76 50 0) (bruijn ##x.77 49 0) (bruijn ##x.78 48 0) (bruijn ##x.79 47 0) (bruijn ##x.80 46 0) (bruijn ##x.81 45 0) (bruijn ##x.82 44 0) (bruijn ##x.83 43 0) (bruijn ##x.84 42 0) (bruijn ##x.85 41 0) (bruijn ##x.86 40 0) (bruijn ##x.87 39 0) (bruijn ##x.88 38 0) (bruijn ##x.89 37 0) (bruijn ##x.90 36 0) (bruijn ##x.91 35 0) (bruijn ##x.92 34 0) (bruijn ##x.93 33 0) (bruijn ##x.94 32 0) (bruijn ##x.95 31 0) (bruijn ##x.96 30 0) (bruijn ##x.97 29 0) (bruijn ##x.98 28 0) (bruijn ##x.99 27 0) (bruijn ##x.100 26 0) (bruijn ##x.101 25 0) (bruijn ##x.102 24 0) (bruijn ##x.103 23 0) (bruijn ##x.104 22 0) (bruijn ##x.105 21 0) (bruijn ##x.106 20 0) (bruijn ##x.107 19 0) (bruijn ##x.108 18 0) (bruijn ##x.109 17 0) (bruijn ##x.110 16 0) (bruijn ##x.111 15 0) (bruijn ##x.112 14 0) (bruijn ##x.113 13 0) (bruijn ##x.114 12 0) (bruijn ##x.115 11 0) (bruijn ##x.116 10 0) (bruijn ##x.117 9 0) (bruijn ##x.118 8 0) (bruijn ##x.119 7 0) (bruijn ##x.120 6 0) (bruijn ##x.121 5 0) (bruijn ##x.122 4 0) (bruijn ##x.123 3 0) (bruijn ##x.124 2 0) (bruijn ##x.125 1 0) (bruijn ##x.126 0 0))
-V_CALL_FUNC(_V0scheme_V0r7rs_V20_lambda2, env, runtime,
+  // ((close _V0scheme_V0r7rs_V20_lambda2) (bruijn ##x.3 124 0) (bruijn ##x.4 123 0) (bruijn ##x.5 122 0) (bruijn ##x.6 121 0) (bruijn ##x.7 120 0) (bruijn ##x.8 119 0) (bruijn ##x.9 118 0) (bruijn ##x.10 117 0) (bruijn ##x.11 116 0) (bruijn ##x.12 115 0) (bruijn ##x.13 114 0) (bruijn ##x.14 113 0) (bruijn ##x.15 112 0) (bruijn ##x.16 111 0) (bruijn ##x.17 110 0) (bruijn ##x.18 109 0) (bruijn ##x.19 108 0) (bruijn ##x.20 107 0) (bruijn ##x.21 106 0) (bruijn ##x.22 105 0) (bruijn ##x.23 104 0) (bruijn ##x.24 103 0) (bruijn ##x.25 102 0) (bruijn ##x.26 101 0) (bruijn ##x.27 100 0) (bruijn ##x.28 99 0) (bruijn ##x.29 98 0) (bruijn ##x.30 97 0) (bruijn ##x.31 96 0) (bruijn ##x.32 95 0) (bruijn ##x.33 94 0) (bruijn ##x.34 93 0) (bruijn ##x.35 92 0) (bruijn ##x.36 91 0) (bruijn ##x.37 90 0) (bruijn ##x.38 89 0) (bruijn ##x.39 88 0) (bruijn ##x.40 87 0) (bruijn ##x.41 86 0) (bruijn ##x.42 85 0) (bruijn ##x.43 84 0) (bruijn ##x.44 83 0) (bruijn ##x.45 82 0) (bruijn ##x.46 81 0) (bruijn ##x.47 80 0) (bruijn ##x.48 79 0) (bruijn ##x.49 78 0) (bruijn ##x.50 77 0) (bruijn ##x.51 76 0) (bruijn ##x.52 75 0) (bruijn ##x.53 74 0) (bruijn ##x.54 73 0) (bruijn ##x.55 72 0) (bruijn ##x.56 71 0) (bruijn ##x.57 70 0) (bruijn ##x.58 69 0) (bruijn ##x.59 68 0) (bruijn ##x.60 67 0) (bruijn ##x.61 66 0) (bruijn ##x.62 65 0) (bruijn ##x.63 64 0) (bruijn ##x.64 63 0) (bruijn ##x.65 62 0) (bruijn ##x.66 61 0) (bruijn ##x.67 60 0) (bruijn ##x.68 59 0) (bruijn ##x.69 58 0) (bruijn ##x.70 57 0) (bruijn ##x.71 56 0) (bruijn ##x.72 55 0) (bruijn ##x.73 54 0) (bruijn ##x.74 53 0) (bruijn ##x.75 52 0) (bruijn ##x.76 51 0) (bruijn ##x.77 50 0) (bruijn ##x.78 49 0) (bruijn ##x.79 48 0) (bruijn ##x.80 47 0) (bruijn ##x.81 46 0) (bruijn ##x.82 45 0) (bruijn ##x.83 44 0) (bruijn ##x.84 43 0) (bruijn ##x.85 42 0) (bruijn ##x.86 41 0) (bruijn ##x.87 40 0) (bruijn ##x.88 39 0) (bruijn ##x.89 38 0) (bruijn ##x.90 37 0) (bruijn ##x.91 36 0) (bruijn ##x.92 35 0) (bruijn ##x.93 34 0) (bruijn ##x.94 33 0) (bruijn ##x.95 32 0) (bruijn ##x.96 31 0) (bruijn ##x.97 30 0) (bruijn ##x.98 29 0) (bruijn ##x.99 28 0) (bruijn ##x.100 27 0) (bruijn ##x.101 26 0) (bruijn ##x.102 25 0) (bruijn ##x.103 24 0) (bruijn ##x.104 23 0) (bruijn ##x.105 22 0) (bruijn ##x.106 21 0) (bruijn ##x.107 20 0) (bruijn ##x.108 19 0) (bruijn ##x.109 18 0) (bruijn ##x.110 17 0) (bruijn ##x.111 16 0) (bruijn ##x.112 15 0) (bruijn ##x.113 14 0) (bruijn ##x.114 13 0) (bruijn ##x.115 12 0) (bruijn ##x.116 11 0) (bruijn ##x.117 10 0) (bruijn ##x.118 9 0) (bruijn ##x.119 8 0) (bruijn ##x.120 7 0) (bruijn ##x.121 6 0) (bruijn ##x.122 5 0) (bruijn ##x.123 4 0) (bruijn ##x.124 3 0) (bruijn ##x.125 2 0) (bruijn ##x.126 1 0) (bruijn ##x.127 0 0))
+    V_CALL_FUNC(_V0scheme_V0r7rs_V20_lambda2, env, runtime,
       VGetArg(upenv, 124-1, 0),
       VGetArg(upenv, 123-1, 0),
       VGetArg(upenv, 122-1, 0),
@@ -950,7 +950,7 @@ static void _V0scheme_V0r7rs_V20_k126(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 124 0) (close _V0scheme_V0r7rs_V20_k127) 'null?)
-V_CALL(VGetArg(upenv, 124-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 124-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k127, env)}),
       _V0null_Q);
  }
@@ -969,7 +969,7 @@ static void _V0scheme_V0r7rs_V20_k125(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 123 0) (close _V0scheme_V0r7rs_V20_k126) 'boolean?)
-V_CALL(VGetArg(upenv, 123-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 123-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k126, env)}),
       _V0boolean_Q);
  }
@@ -988,7 +988,7 @@ static void _V0scheme_V0r7rs_V20_k124(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 122 0) (close _V0scheme_V0r7rs_V20_k125) 'vector?)
-V_CALL(VGetArg(upenv, 122-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 122-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k125, env)}),
       _V0vector_Q);
  }
@@ -1007,7 +1007,7 @@ static void _V0scheme_V0r7rs_V20_k123(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 121 0) (close _V0scheme_V0r7rs_V20_k124) 'symbol?)
-V_CALL(VGetArg(upenv, 121-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 121-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k124, env)}),
       _V0symbol_Q);
  }
@@ -1026,7 +1026,7 @@ static void _V0scheme_V0r7rs_V20_k122(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 120 0) (close _V0scheme_V0r7rs_V20_k123) 'exact?)
-V_CALL(VGetArg(upenv, 120-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 120-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k123, env)}),
       _V0exact_Q);
  }
@@ -1045,7 +1045,7 @@ static void _V0scheme_V0r7rs_V20_k121(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 119 0) (close _V0scheme_V0r7rs_V20_k122) 'real?)
-V_CALL(VGetArg(upenv, 119-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 119-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k122, env)}),
       _V0real_Q);
  }
@@ -1064,7 +1064,7 @@ static void _V0scheme_V0r7rs_V20_k120(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 118 0) (close _V0scheme_V0r7rs_V20_k121) 'char?)
-V_CALL(VGetArg(upenv, 118-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 118-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k121, env)}),
       _V0char_Q);
  }
@@ -1083,7 +1083,7 @@ static void _V0scheme_V0r7rs_V20_k119(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 117 0) (close _V0scheme_V0r7rs_V20_k120) 'symbol=?)
-V_CALL(VGetArg(upenv, 117-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 117-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k120, env)}),
       _V0symbol_E_Q);
  }
@@ -1102,7 +1102,7 @@ static void _V0scheme_V0r7rs_V20_k118(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 116 0) (close _V0scheme_V0r7rs_V20_k119) 'equal?)
-V_CALL(VGetArg(upenv, 116-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 116-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k119, env)}),
       _V0equal_Q);
  }
@@ -1121,7 +1121,7 @@ static void _V0scheme_V0r7rs_V20_k117(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 115 0) (close _V0scheme_V0r7rs_V20_k118) '<)
-V_CALL(VGetArg(upenv, 115-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 115-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k118, env)}),
       _V0_L);
  }
@@ -1140,7 +1140,7 @@ static void _V0scheme_V0r7rs_V20_k116(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 114 0) (close _V0scheme_V0r7rs_V20_k117) '>)
-V_CALL(VGetArg(upenv, 114-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 114-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k117, env)}),
       _V0_G);
  }
@@ -1159,7 +1159,7 @@ static void _V0scheme_V0r7rs_V20_k115(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 113 0) (close _V0scheme_V0r7rs_V20_k116) '>=)
-V_CALL(VGetArg(upenv, 113-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 113-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k116, env)}),
       _V0_G_E);
  }
@@ -1178,7 +1178,7 @@ static void _V0scheme_V0r7rs_V20_k114(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 112 0) (close _V0scheme_V0r7rs_V20_k115) 'exact->inexact)
-V_CALL(VGetArg(upenv, 112-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 112-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k115, env)}),
       _V0exact___Ginexact);
  }
@@ -1197,7 +1197,7 @@ static void _V0scheme_V0r7rs_V20_k113(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 111 0) (close _V0scheme_V0r7rs_V20_k114) 'complex?)
-V_CALL(VGetArg(upenv, 111-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 111-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k114, env)}),
       _V0complex_Q);
  }
@@ -1216,7 +1216,7 @@ static void _V0scheme_V0r7rs_V20_k112(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 110 0) (close _V0scheme_V0r7rs_V20_k113) '-)
-V_CALL(VGetArg(upenv, 110-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 110-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k113, env)}),
       _V0__);
  }
@@ -1235,7 +1235,7 @@ static void _V0scheme_V0r7rs_V20_k111(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 109 0) (close _V0scheme_V0r7rs_V20_k112) '/)
-V_CALL(VGetArg(upenv, 109-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 109-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k112, env)}),
       _V0_W);
  }
@@ -1254,7 +1254,7 @@ static void _V0scheme_V0r7rs_V20_k110(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 108 0) (close _V0scheme_V0r7rs_V20_k111) 'remainder)
-V_CALL(VGetArg(upenv, 108-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 108-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k111, env)}),
       _V0remainder);
  }
@@ -1273,7 +1273,7 @@ static void _V0scheme_V0r7rs_V20_k109(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 107 0) (close _V0scheme_V0r7rs_V20_k110) 'min)
-V_CALL(VGetArg(upenv, 107-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 107-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k110, env)}),
       _V0min);
  }
@@ -1292,7 +1292,7 @@ static void _V0scheme_V0r7rs_V20_k108(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 106 0) (close _V0scheme_V0r7rs_V20_k109) 'car)
-V_CALL(VGetArg(upenv, 106-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 106-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k109, env)}),
       _V0car);
  }
@@ -1311,7 +1311,7 @@ static void _V0scheme_V0r7rs_V20_k107(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 105 0) (close _V0scheme_V0r7rs_V20_k108) 'set-car!)
-V_CALL(VGetArg(upenv, 105-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 105-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k108, env)}),
       _V0set__car_B);
  }
@@ -1330,7 +1330,7 @@ static void _V0scheme_V0r7rs_V20_k106(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 104 0) (close _V0scheme_V0r7rs_V20_k107) 'caar)
-V_CALL(VGetArg(upenv, 104-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 104-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k107, env)}),
       _V0caar);
  }
@@ -1349,7 +1349,7 @@ static void _V0scheme_V0r7rs_V20_k105(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 103 0) (close _V0scheme_V0r7rs_V20_k106) 'cdar)
-V_CALL(VGetArg(upenv, 103-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 103-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k106, env)}),
       _V0cdar);
  }
@@ -1368,7 +1368,7 @@ static void _V0scheme_V0r7rs_V20_k104(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 102 0) (close _V0scheme_V0r7rs_V20_k105) 'caaar)
-V_CALL(VGetArg(upenv, 102-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 102-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k105, env)}),
       _V0caaar);
  }
@@ -1387,7 +1387,7 @@ static void _V0scheme_V0r7rs_V20_k103(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 101 0) (close _V0scheme_V0r7rs_V20_k104) 'cadar)
-V_CALL(VGetArg(upenv, 101-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 101-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k104, env)}),
       _V0cadar);
  }
@@ -1406,7 +1406,7 @@ static void _V0scheme_V0r7rs_V20_k102(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 100 0) (close _V0scheme_V0r7rs_V20_k103) 'cdaar)
-V_CALL(VGetArg(upenv, 100-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 100-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k103, env)}),
       _V0cdaar);
  }
@@ -1425,7 +1425,7 @@ static void _V0scheme_V0r7rs_V20_k101(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 99 0) (close _V0scheme_V0r7rs_V20_k102) 'cddar)
-V_CALL(VGetArg(upenv, 99-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 99-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k102, env)}),
       _V0cddar);
  }
@@ -1444,7 +1444,7 @@ static void _V0scheme_V0r7rs_V20_k100(VRuntime * runtime, VEnv * upenv, int argc
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 98 0) (close _V0scheme_V0r7rs_V20_k101) 'caaaar)
-V_CALL(VGetArg(upenv, 98-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 98-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k101, env)}),
       _V0caaaar);
  }
@@ -1463,7 +1463,7 @@ static void _V0scheme_V0r7rs_V20_k99(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 97 0) (close _V0scheme_V0r7rs_V20_k100) 'caadar)
-V_CALL(VGetArg(upenv, 97-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 97-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k100, env)}),
       _V0caadar);
  }
@@ -1482,7 +1482,7 @@ static void _V0scheme_V0r7rs_V20_k98(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 96 0) (close _V0scheme_V0r7rs_V20_k99) 'cadaar)
-V_CALL(VGetArg(upenv, 96-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 96-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k99, env)}),
       _V0cadaar);
  }
@@ -1501,7 +1501,7 @@ static void _V0scheme_V0r7rs_V20_k97(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 95 0) (close _V0scheme_V0r7rs_V20_k98) 'caddar)
-V_CALL(VGetArg(upenv, 95-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 95-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k98, env)}),
       _V0caddar);
  }
@@ -1520,7 +1520,7 @@ static void _V0scheme_V0r7rs_V20_k96(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 94 0) (close _V0scheme_V0r7rs_V20_k97) 'cdaaar)
-V_CALL(VGetArg(upenv, 94-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 94-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k97, env)}),
       _V0cdaaar);
  }
@@ -1539,7 +1539,7 @@ static void _V0scheme_V0r7rs_V20_k95(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 93 0) (close _V0scheme_V0r7rs_V20_k96) 'cdadar)
-V_CALL(VGetArg(upenv, 93-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 93-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k96, env)}),
       _V0cdadar);
  }
@@ -1558,7 +1558,7 @@ static void _V0scheme_V0r7rs_V20_k94(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 92 0) (close _V0scheme_V0r7rs_V20_k95) 'cddaar)
-V_CALL(VGetArg(upenv, 92-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 92-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k95, env)}),
       _V0cddaar);
  }
@@ -1577,7 +1577,7 @@ static void _V0scheme_V0r7rs_V20_k93(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 91 0) (close _V0scheme_V0r7rs_V20_k94) 'cdddar)
-V_CALL(VGetArg(upenv, 91-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 91-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k94, env)}),
       _V0cdddar);
  }
@@ -1596,7 +1596,7 @@ static void _V0scheme_V0r7rs_V20_k92(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 90 0) (close _V0scheme_V0r7rs_V20_k93) 'list)
-V_CALL(VGetArg(upenv, 90-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 90-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k93, env)}),
       _V0list);
  }
@@ -1615,7 +1615,7 @@ static void _V0scheme_V0r7rs_V20_k91(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 89 0) (close _V0scheme_V0r7rs_V20_k92) 'list-ref)
-V_CALL(VGetArg(upenv, 89-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 89-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k92, env)}),
       _V0list__ref);
  }
@@ -1634,7 +1634,7 @@ static void _V0scheme_V0r7rs_V20_k90(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 88 0) (close _V0scheme_V0r7rs_V20_k91) 'for-each)
-V_CALL(VGetArg(upenv, 88-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 88-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k91, env)}),
       _V0for__each);
  }
@@ -1653,7 +1653,7 @@ static void _V0scheme_V0r7rs_V20_k89(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 87 0) (close _V0scheme_V0r7rs_V20_k90) 'reverse)
-V_CALL(VGetArg(upenv, 87-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 87-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k90, env)}),
       _V0reverse);
  }
@@ -1672,7 +1672,7 @@ static void _V0scheme_V0r7rs_V20_k88(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 86 0) (close _V0scheme_V0r7rs_V20_k89) 'memv)
-V_CALL(VGetArg(upenv, 86-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 86-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k89, env)}),
       _V0memv);
  }
@@ -1691,7 +1691,7 @@ static void _V0scheme_V0r7rs_V20_k87(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 85 0) (close _V0scheme_V0r7rs_V20_k88) 'assq)
-V_CALL(VGetArg(upenv, 85-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 85-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k88, env)}),
       _V0assq);
  }
@@ -1710,7 +1710,7 @@ static void _V0scheme_V0r7rs_V20_k86(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 84 0) (close _V0scheme_V0r7rs_V20_k87) 'assoc)
-V_CALL(VGetArg(upenv, 84-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 84-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k87, env)}),
       _V0assoc);
  }
@@ -1729,7 +1729,7 @@ static void _V0scheme_V0r7rs_V20_k85(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 83 0) (close _V0scheme_V0r7rs_V20_k86) 'list->string)
-V_CALL(VGetArg(upenv, 83-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 83-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k86, env)}),
       _V0list___Gstring);
  }
@@ -1748,7 +1748,7 @@ static void _V0scheme_V0r7rs_V20_k84(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 82 0) (close _V0scheme_V0r7rs_V20_k85) 'substring)
-V_CALL(VGetArg(upenv, 82-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 82-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k85, env)}),
       _V0substring);
  }
@@ -1767,7 +1767,7 @@ static void _V0scheme_V0r7rs_V20_k83(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 81 0) (close _V0scheme_V0r7rs_V20_k84) 'string-copy!)
-V_CALL(VGetArg(upenv, 81-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 81-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k84, env)}),
       _V0string__copy_B);
  }
@@ -1786,7 +1786,7 @@ static void _V0scheme_V0r7rs_V20_k82(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 80 0) (close _V0scheme_V0r7rs_V20_k83) 'string-set!)
-V_CALL(VGetArg(upenv, 80-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 80-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k83, env)}),
       _V0string__set_B);
  }
@@ -1805,7 +1805,7 @@ static void _V0scheme_V0r7rs_V20_k81(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 79 0) (close _V0scheme_V0r7rs_V20_k82) 'string->symbol)
-V_CALL(VGetArg(upenv, 79-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 79-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k82, env)}),
       _V0string___Gsymbol);
  }
@@ -1824,7 +1824,7 @@ static void _V0scheme_V0r7rs_V20_k80(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 78 0) (close _V0scheme_V0r7rs_V20_k81) 'string->list)
-V_CALL(VGetArg(upenv, 78-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 78-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k81, env)}),
       _V0string___Glist);
  }
@@ -1843,7 +1843,7 @@ static void _V0scheme_V0r7rs_V20_k79(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 77 0) (close _V0scheme_V0r7rs_V20_k80) 'symbol->string)
-V_CALL(VGetArg(upenv, 77-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 77-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k80, env)}),
       _V0symbol___Gstring);
  }
@@ -1862,7 +1862,7 @@ static void _V0scheme_V0r7rs_V20_k78(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 76 0) (close _V0scheme_V0r7rs_V20_k79) 'vector)
-V_CALL(VGetArg(upenv, 76-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 76-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k79, env)}),
       _V0vector);
  }
@@ -1881,7 +1881,7 @@ static void _V0scheme_V0r7rs_V20_k77(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 75 0) (close _V0scheme_V0r7rs_V20_k78) 'vector-set!)
-V_CALL(VGetArg(upenv, 75-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 75-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k78, env)}),
       _V0vector__set_B);
  }
@@ -1900,7 +1900,7 @@ static void _V0scheme_V0r7rs_V20_k76(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 74 0) (close _V0scheme_V0r7rs_V20_k77) 'vector-for-each)
-V_CALL(VGetArg(upenv, 74-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 74-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k77, env)}),
       _V0vector__for__each);
  }
@@ -1919,7 +1919,7 @@ static void _V0scheme_V0r7rs_V20_k75(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 73 0) (close _V0scheme_V0r7rs_V20_k76) 'current-output-port)
-V_CALL(VGetArg(upenv, 73-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 73-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k76, env)}),
       _V0current__output__port);
  }
@@ -1938,7 +1938,7 @@ static void _V0scheme_V0r7rs_V20_k74(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 72 0) (close _V0scheme_V0r7rs_V20_k75) 'current-input-port)
-V_CALL(VGetArg(upenv, 72-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 72-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k75, env)}),
       _V0current__input__port);
  }
@@ -1957,7 +1957,7 @@ static void _V0scheme_V0r7rs_V20_k73(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 71 0) (close _V0scheme_V0r7rs_V20_k74) 'open-output-file)
-V_CALL(VGetArg(upenv, 71-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 71-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k74, env)}),
       _V0open__output__file);
  }
@@ -1976,7 +1976,7 @@ static void _V0scheme_V0r7rs_V20_k72(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 70 0) (close _V0scheme_V0r7rs_V20_k73) 'open-output-string)
-V_CALL(VGetArg(upenv, 70-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 70-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k73, env)}),
       _V0open__output__string);
  }
@@ -1995,7 +1995,7 @@ static void _V0scheme_V0r7rs_V20_k71(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 69 0) (close _V0scheme_V0r7rs_V20_k72) 'with-output-to-file)
-V_CALL(VGetArg(upenv, 69-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 69-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k72, env)}),
       _V0with__output__to__file);
  }
@@ -2014,7 +2014,7 @@ static void _V0scheme_V0r7rs_V20_k70(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 68 0) (close _V0scheme_V0r7rs_V20_k71) 'read-char)
-V_CALL(VGetArg(upenv, 68-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 68-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k71, env)}),
       _V0read__char);
  }
@@ -2033,7 +2033,7 @@ static void _V0scheme_V0r7rs_V20_k69(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 67 0) (close _V0scheme_V0r7rs_V20_k70) 'read)
-V_CALL(VGetArg(upenv, 67-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 67-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k70, env)}),
       _V0read);
  }
@@ -2052,7 +2052,7 @@ static void _V0scheme_V0r7rs_V20_k68(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 66 0) (close _V0scheme_V0r7rs_V20_k69) 'display)
-V_CALL(VGetArg(upenv, 66-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 66-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k69, env)}),
       _V0display);
  }
@@ -2071,7 +2071,7 @@ static void _V0scheme_V0r7rs_V20_k67(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 65 0) (close _V0scheme_V0r7rs_V20_k68) 'call/cc)
-V_CALL(VGetArg(upenv, 65-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 65-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k68, env)}),
       _V0call_Wcc);
  }
@@ -2090,7 +2090,7 @@ static void _V0scheme_V0r7rs_V20_k66(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 64 0) (close _V0scheme_V0r7rs_V20_k67) 'call-with-values)
-V_CALL(VGetArg(upenv, 64-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 64-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k67, env)}),
       _V0call__with__values);
  }
@@ -2109,7 +2109,7 @@ static void _V0scheme_V0r7rs_V20_k65(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 63 0) (close _V0scheme_V0r7rs_V20_k66) 'values)
-V_CALL(VGetArg(upenv, 63-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 63-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k66, env)}),
       _V0values);
  }
@@ -2128,7 +2128,7 @@ static void _V0scheme_V0r7rs_V20_k64(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 62 0) (close _V0scheme_V0r7rs_V20_k65) 'exit)
-V_CALL(VGetArg(upenv, 62-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 62-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k65, env)}),
       _V0exit);
  }
@@ -2147,7 +2147,7 @@ static void _V0scheme_V0r7rs_V20_k63(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 61 0) (close _V0scheme_V0r7rs_V20_k64) 'error)
-V_CALL(VGetArg(upenv, 61-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 61-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k64, env)}),
       _V0error);
  }
@@ -2166,7 +2166,7 @@ static void _V0scheme_V0r7rs_V20_k62(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 60 0) (close _V0scheme_V0r7rs_V20_k63) 'command-line)
-V_CALL(VGetArg(upenv, 60-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 60-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k63, env)}),
       _V0command__line);
  }
@@ -2185,7 +2185,7 @@ static void _V0scheme_V0r7rs_V20_k61(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 59 0) (close _V0scheme_V0r7rs_V20_k62) 'apply)
-V_CALL(VGetArg(upenv, 59-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 59-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k62, env)}),
       _V0apply);
  }
@@ -2204,7 +2204,7 @@ static void _V0scheme_V0r7rs_V20_k60(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 58 0) (close _V0scheme_V0r7rs_V20_k61) 'call-with-current-continuation)
-V_CALL(VGetArg(upenv, 58-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 58-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k61, env)}),
       _V0call__with__current__continuation);
  }
@@ -2223,7 +2223,7 @@ static void _V0scheme_V0r7rs_V20_k59(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 57 0) (close _V0scheme_V0r7rs_V20_k60) 'write)
-V_CALL(VGetArg(upenv, 57-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 57-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k60, env)}),
       _V0write);
  }
@@ -2242,7 +2242,7 @@ static void _V0scheme_V0r7rs_V20_k58(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 56 0) (close _V0scheme_V0r7rs_V20_k59) 'newline)
-V_CALL(VGetArg(upenv, 56-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 56-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k59, env)}),
       _V0newline);
  }
@@ -2261,7 +2261,7 @@ static void _V0scheme_V0r7rs_V20_k57(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 55 0) (close _V0scheme_V0r7rs_V20_k58) 'read-line)
-V_CALL(VGetArg(upenv, 55-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 55-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k58, env)}),
       _V0read__line);
  }
@@ -2280,7 +2280,7 @@ static void _V0scheme_V0r7rs_V20_k56(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 54 0) (close _V0scheme_V0r7rs_V20_k57) 'with-input-from-file)
-V_CALL(VGetArg(upenv, 54-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 54-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k57, env)}),
       _V0with__input__from__file);
  }
@@ -2299,7 +2299,7 @@ static void _V0scheme_V0r7rs_V20_k55(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 53 0) (close _V0scheme_V0r7rs_V20_k56) 'get-output-string)
-V_CALL(VGetArg(upenv, 53-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 53-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k56, env)}),
       _V0get__output__string);
  }
@@ -2318,7 +2318,7 @@ static void _V0scheme_V0r7rs_V20_k54(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 52 0) (close _V0scheme_V0r7rs_V20_k55) 'close-port)
-V_CALL(VGetArg(upenv, 52-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 52-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k55, env)}),
       _V0close__port);
  }
@@ -2337,7 +2337,7 @@ static void _V0scheme_V0r7rs_V20_k53(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 51 0) (close _V0scheme_V0r7rs_V20_k54) 'open-input-file)
-V_CALL(VGetArg(upenv, 51-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 51-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k54, env)}),
       _V0open__input__file);
  }
@@ -2356,7 +2356,7 @@ static void _V0scheme_V0r7rs_V20_k52(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 50 0) (close _V0scheme_V0r7rs_V20_k53) 'current-error-port)
-V_CALL(VGetArg(upenv, 50-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 50-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k53, env)}),
       _V0current__error__port);
  }
@@ -2375,7 +2375,7 @@ static void _V0scheme_V0r7rs_V20_k51(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 49 0) (close _V0scheme_V0r7rs_V20_k52) 'char->integer)
-V_CALL(VGetArg(upenv, 49-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 49-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k52, env)}),
       _V0char___Ginteger);
  }
@@ -2394,7 +2394,7 @@ static void _V0scheme_V0r7rs_V20_k50(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 48 0) (close _V0scheme_V0r7rs_V20_k51) 'vector-length)
-V_CALL(VGetArg(upenv, 48-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 48-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k51, env)}),
       _V0vector__length);
  }
@@ -2413,7 +2413,7 @@ static void _V0scheme_V0r7rs_V20_k49(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 47 0) (close _V0scheme_V0r7rs_V20_k50) 'vector-ref)
-V_CALL(VGetArg(upenv, 47-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 47-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k50, env)}),
       _V0vector__ref);
  }
@@ -2432,7 +2432,7 @@ static void _V0scheme_V0r7rs_V20_k48(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 46 0) (close _V0scheme_V0r7rs_V20_k49) 'list->vector)
-V_CALL(VGetArg(upenv, 46-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 46-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k49, env)}),
       _V0list___Gvector);
  }
@@ -2451,7 +2451,7 @@ static void _V0scheme_V0r7rs_V20_k47(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 45 0) (close _V0scheme_V0r7rs_V20_k48) 'string-append)
-V_CALL(VGetArg(upenv, 45-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 45-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k48, env)}),
       _V0string__append);
  }
@@ -2470,7 +2470,7 @@ static void _V0scheme_V0r7rs_V20_k46(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 44 0) (close _V0scheme_V0r7rs_V20_k47) 'string->number)
-V_CALL(VGetArg(upenv, 44-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 44-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k47, env)}),
       _V0string___Gnumber);
  }
@@ -2489,7 +2489,7 @@ static void _V0scheme_V0r7rs_V20_k45(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 43 0) (close _V0scheme_V0r7rs_V20_k46) 'string-length)
-V_CALL(VGetArg(upenv, 43-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 43-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k46, env)}),
       _V0string__length);
  }
@@ -2508,7 +2508,7 @@ static void _V0scheme_V0r7rs_V20_k44(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 42 0) (close _V0scheme_V0r7rs_V20_k45) 'string-ref)
-V_CALL(VGetArg(upenv, 42-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 42-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k45, env)}),
       _V0string__ref);
  }
@@ -2527,7 +2527,7 @@ static void _V0scheme_V0r7rs_V20_k43(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 41 0) (close _V0scheme_V0r7rs_V20_k44) 'string-copy)
-V_CALL(VGetArg(upenv, 41-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 41-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k44, env)}),
       _V0string__copy);
  }
@@ -2546,7 +2546,7 @@ static void _V0scheme_V0r7rs_V20_k42(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 40 0) (close _V0scheme_V0r7rs_V20_k43) 'make-string)
-V_CALL(VGetArg(upenv, 40-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 40-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k43, env)}),
       _V0make__string);
  }
@@ -2565,7 +2565,7 @@ static void _V0scheme_V0r7rs_V20_k41(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 39 0) (close _V0scheme_V0r7rs_V20_k42) 'assv)
-V_CALL(VGetArg(upenv, 39-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 39-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k42, env)}),
       _V0assv);
  }
@@ -2584,7 +2584,7 @@ static void _V0scheme_V0r7rs_V20_k40(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 38 0) (close _V0scheme_V0r7rs_V20_k41) 'member)
-V_CALL(VGetArg(upenv, 38-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 38-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k41, env)}),
       _V0member);
  }
@@ -2603,7 +2603,7 @@ static void _V0scheme_V0r7rs_V20_k39(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 37 0) (close _V0scheme_V0r7rs_V20_k40) 'memq)
-V_CALL(VGetArg(upenv, 37-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 37-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k40, env)}),
       _V0memq);
  }
@@ -2622,7 +2622,7 @@ static void _V0scheme_V0r7rs_V20_k38(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 36 0) (close _V0scheme_V0r7rs_V20_k39) 'append)
-V_CALL(VGetArg(upenv, 36-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 36-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k39, env)}),
       _V0append);
  }
@@ -2641,7 +2641,7 @@ static void _V0scheme_V0r7rs_V20_k37(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 35 0) (close _V0scheme_V0r7rs_V20_k38) 'map)
-V_CALL(VGetArg(upenv, 35-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 35-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k38, env)}),
       _V0map);
  }
@@ -2660,7 +2660,7 @@ static void _V0scheme_V0r7rs_V20_k36(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 34 0) (close _V0scheme_V0r7rs_V20_k37) 'length)
-V_CALL(VGetArg(upenv, 34-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 34-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k37, env)}),
       _V0length);
  }
@@ -2679,7 +2679,7 @@ static void _V0scheme_V0r7rs_V20_k35(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 33 0) (close _V0scheme_V0r7rs_V20_k36) 'cddddr)
-V_CALL(VGetArg(upenv, 33-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 33-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k36, env)}),
       _V0cddddr);
  }
@@ -2698,7 +2698,7 @@ static void _V0scheme_V0r7rs_V20_k34(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 32 0) (close _V0scheme_V0r7rs_V20_k35) 'cddadr)
-V_CALL(VGetArg(upenv, 32-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 32-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k35, env)}),
       _V0cddadr);
  }
@@ -2717,7 +2717,7 @@ static void _V0scheme_V0r7rs_V20_k33(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 31 0) (close _V0scheme_V0r7rs_V20_k34) 'cdaddr)
-V_CALL(VGetArg(upenv, 31-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 31-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k34, env)}),
       _V0cdaddr);
  }
@@ -2736,7 +2736,7 @@ static void _V0scheme_V0r7rs_V20_k32(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 30 0) (close _V0scheme_V0r7rs_V20_k33) 'cdaadr)
-V_CALL(VGetArg(upenv, 30-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 30-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k33, env)}),
       _V0cdaadr);
  }
@@ -2755,7 +2755,7 @@ static void _V0scheme_V0r7rs_V20_k31(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 29 0) (close _V0scheme_V0r7rs_V20_k32) 'cadddr)
-V_CALL(VGetArg(upenv, 29-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 29-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k32, env)}),
       _V0cadddr);
  }
@@ -2774,7 +2774,7 @@ static void _V0scheme_V0r7rs_V20_k30(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 28 0) (close _V0scheme_V0r7rs_V20_k31) 'cadadr)
-V_CALL(VGetArg(upenv, 28-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 28-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k31, env)}),
       _V0cadadr);
  }
@@ -2793,7 +2793,7 @@ static void _V0scheme_V0r7rs_V20_k29(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 27 0) (close _V0scheme_V0r7rs_V20_k30) 'caaddr)
-V_CALL(VGetArg(upenv, 27-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 27-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k30, env)}),
       _V0caaddr);
  }
@@ -2812,7 +2812,7 @@ static void _V0scheme_V0r7rs_V20_k28(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 26 0) (close _V0scheme_V0r7rs_V20_k29) 'caaadr)
-V_CALL(VGetArg(upenv, 26-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 26-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k29, env)}),
       _V0caaadr);
  }
@@ -2831,7 +2831,7 @@ static void _V0scheme_V0r7rs_V20_k27(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 25 0) (close _V0scheme_V0r7rs_V20_k28) 'cdddr)
-V_CALL(VGetArg(upenv, 25-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 25-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k28, env)}),
       _V0cdddr);
  }
@@ -2850,7 +2850,7 @@ static void _V0scheme_V0r7rs_V20_k26(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 24 0) (close _V0scheme_V0r7rs_V20_k27) 'cdadr)
-V_CALL(VGetArg(upenv, 24-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 24-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k27, env)}),
       _V0cdadr);
  }
@@ -2869,7 +2869,7 @@ static void _V0scheme_V0r7rs_V20_k25(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 23 0) (close _V0scheme_V0r7rs_V20_k26) 'caddr)
-V_CALL(VGetArg(upenv, 23-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 23-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k26, env)}),
       _V0caddr);
  }
@@ -2888,7 +2888,7 @@ static void _V0scheme_V0r7rs_V20_k24(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 22 0) (close _V0scheme_V0r7rs_V20_k25) 'caadr)
-V_CALL(VGetArg(upenv, 22-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 22-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k25, env)}),
       _V0caadr);
  }
@@ -2907,7 +2907,7 @@ static void _V0scheme_V0r7rs_V20_k23(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 21 0) (close _V0scheme_V0r7rs_V20_k24) 'cddr)
-V_CALL(VGetArg(upenv, 21-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 21-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k24, env)}),
       _V0cddr);
  }
@@ -2926,7 +2926,7 @@ static void _V0scheme_V0r7rs_V20_k22(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 20 0) (close _V0scheme_V0r7rs_V20_k23) 'cadr)
-V_CALL(VGetArg(upenv, 20-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 20-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k23, env)}),
       _V0cadr);
  }
@@ -2945,7 +2945,7 @@ static void _V0scheme_V0r7rs_V20_k21(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 19 0) (close _V0scheme_V0r7rs_V20_k22) 'set-cdr!)
-V_CALL(VGetArg(upenv, 19-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 19-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k22, env)}),
       _V0set__cdr_B);
  }
@@ -2964,7 +2964,7 @@ static void _V0scheme_V0r7rs_V20_k20(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 18 0) (close _V0scheme_V0r7rs_V20_k21) 'cdr)
-V_CALL(VGetArg(upenv, 18-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 18-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k21, env)}),
       _V0cdr);
  }
@@ -2983,7 +2983,7 @@ static void _V0scheme_V0r7rs_V20_k19(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 17 0) (close _V0scheme_V0r7rs_V20_k20) 'cons)
-V_CALL(VGetArg(upenv, 17-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 17-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k20, env)}),
       _V0cons);
  }
@@ -3002,7 +3002,7 @@ static void _V0scheme_V0r7rs_V20_k18(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 16 0) (close _V0scheme_V0r7rs_V20_k19) 'max)
-V_CALL(VGetArg(upenv, 16-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 16-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k19, env)}),
       _V0max);
  }
@@ -3021,7 +3021,7 @@ static void _V0scheme_V0r7rs_V20_k17(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 15 0) (close _V0scheme_V0r7rs_V20_k18) 'quotient)
-V_CALL(VGetArg(upenv, 15-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 15-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k18, env)}),
       _V0quotient);
  }
@@ -3040,7 +3040,7 @@ static void _V0scheme_V0r7rs_V20_k16(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 14 0) (close _V0scheme_V0r7rs_V20_k17) '*)
-V_CALL(VGetArg(upenv, 14-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 14-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k17, env)}),
       _V0_S);
  }
@@ -3059,7 +3059,7 @@ static void _V0scheme_V0r7rs_V20_k15(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 13 0) (close _V0scheme_V0r7rs_V20_k16) '+)
-V_CALL(VGetArg(upenv, 13-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 13-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k16, env)}),
       _V0_P);
  }
@@ -3078,7 +3078,7 @@ static void _V0scheme_V0r7rs_V20_k14(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 12 0) (close _V0scheme_V0r7rs_V20_k15) 'number?)
-V_CALL(VGetArg(upenv, 12-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 12-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k15, env)}),
       _V0number_Q);
  }
@@ -3097,7 +3097,7 @@ static void _V0scheme_V0r7rs_V20_k13(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 11 0) (close _V0scheme_V0r7rs_V20_k14) 'inexact)
-V_CALL(VGetArg(upenv, 11-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 11-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k14, env)}),
       _V0inexact);
  }
@@ -3116,7 +3116,7 @@ static void _V0scheme_V0r7rs_V20_k12(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 10 0) (close _V0scheme_V0r7rs_V20_k13) '<=)
-V_CALL(VGetArg(upenv, 10-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 10-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k13, env)}),
       _V0_L_E);
  }
@@ -3135,7 +3135,7 @@ static void _V0scheme_V0r7rs_V20_k11(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 9 0) (close _V0scheme_V0r7rs_V20_k12) '=)
-V_CALL(VGetArg(upenv, 9-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 9-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k12, env)}),
       _V0_E);
  }
@@ -3154,7 +3154,7 @@ static void _V0scheme_V0r7rs_V20_k10(VRuntime * runtime, VEnv * upenv, int argc,
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 8 0) (close _V0scheme_V0r7rs_V20_k11) 'not)
-V_CALL(VGetArg(upenv, 8-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 8-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k11, env)}),
       _V0not);
  }
@@ -3173,7 +3173,7 @@ static void _V0scheme_V0r7rs_V20_k9(VRuntime * runtime, VEnv * upenv, int argc, 
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 7 0) (close _V0scheme_V0r7rs_V20_k10) 'eqv?)
-V_CALL(VGetArg(upenv, 7-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 7-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k10, env)}),
       _V0eqv_Q);
  }
@@ -3192,7 +3192,7 @@ static void _V0scheme_V0r7rs_V20_k8(VRuntime * runtime, VEnv * upenv, int argc, 
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 6 0) (close _V0scheme_V0r7rs_V20_k9) 'eq?)
-V_CALL(VGetArg(upenv, 6-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 6-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k9, env)}),
       _V0eq_Q);
  }
@@ -3211,7 +3211,7 @@ static void _V0scheme_V0r7rs_V20_k7(VRuntime * runtime, VEnv * upenv, int argc, 
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 5 0) (close _V0scheme_V0r7rs_V20_k8) 'integer?)
-V_CALL(VGetArg(upenv, 5-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 5-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k8, env)}),
       _V0integer_Q);
  }
@@ -3230,7 +3230,7 @@ static void _V0scheme_V0r7rs_V20_k6(VRuntime * runtime, VEnv * upenv, int argc, 
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 4 0) (close _V0scheme_V0r7rs_V20_k7) 'inexact?)
-V_CALL(upenv->up->up->up->vars[0], runtime,
+    V_CALL(upenv->up->up->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k7, env)}),
       _V0inexact_Q);
  }
@@ -3249,7 +3249,7 @@ static void _V0scheme_V0r7rs_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, 
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 3 0) (close _V0scheme_V0r7rs_V20_k6) 'string?)
-V_CALL(upenv->up->up->vars[0], runtime,
+    V_CALL(upenv->up->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k6, env)}),
       _V0string_Q);
  }
@@ -3268,7 +3268,7 @@ static void _V0scheme_V0r7rs_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, 
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 2 0) (close _V0scheme_V0r7rs_V20_k5) 'procedure?)
-V_CALL(upenv->up->vars[0], runtime,
+    V_CALL(upenv->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k5, env)}),
       _V0procedure_Q);
  }
@@ -3287,7 +3287,7 @@ static void _V0scheme_V0r7rs_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, 
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 1 0) (close _V0scheme_V0r7rs_V20_k4) 'pair?)
-V_CALL(upenv->vars[0], runtime,
+    V_CALL(upenv->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k4, env)}),
       _V0pair_Q);
  }
@@ -3306,7 +3306,7 @@ static void _V0scheme_V0r7rs_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, 
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // ((bruijn ##vcore.import 0 0) (close _V0scheme_V0r7rs_V20_k3) 'eof-object?)
-V_CALL(_var0, runtime,
+    V_CALL(_var0, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k3, env)}),
       _V0eof__object_Q);
  }
@@ -3324,10 +3324,10 @@ static void _V0scheme_V0r7rs_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.make-import (close _V0scheme_V0r7rs_V20_k2) (##string ##string.379) (bruijn ##x.378 0 0))
+  // (##vcore.make-import (close _V0scheme_V0r7rs_V20_k2) (##string ##string.380) (bruijn ##x.379 0 0))
     V_CALL_FUNC(VMakeImport2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k2, env)}),
-      VEncodePointer(&_V10string_D379.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10string_D380.sym, VPOINTER_OTHER),
       _var0);
  }
 }
@@ -3344,10 +3344,10 @@ static void _V0scheme_V0r7rs_V20_lambda1(VRuntime * runtime, VEnv * upenv, int a
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.load-library (close _V0scheme_V0r7rs_V20_k1) (##string ##string.380))
+  // (##vcore.load-library (close _V0scheme_V0r7rs_V20_k1) (##string ##string.381))
     V_CALL_FUNC(VLoadLibrary2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k1, env)}),
-      VEncodePointer(&_V10string_D380.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10string_D381.sym, VPOINTER_OTHER));
  }
 }
 VFunc _V0scheme_V0r7rs_V20 = (VFunc)_V0scheme_V0r7rs_V20_lambda1;

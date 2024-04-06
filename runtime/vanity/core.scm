@@ -27,7 +27,7 @@
   (import (vanity seed))
   (export
     ; predicates
-    null? eof-object? boolean? pair? vector? procedure? symbol? string? exact? inexact? real? integer? char?
+    null? eof-object? boolean? pair? vector? procedure? symbol? string? exact? exact-integer? inexact? real? integer? char?
     ; equality
     eq? symbol=? eqv? equal?
     ; logic
@@ -37,9 +37,11 @@
     ; math constructors
     inexact exact->inexact
     ; math predicates
-    number? complex?
+    number? complex? rational? positive? negative? zero?
     ; math functions
     + - * / quotient remainder max min
+    abs square ;sqrt
+    ;sin cos tan asin acos atan exp log expt pow
     ; pairs
     cons car cdr set-car! set-cdr!
     ; cxr
@@ -48,9 +50,9 @@
     caaaar caaadr caadar caaddr cadaar cadadr caddar cadddr
     cdaaar cdaadr cdadar cdaddr cddaar cddadr cdddar cddddr
     ; lists
-    list length list-ref map for-each append reverse memq memv member assq assv assoc
+    list list? length list-tail list-ref list-set! list-copy make-list map for-each append reverse memq memv member assq assv assoc
     ; strings
-    string->list list->string make-string substring string-copy string-copy! string-ref string-set! string-length string->symbol string->number string->list string-append
+    string->list list->string make-string substring string-copy string-copy! string-ref string-set! string-length string->symbol string->number string-append
     symbol->string
     ; vectors
     list->vector vector vector-ref vector-set! vector-length vector-for-each 
@@ -78,27 +80,45 @@
     atom? displayln writeln format printf sprintf error
   )
   ; predicates
-  (define null? ##sys.null?)
-  (define (boolean? x) (or (##sys.eq? x #t) (##sys.eq? x #f)))
-  (define eof-object? ##sys.eof-object?)
-  (define pair? ##sys.pair?)
-  (define vector? ##sys.vector?)
-  (define procedure? ##sys.procedure?)
-  (define symbol? ##sys.symbol?)
-  (define string? ##sys.string?)
-  (define char? ##sys.char?)
-  (define exact? ##sys.int?)
-  (define integer? ##sys.int?)
-  (define inexact? ##sys.double?)
-  (define real? ##sys.double?)
+  (define null? ##vcore.null?)
+  (define (boolean? x) (or (##vcore.eq? x #t) (##vcore.eq? x #f)))
+  (define eof-object? ##vcore.eof-object?)
+  (define pair? ##vcore.pair?)
+  (define vector? ##vcore.vector?)
+  (define procedure? ##vcore.procedure?)
+  (define symbol? ##vcore.symbol?)
+  (define string? ##vcore.string?)
+  (define char? ##vcore.char?)
+  (define exact? ##vcore.int?)
+  (define exact-integer? ##vcore.int?)
+  (define integer? ##vcore.int?)
+  (define inexact? ##vcore.double?)
+  (define real? ##vcore.double?)
 
   ; equality
-  (define eq? ##sys.eq?)
-  (define symbol=? ##sys.symbol=?)
-  (define eqv? ##sys.eqv?)
-  #;(define (eqv? a b)
-    (or (##sys.eq? a b)
-        (and (##sys.symbol? a) (##sys.symbol? b) (##sys.symbol=? a b))))
+  (define eq? ##vcore.eq?)
+  (define symbol=?
+    (case-lambda
+      ((x y) (##vcore.symbol=? x y))
+      ((x y z) (and ##vcore.symbol=? x y) (##vcore.symbol=? y z))
+      ((x y z w) (and ##vcore.symbol=? x y) (##vcore.symbol=? y z) (##vcore.symbol=? z w))
+      ((x y . xs)
+       (let loop ((xs (cons y xs)))
+         (cond ((null? xs) #t)
+               ((not (##vcore.symbol=? x (car xs))) #f)
+               (else (loop (cdr xs))))))))
+  (define boolean=?
+    (case-lambda
+      ((x y) (and (eq? x y) (boolean? x) (boolean? y)))
+      ((x y z) (and boolean=? x y) (boolean=? y z))
+      ((x y z w) (and boolean=? x y) (boolean=? y z) (boolean=? z w))
+      ((x y . xs)
+       (let loop ((xs (cons y xs)))
+         (cond ((null? xs) #t)
+               ((not (boolean=? x (car xs))) #f)
+               (else (loop (cdr xs))))))))
+
+  (define eqv? ##vcore.eqv?)
   (define (vector=? x y)
     (if (not (= (vector-length x) (vector-length y)))
         #f
@@ -108,61 +128,94 @@
             ((equal? (vector-ref x i) (vector-ref y i)) (loop (+ i 1) len))
             (else #f)))))
   (define (equal? x y)
-    (or (##sys.eq? x y)
-        (and (##sys.blob? x) (##sys.blob? y) (##sys.blob=? x y))
-        (and (##sys.pair? x) (##sys.pair? y) (equal? (##sys.car x) (##sys.car y)) (equal? (##sys.cdr x) (##sys.cdr y)))
-        (and (##sys.vector? x) (##sys.vector? y) (vector=? x y))))
+    (or (##vcore.eq? x y)
+        (and (##vcore.blob? x) (##vcore.blob? y) (##vcore.blob=? x y))
+        (and (##vcore.pair? x) (##vcore.pair? y) (equal? (##vcore.car x) (##vcore.car y)) (equal? (##vcore.cdr x) (##vcore.cdr y)))
+        (and (##vcore.vector? x) (##vcore.vector? y) (vector=? x y))))
 
   ; logic
-  (define not ##sys.not)
+  (define not ##vcore.not)
 
   ; math equality
   (define (< x0 x1 . xs)
     (let loop ((xs (cons x0 (cons x1 xs))))
       (cond ((null? (cdr xs)) #t)
-            ((eq? (##sys.cmp (car xs) (cadr xs)) -1) (loop (cdr xs)))
+            ((eq? (##vcore.cmp (car xs) (cadr xs)) -1) (loop (cdr xs)))
             (else #f))))
   (define (= x0 x1 . xs)
     (let loop ((xs (cons x0 (cons x1 xs))))
       (cond ((null? (cdr xs)) #t)
-            ((eq? (##sys.cmp (car xs) (cadr xs)) 0) (loop (cdr xs)))
+            ((eq? (##vcore.cmp (car xs) (cadr xs)) 0) (loop (cdr xs)))
             (else #f))))
   (define (> x0 x1 . xs)
     (let loop ((xs (cons x0 (cons x1 xs))))
       (cond ((null? (cdr xs)) #t)
-            ((eq? (##sys.cmp (car xs) (cadr xs)) 1) (loop (cdr xs)))
+            ((eq? (##vcore.cmp (car xs) (cadr xs)) 1) (loop (cdr xs)))
             (else #f))))
   (define (<= x0 x1 . xs)
     (let loop ((xs (cons x0 (cons x1 xs))))
       (cond ((null? (cdr xs)) #t)
-            ((eq? (##sys.cmp (car xs) (cadr xs)) 1) #f)
+            ((eq? (##vcore.cmp (car xs) (cadr xs)) 1) #f)
             (else (loop (cdr xs))))))
   (define (>= x0 x1 . xs)
     (let loop ((xs (cons x0 (cons x1 xs))))
       (cond ((null? (cdr xs)) #t)
-            ((eq? (##sys.cmp (car xs) (cadr xs)) -1) #f)
+            ((eq? (##vcore.cmp (car xs) (cadr xs)) -1) #f)
             (else (loop (cdr xs))))))
 
   ; math constructors
-  (define (inexact x) (##sys.+ x 0.0))
+  (define (inexact x) (##vcore.+ x 0.0))
   (define exact->inexact inexact)
 
   ; math predicates
   (define (number? x)
-    (or (##sys.double? x) (##sys.int? x)))
+    (or (##vcore.double? x) (##vcore.int? x)))
   (define complex? number?)
-  ; true if (=2 (floor x) x)
-  ;(define rational? integer?)
-  ;(define integer? ##sys.int?)
+  (define rational? integer?)
+  ;(define integer? ##vcore.int?)
+  (define (positive? x) (> x 0))
+  (define (zero? x) (= x 0))
+  (define (negative? x) (< x 0))
 
   ; math functions
-  (define + ##sys.+)
-  (define - ##sys.-)
-  (define * ##sys.*)
-  (define / ##sys./)
+  (define + ##vcore.+)
+  (define - ##vcore.-)
+  (define * ##vcore.*)
+  (define / ##vcore./)
 
-  (define quotient ##sys.quotient)
-  (define remainder ##sys.remainder)
+  (define quotient ##vcore.quotient)
+  (define remainder ##vcore.remainder)
+
+  ; All need to work on ints
+  (define (abs x) (if (< x 0) (- x) x))
+  #;(define ceiling (foreign-function "C" "double ceil(double);"))
+  #;(define floor (foreign-function "C" "double floor(double);"))
+  #;(define round (foreign-function "C" "double round(double);"))
+
+  (define (square x) (* x x))
+  #;(define sqrt (##foreign-function "C" "double sqrt(double);"))
+
+  #;(define sin (##foreign-function "C" "double sin(double);"))
+  #;(define cos (##foreign-function "C" "double cos(double);"))
+  #;(define tan (##foreign-function "C" "double tan(double);"))
+  #;(define asin (##foreign-function "C" "double asin(double);"))
+  #;(define acos (##foreign-function "C" "double acos(double);"))
+
+  #;(define atan-impl (##foreign-function "C" "double atan(double);"))
+  #;(define atan2-impl (##foreign-function "C" "double atan2(double);"))
+  #;(define atan
+    (case-lambda
+      ((x) (atan-impl x))
+      ((y x) (atan2-impl y x))))
+
+  #;(define exp (##foreign-function "C" "double exp(double);"))
+  #;(define log-impl (##foreign-function "C" "double log(double);"))
+  #;(define log
+    (case-lambda
+      ((x) (log-impl x))
+      ((x base) (/ (log-impl x) (log-impl base)))))
+  #;(define pow (##foreign-function "C" "double pow(double);"))
+  #;(define expt pow)
 
   (define max
     (case-lambda
@@ -192,91 +245,112 @@
             (loop (min a (car bs)) (cdr bs)))))))
 
   ; lists
-  (define cons ##sys.cons)
-  (define car ##sys.car)
-  (define cdr ##sys.cdr)
-  (define set-car! ##sys.set-car!)
-  (define set-cdr! ##sys.set-cdr!)
+  (define cons ##vcore.cons)
+  (define car ##vcore.car)
+  (define cdr ##vcore.cdr)
+  (define set-car! ##vcore.set-car!)
+  (define set-cdr! ##vcore.set-cdr!)
 
-  (define (caar x) (##sys.car (##sys.car x)))
-  (define (cadr x) (##sys.car (##sys.cdr x)))
-  (define (cdar x) (##sys.cdr (##sys.car x)))
-  (define (cddr x) (##sys.cdr (##sys.cdr x)))
+  (define (caar x) (##vcore.car (##vcore.car x)))
+  (define (cadr x) (##vcore.car (##vcore.cdr x)))
+  (define (cdar x) (##vcore.cdr (##vcore.car x)))
+  (define (cddr x) (##vcore.cdr (##vcore.cdr x)))
 
-  (define (caaar x) (##sys.car (##sys.car (##sys.car x))))
-  (define (caadr x) (##sys.car (##sys.car (##sys.cdr x))))
-  (define (cadar x) (##sys.car (##sys.cdr (##sys.car x))))
-  (define (caddr x) (##sys.car (##sys.cdr (##sys.cdr x))))
-  (define (cdaar x) (##sys.cdr (##sys.car (##sys.car x))))
-  (define (cdadr x) (##sys.cdr (##sys.car (##sys.cdr x))))
-  (define (cddar x) (##sys.cdr (##sys.cdr (##sys.car x))))
-  (define (cdddr x) (##sys.cdr (##sys.cdr (##sys.cdr x))))
+  (define (caaar x) (##vcore.car (##vcore.car (##vcore.car x))))
+  (define (caadr x) (##vcore.car (##vcore.car (##vcore.cdr x))))
+  (define (cadar x) (##vcore.car (##vcore.cdr (##vcore.car x))))
+  (define (caddr x) (##vcore.car (##vcore.cdr (##vcore.cdr x))))
+  (define (cdaar x) (##vcore.cdr (##vcore.car (##vcore.car x))))
+  (define (cdadr x) (##vcore.cdr (##vcore.car (##vcore.cdr x))))
+  (define (cddar x) (##vcore.cdr (##vcore.cdr (##vcore.car x))))
+  (define (cdddr x) (##vcore.cdr (##vcore.cdr (##vcore.cdr x))))
 
-  (define (caaaar x) (##sys.car (##sys.car (##sys.car (##sys.car x)))))
-  (define (caaadr x) (##sys.car (##sys.car (##sys.car (##sys.cdr x)))))
-  (define (caadar x) (##sys.car (##sys.car (##sys.cdr (##sys.car x)))))
-  (define (caaddr x) (##sys.car (##sys.car (##sys.cdr (##sys.cdr x)))))
-  (define (cadaar x) (##sys.car (##sys.cdr (##sys.car (##sys.car x)))))
-  (define (cadadr x) (##sys.car (##sys.cdr (##sys.car (##sys.cdr x)))))
-  (define (caddar x) (##sys.car (##sys.cdr (##sys.cdr (##sys.car x)))))
-  (define (cadddr x) (##sys.car (##sys.cdr (##sys.cdr (##sys.cdr x)))))
+  (define (caaaar x) (##vcore.car (##vcore.car (##vcore.car (##vcore.car x)))))
+  (define (caaadr x) (##vcore.car (##vcore.car (##vcore.car (##vcore.cdr x)))))
+  (define (caadar x) (##vcore.car (##vcore.car (##vcore.cdr (##vcore.car x)))))
+  (define (caaddr x) (##vcore.car (##vcore.car (##vcore.cdr (##vcore.cdr x)))))
+  (define (cadaar x) (##vcore.car (##vcore.cdr (##vcore.car (##vcore.car x)))))
+  (define (cadadr x) (##vcore.car (##vcore.cdr (##vcore.car (##vcore.cdr x)))))
+  (define (caddar x) (##vcore.car (##vcore.cdr (##vcore.cdr (##vcore.car x)))))
+  (define (cadddr x) (##vcore.car (##vcore.cdr (##vcore.cdr (##vcore.cdr x)))))
 
-  (define (cdaaar x) (##sys.cdr (##sys.car (##sys.car (##sys.car x)))))
-  (define (cdaadr x) (##sys.cdr (##sys.car (##sys.car (##sys.cdr x)))))
-  (define (cdadar x) (##sys.cdr (##sys.car (##sys.cdr (##sys.car x)))))
-  (define (cdaddr x) (##sys.cdr (##sys.car (##sys.cdr (##sys.cdr x)))))
-  (define (cddaar x) (##sys.cdr (##sys.cdr (##sys.car (##sys.car x)))))
-  (define (cddadr x) (##sys.cdr (##sys.cdr (##sys.car (##sys.cdr x)))))
-  (define (cdddar x) (##sys.cdr (##sys.cdr (##sys.cdr (##sys.car x)))))
-  (define (cddddr x) (##sys.cdr (##sys.cdr (##sys.cdr (##sys.cdr x)))))
+  (define (cdaaar x) (##vcore.cdr (##vcore.car (##vcore.car (##vcore.car x)))))
+  (define (cdaadr x) (##vcore.cdr (##vcore.car (##vcore.car (##vcore.cdr x)))))
+  (define (cdadar x) (##vcore.cdr (##vcore.car (##vcore.cdr (##vcore.car x)))))
+  (define (cdaddr x) (##vcore.cdr (##vcore.car (##vcore.cdr (##vcore.cdr x)))))
+  (define (cddaar x) (##vcore.cdr (##vcore.cdr (##vcore.car (##vcore.car x)))))
+  (define (cddadr x) (##vcore.cdr (##vcore.cdr (##vcore.car (##vcore.cdr x)))))
+  (define (cdddar x) (##vcore.cdr (##vcore.cdr (##vcore.cdr (##vcore.car x)))))
+  (define (cddddr x) (##vcore.cdr (##vcore.cdr (##vcore.cdr (##vcore.cdr x)))))
 
   (define list (lambda args args))
 
+  (define (list? lst)
+    (or (null? lst)
+        (and (pair? lst) (list? (cdr lst)))))
+
   (define (length lst)
     (let loop ((lst lst) (i 0))
-      (if (##sys.null? lst) i
-          (loop (##sys.cdr lst) (+ i 1)))))
+      (if (##vcore.null? lst) i
+          (loop (##vcore.cdr lst) (+ i 1)))))
 
+  (define (list-tail lst x)
+    (if (eq? x 0) lst
+        (list-tail (##vcore.cdr lst) (- x 1))))
   (define (list-ref lst x)
-    (if (eq? x 0) (##sys.car lst)
-        (list-ref (##sys.cdr lst) (- x 1))))
+    (if (eq? x 0) (##vcore.car lst)
+        (list-ref (##vcore.cdr lst) (- x 1))))
+  (define (list-set! lst i val)
+    (set-car! (list-tail lst i) val))
+
+  (define (list-copy lst)
+    (if (null? lst) '()
+        (cons (car lst) (list-copy (cdr lst)))))
+
+  (define make-list
+    (case-lambda
+      ((k) (make-list k #f))
+      ((k val)
+       (let loop ((k k) (ret '()))
+         (if (eq? k 0) ret
+             (loop (- k 1) (cons val ret)))))))
 
   (define map
     (case-lambda
       ((f xs)
        (let loop ((xs xs))
-         (if (##sys.null? xs) '()
-             (##sys.cons (f (##sys.car xs)) (loop (##sys.cdr xs))))))
+         (if (##vcore.null? xs) '()
+             (##vcore.cons (f (##vcore.car xs)) (loop (##vcore.cdr xs))))))
       ((f xs ys)
        (let loop ((xs xs) (ys ys))
-         (if (##sys.null? xs) '()
-             (##sys.cons (f (##sys.car xs) (##sys.car ys)) (loop (##sys.cdr xs) (##sys.cdr ys))))))
+         (if (##vcore.null? xs) '()
+             (##vcore.cons (f (##vcore.car xs) (##vcore.car ys)) (loop (##vcore.cdr xs) (##vcore.cdr ys))))))
       ((f xs ys zs)
        (let loop ((xs xs) (ys ys) (zs zs))
-         (if (##sys.null? xs) '()
-             (##sys.cons (f (##sys.car xs) (##sys.car ys) (##sys.car zs)) (loop (##sys.cdr xs) (##sys.cdr ys) (##sys.cdr zs))))))
+         (if (##vcore.null? xs) '()
+             (##vcore.cons (f (##vcore.car xs) (##vcore.car ys) (##vcore.car zs)) (loop (##vcore.cdr xs) (##vcore.cdr ys) (##vcore.cdr zs))))))
       ((f . lsts)
        (let loop ((lsts lsts))
-         (if (##sys.null? (##sys.car lsts)) '()
-             (##sys.cons (apply f (map ##sys.car lsts)) (loop (map ##sys.cdr lsts))))))))
+         (if (##vcore.null? (##vcore.car lsts)) '()
+             (##vcore.cons (apply f (map ##vcore.car lsts)) (loop (map ##vcore.cdr lsts))))))))
   (define for-each
     (case-lambda
       ((f xs)
        (let loop ((xs xs))
-         (if (##sys.not (##sys.null? xs))
-             (begin (f (##sys.car xs)) (loop (##sys.cdr xs))))))
+         (if (##vcore.not (##vcore.null? xs))
+             (begin (f (##vcore.car xs)) (loop (##vcore.cdr xs))))))
       ((f xs ys)
        (let loop ((xs xs) (ys ys))
-         (if (##sys.not (##sys.null? xs))
-             (begin (f (##sys.car xs) (##sys.car ys)) (loop (##sys.cdr xs) (##sys.cdr ys))))))
+         (if (##vcore.not (##vcore.null? xs))
+             (begin (f (##vcore.car xs) (##vcore.car ys)) (loop (##vcore.cdr xs) (##vcore.cdr ys))))))
       ((f xs ys zs)
        (let loop ((xs xs) (ys ys) (zs zs))
-         (if (##sys.not (##sys.null? xs))
-             (begin (f (##sys.car xs) (##sys.car ys) (##sys.car zs)) (loop (##sys.cdr xs) (##sys.cdr ys) (##sys.cdr zs))))))
+         (if (##vcore.not (##vcore.null? xs))
+             (begin (f (##vcore.car xs) (##vcore.car ys) (##vcore.car zs)) (loop (##vcore.cdr xs) (##vcore.cdr ys) (##vcore.cdr zs))))))
       ((f . lsts)
        (let loop ((lsts lsts))
-         (if (##sys.not (##sys.null? (##sys.car lsts)))
-             (begin (apply f (map ##sys.car lsts)) (loop (map ##sys.cdr lsts))))))))
+         (if (##vcore.not (##vcore.null? (##vcore.car lsts)))
+             (begin (apply f (map ##vcore.car lsts)) (loop (map ##vcore.cdr lsts))))))))
 
   (define fold-right
     (case-lambda
@@ -290,8 +364,8 @@
       ((a) a)
       ((a b)
        (let loop ((a a))
-         (if (##sys.null? a) b
-             (##sys.cons (##sys.car a) (loop (##sys.cdr a))))))
+         (if (##vcore.null? a) b
+             (##vcore.cons (##vcore.car a) (loop (##vcore.cdr a))))))
       ((a b c) (append a (append b c)))
       ((a b c d) (append a (append b( append c d))))
       (lsts (fold-right append '() lsts))))
@@ -336,17 +410,17 @@
 
   ; strings
 
-  (define make-string ##sys.make-string)
-  (define substring ##sys.substring)
-  (define string-copy ##sys.substring)
-  (define string-copy! ##sys.string-copy!)
-  (define string-ref ##sys.string-ref)
-  (define string-set! ##sys.string-set!)
-  (define string-length ##sys.string-length)
-  (define string->symbol ##sys.string->symbol)
-  (define string->number ##sys.string->number)
+  (define make-string ##vcore.make-string)
+  (define substring ##vcore.substring)
+  (define string-copy ##vcore.substring)
+  (define string-copy! ##vcore.string-copy!)
+  (define string-ref ##vcore.string-ref)
+  (define string-set! ##vcore.string-set!)
+  (define string-length ##vcore.string-length)
+  (define string->symbol ##vcore.string->symbol)
+  (define string->number ##vcore.string->number)
 
-  (define symbol->string ##sys.symbol->string)
+  (define symbol->string ##vcore.symbol->string)
 
   (define (list->string lst)
     (let ((str (make-string (length lst))))
@@ -389,11 +463,11 @@
       (strs (fold-right string-append "" strs))))
 
   ; vectors
-  (define list->vector ##sys.list->vector)
+  (define list->vector ##vcore.list->vector)
   (define vector (lambda args (list->vector args)))
-  (define vector-ref ##sys.vector-ref)
-  (define vector-set! ##sys.vector-set!)
-  (define vector-length ##sys.vector-length)
+  (define vector-ref ##vcore.vector-ref)
+  (define vector-set! ##vcore.vector-set!)
+  (define vector-length ##vcore.vector-length)
 
   (define vector-for-each
     (case-lambda
@@ -422,7 +496,7 @@
 
   (define make-hash-table
     (case-lambda
-      (() (##vcore.make-hash-table ##sys.eq? #f 32))
+      (() (##vcore.make-hash-table ##vcore.eq? #f 32))
       ((eq) (##vcore.make-hash-table eq #f 32))
       ((eq hash) (##vcore.make-hash-table eq hash 32))
       ((eq hash len) (##vcore.make-hash-table eq hash len))))
@@ -438,51 +512,30 @@
 
   ; chars
 
-  (define char->integer ##sys.char-integer)
-
-  ; parameters
-  #;(define make-parameter
-    (case-lambda
-      ((init) (make-parameter init (lambda (e) e)))
-      ((init conv)
-       (let ((id (##vcore.make-id))
-             (init (conv init)))
-         (##sys.set-finalizer! id ##vcore.release-id)
-         (case-lambda
-           (()
-            (call-with-values
-              (lambda () (##vcore.lookup-parameter id))
-              (lambda (ret found) (if found ret init))))
-           ((secret x)
-            (if (eqv? secret '##secret.make-parameter) (##vcore.push-parameter! id (conv x))
-                (error "parameter objects do not accept arguments in Vanity")))
-           ((secret)
-            (if (eqv? secret '##secret.make-parameter) (##vcore.pop-parameter! id)
-                (error "parameter objects do not accept arguments in Vanity")))
-           (_ (error "parameter objects do not accept arguments in Vanity")))))))
+  (define char->integer ##vcore.char-integer)
 
   ; io
   (define current-output-port 
-    (let ((out (##sys.stdout->port)))
+    (let ((out (##vcore.stdout->port)))
       (case-lambda
         (() out)
         ((port) (set! out port)))))
   (define current-error-port 
-    (let ((out (##sys.stderr->port)))
+    (let ((out (##vcore.stderr->port)))
       (case-lambda
         (() out)
         ((port) (set! out port)))))
   (define current-input-port 
-    (let ((in (##sys.stdin->port)))
+    (let ((in (##vcore.stdin->port)))
       (case-lambda
         (() in)
         ((port) (set! in port)))))
 
 
-  #;(define close-port ##sys.close-stream)
-  #;(define open-input-file ##sys.open-input-stream)
-  #;(define open-output-file ##sys.open-output-stream)
-  #;(define open-output-string ##sys.open-output-string)
+  #;(define close-port ##vcore.close-stream)
+  #;(define open-input-file ##vcore.open-input-stream)
+  #;(define open-output-file ##vcore.open-output-stream)
+  #;(define open-output-string ##vcore.open-output-string)
 
   ; accepts a thunk that returns two values
   ; the return, and a value indicating whether the thunk failed
@@ -495,40 +548,40 @@
       (lambda (ret ok)
         (if ok ret
             (begin
-              (##sys.garbage-collect #t)
+              (##vcore.garbage-collect #t)
               (call-with-values
                 thunk
                 (lambda (ret ok) (if ok ret (error msg))))))))
     #;(let ((ret (thunk)))
       (if ret ret
           (begin
-            (##sys.garbage-collect #t)
+            (##vcore.garbage-collect #t)
             (let ((ret (thunk)))
               (if ret ret
                   (error msg)))))))
 
   (define (close-port port)
-    (if (##sys.has-finalizer? port)
-        (##sys.finalize! port)
-        (##sys.close-stream port)))
+    (if (##vcore.has-finalizer? port)
+        (##vcore.finalize! port)
+        (##vcore.close-stream port)))
 
   (define (open-input-file-impl path)
     (call-with-values
-      (lambda () (##sys.open-input-stream path))
+      (lambda () (##vcore.open-input-stream path))
       (lambda (ret ok)
-        (if ret (##sys.set-finalizer! ret ##sys.close-stream))
+        (if ret (##vcore.set-finalizer! ret ##vcore.close-stream))
         (values ret ok))))
   (define (open-output-file-impl path)
     (call-with-values
-      (lambda () (##sys.open-output-stream path))
+      (lambda () (##vcore.open-output-stream path))
       (lambda (ret ok)
-        (if ret (##sys.set-finalizer! ret ##sys.close-stream))
+        (if ret (##vcore.set-finalizer! ret ##vcore.close-stream))
         (values ret ok))))
   (define (open-output-string-impl)
     (call-with-values
-      (lambda () (##sys.open-output-string))
+      (lambda () (##vcore.open-output-string))
       (lambda (ret ok)
-        (if ret (##sys.set-finalizer! ret ##sys.close-stream))
+        (if ret (##vcore.set-finalizer! ret ##vcore.close-stream))
         (values ret ok))))
 
   (define (open-input-file path)
@@ -537,7 +590,7 @@
     (try-or-gc (lambda () (open-output-file-impl path)) "open-output-file: failed"))
   (define (open-output-string)
     (try-or-gc open-output-string-impl "open-output-string: failed"))
-  (define get-output-string ##sys.get-output-string)
+  (define get-output-string ##vcore.get-output-string)
 
   (define (with-output-to-file str thunk)
     (let ((port (open-output-file str))
@@ -558,37 +611,37 @@
 
   (define read-char
     (case-lambda
-      (() (##sys.read-char (current-input-port)))
-      ((port) (##sys.read-char port))))
+      (() (##vcore.read-char (current-input-port)))
+      ((port) (##vcore.read-char port))))
   (define read-line
     (case-lambda
-      (() (##sys.read-line (current-input-port)))
-      ((port) (##sys.read-line port))))
+      (() (##vcore.read-line (current-input-port)))
+      ((port) (##vcore.read-line port))))
   (define read
     (case-lambda
-      (() (##sys.read (current-input-port)))
-      ((port) (##sys.read port))))
+      (() (##vcore.read (current-input-port)))
+      ((port) (##vcore.read port))))
 
   (define newline
     (case-lambda
-      (() (##sys.newline (current-output-port)))
-      ((port) (##sys.newline port))))
+      (() (##vcore.newline (current-output-port)))
+      ((port) (##vcore.newline port))))
   
   (define (printout-list x write? port)
-    (##sys.display-word "(" port)
+    (##vcore.display-word "(" port)
     (printout (car x) write? port)
     (let loop ((xs (cdr x)))
      (cond ((pair? xs)
-            (##sys.display-word " " port)
+            (##vcore.display-word " " port)
             (printout (car xs) write? port)
             (loop (cdr xs)))
            ((null? xs) 'ok)
            (else
-            (##sys.display-word " . " port)
+            (##vcore.display-word " . " port)
             (printout xs write? port))))
-    (##sys.display-word ")" port))
+    (##vcore.display-word ")" port))
   (define (printout-quotation x write? port)
-    (##sys.display-word (cdr (assv (car x) '((quote . "'") (quasiquote . "`") (unquote . ",") (unquote-splicing . ",@")))) port)
+    (##vcore.display-word (cdr (assv (car x) '((quote . "'") (quasiquote . "`") (unquote . ",") (unquote-splicing . ",@")))) port)
     (printout (cadr x) write? port))
   (define (printout x write? port)
     (cond
@@ -598,18 +651,18 @@
            (printout-list x write? port)))
       ((vector? x)
        (let ((len (vector-length x)))
-        (##sys.display-word "#(" port)
+        (##vcore.display-word "#(" port)
         (let loop ((i 0))
          (if (eq? i len)
              #f
              (begin
               (if (eq? i 0)
                   #f
-                  (##sys.display-word " " port))
+                  (##vcore.display-word " " port))
               (printout (vector-ref x i) write? port)
               (loop (+ i 1)))))
-        (##sys.display-word ")" port)))
-      (else (if write? (##sys.write x port) (##sys.display-word x port)))))
+        (##vcore.display-word ")" port)))
+      (else (if write? (##vcore.write x port) (##vcore.display-word x port)))))
   (define display
     (case-lambda
       ((x) (printout x #f (current-output-port)))
@@ -620,10 +673,10 @@
       ((x port) (printout x #t port))))
 
   ; misc 
-  (define call/cc ##sys.call/cc)
-  (define call-with-current-continuation ##sys.call/cc)
-  (define call-with-values ##sys.call-with-values)
-  (define apply ##sys.apply)
+  (define call/cc ##vcore.call/cc)
+  (define call-with-current-continuation ##vcore.call/cc)
+  (define call-with-values ##vcore.call-with-values)
+  (define apply ##vcore.apply)
   (define (values . args)
     (call/cc (lambda (k) (apply k args))))
   
@@ -631,12 +684,12 @@
   (define mutator ##vcore.mutator)
 
   ; system interface
-  (define command-line ##sys.command-line)
-  (define system ##sys.system)
-  (define open-input-process ##sys.open-input-process)
-  (define open-output-process ##sys.open-output-process)
-  (define make-temporary-file ##sys.make-temporary-file)
-  (define exit ##sys.exit)
+  (define command-line ##vcore.command-line)
+  (define system ##vcore.system)
+  (define open-input-process ##vcore.open-input-process)
+  (define open-output-process ##vcore.open-output-process)
+  (define make-temporary-file ##vcore.make-temporary-file)
+  (define exit ##vcore.exit)
 
   ; (: exact (procedure number? -> exact?))
   ; (: list (procedure X ... -> (listof? X)))
@@ -667,10 +720,10 @@
                   (if (= (+ i 1) len) (error "printf: format string has trailing tilde" fmt))
                   (case (string-ref fmt (+ i 1))
                     ((#\~)
-                     (##sys.display-word #\~ port)
+                     (##vcore.display-word #\~ port)
                      (loop (+ i 2) args))
                     ((#\n #\N)
-                     (##sys.display-word #\newline port)
+                     (##vcore.display-word #\newline port)
                      (loop (+ i 2) args))
                     ((#\a #\A)
                      (if (null? args) (error "printf: not enough args for format string" fmt))
@@ -681,7 +734,7 @@
                      (write (car args) port)
                      (loop (+ i 2) (cdr args)))
                     (else (error "printf: unknown format" (substring fmt i (+ i 2))))))
-                (begin (##sys.display-word c port) (loop (+ i 1) args))))))))
+                (begin (##vcore.display-word c port) (loop (+ i 1) args))))))))
   (define (format-sprintf fmt args)
     (let ((strport (open-output-string)))
       (format-printf strport fmt args)
@@ -727,7 +780,7 @@
                   (write (car irritants) err)
                   (loop (cdr irritants)))))))
       (newline err)
-      (##sys.abort)))
+      (##vcore.abort)))
 
   (define fiber-fork-list ##vcore.fiber-fork-list)
   (define (fiber-fork . args)

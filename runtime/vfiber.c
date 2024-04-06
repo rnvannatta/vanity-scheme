@@ -263,17 +263,27 @@ typedef struct _TEB
     GUID                         EffectiveContainerId;              /* ff0/1828 */
 } TEB, *PTEB;
 
-__attribute__((returns_twice)) void VSwitchFiber(VFiberState const * to, VFiberState * from) {
-  from->tib.except = NtCurrentTeb()->Tib.ExceptionList;
-  from->tib.stack_limit = NtCurrentTeb()->Tib.StackLimit;
-  from->tib.fls_slots = NtCurrentTeb()->FlsSlots;
+// mingw spits out nasty scary warnings when compiling this on O2, so don't!
+// the teb is stored in %gs, and it seems that gcc has some 'issues' with code
+// that extracts from the gs, such as assuming it's a nullptr
+#pragma GCC push_options
+#pragma GCC optimize("O0")
+struct _TEB * (MyNtCurrentTeb)() {
+  return NtCurrentTeb();
+}
+#pragma GCC pop_options
 
-  NtCurrentTeb()->Tib.FiberData = (void*)to;
-  NtCurrentTeb()->Tib.ExceptionList = to->tib.except;
-  NtCurrentTeb()->Tib.StackBase = to->tib.stack_base;
-  NtCurrentTeb()->Tib.StackLimit = to->tib.stack_limit;
-  NtCurrentTeb()->DeallocationStack = to->tib.stack_alloc;
-  NtCurrentTeb()->FlsSlots = to->tib.fls_slots;
+__attribute__((returns_twice)) void VSwitchFiber(VFiberState const * to, VFiberState * from) {
+  from->tib.except = MyNtCurrentTeb()->Tib.ExceptionList;
+  from->tib.stack_limit = MyNtCurrentTeb()->Tib.StackLimit;
+  from->tib.fls_slots = MyNtCurrentTeb()->FlsSlots;
+
+  MyNtCurrentTeb()->Tib.FiberData = (void*)to;
+  MyNtCurrentTeb()->Tib.ExceptionList = to->tib.except;
+  MyNtCurrentTeb()->Tib.StackBase = to->tib.stack_base;
+  MyNtCurrentTeb()->Tib.StackLimit = to->tib.stack_limit;
+  MyNtCurrentTeb()->DeallocationStack = to->tib.stack_alloc;
+  MyNtCurrentTeb()->FlsSlots = to->tib.fls_slots;
 
   VSwitchFiberAsm(to, from);
 }
@@ -281,16 +291,16 @@ __attribute__((returns_twice)) void VSwitchFiber(VFiberState const * to, VFiberS
 
 #ifdef _WIN64
 static void MyConvertToFiber(VFiberState * state) {
-  NtCurrentTeb()->Tib.FiberData = state;
+  MyNtCurrentTeb()->Tib.FiberData = state;
 
-  state->tib.except = NtCurrentTeb()->Tib.ExceptionList;
-  state->tib.stack_base = NtCurrentTeb()->Tib.StackBase;
-  state->tib.stack_limit = NtCurrentTeb()->Tib.StackLimit;
-  state->tib.stack_alloc = NtCurrentTeb()->DeallocationStack;
-  state->tib.fls_slots = NtCurrentTeb()->FlsSlots;
+  state->tib.except = MyNtCurrentTeb()->Tib.ExceptionList;
+  state->tib.stack_base = MyNtCurrentTeb()->Tib.StackBase;
+  state->tib.stack_limit = MyNtCurrentTeb()->Tib.StackLimit;
+  state->tib.stack_alloc = MyNtCurrentTeb()->DeallocationStack;
+  state->tib.fls_slots = MyNtCurrentTeb()->FlsSlots;
 }
 static void MyConvertFromFiber() {
-  NtCurrentTeb()->Tib.FiberData = NULL;
+  MyNtCurrentTeb()->Tib.FiberData = NULL;
 }
 
 static void MyCreateFiber(VFiberState * state, char * stack_base, char * stack_limit, char * stack_alloc) {
