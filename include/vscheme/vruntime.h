@@ -76,7 +76,7 @@ enum VTOK_T {
   // TO ONLY BE USED BY THE LEXER
   VTOK_LEX_OPENPAREN, VTOK_LEX_CLOSEPAREN, VTOK_LEX_VECPAREN, VTOK_LEX_DOT, VTOK_LEX_COMMENT,
   VTOK_LEX_QUOTE, VTOK_LEX_QUASIQUOTE, VTOK_LEX_UNQUOTE, VTOK_LEX_UNQUOTE_SPLICING,
-  VTOK_ERROR,
+  VTOK_ERROR, VTOK_LEX_VECTOR,
   VNUM_TOKS
 };
 
@@ -585,6 +585,10 @@ SYSV_CALL static inline VClosure * VDecodeClosureApply(VWORD v) {
   if(VWordType(v) != VPOINTER_CLOSURE) VError("tried to call non-closure: ~s\n", v);
   return (VClosure*)VDecodePointer(v);
 }
+SYSV_CALL static inline VPair * VCheckedDecodePair(VWORD v, char const * proc) {
+  if(VWordType(v) != VPOINTER_PAIR) VError("~Z: not a pair: ~S\n", proc, v);
+  return (VPair*)VDecodePointer(v);
+}
 
 SYSV_CALL static inline void * VCheckedDecodePointer(VWORD v, VNEWTAG tag, char const * proc) {
   if(VIsPointer(v)) {
@@ -785,6 +789,18 @@ SYSV_CALL static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned le
 #define V_STATIC_STRING(name, str) struct { VBlob b; char buf[sizeof str]; } name = { { .base = { .tag =VSTRING, .flags = 0, .pincount = 0, }, .len = sizeof str }, str };
 
 #define V_ALLOCA_VECTOR(len) alloca(sizeof(VVector) + sizeof(VWORD[len]))
+#define V_ALLOCA_VECTOR2(last_alloced, runtime, len) \
+  ({ \
+    VVector * _ret = NULL; \
+    if(len > 65536) \
+      VError("cannot allocate vector with more than 65536 elements, asked to allocate one with ~D\n", len); \
+    size_t _size = sizeof(VVector) + sizeof(VWORD[len]); \
+    if(!VStackOverflowNoInline2(runtime, ((char*)last_alloced) - _size)) \
+      _ret = alloca(_size); \
+    _ret;\
+  })
+
+
 SYSV_CALL static inline VVector * VFillVector(VVector * vec, VNEWTAG tag, unsigned len, VWORD const * dat) {
   vec->base = VMakeSmallObject(tag);
   vec->len = len;
@@ -882,8 +898,12 @@ SYSV_CALL static inline void VReturnWord(VWORD k, VRuntime * runtime, VWORD ret)
       VError("Incorrect number of arguments to ~Z, got ~D, need between ~D and ~D\n", func, num_vars, nargmin, nargmax); \
     } } while(0)
 
-//extern char* VStackStart;
-//extern ssize_t VStackLen;
+// The maximum amount that may be allocated per call
+#define V_ALLOCA_LIMIT (512*1024)
+// The amount of stack margin vanity expects at the start of a call
+// It is the stack margin plus how much the GC expects plus safety
+// padding.
+#define V_STACK_MARGIN (1024*1024)
 
 SYSV_CALL static inline bool VStackOverflow(VRuntime * _runtime) {
   VPublicRuntime * runtime = (VPublicRuntime*)_runtime;

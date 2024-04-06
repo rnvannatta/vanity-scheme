@@ -27,10 +27,10 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
-static struct { VBlob sym; char bytes[34]; } _V10string_D8 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 34 }, "_V0vanity_V0compiler_V0config_V20" };
+static struct { VBlob sym; char bytes[34]; } _V10string_D9 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 34 }, "_V0vanity_V0compiler_V0config_V20" };
 VWEAK VWORD _V0version;VWEAK struct { VBlob sym; char bytes[8]; } _VW_V0version = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 8 }, "version" };
 VWEAK VWORD _V0install__root;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0install__root = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "install-root" };
-static struct { VBlob sym; char bytes[12]; } _V10string_D7 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "/usr/local/" };
+static struct { VBlob sym; char bytes[12]; } _V10string_D8 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "/usr/local/" };
 static __attribute__((constructor)) void VDllMain1() {
   _V0version = VEncodePointer(VLookupConstant("_V0version", &_VW_V0version), VPOINTER_OTHER);
   _V0install__root = VEncodePointer(VLookupConstant("_V0install__root", &_VW_V0install__root), VPOINTER_OTHER);
@@ -48,7 +48,7 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (letrec 2 ((##inline ##sys.qcons '0 (##inline ##sys.qcons '0 '())) (##string ##string.7)) ((bruijn ##k.1 2 0) (##inline ##sys.cons (##inline ##sys.cons 'install-root (bruijn install-root 0 1)) (##inline ##sys.cons (##inline ##sys.cons 'version (bruijn version 0 0)) '()))))
+  // (letrec 2 ((##inline ##vcore.qcons '0 (##inline ##vcore.qcons '0 '())) (##string ##string.8)) ((bruijn ##k.2 2 0) (##inline ##vcore.cons (##inline ##vcore.cons 'install-root (bruijn install-root 0 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'version (bruijn version 0 0)) '()))))
     // OH NO A LETREC!
     {
     VEnv * upenv = env;
@@ -60,8 +60,8 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upen
         VInlineCons(
         VEncodeInt(0l),
         VNULL));
-    env->vars[1] = VEncodePointer(&_V10string_D7.sym, VPOINTER_OTHER);
-V_CALL(upenv->up->vars[0], runtime,
+    env->vars[1] = VEncodePointer(&_V10string_D8.sym, VPOINTER_OTHER);
+    V_CALL(upenv->up->vars[0], runtime,
       VInlineCons(
         VInlineCons(
         _V0install__root,
@@ -87,10 +87,10 @@ static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv *
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.make-import (close _V0vanity_V0compiler_V0config_V20_k1) (##string ##string.8))
+  // (##vcore.make-import (close _V0vanity_V0compiler_V0config_V20_k1) (##string ##string.9))
     V_CALL_FUNC(VMakeImport2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0config_V20_k1, env)}),
-      VEncodePointer(&_V10string_D8.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10string_D9.sym, VPOINTER_OTHER));
  }
 }
 VFunc _V0vanity_V0compiler_V0config_V20 = (VFunc)_V0vanity_V0compiler_V0config_V20_lambda1;

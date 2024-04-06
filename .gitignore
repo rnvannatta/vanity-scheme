@@ -10,6 +10,7 @@ config.sh
 *.o
 *.so
 a.out
+*.escm
 *.exe
 *.dll
 core

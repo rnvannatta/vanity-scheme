@@ -25,6 +25,6 @@
 
 ; Very basic test
 (define (fact x)
-    (if (##sys.eq? x 0) 1
-        (##sys.* x (fact (##sys.- x 1)))))
-(##sys.exit (##sys.eq? (fact 5) 120))
+    (if (##vcore.eq? x 0) 1
+        (##vcore.* x (fact (##vcore.- x 1)))))
+(##vcore.exit (##vcore.eq? (fact 5) 120))

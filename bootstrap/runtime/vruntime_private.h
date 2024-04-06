@@ -27,6 +27,7 @@
 #define _GNU_SOURCE
 #pragma once
 #include "vscheme/vruntime.h"
+#include "vsetjmp_private.h"
 typedef struct VFiberContext VFiberContext;
 typedef struct VFiber VFiber;
 typedef struct VStack VStack;
@@ -110,3 +111,5 @@ typedef struct VRuntime {
   int num_half_reaped_fibers;
   VRuntime ** half_reaped_fibers;
 } VRuntime;
+
+SYSV_CALL void VGetStackInfo(char ** start, size_t * size);

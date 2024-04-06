@@ -10,7 +10,7 @@
 (let ((p (cons 1 2)))
   (hash-table-set! table p (symbol->string 'nasty))
   (set! mypair p))
-(##sys.garbage-collect #t)
+(##vcore.garbage-collect #t)
 
 (hash-table-set! table 3 'thwee)
 (hash-table-set! table 4 'four)

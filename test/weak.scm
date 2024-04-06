@@ -1,3 +1,3 @@
 (import (vanity core))
 
-(exit (eq? ##sys.eq? eq?))
+(exit (eq? ##vcore.eq? eq?))

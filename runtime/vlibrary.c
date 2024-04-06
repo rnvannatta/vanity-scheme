@@ -98,6 +98,9 @@ SYSV_CALL void VAdd2(V_CORE_ARGS, VWORD k, ...);
 asm(
 ".intel_syntax noprefix\n"
 ".globl VAdd2\n"
+#ifdef __linux__
+".type VAdd2, @function\n"
+#endif
 "VAdd2:\n"
 " cmp " ARGC_REG ", 3\n"
 " je VAdd2Case2\n"
@@ -197,6 +200,9 @@ SYSV_CALL void VSub2(V_CORE_ARGS, VWORD k, VWORD x, ...);
 asm(
 ".intel_syntax noprefix\n"
 ".globl VSub2\n"
+#ifdef __linux__
+".type VSub2, @function\n"
+#endif
 "VSub2:\n"
 " cmp " ARGC_REG ", 3\n"
 " je VSub2Case2\n"
@@ -1192,6 +1198,23 @@ SYSV_CALL void VNewline2(V_CORE_ARGS, VWORD k, VWORD port) {
     V_CALL(k, runtime, VVOID);
 }
 
+SYSV_CALL void VDisplayStdout(V_CORE_ARGS, VWORD k, VWORD val) {
+    V_ARG_CHECK2("display-stdout", 2, argc);
+    VDisplayWord(stdout, val, false);
+    V_CALL(k, runtime, VVOID);
+}
+SYSV_CALL void VWriteStdout(V_CORE_ARGS, VWORD k, VWORD val) {
+    V_ARG_CHECK2("write-stdout", 2, argc);
+    VDisplayWord(stdout, val, true);
+    V_CALL(k, runtime, VVOID);
+}
+SYSV_CALL void VNewlineStdout(V_CORE_ARGS, VWORD k) {
+    V_ARG_CHECK2("newline-stdout", 1, argc);
+    fprintf(stdout, "\n");
+    fflush(stdout);
+    V_CALL(k, runtime, VVOID);
+}
+
 // misc
 
 SYSV_CALL static void VCallCCLambda2(V_CORE_ARGS, VWORD k, ...) {
@@ -1281,45 +1304,74 @@ SYSV_CALL void VCallValues2(V_CORE_ARGS, VWORD _k, VWORD _producer, VWORD _consu
 SYSV_CALL void VApply2(V_CORE_ARGS, VWORD k, VWORD _proc, ...) {
   V_ARG_MIN2("apply", 3, argc);
 
-    VClosure * proc = VCheckedDecodeClosure(_proc, "apply");
+  VClosure * proc = VCheckedDecodeClosure(_proc, "apply");
 
-    VWORD tmp[argc-2];
+  VWORD tmp[argc-2];
 
-    va_list args;
-    va_start(args, _proc);
-    tmp[0] = k;
-    for(int i = 2; i < argc-1; i++) {
-      tmp[i-1] = va_arg(args, VWORD);
-    }
-    VWORD lst = va_arg(args, VWORD);
-    va_end(args);
+  va_list args;
+  va_start(args, _proc);
+  tmp[0] = k;
+  for(int i = 2; i < argc-1; i++) {
+    tmp[i-1] = va_arg(args, VWORD);
+  }
+  VWORD lst = va_arg(args, VWORD);
+  va_end(args);
 
-    int nargs = argc-2;
-    VWORD pair = lst;
-    while(VWordType(pair) == VPOINTER_PAIR) {
-      pair = VDecodePair(pair)->rest;
-      nargs++;
-    }
-    if(!VIsToken(pair, VTOK_NULL))
-      VError("apply: not a null terminated list ~S~N\n", lst);
+  int nargs = argc-2;
+  VWORD pair = lst;
+  while(VWordType(pair) == VPOINTER_PAIR) {
+    pair = VDecodePair(pair)->rest;
+    nargs++;
+  }
+  if(!VIsToken(pair, VTOK_NULL))
+    VError("apply: not a null terminated list ~S~N\n", lst);
 
-    VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[nargs]));
-    environ->base = VMakeObject(VENVIRONMENT);
-    environ->argc = nargs;
-    environ->runtime = runtime;
-    environ->static_chain = proc->env;
+  VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[nargs]));
+  environ->base = VMakeObject(VENVIRONMENT);
+  environ->argc = nargs;
+  environ->runtime = runtime;
+  environ->static_chain = proc->env;
 
-    memcpy(environ->argv, tmp, sizeof tmp);
-    VWORD * ptr = environ->argv + argc - 2;
-    while(VWordType(lst) == VPOINTER_PAIR) {
-      VPair * p = VDecodePair(lst);
-      *ptr++ = p->first;
-      lst = p->rest;
-    }
+  memcpy(environ->argv, tmp, sizeof tmp);
+  VWORD * ptr = environ->argv + argc - 2;
+  while(VWordType(lst) == VPOINTER_PAIR) {
+    VPair * p = VDecodePair(lst);
+    *ptr++ = p->first;
+    lst = p->rest;
+  }
 
-    VSysApply(proc->func, environ);
+  VSysApply(proc->func, environ);
 }
 
+SYSV_CALL void VApplyCps(V_CORE_ARGS, VWORD k, VWORD _proc, VWORD lst) {
+  V_ARG_CHECK2("apply-cps", 3, argc);
+
+  VClosure * proc = VCheckedDecodeClosure(_proc, "apply-cps");
+
+  int nargs = 0;
+  VWORD pair = lst;
+  while(VWordType(pair) == VPOINTER_PAIR) {
+    pair = VDecodePair(pair)->rest;
+    nargs++;
+  }
+  if(!VIsToken(pair, VTOK_NULL))
+    VError("apply-cps: not a null terminated list ~S~N\n", lst);
+
+  VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[nargs]));
+  environ->base = VMakeObject(VENVIRONMENT);
+  environ->argc = nargs;
+  environ->runtime = runtime;
+  environ->static_chain = proc->env;
+
+  VWORD * ptr = environ->argv;
+  while(VWordType(lst) == VPOINTER_PAIR) {
+    VPair * p = VDecodePair(lst);
+    *ptr++ = p->first;
+    lst = p->rest;
+  }
+
+  VSysApply(proc->func, environ);
+}
 
 SYSV_CALL void VSystem2(V_CORE_ARGS, VWORD k, VWORD cmd) {
   V_ARG_CHECK2("system", 2, argc);

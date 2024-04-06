@@ -26,6 +26,7 @@
  */
 
 #include <errno.h>
+#include <assert.h>
 
 #include "vscheme/vruntime.h"
 #include "vruntime_private.h"
@@ -51,6 +52,7 @@ enum lex_t {
   LEX_DOT,
   LEX_2DOT,
   LEX_SHARP,
+  LEX_VECTOR,
   LEX_CODE_COMMENT,
   LEX_QUOTE,
   LEX_QUASIQUOTE,
@@ -171,6 +173,9 @@ SYSV_CALL static int VLexSharp(int c, bool * satisfied, bool * unget) {
     case ';':
       *satisfied = true;
       return LEX_CODE_COMMENT;
+    case '(':
+      *satisfied = true;
+      return LEX_VECTOR;
     case '\\':
       return LEX_CHAR;
     case '#':
@@ -431,25 +436,29 @@ SYSV_CALL static int VLex(VRuntime * runtime, FILE * f) {
     }
   }
   if(unget) ungetc(c, f);
-  runtime->lex_buf[buf_cursor++] = '\0';
   switch(lex_state) {
     case LEX_START:
     case LEX_COMMENT:
       return LEX_EOF;
     default:
+      runtime->lex_buf[buf_cursor++] = '\0';
       return lex_state;
   }
 }
 
-SYSV_CALL static VWORD VTreeify(VRuntime * runtime, VPair * root) {
-  VPair * cur = root;
+SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
+SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, VWORD _cur) {
+  // cur's first value is a pointer to the list we are CONSing to
+  // for example if we're treeifying (a b c d e f) and we've alreay consed on f an de
+  // then cur->first is (e f)
+  VPair * root = VDecodePair(_root);
+  VPair * cur = VDecodePair(_cur);
+  char * alloced = (char*)&argc;
   while(VBits(root->rest) != VBits(VNULL)) {
     VPair * p = (VPair*)VDecodePointer(root->rest);
     if(p->base.tag == VCONST_PAIR) {
       // open paren or close paren
       if(VIsToken(p->first, VTOK_LEX_OPENPAREN)) {
-        // open paren
-
         root->rest = p->rest;
         // we drop p, don't need it
         // but we do need to find cur's parent
@@ -462,8 +471,55 @@ SYSV_CALL static VWORD VTreeify(VRuntime * runtime, VPair * root) {
         // where * indicates where we were consing to
         // now we are doing (* (a b c) x y z)
         cur = parent;
+      } else if(VIsToken(p->first, VTOK_LEX_VECTOR)) {
+        // we drop p, don't need it
+        // but we do need to find cur's parent
+        VPair * parent = root;
+        VWORD curword = VEncodePair(cur);
+        while(VBits(parent->first) != VBits(curword)) {
+          parent = (VPair*)VDecodePointer(parent->first);
+        }
+        // if we were doing ((* a b c) x y z)
+        // where * indicates where we were consing to
+        // now we are doing (* #(a b c) x y z)
+        VPair * new_cur = parent;
+
+        VPair * vecpair = (VPair*)VDecodePair(new_cur->first);
+        VWORD list = vecpair->first;
+
+        int len = 0;
+        VWORD iter = list;
+        while(VWordType(iter) == VPOINTER_PAIR) {
+          iter = VDecodePair(iter)->rest;
+          len++;
+        }
+        if(!VIsToken(iter, VTOK_NULL))
+          VError("read: vector literal contains dot syntax\n");
+
+        VVector * vec = V_ALLOCA_VECTOR2(alloced, runtime, len);
+        alloced = (char*)vec;
+
+        if(!vec) {
+          VTrackMutation(runtime, root, &root->rest, root->rest);
+          VGarbageCollect2Args((VFunc)VTreeify, runtime, statics, 4, argc, k, _port, VEncodePair(root), VEncodePair(cur));
+        }
+        root->rest = p->rest;
+        cur = new_cur;
+
+        *vec = (VVector){ .base = { .tag = VVECTOR }, .len = len };
+        int i = 0;
+        iter = list;
+        while(VWordType(iter) == VPOINTER_PAIR) {
+          VPair * p = VDecodePair(iter);
+          // don't need to track because vec is brand new
+          VTrackMutation(runtime, vec, &vec->arr[i], p->first);
+          vec->arr[i++] = p->first;
+          iter = p->rest;
+        }
+        assert(i == len);
+        VSetFirst(runtime, vecpair, VEncodePointer(vec, VPOINTER_OTHER));
+
       } else if(VIsToken(p->first, VTOK_LEX_CLOSEPAREN)) {
-        // close paren
         root->rest = p->rest;
         p->base = VMakeObject(VPAIR);
         p->first = VNULL;
@@ -540,10 +596,19 @@ SYSV_CALL static VWORD VTreeify(VRuntime * runtime, VPair * root) {
     }
   }
   if(cur != root) VError("read: mismatched parentheses: unterminated list\n");
+  VWORD ret;
   if(VBits(root->first) == VBits(VNULL))
-    return VVOID;
+    ret = VVOID;
   else
-    return VDecodePair(root->first)->first;
+    ret = VDecodePair(root->first)->first;
+
+
+  if(VIsEq(ret, VVOID)) {
+    // read a comment, try again
+    VRead2(runtime, statics, 2, k, _port);
+  } else {
+    V_CALL(k, runtime, ret);
+  }
 }
 
 SYSV_CALL static VWORD ParseChar(char const * buf) {
@@ -608,7 +673,6 @@ SYSV_CALL static char * ParseString(char * buf) {
 
 // ============================================================================
 
-SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
 SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD _read_more, VWORD _root) {
   V_ARG_CHECK2("##sys.read-iter", 5, argc);
 
@@ -625,7 +689,6 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
   VWORD elem;
   do {
     if(VStackOverflowNoInline2(runtime, alloced)) {
-      fprintf(stderr, "gc during read\n");
       VTrackMutation(runtime, root, &root->rest, root->rest);
       VGarbageCollect2Args((VFunc)VReadIter2, runtime, statics, 5, argc, k, _port, VEncodeInt(depth), VEncodeBool(read_more), _root);
     }
@@ -675,6 +738,18 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
         pair->base = VMakeObject(VCONST_PAIR);
         root->rest = VEncodePair(pair);
         read_more = true;
+        break;
+      }
+      case LEX_VECTOR:
+      {
+        VPair * pair = myalloca(sizeof(VPair));
+        // using CONST_PAIR as a marker to indicate beginning or end of a list
+        // a const pair with a VTOK_LEX_OPENPAREN in the CAR indicates a open paren, ie beginning
+        *pair = VMakePair(VEncodeToken(VTOK_LEX_VECTOR), root->rest);
+        pair->base = VMakeObject(VCONST_PAIR);
+        root->rest = VEncodePair(pair);
+        depth++;
+        break;
         break;
       }
       case LEX_QUOTE:
@@ -817,13 +892,17 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       }
     }
   } while(depth > 0 || read_more);
-  VWORD ret = VTreeify(runtime, root);
+#if 0
+  VWORD ret = V_CALL_FUNC(VTreeify, NULL, runtime, _k, VEncodePair(root));
   if(VIsEq(ret, VVOID)) {
     // read a comment, try again
     VRead2(runtime, statics, 2, k, _port);
   } else {
     V_CALL(k, runtime, ret);
   }
+#else
+  V_CALL_FUNC(VTreeify, NULL, runtime, k, _port, VEncodePair(root), VEncodePair(root));
+#endif
 }
 
 SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port) {

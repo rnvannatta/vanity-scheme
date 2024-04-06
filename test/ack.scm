@@ -25,10 +25,11 @@
 
 ; Tests basic library usage, and stress tests the garbage collector
 (define-library (acker)
-  (export ack)
-  (define (ack m n)
-    (cond ((##sys.eq? m 0) (##sys.+ n 1))
-          ((##sys.eq? n 0) (ack (##sys.- m 1) 1))
-          (else (ack (##sys.- m 1) (ack m (##sys.- n 1)))))))
+  (begin
+    (export ack)
+    (define (ack m n)
+      (cond ((##vcore.eq? m 0) (##vcore.+ n 1))
+            ((##vcore.eq? n 0) (ack (##vcore.- m 1) 1))
+            (else (ack (##vcore.- m 1) (ack m (##vcore.- n 1))))))))
 (import (acker))
-(##sys.exit (##sys.eq? (ack 3 9) 4093))
+(##vcore.exit (##vcore.eq? (ack 3 9) 4093))

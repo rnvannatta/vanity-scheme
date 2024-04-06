@@ -123,10 +123,15 @@ SYSV_CALL void VDisplay2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port);
 SYSV_CALL void VWrite2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port);
 SYSV_CALL void VNewline2(V_CORE_ARGS, VWORD k, VWORD port);
 
+SYSV_CALL void VDisplayStdout(V_CORE_ARGS, VWORD k, VWORD val);
+SYSV_CALL void VWriteStdout(V_CORE_ARGS, VWORD k, VWORD val);
+SYSV_CALL void VNewlineStdout(V_CORE_ARGS, VWORD k);
+
 // control flow
 SYSV_CALL void VCallCC2(V_CORE_ARGS, VWORD k, VWORD proc);
 SYSV_CALL void VCallValues2(V_CORE_ARGS, VWORD k, VWORD producer, VWORD consumer);
 SYSV_CALL void VApply2(V_CORE_ARGS, VWORD k, VWORD proc, ...);
+SYSV_CALL void VApplyCps(V_CORE_ARGS, VWORD k, VWORD proc, VWORD lst);
 
 // system
 SYSV_CALL void VSystem2(V_CORE_ARGS, VWORD k, VWORD cmd);

@@ -1827,7 +1827,7 @@ SYSV_CALL void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   }
 }
 
-SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write) {
+static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
   uint64_t type = VWordType(v);
   switch(type) {
     case VIMM_NUMBER:
@@ -1879,7 +1879,23 @@ SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write) {
     }
     case VPOINTER_PAIR:
     {
-      fprintf(f, "#pair");
+      if(depth >= 16)
+        fprintf(f, "#pair");
+      else {
+        fprintf(f, "(");
+        VPair * p = (VPair*)VDecodePointer(v);
+        VDisplayWordImpl(f, p->first, write, depth+1);
+        while(VWordType(p->rest) == VPOINTER_PAIR) {
+          p = (VPair*)VDecodePointer(p->rest);
+          fprintf(f, " ");
+          VDisplayWordImpl(f, p->first, write, depth+1);
+        }
+        if(!(VWordType(p->rest) == VIMM_TOK && VDecodeToken(p->rest) == VTOK_NULL)) {
+          fprintf(f, " . ");
+          VDisplayWordImpl(f, p->rest, write, depth+1);
+        }
+        fprintf(f, ")");
+      }
       break;
     }
     case VPOINTER_CLOSURE:
@@ -1970,6 +1986,10 @@ SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write) {
   }
 }
 
+SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write) {
+  VDisplayWordImpl(f, v, write, 0);
+}
+
 SYSV_CALL void VGetStackInfo(char ** start, size_t * size) {
 #ifdef __linux__
   int ret;
@@ -2009,7 +2029,7 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   VGetStackInfo(&start, &stacksize);
 
   r->public.VStackStart = start;
-  r->public.VStackLen = (ssize_t)stacksize - 1024*1024;
+  r->public.VStackLen = (ssize_t)stacksize - V_STACK_MARGIN;
   r->public.VStackSize = (ssize_t)stacksize;
 
   r->VActiveHeap = true;
@@ -2068,15 +2088,15 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   r->half_reaped_fibers = NULL;
 }
 
+static VClosure next_closure = { .base = { .tag = VCLOSURE }, .func = (VFunc)VNext2, .env = NULL };
+
 SYSV_CALL VWORD VStart2(VRuntime * runtime, int num_toplevels, VThunk const * toplevels) {
   if(!runtime->VGlobalTable)
   {
     VInitGlobalTable(runtime);
   }
 
-  VClosure next_closure = VMakeClosure2((VFunc)VNext2, NULL);
   VWORD next = VEncodeClosure(&next_closure);
-
   VWORD ret = VEncodeInt(0);
   // volatile prevents a longjmp clobber warning when optimization is on
   volatile int i = 0;
@@ -2422,7 +2442,6 @@ static void VPushHalfReapedRuntimes(VRuntime * runtime, int numfibers, VRuntime 
   }
 }
 
-// TODO need to keep massaging this into a GCable function
 static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfibers, VWORD k, VLaunchFiberData * datas) {
   VFiber * me = runtime->my_fiber;
   VFiber * fibers[numfibers];
@@ -2517,6 +2536,8 @@ SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst) {
       nfibers++;
       cur = VInlineCdr(cur);
     }
+    if(nfibers * (sizeof(VPair) + sizeof(VLaunchFiberData)) > V_ALLOCA_LIMIT)
+      VError("fiber-fork: too many fibers in one call, alloca limit exceeded\n");
     if(nfibers > 0) {
       VLaunchFiberData datas[nfibers];
 
