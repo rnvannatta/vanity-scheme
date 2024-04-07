@@ -3,10 +3,10 @@ include Makefile.sources
 vpath %.h src $(INCLUDES)
 vpath %.scmh build/include $(INCLUDES)
 
-STRAP = $(addprefix bootstrap/src/, $(SRC:.scm=.c))
+STRAP = $(addprefix bootstrap/src/, $(SRC:.scm=.c) $(COMPILE_SRC:.scm=.c))
 
 VSCHEME = libvscheme.so.$(MAJOR)
-VSC = vsc.$(MAJOR)
+VSC = vsc-$(MAJOR)
 
 include config.mk
 
@@ -14,7 +14,7 @@ include config.mk
 
 hatch :
 	ln -sf "$(INSTALL_DIR)/lib/$(VSCHEME)" $(INSTALL_DIR)/lib/libvscheme.so
-	ln -sf "$(INSTALL_DIR)/bin/vsc.$(MAJOR)" $(INSTALL_DIR)/bin/vsc
+	ln -sf "$(INSTALL_DIR)/bin/vsc-$(MAJOR)" $(INSTALL_DIR)/bin/vsc
 	cp -ar bootstrap/include/* $(INSTALL_DIR)/include/
 	gcc -rdynamic -o lib/libvscheme.so $(addprefix bootstrap/runtime/, $(RUNTIME_LISP_SRC:.scm=.c)) $(addprefix bootstrap/runtime/, $(RUNTIME_SRC)) bootstrap/runtime/vfiber-sysv-amd64.S bootstrap/runtime/vapply-sysv-amd64.S -Ibootstrap/include $(LIBS) $(CFLAGS) -fPIC -shared -Wno-missing-braces -masm=intel
 	cp -a lib/libvscheme.so $(INSTALL_DIR)/lib/$(VSCHEME)

@@ -157,7 +157,10 @@
     (match expr
       (('quasiquote x) `(##vcore.cons `quasiquote (##vcore.cons ,(expand-quasiquote (+ quotation 1) x) '())))
       (('unquote x)
-       (if (= quotation 1) x
+       (if (= quotation 1)
+           (if (vector? x)
+               `(##vcore.list->vector ,(expand-syntax `',(vector->list x)))
+               x)
            `(##vcore.cons `unquote (##vcore.cons ,(expand-quasiquote (- quotation 1) x) '()))))
       ((('unquote-splicing x) . y)
        (if (= quotation 1)
@@ -165,7 +168,10 @@
            `(append ,x ,(expand-quasiquote quotation y))
            `(##vcore.cons (##vcore.cons `unquote-splicing (##vcore.cons ,(expand-quasiquote (- quotation 1) x) '()) ,(expand-quasiquote quotation y)))))
       ((a . b) `(##vcore.cons ,(expand-quasiquote quotation a) ,(expand-quasiquote quotation b)))
-      (x `',x)))
+      (x
+       (if (vector? x)
+           `(##vcore.list->vector ,(expand-quasiquote quotation (vector->list expr)))
+           `',x))))
 
   ; pretty ugly code
   (define (expand-library lib paths)
@@ -306,7 +312,10 @@
 
       (('quasiquote x) (expand-syntax (expand-quasiquote 1 x)))
       (('quote (a . b)) (expand-syntax `(##vcore.qcons (quote ,a) (quote ,b))))
-      (('quote x) `(quote ,x))
+      (('quote x)
+       (if (vector? x)
+           `(##vcore.list->vector ,(expand-syntax `',(vector->list x)))
+           `(quote ,x)))
 
       (('let . _) (expand-let (cdr expr)))
 
@@ -401,4 +410,8 @@
       ((a . b) (compiler-error "stray improper list in program" `(,a . ,b)))
       (() (compiler-error "stray null list in program" '()))
 
-      (else expr))))
+      (else
+        ; FIXME: really terrible need to properly do this with a literal
+        (if (vector? expr)
+            `(##vcore.list->vector ,(expand-syntax `',(vector->list expr)))
+            expr)))))

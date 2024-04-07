@@ -151,7 +151,7 @@ A rough ordering of the next few improvements I'll be making:
 3. DONE: Implement finalizers.
 4. DONE: Emit header files for compiled libraries.
 5. DONE: Windows cross compilation.
-6. Implement Fibers.
+6. DONE Implement Fibers.
 7. Add a repl via bytecode
 
 Progress is very slow as I am moonlighting this project while daylighting as a graphics programmer.

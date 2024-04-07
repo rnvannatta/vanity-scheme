@@ -29,47 +29,47 @@
 #include "vruntime.h"
 
 // predicates
-static inline VWORD VInlineNullP(VWORD v) {
+static inline VWORD VInlineNullP2(VRuntime * runtime, VWORD v) {
   return VEncodeBool(VBits(v) == VBits(VNULL));
 }
-static inline VWORD VInlinePairP(VWORD v) {
+static inline VWORD VInlinePairP2(VRuntime * runtime, VWORD v) {
   return VEncodeBool(VWordType(v) == VPOINTER_PAIR);
 }
-static inline VWORD VInlineSymbolP(VWORD v) {
+static inline VWORD VInlineSymbolP2(VRuntime * runtime, VWORD v) {
   return VEncodeBool(VWordType(v) == VPOINTER_OTHER && *(VTAG*)VDecodePointer(v) == VSYMBOL);
 }
-static inline VWORD VInlineStringP(VWORD v) {
+static inline VWORD VInlineStringP2(VRuntime * runtime, VWORD v) {
   return VEncodeBool(VWordType(v) == VPOINTER_OTHER && *(VTAG*)VDecodePointer(v) == VSTRING);
 }
 // need eof, procedure, vector, double, int, char
 
 // logic
-static inline VWORD VInlineNot(VWORD v) {
+static inline VWORD VInlineNot2(VRuntime * runtime, VWORD v) {
   return VEncodeBool(VBits(v) == VBits(VFALSE));
 }
 
 // equivalence
-static inline VWORD VInlineEq(VWORD a, VWORD b) {
+static inline VWORD VInlineEq2(VRuntime * runtime, VWORD a, VWORD b) {
   return VEncodeBool(VBits(a) == VBits(b));
 }
 
-static inline VWORD VInlineSymbolEqv(VWORD a, VWORD b) {
+static inline VWORD VInlineSymbolEqv2(VRuntime * runtime, VWORD a, VWORD b) {
   return VEncodeBool(VIsSymbol(a) && VIsSymbol(b) && VCheckSymbolEqv(a, b));
 }
 
-static inline VWORD VInlineEqv(VWORD a, VWORD b) {
+static inline VWORD VInlineEqv2(VRuntime * runtime, VWORD a, VWORD b) {
   return VEncodeBool(VBits(a) == VBits(b) || (VIsSymbol(a) && VIsSymbol(b) && VCheckSymbolEqv(a, b)));
 }
 
 // lists
-#define VInlineCons(a, b) VEncodePair(VFillPair(alloca(sizeof(VPair)), a, b))
+#define VInlineCons2(runtime, a, b) VEncodePair(VFillPair(alloca(sizeof(VPair)), a, b))
 
-static inline VWORD VInlineCar(VWORD v) {
-    if(VWordType(v) != VPOINTER_PAIR) VError("car: not a pair\n");
+static inline VWORD VInlineCar2(VRuntime * runtime, VWORD v) {
+    if(VWordType(v) != VPOINTER_PAIR) VError2(runtime, "car: not a pair ~S\n", v);
     return VDecodePair(v)->first;
 }
 
-static inline VWORD VInlineCdr(VWORD v) {
-    if(VWordType(v) != VPOINTER_PAIR) VError("cdr: not a pair\n");
+static inline VWORD VInlineCdr2(VRuntime * runtime, VWORD v) {
+    if(VWordType(v) != VPOINTER_PAIR) VError2(runtime, "cdr: not a pair ~S\n", v);
     return VDecodePair(v)->rest;
 }

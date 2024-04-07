@@ -3,13 +3,13 @@ include Makefile.sources
 vpath %.h src $(INCLUDES)
 vpath %.scmh build $(INCLUDES)
 
-DEPS = $(addprefix build/headers, $(RUNTIME_LISP_SRC:.scm=.d) $(SRC:.scm=.d))
+DEPS = $(addprefix build/headers, $(RUNTIME_LISP_SRC:.scm=.d) $(SRC:.scm=.d) $(COMPILE_SRC:.scm=.d) $(INTERP_SRC:.scm=.d))
 
 include config.mk
 
 .PHONY : headers
 
-headers : $(addprefix build/, $(SRC:.scm=.scmh) $(RUNTIME_LISP_SRC:.scm=.scmh))
+headers : $(addprefix build/, $(SRC:.scm=.scmh) $(INTERP_SRC:.scm=.scmh) $(COMPILE_SRC:.scm=.scmh) $(RUNTIME_LISP_SRC:.scm=.scmh))
 
 -include $(DEPS)
 

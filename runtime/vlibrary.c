@@ -396,12 +396,12 @@ SYSV_CALL void VCharP2(V_CORE_ARGS, VWORD k, VWORD x) {
 // equality
 SYSV_CALL void VEq2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   V_ARG_CHECK2("eq?", 3, argc);
-  V_CALL(k, runtime, VInlineEq(x, y));
+  V_CALL(k, runtime, VInlineEq2(runtime, x, y));
 }
 
 SYSV_CALL void VSymbolEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   V_ARG_CHECK2("symbol=?", 3, argc);
-  V_CALL(k, runtime, VInlineSymbolEqv(x, y));
+  V_CALL(k, runtime, VInlineSymbolEqv2(runtime, x, y));
 }
 SYSV_CALL void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   V_ARG_CHECK2("blob=?", 3, argc);
@@ -415,7 +415,7 @@ SYSV_CALL void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
 
 SYSV_CALL void VEqv(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
   V_ARG_CHECK2("eqv?", 3, argc);
-  V_CALL(k, runtime, VInlineEqv(x, y));
+  V_CALL(k, runtime, VInlineEqv2(runtime, x, y));
 }
 
 // logic
@@ -429,17 +429,17 @@ SYSV_CALL void VNot2(V_CORE_ARGS, VWORD k, VWORD x) {
 
 SYSV_CALL void VCons2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
     V_ARG_CHECK2("cons", 3, argc);
-    V_CALL(k, runtime, VInlineCons(x, y));
+    V_CALL(k, runtime, VInlineCons2(runtime, x, y));
 }
 
 SYSV_CALL void VCar2(V_CORE_ARGS, VWORD k, VWORD x) {
     V_ARG_CHECK2("car", 2, argc);
-    V_CALL(k, runtime, VInlineCar(x));
+    V_CALL(k, runtime, VInlineCar2(runtime, x));
 }
 
 SYSV_CALL void VCdr2(V_CORE_ARGS, VWORD k, VWORD x) {
     V_ARG_CHECK2("cdr", 2, argc);
-    V_CALL(k, runtime, VInlineCdr(x));
+    V_CALL(k, runtime, VInlineCdr2(runtime, x));
 }
 
 // vectors
@@ -1081,6 +1081,21 @@ SYSV_CALL void VCloseStream2(V_CORE_ARGS, VWORD k, VWORD _port) {
   }
 
   V_CALL(k, runtime, VVOID);
+}
+
+SYSV_CALL void VTtyPortP(V_CORE_ARGS, VWORD k, VWORD _port) {
+  V_ARG_CHECK2("tty-port?", 2, argc);
+
+  if(VWordType(_port) != VPOINTER_OTHER) VError("tty-port?: not a port\n");
+  VPort * port = (VPort*)VDecodePointer(_port);
+  if(port->base.tag != VPORT) VError("tty-port?: not a port\n");
+  if(!(port->flags & PFLAG_WRITE)) VError("tty-port?: not an input port\n");
+
+  int fd = fileno(port->stream);
+  bool tty = isatty(fd);
+  errno = 0;
+
+  V_CALL(k, runtime, VEncodeBool(tty));
 }
 
 SYSV_CALL void VOpenOutputString2(V_CORE_ARGS, VWORD k) {

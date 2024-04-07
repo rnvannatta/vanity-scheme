@@ -1,6 +1,6 @@
 (define-library (vanity bytecode)
   (import (vanity core) (vanity list) (vanity intrinsics))
-  (export eval-vasm-port)
+  (export eval-vasm)
   (define (load-all port)
     (let loop ()
       (let ((expr (read port)))
@@ -104,14 +104,15 @@
 
   (define eval-vasm-toplevel (##vcore.function "VEvalVasmToplevel"))
 
-  (define (eval-vasm-port port)
-    (let ((tape (preprocess-vasm (read (current-input-port)))))
-      (let loop ((program-counter 0))
-        (let ((program-counter (find-toplevel tape program-counter)))
-          (if program-counter
-              (begin
-                (eval-vasm-toplevel tape program-counter)
-                (loop program-counter))))))))
-(import (vanity core) (vanity bytecode))
-(let ()
-  (eval-vasm-port (current-input-port)))
+  (define (eval-vasm vasm)
+    (define tape (preprocess-vasm vasm))
+    (define program-counter 0)
+    (define (loop . rets)
+      (if program-counter
+          (set! program-counter (find-toplevel tape program-counter)))
+      (if program-counter
+          (call-with-values
+            (lambda () (eval-vasm-toplevel tape program-counter))
+            loop)
+          (apply values rets)))
+    (loop)))

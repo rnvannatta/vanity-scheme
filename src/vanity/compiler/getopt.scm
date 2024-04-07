@@ -68,6 +68,8 @@
               (else (list (cons #\: (caddr ass)))))))))
     (define (iter args)
       (cond ((null? args) '())
+            ((or (equal? (car args) "-") (< (string-length (car args)) 2))
+             (cons (cons #t (car args)) (iter (cdr args))))
             ((equal? (substring (car args) 0 2) "--")
              (if (= (string-length (car args)) 2)
                  (map (lambda (e) (cons #f e)) (cdr args))

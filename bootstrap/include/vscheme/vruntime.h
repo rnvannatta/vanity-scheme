@@ -319,6 +319,7 @@ typedef struct VDebugInfo {
 
 SYSV_CALL static inline bool VIsEq(VWORD a, VWORD b) { return VBits(a) == VBits(b); }
 SYSV_CALL void VError(const char *, ...);
+SYSV_CALL void VError2(VRuntime * runtime, const char *, ...);
 
 // Used in inline functions
 typedef struct VPublicRuntime {
@@ -864,7 +865,7 @@ SYSV_CALL static inline void VRecordCall2(VRuntime * _runtime, VDebugInfo * debu
 
 #define V_CALL_FUNC(func, env, runtime, ...) \
  do { \
-   (func)(runtime, env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD), __VA_ARGS__); \
+   (func)(runtime, env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
  } while(0)
 
 #define V_CALL(closure, runtime, ...) \
@@ -935,7 +936,7 @@ SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics,
   } else
 #define V_GC_CHECK2_VARARGS(func, runtime, statics, fixed_args, argc, ...) \
   if(VStackOverflow(runtime)) { \
-    VGarbageCollect2Args(func, runtime, statics, fixed_args, argc, __VA_ARGS__); \
+    VGarbageCollect2Args(func, runtime, statics, fixed_args, argc __VA_OPT__(,) __VA_ARGS__); \
   } else
 
 SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write);

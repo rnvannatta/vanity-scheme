@@ -55,19 +55,19 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upen
     struct { VEnv env; VWORD argv[2]; } container;
     VEnv * env = &container.env;
     VInitEnv(env, 2, 2, upenv);
-    env->vars[0] = VInlineCons(
+    env->vars[0] = VInlineCons2(runtime,
         VEncodeInt(0l),
-        VInlineCons(
+        VInlineCons2(runtime,
         VEncodeInt(0l),
         VNULL));
     env->vars[1] = VEncodePointer(&_V10string_D8.sym, VPOINTER_OTHER);
     V_CALL(upenv->up->vars[0], runtime,
-      VInlineCons(
-        VInlineCons(
+      VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0install__root,
         env->vars[1]),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0version,
         env->vars[0]),
         VNULL)));

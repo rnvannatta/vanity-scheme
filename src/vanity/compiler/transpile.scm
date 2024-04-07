@@ -225,7 +225,7 @@
       (define (print-inline f xs)
         (let ((inline (lookup-inline-name f)))
           (if (not inline) (compiler-error "unknown inline" f))
-          (printf "~A(~N        " inline)
+          (printf "~A(runtime,~N        " inline)
           (if (not (null? xs))
               (begin
                 (print-expr (car xs) args)
@@ -305,7 +305,7 @@
         (if variadic?
             (begin
               (printf " VWORD _varargs = VNULL;~N")
-              (printf " V_GATHER_VARARGS_VARIADIC(&_varargs, ~A, argc, ~A);~N" num (list-ref args (- num 1)))))
+              (printf " V_GATHER_VARARGS_VARIADIC(&_varargs, ~A, argc, ~A);~N" num (if (= num 0) "argc" (list-ref args (- num 1))))))
         (printf " V_GC_CHECK2_VARARGS((VFunc)~A, runtime, upenv, ~A, argc" name num)
         (for-each (lambda (arg) (printf ", ~A" arg)) args)
         (if variadic?
