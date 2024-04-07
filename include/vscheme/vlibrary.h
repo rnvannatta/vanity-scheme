@@ -110,6 +110,8 @@ SYSV_CALL void VOpenInputStream2(V_CORE_ARGS, VWORD k, VWORD path);
 SYSV_CALL void VOpenOutputStream2(V_CORE_ARGS, VWORD k, VWORD path);
 SYSV_CALL void VCloseStream2(V_CORE_ARGS, VWORD k, VWORD port);
 
+SYSV_CALL void VTtyPortP(V_CORE_ARGS, VWORD k, VWORD _port);
+
 SYSV_CALL void VOpenOutputString2(V_CORE_ARGS, VWORD k);
 SYSV_CALL void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD port);
 

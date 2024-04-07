@@ -1,0 +1,1 @@
+(define-library-interface (vanity bytecode) (import (vanity core) (vanity list) (vanity intrinsics)) (export eval-vasm) (inline-import) (inline-export))

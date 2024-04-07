@@ -1459,6 +1459,14 @@ SYSV_CALL void VError(const char * str, ...) {
   va_end(args);
   VAbort2(NULL, NULL, 0);
 }
+SYSV_CALL void VError2(VRuntime * runtime, const char * str, ...) {
+  va_list args;
+  va_start(args, str);
+  VVFPrintfC(stderr, str, args);
+
+  va_end(args);
+  VAbort2(runtime, NULL, 0);
+}
 
 
 // Its impossible for a var in the old set to point to the new set
@@ -1676,12 +1684,12 @@ SYSV_CALL static void VMakeImportLambda(V_CORE_ARGS, VWORD k, VWORD x) {
         cur++;
       }
     }
-    VWORD arg = VInlineCar(args);
-    if(VDecodeBool(VInlineEqv(VInlineCar(arg), x))) {
-      V_CALL(k, runtime, VInlineCdr(arg));
+    VWORD arg = VInlineCar2(runtime, args);
+    if(VDecodeBool(VInlineEqv2(runtime, VInlineCar2(runtime, arg), x))) {
+      V_CALL(k, runtime, VInlineCdr2(runtime, arg));
       break;
     } else {
-      args = VInlineCdr(args);
+      args = VInlineCdr2(runtime, args);
     }
   }
 }
@@ -2448,7 +2456,7 @@ static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfiber
 
   VWORD ret = VNULL;
   for(int i = 0; i < numfibers; i++) {
-    ret = VInlineCons(VVOID, ret);
+    ret = VInlineCons2(runtime, VVOID, ret);
   }
 
   int pushnum = 0;
@@ -2470,7 +2478,7 @@ static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfiber
     // see if we have any opportunistic waits
     VPair * waitpair = VDecodePair(cur_wait);
     while(waitnum < pushnum && VTryFiberWait(runtime->fiber_context, fibers[waitnum], me, (uint64_t*)&waitpair->first)) {
-      cur_wait = VInlineCdr(cur_wait);
+      cur_wait = VInlineCdr2(runtime, cur_wait);
       waitpair = VDecodePair(cur_wait);
       waitnum++;
     }
@@ -2478,7 +2486,7 @@ static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfiber
     // try to reap threads
     while(halfreapnum < waitnum) {
       VPair * reappair = VDecodePair(cur_reap);
-      VWORD fiber_ret = VInlineCar(cur_reap);
+      VWORD fiber_ret = VInlineCar2(runtime, cur_reap);
       if(VIsToken(fiber_ret, VTOK_ERROR))
         VError("fiber-split: a fiber errored\n");
       if(VIsToken(fiber_ret, VTOK_VOID))
@@ -2495,14 +2503,14 @@ static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfiber
       } else {
         reapoverflow = true;
       }
-      cur_reap = VInlineCdr(cur_reap);
+      cur_reap = VInlineCdr2(runtime, cur_reap);
       halfreapnum++;
     }
 
     if(pushnum == numfibers && waitnum < numfibers) {
       // no more fibers to push so at this point we start spinning on waits
       waitpair->first = VWord(VFiberWait(runtime->fiber_context, fibers[waitnum], me));
-      cur_wait = VInlineCdr(cur_wait);
+      cur_wait = VInlineCdr2(runtime, cur_wait);
       waitnum++;
     }
   }
@@ -2531,10 +2539,10 @@ SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst) {
     while(!VIsToken(cur, VTOK_NULL)) {
       if(VWordType(cur) != VPOINTER_PAIR)
         VError("fiber-fork: not a proper list ~S\n", lst);
-      if(VWordType(VInlineCar(cur)) != VPOINTER_CLOSURE)
-        VError("fiber-fork: not a procedure ~S\n", VInlineCar(cur));
+      if(VWordType(VInlineCar2(runtime, cur)) != VPOINTER_CLOSURE)
+        VError("fiber-fork: not a procedure ~S\n", VInlineCar2(runtime, cur));
       nfibers++;
-      cur = VInlineCdr(cur);
+      cur = VInlineCdr2(runtime, cur);
     }
     if(nfibers * (sizeof(VPair) + sizeof(VLaunchFiberData)) > V_ALLOCA_LIMIT)
       VError("fiber-fork: too many fibers in one call, alloca limit exceeded\n");
@@ -2542,10 +2550,10 @@ SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst) {
       VLaunchFiberData datas[nfibers];
 
       for(int i = 0; i < nfibers; i++) {
-        datas[i].thunk = VInlineCar(lst);
+        datas[i].thunk = VInlineCar2(runtime, lst);
         datas[i].base_runtime = runtime;
         datas[i].my_runtime = NULL;
-        lst = VInlineCdr(lst);
+        lst = VInlineCdr2(runtime, lst);
       }
 
       VWrappedFiberFork(runtime, NULL, nfibers, k, datas);

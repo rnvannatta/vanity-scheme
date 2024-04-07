@@ -48,27 +48,27 @@ static __attribute__((constructor)) void VDllMain1() {
   _V40_V10vcore_Drandom__copy = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__copy", &_VW_V40_V10vcore_Drandom__copy), VPOINTER_CLOSURE);
   _V40_V10vcore_Dmake__random = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__random", &_VW_V40_V10vcore_Dmake__random), VPOINTER_CLOSURE);
 }
-__attribute__((used)) static void _V20CaseError__V0vanity_V0hash_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, ...) {
- // (_V0vanity_V0hash_V20_lambda2 #t (2 (##vcore.random-sample! (bruijn ##k.3 0 0) (bruijn rng 0 1))) (3 (##vcore.random-sample-bounded! (bruijn ##k.4 0 0) (bruijn rng 0 1) (bruijn end 0 2))))
- VError("Not enough arguments to _V0vanity_V0hash_V20_lambda2, got ~D~N"
+__attribute__((used)) static void _V20CaseError__V0random__sample_B_lambda2(VRuntime * runtime, VEnv * upenv, int argc, ...) {
+ // (_V0random__sample_B_lambda2 #t (2 (##vcore.random-sample! (bruijn ##k.3 0 0) (bruijn rng 0 1))) (3 (##vcore.random-sample-bounded! (bruijn ##k.4 0 0) (bruijn rng 0 1) (bruijn end 0 2))))
+ VError("Not enough arguments to _V0random__sample_B_lambda2, got ~D~N"
  "-- expected 2~N"
  "-- expected 3~N"
  , argc);
 }
-__attribute__((used)) static void _V20Case0__V0vanity_V0hash_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
- static VDebugInfo dbg = { "_V20Case0__V0vanity_V0hash_V20_lambda2" };
+__attribute__((used)) static void _V20Case0__V0random__sample_B_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V20Case0__V0random__sample_B_lambda2" };
  VRecordCall2(runtime, &dbg);
- V_GC_CHECK2_VARARGS((VFunc)_V20Case0__V0vanity_V0hash_V20_lambda2, runtime, upenv, 2, argc, _var0, _var1) {
+ V_GC_CHECK2_VARARGS((VFunc)_V20Case0__V0random__sample_B_lambda2, runtime, upenv, 2, argc, _var0, _var1) {
   // (##vcore.random-sample! (bruijn ##k.3 0 0) (bruijn rng 0 1))
     V_CALL_FUNC(VRandomSample, NULL, runtime,
       _var0,
       _var1);
  }
 }
-__attribute__((used)) static void _V20Case1__V0vanity_V0hash_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
- static VDebugInfo dbg = { "_V20Case1__V0vanity_V0hash_V20_lambda2" };
+__attribute__((used)) static void _V20Case1__V0random__sample_B_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V20Case1__V0random__sample_B_lambda2" };
  VRecordCall2(runtime, &dbg);
- V_GC_CHECK2_VARARGS((VFunc)_V20Case1__V0vanity_V0hash_V20_lambda2, runtime, upenv, 3, argc, _var0, _var1, _var2) {
+ V_GC_CHECK2_VARARGS((VFunc)_V20Case1__V0random__sample_B_lambda2, runtime, upenv, 3, argc, _var0, _var1, _var2) {
   // (##vcore.random-sample-bounded! (bruijn ##k.4 0 0) (bruijn rng 0 1) (bruijn end 0 2))
     V_CALL_FUNC(VRandomSampleBounded, NULL, runtime,
       _var0,
@@ -76,18 +76,18 @@ __attribute__((used)) static void _V20Case1__V0vanity_V0hash_V20_lambda2(VRuntim
       _var2);
  }
 }
-void _V0vanity_V0hash_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, ...);
+void _V0random__sample_B_lambda2(VRuntime * runtime, VEnv * upenv, int argc, ...);
 asm(
 ".intel_syntax noprefix\n"
 #ifdef __linux__
-".type _V0vanity_V0hash_V20_lambda2, @function\n"
+".type _V0random__sample_B_lambda2, @function\n"
 #endif
-"_V0vanity_V0hash_V20_lambda2:\n"
+"_V0random__sample_B_lambda2:\n"
 "    cmp " ARGC_REG ", 2\n"
-"    je _V20Case0__V0vanity_V0hash_V20_lambda2\n"
+"    je _V20Case0__V0random__sample_B_lambda2\n"
 "    cmp " ARGC_REG ", 3\n"
-"    je _V20Case1__V0vanity_V0hash_V20_lambda2\n"
-"    jmp _V20CaseError__V0vanity_V0hash_V20_lambda2\n"
+"    je _V20Case1__V0random__sample_B_lambda2\n"
+"    jmp _V20CaseError__V0random__sample_B_lambda2\n"
 );
 static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k1" };
@@ -102,7 +102,7 @@ static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (letrec 5 ((##intrinsic ##vcore.make-random) (##intrinsic ##vcore.random-copy) (close _V0vanity_V0hash_V20_lambda2) (##intrinsic ##vcore.random-sample-float!) (##intrinsic ##vcore.random-advance!)) ((bruijn ##k.2 2 0) (##inline ##vcore.cons (##inline ##vcore.cons 'make-random (bruijn make-random 0 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-copy (bruijn random-copy 0 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-sample! (bruijn random-sample! 0 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-sample-float! (bruijn random-sample-float! 0 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-advance! (bruijn random-advance! 0 4)) '())))))))
+  // (letrec 5 ((##intrinsic ##vcore.make-random) (##intrinsic ##vcore.random-copy) (close _V0random__sample_B_lambda2) (##intrinsic ##vcore.random-sample-float!) (##intrinsic ##vcore.random-advance!)) ((bruijn ##k.2 2 0) (##inline ##vcore.cons (##inline ##vcore.cons 'make-random (bruijn make-random 0 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-copy (bruijn random-copy 0 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-sample! (bruijn random-sample! 0 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-sample-float! (bruijn random-sample-float! 0 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'random-advance! (bruijn random-advance! 0 4)) '())))))))
     // OH NO A LETREC!
     {
     VEnv * upenv = env;
@@ -111,28 +111,28 @@ static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
     VInitEnv(env, 5, 5, upenv);
     env->vars[0] = _V40_V10vcore_Dmake__random;
     env->vars[1] = _V40_V10vcore_Drandom__copy;
-    env->vars[2] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0hash_V20_lambda2, env)});
+    env->vars[2] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0random__sample_B_lambda2, env)});
     env->vars[3] = _V40_V10vcore_Drandom__sample__float_B;
     env->vars[4] = _V40_V10vcore_Drandom__advance_B;
     V_CALL(upenv->up->vars[0], runtime,
-      VInlineCons(
-        VInlineCons(
+      VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0make__random,
         env->vars[0]),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0random__copy,
         env->vars[1]),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0random__sample_B,
         env->vars[2]),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0random__sample__float_B,
         env->vars[3]),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0random__advance_B,
         env->vars[4]),
         VNULL))))));

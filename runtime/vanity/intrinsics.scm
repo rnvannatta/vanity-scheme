@@ -29,18 +29,18 @@
   (define (lookup-inline-name sym)
     (case sym
       ; predicates
-      ((##vcore.null?) "VInlineNullP")
-      ((##vcore.pair?) "VInlinePairP")
+      ((##vcore.null?) "VInlineNullP2")
+      ((##vcore.pair?) "VInlinePairP2")
       ;((##vcore.symbol?) "VInlineSymbolP")
       ;((##vcore.string?) "VInlineSymbolP")
       ; logic
-      ((##vcore.not) "VInlineNot")
+      ((##vcore.not) "VInlineNot2")
       ; equivalence
-      ((##vcore.eq?) "VInlineEq")
+      ((##vcore.eq?) "VInlineEq2")
       ; lists
-      ((##vcore.cons ##vcore.qcons) "VInlineCons")
-      ((##vcore.car) "VInlineCar")
-      ((##vcore.cdr) "VInlineCdr")
+      ((##vcore.cons ##vcore.qcons) "VInlineCons2")
+      ((##vcore.car) "VInlineCar2")
+      ((##vcore.cdr) "VInlineCdr2")
       (else #f)))
   (define (lookup-intrinsic-name sym)
     (case sym
@@ -144,6 +144,8 @@
          ((##vcore.open-input-stream) "VOpenInputStream2")
          ((##vcore.open-output-stream) "VOpenOutputStream2")
          ((##vcore.close-stream) "VCloseStream2")
+
+         ((##vcore.tty-port?) "VTtyPortP")
 
          ((##vcore.open-output-string) "VOpenOutputString2")
          ((##vcore.get-output-string) "VGetOutputString2")

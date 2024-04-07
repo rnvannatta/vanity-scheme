@@ -55,7 +55,7 @@
     string->list list->string make-string substring string-copy string-copy! string-ref string-set! string-length string->symbol string->number string-append
     symbol->string
     ; vectors
-    list->vector vector vector-ref vector-set! vector-length vector-for-each 
+    list->vector vector->list vector vector-ref vector-set! vector-length vector-for-each 
     ; hash table
     make-hash-table hash-table-ref hash-table-set! hash-table-delete!
     ; chars
@@ -468,6 +468,13 @@
   (define vector-ref ##vcore.vector-ref)
   (define vector-set! ##vcore.vector-set!)
   (define vector-length ##vcore.vector-length)
+
+  (define (vector->list vec)
+    (let ((len (vector-length vec)))
+      (let loop ((acc '()) (i (- len 1)))
+        (if (< i 0)
+            acc
+            (loop (cons (vector-ref vec i) acc) (- i 1))))))
 
   (define vector-for-each
     (case-lambda

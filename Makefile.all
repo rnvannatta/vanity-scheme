@@ -3,8 +3,12 @@ include Makefile.sources
 vpath %.h src $(INCLUDES)
 vpath %.scmh build/include $(INCLUDES)
 
-DEP = $(addprefix build/, $(RUNTIME_SRC:.c=.d) $(RUNTIME_LISP_SRC:.scm=.d) $(SRC:.scm=.d))
+DEP = $(addprefix build/, $(RUNTIME_SRC:.c=.d) $(RUNTIME_LISP_SRC:.scm=.d) $(SRC:.scm=.d) $(INTERP_SRC:.scm=.d))
+
 OBJ = $(addprefix build/, $(SRC:.scm=.o)) build/ffi.tab.o build/ffi.lex.o
+COMPILE_OBJ = $(addprefix build/, $(COMPILE_SRC:.scm=.o))
+INTERP_OBJ = $(addprefix build/, $(INTERP_SRC:.scm=.o))
+
 RUNTIME_OBJ = $(addprefix build/, $(RUNTIME_SRC:.c=.o))
 RUNTIME_OBJ += $(addprefix build/, $(ASSEMBLY_SRC:.S=.o))
 RUNTIME_OBJ +=  $(addprefix build/, $(RUNTIME_LISP_SRC:.scm=.o))
@@ -14,31 +18,36 @@ WINDOWS_RUNTIME_OBJ = $(addprefix build/x86_64-w64-mingw32/, $(RUNTIME_SRC:.c=.o
 WINDOWS_RUNTIME_OBJ += $(addprefix build/x86_64-w64-mingw32/, $(WINDOWS_ASSEMBLY_SRC:.S=.o))
 WINDOWS_RUNTIME_OBJ +=  $(addprefix build/x86_64-w64-mingw32/, $(RUNTIME_LISP_SRC:.scm=.o))
 
-BOOT = $(addprefix bin/bootstrap/src/, $(SRC:.scm=.c))
+BOOT = $(addprefix bin/bootstrap/src/, $(SRC:.scm=.c) $(COMPILE_SRC:.scm=.c))
 BOOT += $(addprefix bin/bootstrap/runtime/, $(ASSEMBLY_SRC) $(WINDOWS_ASSEMBLY_SRC) $(RUNTIME_SRC) $(PRIVATE_HEADERS) $(RUNTIME_LISP_SRC:.scm=.c))
 
 STRAP = $(addprefix bootstrap/src/, $(SRC:.scm=.c))
 
-VSCHEME = libvscheme.so.$(MAJOR)
-VSC = vsc.$(MAJOR)
-
 include config.mk
 
-.PHONY : deps all install compiler runtime windows_runtime tests tests_linux tests_windows install_compiler lay_egg testffi
+VSCHEME = libvscheme.so.$(MAJOR)
+VSC = vsc-$(MAJOR)
+VANITY = vanity-$(MAJOR)
+
+.PHONY : deps all install compiler interpreter runtime windows_runtime tests tests_linux tests_windows install_compiler lay_egg testffi
 compiler : bin/vsc
+interpreter : bin/vanity
 runtime : lib/libvscheme.so
 windows_runtime : lib/x86_64-w64-mingw32/vscheme.dll
-tests : tests_linux tests_windows
-all : compiler runtime windows_runtime
+tests : tests_linux tests_windows interpreter
+all : compiler interpreter runtime windows_runtime
 
 # the include copy doesn't have an -u on it because
 # include files aren't build. Can add the -u if we
 # copy the files to the bin directory
-install : compiler runtime windows_runtime
+install : compiler interpreter runtime windows_runtime
 	cp -u lib/libvscheme.so $(INSTALL_DIR)/lib/$(VSCHEME)
 	ldconfig
 	cp -r include/* $(INSTALL_DIR)/include/.
 	cp -u bin/vsc $(INSTALL_DIR)/bin/$(VSC)
+	cp -u bin/vanity $(INSTALL_DIR)/bin/$(VANITY)
+	ln -sfn $(INSTALL_DIR)/bin/$(VSC) $(INSTALL_DIR)/bin/vsc
+	ln -sfn $(INSTALL_DIR)/bin/$(VANITY) $(INSTALL_DIR)/bin/vanity
 	mkdir -p $(INSTALL_DIR)/x86_64-w64-mingw32/include
 	mkdir -p $(INSTALL_DIR)/x86_64-w64-mingw32/lib
 	ln -sfn $(INSTALL_DIR)/include/vscheme $(INSTALL_DIR)/x86_64-w64-mingw32/include/vscheme
@@ -131,7 +140,9 @@ build/x86_64-w64-mingw32/%.d : runtime/%.scm
 
 -include $(DEP)
 
-bin/vsc : $(OBJ)
+bin/vsc : $(OBJ) $(COMPILE_OBJ)
+	vsc -o $@ $^ $(SCMFLAGS)
+bin/vanity : $(OBJ) $(INTERP_OBJ)
 	vsc -o $@ $^ $(SCMFLAGS)
 
 lib/libvscheme.so : $(RUNTIME_OBJ)

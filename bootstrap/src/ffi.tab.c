@@ -212,16 +212,16 @@ VWORD kons_str(char const * str, VWORD rest) {
 #define GET_LIST(_1, _2, _3, _4, NAME, ...) NAME
 #define LIST(...) GET_LIST(__VA_ARGS__, LIST4, LIST3, LIST2, LIST1)(__VA_ARGS__)
 
-#define CAR(x) VInlineCar(x)
-#define CDR(x) VInlineCdr(x)
-#define CADR(x) VInlineCar(VInlineCdr(x))
-#define CADDR(x) VInlineCar(VInlineCdr(VInlineCdr(x)))
-#define CADDDR(x) VInlineCar(VInlineCdr(VInlineCdr(VInlineCdr(x))))
-#define CADDDDR(x) VInlineCar(VInlineCdr(VInlineCdr(VInlineCdr(VInlineCdr(x)))))
+#define CAR(x) VInlineCar2(NULL, x)
+#define CDR(x) VInlineCdr2(NULL, x)
+#define CADR(x) VInlineCar2(NULL, VInlineCdr2(NULL, x))
+#define CADDR(x) VInlineCar2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, x)))
+#define CADDDR(x) VInlineCar2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, x))))
+#define CADDDDR(x) VInlineCar2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, x)))))
 
 static VWORD detangle_params(VWORD param) {
   VWORD ret = VNULL;
-  while(!VDecodeBool(VInlineNullP(param))) {
+  while(!VDecodeBool(VInlineNullP2(NULL, param))) {
     VWORD newparam = LIST(CADDR(param), CADDDR(param));
     ret = CONS(newparam, ret);
     param = CADR(param);
@@ -231,7 +231,7 @@ static VWORD detangle_params(VWORD param) {
 }
 static VWORD detangle_enums(VWORD enum_list) {
   VWORD ret = VNULL;
-  while(!VDecodeBool(VInlineNullP(enum_list))) {
+  while(!VDecodeBool(VInlineNullP2(NULL, enum_list))) {
     VWORD newenum = CDR(enum_list);
     ret = CONS(newenum, ret);
     enum_list = CAR(enum_list);
@@ -240,7 +240,7 @@ static VWORD detangle_enums(VWORD enum_list) {
 }
 static VWORD reverse(VWORD param) {
   VWORD ret = VNULL;
-  while(!VDecodeBool(VInlineNullP(param))) {
+  while(!VDecodeBool(VInlineNullP2(NULL, param))) {
     ret = CONS(CAR(param), ret);
     param = CDR(param);
   }
@@ -248,7 +248,7 @@ static VWORD reverse(VWORD param) {
 }
 
 static bool memv(char const * x, VWORD lst) {
-  while(!VDecodeBool(VInlineNullP(lst))) {
+  while(!VDecodeBool(VInlineNullP2(NULL, lst))) {
     VWORD e = CAR(lst);
     if(VIsSymbol(e) && !strcmp(VDecodeSymbol(e)->buf, x)) return true;
     if(VIsString(e) && !strcmp(VDecodeString(e)->buf, x)) return true;

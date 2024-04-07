@@ -287,508 +287,508 @@ static void _V0scheme_V0r7rs_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
  V_GC_CHECK2_VARARGS((VFunc)_V0scheme_V0r7rs_V20_lambda2, runtime, upenv, 125, argc, _var0, _var1, _var2, _var3, _var4, _var5, _var6, _var7, _var8, _var9, _var10, _var11, _var12, _var13, _var14, _var15, _var16, _var17, _var18, _var19, _var20, _var21, _var22, _var23, _var24, _var25, _var26, _var27, _var28, _var29, _var30, _var31, _var32, _var33, _var34, _var35, _var36, _var37, _var38, _var39, _var40, _var41, _var42, _var43, _var44, _var45, _var46, _var47, _var48, _var49, _var50, _var51, _var52, _var53, _var54, _var55, _var56, _var57, _var58, _var59, _var60, _var61, _var62, _var63, _var64, _var65, _var66, _var67, _var68, _var69, _var70, _var71, _var72, _var73, _var74, _var75, _var76, _var77, _var78, _var79, _var80, _var81, _var82, _var83, _var84, _var85, _var86, _var87, _var88, _var89, _var90, _var91, _var92, _var93, _var94, _var95, _var96, _var97, _var98, _var99, _var100, _var101, _var102, _var103, _var104, _var105, _var106, _var107, _var108, _var109, _var110, _var111, _var112, _var113, _var114, _var115, _var116, _var117, _var118, _var119, _var120, _var121, _var122, _var123, _var124) {
   // ((bruijn ##k.2 128 0) (##inline ##vcore.cons (##inline ##vcore.cons 'null? (bruijn null? 0 124)) (##inline ##vcore.cons (##inline ##vcore.cons 'eof-object? (bruijn eof-object? 0 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'boolean? (bruijn boolean? 0 123)) (##inline ##vcore.cons (##inline ##vcore.cons 'pair? (bruijn pair? 0 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector? (bruijn vector? 0 122)) (##inline ##vcore.cons (##inline ##vcore.cons 'procedure? (bruijn procedure? 0 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol? (bruijn symbol? 0 121)) (##inline ##vcore.cons (##inline ##vcore.cons 'string? (bruijn string? 0 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact? (bruijn exact? 0 120)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact? (bruijn inexact? 0 4)) (##inline ##vcore.cons (##inline ##vcore.cons 'real? (bruijn real? 0 119)) (##inline ##vcore.cons (##inline ##vcore.cons 'integer? (bruijn integer? 0 5)) (##inline ##vcore.cons (##inline ##vcore.cons 'char? (bruijn char? 0 118)) (##inline ##vcore.cons (##inline ##vcore.cons 'eq? (bruijn eq? 0 6)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol=? (bruijn symbol=? 0 117)) (##inline ##vcore.cons (##inline ##vcore.cons 'eqv? (bruijn eqv? 0 7)) (##inline ##vcore.cons (##inline ##vcore.cons 'equal? (bruijn equal? 0 116)) (##inline ##vcore.cons (##inline ##vcore.cons 'not (bruijn not 0 8)) (##inline ##vcore.cons (##inline ##vcore.cons '< (bruijn < 0 115)) (##inline ##vcore.cons (##inline ##vcore.cons '= (bruijn = 0 9)) (##inline ##vcore.cons (##inline ##vcore.cons '> (bruijn > 0 114)) (##inline ##vcore.cons (##inline ##vcore.cons '<= (bruijn <= 0 10)) (##inline ##vcore.cons (##inline ##vcore.cons '>= (bruijn >= 0 113)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact (bruijn inexact 0 11)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact->inexact (bruijn exact->inexact 0 112)) (##inline ##vcore.cons (##inline ##vcore.cons 'number? (bruijn number? 0 12)) (##inline ##vcore.cons (##inline ##vcore.cons 'complex? (bruijn complex? 0 111)) (##inline ##vcore.cons (##inline ##vcore.cons '+ (bruijn + 0 13)) (##inline ##vcore.cons (##inline ##vcore.cons '- (bruijn - 0 110)) (##inline ##vcore.cons (##inline ##vcore.cons '* (bruijn * 0 14)) (##inline ##vcore.cons (##inline ##vcore.cons '/ (bruijn / 0 109)) (##inline ##vcore.cons (##inline ##vcore.cons 'quotient (bruijn quotient 0 15)) (##inline ##vcore.cons (##inline ##vcore.cons 'remainder (bruijn remainder 0 108)) (##inline ##vcore.cons (##inline ##vcore.cons 'max (bruijn max 0 16)) (##inline ##vcore.cons (##inline ##vcore.cons 'min (bruijn min 0 107)) (##inline ##vcore.cons (##inline ##vcore.cons 'cons (bruijn cons 0 17)) (##inline ##vcore.cons (##inline ##vcore.cons 'car (bruijn car 0 106)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdr (bruijn cdr 0 18)) (##inline ##vcore.cons (##inline ##vcore.cons 'set-car! (bruijn set-car! 0 105)) (##inline ##vcore.cons (##inline ##vcore.cons 'set-cdr! (bruijn set-cdr! 0 19)) (##inline ##vcore.cons (##inline ##vcore.cons 'caar (bruijn caar 0 104)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadr (bruijn cadr 0 20)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdar (bruijn cdar 0 103)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddr (bruijn cddr 0 21)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaar (bruijn caaar 0 102)) (##inline ##vcore.cons (##inline ##vcore.cons 'caadr (bruijn caadr 0 22)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadar (bruijn cadar 0 101)) (##inline ##vcore.cons (##inline ##vcore.cons 'caddr (bruijn caddr 0 23)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaar (bruijn cdaar 0 100)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdadr (bruijn cdadr 0 24)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddar (bruijn cddar 0 99)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdddr (bruijn cdddr 0 25)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaaar (bruijn caaaar 0 98)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaadr (bruijn caaadr 0 26)) (##inline ##vcore.cons (##inline ##vcore.cons 'caadar (bruijn caadar 0 97)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaddr (bruijn caaddr 0 27)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadaar (bruijn cadaar 0 96)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadadr (bruijn cadadr 0 28)) (##inline ##vcore.cons (##inline ##vcore.cons 'caddar (bruijn caddar 0 95)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadddr (bruijn cadddr 0 29)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaaar (bruijn cdaaar 0 94)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaadr (bruijn cdaadr 0 30)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdadar (bruijn cdadar 0 93)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaddr (bruijn cdaddr 0 31)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddaar (bruijn cddaar 0 92)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddadr (bruijn cddadr 0 32)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdddar (bruijn cdddar 0 91)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddddr (bruijn cddddr 0 33)) (##inline ##vcore.cons (##inline ##vcore.cons 'list (bruijn list 0 90)) (##inline ##vcore.cons (##inline ##vcore.cons 'length (bruijn length 0 34)) (##inline ##vcore.cons (##inline ##vcore.cons 'list-ref (bruijn list-ref 0 89)) (##inline ##vcore.cons (##inline ##vcore.cons 'map (bruijn map 0 35)) (##inline ##vcore.cons (##inline ##vcore.cons 'for-each (bruijn for-each 0 88)) (##inline ##vcore.cons (##inline ##vcore.cons 'append (bruijn append 0 36)) (##inline ##vcore.cons (##inline ##vcore.cons 'reverse (bruijn reverse 0 87)) (##inline ##vcore.cons (##inline ##vcore.cons 'memq (bruijn memq 0 37)) (##inline ##vcore.cons (##inline ##vcore.cons 'memv (bruijn memv 0 86)) (##inline ##vcore.cons (##inline ##vcore.cons 'member (bruijn member 0 38)) (##inline ##vcore.cons (##inline ##vcore.cons 'assq (bruijn assq 0 85)) (##inline ##vcore.cons (##inline ##vcore.cons 'assv (bruijn assv 0 39)) (##inline ##vcore.cons (##inline ##vcore.cons 'assoc (bruijn assoc 0 84)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->list (bruijn string->list 0 78)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->string (bruijn list->string 0 83)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-string (bruijn make-string 0 40)) (##inline ##vcore.cons (##inline ##vcore.cons 'substring (bruijn substring 0 82)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-copy (bruijn string-copy 0 41)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-copy! (bruijn string-copy! 0 81)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-ref (bruijn string-ref 0 42)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-set! (bruijn string-set! 0 80)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-length (bruijn string-length 0 43)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->symbol (bruijn string->symbol 0 79)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->number (bruijn string->number 0 44)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->list (bruijn string->list 0 78)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-append (bruijn string-append 0 45)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol->string (bruijn symbol->string 0 77)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->vector (bruijn list->vector 0 46)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector (bruijn vector 0 76)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-ref (bruijn vector-ref 0 47)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-set! (bruijn vector-set! 0 75)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-length (bruijn vector-length 0 48)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-for-each (bruijn vector-for-each 0 74)) (##inline ##vcore.cons (##inline ##vcore.cons 'char->integer (bruijn char->integer 0 49)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-output-port (bruijn current-output-port 0 73)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-error-port (bruijn current-error-port 0 50)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-input-port (bruijn current-input-port 0 72)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-input-file (bruijn open-input-file 0 51)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-file (bruijn open-output-file 0 71)) (##inline ##vcore.cons (##inline ##vcore.cons 'close-port (bruijn close-port 0 52)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-string (bruijn open-output-string 0 70)) (##inline ##vcore.cons (##inline ##vcore.cons 'get-output-string (bruijn get-output-string 0 53)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-output-to-file (bruijn with-output-to-file 0 69)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-input-from-file (bruijn with-input-from-file 0 54)) (##inline ##vcore.cons (##inline ##vcore.cons 'read-char (bruijn read-char 0 68)) (##inline ##vcore.cons (##inline ##vcore.cons 'read-line (bruijn read-line 0 55)) (##inline ##vcore.cons (##inline ##vcore.cons 'read (bruijn read 0 67)) (##inline ##vcore.cons (##inline ##vcore.cons 'newline (bruijn newline 0 56)) (##inline ##vcore.cons (##inline ##vcore.cons 'display (bruijn display 0 66)) (##inline ##vcore.cons (##inline ##vcore.cons 'write (bruijn write 0 57)) (##inline ##vcore.cons (##inline ##vcore.cons 'call/cc (bruijn call/cc 0 65)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-current-continuation (bruijn call-with-current-continuation 0 58)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-values (bruijn call-with-values 0 64)) (##inline ##vcore.cons (##inline ##vcore.cons 'apply (bruijn apply 0 59)) (##inline ##vcore.cons (##inline ##vcore.cons 'values (bruijn values 0 63)) (##inline ##vcore.cons (##inline ##vcore.cons 'command-line (bruijn command-line 0 60)) (##inline ##vcore.cons (##inline ##vcore.cons 'exit (bruijn exit 0 62)) (##inline ##vcore.cons (##inline ##vcore.cons 'error (bruijn error 0 61)) '())))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
     V_CALL(VGetArg(upenv, 128-1, 0), runtime,
-      VInlineCons(
-        VInlineCons(
+      VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0null_Q,
         _var124),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0eof__object_Q,
         _var0),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0boolean_Q,
         _var123),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0pair_Q,
         _var1),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0vector_Q,
         _var122),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0procedure_Q,
         _var2),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0symbol_Q,
         _var121),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0string_Q,
         _var3),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0exact_Q,
         _var120),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0inexact_Q,
         _var4),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0real_Q,
         _var119),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0integer_Q,
         _var5),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0char_Q,
         _var118),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0eq_Q,
         _var6),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0symbol_E_Q,
         _var117),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0eqv_Q,
         _var7),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0equal_Q,
         _var116),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0not,
         _var8),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0_L,
         _var115),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0_E,
         _var9),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0_G,
         _var114),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0_L_E,
         _var10),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0_G_E,
         _var113),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0inexact,
         _var11),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0exact___Ginexact,
         _var112),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0number_Q,
         _var12),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0complex_Q,
         _var111),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0_P,
         _var13),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0__,
         _var110),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0_S,
         _var14),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0_W,
         _var109),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0quotient,
         _var15),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0remainder,
         _var108),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0max,
         _var16),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0min,
         _var107),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cons,
         _var17),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0car,
         _var106),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cdr,
         _var18),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0set__car_B,
         _var105),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0set__cdr_B,
         _var19),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0caar,
         _var104),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cadr,
         _var20),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cdar,
         _var103),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cddr,
         _var21),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0caaar,
         _var102),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0caadr,
         _var22),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cadar,
         _var101),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0caddr,
         _var23),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cdaar,
         _var100),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cdadr,
         _var24),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cddar,
         _var99),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cdddr,
         _var25),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0caaaar,
         _var98),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0caaadr,
         _var26),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0caadar,
         _var97),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0caaddr,
         _var27),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cadaar,
         _var96),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cadadr,
         _var28),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0caddar,
         _var95),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cadddr,
         _var29),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cdaaar,
         _var94),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cdaadr,
         _var30),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cdadar,
         _var93),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cdaddr,
         _var31),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cddaar,
         _var92),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cddadr,
         _var32),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cdddar,
         _var91),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0cddddr,
         _var33),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0list,
         _var90),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0length,
         _var34),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0list__ref,
         _var89),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0map,
         _var35),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0for__each,
         _var88),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0append,
         _var36),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0reverse,
         _var87),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0memq,
         _var37),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0memv,
         _var86),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0member,
         _var38),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0assq,
         _var85),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0assv,
         _var39),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0assoc,
         _var84),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0string___Glist,
         _var78),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0list___Gstring,
         _var83),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0make__string,
         _var40),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0substring,
         _var82),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0string__copy,
         _var41),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0string__copy_B,
         _var81),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0string__ref,
         _var42),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0string__set_B,
         _var80),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0string__length,
         _var43),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0string___Gsymbol,
         _var79),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0string___Gnumber,
         _var44),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0string___Glist,
         _var78),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0string__append,
         _var45),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0symbol___Gstring,
         _var77),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0list___Gvector,
         _var46),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0vector,
         _var76),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0vector__ref,
         _var47),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0vector__set_B,
         _var75),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0vector__length,
         _var48),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0vector__for__each,
         _var74),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0char___Ginteger,
         _var49),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0current__output__port,
         _var73),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0current__error__port,
         _var50),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0current__input__port,
         _var72),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0open__input__file,
         _var51),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0open__output__file,
         _var71),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0close__port,
         _var52),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0open__output__string,
         _var70),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0get__output__string,
         _var53),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0with__output__to__file,
         _var69),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0with__input__from__file,
         _var54),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0read__char,
         _var68),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0read__line,
         _var55),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0read,
         _var67),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0newline,
         _var56),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0display,
         _var66),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0write,
         _var57),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0call_Wcc,
         _var65),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0call__with__current__continuation,
         _var58),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0call__with__values,
         _var64),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0apply,
         _var59),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0values,
         _var63),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0command__line,
         _var60),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0exit,
         _var62),
-        VInlineCons(
-        VInlineCons(
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
         _V0error,
         _var61),
         VNULL)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
