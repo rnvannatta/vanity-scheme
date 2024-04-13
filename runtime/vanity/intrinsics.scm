@@ -57,6 +57,7 @@
          ; Predicates
          ((##vcore.null?) "VNullP2")
          ((##vcore.pair?) "VPairP2")
+         ((##vcore.record?) "VRecordP2")
          ((##vcore.vector?) "VVectorP2")
          ((##vcore.procedure?) "VProcedureP2")
          ((##vcore.blob?) "VBlobP2")
@@ -74,6 +75,15 @@
 
          ; Logic
          ((##vcore.not) "VNot2")
+
+         ; Dynamic Variables
+         ((##vcore.get-dynamics) "VGetDynamics")
+         ((##vcore.push-dynamic) "VPushDynamic")
+         ((##vcore.pop-dynamic) "VPopDynamic")
+         ((##vcore.get-exception-handler) "VGetExceptionHandler")
+         ((##vcore.push-exception-handler) "VPushExceptionHandler")
+         ((##vcore.pop-exception-handler) "VPopExceptionHandler")
+         ((##vcore.raise) "VRaise")
 
          ; System
          ((##vcore.next) "VNext2")
@@ -106,6 +116,12 @@
          ((##vcore.vector-ref) "VVectorRef2")
          ((##vcore.vector-set!) "VVectorSet2")
          ((##vcore.vector-length) "VVectorLength2")
+
+         ; Records
+         ((##vcore.record) "VCreateRecord2")
+         ((##vcore.record-ref) "VRecordRef2")
+         ((##vcore.record-set!) "VRecordSet2")
+         ((##vcore.record-length) "VRecordLength2")
 
          ; Hash Table
          ((##vcore.make-hash-table) "VMakeHashTable")
@@ -207,6 +223,7 @@
          ((##vcore.null?) ##vcore.null?)
          ((##vcore.pair?) ##vcore.pair?)
          ((##vcore.vector?) ##vcore.vector?)
+         ((##vcore.record?) ##vcore.record?)
          ((##vcore.procedure?) ##vcore.procedure?)
          ((##vcore.blob?) ##vcore.blob?)
          ((##vcore.symbol?) ##vcore.symbol?)
@@ -224,6 +241,15 @@
          ; Logic
          ((##vcore.not) ##vcore.not)
 
+         ; Dynamic Variables
+         ((##vcore.get-dynamics) ##vcore.get-dynamics)
+         ((##vcore.push-dynamic) ##vcore.push-dynamic)
+         ((##vcore.pop-dynamic) ##vcore.pop-dynamic)
+         ((##vcore.get-exception-handler) ##vcore.get-exception-handler)
+         ((##vcore.push-exception-handler) ##vcore.push-exception-handler)
+         ((##vcore.pop-exception-handler) ##vcore.pop-exception-handler)
+         ((##vcore.raise) ##vcore.raise)
+
          ; System
          ((##vcore.next) ##vcore.next)
          ((##vcore.call/cc) ##vcore.call/cc)
@@ -234,6 +260,12 @@
          ((##vcore.exit) ##vcore.exit)
          ((##vcore.define-global) ##vcore.define-global)
          ((##vcore.set-global!) ##vcore.set-global!)
+
+         ; Records
+         ((##vcore.record) ##vcore.record)
+         ((##vcore.record-ref) ##vcore.record-ref)
+         ((##vcore.record-set!) ##vcore.record-set!)
+         ((##vcore.record-length) ##vcore.record-length)
 
          ((##vcore.import) ##vcore.import)
          ((##vcore.function) ##vcore.function)
@@ -255,6 +287,12 @@
          ((##vcore.vector-ref) ##vcore.vector-ref)
          ((##vcore.vector-set!) ##vcore.vector-set!)
          ((##vcore.vector-length) ##vcore.vector-length)
+
+         ; Records
+         ((##vcore.record) ##vcore.record)
+         ((##vcore.record-ref) ##vcore.record-ref)
+         ((##vcore.record-set!) ##vcore.record-set!)
+         ((##vcore.record-length) ##vcore.record-length)
 
          ; Hash Table
          ((##vcore.make-hash-table) ##vcore.make-hash-table)

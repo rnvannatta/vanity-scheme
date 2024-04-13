@@ -84,6 +84,9 @@ typedef struct VRuntime {
   unsigned VNumGlobals;
   unsigned VNumGlobalSlots;
   bool VGrowSymtable;
+  // dynamic variables
+  VWORD dynamics;
+  VWORD exception_handlers;
   // finalizers
   VFinalizerTable VHeapFinalizers[2];
   // gc info

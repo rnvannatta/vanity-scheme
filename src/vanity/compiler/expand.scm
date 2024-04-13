@@ -206,6 +206,8 @@
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
         (('begin x) (expand-library-expr x))
         (('begin x . xs) (append (expand-library-expr x) (expand-library-expr (cons 'begin xs))))
+        (('define-record-type . rest)
+         (expand-library-expr (expand-define-record-type expr)))
         ; TODO why not? we've done everything we need for expressions in libraries
         (else (compiler-error "expressions not permitted in libraries yet" expr))))
     ; still has free variables
@@ -231,6 +233,69 @@
             .
             ,(cddr basic-library))))))))
 
+  (define (valid-identifier? s) (symbol? s))
+  (define (valid-arguments? args)
+    (let loop ((rest args))
+      (if (pair? rest)
+          (and
+            (valid-identifier? (car rest))
+            (not (memtail (car rest) (cdr rest)))
+            (loop (cdr rest)))
+          #t)))
+  (define (expand-define-record-type expr)
+    (define (validate-fields fieldnames fields)
+      (if (null? fieldnames)
+          #t
+          (begin
+            (if (not (assv (car fieldnames) fields))
+                (compiler-error "define-record type: field not defined in field declaration list" (car fieldnames) fields))
+            (validate-fields (cdr fieldnames) fields))))
+    (define (expand-field pred fields field i)
+      (define (make-getter getter)
+        (if (not (valid-identifier? getter))
+            (compiler-error "define-record-type: not a valid identifier" getter))
+        `(define (,getter rec)
+           (if (,pred rec)
+               (##vcore.record-ref rec ,(+ i 1))
+               (error "not a record of the right type" ',getter rec))))
+      (define (make-setter setter)
+        (if (not (valid-identifier? setter))
+            (compiler-error "define-record-type: not a valid identifier" setter))
+        `(define (,setter rec x)
+           (if (,pred rec)
+               (##vcore.record-set! rec ,(+ i 1) x)
+               (error "not a record of the right type" ',setter rec))))
+      (match (assv field fields)
+        ((field getter)
+         (make-getter getter))
+        ((field getter setter)
+         `(begin
+           ,(make-getter getter)
+           ,(make-setter setter)))))
+    (match expr
+      (('define-record-type name (constructor field-names ...) pred fields ...)
+       (if (not (and (valid-identifier? name)
+                     (valid-identifier? constructor)
+                     (fold (lambda (a b) (and a b)) #t (map valid-identifier? field-names))
+                     (valid-identifier? pred)))
+           (compiler-error "malformed define-record-type: name, constructor, field names, and predicate must all be valid identifiers" expr))
+       (if (not (valid-arguments? field-names))
+           (compiler-error "malformed define-record-type: constructor field names contain a duplicate" field-names))
+       (if (not (= (length field-names) (length fields)))
+           (compiler-error "malformed define-record-type: there must be exactly one field declaration per fieldname" field-names fields))
+       ; having a gensymed truepred prevents the record type from getting fucked up by overdefining pred
+       ; eg (define-record-type nil (nil) nil?)
+       ; still works correctly even if we (define nil? 'lmao)
+       (let ((recordname (gensym name))
+             (truepred (gensym pred)))
+         `(begin
+            (define ,recordname (##vcore.cons ',name '()))
+            (define (,truepred x) (and (##vcore.record? x) (eqv? (##vcore.record-ref x 0) ,recordname)))
+            (define ,pred ,truepred)
+            (define (,constructor . ,field-names) (##vcore.record ,recordname . ,field-names))
+            .
+            ,(map (lambda (field i) (expand-field truepred fields field i)) field-names (iota (length field-names))))))
+      (else (compiler-error "malformed define-record-type" expr))))
 
   (define (memtail x args)
     (if (pair? args)
@@ -269,6 +334,8 @@
 
       (('define-library lib . body) (list (expand-library `(define-library ,lib . ,body) paths)))
       (('define-library . noise) (compiler-error "malformed define-library" `(define-library . ,noise)))
+
+      (('define-record-type . body) (expand-toplevel (expand-define-record-type expr) paths))
 
       (('import) '())
       (('import lib . rest)
@@ -321,7 +388,7 @@
 
       (('let*-values ((xs producer) . rest) . body)
        (expand-syntax `(call-with-values (lambda () ,producer) (lambda ,xs (let*-values ,rest . ,body)))))
-      (('let*-values () . body) (expand-syntax `(begin . ,body)))
+      (('let*-values () . body) (expand-syntax `(let () . ,body)))
       (('let*-values . noise) (compiler-error "malformed let-values*" `(let*-values . ,noise)))
 
       (('letrec* ((xs vals) ...) . body)
@@ -332,8 +399,18 @@
       (('letrec* . noise) (compiler-error "malformed letrec" `(letrec . ,noise)))
 
       (('let* ((x val) rest ...) . body) (expand-syntax `(let ((,x ,val)) (let* ,rest . ,body))))
-      (('let* () . body) (expand-syntax `(begin . ,body)))
+      (('let* () . body) (expand-syntax `(let () . ,body)))
       (('let* . noise) (compiler-error "malformed let*" `(let* . ,noise)))
+
+      (('parameterize ((x val) rest ...) . body)
+       (let ((parameter (gensym "parameter"))
+             (keyval (gensym "keyval")))
+         (expand-syntax
+           `(let* ((,parameter ,x)
+                   (,keyval (,parameter '##vcore.push-value ,val)))
+              (parameterize ,rest . ,body)
+              (,parameter '##vcore.pop-value ,keyval)))))
+      (('parameterize () . body) (expand-syntax `(let () . ,body)))
 
       (('begin x) (expand-syntax x))
       (('begin x y) `(begin ,(expand-syntax x) ,(expand-syntax y)))
