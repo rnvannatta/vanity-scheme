@@ -35,6 +35,10 @@
 #include <stdint.h>
 #include <limits.h>
 
+// only used by call/cc. maybe we should move call/cc to runtime.c
+// it's a pretty goofy function that's kind of fundamental
+#include "vruntime_private.h"
+
 SYSV_CALL __attribute__((used)) static void VAdd2CaseVarargs(V_CORE_ARGS, VWORD k, ...) {
     V_ARG_MIN2("+", 1, argc);
     bool exact = true;
@@ -360,6 +364,10 @@ SYSV_CALL void VVectorP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("vector?", 2, argc);
   V_CALL(k, runtime, VEncodeBool(VIsVector(x)));
 }
+SYSV_CALL void VRecordP2(V_CORE_ARGS, VWORD k, VWORD x) {
+  V_ARG_CHECK2("record?", 2, argc);
+  V_CALL(k, runtime, VEncodeBool(VIsRecord(x)));
+}
 SYSV_CALL void VHashTableP(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK2("hash-table?", 2, argc);
   V_CALL(k, runtime, VEncodeBool(VIsHashTable(x)));
@@ -485,6 +493,47 @@ SYSV_CALL void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vector) {
   V_ARG_CHECK2("vector-length", 2, argc);
   VVector * vec = VCheckedDecodeVector(vector, "vector-length");
   V_CALL(k, runtime, VEncodeInt(vec->len));
+}
+
+// records
+
+SYSV_CALL void VCreateRecord2(V_CORE_ARGS, VWORD k, VWORD type, ...) {
+  V_ARG_MIN2("record", 2, argc);
+
+  int len = argc-2;
+  if(len > 65534) VError("record: records with more than 65535 fields not supported\n");
+
+  VVector * rec = V_ALLOCA_VECTOR(len+1);
+  rec->base = VMakeSmallObject(VRECORD);
+  rec->len = len+1;
+
+  rec->arr[0] = type;
+  int i = 1;
+  int c = 2;
+  va_list args;
+  va_start(args, type);
+  while(c < argc) {
+    rec->arr[i++] = va_arg(args, VWORD);
+    c++;
+  }
+  va_end(args);
+  V_CALL(k, runtime, VEncodePointer(rec, VPOINTER_OTHER));
+}
+
+SYSV_CALL void VRecordRef2(V_CORE_ARGS, VWORD k, VWORD record, VWORD index) {
+  V_ARG_CHECK2("record-ref", 3, argc);
+  VVector * rec = VCheckedDecodeRecord(record, "record-ref");
+  if(VWordType(index) != VIMM_INT) VError("record-ref: arg 2 not an int\n");
+  int i = VDecodeInt(index);
+  if(!(0 <= i && i < rec->len)) VError("record-ref: out of range\n");
+
+  V_CALL(k, runtime, rec->arr[i]);
+}
+
+SYSV_CALL void VRecordLength2(V_CORE_ARGS, VWORD k, VWORD record) {
+  V_ARG_CHECK2("record-length", 2, argc);
+  VVector * rec = VCheckedDecodeRecord(record, "record-length");
+  V_CALL(k, runtime, VEncodeInt(rec->len));
 }
 
 // hash tables
@@ -1237,6 +1286,8 @@ SYSV_CALL static void VCallCCLambda2(V_CORE_ARGS, VWORD k, ...) {
   // so we need a wrapper to drop arg0 then call the continuation
   // and we can do that just with memmoving and changing the up var
   VWORD realk = statics->vars[0];
+  runtime->dynamics = statics->vars[1];
+  runtime->exception_handlers = statics->vars[2];
   if(argc == 2) {
     // 99.99% of use cases, returning single value
     va_list args;
@@ -1273,9 +1324,11 @@ SYSV_CALL void VCallCC2(V_CORE_ARGS, VWORD k, VWORD _proc) {
   // (lambda (k proc) (proc k (lambda (k2 . xs) (apply k xs))))
   V_ARG_CHECK2("call/cc", 2, argc);
   
-  VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[1]));
-  env->base = VMakeSmallObject(VENV); env->num_vars = 1; env->var_len = 1; env->up = NULL;
+  VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[3]));
+  env->base = VMakeSmallObject(VENV); env->num_vars = 3; env->var_len = 3; env->up = NULL;
   env->vars[0] = k;
+  env->vars[1] = runtime->dynamics;
+  env->vars[2] = runtime->exception_handlers;
   VClosure k_wrapped = VMakeClosure2((VFunc)VCallCCLambda2, env);
 
   V_CALL(_proc, runtime, k, VEncodeClosure(&k_wrapped));

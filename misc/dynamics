@@ -1,57 +1,26 @@
-(let-dynamic ((out (open-file blah)))
-  fsdkfsl
-)
+`current-input-port` is implemented like...  (lambda () (cdr (assv secret (##vcore.dynamics))))
 
-(dynamic-bind ((x f))
-  body
-)
+(define (make-parameter init)
+  (let ((secret (##vcore.gensym "parameter-secret")))
+  (lambda ()
+    (let ((lookup (assv secret (##vcore.dynamics))))
+      (if lookup (cdr lookup) init)))))
 
-===>
+`call/cc` is implemented like...
+(define (call/cc proc)
+  (let ((dynamics (##vcore.dynamics)))
+    (##vcore.call/cc
+      (lambda (k)
+        (proc (lambda (ret) (##vcore.set-dynamics! dynamics) (k ret)))))))
+
+`parameterize` is implemented like...
+(parameterize ((radix 2)) blah)
+
+=>
 
 (begin
-  (##sys.dynamic-push x f)
-  (begin body)
-  (##sys.dynamic-pop))
+  (##vcore.dynamic-push (radix '##vcore.get-secret) 2)
+  blah
+  (##vcore.dynamic-pop))
 
-
-; continuations work via capturing their current bindings
-; since we NEVER return we just replace the bindings on continuation
-
-; example implementation
-(define *winds* '())
-(define (call/cc proc)
-  (let ((mywinds *winds*))
-    (##sys.call-cc
-      (lambda (k)
-        (proc (lambda (ret) (set! *winds* mywinds) (k ret)))))))
-
-; NOTE in reality to avoid mutation we use a hidden parameter for winds instead of a global
-
-
-; the final detail is that (x) is actually a procedure, (x) extracts the value of itself from the winds
-; something along the lines of
-(letrec ((x (lambda () (##sys.dynamic-query x))))
-  x)
-
-; runtime - yes death to globals
-; ups - mandatory yes
-; returns - a stupid idea: skiplists are smarter
-;   even smarter than skiplists is just binding a toplevels for all the imported variables to go to
-; dynamics - just stuff in runtime. write on a chalkboard until it sticks: functions never return
-; -- you need seperate runtimes per thread anyway
-; argc - mandatory yes
-
-; is it a smart idea to stuff ups in runtime?
-; from 5 to 3 lets us put args in int registers which is probably smarter
-
-; 3 has 3 args in int register; 2 has 4 args in int register.
-
-; common 3 arg functions.... not many tbh
-; most of my code that has more than 2 args is a 'complicated' function
-
-; SO THEN the sysv abi is
-; void func(VRuntime * runtime, VEnv * upenv, int argc, VWORD a, VWORD b, VWORD c, ...);
-; where VWORD is an integral type
-
-; we can tack on 8 more VWORD_FAR that go in float registers
-; and once we become ballers we can abandon sysv and just clobber all the registers
+We need a second parameter list for exception handlers because they run inside the dynamic extant of the error but without the exception installed

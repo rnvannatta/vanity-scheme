@@ -405,6 +405,120 @@ SYSV_CALL void * VForwarded(void * address) {
     return NULL;
 }
 
+SYSV_CALL void VGetDynamics(V_CORE_ARGS, VWORD k) {
+  V_CALL(k, runtime, runtime->dynamics);
+}
+
+SYSV_CALL void VPushDynamic(V_CORE_ARGS, VWORD k, VWORD key, VWORD val) {
+  VPair entry = VMakePair(key, val);
+  VPair node = VMakePair(VEncodePair(&entry), runtime->dynamics);
+  runtime->dynamics = VEncodePair(&node);
+
+  V_CALL(k, runtime, VEncodePair(&entry));
+}
+
+SYSV_CALL void VPopDynamic(V_CORE_ARGS, VWORD k, VWORD keyval) {
+  if(VIsEq(runtime->dynamics, VNULL))
+    VError("pop-dynamic: attempted to pop a dynamic when there are none bound: ~S\n", keyval);
+  VPair * top = VDecodePair(runtime->dynamics);
+  if(!VIsEq(keyval, top->first)) {
+    VError("pop-dynamic: you must pop dynamics in inverse order they were pushed: got ~S, expected ~S, chain ~S\n", keyval, top->first, runtime->dynamics);
+  }
+  runtime->dynamics = top->rest;
+
+  V_CALL(k, runtime, VVOID);
+}
+
+SYSV_CALL void VGetExceptionHandlers(V_CORE_ARGS, VWORD k) {
+  V_CALL(k, runtime, runtime->exception_handlers);
+}
+
+static SYSV_CALL void VDefaultExceptionHandler(V_CORE_ARGS, VWORD k, VWORD err) {
+  VAbort2(runtime, NULL, 1, err);
+}
+static VClosure default_exception_handler = { .base = { .tag = VCLOSURE }, .func = (VFunc)VDefaultExceptionHandler, .env = NULL };
+static SYSV_CALL VWORD VGetExceptionHandlerImpl(VRuntime * runtime) {
+  if(VIsEq(runtime->exception_handlers, VNULL)) {
+    return VEncodeClosure(&default_exception_handler);
+  } else {
+    VPair * top = VDecodePair(runtime->exception_handlers);
+    runtime->exception_handlers = top->rest;
+    return top->first;
+  }
+}
+SYSV_CALL void VGetExceptionHandler(V_CORE_ARGS, VWORD k) {
+  V_CALL(k, runtime, VGetExceptionHandlerImpl(runtime));
+}
+
+SYSV_CALL void VPushExceptionHandler(V_CORE_ARGS, VWORD k, VWORD handler) {
+  (void)VCheckedDecodeClosure(handler, "push-exception-hander");
+    
+  VPair node = VMakePair(handler, runtime->exception_handlers);
+  runtime->exception_handlers = VEncodePair(&node);
+
+  V_CALL(k, runtime, VVOID);
+}
+
+SYSV_CALL void VPopExceptionHandler(V_CORE_ARGS, VWORD k, VWORD handler) {
+  if(VIsEq(runtime->exception_handlers, VNULL))
+    VError("pop-exception-handler: attempted to pop an exception handler when there are none bound: ~S\n", handler);
+
+  VPair * top = VDecodePair(runtime->exception_handlers);
+  if(!VIsEq(handler, top->first)) {
+    VError("pop-exception-handler: you must pop exception handlers in inverse order they were pushed: got ~S, expected ~S\n",
+           handler, top->first);
+  }
+  runtime->exception_handlers = top->rest;
+
+  V_CALL(k, runtime, VVOID);
+}
+
+SYSV_CALL void VRaise(V_CORE_ARGS, VWORD k, VWORD x);
+static SYSV_CALL void VRaiseK(V_CORE_ARGS, ...) {
+  VWORD x = statics->vars[0];
+  V_CALL_FUNC(VRaise, NULL, runtime, VFALSE, x);
+}
+
+SYSV_CALL void VRaise(V_CORE_ARGS, VWORD _, VWORD x) {
+  VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[1]));
+  VInitEnv(env, 1, 1, NULL);
+  env->vars[0] = x;
+  VClosure raisek = VMakeClosure2(VRaiseK, env);
+
+  VWORD handler = VGetExceptionHandlerImpl(runtime);
+  V_CALL(handler, runtime, VEncodeClosure(&raisek), x);
+}
+
+SYSV_CALL void VVFPrintfC(FILE * f, char const * str, va_list args);
+SYSV_CALL void VErrorC(VRuntime * runtime, const char * str, ...) {
+  va_list args;
+  va_start(args, str);
+  FILE * f = tmpfile();
+  VBlob * ret = alloca(sizeof(VBlob)+4096);
+  ret->base = VMakeSmallObject(VSTRING);
+  ret->len = 4096;
+  if(f) {
+    VVFPrintfC(f, str, args);
+    int len = ftell(f);
+    rewind(f);
+
+    if(len < ret->len)
+      ret->len = len;
+    else
+      len = ret->len;
+
+    fread(ret->buf, len, 1, f);
+    ret->buf[len-1] = '\0';
+    fclose(f);
+  } else {
+    char msg[] = "an error occured but file descriptors were exhausted. Unable to transcribe message.";
+    memcpy(ret->buf, msg, sizeof msg);
+    ret->len = sizeof msg;
+  }
+  va_end(args);
+  V_CALL_FUNC(VRaise, NULL, runtime, VFALSE, VEncodePointer(ret, VPOINTER_OTHER));
+}
+
 /////////////////////////////////////////////////////////////
 //                   GARBAGE COLLECTOR                     //
 /////////////////////////////////////////////////////////////
@@ -484,6 +598,8 @@ SYSV_CALL static VEnvironment * VCheckedMoveEnviron(VRuntime * runtime, VEnviron
   // runtime is not on the heap, but it contains pointers to the heap
   if(ret->runtime) {
     ret->runtime->VExitCode = VMoveDispatch(runtime, ret->runtime->VExitCode);
+    ret->runtime->dynamics = VMoveDispatch(runtime, ret->runtime->dynamics);
+    ret->runtime->exception_handlers = VMoveDispatch(runtime, ret->runtime->exception_handlers);
   }
 
   return ret;
@@ -563,6 +679,7 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
           break;
         }
         case VVECTOR:
+        case VRECORD:
         {
           VVector * v = ptr;
           return VEncodePointer(VMoveObject(runtime, v, sizeof(VVector) + sizeof(VWORD[v->len])), VPOINTER_OTHER);
@@ -681,6 +798,7 @@ SYSV_CALL static VWORD * VCheneyScan(VRuntime * runtime, VWORD * cur) {
       break;
     }
     case VVECTOR:
+    case VRECORD:
     {
       VVector * v = ((VVector*)cur);
       VCheneyVector(runtime, v);
@@ -1095,10 +1213,8 @@ static inline size_t VObjectSize(VObject const * o) {
     case VPAIR:
       return sizeof(VPair);
     case VVECTOR:
-      return VVectorSize(o);
     case VRECORD:
-      assert(0);
-      return 0;
+      return VVectorSize(o);
     case VSYMBOL:
     case VSTRING:
     case VBUFFER:
@@ -1215,10 +1331,8 @@ static inline void VShiftObject(VObject * o, void const * old, void const * olde
       VShiftPair(o, old, oldend, shift);
       return;
     case VVECTOR:
-      VShiftVector(o, old, oldend, shift);
-      return;
     case VRECORD:
-      assert(0);
+      VShiftVector(o, old, oldend, shift);
       return;
     case VRUNTIME:
       VShiftRuntime(o, old, oldend, shift);
@@ -1354,16 +1468,39 @@ SYSV_CALL void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
 }
 
 SYSV_CALL void VAbort2(V_CORE_ARGS, ...) {
-  if(runtime)
-    VPrintCallHistory(runtime);
-  fflush(stderr);
-  fflush(stdout);
+
+  // Print the msg, attempt to start a debugger... but only if we're the main thread
+  // fibers should continue throwing through into the main thread.
+  // we might have more exception handlers in the main thread.
+  VWORD err = VERROR;
+  if(!runtime || VIsMain(runtime)) {
+    if(argc) {
+      va_list args;
+      va_start(args, argc);
+      err = va_arg(args, VWORD);
+      va_end(args);
 #ifdef __linux__
-  raise(SIGTRAP);
+      if(isatty(fileno(stderr)))
+        VFPrintfC(stderr, "\033[1;31munhandled exception:\033[0m ~A~N", err);
+      else
+#endif
+      VFPrintfC(stderr, "unhandled exception: ~A~N", err);
+    }
+
+    if(runtime)
+      VPrintCallHistory(runtime);
+    fflush(stderr);
+    fflush(stdout);
+#ifdef __linux__
+    raise(SIGTRAP);
 #endif
 #ifdef _WIN64
-  DebugBreak();
+    DebugBreak();
 #endif
+  }
+
+  // TODO actually pass the error here
+
   if(runtime)
     VLongJmp(runtime->VRoot, VJMP_ERROR);
   else
@@ -1524,6 +1661,13 @@ SYSV_CALL void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val) {
   VSetPair2(runtime, statics, argc, false, k, pair, val);
 }
 
+SYSV_CALL void VVectorSetImpl(VRuntime * runtime, VWORD k, VVector * vector, int index, VWORD val) {
+  VTrackMutation(runtime, vector, vector->arr + index, val);
+  vector->arr[index] = val;
+
+  V_CALL(k, runtime, VVOID);
+}
+
 SYSV_CALL void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
   V_ARG_CHECK2("vector-set!", 4, argc);
   if(VStackOverflowNoInline(runtime)) {
@@ -1534,10 +1678,21 @@ SYSV_CALL void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
     int index = VDecodeInt(i);
     if(!(0 <= index && index < vector->len)) VError("vector-set!: out of range\n");
 
-    VTrackMutation(runtime, vector, vector->arr + index, val);
-    vector->arr[index] = val;
+    VVectorSetImpl(runtime, k, vector, index, val);
+  }
+}
+SYSV_CALL void VRecordSet2(V_CORE_ARGS, VWORD k, VWORD r, VWORD i, VWORD val) {
+  V_ARG_CHECK2("record-set!", 4, argc);
+  if(VStackOverflowNoInline(runtime)) {
+    VGarbageCollect2Args((VFunc)VRecordSet2, runtime, statics, 4, argc, k, r, i, val);
+  } else {
+    VVector * record = VCheckedDecodeRecord(r, "record-set!");
+    if(VWordType(i) != VIMM_INT) VError("record-set!: arg 2 not an int\n");
+    int index = VDecodeInt(i);
+    if(!(0 <= index && index < record->len)) VError("record-set!: out of range\n");
+    if(index == 0) VError("record-set!: tried to set tag field of record\n");
 
-    V_CALL(k, runtime, VVOID);
+    VVectorSetImpl(runtime, k, record, index, val);
   }
 }
 
@@ -1967,6 +2122,11 @@ static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
           fprintf(f, "#vector");
           break;
         }
+        case VRECORD:
+        {
+          fprintf(f, "#record");
+          break;
+        }
         case VHASH_TABLE:
         {
           fprintf(f, "#hash-table");
@@ -2061,6 +2221,9 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   r->VNumGlobals = 0;
   r->VNumGlobalSlots = 0;
   r->VGrowSymtable = false;
+
+  r->dynamics = VNULL;
+  r->exception_handlers = VNULL;
 
   memset(&r->VHeapFinalizers, 0, sizeof r->VHeapFinalizers);
 
@@ -2322,6 +2485,9 @@ static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * f
   r->VNumGlobalSlots = runtime->VNumGlobalSlots;
   r->VGrowSymtable = false;
 
+  r->dynamics = runtime->dynamics;
+  r->exception_handlers = VNULL;
+
   memset(&r->VHeapFinalizers, 0, sizeof r->VHeapFinalizers);
 
   r->VNumMinorGCs = 0;
@@ -2488,9 +2654,9 @@ static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfiber
       VPair * reappair = VDecodePair(cur_reap);
       VWORD fiber_ret = VInlineCar2(runtime, cur_reap);
       if(VIsToken(fiber_ret, VTOK_ERROR))
-        VError("fiber-split: a fiber errored\n");
+        VErrorC(runtime, "fiber-fork: a fiber errored\n");
       if(VIsToken(fiber_ret, VTOK_VOID))
-        VError("fiber-split: a fiber returned but did not return a value\n");
+        VErrorC(runtime, "fiber-fork: a fiber returned but did not return a value\n");
 
       VRuntime * fiber_runtime = datas[halfreapnum].my_runtime;
       size_t reapsize = VReapSpaceNeeded(fiber_ret, fiber_runtime);
@@ -2591,6 +2757,7 @@ static uint64_t VLaunchAwaiter(VFiber * me, void * _data) {
   VWORD thunk = VEncodeClosure(&_thunk);
 
   VInitFiberRuntime(data->my_runtime, data->base_runtime, me);
+  data->my_runtime->exception_handlers = data->base_runtime->exception_handlers;
   data->my_runtime->my_future = (VFuture*)VDecodePointer(data->future);
   VWORD ret = VStart3(data->my_runtime, 1, &thunk);
 
@@ -2638,6 +2805,10 @@ SYSV_CALL void VAsync(V_CORE_ARGS, VWORD k, VWORD future_thunk) {
     if(atomic_load(&future.fiber))
       VError("async control flow error: async-join occured even though the future hasn't been awaited\n");
 
+    // Grab pieces of state not represented in the continuation
+    runtime->dynamics = awaiter_data.my_runtime->dynamics;
+    runtime->exception_handlers = awaiter_data.my_runtime->exception_handlers;
+
     VRuntime * runtimes[2] = {
       awaiter_data.my_runtime,
       thunk_data.my_runtime,
@@ -2674,6 +2845,10 @@ SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD _future) {
     fiber = atomic_load(&future->fiber);
     if(fiber) {
       future->val = VWord(VFiberWait(runtime->fiber_context, fiber, runtime->my_fiber));
+      if(VIsToken(future->val, VTOK_ERROR)) {
+        future->val = VVOID;
+        VErrorC(runtime, "await: a future errored\n");
+      }
       assert(atomic_exchange(&future->fiber, NULL));
     }
     VFiberRelease(future->lock, runtime->fiber_context, runtime->my_fiber);

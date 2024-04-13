@@ -41,6 +41,7 @@ SYSV_CALL void VNullP2(V_CORE_ARGS, VWORD k, VWORD x);
 SYSV_CALL void VEofP2(V_CORE_ARGS, VWORD k, VWORD x);
 SYSV_CALL void VPairP2(V_CORE_ARGS, VWORD k, VWORD x);
 SYSV_CALL void VVectorP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VRecordP2(V_CORE_ARGS, VWORD k, VWORD x);
 SYSV_CALL void VProcedureP2(V_CORE_ARGS, VWORD k, VWORD x);
 SYSV_CALL void VBlobP2(V_CORE_ARGS, VWORD k, VWORD x);
 SYSV_CALL void VSymbolP2(V_CORE_ARGS, VWORD k, VWORD x);
@@ -68,6 +69,12 @@ SYSV_CALL void VCdr2(V_CORE_ARGS, VWORD k, VWORD x);
 SYSV_CALL void VListVector2(V_CORE_ARGS, VWORD k, VWORD vec);
 SYSV_CALL void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i);
 SYSV_CALL void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vec);
+
+// records
+
+SYSV_CALL void VCreateRecord2(V_CORE_ARGS, VWORD k, VWORD type, ...);
+SYSV_CALL void VRecordRef2(V_CORE_ARGS, VWORD k, VWORD rec, VWORD i);
+SYSV_CALL void VRecordLength2(V_CORE_ARGS, VWORD k, VWORD rec);
 
 // hash table
 

@@ -27,7 +27,7 @@
   (import (vanity seed))
   (export
     ; predicates
-    null? eof-object? boolean? pair? vector? procedure? symbol? string? exact? exact-integer? inexact? real? integer? char?
+    null? eof-object? boolean? pair? vector? record? procedure? symbol? string? exact? exact-integer? inexact? real? integer? char?
     ; equality
     eq? symbol=? eqv? equal?
     ; logic
@@ -56,6 +56,8 @@
     symbol->string
     ; vectors
     list->vector vector->list vector vector-ref vector-set! vector-length vector-for-each 
+    ; records
+    record record-ref record-set! record-length
     ; hash table
     make-hash-table hash-table-ref hash-table-set! hash-table-delete!
     ; chars
@@ -67,6 +69,8 @@
     ; misc
     call/cc call-with-current-continuation call-with-values apply values
     setter mutator ##vcore.setter ##vcore.mutator
+    make-parameter
+    raise raise-continuable with-exception-handler
     ; system interface
     command-line
     system
@@ -85,6 +89,7 @@
   (define eof-object? ##vcore.eof-object?)
   (define pair? ##vcore.pair?)
   (define vector? ##vcore.vector?)
+  (define record? ##vcore.record?)
   (define procedure? ##vcore.procedure?)
   (define symbol? ##vcore.symbol?)
   (define string? ##vcore.string?)
@@ -127,11 +132,21 @@
             ((= i len) #t)
             ((equal? (vector-ref x i) (vector-ref y i)) (loop (+ i 1) len))
             (else #f)))))
+  (define (record=? x y)
+    (if (not (and (= (record-length x) (record-length y))
+                  (eqv? (record-ref x 0) (record-ref y 0))))
+        #f
+        (let loop ((i 1) (len (record-length x)))
+          (cond
+            ((= i len) #t)
+            ((equal? (record-ref x i) (record-ref y i)) (loop (+ i 1) len))
+            (else #f)))))
   (define (equal? x y)
     (or (##vcore.eq? x y)
         (and (##vcore.blob? x) (##vcore.blob? y) (##vcore.blob=? x y))
         (and (##vcore.pair? x) (##vcore.pair? y) (equal? (##vcore.car x) (##vcore.car y)) (equal? (##vcore.cdr x) (##vcore.cdr y)))
-        (and (##vcore.vector? x) (##vcore.vector? y) (vector=? x y))))
+        (and (##vcore.vector? x) (##vcore.vector? y) (vector=? x y))
+        (and (##vcore.record? x) (##vcore.record? y) (record=? x y))))
 
   ; logic
   (define not ##vcore.not)
@@ -499,6 +514,12 @@
           (if (< i len)
               (begin (apply f (map (lambda (vec) (vector-ref vec i)) vecs)) (loop (+ i 1)))))))))
 
+  ; records
+  (define record ##vcore.record)
+  (define record-ref ##vcore.record-ref)
+  (define record-set! ##vcore.record-set!)
+  (define record-length ##vcore.record-length)
+
   ; hash tables
 
   (define make-hash-table
@@ -690,6 +711,23 @@
   (define setter ##vcore.setter)
   (define mutator ##vcore.mutator)
 
+  ; dynamic variables
+  (define make-parameter
+    (case-lambda
+      ((init) (make-parameter init (lambda (x) x) 'parameter))
+      ((init convert) (make-parameter init convert 'parameter))
+      ((init convert name)
+       (let ((key (cons name '()))
+             (init (convert init)))
+         (case-lambda
+          (() (let ((lookup (assq key (##vcore.get-dynamics))))
+                (if lookup (cdr lookup) init)))
+          ((action x)
+           (case action
+             ((##vcore.push-value) (##vcore.push-dynamic key (convert x)))
+             ((##vcore.pop-value) (##vcore.pop-dynamic x))
+             (else (error "make parameter expects zero arguments")))))))))
+
   ; system interface
   (define command-line ##vcore.command-line)
   (define system ##vcore.system)
@@ -706,7 +744,7 @@
   ; (: set-car! (procedure (mutates (pairof? any? Y) (pairof? X Y)) X ->))
   ; (: error (procedure string? any? ...))
 
-  ; NOT R5RS
+  ; VANITY SPECIALS
   (define (atom? x) (not (pair? x)))
   (define displayln
     (case-lambda
@@ -772,6 +810,18 @@
              ((eq? a #t) (format-printf (current-output-port) b args))
              ((eq? a #f) (format-sprintf b args))
              (else (format-printf a b args))))))
+
+  (define raise ##vcore.raise)
+  (define (raise-continuable x)
+    (let* ((handler (##vcore.get-exception-handler))
+           (ret (handler x)))
+      (##vcore.push-exception-handler handler)
+      ret))
+  (define (with-exception-handler handler thunk)
+    (##vcore.push-exception-handler handler)
+    (let ((ret (thunk)))
+      (##vcore.pop-exception-handler handler)
+      ret))
 
   (define (error msg . irritants)
     (let ((err (current-error-port)))

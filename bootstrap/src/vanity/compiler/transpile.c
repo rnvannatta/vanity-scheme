@@ -613,7 +613,7 @@ upenv->vars[0])) {
     V_CALL(VGetArg(upenv, 12-1, 17), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k62, env)}),
       upenv->up->vars[0],
-      VEncodeChar(''));
+      VEncodeChar('\t'));
 }
  }
 }
@@ -1102,7 +1102,7 @@ upenv->vars[0])) {
     V_CALL(VGetArg(upenv, 13-1, 17), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0loop_k82, env)}),
       upenv->up->vars[0],
-      VEncodeChar(''));
+      VEncodeChar('\t'));
 }
  }
 }
@@ -1530,7 +1530,7 @@ _var0)) {
     V_CALL(VGetArg(upenv, 6-1, 17), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0escape__char_k99, env)}),
       upenv->vars[0],
-      VEncodeChar(''));
+      VEncodeChar('\t'));
 }
  }
 }

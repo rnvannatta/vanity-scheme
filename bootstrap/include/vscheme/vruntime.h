@@ -543,6 +543,10 @@ SYSV_CALL static inline bool VIsVector(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VVECTOR;
 }
 
+SYSV_CALL static inline bool VIsRecord(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VRECORD;
+}
+
 SYSV_CALL static inline bool VIsHashTable(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VHASH_TABLE;
 }
@@ -626,6 +630,12 @@ SYSV_CALL static inline VBlob * VCheckedDecodeSymbol(VWORD v, char const * proc)
 SYSV_CALL static inline VVector * VCheckedDecodeVector(VWORD v, char const * proc) {
   if(VIsVector(v)) return (VVector*) VDecodePointer(v);
   VError("~Z: not a vector: ~S\n", proc, v);
+  return NULL;
+}
+
+SYSV_CALL static inline VVector * VCheckedDecodeRecord(VWORD v, char const * proc) {
+  if(VIsRecord(v)) return (VVector*) VDecodePointer(v);
+  VError("~Z: not a record: ~S\n", proc, v);
   return NULL;
 }
 
@@ -968,9 +978,20 @@ SYSV_CALL void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer);
 SYSV_CALL void VHasFinalizer(V_CORE_ARGS, VWORD k, VWORD mem);
 SYSV_CALL void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem);
 
+SYSV_CALL void VGetDynamics(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VPushDynamic(V_CORE_ARGS, VWORD k, VWORD key, VWORD val);
+SYSV_CALL void VPopDynamic(V_CORE_ARGS, VWORD k, VWORD keyval);
+
+SYSV_CALL void VGetExceptionHandlers(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VGetExceptionHandler(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VPushExceptionHandler(V_CORE_ARGS, VWORD k, VWORD handler);
+SYSV_CALL void VPopExceptionHandler(V_CORE_ARGS, VWORD k, VWORD node);
+SYSV_CALL void VRaise(V_CORE_ARGS, VWORD k, VWORD x);
+
 SYSV_CALL void VSetCar2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
 SYSV_CALL void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
 SYSV_CALL void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i, VWORD val);
+SYSV_CALL void VRecordSet2(V_CORE_ARGS, VWORD k, VWORD rec, VWORD i, VWORD val);
 
 SYSV_CALL void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD up, VWORD var, VWORD val);
 SYSV_CALL void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val);

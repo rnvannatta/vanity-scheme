@@ -1,0 +1,15 @@
+exceptions in multithreaded context... ewww
+
+how does cilk do it?
+
+> There is an implicit _Cilk_sync before a try-block.
+> If a spawned function terminates with an exception, the exception propagates from the point of the corresponding sync.
+> When several exceptions are pending and not yet caught, later exception objects (in the serial execution order of the program) are destructed in an unspecified order before the earliest exception is caught.
+
+the exception is forwarded.
+
+So that means the least insane thing to do is at a fork:
+* wipe the exception handlers
+* change abort to return an error from the fiber
+* the fiber forwards the exception at the join point
+* async forwards the exception at the await point
