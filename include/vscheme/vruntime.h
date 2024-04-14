@@ -1019,6 +1019,8 @@ static inline int VDecodeExitCode(VWORD v) {
 
 SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k);
 
+SYSV_CALL void VGensym(V_CORE_ARGS, VWORD k, VWORD _str);
+
 /* ======================== Fibering ======================= */
 
 SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst);

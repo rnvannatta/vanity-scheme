@@ -96,7 +96,6 @@
          ((##vcore.define-global) "VDefineGlobalVar2")
          ((##vcore.set-global!) "VSetGlobalVar2")
 
-         ((##vcore.import) "VImport2")
          ((##vcore.function) "VFunction2")
          ((##vcore.define) "VDefineGlobalVar2")
          ((##vcore.multidefine) "VMultiDefine2")
@@ -142,7 +141,10 @@
          ((##vcore.string->symbol) "VStringSymbol2")
          ((##vcore.string->number) "VStringNumber2")
 
+         ; Symbols
+
          ((##vcore.symbol->string) "VSymbolString2")
+         ((##vcore.gensym) "VGensym")
 
          ; Characters
 
@@ -267,7 +269,6 @@
          ((##vcore.record-set!) ##vcore.record-set!)
          ((##vcore.record-length) ##vcore.record-length)
 
-         ((##vcore.import) ##vcore.import)
          ((##vcore.function) ##vcore.function)
          ((##vcore.define) ##vcore.define)
          ((##vcore.multidefine) ##vcore.multidefine)
@@ -313,7 +314,10 @@
          ((##vcore.string->symbol) ##vcore.string->symbol)
          ((##vcore.string->number) ##vcore.string->number)
 
+         ; Symbols
+
          ((##vcore.symbol->string) ##vcore.symbol->string)
+         ((##vcore.gensym) ##vcore.gensym)
 
          ; Characters
 

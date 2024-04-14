@@ -53,8 +53,4 @@
     (cond ((null? lst) '())
           ((p (car lst)) (cons (car lst) (filter p (cdr lst))))
           (else (filter p (cdr lst)))))
-  (define gensym
-    (let ((x 0))
-      (lambda (base)
-        (set! x (+ x 1))
-        (string->symbol (format "##~A.~A" base x))))))
+  (define gensym ##vcore.gensym))
