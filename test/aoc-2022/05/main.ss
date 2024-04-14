@@ -106,15 +106,15 @@
   (let ((line (read-line input)))
     (if (eof-object? line)
         (let ((out (open-output-string)))
-          (current-output-port out)
-          #;(display "task 2:")
-          #;(display stack)
-          (let loop ((i 0))
-            (if (>= i (vector-length stack))
-                #f
-                (begin
-                  (display (car (vector-ref stack i)))
-                  (loop (+ i 1)))))
+          (parameterize ((current-output-port out))
+            #;(display "task 2:")
+            #;(display stack)
+            (let loop ((i 0))
+              (if (>= i (vector-length stack))
+                  #f
+                  (begin
+                    (display (car (vector-ref stack i)))
+                    (loop (+ i 1))))))
           (assert-equal (get-output-string out) "BLSGJSDTS")
           (close-port out)
           #;(newline))

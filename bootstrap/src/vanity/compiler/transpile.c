@@ -613,7 +613,7 @@ upenv->vars[0])) {
     V_CALL(VGetArg(upenv, 12-1, 17), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D229_k62, env)}),
       upenv->up->vars[0],
-      VEncodeChar(''));
+      VEncodeChar('\t'));
 }
  }
 }
@@ -1102,7 +1102,7 @@ upenv->vars[0])) {
     V_CALL(VGetArg(upenv, 13-1, 17), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D235_k82, env)}),
       upenv->up->vars[0],
-      VEncodeChar(''));
+      VEncodeChar('\t'));
 }
  }
 }
@@ -1530,7 +1530,7 @@ _var0)) {
     V_CALL(VGetArg(upenv, 6-1, 17), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Descape__char_D211_k99, env)}),
       upenv->vars[0],
-      VEncodeChar(''));
+      VEncodeChar('\t'));
 }
  }
 }
@@ -13799,12 +13799,13 @@ static void _V10_Dprintout2_D200_k589(VRuntime * runtime, VEnv * upenv, int argc
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dprintout2_D200_k589, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.1344 1 0) ((bruijn ##.compiler-error.195 19 42) (bruijn ##.k.1345 0 0) (##string ##.string.1490)) ((bruijn ##.k.1345 0 0) #f))
+  // (if (bruijn ##.p.1344 1 0) ((bruijn ##.compiler-error.195 19 42) (bruijn ##.k.1345 0 0) (##string ##.string.1490) (bruijn ##.toplevels.207 17 7)) ((bruijn ##.k.1345 0 0) #f))
 if(VDecodeBool(
 upenv->vars[0])) {
     V_CALL(VGetArg(upenv, 19-1, 42), runtime,
       _var0,
-      VEncodePointer(&_V10_Dstring_D1490.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1490.sym, VPOINTER_OTHER),
+      VGetArg(upenv, 17-1, 7));
 } else {
     V_CALL(_var0, runtime,
       VEncodeBool(false));

@@ -279,6 +279,8 @@
       cc-files
       cc-obj-files)))
 
+(if (and shared? (> num-mains 0)) (compiler-error "shared library has toplevel expressions or defines"))
+(if (> num-mains 1) (compiler-error "program has toplevel expressions in multiple files, and so it generated multiple mains"))
 
 ; 2. compile
 (for-each
@@ -291,9 +293,6 @@
   scm-files
   cc-files
   cc-obj-files)
-
-(if (and shared? (> num-mains 0)) (compiler-error "shared library has toplevel expressions or defines"))
-(if (> num-mains 1) (compiler-error "program has toplevel expressions in multiple files, and so it generated multiple mains"))
 
 (define (delete-file f)  (system (sprintf "/bin/rm ~A" f)))
 

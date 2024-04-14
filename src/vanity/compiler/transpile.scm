@@ -430,7 +430,7 @@
       (for-each print-declare declares)
 
       (if (and shared? print-main?)
-          (compiler-error "shared library has toplevel expressions or defines"))
+          (compiler-error "shared library has toplevel expressions or defines" toplevels))
       (if print-main?
           (print-main toplevels))
       print-main?))

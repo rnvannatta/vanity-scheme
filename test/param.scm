@@ -43,3 +43,5 @@
 
 (assert-equal (radix) 10)
 (assert-equal (color) 'red)
+
+(assert-equal (parameterize ((radix 10)) 1) 1)
