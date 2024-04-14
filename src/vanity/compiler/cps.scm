@@ -25,7 +25,7 @@
 
 (define-library (vanity compiler cps)
   (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity intrinsics))
-  (export to-cps optimize alpha-convert annotate-lambdas deannotate-lambdas)
+  (export to-cps optimize)
   (define (to-cps expr)
     (define (application? x)
       (and (pair? x) (not (memv (car x) '(quote lambda case-lambda ##foreign.function)))))
@@ -144,10 +144,6 @@
           (if (equal? x (car lst)) lst
               (memtail x (cdr lst)))
           (if (equal? x lst) lst #f)))
-  (define (annotate-lambdas expr) expr)
-  (define (alpha-convert expr) expr)
-  (define (deannotate-lambdas expr) expr)
-
 
   (define (ref-count-lambda x args body)
     (if (memtail x args)

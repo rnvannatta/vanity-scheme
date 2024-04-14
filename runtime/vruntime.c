@@ -48,6 +48,7 @@
 #include <time.h>
 #include <stdarg.h>
 #include <signal.h>
+#include <stdatomic.h>
 
 #include "vscheme/vruntime.h"
 #include "vsetjmp_private.h"
@@ -2257,6 +2258,9 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
 
   r->num_half_reaped_fibers = 0;
   r->half_reaped_fibers = NULL;
+
+  atomic_init(&r->gensym_storage, 0ull);
+  r->gensym_index = (_Atomic uint64_t*)&r->gensym_storage;
 }
 
 static VClosure next_closure = { .base = { .tag = VCLOSURE }, .func = (VFunc)VNext2, .env = NULL };
@@ -2417,6 +2421,34 @@ SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k) {
   V_CALL(k, runtime, ret);
 }
 
+SYSV_CALL void VGensym(V_CORE_ARGS, VWORD k, VWORD _str) {
+  V_ARG_CHECK2("gensym", 2, argc);
+  if(!(VIsSymbol(_str) || VIsString(_str)))
+    VError2(runtime, "gensym: not a string or symbol: ~S~N", _str);
+
+  VBlob * str = VDecodeBlob(_str);
+  uint64_t index = atomic_fetch_add_explicit(runtime->gensym_index, 1, memory_order_seq_cst);
+  if(index == ~0ull) VError2(runtime, "gensym: internal error~N");
+
+  char const * dots = ".";
+  char const * var = str->buf;
+  if(str->len >= 3 && str->buf[0] == '#' && str->buf[1] == '#' && str->buf[2] == '.') {
+    dots = ".";
+    var = str->buf+3;
+  } else if((str->len >= 2 && str->buf[0] == '#' && str->buf[1] == '#')) {
+    dots = "..";
+    var = str->buf+2;
+  }
+  int len = snprintf(NULL, 0, "##%s%s.%llu", dots, var, (unsigned long long)index);
+  len++;
+  VBlob * sym = alloca(sizeof(VBlob)+len);
+  sym->base = VMakeSmallObject(VSYMBOL);
+  sym->len = len;
+  int ret = snprintf(sym->buf, sym->len, "##%s%s.%llu", dots, var, (unsigned long long)index);
+  assert(ret == sym->len-1);
+  V_CALL(k, runtime, VEncodePointer(sym, VPOINTER_OTHER));
+}
+
 SYSV_CALL bool __attribute__((noinline)) VStackOverflowNoInline(VRuntime * runtime) {
   char * VStackStop = (char*)&runtime;
   ptrdiff_t size = runtime->public.VStackStart - VStackStop;
@@ -2509,6 +2541,9 @@ static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * f
   r->fiber_runtimes = runtime->fiber_runtimes;
   r->fiber_heaps = runtime->fiber_heaps;
 
+  atomic_init(&r->gensym_storage, ~0ull);
+  r->gensym_index = (_Atomic uint64_t*)runtime->gensym_index;
+
   for(int i = 0; i < 2; i++) {
     r->VHeaps[i].begin = NULL;
     r->VHeaps[i].end = NULL;
@@ -2518,6 +2553,7 @@ static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * f
   r->VHeap = NULL;
   r->VHeapPos = NULL;
   r->VHeapEnd = NULL;
+
   VSwapHeap(r);
 }
 static void VFreeFiberRuntime(VRuntime * r) {

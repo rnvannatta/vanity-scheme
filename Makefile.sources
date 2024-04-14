@@ -1,4 +1,4 @@
-SRC := $(addprefix vanity/compiler/, variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm lower.scm transpile.scm ffi.scm library.scm config.scm bytecode.scm)
+SRC := $(addprefix vanity/compiler/, variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm lower.scm transpile.scm ffi.scm library.scm config.scm bytecode.scm alpha-convert.scm)
 COMPILE_SRC := $(addprefix vanity/compiler/, frontend.scm)
 INTERP_SRC := $(addprefix vanity/interpreter/, frontend.scm)
 RUNTIME_SRC := vruntime.c vlibrary.c vread.c vfiber.c vbytecode.c
