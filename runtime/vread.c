@@ -494,7 +494,7 @@ SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, V
           len++;
         }
         if(!VIsToken(iter, VTOK_NULL))
-          VError("read: vector literal contains dot syntax\n");
+          VErrorC(runtime, "read: vector literal contains dot syntax\n");
 
         VVector * vec = V_ALLOCA_VECTOR2(alloced, runtime, len);
         alloced = (char*)vec;
@@ -535,8 +535,8 @@ SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, V
         root->rest = p->rest;
 
         VPair * curfirst = VDecodePair(cur->first);
-        if(VWordType(cur->first) != VPOINTER_PAIR) VError("read: improper dot syntax (... .)\n");
-        if(VBits(curfirst->rest) != VBits(VNULL)) VError("read: improper dot syntax: multiple elements trail '.'\n", cur->first);
+        if(VWordType(cur->first) != VPOINTER_PAIR) VErrorC(runtime, "read: improper dot syntax (... .)\n");
+        if(VBits(curfirst->rest) != VBits(VNULL)) VErrorC(runtime, "read: improper dot syntax: multiple elements trail '.'\n", cur->first);
         // we've turned (x . ()) into x, so future conses will be a proper list
         VSetFirst(runtime, cur, curfirst->first);
         //cur->first = curfirst->first;
@@ -549,7 +549,7 @@ SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, V
         VPair * curfirst = VDecodePair(cur->first);
         if(VWordType(cur->first) != VPOINTER_PAIR) {
           if(VBits(root->rest) == VBits(VNULL)) {
-            VError("read: trailing code comment (... #;) or #;EOF\n");
+            VErrorC(runtime, "read: trailing code comment (... #;) or #;EOF\n");
           }
         }
         VSetFirst(runtime, cur, curfirst->rest);
@@ -560,7 +560,7 @@ SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, V
         VPair * curfirst = VDecodePair(cur->first);
         if(VWordType(cur->first) != VPOINTER_PAIR) {
           if(VBits(root->rest) == VBits(VNULL)) {
-            VError("read: trailing abbreviation (... ') or 'EOF\n");
+            VErrorC(runtime, "read: trailing abbreviation (... ') or 'EOF\n");
           }
         }
         VWORD second_enc = p->first;
@@ -583,7 +583,7 @@ SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, V
 
 
       } else {
-        VError("read: unknown token encountered. heap corruption?\n");
+        VErrorC(runtime, "read: unknown token encountered. heap corruption?\n");
       }
     } else {
       // token
@@ -595,7 +595,7 @@ SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, V
       //cur->first = VEncodePair(p);
     }
   }
-  if(cur != root) VError("read: mismatched parentheses: unterminated list\n");
+  if(cur != root) VErrorC(runtime, "read: mismatched parentheses: unterminated list\n");
   VWORD ret;
   if(VBits(root->first) == VBits(VNULL))
     ret = VVOID;
@@ -611,11 +611,11 @@ SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, V
   }
 }
 
-SYSV_CALL static VWORD ParseChar(char const * buf) {
+SYSV_CALL static VWORD ParseChar(VRuntime * runtime, char const * buf) {
   // #\c
   // need to check that it didn't parse as #\, forbidden
   // FIXME don't do null terminated lexings I guess
-  if(!buf[2]) VError("read: forbidden char #\\\0. Use #\\null instead.\n");
+  if(!buf[2]) VErrorC(runtime, "read: forbidden char #\\\0. Use #\\null instead.\n");
   if(!buf[3]) return VEncodeChar(buf[2]);
 
   char const * name = buf+2;
@@ -629,12 +629,12 @@ SYSV_CALL static VWORD ParseChar(char const * buf) {
   else if(!strcmp(name, "return")) ret = '\r';
   else if(!strcmp(name, "space")) ret = ' ';
   else if(!strcmp(name, "tab")) ret = '\t';
-  else VError("read: unknown named char ~z\n", name);
+  else VErrorC(runtime, "read: unknown named char ~z\n", name);
 
   return VEncodeChar(ret);
 }
 
-SYSV_CALL static char DecodeEscape(char c) {
+SYSV_CALL static char DecodeEscape(VRuntime * runtime, char c) {
   switch(c) {
     case 'a': return '\a';
     case 'b': return '\b';
@@ -645,12 +645,12 @@ SYSV_CALL static char DecodeEscape(char c) {
     case '\\': return '\\';
     case '|': return '|';
     default:
-      VError("read: unkown escape in string \\~c\n", c);
+      VErrorC(runtime, "read: unkown escape in string \\~c\n", c);
       return '\0';
   }
 }
 
-SYSV_CALL static char * ParseString(char * buf) {
+SYSV_CALL static char * ParseString(VRuntime * runtime, char * buf) {
   buf = buf+1;
   char const * read = buf;
   char * write = buf;
@@ -661,25 +661,25 @@ SYSV_CALL static char * ParseString(char * buf) {
         *write++ = '\0';
         return buf;
       case '\\':
-        *write++ = DecodeEscape(*read++);
+        *write++ = DecodeEscape(runtime, *read++);
         break;
       default:
         *write++ = c;
     }
   }
-  VError("read: string ~z is not terminated with a \"\n", buf);
+  VErrorC(runtime, "read: string ~z is not terminated with a \"\n", buf);
   return NULL;
 }
 
 // ============================================================================
 
 SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD _read_more, VWORD _root) {
-  V_ARG_CHECK2("##sys.read-iter", 5, argc);
+  V_ARG_CHECK3(runtime, "##sys.read-iter", 5, argc);
 
-  VPort * port = VCheckedDecodePort(_port, "read");
+  VPort * port = VCheckedDecodePort2(runtime, _port, "read");
   FILE * f = port->stream;
-  if(!f) VError("read: trying to read from closed port\n");
-  if(!(port->flags & PFLAG_READ)) VError("read: trying to read from writeonly port\n");
+  if(!f) VErrorC(runtime, "read: trying to read from closed port\n");
+  if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read: trying to read from writeonly port\n");
   int depth = VDecodeInt(_depth);
   bool read_more = VDecodeBool(_read_more);
   VPair * const root = VDecodePair(_root);
@@ -711,7 +711,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       }
       case LEX_CLOSE_PAREN:
       {
-        if(depth == 0) VError("read: stray ')'\n");
+        if(depth == 0) VErrorC(runtime, "read: stray ')'\n");
         VPair * pair = myalloca(sizeof(VPair));
         // using CONST_PAIR as a marker to indicate beginning of a new list
         // a const pair with not VTOK_LEX_OPENPAREN in the CAR indicates the end of a list, the contents of car indicate the tail
@@ -724,7 +724,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       }
       case LEX_DOT:
       {
-        if(depth == 0) VError("read: stray '.'\n");
+        if(depth == 0) VErrorC(runtime, "read: stray '.'\n");
         VPair * pair = myalloca(sizeof(VPair));
         *pair = VMakePair(VEncodeToken(VTOK_LEX_DOT), root->rest);
         pair->base = VMakeObject(VCONST_PAIR);
@@ -795,7 +795,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       }
       case LEX_CHAR:
       {
-        elem = ParseChar(runtime->lex_buf);
+        elem = ParseChar(runtime, runtime->lex_buf);
 
         VPair * pair = myalloca(sizeof(VPair));
         *pair = VMakePair(elem, root->rest);
@@ -809,7 +809,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
         double d = strtod(runtime->lex_buf, &end);
         if(errno || runtime->lex_buf == end)
         {
-          VError("read: failed to parse as number: ~z\n", runtime->lex_buf);
+          VErrorC(runtime, "read: failed to parse as number: ~z\n", runtime->lex_buf);
           depth = 0;
           break;
         }
@@ -834,7 +834,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
         double d = strtod(runtime->lex_buf, &end);
         if(errno || runtime->lex_buf == end)
         {
-          VError("read: failed to parse as number: ~z\n", runtime->lex_buf);
+          VErrorC(runtime, "read: failed to parse as number: ~z\n", runtime->lex_buf);
           depth = 0;
           break;
         }
@@ -847,7 +847,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       }
       case LEX_STRING:
       {
-        char * str = ParseString(runtime->lex_buf);
+        char * str = ParseString(runtime, runtime->lex_buf);
 
         size_t len = strlen(str) + 1;
         VBlob * blob = myalloca(sizeof(VBlob) + len);
@@ -874,9 +874,9 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       case LEX_EOF:
       {
         if(read_more)
-          VError("read: missing expr after prefix such as ' or #;\n");
+          VErrorC(runtime, "read: missing expr after prefix such as ' or #;\n");
         if(depth != 0)
-          VError("read: missing close paren\n");
+          VErrorC(runtime, "read: missing close paren\n");
         VPair * pair = myalloca(sizeof(VPair));
         *pair = VMakePair(VEOF, VNULL);
         *root = VMakePair(VNULL, VEncodePair(pair));
@@ -886,7 +886,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       default:
       case LEX_ERROR:
       {
-        VError("read: failed to lex: ~z\n", runtime->lex_buf);
+        VErrorC(runtime, "read: failed to lex: ~z\n", runtime->lex_buf);
         depth = 0;
         break;
       }
@@ -906,7 +906,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
 }
 
 SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port) {
-  V_ARG_CHECK2("read", 2, argc);
+  V_ARG_CHECK3(runtime, "read", 2, argc);
   int depth = 0;
   bool read_more = false;
   VPair root = VMakePair(VNULL, VNULL);

@@ -264,13 +264,16 @@ static bool memv(char const * x, VWORD lst) {
 // can just keep a simple table of typedefs
 static VWORD typedef_table = { LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
 
+extern VWORD parse_ret;
+extern VRuntime * global_runtime;
+
 static void register_typedef(VWORD type, VWORD decl) {
   if(!memv("typedef", type)) return;
 
   VWORD sym = decl;
   while(VWordType(sym) == VPOINTER_PAIR)
     sym = CADR(sym);
-  if(!VIsString(sym)) VError("foreign-parse-header: internal error\n");
+  if(!VIsString(sym)) VErrorC(global_runtime, "foreign-parse-header: internal error\n");
   typedef_table = CONS(sym, typedef_table);
 }
 
@@ -282,10 +285,8 @@ int yylex(void);
 void yyerror(char*);
 extern FILE * yyin;
 
-extern VWORD parse_ret;
 
-
-#line 289 "ffi.tab.c"
+#line 290 "ffi.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -741,14 +742,14 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   272,   272,   274,   278,   278,   280,   282,   286,   288,
-     292,   295,   301,   303,   305,   309,   311,   313,   315,   317,
-     321,   323,   325,   327,   329,   331,   333,   337,   339,   341,
-     343,   345,   349,   351,   353,   357,   359,   361,   363,   365,
-     368,   370,   372,   374,   376,   378,   382,   384,   386,   388,
-     390,   392,   394,   396,   400,   402,   404,   408,   410,   414,
-     416,   418,   422,   424,   426,   428,   432,   434,   436,   438,
-     442
+       0,   273,   273,   275,   279,   279,   281,   283,   287,   289,
+     293,   296,   302,   304,   306,   310,   312,   314,   316,   318,
+     322,   324,   326,   328,   330,   332,   334,   338,   340,   342,
+     344,   346,   350,   352,   354,   358,   360,   362,   364,   366,
+     369,   371,   373,   375,   377,   379,   383,   385,   387,   389,
+     391,   393,   395,   397,   401,   403,   405,   409,   411,   415,
+     417,   419,   423,   425,   427,   429,   433,   435,   437,   439,
+     443
 };
 #endif
 
@@ -1387,412 +1388,412 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* start: toplevel  */
-#line 273 "src/ffi.y"
+#line 274 "src/ffi.y"
       { parse_ret = CONS("toplevel", reverse((yyvsp[0].vword_val))); }
-#line 1393 "ffi.tab.c"
+#line 1394 "ffi.tab.c"
     break;
 
   case 3: /* start: specified_type prefix_declarator  */
-#line 275 "src/ffi.y"
+#line 276 "src/ffi.y"
       { parse_ret = LIST("naked_declaration", (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1399 "ffi.tab.c"
+#line 1400 "ffi.tab.c"
     break;
 
   case 6: /* toplevel: declaration  */
-#line 281 "src/ffi.y"
+#line 282 "src/ffi.y"
          { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 1405 "ffi.tab.c"
+#line 1406 "ffi.tab.c"
     break;
 
   case 7: /* toplevel: toplevel declaration  */
-#line 283 "src/ffi.y"
+#line 284 "src/ffi.y"
          { (yyval.vword_val) = CONS((yyvsp[0].vword_val), (yyvsp[-1].vword_val)); }
-#line 1411 "ffi.tab.c"
+#line 1412 "ffi.tab.c"
     break;
 
   case 8: /* declaration: declarator_list ';'  */
-#line 287 "src/ffi.y"
+#line 288 "src/ffi.y"
             { VWORD v = (yyvsp[-1].vword_val); (yyval.vword_val) = CONS("declaration", CONS(CAR(v), reverse(CDR(v)))); }
-#line 1417 "ffi.tab.c"
+#line 1418 "ffi.tab.c"
     break;
 
   case 9: /* declaration: specified_type ';'  */
-#line 289 "src/ffi.y"
+#line 290 "src/ffi.y"
             { (yyval.vword_val) = LIST("declaration", (yyvsp[-1].vword_val)); }
-#line 1423 "ffi.tab.c"
+#line 1424 "ffi.tab.c"
     break;
 
   case 10: /* declarator_list: specified_type prefix_declarator  */
-#line 293 "src/ffi.y"
+#line 294 "src/ffi.y"
                 { register_typedef((yyvsp[-1].vword_val), (yyvsp[0].vword_val));
                   (yyval.vword_val) = CONS((yyvsp[-1].vword_val), LIST((yyvsp[0].vword_val))); }
-#line 1430 "ffi.tab.c"
+#line 1431 "ffi.tab.c"
     break;
 
   case 11: /* declarator_list: declarator_list ',' prefix_declarator  */
-#line 296 "src/ffi.y"
+#line 297 "src/ffi.y"
                 { VWORD v = (yyvsp[-2].vword_val);
                   register_typedef(CAR(v), (yyvsp[0].vword_val));
                   (yyval.vword_val) = CONS(CAR(v), CONS((yyvsp[0].vword_val), CDR(v))); }
-#line 1438 "ffi.tab.c"
+#line 1439 "ffi.tab.c"
     break;
 
   case 12: /* prefix_declarator: postfix_declarator  */
-#line 302 "src/ffi.y"
+#line 303 "src/ffi.y"
                   { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1444 "ffi.tab.c"
+#line 1445 "ffi.tab.c"
     break;
 
   case 13: /* prefix_declarator: '*' prefix_declarator  */
-#line 304 "src/ffi.y"
+#line 305 "src/ffi.y"
                   { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1450 "ffi.tab.c"
+#line 1451 "ffi.tab.c"
     break;
 
   case 14: /* prefix_declarator: '*' T_QUALIFIER prefix_declarator  */
-#line 306 "src/ffi.y"
+#line 307 "src/ffi.y"
                   { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1456 "ffi.tab.c"
+#line 1457 "ffi.tab.c"
     break;
 
   case 15: /* postfix_declarator: identifier  */
-#line 310 "src/ffi.y"
+#line 311 "src/ffi.y"
                    { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1462 "ffi.tab.c"
+#line 1463 "ffi.tab.c"
     break;
 
   case 16: /* postfix_declarator: postfix_declarator '(' ')'  */
-#line 312 "src/ffi.y"
+#line 313 "src/ffi.y"
                    { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1468 "ffi.tab.c"
+#line 1469 "ffi.tab.c"
     break;
 
   case 17: /* postfix_declarator: postfix_declarator '[' ']'  */
-#line 314 "src/ffi.y"
+#line 315 "src/ffi.y"
                    { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
-#line 1474 "ffi.tab.c"
+#line 1475 "ffi.tab.c"
     break;
 
   case 18: /* postfix_declarator: postfix_declarator '(' parameter_list ')'  */
-#line 316 "src/ffi.y"
+#line 317 "src/ffi.y"
                    { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1480 "ffi.tab.c"
+#line 1481 "ffi.tab.c"
     break;
 
   case 19: /* postfix_declarator: '(' prefix_declarator ')'  */
-#line 318 "src/ffi.y"
+#line 319 "src/ffi.y"
                    { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1486 "ffi.tab.c"
+#line 1487 "ffi.tab.c"
     break;
 
   case 20: /* abstract_postfix_declarator: abstract_postfix_declarator '(' ')'  */
-#line 322 "src/ffi.y"
+#line 323 "src/ffi.y"
                             { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1492 "ffi.tab.c"
+#line 1493 "ffi.tab.c"
     break;
 
   case 21: /* abstract_postfix_declarator: abstract_postfix_declarator '[' ']'  */
-#line 324 "src/ffi.y"
+#line 325 "src/ffi.y"
                             { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
-#line 1498 "ffi.tab.c"
+#line 1499 "ffi.tab.c"
     break;
 
   case 22: /* abstract_postfix_declarator: abstract_postfix_declarator '(' parameter_list ')'  */
-#line 326 "src/ffi.y"
+#line 327 "src/ffi.y"
                             { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1504 "ffi.tab.c"
+#line 1505 "ffi.tab.c"
     break;
 
   case 23: /* abstract_postfix_declarator: '(' ')'  */
-#line 328 "src/ffi.y"
+#line 329 "src/ffi.y"
                             { (yyval.vword_val) = LIST("function", VFALSE); }
-#line 1510 "ffi.tab.c"
+#line 1511 "ffi.tab.c"
     break;
 
   case 24: /* abstract_postfix_declarator: '[' ']'  */
-#line 330 "src/ffi.y"
+#line 331 "src/ffi.y"
                             { (yyval.vword_val) = LIST("array", VFALSE); }
-#line 1516 "ffi.tab.c"
+#line 1517 "ffi.tab.c"
     break;
 
   case 25: /* abstract_postfix_declarator: '(' parameter_list ')'  */
-#line 332 "src/ffi.y"
+#line 333 "src/ffi.y"
                             { (yyval.vword_val) = LIST("function", VFALSE, detangle_params((yyvsp[-1].vword_val))); }
-#line 1522 "ffi.tab.c"
+#line 1523 "ffi.tab.c"
     break;
 
   case 26: /* abstract_postfix_declarator: '(' abstract_prefix_declarator ')'  */
-#line 334 "src/ffi.y"
+#line 335 "src/ffi.y"
                             { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1528 "ffi.tab.c"
+#line 1529 "ffi.tab.c"
     break;
 
   case 27: /* abstract_prefix_declarator: abstract_postfix_declarator  */
-#line 338 "src/ffi.y"
+#line 339 "src/ffi.y"
                            { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1534 "ffi.tab.c"
+#line 1535 "ffi.tab.c"
     break;
 
   case 28: /* abstract_prefix_declarator: '*'  */
-#line 340 "src/ffi.y"
+#line 341 "src/ffi.y"
                            { (yyval.vword_val) = LIST("pointer", VFALSE); }
-#line 1540 "ffi.tab.c"
+#line 1541 "ffi.tab.c"
     break;
 
   case 29: /* abstract_prefix_declarator: '*' T_QUALIFIER  */
-#line 342 "src/ffi.y"
+#line 343 "src/ffi.y"
                            { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[0].keyword_val)), VFALSE)); }
-#line 1546 "ffi.tab.c"
+#line 1547 "ffi.tab.c"
     break;
 
   case 30: /* abstract_prefix_declarator: '*' abstract_prefix_declarator  */
-#line 344 "src/ffi.y"
+#line 345 "src/ffi.y"
                            { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1552 "ffi.tab.c"
+#line 1553 "ffi.tab.c"
     break;
 
   case 31: /* abstract_prefix_declarator: '*' T_QUALIFIER abstract_prefix_declarator  */
-#line 346 "src/ffi.y"
+#line 347 "src/ffi.y"
                            { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1558 "ffi.tab.c"
+#line 1559 "ffi.tab.c"
     break;
 
   case 32: /* param_prefix_declarator: param_postfix_declarator  */
-#line 350 "src/ffi.y"
+#line 351 "src/ffi.y"
                         { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1564 "ffi.tab.c"
+#line 1565 "ffi.tab.c"
     break;
 
   case 33: /* param_prefix_declarator: '*' param_prefix_declarator  */
-#line 352 "src/ffi.y"
+#line 353 "src/ffi.y"
                         { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1570 "ffi.tab.c"
+#line 1571 "ffi.tab.c"
     break;
 
   case 34: /* param_prefix_declarator: '*' T_QUALIFIER param_prefix_declarator  */
-#line 354 "src/ffi.y"
+#line 355 "src/ffi.y"
                         { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1576 "ffi.tab.c"
+#line 1577 "ffi.tab.c"
     break;
 
   case 35: /* param_postfix_declarator: T_VARIABLE  */
-#line 358 "src/ffi.y"
+#line 359 "src/ffi.y"
                          { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1582 "ffi.tab.c"
+#line 1583 "ffi.tab.c"
     break;
 
   case 36: /* param_postfix_declarator: param_postfix_declarator '(' ')'  */
-#line 360 "src/ffi.y"
+#line 361 "src/ffi.y"
                          { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1588 "ffi.tab.c"
+#line 1589 "ffi.tab.c"
     break;
 
   case 37: /* param_postfix_declarator: param_postfix_declarator '[' ']'  */
-#line 362 "src/ffi.y"
+#line 363 "src/ffi.y"
                          { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
-#line 1594 "ffi.tab.c"
+#line 1595 "ffi.tab.c"
     break;
 
   case 38: /* param_postfix_declarator: param_postfix_declarator '(' parameter_list ')'  */
-#line 364 "src/ffi.y"
+#line 365 "src/ffi.y"
                          { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1600 "ffi.tab.c"
+#line 1601 "ffi.tab.c"
     break;
 
   case 39: /* param_postfix_declarator: '(' param_prefix_declarator ')'  */
-#line 366 "src/ffi.y"
+#line 367 "src/ffi.y"
                          { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1606 "ffi.tab.c"
+#line 1607 "ffi.tab.c"
     break;
 
   case 40: /* parameter_list: qualified_type  */
-#line 369 "src/ffi.y"
+#line 370 "src/ffi.y"
                { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[0].vword_val), VFALSE); }
-#line 1612 "ffi.tab.c"
+#line 1613 "ffi.tab.c"
     break;
 
   case 41: /* parameter_list: qualified_type abstract_prefix_declarator  */
-#line 371 "src/ffi.y"
+#line 372 "src/ffi.y"
                { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1618 "ffi.tab.c"
+#line 1619 "ffi.tab.c"
     break;
 
   case 42: /* parameter_list: qualified_type param_prefix_declarator  */
-#line 373 "src/ffi.y"
+#line 374 "src/ffi.y"
                { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1624 "ffi.tab.c"
+#line 1625 "ffi.tab.c"
     break;
 
   case 43: /* parameter_list: parameter_list ',' qualified_type  */
-#line 375 "src/ffi.y"
+#line 376 "src/ffi.y"
                { (yyval.vword_val) = LIST("param", (yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
-#line 1630 "ffi.tab.c"
+#line 1631 "ffi.tab.c"
     break;
 
   case 44: /* parameter_list: parameter_list ',' qualified_type abstract_prefix_declarator  */
-#line 377 "src/ffi.y"
+#line 378 "src/ffi.y"
                { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1636 "ffi.tab.c"
+#line 1637 "ffi.tab.c"
     break;
 
   case 45: /* parameter_list: parameter_list ',' qualified_type param_prefix_declarator  */
-#line 379 "src/ffi.y"
+#line 380 "src/ffi.y"
                { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1642 "ffi.tab.c"
+#line 1643 "ffi.tab.c"
     break;
 
   case 46: /* plain_type: T_TYPE  */
-#line 383 "src/ffi.y"
+#line 384 "src/ffi.y"
            { (yyval.vword_val) = keyword_to_vword((yyvsp[0].keyword_val)); }
-#line 1648 "ffi.tab.c"
+#line 1649 "ffi.tab.c"
     break;
 
   case 47: /* plain_type: T_TYPENAME  */
-#line 385 "src/ffi.y"
+#line 386 "src/ffi.y"
            { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1654 "ffi.tab.c"
+#line 1655 "ffi.tab.c"
     break;
 
   case 48: /* plain_type: T_STRUCT identifier  */
-#line 387 "src/ffi.y"
+#line 388 "src/ffi.y"
            { (yyval.vword_val) = LIST("struct", (yyvsp[0].vword_val)); }
-#line 1660 "ffi.tab.c"
+#line 1661 "ffi.tab.c"
     break;
 
   case 49: /* plain_type: T_ENUM identifier  */
-#line 389 "src/ffi.y"
+#line 390 "src/ffi.y"
            { (yyval.vword_val) = LIST("enum", (yyvsp[0].vword_val), VFALSE); }
-#line 1666 "ffi.tab.c"
+#line 1667 "ffi.tab.c"
     break;
 
   case 50: /* plain_type: T_ENUM '{' enum_list '}'  */
-#line 391 "src/ffi.y"
+#line 392 "src/ffi.y"
            { (yyval.vword_val) = LIST("enum", VFALSE, detangle_enums((yyvsp[-1].vword_val))); }
-#line 1672 "ffi.tab.c"
+#line 1673 "ffi.tab.c"
     break;
 
   case 51: /* plain_type: T_ENUM identifier '{' enum_list '}'  */
-#line 393 "src/ffi.y"
+#line 394 "src/ffi.y"
            { (yyval.vword_val) = LIST("enum", (yyvsp[-3].vword_val), detangle_enums((yyvsp[-1].vword_val))); }
-#line 1678 "ffi.tab.c"
+#line 1679 "ffi.tab.c"
     break;
 
   case 52: /* plain_type: T_ENUM '{' enum_list ',' '}'  */
-#line 395 "src/ffi.y"
+#line 396 "src/ffi.y"
            { (yyval.vword_val) = LIST("enum", VFALSE, detangle_enums((yyvsp[-2].vword_val))); }
-#line 1684 "ffi.tab.c"
+#line 1685 "ffi.tab.c"
     break;
 
   case 53: /* plain_type: T_ENUM identifier '{' enum_list ',' '}'  */
-#line 397 "src/ffi.y"
+#line 398 "src/ffi.y"
            { (yyval.vword_val) = LIST("enum", (yyvsp[-4].vword_val), detangle_enums((yyvsp[-2].vword_val))); }
-#line 1690 "ffi.tab.c"
+#line 1691 "ffi.tab.c"
     break;
 
   case 54: /* post_qualified_type: plain_type  */
-#line 401 "src/ffi.y"
+#line 402 "src/ffi.y"
                { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 1696 "ffi.tab.c"
+#line 1697 "ffi.tab.c"
     break;
 
   case 55: /* post_qualified_type: post_qualified_type T_QUALIFIER  */
-#line 403 "src/ffi.y"
+#line 404 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1702 "ffi.tab.c"
+#line 1703 "ffi.tab.c"
     break;
 
   case 56: /* post_qualified_type: post_qualified_type T_TYPE  */
-#line 405 "src/ffi.y"
+#line 406 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1708 "ffi.tab.c"
+#line 1709 "ffi.tab.c"
     break;
 
   case 57: /* qualified_type: post_qualified_type  */
-#line 409 "src/ffi.y"
+#line 410 "src/ffi.y"
                { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1714 "ffi.tab.c"
+#line 1715 "ffi.tab.c"
     break;
 
   case 58: /* qualified_type: T_QUALIFIER qualified_type  */
-#line 411 "src/ffi.y"
+#line 412 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 1720 "ffi.tab.c"
+#line 1721 "ffi.tab.c"
     break;
 
   case 59: /* specified_type: post_specified_type  */
-#line 415 "src/ffi.y"
+#line 416 "src/ffi.y"
                { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1726 "ffi.tab.c"
+#line 1727 "ffi.tab.c"
     break;
 
   case 60: /* specified_type: T_QUALIFIER specified_type  */
-#line 417 "src/ffi.y"
+#line 418 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 1732 "ffi.tab.c"
+#line 1733 "ffi.tab.c"
     break;
 
   case 61: /* specified_type: T_STORAGE specified_type  */
-#line 419 "src/ffi.y"
+#line 420 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 1738 "ffi.tab.c"
+#line 1739 "ffi.tab.c"
     break;
 
   case 62: /* post_specified_type: plain_type  */
-#line 423 "src/ffi.y"
+#line 424 "src/ffi.y"
                     { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 1744 "ffi.tab.c"
+#line 1745 "ffi.tab.c"
     break;
 
   case 63: /* post_specified_type: post_specified_type T_QUALIFIER  */
-#line 425 "src/ffi.y"
+#line 426 "src/ffi.y"
                     { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1750 "ffi.tab.c"
+#line 1751 "ffi.tab.c"
     break;
 
   case 64: /* post_specified_type: post_specified_type T_TYPE  */
-#line 427 "src/ffi.y"
+#line 428 "src/ffi.y"
                     { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1756 "ffi.tab.c"
+#line 1757 "ffi.tab.c"
     break;
 
   case 65: /* post_specified_type: post_specified_type T_STORAGE  */
-#line 429 "src/ffi.y"
+#line 430 "src/ffi.y"
                     { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1762 "ffi.tab.c"
+#line 1763 "ffi.tab.c"
     break;
 
   case 66: /* enum_list: T_VARIABLE  */
-#line 433 "src/ffi.y"
+#line 434 "src/ffi.y"
           { (yyval.vword_val) = LIST(VNULL, (yyvsp[0].vword_val), VFALSE); }
-#line 1768 "ffi.tab.c"
+#line 1769 "ffi.tab.c"
     break;
 
   case 67: /* enum_list: T_VARIABLE '=' expr  */
-#line 435 "src/ffi.y"
+#line 436 "src/ffi.y"
           { (yyval.vword_val) = LIST(VNULL, (yyvsp[-2].vword_val), (yyvsp[0].vword_val)); }
-#line 1774 "ffi.tab.c"
+#line 1775 "ffi.tab.c"
     break;
 
   case 68: /* enum_list: enum_list ',' T_VARIABLE  */
-#line 437 "src/ffi.y"
+#line 438 "src/ffi.y"
           { (yyval.vword_val) = LIST((yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
-#line 1780 "ffi.tab.c"
+#line 1781 "ffi.tab.c"
     break;
 
   case 69: /* enum_list: enum_list ',' T_VARIABLE '=' expr  */
-#line 439 "src/ffi.y"
+#line 440 "src/ffi.y"
           { (yyval.vword_val) = LIST((yyvsp[-4].vword_val), (yyvsp[-2].vword_val), (yyvsp[0].vword_val)); }
-#line 1786 "ffi.tab.c"
+#line 1787 "ffi.tab.c"
     break;
 
   case 70: /* expr: T_INTEGER  */
-#line 443 "src/ffi.y"
-     { if((yyvsp[0].int_val) > INT_MAX) VError("foreign-prase-header-c: failed to parse, integer exceeds 31 bit limit %llu", (yyvsp[0].int_val)); (yyval.vword_val) = VEncodeInt((yyvsp[0].int_val)); }
-#line 1792 "ffi.tab.c"
+#line 444 "src/ffi.y"
+     { if((yyvsp[0].int_val) > INT_MAX) VErrorC(global_runtime, "foreign-prase-header-c: failed to parse, integer exceeds 31 bit limit %llu", (yyvsp[0].int_val)); (yyval.vword_val) = VEncodeInt((yyvsp[0].int_val)); }
+#line 1793 "ffi.tab.c"
     break;
 
 
-#line 1796 "ffi.tab.c"
+#line 1797 "ffi.tab.c"
 
       default: break;
     }
@@ -1985,37 +1986,41 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 485 "src/ffi.y"
+#line 486 "src/ffi.y"
 
 
 VWORD parse_ret;
+VRuntime * global_runtime;
 
 void VForeignParseDeclCImpl(V_CORE_ARGS, VWORD k, VWORD decl) {
-  V_ARG_CHECK2("foreign-parse-decl-c", 2, argc);
+  global_runtime = runtime;
+  V_ARG_CHECK3(runtime, "foreign-parse-decl-c", 2, argc);
   V_GC_CHECK2_VARARGS((VFunc)VForeignParseDeclCImpl, runtime, statics, 2, argc, k, decl) {
-    VBlob * buf = VCheckedDecodeString(decl, "foreign-parse-decl-c");
+    VBlob * buf = VCheckedDecodeString2(runtime, decl, "foreign-parse-decl-c");
     FILE * f = fmemopen(buf->buf, buf->len-1, "r");
-    if(!f) VError("foreign-parse-decl-c: failed to parse, out of file descriptors!\n");
+    if(!f) VErrorC(runtime, "foreign-parse-decl-c: failed to parse, out of file descriptors!\n");
     yyin = f;
-    if(yyparse()) VError("foreign-parse-decl-c: error during parsing\n");
+    if(yyparse()) VErrorC(runtime, "foreign-parse-decl-c: error during parsing\n");
 
     fclose(f);
   }
   V_CALL(k, runtime, parse_ret);
 }
 void VForeignParseHeaderCImpl(V_CORE_ARGS, VWORD k, VWORD header) {
-  V_ARG_CHECK2("foreign-parse-header-c", 2, argc);
+  global_runtime = runtime;
+  V_ARG_CHECK3(runtime, "foreign-parse-header-c", 2, argc);
   V_GC_CHECK2_VARARGS((VFunc)VForeignParseHeaderCImpl, runtime, statics, 2, argc, k, header) {
-    VPort * port = VCheckedDecodePort(header, "foreign-parse-header-c");
+    VPort * port = VCheckedDecodePort2(runtime, header, "foreign-parse-header-c");
     FILE * f = port->stream;
-    if(!f || !(port->flags & PFLAG_READ)) VError("foreign-parse-header-c: failed to parse, port is not an opened input port!\n");
+    if(!f || !(port->flags & PFLAG_READ)) VErrorC(runtime, "foreign-parse-header-c: failed to parse, port is not an opened input port!\n");
     yyin = f;
-    if(yyparse()) VError("foreign-parse-header-c: error during parsing\n");
+    if(yyparse()) VErrorC(runtime, "foreign-parse-header-c: error during parsing\n");
   }
   V_CALL(k, runtime, parse_ret);
 }
 void VForeignReleaseParseImpl(V_CORE_ARGS, VWORD k) {
-  V_ARG_CHECK2("foreign-release-parse", 1, argc);
+  global_runtime = runtime;
+  V_ARG_CHECK3(runtime, "foreign-release-parse", 1, argc);
   VDestroyMemoryPool(&parse_pool);
   V_CALL(k, runtime, VFALSE);
 }

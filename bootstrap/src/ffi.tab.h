@@ -85,7 +85,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 230 "src/ffi.y"
+#line 231 "src/ffi.y"
 
   unsigned long long int_val;
   int keyword_val;

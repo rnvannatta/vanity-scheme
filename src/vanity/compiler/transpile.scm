@@ -292,13 +292,13 @@
             (if variadic?
                 (begin
                   (printf " if(argc < ~A) {~N" num)
-                  (printf "  VError(\"Not enough arguments to ~A, got ~~D~~N\"~N" name)
+                  (printf "  VErrorC(runtime, \"Not enough arguments to ~A, got ~~D~~N\"~N" name)
                   (printf "  \"-- expected ~A or more~~N\"~N" num)
                   (printf "  , argc);~N")
                   (printf " }~N"))
                 (begin
                   (printf " if(argc != ~A) {~N" num)
-                  (printf "  VError(\"Not enough arguments to ~A, got ~~D~~N\"~N" name)
+                  (printf "  VErrorC(runtime, \"Not enough arguments to ~A, got ~~D~~N\"~N" name)
                   (printf "  \"-- expected ~A~~N\"~N" num)
                   (printf "  , argc);~N")
                   (printf " }~N"))))
@@ -334,7 +334,7 @@
              (cases (map (lambda (i e) `(,(sprintf "_V20Case~A_~A" i name) #f ,e)) (iota (length cases)) cases)))
        (printf "__attribute__((used)) static void _V20CaseError_~A(VRuntime * runtime, VEnv * upenv, int argc, ...) {~N" name)
        (printf " // ~S~N" fun)
-       (printf " VError(\"Not enough arguments to ~A, got ~~D~~N\"~N" name)
+       (printf " VErrorC(runtime, \"Not enough arguments to ~A, got ~~D~~N\"~N" name)
        (for-each
          (lambda (e)
           (match e
