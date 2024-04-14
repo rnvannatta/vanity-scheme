@@ -404,12 +404,14 @@
 
       (('parameterize ((x val) rest ...) . body)
        (let ((parameter (gensym "parameter"))
-             (keyval (gensym "keyval")))
+             (keyval (gensym "keyval"))
+             (ret (gensym "ret")))
          (expand-syntax
            `(let* ((,parameter ,x)
-                   (,keyval (,parameter '##vcore.push-value ,val)))
-              (parameterize ,rest . ,body)
-              (,parameter '##vcore.pop-value ,keyval)))))
+                   (,keyval (,parameter '##vcore.push-value ,val))
+                   (,ret (parameterize ,rest . ,body)))
+              (,parameter '##vcore.pop-value ,keyval)
+              ,ret))))
       (('parameterize () . body) (expand-syntax `(let () . ,body)))
 
       (('begin x) (expand-syntax x))

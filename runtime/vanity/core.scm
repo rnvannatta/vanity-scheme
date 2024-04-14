@@ -543,27 +543,25 @@
   (define char->integer ##vcore.char-integer)
 
   ; io
-  (define current-output-port 
+  #;(define current-output-port 
     (let ((out (##vcore.stdout->port)))
       (case-lambda
         (() out)
         ((port) (set! out port)))))
-  (define current-error-port 
+  #;(define current-error-port 
     (let ((out (##vcore.stderr->port)))
       (case-lambda
         (() out)
         ((port) (set! out port)))))
-  (define current-input-port 
+  #;(define current-input-port 
     (let ((in (##vcore.stdin->port)))
       (case-lambda
         (() in)
         ((port) (set! in port)))))
 
-
-  #;(define close-port ##vcore.close-stream)
-  #;(define open-input-file ##vcore.open-input-stream)
-  #;(define open-output-file ##vcore.open-output-stream)
-  #;(define open-output-string ##vcore.open-output-string)
+  (define current-output-port (make-parameter (##vcore.stdout->port)))
+  (define current-error-port (make-parameter (##vcore.stderr->port)))
+  (define current-input-port (make-parameter (##vcore.stdin->port)))
 
   ; accepts a thunk that returns two values
   ; the return, and a value indicating whether the thunk failed
@@ -620,7 +618,7 @@
     (try-or-gc open-output-string-impl "open-output-string: failed"))
   (define get-output-string ##vcore.get-output-string)
 
-  (define (with-output-to-file str thunk)
+  #;(define (with-output-to-file str thunk)
     (let ((port (open-output-file str))
           (stdout (current-output-port)))
       (current-output-port port)
@@ -628,7 +626,7 @@
         (current-output-port stdout)
         (close-port port)
         ret)))
-  (define (with-input-from-file str thunk)
+  #;(define (with-input-from-file str thunk)
     (let ((port (open-input-file str))
           (stdout (current-input-port)))
       (current-input-port port)
@@ -636,6 +634,18 @@
         (current-input-port stdout)
         (close-port port)
         ret)))
+  (define (with-output-to-file str thunk)
+    (let ((port (open-output-file str)))
+      (parameterize ((current-output-port port))
+        (let ((ret (thunk)))
+          (close-port port)
+          ret))))
+  (define (with-input-from-file str thunk)
+    (let ((port (open-input-file str)))
+      (parameterize ((current-input-port port))
+        (let ((ret (thunk)))
+          (close-port port)
+          ret))))
 
   (define read-char
     (case-lambda
