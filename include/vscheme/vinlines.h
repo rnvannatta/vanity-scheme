@@ -65,11 +65,11 @@ static inline VWORD VInlineEqv2(VRuntime * runtime, VWORD a, VWORD b) {
 #define VInlineCons2(runtime, a, b) VEncodePair(VFillPair(alloca(sizeof(VPair)), a, b))
 
 static inline VWORD VInlineCar2(VRuntime * runtime, VWORD v) {
-    if(VWordType(v) != VPOINTER_PAIR) VError2(runtime, "car: not a pair ~S\n", v);
+    if(VWordType(v) != VPOINTER_PAIR) VErrorC(runtime, "car: not a pair ~S\n", v);
     return VDecodePair(v)->first;
 }
 
 static inline VWORD VInlineCdr2(VRuntime * runtime, VWORD v) {
-    if(VWordType(v) != VPOINTER_PAIR) VError2(runtime, "cdr: not a pair ~S\n", v);
+    if(VWordType(v) != VPOINTER_PAIR) VErrorC(runtime, "cdr: not a pair ~S\n", v);
     return VDecodePair(v)->rest;
 }

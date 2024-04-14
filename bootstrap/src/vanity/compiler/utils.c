@@ -81,7 +81,7 @@ static void _V10_Dread__all_D16_k20(VRuntime * runtime, VEnv * upenv, int argc, 
  static VDebugInfo dbg = { "_V10_Dread__all_D16_k20" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dread__all_D16_k20, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dread__all_D16_k20, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -97,7 +97,7 @@ static void _V10_Dread__all_D16_k19(VRuntime * runtime, VEnv * upenv, int argc, 
  static VDebugInfo dbg = { "_V10_Dread__all_D16_k19" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dread__all_D16_k19, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dread__all_D16_k19, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -122,7 +122,7 @@ static void _V10_Dread__all_D16_k18(VRuntime * runtime, VEnv * upenv, int argc, 
  static VDebugInfo dbg = { "_V10_Dread__all_D16_k18" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dread__all_D16_k18, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dread__all_D16_k18, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -141,7 +141,7 @@ static void _V10_Dread__all_D16_lambda3(VRuntime * runtime, VEnv * upenv, int ar
  static VDebugInfo dbg = { "_V10_Dread__all_D16_lambda3" };
  VRecordCall2(runtime, &dbg);
  if(argc != 2) {
-  VError("Not enough arguments to _V10_Dread__all_D16_lambda3, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dread__all_D16_lambda3, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -161,7 +161,7 @@ static void _V10_Dloop_D25_k25(VRuntime * runtime, VEnv * upenv, int argc, VWORD
  static VDebugInfo dbg = { "_V10_Dloop_D25_k25" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dloop_D25_k25, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D25_k25, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -176,7 +176,7 @@ static void _V10_Dloop_D25_k24(VRuntime * runtime, VEnv * upenv, int argc, VWORD
  static VDebugInfo dbg = { "_V10_Dloop_D25_k24" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dloop_D25_k24, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D25_k24, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -201,7 +201,7 @@ static void _V10_Dloop_D25_k23(VRuntime * runtime, VEnv * upenv, int argc, VWORD
  static VDebugInfo dbg = { "_V10_Dloop_D25_k23" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dloop_D25_k23, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D25_k23, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -220,7 +220,7 @@ static void _V10_Dloop_D25_k22(VRuntime * runtime, VEnv * upenv, int argc, VWORD
  static VDebugInfo dbg = { "_V10_Dloop_D25_k22" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dloop_D25_k22, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D25_k22, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -241,7 +241,7 @@ static void _V10_Dloop_D25_k21(VRuntime * runtime, VEnv * upenv, int argc, VWORD
  static VDebugInfo dbg = { "_V10_Dloop_D25_k21" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dloop_D25_k21, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D25_k21, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -266,7 +266,7 @@ static void _V10_Dloop_D25_lambda5(VRuntime * runtime, VEnv * upenv, int argc, V
  static VDebugInfo dbg = { "_V10_Dloop_D25_lambda5" };
  VRecordCall2(runtime, &dbg);
  if(argc != 2) {
-  VError("Not enough arguments to _V10_Dloop_D25_lambda5, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D25_lambda5, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -286,7 +286,7 @@ static void _V10_Dsearch__open__input__file_D17_lambda4(VRuntime * runtime, VEnv
  static VDebugInfo dbg = { "_V10_Dsearch__open__input__file_D17_lambda4" };
  VRecordCall2(runtime, &dbg);
  if(argc != 3) {
-  VError("Not enough arguments to _V10_Dsearch__open__input__file_D17_lambda4, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dsearch__open__input__file_D17_lambda4, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -315,7 +315,7 @@ static void _V10_Dcompiler__error_D18_k33(VRuntime * runtime, VEnv * upenv, int 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_k33" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_k33, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_k33, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -331,7 +331,7 @@ static void _V10_Dcompiler__error_D18_lambda7(VRuntime * runtime, VEnv * upenv, 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_lambda7" };
  VRecordCall2(runtime, &dbg);
  if(argc != 2) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_lambda7, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_lambda7, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -352,7 +352,7 @@ static void _V10_Dcompiler__error_D18_k32(VRuntime * runtime, VEnv * upenv, int 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_k32" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_k32, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_k32, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -372,7 +372,7 @@ static void _V10_Dcompiler__error_D18_k31(VRuntime * runtime, VEnv * upenv, int 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_k31" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_k31, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_k31, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -398,7 +398,7 @@ static void _V10_Dcompiler__error_D18_k35(VRuntime * runtime, VEnv * upenv, int 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_k35" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_k35, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_k35, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -413,7 +413,7 @@ static void _V10_Dcompiler__error_D18_k34(VRuntime * runtime, VEnv * upenv, int 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_k34" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_k34, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_k34, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -432,7 +432,7 @@ static void _V10_Dcompiler__error_D18_k30(VRuntime * runtime, VEnv * upenv, int 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_k30" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_k30, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_k30, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -450,7 +450,7 @@ static void _V10_Dcompiler__error_D18_k29(VRuntime * runtime, VEnv * upenv, int 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_k29" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_k29, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_k29, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -469,7 +469,7 @@ static void _V10_Dcompiler__error_D18_k28(VRuntime * runtime, VEnv * upenv, int 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_k28" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_k28, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_k28, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -488,7 +488,7 @@ static void _V10_Dcompiler__error_D18_k27(VRuntime * runtime, VEnv * upenv, int 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_k27" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_k27, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_k27, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -508,7 +508,7 @@ static void _V10_Dcompiler__error_D18_k26(VRuntime * runtime, VEnv * upenv, int 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_k26" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_k26, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_k26, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -528,7 +528,7 @@ static void _V10_Dcompiler__error_D18_lambda6(VRuntime * runtime, VEnv * upenv, 
  static VDebugInfo dbg = { "_V10_Dcompiler__error_D18_lambda6" };
  VRecordCall2(runtime, &dbg);
  if(argc < 2) {
-  VError("Not enough arguments to _V10_Dcompiler__error_D18_lambda6, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dcompiler__error_D18_lambda6, got ~D~N"
   "-- expected 2 or more~N"
   , argc);
  }
@@ -550,7 +550,7 @@ static void _V10_Dfilter_D19_k41(VRuntime * runtime, VEnv * upenv, int argc, VWO
  static VDebugInfo dbg = { "_V10_Dfilter_D19_k41" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dfilter_D19_k41, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dfilter_D19_k41, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -566,7 +566,7 @@ static void _V10_Dfilter_D19_k40(VRuntime * runtime, VEnv * upenv, int argc, VWO
  static VDebugInfo dbg = { "_V10_Dfilter_D19_k40" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dfilter_D19_k40, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dfilter_D19_k40, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -586,7 +586,7 @@ static void _V10_Dfilter_D19_k39(VRuntime * runtime, VEnv * upenv, int argc, VWO
  static VDebugInfo dbg = { "_V10_Dfilter_D19_k39" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dfilter_D19_k39, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dfilter_D19_k39, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -605,7 +605,7 @@ static void _V10_Dfilter_D19_k42(VRuntime * runtime, VEnv * upenv, int argc, VWO
  static VDebugInfo dbg = { "_V10_Dfilter_D19_k42" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dfilter_D19_k42, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dfilter_D19_k42, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -621,7 +621,7 @@ static void _V10_Dfilter_D19_k38(VRuntime * runtime, VEnv * upenv, int argc, VWO
  static VDebugInfo dbg = { "_V10_Dfilter_D19_k38" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dfilter_D19_k38, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dfilter_D19_k38, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -647,7 +647,7 @@ static void _V10_Dfilter_D19_k37(VRuntime * runtime, VEnv * upenv, int argc, VWO
  static VDebugInfo dbg = { "_V10_Dfilter_D19_k37" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dfilter_D19_k37, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dfilter_D19_k37, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -666,7 +666,7 @@ static void _V10_Dfilter_D19_k36(VRuntime * runtime, VEnv * upenv, int argc, VWO
  static VDebugInfo dbg = { "_V10_Dfilter_D19_k36" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V10_Dfilter_D19_k36, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dfilter_D19_k36, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -691,7 +691,7 @@ static void _V10_Dfilter_D19_lambda8(VRuntime * runtime, VEnv * upenv, int argc,
  static VDebugInfo dbg = { "_V10_Dfilter_D19_lambda8" };
  VRecordCall2(runtime, &dbg);
  if(argc != 3) {
-  VError("Not enough arguments to _V10_Dfilter_D19_lambda8, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dfilter_D19_lambda8, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -771,7 +771,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k17(VRuntime * runtime, VEnv * upen
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k17" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k17, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k17, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -803,7 +803,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k16(VRuntime * runtime, VEnv * upen
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k16" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k16, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k16, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -822,7 +822,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k15(VRuntime * runtime, VEnv * upen
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k15" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k15, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k15, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -841,7 +841,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k14(VRuntime * runtime, VEnv * upen
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k14" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k14, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k14, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -860,7 +860,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k13(VRuntime * runtime, VEnv * upen
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k13" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k13, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k13, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -879,7 +879,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k12(VRuntime * runtime, VEnv * upen
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k12" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k12, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k12, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -898,7 +898,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k11(VRuntime * runtime, VEnv * upen
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k11" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k11, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k11, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -917,7 +917,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k10(VRuntime * runtime, VEnv * upen
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k10" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k10, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k10, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -936,7 +936,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k9(VRuntime * runtime, VEnv * upenv
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k9" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k9, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k9, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -955,7 +955,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k8(VRuntime * runtime, VEnv * upenv
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k8" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k8, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k8, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -974,7 +974,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k7(VRuntime * runtime, VEnv * upenv
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k7" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k7, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k7, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -993,7 +993,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k6(VRuntime * runtime, VEnv * upenv
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k6" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k6, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k6, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1012,7 +1012,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k5(VRuntime * runtime, VEnv * upenv
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k5" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k5, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k5, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1031,7 +1031,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k4(VRuntime * runtime, VEnv * upenv
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k4" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k4, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k4, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1050,7 +1050,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k3(VRuntime * runtime, VEnv * upenv
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k3" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k3, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k3, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1069,7 +1069,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k2(VRuntime * runtime, VEnv * upenv
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k2" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k2, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k2, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1088,7 +1088,7 @@ static void _V0vanity_V0compiler_V0utils_V20_k1(VRuntime * runtime, VEnv * upenv
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_k1" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k1, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_k1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1108,7 +1108,7 @@ static void _V0vanity_V0compiler_V0utils_V20_lambda1(VRuntime * runtime, VEnv * 
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0utils_V20_lambda1" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0utils_V20_lambda1, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0utils_V20_lambda1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }

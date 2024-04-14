@@ -39,7 +39,7 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upen
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_k1" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0config_V20_k1, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_k1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -78,7 +78,7 @@ static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv *
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_lambda1" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VError("Not enough arguments to _V0vanity_V0compiler_V0config_V20_lambda1, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_lambda1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }

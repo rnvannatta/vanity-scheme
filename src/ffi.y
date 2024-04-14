@@ -194,13 +194,16 @@ static bool memv(char const * x, VWORD lst) {
 // can just keep a simple table of typedefs
 static VWORD typedef_table = { LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
 
+extern VWORD parse_ret;
+extern VRuntime * global_runtime;
+
 static void register_typedef(VWORD type, VWORD decl) {
   if(!memv("typedef", type)) return;
 
   VWORD sym = decl;
   while(VWordType(sym) == VPOINTER_PAIR)
     sym = CADR(sym);
-  if(!VIsString(sym)) VError("foreign-parse-header: internal error\n");
+  if(!VIsString(sym)) VErrorC(global_runtime, "foreign-parse-header: internal error\n");
   typedef_table = CONS(sym, typedef_table);
 }
 
@@ -211,8 +214,6 @@ bool is_typedef(char const * symbol) {
 int yylex(void);
 void yyerror(char*);
 extern FILE * yyin;
-
-extern VWORD parse_ret;
 
 %}
 
@@ -440,7 +441,7 @@ enum_list : T_VARIABLE
           ;
 
 expr : T_INTEGER
-     { if($1 > INT_MAX) VError("foreign-prase-header-c: failed to parse, integer exceeds 31 bit limit %llu", $1); $$ = VEncodeInt($1); }
+     { if($1 > INT_MAX) VErrorC(global_runtime, "foreign-prase-header-c: failed to parse, integer exceeds 31 bit limit %llu", $1); $$ = VEncodeInt($1); }
      /*
      | '-' expr
      | '+' expr
@@ -485,33 +486,37 @@ expr : T_INTEGER
 %%
 
 VWORD parse_ret;
+VRuntime * global_runtime;
 
 void VForeignParseDeclCImpl(V_CORE_ARGS, VWORD k, VWORD decl) {
-  V_ARG_CHECK2("foreign-parse-decl-c", 2, argc);
+  global_runtime = runtime;
+  V_ARG_CHECK3(runtime, "foreign-parse-decl-c", 2, argc);
   V_GC_CHECK2_VARARGS((VFunc)VForeignParseDeclCImpl, runtime, statics, 2, argc, k, decl) {
-    VBlob * buf = VCheckedDecodeString(decl, "foreign-parse-decl-c");
+    VBlob * buf = VCheckedDecodeString2(runtime, decl, "foreign-parse-decl-c");
     FILE * f = fmemopen(buf->buf, buf->len-1, "r");
-    if(!f) VError("foreign-parse-decl-c: failed to parse, out of file descriptors!\n");
+    if(!f) VErrorC(runtime, "foreign-parse-decl-c: failed to parse, out of file descriptors!\n");
     yyin = f;
-    if(yyparse()) VError("foreign-parse-decl-c: error during parsing\n");
+    if(yyparse()) VErrorC(runtime, "foreign-parse-decl-c: error during parsing\n");
 
     fclose(f);
   }
   V_CALL(k, runtime, parse_ret);
 }
 void VForeignParseHeaderCImpl(V_CORE_ARGS, VWORD k, VWORD header) {
-  V_ARG_CHECK2("foreign-parse-header-c", 2, argc);
+  global_runtime = runtime;
+  V_ARG_CHECK3(runtime, "foreign-parse-header-c", 2, argc);
   V_GC_CHECK2_VARARGS((VFunc)VForeignParseHeaderCImpl, runtime, statics, 2, argc, k, header) {
-    VPort * port = VCheckedDecodePort(header, "foreign-parse-header-c");
+    VPort * port = VCheckedDecodePort2(runtime, header, "foreign-parse-header-c");
     FILE * f = port->stream;
-    if(!f || !(port->flags & PFLAG_READ)) VError("foreign-parse-header-c: failed to parse, port is not an opened input port!\n");
+    if(!f || !(port->flags & PFLAG_READ)) VErrorC(runtime, "foreign-parse-header-c: failed to parse, port is not an opened input port!\n");
     yyin = f;
-    if(yyparse()) VError("foreign-parse-header-c: error during parsing\n");
+    if(yyparse()) VErrorC(runtime, "foreign-parse-header-c: error during parsing\n");
   }
   V_CALL(k, runtime, parse_ret);
 }
 void VForeignReleaseParseImpl(V_CORE_ARGS, VWORD k) {
-  V_ARG_CHECK2("foreign-release-parse", 1, argc);
+  global_runtime = runtime;
+  V_ARG_CHECK3(runtime, "foreign-release-parse", 1, argc);
   VDestroyMemoryPool(&parse_pool);
   V_CALL(k, runtime, VFALSE);
 }
