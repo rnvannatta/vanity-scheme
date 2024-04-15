@@ -86,6 +86,38 @@
          (ret (read-line proc)))
     (close-port proc)
     ret))
+(define (count-true . args)
+  (let loop ((args args) (ct 0))
+    (if (null? args) ct
+        (loop (cdr args) (+ ct (if (car args) 1 0))))))
+(define (delete-file f)  (system (sprintf "/bin/rm ~A" f)))
+(define (gen-header)
+  (let* ((file (read-all (open-input-file (car scm-files))))
+         (headers (filter (lambda (x) x) (map header-from-library file))))
+    (if (> (length headers) 1) (compiler-error "Only one statement permitted in header generation"))
+    (if (not (or (null? headers) (car headers))) (compiler-error "File did not produce a valid header"))
+    (with-output-to-file
+      out-file
+      (lambda ()
+        (if (not (null? headers)) (write (car headers)))
+        (newline)))))
+(define (gen-makefile)
+  (if (null? maketargets) (set! maketargets (list (change-extension (basename (car scm-files)) ".o"))))
+  (let* ((file (read-all (open-input-file (car scm-files))))
+         (deps (gather-dependencies file))
+         (port (if out-file (open-output-file out-file) (current-output-port))))
+    (for-each (lambda (target) (format port "~A " target)) maketargets)
+    (display ":" port)
+    (format port " ~A" (car scm-files))
+    (for-each
+      (lambda (dep) 
+        (if (pair? dep)
+            (begin
+              (if (not (valid-import? dep)) (compiler-error "invalid import" dep))
+              (format port " ~A" (import->path dep)))))
+      deps)
+    (newline port)
+    (if out-file (close-port port))))
 
 (define (display-help)
   (displayln "Usage: vsc [options] file...")
@@ -115,217 +147,189 @@
   (printf "Vanity Scheme Compiler ~A.~A~N" (car version) (cadr version))
   (displayln "Copyright (C) 2023 Richard Van Natta"))
 
-(let loop ((args (getopt "vghtco:I:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark)))))
-  (if (not (null? args))
-      (begin
-        (case (caar args)
-          ((#t)
-           (if (equal? (extension (cdar args)) ".o")
-               (set! obj-files (cons (cdar args) obj-files))
-               (set! scm-files (cons (cdar args) scm-files))))
-          ((#\v) (set! verbose? #t))
-          ((#\g) (set! debug? #t))
-          ((#\h) (set! header? #t))
-          ((#\t) (set! transpile? #t))
-          ((#\c) (set! object? #t))
-          ; TODO use realpath on out-file to ensure we can actually write to it
-          ((#\o) (set! out-file (cdar args)))
-          ((#\I) (set! paths (append paths (list (realpath (cdar args))))))
-          ((#\O)
-           (set! optimization (string->number (cdar args)))
-           (if (not (and optimization (integer? optimization) (<= 0 optimization 3)))
-               (compiler-error "Optimization flag -O expects integer between 0 and 3 inclusive" (cdar args))))
-          ((#\E)
-           (set! expand? (string->number (cdar args)))
-           (if (not (and expand? (integer? expand?) (<= 0 expand? 2)))
-               (compiler-error "Expand flag -E expects integer between 0 and 2 inclusive" (cdar args))))
-          ((#\W)
-           (if (not (eq? (string-ref (cdar args) 0) #\c))
-               (compiler-error "Wrapper flag -W can only pass args to the C compiler, eg -Wc,-Ilib"))
-           (if (not (and (>= (string-length (cdar args)) 2) (eq? (string-ref (cdar args) 1) #\,)))
-               (compiler-error "Wrapper flag -W missing comma"))
-           (set! c-options (cons (decomma (substring (cdar args) 1)) c-options)))
-          ((help) (display-help) (exit 0))
-          ((version) (display-version) (exit 0))
-          ((shared) (set! shared? #t))
-          ((api) (set! api (string->number (cdar args))))
-          ((platform) (set! platform (cdar args)))
-          ((cc) (set! cc (cdar args)))
-          ((keep-temps) (set! keep? #t))
-          ((makefile) (set! makefile? #t))
-          ((maketarget) (set! maketargets (cons (cdar args) maketargets)))
-          ((benchmark) (set! benchmark? #t))
-          ((bytecode) (set! bytecode? #t))
-          (else (write (caar args)) (newline) (compiler-error "Unknown CLI option" (cdar args))))
-        (loop (cdr args)))))
-(if (not cc)
-    (set! cc
-      (cond ((equal? platform "linux") "gcc")
-            ((equal? platform "windows") "/usr/bin/x86_64-w64-mingw32-gcc")
-            (else (compiler-error "Unknown --platform, only 'linux' and 'windows' are valid" platform)))))
+(define (handle-exception err)
+  (parameterize ((current-output-port (current-error-port)))
+    (display "vsc: ")
+    (write err)
+    (newline)
+    (exit 1)))
 
-(define (count-true . args)
-  (let loop ((args args) (ct 0))
-    (if (null? args) ct
-        (loop (cdr args) (+ ct (if (car args) 1 0))))))
-(if (> (count-true makefile? header? bytecode? transpile? object? expand?) 1) (compiler-error "Only one of '-h' or '-c' or '-t' or '-E' or '--makefile' can be set"))
+(with-exception-handler handle-exception
+  (lambda ()
+    (let loop ((args (getopt "vghtco:I:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark)))))
+      (if (not (null? args))
+          (begin
+            (case (caar args)
+              ((#t)
+               (if (equal? (extension (cdar args)) ".o")
+                   (set! obj-files (cons (cdar args) obj-files))
+                   (set! scm-files (cons (cdar args) scm-files))))
+              ((#\v) (set! verbose? #t))
+              ((#\g) (set! debug? #t))
+              ((#\h) (set! header? #t))
+              ((#\t) (set! transpile? #t))
+              ((#\c) (set! object? #t))
+              ; TODO use realpath on out-file to ensure we can actually write to it
+              ((#\o) (set! out-file (cdar args)))
+              ((#\I) (set! paths (append paths (list (realpath (cdar args))))))
+              ((#\O)
+               (set! optimization (string->number (cdar args)))
+               (if (not (and optimization (integer? optimization) (<= 0 optimization 3)))
+                   (compiler-error "Optimization flag -O expects integer between 0 and 3 inclusive" (cdar args))))
+              ((#\E)
+               (set! expand? (string->number (cdar args)))
+               (if (not (and expand? (integer? expand?) (<= 0 expand? 2)))
+                   (compiler-error "Expand flag -E expects integer between 0 and 2 inclusive" (cdar args))))
+              ((#\W)
+               (if (not (eq? (string-ref (cdar args) 0) #\c))
+                   (compiler-error "Wrapper flag -W can only pass args to the C compiler, eg -Wc,-Ilib"))
+               (if (not (and (>= (string-length (cdar args)) 2) (eq? (string-ref (cdar args) 1) #\,)))
+                   (compiler-error "Wrapper flag -W missing comma"))
+               (set! c-options (cons (decomma (substring (cdar args) 1)) c-options)))
+              ((help) (display-help) (exit 0))
+              ((version) (display-version) (exit 0))
+              ((shared) (set! shared? #t))
+              ((api) (set! api (string->number (cdar args))))
+              ((platform) (set! platform (cdar args)))
+              ((cc) (set! cc (cdar args)))
+              ((keep-temps) (set! keep? #t))
+              ((makefile) (set! makefile? #t))
+              ((maketarget) (set! maketargets (cons (cdar args) maketargets)))
+              ((benchmark) (set! benchmark? #t))
+              ((bytecode) (set! bytecode? #t))
+              (else (compiler-error "Unknown CLI option" (cdar args))))
+            (loop (cdr args)))))
+    (if (not cc)
+        (set! cc
+          (cond ((equal? platform "linux") "gcc")
+                ((equal? platform "windows") "/usr/bin/x86_64-w64-mingw32-gcc")
+                (else (compiler-error "Unknown --platform, only 'linux' and 'windows' are valid" platform)))))
 
-(if (and (null? scm-files) (null? obj-files)) (compiler-error "No input file provided"))
+    (if (> (count-true makefile? header? bytecode? transpile? object? expand?) 1) (compiler-error "Only one of '-h' or '-c' or '-t' or '-E' or '--makefile' can be set"))
 
-(if (and (or makefile? header? bytecode? transpile? object? expand?) (not (null? obj-files))) (compiler-error "Cannot specify '-h' '-c' or '-t' or '-E' or '--makefile' with object files"))
-(if (and (or makefile? header? bytecode? transpile? object? expand?) out-file (not (null? (cdr scm-files)))) (compiler-error "Cannot specify '-h' or '-c' or '-t' or '-E' or '--makefile' with '-o' and multiple files"))
+    (if (and (null? scm-files) (null? obj-files)) (compiler-error "No input file provided"))
 
-; TEMPORARY
-(if (and (or makefile? header? bytecode? transpile? object? expand?) (not (null? (cdr scm-files)))) (compiler-error "FIXME: -h and -c and -t and -E can only handle one file"))
+    (if (and (or makefile? header? bytecode? transpile? object? expand?) (not (null? obj-files))) (compiler-error "Cannot specify '-h' '-c' or '-t' or '-E' or '--makefile' with object files"))
+    (if (and (or makefile? header? bytecode? transpile? object? expand?) out-file (not (null? (cdr scm-files)))) (compiler-error "Cannot specify '-h' or '-c' or '-t' or '-E' or '--makefile' with '-o' and multiple files"))
 
-(if (not out-file)
-    (set! out-file
-      (cond (object? (change-extension (basename (car scm-files)) ".o"))
-            (transpile? (change-extension (basename (car scm-files)) ".c"))
-            (expand? (change-extension (basename (car scm-files)) ".escm"))
-            (header? (change-extension (basename (car scm-files)) ".scmh"))
-            (bytecode? (change-extension (basename (car scm-files)) ".vasm"))
-            (makefile? out-file)
-            (else #f))))
+    ; TEMPORARY
+    (if (and (or makefile? header? bytecode? transpile? object? expand?) (not (null? (cdr scm-files)))) (compiler-error "FIXME: -h and -c and -t and -E can only handle one file"))
 
-(define (gen-header)
-  (let* ((file (read-all (open-input-file (car scm-files))))
-         (headers (filter (lambda (x) x) (map header-from-library file))))
-    (if (> (length headers) 1) (compiler-error "Only one statement permitted in header generation"))
-    (if (not (or (null? headers) (car headers))) (compiler-error "File did not produce a valid header"))
-    (with-output-to-file
-      out-file
-      (lambda ()
-        (if (not (null? headers)) (write (car headers)))
-        (newline)))))
-(if header? (begin (gen-header) (exit)))
+    (if (not out-file)
+        (set! out-file
+          (cond (object? (change-extension (basename (car scm-files)) ".o"))
+                (transpile? (change-extension (basename (car scm-files)) ".c"))
+                (expand? (change-extension (basename (car scm-files)) ".escm"))
+                (header? (change-extension (basename (car scm-files)) ".scmh"))
+                (bytecode? (change-extension (basename (car scm-files)) ".vasm"))
+                (makefile? out-file)
+                (else #f))))
 
-
-(define (gen-makefile)
-  (if (null? maketargets) (set! maketargets (list (change-extension (basename (car scm-files)) ".o"))))
-  (let* ((file (read-all (open-input-file (car scm-files))))
-         (deps (gather-dependencies file))
-         (port (if out-file (open-output-file out-file) (current-output-port))))
-    (for-each (lambda (target) (format port "~A " target)) maketargets)
-    (display ":" port)
-    (format port " ~A" (car scm-files))
-    (for-each
-      (lambda (dep) 
-        (if (pair? dep)
-            (begin
-              (if (not (valid-import? dep)) (compiler-error "invalid import" dep))
-              (format port " ~A" (import->path dep)))))
-      deps)
-    (newline port)
-    (if out-file (close-port port))))
-(if makefile? (begin (gen-makefile) (exit)))
+    (if header? (begin (gen-header) (exit)))
+    (if makefile? (begin (gen-makefile) (exit)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; RUN COMPILE: super messy
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define cc-files
-  (if (or header? bytecode? transpile? expand?) (list out-file)
-      (map (lambda (file) (make-temporary-file (string-append "/tmp/" (basename file)) ".c")) scm-files)))
-(define cc-obj-files
-  (cond ((or header? bytecode? transpile? expand?) (list #f))
-        (object? (list out-file))
-        (else (map (lambda (file) (make-temporary-file (string-append "/tmp/" (basename file)) ".o")) scm-files))))
+(with-exception-handler handle-exception
+  (lambda ()
+    (define cc-files
+      (if (or header? bytecode? transpile? expand?) (list out-file)
+          (map (lambda (file) (make-temporary-file (string-append "/tmp/" (basename file)) ".c")) scm-files)))
+    (define cc-obj-files
+      (cond ((or header? bytecode? transpile? expand?) (list #f))
+            (object? (list out-file))
+            (else (map (lambda (file) (make-temporary-file (string-append "/tmp/" (basename file)) ".o")) scm-files))))
 
-(define base-cc-flags
-  (if (equal? platform "linux")
-      " -rdynamic -Wmissing-braces -masm=intel"
-      (sprintf " -Wl,--export-all-symbols -Wl,--stack,8388608 -Wmissing-braces -masm=intel -I~A/x86_64-w64-mingw32/include/" install-root)))
-(define cc-command-flags
-  (string-append
-    base-cc-flags
-    (sprintf " -O~A" optimization)
-    (if debug? " -g" "")
-    (if shared? " -fPIC" "")))
-(define cc-command "")
-(set! cc-command (string-append cc-command cc-command-flags))
-(for-each
-  (lambda (option) (set! cc-command (string-append cc-command option)))
-  c-options)
+    (define base-cc-flags
+      (if (equal? platform "linux")
+          " -rdynamic -Wmissing-braces -masm=intel"
+          (sprintf " -Wl,--export-all-symbols -Wl,--stack,8388608 -Wmissing-braces -masm=intel -I~A/x86_64-w64-mingw32/include/" install-root)))
+    (define cc-command-flags
+      (string-append
+        base-cc-flags
+        (sprintf " -O~A" optimization)
+        (if debug? " -g" "")
+        (if shared? " -fPIC" "")))
+    (define cc-command (apply string-append cc-command-flags c-options))
 
-(define stdout (current-output-port))
-; 1. transpile
-(define num-mains
-  (fold
-    (lambda (x acc) (+ acc (if x 1 0)))
-    0
-    (map
+    (define stdout (current-output-port))
+    ; 1. transpile
+    (define num-mains
+      (fold
+        (lambda (x acc) (+ acc (if x 1 0)))
+        0
+        (map
+          (lambda (scm-file cc-file obj-file)
+            (let ((path (realbasepath scm-file)))
+              (with-output-to-file
+                cc-file
+                (lambda ()
+                  (let* ((fd (open-input-file scm-file))
+                         (file (if fd (append (read-all fd)) (compiler-error "file does not exist" scm-file)))
+                         (expanded  (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths)))) file)))
+                    (if (eq? expand? 0) (for-each pretty-print expanded)
+                        (let ((cps (map (lambda (expr) (to-cps expr)) (apply append expanded))))
+                         (if (eq? expand? 1) (for-each pretty-print cps)
+                             (let ((opt (map (lambda (expr) (optimize expr (not bytecode?))) cps)))
+                              (if (eq? expand? 2) (for-each pretty-print opt)
+                                  (let* ((bruijn (map bruijn-ify opt))
+                                         (funs (to-functions bruijn (not bytecode?))))
+                                    (if bytecode?
+                                        (begin
+                                          (write-bytecode (apply to-bytecode (cons debug? (cons shared? funs))))
+                                          (not (null? (take-right funs 1))))
+                                        (apply printout2 (cons debug? (cons shared? funs)))))))))))))))
+          scm-files
+          cc-files
+          cc-obj-files)))
+
+    (if (and shared? (> num-mains 0)) (compiler-error "shared library has toplevel expressions or defines"))
+    (if (> num-mains 1) (compiler-error "program has toplevel expressions in multiple files, and so it generated multiple mains"))
+
+    ; 2. compile
+    (for-each
       (lambda (scm-file cc-file obj-file)
         (let ((path (realbasepath scm-file)))
-          (with-output-to-file
-            cc-file
-            (lambda ()
-              (let* ((fd (open-input-file scm-file))
-                     (file (if fd (append (read-all fd)) (compiler-error "file does not exist" scm-file)))
-                     (expanded  (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths)))) file)))
-                (if (eq? expand? 0) (for-each pretty-print expanded)
-                    (let ((cps (map (lambda (expr) (to-cps expr)) (apply append expanded))))
-                     (if (eq? expand? 1) (for-each pretty-print cps)
-                         (let ((opt (map (lambda (expr) (optimize expr (not bytecode?))) cps)))
-                          (if (eq? expand? 2) (for-each pretty-print opt)
-                              (let* ((bruijn (map bruijn-ify opt))
-                                     (funs (to-functions bruijn (not bytecode?))))
-                                (if bytecode?
-                                    (begin
-                                      (write-bytecode (apply to-bytecode (cons debug? (cons shared? funs))))
-                                      (not (null? (take-right funs 1))))
-                                    (apply printout2 (cons debug? (cons shared? funs)))))))))))))))
+          (if (and (not header?) (not bytecode?) (not transpile?) (not expand?))
+              (begin
+                (if verbose? (displayln (sprintf "~A -I~A ~A -c -o ~A ~A" cc path cc-command obj-file cc-file)))
+                (system (sprintf "~A -I~A ~A -c -o ~A ~A" cc path cc-command obj-file cc-file))))))
       scm-files
       cc-files
-      cc-obj-files)))
+      cc-obj-files)
 
-(if (and shared? (> num-mains 0)) (compiler-error "shared library has toplevel expressions or defines"))
-(if (> num-mains 1) (compiler-error "program has toplevel expressions in multiple files, and so it generated multiple mains"))
+    ; 3. link
+    (if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not object?))
+        (let ()
+          (define link-command-flags
+            (string-append
+              base-cc-flags
+              (sprintf " -O~A" optimization)
+              (if debug? " -g" "")
+              ; TODO way to not link vscheme in
+              (if (equal? platform "linux")
+                  " -lvscheme"
+                  (sprintf " -L~A/x86_64-w64-mingw32/lib/ -lvscheme" install-root))
+              (if shared? " -fPIC -shared" " -Wl,--no-as-needed")))
+          (define link-command
+            (if out-file
+                (sprintf "~A -o ~A" cc out-file)
+                cc))
+          (for-each
+            (lambda (file) (set! link-command (string-append link-command " " file)))
+            (append obj-files cc-obj-files))
+          (for-each
+            (lambda (option) (set! link-command (string-append link-command option)))
+            c-options)
+          (set! link-command (string-append link-command link-command-flags))
 
-; 2. compile
-(for-each
-  (lambda (scm-file cc-file obj-file)
-    (let ((path (realbasepath scm-file)))
-      (if (and (not header?) (not bytecode?) (not transpile?) (not expand?))
-          (begin
-            (if verbose? (displayln (sprintf "~A -I~A ~A -c -o ~A ~A" cc path cc-command obj-file cc-file)))
-            (system (sprintf "~A -I~A ~A -c -o ~A ~A" cc path cc-command obj-file cc-file))))))
-  scm-files
-  cc-files
-  cc-obj-files)
+          (if verbose? (displayln link-command))
+          (system link-command)))
 
-(define (delete-file f)  (system (sprintf "/bin/rm ~A" f)))
-
-; 3. link
-(if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not object?))
-    (let ()
-      (define link-command-flags
-        (string-append
-          base-cc-flags
-          (sprintf " -O~A" optimization)
-          (if debug? " -g" "")
-          ; TODO way to not link vscheme in
-          (if (equal? platform "linux")
-              " -lvscheme"
-              (sprintf " -L~A/x86_64-w64-mingw32/lib/ -lvscheme" install-root))
-          (if shared? " -fPIC -shared" " -Wl,--no-as-needed")))
-      (define link-command
-        (if out-file
-            (sprintf "~A -o ~A" cc out-file)
-            cc))
-      (for-each
-        (lambda (file) (set! link-command (string-append link-command " " file)))
-        (append obj-files cc-obj-files))
-      (for-each
-        (lambda (option) (set! link-command (string-append link-command option)))
-        c-options)
-      (set! link-command (string-append link-command link-command-flags))
-
-      (if verbose? (displayln link-command))
-      (system link-command)))
-
-; 4. cleanup
-(if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not keep?))
-    (for-each delete-file cc-files))
-(if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not object?) (not keep?))
-    (for-each delete-file cc-obj-files))
+    ; 4. cleanup
+    (if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not keep?))
+        (for-each delete-file cc-files))
+    (if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not object?) (not keep?))
+        (for-each delete-file cc-obj-files))))

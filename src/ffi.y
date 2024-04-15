@@ -489,6 +489,7 @@ VWORD parse_ret;
 VRuntime * global_runtime;
 
 void VForeignParseDeclCImpl(V_CORE_ARGS, VWORD k, VWORD decl) {
+#ifdef __linux__
   global_runtime = runtime;
   V_ARG_CHECK3(runtime, "foreign-parse-decl-c", 2, argc);
   V_GC_CHECK2_VARARGS((VFunc)VForeignParseDeclCImpl, runtime, statics, 2, argc, k, decl) {
@@ -501,6 +502,8 @@ void VForeignParseDeclCImpl(V_CORE_ARGS, VWORD k, VWORD decl) {
     fclose(f);
   }
   V_CALL(k, runtime, parse_ret);
+#endif
+  VErrorC(runtime, "foreign-parse-decl-c: unsupported platform");
 }
 void VForeignParseHeaderCImpl(V_CORE_ARGS, VWORD k, VWORD header) {
   global_runtime = runtime;

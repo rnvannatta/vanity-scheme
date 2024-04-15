@@ -11,7 +11,7 @@
       (cond ((<= i 0) #f)
             ((eq? #\. (string-ref file i)) (substring file i))
             (else (loop (- i 1))))))
-  (define (realbasepath file)
+  #;(define (realbasepath file)
     (let* ((proc (open-input-process (sprintf "realpath `dirname ~A`" file)))
            (ret (read-line proc)))
       (close-port proc)
@@ -29,7 +29,7 @@
     (define evaluate #f)
 
     (define (eval-scheme expr)
-      (let* ((expanded (expand-toplevel expr (cons path '())))
+      (let* ((expanded (expand-toplevel expr '() #;(cons path '())))
              (cps (map to-cps expanded))
              (opt (map (lambda (e) (optimize e #f)) cps))
              (bruijn (map bruijn-ify opt))
@@ -57,7 +57,7 @@
       (case lang
         ((vasm) eval-vasm)
         ((scheme) eval-scheme)))
-    (set! path (if file (realbasepath file) (realbasepath ".")))
+    #;(set! path (if file (realbasepath file) (realbasepath ".")))
     (let ()
       (define port
         (if file
@@ -67,17 +67,30 @@
             (current-input-port)))
       (define is-tty? (and (not file) (##vcore.tty-port? (current-output-port))))
       (define first #t)
-      (let loop ()
-        (if is-tty? (display "> "))
-        (let ((tape (read port)))
-          (if (not (eof-object? tape))
-              (begin
-                (call-with-values
-                  (lambda () (evaluate tape))
-                  (lambda rets
-                    (if (and is-tty? (not (equal? rets `(,(let ((x #f)) (set! x #f))))))
-                        (for-each writeln rets))))
-                (loop))))))))
+      (define restart #f)
+      (define (handle-error err)
+        (if is-tty?
+            (begin
+              (printf "recovered from error: ~A~N" err)
+              (restart #f))
+            (exit 1)))
+      (##vcore.register-sigint)
+      (call/cc (lambda (k) (set! restart k)))
+      ; FIXME too broad and a tad glitchy, need to just catch interrupts in this big net handler
+      (with-exception-handler handle-error
+        (lambda ()
+         (let loop ()
+          (##vcore.garbage-collect #f)
+          (if is-tty? (display "> "))
+          (let ((tape (with-exception-handler handle-error (lambda () (read port)))))
+            (if (not (eof-object? tape))
+                (begin
+                  (call-with-values
+                    (lambda () (with-exception-handler handle-error (lambda () (evaluate tape))))
+                    (lambda rets
+                      (if (and is-tty? (not (equal? rets `(,(let ((x #f)) (set! x #f))))))
+                          (for-each writeln rets))))
+                  (loop))))))))))
 
 (import (vanity core) (vanity interpreter frontend))
 (##vcore.vanity-main)

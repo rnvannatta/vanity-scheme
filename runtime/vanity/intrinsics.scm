@@ -194,6 +194,7 @@
          ((##vcore.open-output-process) "VOpenOutputProcess2")
          ((##vcore.make-temporary-file) "VMakeTemporaryFile2")
          ((##vcore.command-line) "VCommandLine2")
+         ((##vcore.register-sigint) "VRegisterSigint")
 
          ; Random
          ((##vcore.make-random) "VMakeRandom")

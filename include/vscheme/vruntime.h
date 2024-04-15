@@ -1002,6 +1002,8 @@ SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k);
 
 SYSV_CALL void VGensym(V_CORE_ARGS, VWORD k, VWORD _str);
 
+SYSV_CALL void VRegisterSigint(V_CORE_ARGS, VWORD k);
+
 /* ======================== Fibering ======================= */
 
 SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst);
