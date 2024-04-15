@@ -543,22 +543,6 @@
   (define char->integer ##vcore.char-integer)
 
   ; io
-  #;(define current-output-port 
-    (let ((out (##vcore.stdout->port)))
-      (case-lambda
-        (() out)
-        ((port) (set! out port)))))
-  #;(define current-error-port 
-    (let ((out (##vcore.stderr->port)))
-      (case-lambda
-        (() out)
-        ((port) (set! out port)))))
-  #;(define current-input-port 
-    (let ((in (##vcore.stdin->port)))
-      (case-lambda
-        (() in)
-        ((port) (set! in port)))))
-
   (define current-output-port (make-parameter (##vcore.stdout->port)))
   (define current-error-port (make-parameter (##vcore.stderr->port)))
   (define current-input-port (make-parameter (##vcore.stdin->port)))
@@ -577,14 +561,7 @@
               (##vcore.garbage-collect #t)
               (call-with-values
                 thunk
-                (lambda (ret ok) (if ok ret (error msg))))))))
-    #;(let ((ret (thunk)))
-      (if ret ret
-          (begin
-            (##vcore.garbage-collect #t)
-            (let ((ret (thunk)))
-              (if ret ret
-                  (error msg)))))))
+                (lambda (ret ok) (if ok ret (error msg)))))))))
 
   (define (close-port port)
     (if (##vcore.has-finalizer? port)
@@ -618,22 +595,6 @@
     (try-or-gc open-output-string-impl "open-output-string: failed"))
   (define get-output-string ##vcore.get-output-string)
 
-  #;(define (with-output-to-file str thunk)
-    (let ((port (open-output-file str))
-          (stdout (current-output-port)))
-      (current-output-port port)
-      (let ((ret (thunk)))
-        (current-output-port stdout)
-        (close-port port)
-        ret)))
-  #;(define (with-input-from-file str thunk)
-    (let ((port (open-input-file str))
-          (stdout (current-input-port)))
-      (current-input-port port)
-      (let ((ret (thunk)))
-        (current-input-port stdout)
-        (close-port port)
-        ret)))
   (define (with-output-to-file str thunk)
     (let ((port (open-output-file str)))
       (parameterize ((current-output-port port))
@@ -736,7 +697,7 @@
            (case action
              ((##vcore.push-value) (##vcore.push-dynamic key (convert x)))
              ((##vcore.pop-value) (##vcore.pop-dynamic x))
-             (else (error "make parameter expects zero arguments")))))))))
+             (else (error "parameter object expects zero arguments")))))))))
 
   ; system interface
   (define command-line ##vcore.command-line)
@@ -834,20 +795,7 @@
       ret))
 
   (define (error msg . irritants)
-    (let ((err (current-error-port)))
-      (display "error: " err)
-      (display msg err)
-      (if (not (null? irritants))
-          (begin
-            (display ":" err)
-            (let loop ((irritants irritants))
-              (if (not (null? irritants))
-                (begin
-                  (display " " err)
-                  (write (car irritants) err)
-                  (loop (cdr irritants)))))))
-      (newline err)
-      (##vcore.abort)))
+    (raise (##vcore.record #f 'error msg irritants)))
 
   (define fiber-fork-list ##vcore.fiber-fork-list)
   (define (fiber-fork . args)

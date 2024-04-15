@@ -506,10 +506,10 @@ SYSV_CALL void VErrorC(VRuntime * runtime, const char * str, ...) {
     if(len < ret->len)
       ret->len = len;
     else
-      len = ret->len;
+      len = ret->len-1;
 
     fread(ret->buf, len, 1, f);
-    ret->buf[len-1] = '\0';
+    ret->buf[len] = '\0';
     fclose(f);
   } else {
     char msg[] = "an error occured but file descriptors were exhausted. Unable to transcribe message.";
@@ -889,6 +889,9 @@ SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics,
   VGarbageCollect2(f, runtime, statics, argc, argv);
 }
 SYSV_CALL static VWORD VCleanupFinalizers(VRuntime * runtime, VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables);
+
+volatile sig_atomic_t _Atomic VInterruptSignal;
+
 SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv) {
 #ifdef __linux__
   struct timespec start_time, end_time;
@@ -1064,6 +1067,10 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
       cur = VCheneyScan(runtime, cur);
       stop = runtime->VHeapPos;
     }
+  }
+
+  if(atomic_exchange(&VInterruptSignal, 0)) {
+    VErrorC(runtime, "interrupted");
   }
 
   runtime->num_half_reaped_fibers = 0;
@@ -2114,7 +2121,24 @@ static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
         }
         case VRECORD:
         {
-          fprintf(f, "#record");
+          VVector * rec = ptr;
+          if(rec->len == 4 && !VDecodeBool(rec->arr[0])) {
+            VDisplayWordImpl(f, rec->arr[1], write, depth+1);
+            fprintf(f, ": ");
+            VDisplayWordImpl(f, rec->arr[2], write, depth+1);
+            VWORD irritants = rec->arr[3];
+            if(!VIsEq(irritants, VNULL)) {
+              fprintf(f, ":");
+              while(VWordType(irritants) == VPOINTER_PAIR) {
+                fprintf(f, " ");
+                VPair * pair = VDecodePair(irritants);
+                VDisplayWordImpl(f, pair->first, write, depth+1);
+                irritants = pair->rest;
+              }
+            }
+          } else {
+            fprintf(f, "#record");
+          }
           break;
         }
         case VHASH_TABLE:
@@ -2909,6 +2933,19 @@ SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD _future) {
   }
   VErrorC(runtime, "await: unsupported platform\n");
   assert(0);
+}
+
+// ======================================================
+// ------------------- DEBUGGING STUFF ------------------
+// ======================================================
+
+static void sigint_handler(int) {
+  atomic_store(&VInterruptSignal, 1);
+}
+
+SYSV_CALL void VRegisterSigint(V_CORE_ARGS, VWORD k) {
+  signal(SIGINT, sigint_handler);
+  V_CALL(k, runtime, VVOID);
 }
 
 // ======================================================
