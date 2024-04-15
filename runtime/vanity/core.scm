@@ -40,8 +40,9 @@
     number? complex? rational? positive? negative? zero?
     ; math functions
     + - * / quotient remainder max min
-    abs square ;sqrt
-    ;sin cos tan asin acos atan exp log expt pow
+    abs square sqrt
+    ceiling floor round
+    sin cos tan asin acos atan exp log expt pow
     ; pairs
     cons car cdr set-car! set-cdr!
     ; cxr
@@ -203,34 +204,34 @@
 
   ; All need to work on ints
   (define (abs x) (if (< x 0) (- x) x))
-  #;(define ceiling (foreign-function "C" "double ceil(double);"))
-  #;(define floor (foreign-function "C" "double floor(double);"))
-  #;(define round (foreign-function "C" "double round(double);"))
+  (define ceiling (##foreign.function "C" "double ceil(double);"))
+  (define floor (##foreign.function "C" "double floor(double);"))
+  (define round (##foreign.function "C" "double round(double);"))
 
   (define (square x) (* x x))
-  #;(define sqrt (##foreign-function "C" "double sqrt(double);"))
+  (define sqrt (foreign-function "C" "double sqrt(double);"))
 
-  #;(define sin (##foreign-function "C" "double sin(double);"))
-  #;(define cos (##foreign-function "C" "double cos(double);"))
-  #;(define tan (##foreign-function "C" "double tan(double);"))
-  #;(define asin (##foreign-function "C" "double asin(double);"))
-  #;(define acos (##foreign-function "C" "double acos(double);"))
+  (define sin (foreign-function "C" "double sin(double);"))
+  (define cos (foreign-function "C" "double cos(double);"))
+  (define tan (foreign-function "C" "double tan(double);"))
+  (define asin (foreign-function "C" "double asin(double);"))
+  (define acos (foreign-function "C" "double acos(double);"))
 
-  #;(define atan-impl (##foreign-function "C" "double atan(double);"))
-  #;(define atan2-impl (##foreign-function "C" "double atan2(double);"))
-  #;(define atan
+  (define atan-impl (foreign-function "C" "double atan(double);"))
+  (define atan2-impl (foreign-function "C" "double atan2(double, double);"))
+  (define atan
     (case-lambda
       ((x) (atan-impl x))
       ((y x) (atan2-impl y x))))
 
-  #;(define exp (##foreign-function "C" "double exp(double);"))
-  #;(define log-impl (##foreign-function "C" "double log(double);"))
-  #;(define log
+  (define exp (##foreign.function "C" "double exp(double);"))
+  (define log-impl (##foreign.function "C" "double log(double);"))
+  (define log
     (case-lambda
       ((x) (log-impl x))
       ((x base) (/ (log-impl x) (log-impl base)))))
-  #;(define pow (##foreign-function "C" "double pow(double);"))
-  #;(define expt pow)
+  (define pow (##foreign.function "C" "double pow(double, double);"))
+  (define expt pow)
 
   (define max
     (case-lambda

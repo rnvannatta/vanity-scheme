@@ -265,6 +265,7 @@
         (("naked_declaration" ret _) (cdr parse))
         (else (compiler-error "Declaration is not a single function" parse) #f)))
     (match expr
+      (('##foreign.function lang decl a b . d) expr)
       (('##foreign.function lang decl)
        (if (not (equal? lang "C")) (compiler-error "Unsupported foreign function language" lang))
        (let ((parse (is-one-decl (deep-copy (parse-decl-c decl)))))

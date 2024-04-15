@@ -31,6 +31,9 @@
 #include <setjmp.h>
 #endif
 #ifdef _WIN64
+#include "io.h"
+#include "fileapi.h"
+#include "errhandlingapi.h"
 #include <debugapi.h>
 #include <libloaderapi.h>
 #include <processthreadsapi.h>
@@ -490,11 +493,41 @@ SYSV_CALL void VRaise(V_CORE_ARGS, VWORD _, VWORD x) {
   V_CALL(handler, runtime, VEncodeClosure(&raisek), x);
 }
 
+#ifdef _WIN64
+FILE * Windows_TmpFile() {
+  // because tmpfile() creates its files in the root folder of the volume
+  // and the root C: was changed in Vista to be readonly
+  // and tmpfile() was left hanging.
+  char buf[PATH_MAX];
+  GetTempPathA(sizeof buf, buf);
+  char * name = _tempnam(buf, "tmp");
+  if(!name)
+    return NULL;
+  enum { FILE_FLAG_DELETE_ON_CLOSE = 0x04000000 };
+  HANDLE h = CreateFile( name, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_FLAG_DELETE_ON_CLOSE, NULL );
+  free(name);
+  if((intptr_t)h == (intptr_t)-1)
+    return NULL;
+  // don't call CloseHandle on h anymore, open_osfhandle takes ownership
+  int fd = _open_osfhandle((intptr_t)h, 0);
+  if(fd == -1)
+    return NULL;
+  // don't call close on fd anymore, fdopen takes ownership
+  FILE * f = fdopen(fd, "wb+");
+  return f;
+}
+#endif
+
 static SYSV_CALL void VVFPrintfC(VRuntime * runtime, FILE * f, char const * str, va_list args);
 SYSV_CALL void VErrorC(VRuntime * runtime, const char * str, ...) {
   va_list args;
   va_start(args, str);
+  #ifdef __linux__
   FILE * f = tmpfile();
+  #endif
+  #ifdef _WIN64
+  FILE * f = Windows_TmpFile();
+  #endif
   VBlob * ret = alloca(sizeof(VBlob)+4096);
   ret->base = VMakeSmallObject(VSTRING);
   ret->len = 4096;
@@ -2034,6 +2067,9 @@ static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
         case VTOK_EOF:
           fprintf(f, "#eof");
           break;
+        case VTOK_NAN:
+          fprintf(f, "#nan");
+          break;
       }
       break;
     }
@@ -2934,10 +2970,6 @@ SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD _future) {
   VErrorC(runtime, "await: unsupported platform\n");
   assert(0);
 }
-
-// ======================================================
-// ------------------- DEBUGGING STUFF ------------------
-// ======================================================
 
 static void sigint_handler(int) {
   atomic_store(&VInterruptSignal, 1);

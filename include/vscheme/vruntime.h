@@ -371,14 +371,22 @@ SYSV_CALL static inline bool VDecodeBool(VWORD v) {
 
 // TODO remove usage of this function
 SYSV_CALL static inline VWORD VEncodeNumber(double d) {
-  VWORD v;
-  memcpy(&v, &d, sizeof v);
-  return v;
+  if(isnan(d)) {
+    return VNAN;
+  } else {
+    VWORD v;
+    memcpy(&v, &d, sizeof v);
+    return v;
+  }
 }
 SYSV_CALL static inline VWORD VEncodeDouble(double d) {
-  VWORD v;
-  memcpy(&v, &d, sizeof v);
-  return v;
+  if(isnan(d)) {
+    return VNAN;
+  } else {
+    VWORD v;
+    memcpy(&v, &d, sizeof v);
+    return v;
+  }
 }
 
 SYSV_CALL static inline double VDecodeNumber(VWORD v) {
@@ -460,9 +468,9 @@ SYSV_CALL static inline bool VIsNumber(VWORD v) {
   if((bits & LITERAL_HEADER) == LITERAL_HEADER) {
     bits = bits & LITERAL_PAYLOAD;
     if(bits) {
-      return bits == (VIMM_TOK | VTOK_NAN);
+      return (bits == (VIMM_TOK | VTOK_NAN));
     } else {
-      return false;
+      return true;
     }
   } else {
     return true;
