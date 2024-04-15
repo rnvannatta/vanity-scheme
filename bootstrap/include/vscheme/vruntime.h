@@ -371,14 +371,22 @@ SYSV_CALL static inline bool VDecodeBool(VWORD v) {
 
 // TODO remove usage of this function
 SYSV_CALL static inline VWORD VEncodeNumber(double d) {
-  VWORD v;
-  memcpy(&v, &d, sizeof v);
-  return v;
+  if(isnan(d)) {
+    return VNAN;
+  } else {
+    VWORD v;
+    memcpy(&v, &d, sizeof v);
+    return v;
+  }
 }
 SYSV_CALL static inline VWORD VEncodeDouble(double d) {
-  VWORD v;
-  memcpy(&v, &d, sizeof v);
-  return v;
+  if(isnan(d)) {
+    return VNAN;
+  } else {
+    VWORD v;
+    memcpy(&v, &d, sizeof v);
+    return v;
+  }
 }
 
 SYSV_CALL static inline double VDecodeNumber(VWORD v) {
@@ -1001,6 +1009,8 @@ static inline int VDecodeExitCode(VWORD v) {
 SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k);
 
 SYSV_CALL void VGensym(V_CORE_ARGS, VWORD k, VWORD _str);
+
+SYSV_CALL void VRegisterSigint(V_CORE_ARGS, VWORD k);
 
 /* ======================== Fibering ======================= */
 

@@ -55,13 +55,14 @@ SYSV_CALL __attribute__((used)) static void VAdd2CaseVarargs(V_CORE_ARGS, VWORD 
         exact = false;
         dacc += VDecodeNumber(v);
       } else {
-        VErrorC(runtime, "+: not a number\n");
+        VErrorC(runtime, "+: not a number: ~S", v);
       }
     }
     va_end(args);
     VWORD ret;
-    if(iacc >= INT32_MAX || iacc <= INT32_MIN)
-      exact = false;
+    if(exact && (iacc > INT32_MAX || iacc < INT32_MIN)) {
+      VErrorC(runtime, "+: integer overflow");
+    }
 
     if(exact)
       ret = VEncodeInt(iacc);
@@ -84,12 +85,13 @@ SYSV_CALL __attribute__((used)) static void VAdd2Case2(V_CORE_ARGS, VWORD k, VWO
         exact = false;
         dacc += VDecodeNumber(v);
       } else {
-        VErrorC(runtime, "+: not v number ~S\n", v);
+        VErrorC(runtime, "+: not a number: ~S", v);
       }
     }
     VWORD ret;
-    if(iacc >= INT32_MAX || iacc <= INT32_MIN)
-      exact = false;
+    if(exact && (iacc > INT32_MAX || iacc < INT32_MIN)) {
+      VErrorC(runtime, "+: integer overflow");
+    }
 
     if(exact)
       ret = VEncodeInt(iacc);
@@ -123,7 +125,7 @@ SYSV_CALL __attribute__((used)) static void VSub2Case2(V_CORE_ARGS, VWORD k, VWO
         exact = false;
         dacc += VDecodeNumber(a);
       } else {
-        VErrorC(runtime, "-: not a number ~S\n", a);
+        VErrorC(runtime, "-: not a number ~S", a);
       }
     }
     {
@@ -134,12 +136,13 @@ SYSV_CALL __attribute__((used)) static void VSub2Case2(V_CORE_ARGS, VWORD k, VWO
         exact = false;
         dacc -= VDecodeNumber(b);
       } else {
-        VErrorC(runtime, "-: not a number ~S\n", b);
+        VErrorC(runtime, "-: not a number ~S", b);
       }
     }
     VWORD ret;
-    if(iacc >= INT32_MAX || iacc <= INT32_MIN)
-      exact = false;
+    if(exact && (iacc > INT32_MAX || iacc < INT32_MIN)) {
+      VErrorC(runtime, "-: integer overflow");
+    }
 
     if(exact)
       ret = VEncodeInt(iacc);
@@ -161,7 +164,7 @@ SYSV_CALL __attribute__((used)) static void VSub2CaseVarargs(V_CORE_ARGS, VWORD 
         exact = false;
         dacc += VDecodeNumber(x);
       } else {
-        VErrorC(runtime, "-: not a number\n");
+        VErrorC(runtime, "-: not a number: ~S", x);
       }
     }
     // performs the -x op
@@ -182,15 +185,16 @@ SYSV_CALL __attribute__((used)) static void VSub2CaseVarargs(V_CORE_ARGS, VWORD 
         exact = false;
         dacc -= VDecodeNumber(v);
       } else {
-        VErrorC(runtime, "-: not a number\n");
+        VErrorC(runtime, "-: not a number: ~S", v);
       }
     }
     va_end(args);
 end:
     {
       VWORD ret;
-      if(iacc >= INT32_MAX || iacc <= INT32_MIN)
-        exact = false;
+      if(exact && (iacc > INT32_MAX || iacc < INT32_MIN)) {
+        VErrorC(runtime, "-: integer overflow");
+      }
 
       if(exact)
         ret = VEncodeInt(iacc);
@@ -224,10 +228,11 @@ SYSV_CALL void VMul2(V_CORE_ARGS, VWORD k, ...) {
       VWORD v = va_arg(args, VWORD);
       uint64_t type = VWordType(v);
       if(type == VIMM_INT) {
-        // FIXME no longer handles overflow correctly, instead
-        // use overflow detection from hacker's delight
         iacc *= VDecodeInt(v);
-        if(iacc >= INT32_MAX || iacc <= INT32_MIN) {
+        if(exact && (iacc > INT32_MAX || iacc < INT32_MIN)) {
+          VErrorC(runtime, "*: integer overflow");
+        }
+        if(iacc > INT32_MAX || iacc < INT32_MIN) {
           exact = false;
           dacc *= iacc;
           iacc = 1;
@@ -236,7 +241,7 @@ SYSV_CALL void VMul2(V_CORE_ARGS, VWORD k, ...) {
         exact = false;
         dacc *= VDecodeNumber(v);
       } else {
-        VErrorC(runtime, "*: not a number\n");
+        VErrorC(runtime, "*: not a number: ~S", v);
       }
     }
     VWORD ret;
@@ -260,7 +265,7 @@ SYSV_CALL void VDiv2(V_CORE_ARGS, VWORD k, VWORD x, ...) {
         exact = false;
         dacc = VDecodeNumber(x);
       } else {
-        VErrorC(runtime, "/: not a number\n");
+        VErrorC(runtime, "/: not a number: ~S", x);
       }
     }
     // performs the 1/x op
@@ -291,7 +296,7 @@ SYSV_CALL void VDiv2(V_CORE_ARGS, VWORD k, VWORD x, ...) {
         exact = false;
         dacc /= VDecodeNumber(v);
       } else {
-        VErrorC(runtime, "-: not a number\n");
+        VErrorC(runtime, "/: not a number: ~S", v);
       }
     }
     va_end(args);
@@ -309,18 +314,12 @@ end:
 SYSV_CALL void VQuot2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
     V_ARG_CHECK3(runtime, "quotient", 3, argc);
 
-    if(VWordType(x) != VIMM_INT) VErrorC(runtime, "quotient: not an int");
-    if(VWordType(y) != VIMM_INT) VErrorC(runtime, "quotient: not an int");
-
-    V_CALL(k, runtime, VEncodeInt(VDecodeInt(x) / VDecodeInt(y)));
+    V_CALL(k, runtime, VEncodeInt(VCheckedDecodeInt2(runtime, x, "quotient") / VCheckedDecodeInt2(runtime, y, "quotient")));
 }
 SYSV_CALL void VRem2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
     V_ARG_CHECK3(runtime, "remainder", 3, argc);
 
-    if(VWordType(x) != VIMM_INT) VErrorC(runtime, "remainder: not an int");
-    if(VWordType(y) != VIMM_INT) VErrorC(runtime, "remainder: not an int");
-
-    V_CALL(k, runtime, VEncodeInt(VDecodeInt(x) % VDecodeInt(y)));
+    V_CALL(k, runtime, VEncodeInt(VCheckedDecodeInt2(runtime, x, "remainder") % VCheckedDecodeInt2(runtime, y, "remainder")));
 }
 
 // This feels fucking idiotic.
