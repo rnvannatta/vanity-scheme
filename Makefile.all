@@ -1,11 +1,19 @@
 include Makefile.sources
 
+.PHONY : deps all install compiler interpreter windows_interpreter runtime windows_runtime tests tests_linux tests_windows install_compiler lay_egg testffi
+
+CC = gcc
+
+windows_runtime windows_interpreter : CC = /usr/bin/x86_64-w64-mingw32-gcc
+windows_runtime windows_interpreter : CFLAGS += -Wa,--no-warn -lshlwapi
+windows_runtime windows_interpreter : SCMFLAGS += --platform=windows -Wc,-lshlwapi
+
 vpath %.h src $(INCLUDES)
 vpath %.scmh build/include $(INCLUDES)
 
-DEP = $(addprefix build/, $(RUNTIME_SRC:.c=.d) $(RUNTIME_LISP_SRC:.scm=.d) $(SRC:.scm=.d) $(INTERP_SRC:.scm=.d))
+DEP = $(addprefix build/, $(RUNTIME_SRC:.c=.d) $(RUNTIME_LISP_SRC:.scm=.d) $(SRC:.scm=.d) $(COMPILE_SRC:.scm=.d) $(INTERP_SRC:.scm=.d)) build/ffi.tab.d build/ffi.lex.d build/wacky.d
 
-OBJ = $(addprefix build/, $(SRC:.scm=.o)) build/ffi.tab.o build/ffi.lex.o
+OBJ = $(addprefix build/, $(SRC:.scm=.o)) build/ffi.tab.o build/ffi.lex.o build/wacky.o
 COMPILE_OBJ = $(addprefix build/, $(COMPILE_SRC:.scm=.o))
 INTERP_OBJ = $(addprefix build/, $(INTERP_SRC:.scm=.o))
 
@@ -13,9 +21,9 @@ RUNTIME_OBJ = $(addprefix build/, $(RUNTIME_SRC:.c=.o))
 RUNTIME_OBJ += $(addprefix build/, $(ASSEMBLY_SRC:.S=.o))
 RUNTIME_OBJ +=  $(addprefix build/, $(RUNTIME_LISP_SRC:.scm=.o))
 
-DEP += $(addprefix build/x86_64-w64-mingw32/, $(RUNTIME_SRC:.c=.d) $(RUNTIME_LISP_SRC:.scm=.d))
+DEP += $(addprefix build/x86_64-w64-mingw32/, $(RUNTIME_SRC:.c=.d) $(RUNTIME_LISP_SRC:.scm=.d) $(SRC:.scm=.d) $(COMPILE_SRC:.scm=.d) $(INTERP_SRC:.scm=.d)) build/x86_64-w64-mingw32/ffi.tab.d build/x86_64-w64-mingw32/ffi.lex.d build/x86_64-w64-mingw32/wacky.d
 
-WINDOWS_OBJ = $(addprefix build/x86_64-w64-mingw32/, $(SRC:.scm=.o)) build/x86_64-w64-mingw32/ffi.tab.o build/x86_64-w64-mingw32/ffi.lex.o
+WINDOWS_OBJ = $(addprefix build/x86_64-w64-mingw32/, $(SRC:.scm=.o)) build/x86_64-w64-mingw32/ffi.tab.o build/x86_64-w64-mingw32/ffi.lex.o build/x86_64-w64-mingw32/wacky.o
 WINDOWS_INTERP_OBJ = $(addprefix build/x86_64-w64-mingw32/, $(INTERP_SRC:.scm=.o))
 
 
@@ -24,9 +32,7 @@ WINDOWS_RUNTIME_OBJ += $(addprefix build/x86_64-w64-mingw32/, $(WINDOWS_ASSEMBLY
 WINDOWS_RUNTIME_OBJ +=  $(addprefix build/x86_64-w64-mingw32/, $(RUNTIME_LISP_SRC:.scm=.o))
 
 BOOT = $(addprefix bin/bootstrap/src/, $(SRC:.scm=.c) $(COMPILE_SRC:.scm=.c))
-BOOT += $(addprefix bin/bootstrap/runtime/, $(ASSEMBLY_SRC) $(WINDOWS_ASSEMBLY_SRC) $(RUNTIME_SRC) $(PRIVATE_HEADERS) $(RUNTIME_LISP_SRC:.scm=.c))
-
-STRAP = $(addprefix bootstrap/src/, $(SRC:.scm=.c))
+BOOT += $(addprefix bin/bootstrap/runtime/, $(ASSEMBLY_SRC) $(RUNTIME_SRC) $(PRIVATE_HEADERS) $(RUNTIME_LISP_SRC:.scm=.c))
 
 include config.mk
 
@@ -34,7 +40,6 @@ VSCHEME = libvscheme.so.$(MAJOR)
 VSC = vsc-$(MAJOR)
 VANITY = vanity-$(MAJOR)
 
-.PHONY : deps all install compiler interpreter windows_interpreter runtime windows_runtime tests tests_linux tests_windows install_compiler lay_egg testffi
 compiler : bin/vsc
 interpreter : bin/vanity
 runtime : lib/libvscheme.so
@@ -113,6 +118,12 @@ bin/bootstrap/src/%.c : src/%.scm
 	@mkdir -p `dirname $@`
 	vsc -t $< -o $@ $(SCMFLAGS) -Ibuild/include
 	@{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
+bin/bootstrap/src/%.c : config/%.scm
+	@mkdir -p `dirname $@`
+	vsc -t $< -o $@ $(SCMFLAGS) -Ibuild/include
+	@{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
+bin/bootstrap/src/%.c : src/%.c
+	cp $< $@
 bin/bootstrap/runtime/%.c : runtime/%.c
 	cp $< $@
 bin/bootstrap/runtime/%.h : runtime/%.h
@@ -122,24 +133,26 @@ bin/bootstrap/runtime/%.S : runtime/%.S
 
 deps : $(DEP)
 
-build/%.d : runtime/%.c
-	gcc $< -MG -MM -MF $@ -MT $@ -MT $(@:.d=.o) $(CFLAGS) $(IFLAGS)
-build/x86_64-w64-mingw32/%.d : runtime/%.c
-	gcc $< -MG -MM -MF $@ -MT $@ -MT $(@:.d=.o) $(CFLAGS) $(IFLAGS)
-build/%.d : runtime/%.S
-	echo '$(@,.d=.o) $@: $<' > $@
-build/%.d : src/%.scm
-	@mkdir -p `dirname $@`
-	@mkdir -p `dirname build/headers/$*.scmh`
-	vsc --makefile $< -o $@ --maketarget $(@:.d=.o)
-	vsc --makefile $< -o build/headers/$*.d --maketarget $(@:.d=.scmh)
-build/%.d : runtime/%.scm
-	@mkdir -p `dirname $@`
-	@mkdir -p `dirname build/headers/$*.scmh`
-	vsc --makefile $< -o $@ --maketarget $(@:.d=.o)
-	vsc --makefile $< -o build/headers/$*.d --maketarget $(@:.d=.scmh)
-build/x86_64-w64-mingw32/%.d : runtime/%.scm
-	@mkdir -p `dirname $@`
+build/% : runtime/%
+	@mkdir -p $(dir $@)
+	ln -sfr $< $@
+build/% : src/%
+	@mkdir -p $(dir $@)
+	ln -sfr $< $@
+build/x86_64-w64-mingw32/% : runtime/%
+	@mkdir -p $(dir $@)
+	ln -sfr $< $@
+build/x86_64-w64-mingw32/% : src/%
+	@mkdir -p $(dir $@)
+	ln -sfr $< $@
+build/% : config/%
+	@mkdir -p $(dir $@)
+	ln -sfr $< $@
+
+build/%.d : build/%.c
+	gcc $< -MG -MM -MF $@ -MT $@ -MT $(@:.d=.o) $(CFLAGS) $(IFLAGS) -Isrc -Iruntime
+
+build/%.d : build/%.scm
 	@mkdir -p `dirname build/headers/$*.scmh`
 	vsc --makefile $< -o $@ --maketarget $(@:.d=.o)
 	vsc --makefile $< -o build/headers/$*.d --maketarget $(@:.d=.scmh)
@@ -153,7 +166,7 @@ bin/vanity : $(OBJ) $(INTERP_OBJ)
 
 bin/x86_64-w64-mingw32/vanity.exe : $(WINDOWS_OBJ) $(WINDOWS_INTERP_OBJ)
 	@mkdir -p `dirname $@`
-	vsc -o $@ $^ $(SCMFLAGS) --platform=windows
+	vsc -o $@ $^ $(SCMFLAGS)
 
 lib/libvscheme.so : $(RUNTIME_OBJ)
 	gcc -o $@ $^ $(LIBS) $(CFLAGS) -shared
@@ -162,74 +175,24 @@ lib/x86_64-w64-mingw32/vscheme.dll : $(WINDOWS_RUNTIME_OBJ)
 	@mkdir -p `dirname $@`
 	/usr/bin/x86_64-w64-mingw32-gcc -o $@ $^ $(CFLAGS) -shared -Wl,--export-all-symbols -Wl,--stack,8388608
 
-build/%.scmh : src/%.scm
-	@mkdir -p `dirname $@`
-	vsc -h $< -o $@
-	@mkdir -p `dirname build/include/$*.scmh`
-	rsync --checksum $@ build/include/$*.scmh
+build/%.o : build/%.scm
+	vsc -c $< -o $@ $(SCMFLAGS) -Wc,-fPIC -Iinclude -Ibuild/include
 
-build/%.scmh : runtime/%.scm
-	@mkdir -p `dirname $@`
-	vsc -h $< -o $@
-	@mkdir -p `dirname include/$*.scmh`
-	rsync --checksum $@ include/$*.scmh
+build/%.o : build/%.c
+	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS) -Iruntime -Isrc
 
-# Think long and hard why you need -Wc,-Iinclude sometimes to get it working
-# but other times you need to not have -Wc,-Iinclude
+build/%.o : build/%.S 
+	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS)
 
-# I think you need the include when you change ABI but not API
-# and you need to not have the include when you break API but not ABI
-# and if you break both you're fucked.
-
-build/%.o : runtime/%.scm
-	@mkdir -p `dirname $@`
-	vsc -c $< -o $@ $(SCMFLAGS) --shared -Iinclude
-
-build/x86_64-w64-mingw32/%.o : runtime/%.scm
-	@mkdir -p `dirname $@`
-	vsc -c $< -o $@ $(SCMFLAGS) --shared -Iinclude --platform=windows
-
-build/%.o : runtime/%.c
-	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
-
-build/x86_64-w64-mingw32/%.o : runtime/%.c
-	/usr/bin/x86_64-w64-mingw32-gcc -c $< -o $@ $(CFLAGS) $(IFLAGS) -Wa,--no-warn
-
-build/%.o : runtime/%.S 
-	gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
-
-build/x86_64-w64-mingw32/%.o : runtime/%.S 
-	/usr/bin/x86_64-w64-mingw32-gcc -c $< -o $@ $(CFLAGS) $(IFLAGS)
-
-build/%.o : src/%.scm
-	@mkdir -p `dirname $@`
-	vsc -c $< -o $@ $(SCMFLAGS) -Ibuild/include
-
-build/x86_64-w64-mingw32/%.o : src/%.scm
-	@mkdir -p `dirname $@`
-	vsc -c $< -o $@ $(SCMFLAGS) -Ibuild/include --platform=windows
-
-build/ffi.lex.c : src/ffi.l
+build/%.lex.c : build/%.l
 	lex -t $< > $@
 
-build/ffi.tab.h build/ffi.tab.c &: src/ffi.y
-	yacc -d -b ffi $< && mv ffi.tab.h build/ && mv ffi.tab.c build/
-
-build/ffi.lex.o build/ffi.tab.o : include/vscheme/vmemory.h include/vscheme/vruntime.h include/vscheme/vinlines.h 
-
-build/ffi.lex.o : build/ffi.lex.c build/ffi.tab.h
-	gcc -c $< -o $@ $(CFLAGS)
-build/ffi.tab.o : build/ffi.tab.c
-	gcc -c $< -o $@ $(CFLAGS)
-
-build/x86_64-w64-mingw32/ffi.lex.o build/x86_64-w64-mingw32/ffi.tab.o : include/vscheme/vmemory.h include/vscheme/vruntime.h include/vscheme/vinlines.h 
-
-build/x86_64-w64-mingw32/ffi.lex.o : build/ffi.lex.c build/ffi.tab.h
-	/usr/bin/x86_64-w64-mingw32-gcc -c $< -o $@ $(CFLAGS) -Iinclude
-build/x86_64-w64-mingw32/ffi.tab.o : build/ffi.tab.c
-	/usr/bin/x86_64-w64-mingw32-gcc -c $< -o $@ $(CFLAGS) -Iinclude
+build/%.tab.h build/%.tab.c &: build/%.y
+	yacc -d -b build/$* $<
 
 bin/testffi : build/ffi.lex.o build/ffi.tab.o test/testffi.c
 	gcc -o $@ $^ $(CFLAGS) -lvscheme
 
 testffi : bin/testffi
+
+.NOTINTERMEDIATE : $(addprefix build/, $(ASSEMBLY_SRC) $(COMPILE_SRC) $(INTERP_SRC) ffi.y ffi.l) $(addprefix build/x86_64-w64-mingw32/, $(WINDOWS_ASSEMBLY_SRC) $(COMPILE_SRC) $(INTERP_SRC) ffi.y ffi.l)

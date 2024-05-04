@@ -1,6 +1,10 @@
 #!/bin/bash
 
 echo "Configuring Vanity Scheme"
+
+mkdir -p config/vanity/compiler/
+mkdir -p config/x86_64-w64-mingw32/vanity/compiler/
+
 read -p "Major Version:" major
 read -p "Minor Version:" minor
 read -p "Install Dir:" install
@@ -23,14 +27,18 @@ echo "INSTALL_DIR := $install" >> config.mk
 echo "CFLAGS += $cflags" >> config.mk
 echo "SCMFLAGS += $scmflags" >> config.mk
 
-echo "major=$major" > config.sh
-echo "minor=$minor" >> config.sh
-echo "install=$install" >> config.sh
-chmod +x config.sh
-
-cat << EOF > src/vanity/compiler/config.scm
+cat << EOF > config/vanity/compiler/config.scm
 (define-library (vanity compiler config)
-  (export install-root version)
+  (export install-root version platform)
   (define version '($major $minor))
-  (define install-root "$install/"))
+  (define install-root "$install/")
+  (define platform 'linux))
+EOF
+
+cat << EOF > config/x86_64-w64-mingw32/vanity/compiler/config.scm
+(define-library (vanity compiler config)
+  (export install-root version platform)
+  (define version '($major $minor))
+  (define install-root #f)
+  (define platform 'windows))
 EOF

@@ -35,6 +35,11 @@
 #include <stdint.h>
 #include <limits.h>
 
+#ifdef _WIN64
+#include "fileapi.h"
+#include "errhandlingapi.h"
+#endif
+
 // only used by call/cc. maybe we should move call/cc to runtime.c
 // it's a pretty goofy function that's kind of fundamental
 #include "vruntime_private.h"
@@ -1146,12 +1151,18 @@ SYSV_CALL void VTtyPortP(V_CORE_ARGS, VWORD k, VWORD _port) {
   V_CALL(k, runtime, VEncodeBool(tty));
 }
 
+FILE * Windows_TmpFile();
+
 SYSV_CALL void VOpenOutputString2(V_CORE_ARGS, VWORD k) {
   // using tmpfile like this feels horrible
   // but it works for now
   V_ARG_CHECK3(runtime, "open-output-string", 1, argc);
   errno = 0;
+#ifdef _WIN64
+  FILE * f = Windows_TmpFile();
+#else
   FILE * f = tmpfile();
+#endif
   // ENFILE error can be fixed by running a garbage collect
   VWORD ok = VEncodeBool(errno != ENFILE && errno != EMFILE);
   if(!f) {
@@ -1562,4 +1573,20 @@ SYSV_CALL void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD _n) {
   vrandom_advance((vrandom_state*)buf->buf, n);
 
   V_CALL(k, runtime, VVOID);
+}
+
+SYSV_CALL void VRealpath(V_CORE_ARGS, VWORD k, VWORD _relpath) {
+  VBlob * relpath = VCheckedDecodeString2(runtime, _relpath, "realpath");
+  VBlob * ret = alloca(sizeof(VBlob) + PATH_MAX);
+  *ret = (VBlob){ .base = VMakeSmallObject(VSTRING), .len = PATH_MAX };
+#ifdef __linux__
+  char * ok = realpath(relpath->buf, ret->buf);
+#endif
+#ifdef _WIN64
+  DWORD ok = GetFullPathName(relpath->buf, PATH_MAX, ret->buf, NULL);  
+  if(ok >= PATH_MAX)
+    ok = 0;
+#endif
+  ret->len = strlen(ret->buf)+1;
+  V_CALL(k, runtime, ok ? VEncodePointer(ret, VPOINTER_OTHER) : VFALSE);
 }

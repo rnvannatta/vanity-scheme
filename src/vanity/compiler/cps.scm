@@ -229,10 +229,15 @@
     (define (optimize-lambda expr)
       (match expr
         ((lamb xs body)
-         (match (optimize-apply body)
+         `(,lamb ,xs ,(optimize-apply body))
+         #;(match (optimize-apply body)
            ; eta conversion... when does this happen? it used to happen regularly before I
            ; upgraded my cps routine. but it still rarely happens
-           ((f . ys)
+
+           ; eta conversion causes a miscompile with (letrec ((loop (lambda () (loop)))) (loop))
+           ; because 'technically' the lambda is eta equivalent to loop. In general
+           ; eta conversion should probably only be applied to continuation lambdas
+           #;((f . ys)
             (if (and (not (special-apply? f))
                      (equal? xs ys)
                      ; ie if the lambda is (lambda (x) (x x)), we need to not optimize that

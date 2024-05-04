@@ -155,3 +155,6 @@ SYSV_CALL void VRandomSample(V_CORE_ARGS, VWORD k, VWORD rng);
 SYSV_CALL void VRandomSampleBounded(V_CORE_ARGS, VWORD k, VWORD rng, VWORD end);
 SYSV_CALL void VRandomSampleFloat(V_CORE_ARGS, VWORD k, VWORD rng);
 SYSV_CALL void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD step);
+
+// filesystem
+SYSV_CALL void VRealpath(V_CORE_ARGS, VWORD k, VWORD relpath);

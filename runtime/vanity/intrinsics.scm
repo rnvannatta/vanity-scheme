@@ -97,6 +97,7 @@
          ((##vcore.set-global!) "VSetGlobalVar2")
 
          ((##vcore.function) "VFunction2")
+         ((##vcore.set-declare!) "VSetDeclare")
          ((##vcore.define) "VDefineGlobalVar2")
          ((##vcore.multidefine) "VMultiDefine2")
          ((##vcore.lookup-library) "VLookupLibrary2")
@@ -208,6 +209,9 @@
          ((##vcore.fiber-fork-list) "VFiberForkList")
          ((##vcore.async) "VAsync")
          ((##vcore.await) "VAwait")
+
+         ; Filesystem
+         ((##vcore.realpath) "VRealpath")
 
          (else #f)))
   (define (lookup-intrinsic sym)
@@ -337,6 +341,8 @@
          ((##vcore.open-output-stream) ##vcore.open-output-stream)
          ((##vcore.close-stream) ##vcore.close-stream)
 
+         ((##vcore.tty-port?) ##vcore.tty-port?)
+
          ((##vcore.open-output-string) ##vcore.open-output-string)
          ((##vcore.get-output-string) ##vcore.get-output-string)
 
@@ -379,5 +385,8 @@
          ((##vcore.fiber-fork-list) ##vcore.fiber-fork-list)
          ((##vcore.async) ##vcore.async)
          ((##vcore.await) ##vcore.await)
+
+         ; Filesystem
+         ((##vcore.realpath) ##vcore.realpath)
 
          (else #f))))

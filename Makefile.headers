@@ -24,3 +24,9 @@ build/%.scmh : runtime/%.scm
 	vsc -h $< -o $@
 	@mkdir -p `dirname include/$*.scmh`
 	@rsync --checksum $@ include/$*.scmh
+
+build/%.scmh : config/%.scm
+	@mkdir -p `dirname $@`
+	vsc -h $< -o $@
+	@mkdir -p `dirname build/include/$*.scmh`
+	@rsync --checksum $@ build/include/$*.scmh

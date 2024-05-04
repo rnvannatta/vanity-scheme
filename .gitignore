@@ -2,8 +2,8 @@ bin/
 build/
 lib/
 scratch/
+config/
 config.mk
-config.sh
 *.swp
 *.swo
 *.swn
@@ -15,4 +15,3 @@ a.out
 *.dll
 core
 .gdb_history
-src/vanity/compiler/config.scm
