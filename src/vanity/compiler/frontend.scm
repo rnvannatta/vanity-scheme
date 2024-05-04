@@ -43,7 +43,7 @@
 (define cc #f)
 
 (define c-options '())
-(define paths (list (sprintf "~A/include" install-root)))
+(define paths (list (sprintf "~Ainclude" install-root)))
 
 (define makefile? #f)
 (define maketargets '())

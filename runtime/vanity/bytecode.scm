@@ -1,19 +1,13 @@
 (define-library (vanity bytecode)
   (import (vanity core) (vanity list) (vanity intrinsics))
   (export eval-vasm)
-  (define (load-all port)
-    (let loop ()
-      (let ((expr (read port)))
-        (if (eof-object? expr)
-            '()
-            (cons expr (loop))))))
 
   (define (preprocess-vasm tape)
     ; TODO need to test that hash tables work well with eqv and equal
     (define labels '())
     (define (peel-labels tape)
       (let ((len (vector-length tape)))
-        (let loop ((pc 0))
+        (let peel-loop ((pc 0))
           (if (>= pc len)
               tape
               (match (vector-ref tape pc)
@@ -24,8 +18,8 @@
                      (error "vasm label: label declared twice" label))
                  (set! labels (cons (cons label pc) labels))
                  (vector-set! tape pc expr)
-                 (loop (+ pc 1)))
-                (else (loop (+ pc 1))))))))
+                 (peel-loop (+ pc 1)))
+                (else (peel-loop (+ pc 1))))))))
     (define (preprocess-expr expr pc)
       (match expr
         (('toplevel) expr)
@@ -57,14 +51,14 @@
              (error "vasm case-lambda: not a nonnegative integer" x))
          (cond ((integer? b) expr)
                ((and (symbol? b) (assv b labels)) => (lambda (label) `(case-lambda ,x ,(- (cdr label) pc 1))))
-               ((symbol? b) (error "vasm close: unknown label" b))
+               ((symbol? b) (error "vasm case-lambda: unknown label" b))
                (else (error "vasm case-lambda: not an integer" b))))
         (('case-lambda+ x b)
          (if (not (and (integer? x) (>= x 0)))
              (error "vasm case-lambda+: not a nonnegative integer" x))
          (cond ((integer? b) expr)
                ((and (symbol? b) (assv b labels)) => (lambda (label) `(case-lambda+ ,x ,(- (cdr label) pc 1))))
-               ((symbol? b) (error "vasm close: unknown label" b))
+               ((symbol? b) (error "vasm case-lambda+: unknown label" b))
                (else (error "vasm case-lambda+: not an integer" b))))
         (('case-lambda-error name str) expr)
         (('close x)
@@ -72,6 +66,12 @@
                ((symbol? x) (error "vasm close: unknown label" x))
                ((and (integer? x) (>= x 0)) expr)
                (else (error "vasm close: not a nonnegative integer" x))))
+        (('declare name x)
+         (cond ((not (string? name)) (error "vasm declare: not a string" x))
+               ((and (symbol? x) (assv x labels)) => (lambda (label) `(declare ,name ,(cdr label))))
+               ((symbol? x) (error "vasm declare: unknown label" x))
+               ((and (integer? x) (>= x 0)) expr)
+               (else (error "vasm declare: not a nonnegative integer" x))))
         ; set! as a function breaks the rules! of lexical scope
         (('push-set!) expr)
         (('bf x)
@@ -86,14 +86,38 @@
         (('letrec-end) expr)
         (else (error "vasm: unknown or malformed line" expr))))
     (let ((len (vector-length tape)))
-      (let loop ((tape (peel-labels tape)) (pc 0))
+      (let preprocess-loop ((tape (peel-labels tape)) (pc 0))
         (if (>= pc len)
             tape
             (begin
               (let ((e (preprocess-expr (vector-ref tape pc) pc)))
                 (if (not (eq? e (vector-ref tape pc)))
                     (vector-set! tape pc e)))
-              (loop tape (+ pc 1)))))))
+              (preprocess-loop tape (+ pc 1)))))))
+
+  ; call with -1 to start at beginning of program
+  (define (find-declare tape program-counter)
+    (let ((program-counter (+ program-counter 1)))
+      (cond
+        ((>= program-counter (vector-length tape)) #f)
+        ((eqv? (car (vector-ref tape program-counter)) 'declare)
+         program-counter)
+        (else (find-declare tape program-counter)))))
+
+  (define make-vasm-lambda (##vcore.function "VMakeVasmLambda"))
+  (define eval-vasm-toplevel (##vcore.function "VEvalVasmToplevel"))
+
+  (define (set-declares! tape)
+    (let set-declare-loop ((pc (find-declare tape -1)))
+      (if pc
+          (let ()
+            (match (vector-ref tape pc)
+              (('declare name x)
+               (##vcore.set-declare!
+                 name
+                 (make-vasm-lambda tape x)))
+              (else (error "declare not declare?" (vector-ref tape pc))))
+             (set-declare-loop (find-declare tape pc))))))
 
   (define (find-toplevel tape program-counter)
     (cond
@@ -102,17 +126,16 @@
        (+ program-counter 1))
       (else (find-toplevel tape (+ 1 program-counter)))))
 
-  (define eval-vasm-toplevel (##vcore.function "VEvalVasmToplevel"))
-
   (define (eval-vasm vasm)
     (define tape (preprocess-vasm vasm))
     (define program-counter 0)
-    (define (loop . rets)
+    (define (eval-loop . rets)
       (if program-counter
           (set! program-counter (find-toplevel tape program-counter)))
       (if program-counter
           (call-with-values
             (lambda () (eval-vasm-toplevel tape program-counter))
-            loop)
+            eval-loop)
           (apply values rets)))
-    (loop)))
+    (set-declares! tape)
+    (eval-loop)))

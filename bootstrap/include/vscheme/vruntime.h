@@ -468,9 +468,9 @@ SYSV_CALL static inline bool VIsNumber(VWORD v) {
   if((bits & LITERAL_HEADER) == LITERAL_HEADER) {
     bits = bits & LITERAL_PAYLOAD;
     if(bits) {
-      return bits == (VIMM_TOK | VTOK_NAN);
+      return (bits == (VIMM_TOK | VTOK_NAN));
     } else {
-      return false;
+      return true;
     }
   } else {
     return true;
@@ -1011,6 +1011,8 @@ SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k);
 SYSV_CALL void VGensym(V_CORE_ARGS, VWORD k, VWORD _str);
 
 SYSV_CALL void VRegisterSigint(V_CORE_ARGS, VWORD k);
+
+SYSV_CALL void VSetDeclare(V_CORE_ARGS, VWORD k, VWORD string, VWORD proc);
 
 /* ======================== Fibering ======================= */
 

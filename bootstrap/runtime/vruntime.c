@@ -31,6 +31,9 @@
 #include <setjmp.h>
 #endif
 #ifdef _WIN64
+#include "io.h"
+#include "fileapi.h"
+#include "errhandlingapi.h"
 #include <debugapi.h>
 #include <libloaderapi.h>
 #include <processthreadsapi.h>
@@ -490,11 +493,41 @@ SYSV_CALL void VRaise(V_CORE_ARGS, VWORD _, VWORD x) {
   V_CALL(handler, runtime, VEncodeClosure(&raisek), x);
 }
 
+#ifdef _WIN64
+FILE * Windows_TmpFile() {
+  // because tmpfile() creates its files in the root folder of the volume
+  // and the root C: was changed in Vista to be readonly
+  // and tmpfile() was left hanging.
+  char buf[PATH_MAX];
+  GetTempPathA(sizeof buf, buf);
+  char * name = _tempnam(buf, "tmp");
+  if(!name)
+    return NULL;
+  enum { FILE_FLAG_DELETE_ON_CLOSE = 0x04000000 };
+  HANDLE h = CreateFile( name, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_FLAG_DELETE_ON_CLOSE, NULL );
+  free(name);
+  if((intptr_t)h == (intptr_t)-1)
+    return NULL;
+  // don't call CloseHandle on h anymore, open_osfhandle takes ownership
+  int fd = _open_osfhandle((intptr_t)h, 0);
+  if(fd == -1)
+    return NULL;
+  // don't call close on fd anymore, fdopen takes ownership
+  FILE * f = fdopen(fd, "wb+");
+  return f;
+}
+#endif
+
 static SYSV_CALL void VVFPrintfC(VRuntime * runtime, FILE * f, char const * str, va_list args);
 SYSV_CALL void VErrorC(VRuntime * runtime, const char * str, ...) {
   va_list args;
   va_start(args, str);
+  #ifdef __linux__
   FILE * f = tmpfile();
+  #endif
+  #ifdef _WIN64
+  FILE * f = Windows_TmpFile();
+  #endif
   VBlob * ret = alloca(sizeof(VBlob)+4096);
   ret->base = VMakeSmallObject(VSTRING);
   ret->len = 4096;
@@ -601,6 +634,7 @@ SYSV_CALL static VEnvironment * VCheckedMoveEnviron(VRuntime * runtime, VEnviron
     ret->runtime->VExitCode = VMoveDispatch(runtime, ret->runtime->VExitCode);
     ret->runtime->dynamics = VMoveDispatch(runtime, ret->runtime->dynamics);
     ret->runtime->exception_handlers = VMoveDispatch(runtime, ret->runtime->exception_handlers);
+    ret->runtime->declare_list = VMoveDispatch(runtime, ret->runtime->declare_list);
   }
 
   return ret;
@@ -1902,7 +1936,45 @@ SYSV_CALL static void * VDLSym(char const * name) {
 }
 #endif
 
-SYSV_CALL static VFunc VFunctionImpl(VRuntime * runtime, VWORD name) {
+static VPair * VAssocDeclares(VRuntime * runtime, VBlob * string) {
+  VWORD declares = runtime->declare_list;
+  while(!VIsEq(declares, VNULL)) {
+    VPair * node = VDecodePair(declares);
+    declares = node->rest;
+
+    VPair * decl = VDecodePair(node->first);
+    VBlob * key = VDecodeBlob(decl->first);
+    if(!strcmp(key->buf, string->buf))
+      return decl;
+  }
+  return NULL;
+}
+
+SYSV_CALL void VSetDeclare(V_CORE_ARGS, VWORD k, VWORD _string, VWORD proc) {
+  if(!VIsMain(runtime)) {
+    VErrorC(runtime, "set-declare!: not permitted inside of a fiber or during active asynchronous execution");
+  }
+
+  V_ARG_CHECK3(runtime, "set-declare!", 3, argc);
+  VBlob * string = VCheckedDecodeString2(runtime, _string, "set-declare!");
+  (void)VCheckedDecodeClosure2(runtime, proc, "set-declare!");
+
+  VPair * declare = VAssocDeclares(runtime, string);
+
+  VPair newdeclare;
+  VPair newnode;
+  if(declare) {
+    VSetRest(runtime, declare, proc);
+  } else {
+    newdeclare = VMakePair(_string, proc);
+    newnode = VMakePair(VEncodePair(&newdeclare), runtime->declare_list);
+    runtime->declare_list = VEncodePair(&newnode);
+  }
+  V_CALL(k, runtime, VVOID);
+}
+
+
+SYSV_CALL static VClosure VFunctionImpl(VRuntime * runtime, VWORD name) {
   VBlob * blob = VCheckedDecodeString2(runtime, name, "function");
 
   const char * str = blob->buf;
@@ -1912,12 +1984,16 @@ SYSV_CALL static VFunc VFunctionImpl(VRuntime * runtime, VWORD name) {
 #ifdef _WIN64
   void * ptr = VDLSym(str);
 #endif
+  if(!ptr) {
+    VPair * decl = VAssocDeclares(runtime, blob);
+    if(decl) return *VCheckedDecodeClosure2(runtime, decl->rest, "function");
+  }
 
   if(!ptr) {
     VErrorC(runtime, "function: failed to dlsym function ~z (did you remember to load or link the file it's in?)\n", str);
   }
   VFunc * fun = ptr;
-  return *fun;
+  return VMakeClosure2(*fun, NULL);
 }
 
 SYSV_CALL static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
@@ -1980,8 +2056,8 @@ SYSV_CALL void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
     env->vars[2] = sym_word;
     env->vars[3] = libraries;
     VClosure callback = VMakeClosure2((VFunc)VLoadLibraryK, env);
-    VFunc loader = VFunctionImpl(runtime, name);
-    V_CALL_FUNC((*loader), NULL, runtime, VEncodeClosure(&callback));
+    VClosure loader = VFunctionImpl(runtime, name);
+    V_CALL_FUNC(loader.func, loader.env, runtime, VEncodeClosure(&callback));
   } else {
     V_CALL(k, runtime, lib);
   }
@@ -2277,6 +2353,8 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
 
   atomic_init(&r->gensym_storage, 0ull);
   r->gensym_index = (_Atomic uint64_t*)&r->gensym_storage;
+
+  r->declare_list = VNULL;
 }
 
 static VClosure next_closure = { .base = { .tag = VCLOSURE }, .func = (VFunc)VNext2, .env = NULL };
@@ -2412,10 +2490,9 @@ end:
 SYSV_CALL void VFunction2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_ARG_CHECK3(runtime, "function", 2, argc);
 
-  VFunc fun = VFunctionImpl(runtime, name);
-  VClosure closure = VMakeClosure2(*fun, NULL);
+  VClosure fun = VFunctionImpl(runtime, name);
 
-  V_CALL(k, runtime, VEncodeClosure(&closure));
+  V_CALL(k, runtime, VEncodeClosure(&fun));
 }
 
 SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k) {
@@ -2559,6 +2636,8 @@ static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * f
 
   atomic_init(&r->gensym_storage, ~0ull);
   r->gensym_index = (_Atomic uint64_t*)runtime->gensym_index;
+
+  r->declare_list = runtime->declare_list;
 
   for(int i = 0; i < 2; i++) {
     r->VHeaps[i].begin = NULL;
@@ -2934,7 +3013,7 @@ SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD _future) {
   } else {
     V_CALL(k, runtime, future->val);
   }
-  VErrorC(runtime, "await: unsupported platform\n");
+  VErrorC(runtime, "await: unsupported platform");
   assert(0);
 }
 

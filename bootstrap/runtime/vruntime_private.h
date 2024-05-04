@@ -116,6 +116,7 @@ typedef struct VRuntime {
   // misc
   uint64_t gensym_storage;
   uint64_t _Atomic * gensym_index;
+  VWORD declare_list;
 } VRuntime;
 
 SYSV_CALL void VGetStackInfo(char ** start, size_t * size);

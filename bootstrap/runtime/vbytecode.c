@@ -91,14 +91,10 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
       VPair * data = VCheckedDecodePair2(runtime, ins->rest, "eval-vasm: malformed close");
       int closure_pc = VCheckedDecodeInt2(runtime, data->first, "eval-vasm: malformed close");
       // then make a dummy closure to hold env
-      VClosure * dummy = alloca(sizeof(VClosure));
-      *dummy = VMakeClosure2(NULL, env);
-      // then make an env to hold: tape, pc, dummy
-      VEnv * closure_env = alloca(sizeof(VEnv) + sizeof(VWORD[3]));
-      VInitEnv(closure_env, 3, 3, NULL);
+      VEnv * closure_env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+      VInitEnv(closure_env, 2, 2, env);
       closure_env->vars[0] = VEncodePointer(tape, VPOINTER_OTHER);
       closure_env->vars[1] = VEncodeInt(closure_pc);
-      closure_env->vars[2] = VEncodeClosure(dummy);
       //then push a closure of the trampoline and that env on the stack
       VClosure * closure = alloca(sizeof(VClosure));
       *closure = VMakeClosure2(VEvalVasmLambdaTrampoline, closure_env);
@@ -197,7 +193,7 @@ void VEvalVasmLambdaTrampoline(V_CORE_ARGS, ...) {
   V_GC_CHECK2_LIST(VEvalVasmLambdaTrampoline, runtime, statics, argc, argv) {
     VWORD tape = statics->vars[0];
     VWORD pc = statics->vars[1];
-    VEnv * upenv = VCheckedDecodeClosure2(runtime, statics->vars[2], "eval-lambda-trampoline")->env;
+    VEnv * upenv = statics->up;
 
     VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[argc]));
     *env = (VEnv){ .base = { .tag = VENV }, .num_vars = argc, .var_len = argc, .up = upenv };
@@ -210,7 +206,7 @@ void VEvalVasmLambdaTrampoline(V_CORE_ARGS, ...) {
   }
 }
 
-void VEvalVasmToplevelImpl(V_CORE_ARGS, VWORD k, VWORD tape, VWORD pc) {
+static void VEvalVasmToplevelImpl(V_CORE_ARGS, VWORD k, VWORD tape, VWORD pc) {
   V_ARG_CHECK3(runtime, "eval-vasm-toplevel", 3, argc);
   V_GC_CHECK2_VARARGS((VFunc)VEvalVasmToplevelImpl, runtime, statics, 3, argc, k, tape, pc) {
     struct { VEnv env; VWORD word; } container = {
@@ -221,3 +217,19 @@ void VEvalVasmToplevelImpl(V_CORE_ARGS, VWORD k, VWORD tape, VWORD pc) {
   }
 }
 void (*VEvalVasmToplevel)(V_CORE_ARGS, VWORD k, VWORD tape, VWORD pc) = VEvalVasmToplevelImpl;
+
+static void VMakeVasmLambdaImpl(V_CORE_ARGS, VWORD k, VWORD tape, VWORD pc) {
+  V_ARG_CHECK3(runtime, "make-vasm-lambda", 3, argc);
+  V_GC_CHECK2_VARARGS((VFunc)VEvalVasmToplevelImpl, runtime, statics, 3, argc, k, tape, pc) {
+    // make a dummy closure to hold env
+    VEnv * closure_env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+    VInitEnv(closure_env, 2, 2, NULL);
+    closure_env->vars[0] = tape;
+    closure_env->vars[1] = pc;
+    //then push a closure of the trampoline and that env on the stack
+    VClosure * closure = alloca(sizeof(VClosure));
+    *closure = VMakeClosure2(VEvalVasmLambdaTrampoline, closure_env);
+    V_CALL(k, runtime, VEncodeClosure(closure));
+  }
+}
+void (*VMakeVasmLambda)(V_CORE_ARGS, VWORD k, VWORD tape, VWORD pc) = VMakeVasmLambdaImpl;

@@ -1574,3 +1574,19 @@ SYSV_CALL void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD _n) {
 
   V_CALL(k, runtime, VVOID);
 }
+
+SYSV_CALL void VRealpath(V_CORE_ARGS, VWORD k, VWORD _relpath) {
+  VBlob * relpath = VCheckedDecodeString2(runtime, _relpath, "realpath");
+  VBlob * ret = alloca(sizeof(VBlob) + PATH_MAX);
+  *ret = (VBlob){ .base = VMakeSmallObject(VSTRING), .len = PATH_MAX };
+#ifdef __linux__
+  char * ok = realpath(relpath->buf, ret->buf);
+#endif
+#ifdef _WIN64
+  DWORD ok = GetFullPathName(relpath->buf, PATH_MAX, ret->buf, NULL);  
+  if(ok >= PATH_MAX)
+    ok = 0;
+#endif
+  ret->len = strlen(ret->buf)+1;
+  V_CALL(k, runtime, ok ? VEncodePointer(ret, VPOINTER_OTHER) : VFALSE);
+}
