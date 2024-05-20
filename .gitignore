@@ -2,6 +2,7 @@ bin/
 build/
 lib/
 scratch/
+mingw64/
 config/
 config.mk
 *.swp

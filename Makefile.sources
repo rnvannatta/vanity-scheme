@@ -1,10 +1,10 @@
 SRC := $(addprefix vanity/compiler/, variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm lower.scm transpile.scm ffi.scm library.scm config.scm bytecode.scm alpha-convert.scm)
 COMPILE_SRC := $(addprefix vanity/compiler/, frontend.scm)
 INTERP_SRC := $(addprefix vanity/interpreter/, frontend.scm)
-RUNTIME_SRC := vruntime.c vlibrary.c vread.c vfiber.c vbytecode.c
-PRIVATE_HEADERS := vruntime_private.h vqueue_private.h vsetjmp_private.h
-ASSEMBLY_SRC := vapply-sysv-amd64.S vfiber-sysv-amd64.S
-WINDOWS_ASSEMBLY_SRC := vapply-windows-amd64.S vfiber-windows-amd64.S
+RUNTIME_SRC := vruntime.c vlibrary.c vread.c vfiber.c vbytecode.c wacky.c
+PRIVATE_HEADERS := vruntime_private.h vqueue_private.h vsetjmp_private.h wacky_private.h
+ASSEMBLY_SRC := vapply-sysv-amd64.S vfiber-sysv-amd64.S sicko.S
+WINDOWS_ASSEMBLY_SRC := vapply-windows-amd64.S vfiber-windows-amd64.S sicko.S
 
 RUNTIME_LISP_SRC := scheme/r7rs.scm vanity/core.scm vanity/assert.scm vanity/list.scm vanity/hash.scm vanity/seed.scm vanity/pretty-print.scm vanity/intrinsics.scm vanity/bytecode.scm
 

@@ -1973,8 +1973,23 @@ SYSV_CALL void VSetDeclare(V_CORE_ARGS, VWORD k, VWORD _string, VWORD proc) {
   V_CALL(k, runtime, VVOID);
 }
 
+void * VLoadFunction(VRuntime * runtime, VWORD name) {
+  char const * str = VCheckedDecodeConstCString2(runtime, name, "load-function");
 
-SYSV_CALL static VClosure VFunctionImpl(VRuntime * runtime, VWORD name) {
+#ifdef __linux__
+  void * ptr = dlsym(RTLD_DEFAULT, str);
+#endif
+#ifdef _WIN64
+  void * ptr = VDLSym(str);
+#endif
+
+  if(!ptr) {
+    VErrorC(runtime, "load-function: failed to dlsym function ~z (did you remember to load or link the file it's in?)\n", str);
+  }
+  return ptr;
+}
+
+static SYSV_CALL VClosure VFunctionImpl(VRuntime * runtime, VWORD name) {
   VBlob * blob = VCheckedDecodeString2(runtime, name, "function");
 
   const char * str = blob->buf;
@@ -1995,6 +2010,27 @@ SYSV_CALL static VClosure VFunctionImpl(VRuntime * runtime, VWORD name) {
   VFunc * fun = ptr;
   return VMakeClosure2(*fun, NULL);
 }
+
+static SYSV_CALL void VLoadForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD name) {
+  V_ARG_CHECK3(runtime, "load-foreign-function", 2, argc);
+  VBlob * blob = VCheckedDecodeString2(runtime, name, "load-foreign-function");
+
+  const char * str = blob->buf;
+#ifdef __linux__
+  void * ptr = dlsym(RTLD_DEFAULT, str);
+#endif
+#ifdef _WIN64
+  void * ptr = VDLSym(str);
+#endif
+
+  if(!ptr) {
+    VErrorC(runtime, "foreign-function: failed to dlsym function ~z (did you remember to load or link the file it's in?)\n", str);
+  }
+  void * fun = ptr;
+  V_CALL(k, runtime, VEncodeForeignPointer(fun));
+}
+
+VFunc VLoadForeignFunction = (VFunc)VLoadForeignFunctionImpl;
 
 SYSV_CALL static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
   V_ARG_CHECK3(runtime, "load-library-k", 1, argc);

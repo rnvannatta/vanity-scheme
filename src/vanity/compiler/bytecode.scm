@@ -68,7 +68,7 @@
       (('##intrinsic x)
        `(intrinsic ,x))
       (('##foreign.function x)
-       (compiler-error "print-bytecode: foreign functions not supported yet"))
+       `(foreign-function ,(string->symbol x)))
       (x
        (cond ((not (symbol? x)) (process-literal expr))
              ((lookup-intrinsic-name x) `(intrinsic ,x))
@@ -163,9 +163,15 @@
       ((name check-args? (num '+ body))
        (process-fun-single name check-args? num #t body))
       (else (process-fun-case fun))))
+  (define (process-foreign-function expr)
+    (match expr
+      (('##foreign.function lang decl ret name args ...)
+       `((label
+           ,(string->symbol (mangle-foreign-function name))
+           (declare-foreign ,lang ,(car (get-foreign-encoder ret)) ,name . ,(map (lambda (arg) (car (get-foreign-decoder arg))) args)))))))
   (define (process-declare declare)
     (match declare
-      (('##foreign.declare d) (compiler-error "bytecode doesn't support foreign declares yet"))
+      (('##foreign.declare d) `())
       (('##vcore.declare f v) `((declare ,f ,v)))))
 
   (define (process-toplevel expr)
@@ -180,7 +186,7 @@
             (append (car segments) (loop (cdr segments)))))))
 
   (define (write-bytecode-line line)
-    (if (not (memv (car line) '(label toplevel lambda lambda+ case-lambda case-lambda+ declare)))
+    (if (not (memv (car line) '(label toplevel lambda lambda+ case-lambda case-lambda+ declare declare-foreign)))
         (display #\tab))
     (writeln line))
   (define (write-bytecode bytecode)
@@ -197,7 +203,7 @@
     (let ((print-main? (not (null? toplevels)))
           (functions (reverse functions)))
       (if shared? (compiler-error "bytecode shared libraries not supported yet"))
-      (if (not (null? foreign-functions)) (compiler-error "bytecode doesn't support foreign functions yet"))
+      #;(if (not (null? foreign-functions)) (compiler-error "bytecode doesn't support foreign functions yet"))
       (if (and shared? print-main?)
           (compiler-error "shared library has toplevel expressions"))
       (if (not (null? literal-table)) (compiler-error "logic error: bytecode shouldn't have a literal table" literal-table))
@@ -205,6 +211,7 @@
       (glue-bytecode
         (append (map process-declare declares)
                 (map process-function functions)
+                (map process-foreign-function foreign-functions)
                 (if print-main?
                     (map process-toplevel toplevels)
                     '()))))))

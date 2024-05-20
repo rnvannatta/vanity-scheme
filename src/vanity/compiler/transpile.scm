@@ -407,13 +407,15 @@
     (define (print-main toplevels)
       (for-each (cut print-toplevel <> <>) (iota (length toplevels)) toplevels)
 
+      (printf "VThunk VanityToplevels[] = {~N")
+      (for-each (lambda (i) (printf "  toplevel~A~N," i)) (iota (length toplevels)))
+      (printf "};~N")
+      (printf "int VanityToplevelCount = sizeof VanityToplevels / sizeof *VanityToplevels;~N")
+
       (printf "int main(int argc, char ** argv) {~N")
-      (printf "  VThunk toplevels[] = {~N")
-      (for-each (lambda (i) (printf "    toplevel~A," i)) (iota (length toplevels)))
-      (printf "~N  };~N")
       (displayln "  VRuntime * runtime;")
       (displayln "  VInitRuntime2(&runtime, argc, argv);")
-      (printf "  return VDecodeExitCode(VStart2(runtime, sizeof toplevels / sizeof *toplevels, toplevels));~N")
+      (printf "  return VDecodeExitCode(VStart2(runtime, VanityToplevelCount, VanityToplevels));~N")
       (displayln "}"))
 
     (let ((print-main? (not (null? toplevels)))

@@ -5,8 +5,10 @@
 
 #include "vscheme/vruntime.h"
 #include "vscheme/vlibrary.h"
+#include "wacky_private.h"
 
 void VEvalVasmLambdaTrampoline(V_CORE_ARGS, ...);
+void VEvalVasmForeignLambda(V_CORE_ARGS, ...);
 void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
   VWORD stack[256];
   int stackptr = 0;
@@ -98,6 +100,29 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
       //then push a closure of the trampoline and that env on the stack
       VClosure * closure = alloca(sizeof(VClosure));
       *closure = VMakeClosure2(VEvalVasmLambdaTrampoline, closure_env);
+      stack[stackptr++] = VEncodeClosure(closure);
+    }
+    else if(!strcmp(name, "foreign-function")) {
+      // need to get closure pc
+      VPair * data = VCheckedDecodePair2(runtime, ins->rest, "eval-vasm: malformed foreign-function");
+      int func_pc = VCheckedDecodeInt2(runtime, data->first, "eval-vasm: malformed foreign-function");
+      VWORD func = tape->arr[func_pc];
+
+      VPair * data_decl = VCheckedDecodePair2(runtime, func, "eval-vasm: malformed foreign-function");
+      VPair * data_lang = VCheckedDecodePair2(runtime, data_decl->rest, "eval-vasm: malformed foreign-function");
+      VPair * data_ret = VCheckedDecodePair2(runtime, data_lang->rest, "eval-vasm: malformed foreign-function");
+      VPair * data_name = VCheckedDecodePair2(runtime, data_ret->rest, "eval-vasm: malformed foreign-function");
+
+      void * lookup = VLoadFunction(runtime, data_name->first);
+      VWORD foreign_func = VEncodeForeignPointer(lookup);
+
+      VEnv * closure_env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+      VInitEnv(closure_env, 3, 3, NULL);
+      closure_env->vars[0] = foreign_func;
+      closure_env->vars[1] = data_ret->first;
+      closure_env->vars[2] = data_name->rest;
+      VClosure * closure = alloca(sizeof(VClosure));
+      *closure = VMakeClosure2(VEvalVasmForeignLambda, closure_env);
       stack[stackptr++] = VEncodeClosure(closure);
     }
     else if(!strcmp(name, "push-set!")) {
@@ -203,6 +228,31 @@ void VEvalVasmLambdaTrampoline(V_CORE_ARGS, ...) {
     va_end(argv);
 
     VEvalVasm_Impl(runtime, VCheckedDecodeVector2(runtime, tape, "eval-lambda-trampoline"), VCheckedDecodeInt2(runtime, pc, "eval-lambda-trampoline"), env);
+  }
+}
+
+void VEvalVasmForeignLambda(V_CORE_ARGS, ...) {
+  V_ARG_MIN3(runtime, "eval-vasm-foreign-lambda", 1, argc);
+  va_list argv;
+  va_start(argv, argc);
+  V_GC_CHECK2_LIST(VEvalVasmForeignLambda, runtime, statics, argc, argv) {
+    VWORD k = va_arg(argv, VWORD);
+
+    VWORD func = statics->vars[0];
+    VWORD ret = statics->vars[1];
+    VWORD arg_types = statics->vars[2];
+
+    VPair args_root = VMakePair(VNULL, VNULL);
+    VPair * args_cur = &args_root;
+    for(int i = 1; i < argc; i++) {
+      VPair * pair = alloca(sizeof(VPair));
+      *pair = VMakePair(va_arg(argv, VWORD), VNULL);
+      args_cur->rest = VEncodePair(pair);
+      args_cur = pair;
+    }
+    va_end(argv);
+
+    V_CALL_FUNC(VApplyForeignFunctionImpl, NULL, runtime, k, func, ret, arg_types, args_root.rest);
   }
 }
 

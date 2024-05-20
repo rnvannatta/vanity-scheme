@@ -194,6 +194,7 @@ static bool memv(char const * x, VWORD lst) {
 // can just keep a simple table of typedefs
 static VWORD typedef_table = { LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
 
+extern bool parse_error;
 extern VWORD parse_ret;
 extern VRuntime * global_runtime;
 
@@ -212,12 +213,14 @@ bool is_typedef(char const * symbol) {
 }
 
 int yylex(void);
-void yyerror(char*);
+void yyerror(const char*);
 extern FILE * yyin;
+
+extern void yy_set_buffer(FILE * in);
 
 %}
 
-%token T_STRUCT T_ENUM
+%token T_STRUCT T_ENUM T_ERROR
 
 %token <keyword_val> T_TYPE
 %token <keyword_val> T_QUALIFIER
@@ -235,6 +238,8 @@ extern FILE * yyin;
 }
 
 %type <vword_val> start toplevel declaration declarator_list prefix_declarator postfix_declarator parameter_list abstract_prefix_declarator abstract_postfix_declarator param_prefix_declarator param_postfix_declarator qualified_type post_qualified_type enum_list expr specified_type post_specified_type plain_type identifier
+
+%define parse.error detailed
 
 %%
 
@@ -274,6 +279,7 @@ start : toplevel
       { parse_ret = CONS("toplevel", reverse($1)); }
       | specified_type prefix_declarator
       { parse_ret = LIST("naked_declaration", $1, $2); }
+      | error { yyerrok; yyclearin; parse_error = true; YYACCEPT; }
       ;
 
 identifier : T_VARIABLE | T_TYPENAME ;
@@ -282,6 +288,7 @@ toplevel : declaration
          { $$ = LIST($1); }
          | toplevel declaration
          { $$ = CONS($2, $1); }
+         | toplevel error { yyerrok; parse_error = true; }
          ;
 
 declaration : declarator_list ';'
@@ -485,6 +492,7 @@ expr : T_INTEGER
 
 %%
 
+bool parse_error = false;
 VWORD parse_ret;
 VRuntime * global_runtime;
 
@@ -496,10 +504,13 @@ void VForeignParseDeclCImpl(V_CORE_ARGS, VWORD k, VWORD decl) {
     VBlob * buf = VCheckedDecodeString2(runtime, decl, "foreign-parse-decl-c");
     FILE * f = fmemopen(buf->buf, buf->len-1, "r");
     if(!f) VErrorC(runtime, "foreign-parse-decl-c: failed to parse, out of file descriptors!\n");
-    yyin = f;
-    if(yyparse()) VErrorC(runtime, "foreign-parse-decl-c: error during parsing\n");
+    yy_set_buffer(f);
+    parse_error = false;
+    int err = yyparse();
 
     fclose(f);
+
+    if(err || parse_error) VErrorC(runtime, "foreign-parse-decl-c: error during parsing\n");
   }
   V_CALL(k, runtime, parse_ret);
 #endif
@@ -512,8 +523,11 @@ void VForeignParseHeaderCImpl(V_CORE_ARGS, VWORD k, VWORD header) {
     VPort * port = VCheckedDecodePort2(runtime, header, "foreign-parse-header-c");
     FILE * f = port->stream;
     if(!f || !(port->flags & PFLAG_READ)) VErrorC(runtime, "foreign-parse-header-c: failed to parse, port is not an opened input port!\n");
-    yyin = f;
+    yy_set_buffer(f);
+    parse_error = false;
     if(yyparse()) VErrorC(runtime, "foreign-parse-header-c: error during parsing\n");
+
+    if(parse_error || !VDecodeBool(parse_ret)) VErrorC(runtime, "foreign-parse-decl-c: error during parsing (returned false)\n");
   }
   V_CALL(k, runtime, parse_ret);
 }

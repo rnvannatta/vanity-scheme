@@ -102,7 +102,6 @@
     (cond ((and (not lang) (not file)) (set! lang 'scheme))
           ((and (not lang) file) (set! lang (filetype file)))
           (else #f))
-    #;(set! path (if file (realbasepath file) (realbasepath ".")))
     (let ((evaluate
            (case lang
             ((vasm) eval-vasm)
@@ -121,7 +120,8 @@
             (begin
               (printf "recovered from error: ~A~N" err)
               (restart #f))
-            (exit 1)))
+            (begin
+              (error err))))
       (##vcore.register-sigint)
       (call/cc (lambda (k) (set! restart k)))
       ; FIXME too broad and a tad glitchy, need to just catch interrupts in this big net handler

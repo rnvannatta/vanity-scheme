@@ -264,6 +264,7 @@ static bool memv(char const * x, VWORD lst) {
 // can just keep a simple table of typedefs
 static VWORD typedef_table = { LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
 
+extern bool parse_error;
 extern VWORD parse_ret;
 extern VRuntime * global_runtime;
 
@@ -282,11 +283,13 @@ bool is_typedef(char const * symbol) {
 }
 
 int yylex(void);
-void yyerror(char*);
+void yyerror(const char*);
 extern FILE * yyin;
 
+extern void yy_set_buffer(FILE * in);
 
-#line 290 "ffi.tab.c"
+
+#line 293 "ffi.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -319,43 +322,44 @@ enum yysymbol_kind_t
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
   YYSYMBOL_T_STRUCT = 3,                   /* T_STRUCT  */
   YYSYMBOL_T_ENUM = 4,                     /* T_ENUM  */
-  YYSYMBOL_T_TYPE = 5,                     /* T_TYPE  */
-  YYSYMBOL_T_QUALIFIER = 6,                /* T_QUALIFIER  */
-  YYSYMBOL_T_FUNCTION_QUALIFIER = 7,       /* T_FUNCTION_QUALIFIER  */
-  YYSYMBOL_T_STORAGE = 8,                  /* T_STORAGE  */
-  YYSYMBOL_T_INTEGER = 9,                  /* T_INTEGER  */
-  YYSYMBOL_T_TYPENAME = 10,                /* T_TYPENAME  */
-  YYSYMBOL_T_VARIABLE = 11,                /* T_VARIABLE  */
-  YYSYMBOL_12_ = 12,                       /* ';'  */
-  YYSYMBOL_13_ = 13,                       /* ','  */
-  YYSYMBOL_14_ = 14,                       /* '*'  */
-  YYSYMBOL_15_ = 15,                       /* '('  */
-  YYSYMBOL_16_ = 16,                       /* ')'  */
-  YYSYMBOL_17_ = 17,                       /* '['  */
-  YYSYMBOL_18_ = 18,                       /* ']'  */
-  YYSYMBOL_19_ = 19,                       /* '{'  */
-  YYSYMBOL_20_ = 20,                       /* '}'  */
-  YYSYMBOL_21_ = 21,                       /* '='  */
-  YYSYMBOL_YYACCEPT = 22,                  /* $accept  */
-  YYSYMBOL_start = 23,                     /* start  */
-  YYSYMBOL_identifier = 24,                /* identifier  */
-  YYSYMBOL_toplevel = 25,                  /* toplevel  */
-  YYSYMBOL_declaration = 26,               /* declaration  */
-  YYSYMBOL_declarator_list = 27,           /* declarator_list  */
-  YYSYMBOL_prefix_declarator = 28,         /* prefix_declarator  */
-  YYSYMBOL_postfix_declarator = 29,        /* postfix_declarator  */
-  YYSYMBOL_abstract_postfix_declarator = 30, /* abstract_postfix_declarator  */
-  YYSYMBOL_abstract_prefix_declarator = 31, /* abstract_prefix_declarator  */
-  YYSYMBOL_param_prefix_declarator = 32,   /* param_prefix_declarator  */
-  YYSYMBOL_param_postfix_declarator = 33,  /* param_postfix_declarator  */
-  YYSYMBOL_parameter_list = 34,            /* parameter_list  */
-  YYSYMBOL_plain_type = 35,                /* plain_type  */
-  YYSYMBOL_post_qualified_type = 36,       /* post_qualified_type  */
-  YYSYMBOL_qualified_type = 37,            /* qualified_type  */
-  YYSYMBOL_specified_type = 38,            /* specified_type  */
-  YYSYMBOL_post_specified_type = 39,       /* post_specified_type  */
-  YYSYMBOL_enum_list = 40,                 /* enum_list  */
-  YYSYMBOL_expr = 41                       /* expr  */
+  YYSYMBOL_T_ERROR = 5,                    /* T_ERROR  */
+  YYSYMBOL_T_TYPE = 6,                     /* T_TYPE  */
+  YYSYMBOL_T_QUALIFIER = 7,                /* T_QUALIFIER  */
+  YYSYMBOL_T_FUNCTION_QUALIFIER = 8,       /* T_FUNCTION_QUALIFIER  */
+  YYSYMBOL_T_STORAGE = 9,                  /* T_STORAGE  */
+  YYSYMBOL_T_INTEGER = 10,                 /* T_INTEGER  */
+  YYSYMBOL_T_TYPENAME = 11,                /* T_TYPENAME  */
+  YYSYMBOL_T_VARIABLE = 12,                /* T_VARIABLE  */
+  YYSYMBOL_13_ = 13,                       /* ';'  */
+  YYSYMBOL_14_ = 14,                       /* ','  */
+  YYSYMBOL_15_ = 15,                       /* '*'  */
+  YYSYMBOL_16_ = 16,                       /* '('  */
+  YYSYMBOL_17_ = 17,                       /* ')'  */
+  YYSYMBOL_18_ = 18,                       /* '['  */
+  YYSYMBOL_19_ = 19,                       /* ']'  */
+  YYSYMBOL_20_ = 20,                       /* '{'  */
+  YYSYMBOL_21_ = 21,                       /* '}'  */
+  YYSYMBOL_22_ = 22,                       /* '='  */
+  YYSYMBOL_YYACCEPT = 23,                  /* $accept  */
+  YYSYMBOL_start = 24,                     /* start  */
+  YYSYMBOL_identifier = 25,                /* identifier  */
+  YYSYMBOL_toplevel = 26,                  /* toplevel  */
+  YYSYMBOL_declaration = 27,               /* declaration  */
+  YYSYMBOL_declarator_list = 28,           /* declarator_list  */
+  YYSYMBOL_prefix_declarator = 29,         /* prefix_declarator  */
+  YYSYMBOL_postfix_declarator = 30,        /* postfix_declarator  */
+  YYSYMBOL_abstract_postfix_declarator = 31, /* abstract_postfix_declarator  */
+  YYSYMBOL_abstract_prefix_declarator = 32, /* abstract_prefix_declarator  */
+  YYSYMBOL_param_prefix_declarator = 33,   /* param_prefix_declarator  */
+  YYSYMBOL_param_postfix_declarator = 34,  /* param_postfix_declarator  */
+  YYSYMBOL_parameter_list = 35,            /* parameter_list  */
+  YYSYMBOL_plain_type = 36,                /* plain_type  */
+  YYSYMBOL_post_qualified_type = 37,       /* post_qualified_type  */
+  YYSYMBOL_qualified_type = 38,            /* qualified_type  */
+  YYSYMBOL_specified_type = 39,            /* specified_type  */
+  YYSYMBOL_post_specified_type = 40,       /* post_specified_type  */
+  YYSYMBOL_enum_list = 41,                 /* enum_list  */
+  YYSYMBOL_expr = 42                       /* expr  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -553,7 +557,7 @@ typedef int yy_state_fast_t;
 
 #define YY_ASSERT(E) ((void) (0 && (E)))
 
-#if !defined yyoverflow
+#if 1
 
 /* The parser invokes alloca or malloc; define the necessary symbols.  */
 
@@ -618,7 +622,7 @@ void free (void *); /* INFRINGES ON USER NAME SPACE */
 #   endif
 #  endif
 # endif
-#endif /* !defined yyoverflow */
+#endif /* 1 */
 
 #if (! defined yyoverflow \
      && (! defined __cplusplus \
@@ -681,21 +685,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  21
+#define YYFINAL  22
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   141
+#define YYLAST   154
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  22
+#define YYNTOKENS  23
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  20
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  70
+#define YYNRULES  72
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  108
+#define YYNSTATES  110
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   266
+#define YYMAXUTOK   267
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -713,15 +717,15 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      15,    16,    14,     2,    13,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    12,
-       2,    21,     2,     2,     2,     2,     2,     2,     2,     2,
+      16,    17,    15,     2,    14,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    13,
+       2,    22,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,    17,     2,    18,     2,     2,     2,     2,     2,     2,
+       2,    18,     2,    19,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,    19,     2,    20,     2,     2,     2,     2,
+       2,     2,     2,    20,     2,    21,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -735,38 +739,39 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11
+       5,     6,     7,     8,     9,    10,    11,    12
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   273,   273,   275,   279,   279,   281,   283,   287,   289,
-     293,   296,   302,   304,   306,   310,   312,   314,   316,   318,
-     322,   324,   326,   328,   330,   332,   334,   338,   340,   342,
-     344,   346,   350,   352,   354,   358,   360,   362,   364,   366,
-     369,   371,   373,   375,   377,   379,   383,   385,   387,   389,
-     391,   393,   395,   397,   401,   403,   405,   409,   411,   415,
-     417,   419,   423,   425,   427,   429,   433,   435,   437,   439,
-     443
+       0,   278,   278,   280,   282,   285,   285,   287,   289,   291,
+     294,   296,   300,   303,   309,   311,   313,   317,   319,   321,
+     323,   325,   329,   331,   333,   335,   337,   339,   341,   345,
+     347,   349,   351,   353,   357,   359,   361,   365,   367,   369,
+     371,   373,   376,   378,   380,   382,   384,   386,   390,   392,
+     394,   396,   398,   400,   402,   404,   408,   410,   412,   416,
+     418,   422,   424,   426,   430,   432,   434,   436,   440,   442,
+     444,   446,   450
 };
 #endif
 
 /** Accessing symbol of state STATE.  */
 #define YY_ACCESSING_SYMBOL(State) YY_CAST (yysymbol_kind_t, yystos[State])
 
-#if YYDEBUG || 0
+#if 1
 /* The user-facing name of the symbol whose (internal) number is
    YYSYMBOL.  No bounds checking.  */
 static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 
-/* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
-   First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
-static const char *const yytname[] =
+static const char *
+yysymbol_name (yysymbol_kind_t yysymbol)
 {
-  "\"end of file\"", "error", "\"invalid token\"", "T_STRUCT", "T_ENUM",
-  "T_TYPE", "T_QUALIFIER", "T_FUNCTION_QUALIFIER", "T_STORAGE",
+  static const char *const yy_sname[] =
+  {
+  "end of file", "error", "invalid token", "T_STRUCT", "T_ENUM",
+  "T_ERROR", "T_TYPE", "T_QUALIFIER", "T_FUNCTION_QUALIFIER", "T_STORAGE",
   "T_INTEGER", "T_TYPENAME", "T_VARIABLE", "';'", "','", "'*'", "'('",
   "')'", "'['", "']'", "'{'", "'}'", "'='", "$accept", "start",
   "identifier", "toplevel", "declaration", "declarator_list",
@@ -775,16 +780,12 @@ static const char *const yytname[] =
   "param_postfix_declarator", "parameter_list", "plain_type",
   "post_qualified_type", "qualified_type", "specified_type",
   "post_specified_type", "enum_list", "expr", YY_NULLPTR
-};
-
-static const char *
-yysymbol_name (yysymbol_kind_t yysymbol)
-{
-  return yytname[yysymbol];
+  };
+  return yy_sname[yysymbol];
 }
 #endif
 
-#define YYPACT_NINF (-72)
+#define YYPACT_NINF (-74)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -798,17 +799,17 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      83,   121,    23,   -72,    83,    83,   -72,     7,    83,   -72,
-     122,   -72,    97,     4,   -72,   -72,   -72,    -7,    21,   -72,
-     -72,   -72,   -72,    97,   -72,   103,   -72,    61,   103,   -72,
-      48,    63,   -72,   -72,   -72,    31,    70,    -7,   -72,   -72,
-     103,   -72,    40,    25,    42,    59,    -9,   -72,    79,   -72,
-     -72,    91,   -72,    53,   -72,   131,    89,   -72,   -72,   -72,
-      49,   -72,    12,   -72,   -72,    91,   -72,   -72,   -72,   -72,
-      44,    10,    66,   112,   -72,   -72,   113,    59,   -72,    89,
-      89,   -72,   -72,   -72,    82,    86,   107,   -72,    33,    87,
-      41,    92,   -72,   -72,   -72,   -72,   -72,   -72,   -72,   -72,
-     -72,   108,   -72,   -72,   109,   -72,   -72,   -72
+      66,   -74,    71,    78,   -74,    90,    90,   -74,     4,    52,
+     -74,   131,   -74,   109,   127,   -74,   -74,   -74,    -3,    19,
+     -74,   -74,   -74,   -74,   -74,   109,   -74,   115,   -74,    69,
+     115,   -74,    48,   119,   -74,   -74,   -74,    42,    93,    -3,
+     -74,   -74,   115,   -74,    83,    25,    85,   108,   -10,   -74,
+      94,   -74,   -74,    99,   -74,    -7,   -74,   140,   101,   -74,
+     -74,   -74,    89,   -74,     2,   -74,   -74,    99,   -74,   -74,
+     -74,   -74,    50,     9,   104,   122,   -74,   -74,   125,   108,
+     -74,   101,   101,   -74,   -74,   -74,   133,   134,    16,   -74,
+      34,   120,    43,   135,   -74,   -74,   -74,   -74,   -74,   -74,
+     -74,   -74,   -74,    57,   -74,   -74,    95,   -74,   -74,   -74
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -816,31 +817,31 @@ static const yytype_int16 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,    46,     0,     0,    47,     0,     2,     6,
-       0,    62,     0,    59,     5,     4,    48,     0,    49,    60,
-      61,     1,     7,     0,     8,     0,     9,     0,     0,    15,
-      10,    12,    64,    63,    65,    66,     0,     0,    10,    11,
-       0,    13,     0,     0,     0,     0,     0,    50,     0,    14,
-      19,     0,    16,     0,    54,    57,    40,    17,    70,    67,
-      68,    52,     0,    51,    58,     0,    18,    56,    55,    35,
-      28,     0,     0,    27,    41,    42,    32,     0,    53,    43,
-      29,    30,    33,    23,     0,     0,     0,    24,     0,     0,
-       0,     0,    69,    44,    45,    31,    34,    26,    39,    25,
-      20,     0,    21,    36,     0,    37,    22,    38
+       0,     4,     0,     0,    48,     0,     0,    49,     0,     0,
+       7,     0,    64,     0,    61,     6,     5,    50,     0,    51,
+      62,    63,     1,     9,     8,     0,    10,     0,    11,     0,
+       0,    17,    12,    14,    66,    65,    67,    68,     0,     0,
+      12,    13,     0,    15,     0,     0,     0,     0,     0,    52,
+       0,    16,    21,     0,    18,     0,    56,    59,    42,    19,
+      72,    69,    70,    54,     0,    53,    60,     0,    20,    58,
+      57,    37,    30,     0,     0,    29,    43,    44,    34,     0,
+      55,    45,    31,    32,    35,    25,     0,     0,     0,    26,
+       0,     0,     0,     0,    71,    46,    47,    33,    36,    28,
+      41,    27,    22,     0,    23,    38,     0,    39,    24,    40
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-     -72,   -72,   137,   -72,    71,   -72,   -22,   -72,   -72,   -17,
-      -6,   -72,   -71,    77,   -72,   -43,   111,   -72,    96,    64
+     -74,   -74,   146,   -74,   143,   -74,   -24,   -74,   -74,   -38,
+       6,   -74,   -73,    86,   -74,   -45,   123,   -74,   103,    74
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     7,    29,     8,     9,    10,    30,    31,    73,    74,
-      75,    76,    53,    54,    55,    56,    12,    13,    36,    59
+       0,     8,    31,     9,    10,    11,    32,    33,    75,    76,
+      77,    78,    55,    56,    57,    58,    13,    14,    38,    61
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -848,83 +849,85 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      86,    38,    60,    39,    35,    41,    42,    21,    64,    32,
-      33,    61,    34,     1,     2,     3,    51,   101,    49,   104,
-       6,    69,    79,    60,    70,    71,    83,    72,     1,     2,
-       3,    51,    78,    14,    15,     6,     1,     2,     3,    51,
-      37,    52,    17,     6,     1,     2,     3,    51,    -3,   100,
-      80,     6,    45,    81,    84,    69,    50,   103,    70,    71,
-      57,    72,    93,    95,    82,    85,    65,    40,    58,    66,
-      77,    14,    15,    94,    96,    27,    28,    11,    43,    22,
-      44,    11,    11,    46,    87,    11,     1,     2,     3,     4,
-      47,     5,    62,     6,     1,     2,     3,    51,    97,    63,
-      69,     6,    98,    70,    71,   102,    72,    14,    15,    26,
-     105,    27,    28,    14,    15,    19,    20,    27,    28,    23,
-      65,    65,    65,    99,   106,   107,     0,    88,    90,    89,
-      91,    14,    15,    48,    24,    25,    67,    68,    16,    18,
-       0,    92
+      88,    40,    62,    41,    22,    43,    44,    67,    66,    37,
+      68,    63,     2,     3,    62,     4,    53,   103,    51,   106,
+       7,    71,    81,    80,    72,    73,    85,    74,     2,     3,
+      67,     4,    53,   101,    83,    86,     7,     2,     3,    39,
+       4,    53,    54,    95,    97,     7,     2,     3,    -3,     4,
+      53,   102,    -2,    23,     7,     2,     3,    82,     4,     5,
+     105,     6,    71,     7,    47,    72,    73,     1,    74,     2,
+       3,    67,     4,     5,   108,     6,    42,     7,    84,    87,
+      15,    16,    15,    16,    29,    30,    12,    96,    98,    15,
+      16,    12,    12,     2,     3,    12,     4,     5,    18,     6,
+      52,     7,     2,     3,    59,     4,    53,    48,    64,    67,
+       7,    79,   109,    71,    49,    65,    72,    73,    60,    74,
+      15,    16,    28,    89,    29,    30,    15,    16,    20,    21,
+      29,    30,    25,    34,    35,    45,    36,    46,    90,   104,
+      91,    92,    50,    93,    26,    27,    69,    70,    17,    19,
+      99,   100,    24,    94,   107
 };
 
 static const yytype_int8 yycheck[] =
 {
-      71,    23,    11,    25,    11,    27,    28,     0,    51,     5,
-       6,    20,     8,     3,     4,     5,     6,    88,    40,    90,
-      10,    11,    65,    11,    14,    15,    16,    17,     3,     4,
-       5,     6,    20,    10,    11,    10,     3,     4,     5,     6,
-      19,    16,    19,    10,     3,     4,     5,     6,     0,    16,
-       6,    10,    21,    70,    71,    11,    16,    16,    14,    15,
-      18,    17,    79,    80,    70,    71,    13,     6,     9,    16,
-      21,    10,    11,    79,    80,    14,    15,     0,    15,     8,
-      17,     4,     5,    13,    18,     8,     3,     4,     5,     6,
-      20,     8,    13,    10,     3,     4,     5,     6,    16,    20,
-      11,    10,    16,    14,    15,    18,    17,    10,    11,    12,
-      18,    14,    15,    10,    11,     4,     5,    14,    15,     8,
-      13,    13,    13,    16,    16,    16,    -1,    15,    15,    17,
-      17,    10,    11,    37,    12,    13,     5,     6,     1,     2,
-      -1,    77
+      73,    25,    12,    27,     0,    29,    30,    14,    53,    12,
+      17,    21,     3,     4,    12,     6,     7,    90,    42,    92,
+      11,    12,    67,    21,    15,    16,    17,    18,     3,     4,
+      14,     6,     7,    17,    72,    73,    11,     3,     4,    20,
+       6,     7,    17,    81,    82,    11,     3,     4,     0,     6,
+       7,    17,     0,     1,    11,     3,     4,     7,     6,     7,
+      17,     9,    12,    11,    22,    15,    16,     1,    18,     3,
+       4,    14,     6,     7,    17,     9,     7,    11,    72,    73,
+      11,    12,    11,    12,    15,    16,     0,    81,    82,    11,
+      12,     5,     6,     3,     4,     9,     6,     7,    20,     9,
+      17,    11,     3,     4,    19,     6,     7,    14,    14,    14,
+      11,    22,    17,    12,    21,    21,    15,    16,    10,    18,
+      11,    12,    13,    19,    15,    16,    11,    12,     5,     6,
+      15,    16,     9,     6,     7,    16,     9,    18,    16,    19,
+      18,    16,    39,    18,    13,    14,     6,     7,     2,     3,
+      17,    17,     9,    79,    19
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     4,     5,     6,     8,    10,    23,    25,    26,
-      27,    35,    38,    39,    10,    11,    24,    19,    24,    38,
-      38,     0,    26,    38,    12,    13,    12,    14,    15,    24,
-      28,    29,     5,     6,     8,    11,    40,    19,    28,    28,
-       6,    28,    28,    15,    17,    21,    13,    20,    40,    28,
-      16,     6,    16,    34,    35,    36,    37,    18,     9,    41,
-      11,    20,    13,    20,    37,    13,    16,     5,     6,    11,
-      14,    15,    17,    30,    31,    32,    33,    21,    20,    37,
-       6,    31,    32,    16,    31,    32,    34,    18,    15,    17,
-      15,    17,    41,    31,    32,    31,    32,    16,    16,    16,
-      16,    34,    18,    16,    34,    18,    16,    16
+       0,     1,     3,     4,     6,     7,     9,    11,    24,    26,
+      27,    28,    36,    39,    40,    11,    12,    25,    20,    25,
+      39,    39,     0,     1,    27,    39,    13,    14,    13,    15,
+      16,    25,    29,    30,     6,     7,     9,    12,    41,    20,
+      29,    29,     7,    29,    29,    16,    18,    22,    14,    21,
+      41,    29,    17,     7,    17,    35,    36,    37,    38,    19,
+      10,    42,    12,    21,    14,    21,    38,    14,    17,     6,
+       7,    12,    15,    16,    18,    31,    32,    33,    34,    22,
+      21,    38,     7,    32,    33,    17,    32,    33,    35,    19,
+      16,    18,    16,    18,    42,    32,    33,    32,    33,    17,
+      17,    17,    17,    35,    19,    17,    35,    19,    17,    17
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    22,    23,    23,    24,    24,    25,    25,    26,    26,
-      27,    27,    28,    28,    28,    29,    29,    29,    29,    29,
-      30,    30,    30,    30,    30,    30,    30,    31,    31,    31,
-      31,    31,    32,    32,    32,    33,    33,    33,    33,    33,
-      34,    34,    34,    34,    34,    34,    35,    35,    35,    35,
-      35,    35,    35,    35,    36,    36,    36,    37,    37,    38,
-      38,    38,    39,    39,    39,    39,    40,    40,    40,    40,
-      41
+       0,    23,    24,    24,    24,    25,    25,    26,    26,    26,
+      27,    27,    28,    28,    29,    29,    29,    30,    30,    30,
+      30,    30,    31,    31,    31,    31,    31,    31,    31,    32,
+      32,    32,    32,    32,    33,    33,    33,    34,    34,    34,
+      34,    34,    35,    35,    35,    35,    35,    35,    36,    36,
+      36,    36,    36,    36,    36,    36,    37,    37,    37,    38,
+      38,    39,    39,    39,    40,    40,    40,    40,    41,    41,
+      41,    41,    42
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     2,     1,     1,     1,     2,     2,     2,
-       2,     3,     1,     2,     3,     1,     3,     3,     4,     3,
-       3,     3,     4,     2,     2,     3,     3,     1,     1,     2,
-       2,     3,     1,     2,     3,     1,     3,     3,     4,     3,
-       1,     2,     2,     3,     4,     4,     1,     1,     2,     2,
-       4,     5,     5,     6,     1,     2,     2,     1,     2,     1,
-       2,     2,     1,     2,     2,     2,     1,     3,     3,     5,
-       1
+       0,     2,     1,     2,     1,     1,     1,     1,     2,     2,
+       2,     2,     2,     3,     1,     2,     3,     1,     3,     3,
+       4,     3,     3,     3,     4,     2,     2,     3,     3,     1,
+       1,     2,     2,     3,     1,     2,     3,     1,     3,     3,
+       4,     3,     1,     2,     2,     3,     4,     4,     1,     1,
+       2,     2,     4,     5,     5,     6,     1,     2,     2,     1,
+       2,     1,     2,     2,     1,     2,     2,     2,     1,     3,
+       3,     5,     1
 };
 
 
@@ -1107,8 +1110,226 @@ int yydebug;
 #endif
 
 
+/* Context of a parse error.  */
+typedef struct
+{
+  yy_state_t *yyssp;
+  yysymbol_kind_t yytoken;
+} yypcontext_t;
+
+/* Put in YYARG at most YYARGN of the expected tokens given the
+   current YYCTX, and return the number of tokens stored in YYARG.  If
+   YYARG is null, return the number of expected tokens (guaranteed to
+   be less than YYNTOKENS).  Return YYENOMEM on memory exhaustion.
+   Return 0 if there are more than YYARGN expected tokens, yet fill
+   YYARG up to YYARGN. */
+static int
+yypcontext_expected_tokens (const yypcontext_t *yyctx,
+                            yysymbol_kind_t yyarg[], int yyargn)
+{
+  /* Actual size of YYARG. */
+  int yycount = 0;
+  int yyn = yypact[+*yyctx->yyssp];
+  if (!yypact_value_is_default (yyn))
+    {
+      /* Start YYX at -YYN if negative to avoid negative indexes in
+         YYCHECK.  In other words, skip the first -YYN actions for
+         this state because they are default actions.  */
+      int yyxbegin = yyn < 0 ? -yyn : 0;
+      /* Stay within bounds of both yycheck and yytname.  */
+      int yychecklim = YYLAST - yyn + 1;
+      int yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
+      int yyx;
+      for (yyx = yyxbegin; yyx < yyxend; ++yyx)
+        if (yycheck[yyx + yyn] == yyx && yyx != YYSYMBOL_YYerror
+            && !yytable_value_is_error (yytable[yyx + yyn]))
+          {
+            if (!yyarg)
+              ++yycount;
+            else if (yycount == yyargn)
+              return 0;
+            else
+              yyarg[yycount++] = YY_CAST (yysymbol_kind_t, yyx);
+          }
+    }
+  if (yyarg && yycount == 0 && 0 < yyargn)
+    yyarg[0] = YYSYMBOL_YYEMPTY;
+  return yycount;
+}
 
 
+
+
+#ifndef yystrlen
+# if defined __GLIBC__ && defined _STRING_H
+#  define yystrlen(S) (YY_CAST (YYPTRDIFF_T, strlen (S)))
+# else
+/* Return the length of YYSTR.  */
+static YYPTRDIFF_T
+yystrlen (const char *yystr)
+{
+  YYPTRDIFF_T yylen;
+  for (yylen = 0; yystr[yylen]; yylen++)
+    continue;
+  return yylen;
+}
+# endif
+#endif
+
+#ifndef yystpcpy
+# if defined __GLIBC__ && defined _STRING_H && defined _GNU_SOURCE
+#  define yystpcpy stpcpy
+# else
+/* Copy YYSRC to YYDEST, returning the address of the terminating '\0' in
+   YYDEST.  */
+static char *
+yystpcpy (char *yydest, const char *yysrc)
+{
+  char *yyd = yydest;
+  const char *yys = yysrc;
+
+  while ((*yyd++ = *yys++) != '\0')
+    continue;
+
+  return yyd - 1;
+}
+# endif
+#endif
+
+
+
+static int
+yy_syntax_error_arguments (const yypcontext_t *yyctx,
+                           yysymbol_kind_t yyarg[], int yyargn)
+{
+  /* Actual size of YYARG. */
+  int yycount = 0;
+  /* There are many possibilities here to consider:
+     - If this state is a consistent state with a default action, then
+       the only way this function was invoked is if the default action
+       is an error action.  In that case, don't check for expected
+       tokens because there are none.
+     - The only way there can be no lookahead present (in yychar) is if
+       this state is a consistent state with a default action.  Thus,
+       detecting the absence of a lookahead is sufficient to determine
+       that there is no unexpected or expected token to report.  In that
+       case, just report a simple "syntax error".
+     - Don't assume there isn't a lookahead just because this state is a
+       consistent state with a default action.  There might have been a
+       previous inconsistent state, consistent state with a non-default
+       action, or user semantic action that manipulated yychar.
+     - Of course, the expected token list depends on states to have
+       correct lookahead information, and it depends on the parser not
+       to perform extra reductions after fetching a lookahead from the
+       scanner and before detecting a syntax error.  Thus, state merging
+       (from LALR or IELR) and default reductions corrupt the expected
+       token list.  However, the list is correct for canonical LR with
+       one exception: it will still contain any token that will not be
+       accepted due to an error action in a later state.
+  */
+  if (yyctx->yytoken != YYSYMBOL_YYEMPTY)
+    {
+      int yyn;
+      if (yyarg)
+        yyarg[yycount] = yyctx->yytoken;
+      ++yycount;
+      yyn = yypcontext_expected_tokens (yyctx,
+                                        yyarg ? yyarg + 1 : yyarg, yyargn - 1);
+      if (yyn == YYENOMEM)
+        return YYENOMEM;
+      else
+        yycount += yyn;
+    }
+  return yycount;
+}
+
+/* Copy into *YYMSG, which is of size *YYMSG_ALLOC, an error message
+   about the unexpected token YYTOKEN for the state stack whose top is
+   YYSSP.
+
+   Return 0 if *YYMSG was successfully written.  Return -1 if *YYMSG is
+   not large enough to hold the message.  In that case, also set
+   *YYMSG_ALLOC to the required number of bytes.  Return YYENOMEM if the
+   required number of bytes is too large to store.  */
+static int
+yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
+                const yypcontext_t *yyctx)
+{
+  enum { YYARGS_MAX = 5 };
+  /* Internationalized format string. */
+  const char *yyformat = YY_NULLPTR;
+  /* Arguments of yyformat: reported tokens (one for the "unexpected",
+     one per "expected"). */
+  yysymbol_kind_t yyarg[YYARGS_MAX];
+  /* Cumulated lengths of YYARG.  */
+  YYPTRDIFF_T yysize = 0;
+
+  /* Actual size of YYARG. */
+  int yycount = yy_syntax_error_arguments (yyctx, yyarg, YYARGS_MAX);
+  if (yycount == YYENOMEM)
+    return YYENOMEM;
+
+  switch (yycount)
+    {
+#define YYCASE_(N, S)                       \
+      case N:                               \
+        yyformat = S;                       \
+        break
+    default: /* Avoid compiler warnings. */
+      YYCASE_(0, YY_("syntax error"));
+      YYCASE_(1, YY_("syntax error, unexpected %s"));
+      YYCASE_(2, YY_("syntax error, unexpected %s, expecting %s"));
+      YYCASE_(3, YY_("syntax error, unexpected %s, expecting %s or %s"));
+      YYCASE_(4, YY_("syntax error, unexpected %s, expecting %s or %s or %s"));
+      YYCASE_(5, YY_("syntax error, unexpected %s, expecting %s or %s or %s or %s"));
+#undef YYCASE_
+    }
+
+  /* Compute error message size.  Don't count the "%s"s, but reserve
+     room for the terminator.  */
+  yysize = yystrlen (yyformat) - 2 * yycount + 1;
+  {
+    int yyi;
+    for (yyi = 0; yyi < yycount; ++yyi)
+      {
+        YYPTRDIFF_T yysize1
+          = yysize + yystrlen (yysymbol_name (yyarg[yyi]));
+        if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
+          yysize = yysize1;
+        else
+          return YYENOMEM;
+      }
+  }
+
+  if (*yymsg_alloc < yysize)
+    {
+      *yymsg_alloc = 2 * yysize;
+      if (! (yysize <= *yymsg_alloc
+             && *yymsg_alloc <= YYSTACK_ALLOC_MAXIMUM))
+        *yymsg_alloc = YYSTACK_ALLOC_MAXIMUM;
+      return -1;
+    }
+
+  /* Avoid sprintf, as that infringes on the user's name space.
+     Don't have undefined behavior even if the translation
+     produced a string with the wrong number of "%s"s.  */
+  {
+    char *yyp = *yymsg;
+    int yyi = 0;
+    while ((*yyp = *yyformat) != '\0')
+      if (*yyp == '%' && yyformat[1] == 's' && yyi < yycount)
+        {
+          yyp = yystpcpy (yyp, yysymbol_name (yyarg[yyi++]));
+          yyformat += 2;
+        }
+      else
+        {
+          ++yyp;
+          ++yyformat;
+        }
+  }
+  return 0;
+}
 
 
 /*-----------------------------------------------.
@@ -1177,7 +1398,10 @@ yyparse (void)
      action routines.  */
   YYSTYPE yyval;
 
-
+  /* Buffer for error messages, and its allocated size.  */
+  char yymsgbuf[128];
+  char *yymsg = yymsgbuf;
+  YYPTRDIFF_T yymsg_alloc = sizeof yymsgbuf;
 
 #define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N))
 
@@ -1388,412 +1612,424 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* start: toplevel  */
-#line 274 "src/ffi.y"
+#line 279 "src/ffi.y"
       { parse_ret = CONS("toplevel", reverse((yyvsp[0].vword_val))); }
-#line 1394 "ffi.tab.c"
+#line 1618 "ffi.tab.c"
     break;
 
   case 3: /* start: specified_type prefix_declarator  */
-#line 276 "src/ffi.y"
+#line 281 "src/ffi.y"
       { parse_ret = LIST("naked_declaration", (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1400 "ffi.tab.c"
+#line 1624 "ffi.tab.c"
     break;
 
-  case 6: /* toplevel: declaration  */
+  case 4: /* start: error  */
 #line 282 "src/ffi.y"
-         { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 1406 "ffi.tab.c"
+              { yyerrok; yyclearin; parse_error = true; YYACCEPT; }
+#line 1630 "ffi.tab.c"
     break;
 
-  case 7: /* toplevel: toplevel declaration  */
-#line 284 "src/ffi.y"
-         { (yyval.vword_val) = CONS((yyvsp[0].vword_val), (yyvsp[-1].vword_val)); }
-#line 1412 "ffi.tab.c"
-    break;
-
-  case 8: /* declaration: declarator_list ';'  */
+  case 7: /* toplevel: declaration  */
 #line 288 "src/ffi.y"
-            { VWORD v = (yyvsp[-1].vword_val); (yyval.vword_val) = CONS("declaration", CONS(CAR(v), reverse(CDR(v)))); }
-#line 1418 "ffi.tab.c"
+         { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
+#line 1636 "ffi.tab.c"
     break;
 
-  case 9: /* declaration: specified_type ';'  */
+  case 8: /* toplevel: toplevel declaration  */
 #line 290 "src/ffi.y"
-            { (yyval.vword_val) = LIST("declaration", (yyvsp[-1].vword_val)); }
-#line 1424 "ffi.tab.c"
+         { (yyval.vword_val) = CONS((yyvsp[0].vword_val), (yyvsp[-1].vword_val)); }
+#line 1642 "ffi.tab.c"
     break;
 
-  case 10: /* declarator_list: specified_type prefix_declarator  */
-#line 294 "src/ffi.y"
+  case 9: /* toplevel: toplevel error  */
+#line 291 "src/ffi.y"
+                          { yyerrok; parse_error = true; }
+#line 1648 "ffi.tab.c"
+    break;
+
+  case 10: /* declaration: declarator_list ';'  */
+#line 295 "src/ffi.y"
+            { VWORD v = (yyvsp[-1].vword_val); (yyval.vword_val) = CONS("declaration", CONS(CAR(v), reverse(CDR(v)))); }
+#line 1654 "ffi.tab.c"
+    break;
+
+  case 11: /* declaration: specified_type ';'  */
+#line 297 "src/ffi.y"
+            { (yyval.vword_val) = LIST("declaration", (yyvsp[-1].vword_val)); }
+#line 1660 "ffi.tab.c"
+    break;
+
+  case 12: /* declarator_list: specified_type prefix_declarator  */
+#line 301 "src/ffi.y"
                 { register_typedef((yyvsp[-1].vword_val), (yyvsp[0].vword_val));
                   (yyval.vword_val) = CONS((yyvsp[-1].vword_val), LIST((yyvsp[0].vword_val))); }
-#line 1431 "ffi.tab.c"
-    break;
-
-  case 11: /* declarator_list: declarator_list ',' prefix_declarator  */
-#line 297 "src/ffi.y"
-                { VWORD v = (yyvsp[-2].vword_val);
-                  register_typedef(CAR(v), (yyvsp[0].vword_val));
-                  (yyval.vword_val) = CONS(CAR(v), CONS((yyvsp[0].vword_val), CDR(v))); }
-#line 1439 "ffi.tab.c"
-    break;
-
-  case 12: /* prefix_declarator: postfix_declarator  */
-#line 303 "src/ffi.y"
-                  { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1445 "ffi.tab.c"
-    break;
-
-  case 13: /* prefix_declarator: '*' prefix_declarator  */
-#line 305 "src/ffi.y"
-                  { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1451 "ffi.tab.c"
-    break;
-
-  case 14: /* prefix_declarator: '*' T_QUALIFIER prefix_declarator  */
-#line 307 "src/ffi.y"
-                  { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1457 "ffi.tab.c"
-    break;
-
-  case 15: /* postfix_declarator: identifier  */
-#line 311 "src/ffi.y"
-                   { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1463 "ffi.tab.c"
-    break;
-
-  case 16: /* postfix_declarator: postfix_declarator '(' ')'  */
-#line 313 "src/ffi.y"
-                   { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1469 "ffi.tab.c"
-    break;
-
-  case 17: /* postfix_declarator: postfix_declarator '[' ']'  */
-#line 315 "src/ffi.y"
-                   { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
-#line 1475 "ffi.tab.c"
-    break;
-
-  case 18: /* postfix_declarator: postfix_declarator '(' parameter_list ')'  */
-#line 317 "src/ffi.y"
-                   { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1481 "ffi.tab.c"
-    break;
-
-  case 19: /* postfix_declarator: '(' prefix_declarator ')'  */
-#line 319 "src/ffi.y"
-                   { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1487 "ffi.tab.c"
-    break;
-
-  case 20: /* abstract_postfix_declarator: abstract_postfix_declarator '(' ')'  */
-#line 323 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1493 "ffi.tab.c"
-    break;
-
-  case 21: /* abstract_postfix_declarator: abstract_postfix_declarator '[' ']'  */
-#line 325 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
-#line 1499 "ffi.tab.c"
-    break;
-
-  case 22: /* abstract_postfix_declarator: abstract_postfix_declarator '(' parameter_list ')'  */
-#line 327 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1505 "ffi.tab.c"
-    break;
-
-  case 23: /* abstract_postfix_declarator: '(' ')'  */
-#line 329 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", VFALSE); }
-#line 1511 "ffi.tab.c"
-    break;
-
-  case 24: /* abstract_postfix_declarator: '[' ']'  */
-#line 331 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("array", VFALSE); }
-#line 1517 "ffi.tab.c"
-    break;
-
-  case 25: /* abstract_postfix_declarator: '(' parameter_list ')'  */
-#line 333 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", VFALSE, detangle_params((yyvsp[-1].vword_val))); }
-#line 1523 "ffi.tab.c"
-    break;
-
-  case 26: /* abstract_postfix_declarator: '(' abstract_prefix_declarator ')'  */
-#line 335 "src/ffi.y"
-                            { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1529 "ffi.tab.c"
-    break;
-
-  case 27: /* abstract_prefix_declarator: abstract_postfix_declarator  */
-#line 339 "src/ffi.y"
-                           { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1535 "ffi.tab.c"
-    break;
-
-  case 28: /* abstract_prefix_declarator: '*'  */
-#line 341 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", VFALSE); }
-#line 1541 "ffi.tab.c"
-    break;
-
-  case 29: /* abstract_prefix_declarator: '*' T_QUALIFIER  */
-#line 343 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[0].keyword_val)), VFALSE)); }
-#line 1547 "ffi.tab.c"
-    break;
-
-  case 30: /* abstract_prefix_declarator: '*' abstract_prefix_declarator  */
-#line 345 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1553 "ffi.tab.c"
-    break;
-
-  case 31: /* abstract_prefix_declarator: '*' T_QUALIFIER abstract_prefix_declarator  */
-#line 347 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1559 "ffi.tab.c"
-    break;
-
-  case 32: /* param_prefix_declarator: param_postfix_declarator  */
-#line 351 "src/ffi.y"
-                        { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1565 "ffi.tab.c"
-    break;
-
-  case 33: /* param_prefix_declarator: '*' param_prefix_declarator  */
-#line 353 "src/ffi.y"
-                        { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1571 "ffi.tab.c"
-    break;
-
-  case 34: /* param_prefix_declarator: '*' T_QUALIFIER param_prefix_declarator  */
-#line 355 "src/ffi.y"
-                        { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1577 "ffi.tab.c"
-    break;
-
-  case 35: /* param_postfix_declarator: T_VARIABLE  */
-#line 359 "src/ffi.y"
-                         { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1583 "ffi.tab.c"
-    break;
-
-  case 36: /* param_postfix_declarator: param_postfix_declarator '(' ')'  */
-#line 361 "src/ffi.y"
-                         { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1589 "ffi.tab.c"
-    break;
-
-  case 37: /* param_postfix_declarator: param_postfix_declarator '[' ']'  */
-#line 363 "src/ffi.y"
-                         { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
-#line 1595 "ffi.tab.c"
-    break;
-
-  case 38: /* param_postfix_declarator: param_postfix_declarator '(' parameter_list ')'  */
-#line 365 "src/ffi.y"
-                         { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1601 "ffi.tab.c"
-    break;
-
-  case 39: /* param_postfix_declarator: '(' param_prefix_declarator ')'  */
-#line 367 "src/ffi.y"
-                         { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1607 "ffi.tab.c"
-    break;
-
-  case 40: /* parameter_list: qualified_type  */
-#line 370 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[0].vword_val), VFALSE); }
-#line 1613 "ffi.tab.c"
-    break;
-
-  case 41: /* parameter_list: qualified_type abstract_prefix_declarator  */
-#line 372 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1619 "ffi.tab.c"
-    break;
-
-  case 42: /* parameter_list: qualified_type param_prefix_declarator  */
-#line 374 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1625 "ffi.tab.c"
-    break;
-
-  case 43: /* parameter_list: parameter_list ',' qualified_type  */
-#line 376 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", (yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
-#line 1631 "ffi.tab.c"
-    break;
-
-  case 44: /* parameter_list: parameter_list ',' qualified_type abstract_prefix_declarator  */
-#line 378 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1637 "ffi.tab.c"
-    break;
-
-  case 45: /* parameter_list: parameter_list ',' qualified_type param_prefix_declarator  */
-#line 380 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1643 "ffi.tab.c"
-    break;
-
-  case 46: /* plain_type: T_TYPE  */
-#line 384 "src/ffi.y"
-           { (yyval.vword_val) = keyword_to_vword((yyvsp[0].keyword_val)); }
-#line 1649 "ffi.tab.c"
-    break;
-
-  case 47: /* plain_type: T_TYPENAME  */
-#line 386 "src/ffi.y"
-           { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1655 "ffi.tab.c"
-    break;
-
-  case 48: /* plain_type: T_STRUCT identifier  */
-#line 388 "src/ffi.y"
-           { (yyval.vword_val) = LIST("struct", (yyvsp[0].vword_val)); }
-#line 1661 "ffi.tab.c"
-    break;
-
-  case 49: /* plain_type: T_ENUM identifier  */
-#line 390 "src/ffi.y"
-           { (yyval.vword_val) = LIST("enum", (yyvsp[0].vword_val), VFALSE); }
 #line 1667 "ffi.tab.c"
     break;
 
-  case 50: /* plain_type: T_ENUM '{' enum_list '}'  */
-#line 392 "src/ffi.y"
+  case 13: /* declarator_list: declarator_list ',' prefix_declarator  */
+#line 304 "src/ffi.y"
+                { VWORD v = (yyvsp[-2].vword_val);
+                  register_typedef(CAR(v), (yyvsp[0].vword_val));
+                  (yyval.vword_val) = CONS(CAR(v), CONS((yyvsp[0].vword_val), CDR(v))); }
+#line 1675 "ffi.tab.c"
+    break;
+
+  case 14: /* prefix_declarator: postfix_declarator  */
+#line 310 "src/ffi.y"
+                  { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1681 "ffi.tab.c"
+    break;
+
+  case 15: /* prefix_declarator: '*' prefix_declarator  */
+#line 312 "src/ffi.y"
+                  { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
+#line 1687 "ffi.tab.c"
+    break;
+
+  case 16: /* prefix_declarator: '*' T_QUALIFIER prefix_declarator  */
+#line 314 "src/ffi.y"
+                  { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
+#line 1693 "ffi.tab.c"
+    break;
+
+  case 17: /* postfix_declarator: identifier  */
+#line 318 "src/ffi.y"
+                   { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1699 "ffi.tab.c"
+    break;
+
+  case 18: /* postfix_declarator: postfix_declarator '(' ')'  */
+#line 320 "src/ffi.y"
+                   { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
+#line 1705 "ffi.tab.c"
+    break;
+
+  case 19: /* postfix_declarator: postfix_declarator '[' ']'  */
+#line 322 "src/ffi.y"
+                   { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
+#line 1711 "ffi.tab.c"
+    break;
+
+  case 20: /* postfix_declarator: postfix_declarator '(' parameter_list ')'  */
+#line 324 "src/ffi.y"
+                   { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
+#line 1717 "ffi.tab.c"
+    break;
+
+  case 21: /* postfix_declarator: '(' prefix_declarator ')'  */
+#line 326 "src/ffi.y"
+                   { (yyval.vword_val) = (yyvsp[-1].vword_val); }
+#line 1723 "ffi.tab.c"
+    break;
+
+  case 22: /* abstract_postfix_declarator: abstract_postfix_declarator '(' ')'  */
+#line 330 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
+#line 1729 "ffi.tab.c"
+    break;
+
+  case 23: /* abstract_postfix_declarator: abstract_postfix_declarator '[' ']'  */
+#line 332 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
+#line 1735 "ffi.tab.c"
+    break;
+
+  case 24: /* abstract_postfix_declarator: abstract_postfix_declarator '(' parameter_list ')'  */
+#line 334 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
+#line 1741 "ffi.tab.c"
+    break;
+
+  case 25: /* abstract_postfix_declarator: '(' ')'  */
+#line 336 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("function", VFALSE); }
+#line 1747 "ffi.tab.c"
+    break;
+
+  case 26: /* abstract_postfix_declarator: '[' ']'  */
+#line 338 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("array", VFALSE); }
+#line 1753 "ffi.tab.c"
+    break;
+
+  case 27: /* abstract_postfix_declarator: '(' parameter_list ')'  */
+#line 340 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("function", VFALSE, detangle_params((yyvsp[-1].vword_val))); }
+#line 1759 "ffi.tab.c"
+    break;
+
+  case 28: /* abstract_postfix_declarator: '(' abstract_prefix_declarator ')'  */
+#line 342 "src/ffi.y"
+                            { (yyval.vword_val) = (yyvsp[-1].vword_val); }
+#line 1765 "ffi.tab.c"
+    break;
+
+  case 29: /* abstract_prefix_declarator: abstract_postfix_declarator  */
+#line 346 "src/ffi.y"
+                           { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1771 "ffi.tab.c"
+    break;
+
+  case 30: /* abstract_prefix_declarator: '*'  */
+#line 348 "src/ffi.y"
+                           { (yyval.vword_val) = LIST("pointer", VFALSE); }
+#line 1777 "ffi.tab.c"
+    break;
+
+  case 31: /* abstract_prefix_declarator: '*' T_QUALIFIER  */
+#line 350 "src/ffi.y"
+                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[0].keyword_val)), VFALSE)); }
+#line 1783 "ffi.tab.c"
+    break;
+
+  case 32: /* abstract_prefix_declarator: '*' abstract_prefix_declarator  */
+#line 352 "src/ffi.y"
+                           { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
+#line 1789 "ffi.tab.c"
+    break;
+
+  case 33: /* abstract_prefix_declarator: '*' T_QUALIFIER abstract_prefix_declarator  */
+#line 354 "src/ffi.y"
+                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
+#line 1795 "ffi.tab.c"
+    break;
+
+  case 34: /* param_prefix_declarator: param_postfix_declarator  */
+#line 358 "src/ffi.y"
+                        { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1801 "ffi.tab.c"
+    break;
+
+  case 35: /* param_prefix_declarator: '*' param_prefix_declarator  */
+#line 360 "src/ffi.y"
+                        { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
+#line 1807 "ffi.tab.c"
+    break;
+
+  case 36: /* param_prefix_declarator: '*' T_QUALIFIER param_prefix_declarator  */
+#line 362 "src/ffi.y"
+                        { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
+#line 1813 "ffi.tab.c"
+    break;
+
+  case 37: /* param_postfix_declarator: T_VARIABLE  */
+#line 366 "src/ffi.y"
+                         { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1819 "ffi.tab.c"
+    break;
+
+  case 38: /* param_postfix_declarator: param_postfix_declarator '(' ')'  */
+#line 368 "src/ffi.y"
+                         { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
+#line 1825 "ffi.tab.c"
+    break;
+
+  case 39: /* param_postfix_declarator: param_postfix_declarator '[' ']'  */
+#line 370 "src/ffi.y"
+                         { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
+#line 1831 "ffi.tab.c"
+    break;
+
+  case 40: /* param_postfix_declarator: param_postfix_declarator '(' parameter_list ')'  */
+#line 372 "src/ffi.y"
+                         { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
+#line 1837 "ffi.tab.c"
+    break;
+
+  case 41: /* param_postfix_declarator: '(' param_prefix_declarator ')'  */
+#line 374 "src/ffi.y"
+                         { (yyval.vword_val) = (yyvsp[-1].vword_val); }
+#line 1843 "ffi.tab.c"
+    break;
+
+  case 42: /* parameter_list: qualified_type  */
+#line 377 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[0].vword_val), VFALSE); }
+#line 1849 "ffi.tab.c"
+    break;
+
+  case 43: /* parameter_list: qualified_type abstract_prefix_declarator  */
+#line 379 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 1855 "ffi.tab.c"
+    break;
+
+  case 44: /* parameter_list: qualified_type param_prefix_declarator  */
+#line 381 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 1861 "ffi.tab.c"
+    break;
+
+  case 45: /* parameter_list: parameter_list ',' qualified_type  */
+#line 383 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", (yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
+#line 1867 "ffi.tab.c"
+    break;
+
+  case 46: /* parameter_list: parameter_list ',' qualified_type abstract_prefix_declarator  */
+#line 385 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 1873 "ffi.tab.c"
+    break;
+
+  case 47: /* parameter_list: parameter_list ',' qualified_type param_prefix_declarator  */
+#line 387 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 1879 "ffi.tab.c"
+    break;
+
+  case 48: /* plain_type: T_TYPE  */
+#line 391 "src/ffi.y"
+           { (yyval.vword_val) = keyword_to_vword((yyvsp[0].keyword_val)); }
+#line 1885 "ffi.tab.c"
+    break;
+
+  case 49: /* plain_type: T_TYPENAME  */
+#line 393 "src/ffi.y"
+           { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1891 "ffi.tab.c"
+    break;
+
+  case 50: /* plain_type: T_STRUCT identifier  */
+#line 395 "src/ffi.y"
+           { (yyval.vword_val) = LIST("struct", (yyvsp[0].vword_val)); }
+#line 1897 "ffi.tab.c"
+    break;
+
+  case 51: /* plain_type: T_ENUM identifier  */
+#line 397 "src/ffi.y"
+           { (yyval.vword_val) = LIST("enum", (yyvsp[0].vword_val), VFALSE); }
+#line 1903 "ffi.tab.c"
+    break;
+
+  case 52: /* plain_type: T_ENUM '{' enum_list '}'  */
+#line 399 "src/ffi.y"
            { (yyval.vword_val) = LIST("enum", VFALSE, detangle_enums((yyvsp[-1].vword_val))); }
-#line 1673 "ffi.tab.c"
+#line 1909 "ffi.tab.c"
     break;
 
-  case 51: /* plain_type: T_ENUM identifier '{' enum_list '}'  */
-#line 394 "src/ffi.y"
+  case 53: /* plain_type: T_ENUM identifier '{' enum_list '}'  */
+#line 401 "src/ffi.y"
            { (yyval.vword_val) = LIST("enum", (yyvsp[-3].vword_val), detangle_enums((yyvsp[-1].vword_val))); }
-#line 1679 "ffi.tab.c"
+#line 1915 "ffi.tab.c"
     break;
 
-  case 52: /* plain_type: T_ENUM '{' enum_list ',' '}'  */
-#line 396 "src/ffi.y"
+  case 54: /* plain_type: T_ENUM '{' enum_list ',' '}'  */
+#line 403 "src/ffi.y"
            { (yyval.vword_val) = LIST("enum", VFALSE, detangle_enums((yyvsp[-2].vword_val))); }
-#line 1685 "ffi.tab.c"
+#line 1921 "ffi.tab.c"
     break;
 
-  case 53: /* plain_type: T_ENUM identifier '{' enum_list ',' '}'  */
-#line 398 "src/ffi.y"
+  case 55: /* plain_type: T_ENUM identifier '{' enum_list ',' '}'  */
+#line 405 "src/ffi.y"
            { (yyval.vword_val) = LIST("enum", (yyvsp[-4].vword_val), detangle_enums((yyvsp[-2].vword_val))); }
-#line 1691 "ffi.tab.c"
+#line 1927 "ffi.tab.c"
     break;
 
-  case 54: /* post_qualified_type: plain_type  */
-#line 402 "src/ffi.y"
+  case 56: /* post_qualified_type: plain_type  */
+#line 409 "src/ffi.y"
                { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 1697 "ffi.tab.c"
+#line 1933 "ffi.tab.c"
     break;
 
-  case 55: /* post_qualified_type: post_qualified_type T_QUALIFIER  */
-#line 404 "src/ffi.y"
+  case 57: /* post_qualified_type: post_qualified_type T_QUALIFIER  */
+#line 411 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1703 "ffi.tab.c"
+#line 1939 "ffi.tab.c"
     break;
 
-  case 56: /* post_qualified_type: post_qualified_type T_TYPE  */
-#line 406 "src/ffi.y"
+  case 58: /* post_qualified_type: post_qualified_type T_TYPE  */
+#line 413 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1709 "ffi.tab.c"
+#line 1945 "ffi.tab.c"
     break;
 
-  case 57: /* qualified_type: post_qualified_type  */
-#line 410 "src/ffi.y"
+  case 59: /* qualified_type: post_qualified_type  */
+#line 417 "src/ffi.y"
                { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1715 "ffi.tab.c"
+#line 1951 "ffi.tab.c"
     break;
 
-  case 58: /* qualified_type: T_QUALIFIER qualified_type  */
-#line 412 "src/ffi.y"
+  case 60: /* qualified_type: T_QUALIFIER qualified_type  */
+#line 419 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 1721 "ffi.tab.c"
+#line 1957 "ffi.tab.c"
     break;
 
-  case 59: /* specified_type: post_specified_type  */
-#line 416 "src/ffi.y"
+  case 61: /* specified_type: post_specified_type  */
+#line 423 "src/ffi.y"
                { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1727 "ffi.tab.c"
+#line 1963 "ffi.tab.c"
     break;
 
-  case 60: /* specified_type: T_QUALIFIER specified_type  */
-#line 418 "src/ffi.y"
+  case 62: /* specified_type: T_QUALIFIER specified_type  */
+#line 425 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 1733 "ffi.tab.c"
+#line 1969 "ffi.tab.c"
     break;
 
-  case 61: /* specified_type: T_STORAGE specified_type  */
-#line 420 "src/ffi.y"
+  case 63: /* specified_type: T_STORAGE specified_type  */
+#line 427 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 1739 "ffi.tab.c"
+#line 1975 "ffi.tab.c"
     break;
 
-  case 62: /* post_specified_type: plain_type  */
-#line 424 "src/ffi.y"
+  case 64: /* post_specified_type: plain_type  */
+#line 431 "src/ffi.y"
                     { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 1745 "ffi.tab.c"
+#line 1981 "ffi.tab.c"
     break;
 
-  case 63: /* post_specified_type: post_specified_type T_QUALIFIER  */
-#line 426 "src/ffi.y"
+  case 65: /* post_specified_type: post_specified_type T_QUALIFIER  */
+#line 433 "src/ffi.y"
                     { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1751 "ffi.tab.c"
+#line 1987 "ffi.tab.c"
     break;
 
-  case 64: /* post_specified_type: post_specified_type T_TYPE  */
-#line 428 "src/ffi.y"
+  case 66: /* post_specified_type: post_specified_type T_TYPE  */
+#line 435 "src/ffi.y"
                     { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1757 "ffi.tab.c"
+#line 1993 "ffi.tab.c"
     break;
 
-  case 65: /* post_specified_type: post_specified_type T_STORAGE  */
-#line 430 "src/ffi.y"
+  case 67: /* post_specified_type: post_specified_type T_STORAGE  */
+#line 437 "src/ffi.y"
                     { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1763 "ffi.tab.c"
+#line 1999 "ffi.tab.c"
     break;
 
-  case 66: /* enum_list: T_VARIABLE  */
-#line 434 "src/ffi.y"
+  case 68: /* enum_list: T_VARIABLE  */
+#line 441 "src/ffi.y"
           { (yyval.vword_val) = LIST(VNULL, (yyvsp[0].vword_val), VFALSE); }
-#line 1769 "ffi.tab.c"
+#line 2005 "ffi.tab.c"
     break;
 
-  case 67: /* enum_list: T_VARIABLE '=' expr  */
-#line 436 "src/ffi.y"
+  case 69: /* enum_list: T_VARIABLE '=' expr  */
+#line 443 "src/ffi.y"
           { (yyval.vword_val) = LIST(VNULL, (yyvsp[-2].vword_val), (yyvsp[0].vword_val)); }
-#line 1775 "ffi.tab.c"
+#line 2011 "ffi.tab.c"
     break;
 
-  case 68: /* enum_list: enum_list ',' T_VARIABLE  */
-#line 438 "src/ffi.y"
+  case 70: /* enum_list: enum_list ',' T_VARIABLE  */
+#line 445 "src/ffi.y"
           { (yyval.vword_val) = LIST((yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
-#line 1781 "ffi.tab.c"
+#line 2017 "ffi.tab.c"
     break;
 
-  case 69: /* enum_list: enum_list ',' T_VARIABLE '=' expr  */
-#line 440 "src/ffi.y"
+  case 71: /* enum_list: enum_list ',' T_VARIABLE '=' expr  */
+#line 447 "src/ffi.y"
           { (yyval.vword_val) = LIST((yyvsp[-4].vword_val), (yyvsp[-2].vword_val), (yyvsp[0].vword_val)); }
-#line 1787 "ffi.tab.c"
+#line 2023 "ffi.tab.c"
     break;
 
-  case 70: /* expr: T_INTEGER  */
-#line 444 "src/ffi.y"
+  case 72: /* expr: T_INTEGER  */
+#line 451 "src/ffi.y"
      { if((yyvsp[0].int_val) > INT_MAX) VErrorC(global_runtime, "foreign-prase-header-c: failed to parse, integer exceeds 31 bit limit %llu", (yyvsp[0].int_val)); (yyval.vword_val) = VEncodeInt((yyvsp[0].int_val)); }
-#line 1793 "ffi.tab.c"
+#line 2029 "ffi.tab.c"
     break;
 
 
-#line 1797 "ffi.tab.c"
+#line 2033 "ffi.tab.c"
 
       default: break;
     }
@@ -1840,7 +2076,37 @@ yyerrlab:
   if (!yyerrstatus)
     {
       ++yynerrs;
-      yyerror (YY_("syntax error"));
+      {
+        yypcontext_t yyctx
+          = {yyssp, yytoken};
+        char const *yymsgp = YY_("syntax error");
+        int yysyntax_error_status;
+        yysyntax_error_status = yysyntax_error (&yymsg_alloc, &yymsg, &yyctx);
+        if (yysyntax_error_status == 0)
+          yymsgp = yymsg;
+        else if (yysyntax_error_status == -1)
+          {
+            if (yymsg != yymsgbuf)
+              YYSTACK_FREE (yymsg);
+            yymsg = YY_CAST (char *,
+                             YYSTACK_ALLOC (YY_CAST (YYSIZE_T, yymsg_alloc)));
+            if (yymsg)
+              {
+                yysyntax_error_status
+                  = yysyntax_error (&yymsg_alloc, &yymsg, &yyctx);
+                yymsgp = yymsg;
+              }
+            else
+              {
+                yymsg = yymsgbuf;
+                yymsg_alloc = sizeof yymsgbuf;
+                yysyntax_error_status = YYENOMEM;
+              }
+          }
+        yyerror (yymsgp);
+        if (yysyntax_error_status == YYENOMEM)
+          YYNOMEM;
+      }
     }
 
   if (yyerrstatus == 3)
@@ -1982,13 +2248,15 @@ yyreturnlab:
   if (yyss != yyssa)
     YYSTACK_FREE (yyss);
 #endif
-
+  if (yymsg != yymsgbuf)
+    YYSTACK_FREE (yymsg);
   return yyresult;
 }
 
-#line 486 "src/ffi.y"
+#line 493 "src/ffi.y"
 
 
+bool parse_error = false;
 VWORD parse_ret;
 VRuntime * global_runtime;
 
@@ -2000,10 +2268,13 @@ void VForeignParseDeclCImpl(V_CORE_ARGS, VWORD k, VWORD decl) {
     VBlob * buf = VCheckedDecodeString2(runtime, decl, "foreign-parse-decl-c");
     FILE * f = fmemopen(buf->buf, buf->len-1, "r");
     if(!f) VErrorC(runtime, "foreign-parse-decl-c: failed to parse, out of file descriptors!\n");
-    yyin = f;
-    if(yyparse()) VErrorC(runtime, "foreign-parse-decl-c: error during parsing\n");
+    yy_set_buffer(f);
+    parse_error = false;
+    int err = yyparse();
 
     fclose(f);
+
+    if(err || parse_error) VErrorC(runtime, "foreign-parse-decl-c: error during parsing\n");
   }
   V_CALL(k, runtime, parse_ret);
 #endif
@@ -2016,8 +2287,11 @@ void VForeignParseHeaderCImpl(V_CORE_ARGS, VWORD k, VWORD header) {
     VPort * port = VCheckedDecodePort2(runtime, header, "foreign-parse-header-c");
     FILE * f = port->stream;
     if(!f || !(port->flags & PFLAG_READ)) VErrorC(runtime, "foreign-parse-header-c: failed to parse, port is not an opened input port!\n");
-    yyin = f;
+    yy_set_buffer(f);
+    parse_error = false;
     if(yyparse()) VErrorC(runtime, "foreign-parse-header-c: error during parsing\n");
+
+    if(parse_error || !VDecodeBool(parse_ret)) VErrorC(runtime, "foreign-parse-decl-c: error during parsing (returned false)\n");
   }
   V_CALL(k, runtime, parse_ret);
 }

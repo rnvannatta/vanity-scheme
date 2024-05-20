@@ -1080,12 +1080,13 @@ YY_RULE_SETUP
 #line 119 "src/ffi.l"
 
 	YY_BREAK
+/* .* { printf("unable to lex input: %s\n", yytext); return T_ERROR; } */
 case 35:
 YY_RULE_SETUP
-#line 121 "src/ffi.l"
+#line 123 "src/ffi.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1089 "<stdout>"
+#line 1090 "<stdout>"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2093,7 +2094,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 121 "src/ffi.l"
+#line 123 "src/ffi.l"
 
 
 int yywrap(void) {
@@ -2101,7 +2102,13 @@ int yywrap(void) {
   (void)yyunput;
   return 1;
 }
-void yyerror(char * c) {
-  fprintf(stderr, "syntax error\n");
+void yyerror(const char * c) {
+  fprintf(stderr, "ffi: %s\n", c);
+}
+
+void yy_set_buffer(FILE * in) {
+  yyin = in;
+  YY_FLUSH_BUFFER;
+  BEGIN(0);
 }
 
