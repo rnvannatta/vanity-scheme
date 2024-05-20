@@ -9957,6 +9957,21 @@ static void global_k391(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       VEncodeInt(1l));
  }
 }
+static void global_lambda90(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "global_lambda90" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 2) {
+  VErrorC(runtime, "Not enough arguments to global_lambda90, got ~D~N"
+  "-- expected 2~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)global_lambda90, runtime, upenv, 2, argc, _var0, _var1) {
+  // (to-cps (bruijn ##.k.570 0 0) (bruijn ##.expr.69 0 1))
+    V_CALL(VLookupGlobalVarFast2(runtime, "to-cps"), runtime,
+      _var0,
+      _var1);
+ }
+}
 static void global_k390(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "global_k390" };
  VRecordCall2(runtime, &dbg);
@@ -9970,10 +9985,10 @@ static void global_k390(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (map (close global_k391) to-cps (bruijn ##.x.571 0 0))
+  // (map (close global_k391) (close global_lambda90) (bruijn ##.x.571 0 0))
     V_CALL(VLookupGlobalVarFast2(runtime, "map"), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k391, env)}),
-      VLookupGlobalVarFast2(runtime, "to-cps"),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda90, env)}),
       _var0);
  }
 }
@@ -10061,15 +10076,15 @@ static void global_k407(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       _var0);
  }
 }
-static void global_lambda90(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
- static VDebugInfo dbg = { "global_lambda90" };
+static void global_lambda91(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "global_lambda91" };
  VRecordCall2(runtime, &dbg);
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to global_lambda90, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda91, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
- V_GC_CHECK2_VARARGS((VFunc)global_lambda90, runtime, upenv, 2, argc, _var0, _var1) {
+ V_GC_CHECK2_VARARGS((VFunc)global_lambda91, runtime, upenv, 2, argc, _var0, _var1) {
   struct { VEnv env; VWORD argv[2]; } container;
   VEnv * env = &container.env;
   VInitEnv(env, 2, 2, upenv);
@@ -10095,10 +10110,10 @@ static void global_k387(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (map (close global_k388) (close global_lambda90) (bruijn ##.file.62 0 0))
+  // (map (close global_k388) (close global_lambda91) (bruijn ##.file.62 0 0))
     V_CALL(VLookupGlobalVarFast2(runtime, "map"), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k388, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda90, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda91, env)}),
       _var0);
  }
 }
@@ -10808,11 +10823,63 @@ void toplevel51(V_CORE_ARGS, VWORD _k) {
     V_CALL_FUNC(global_lambda79, env, runtime,
       _k);
 }
+VThunk VanityToplevels[] = {
+  toplevel0
+,  toplevel1
+,  toplevel2
+,  toplevel3
+,  toplevel4
+,  toplevel5
+,  toplevel6
+,  toplevel7
+,  toplevel8
+,  toplevel9
+,  toplevel10
+,  toplevel11
+,  toplevel12
+,  toplevel13
+,  toplevel14
+,  toplevel15
+,  toplevel16
+,  toplevel17
+,  toplevel18
+,  toplevel19
+,  toplevel20
+,  toplevel21
+,  toplevel22
+,  toplevel23
+,  toplevel24
+,  toplevel25
+,  toplevel26
+,  toplevel27
+,  toplevel28
+,  toplevel29
+,  toplevel30
+,  toplevel31
+,  toplevel32
+,  toplevel33
+,  toplevel34
+,  toplevel35
+,  toplevel36
+,  toplevel37
+,  toplevel38
+,  toplevel39
+,  toplevel40
+,  toplevel41
+,  toplevel42
+,  toplevel43
+,  toplevel44
+,  toplevel45
+,  toplevel46
+,  toplevel47
+,  toplevel48
+,  toplevel49
+,  toplevel50
+,  toplevel51
+,};
+int VanityToplevelCount = sizeof VanityToplevels / sizeof *VanityToplevels;
 int main(int argc, char ** argv) {
-  VThunk toplevels[] = {
-    toplevel0,    toplevel1,    toplevel2,    toplevel3,    toplevel4,    toplevel5,    toplevel6,    toplevel7,    toplevel8,    toplevel9,    toplevel10,    toplevel11,    toplevel12,    toplevel13,    toplevel14,    toplevel15,    toplevel16,    toplevel17,    toplevel18,    toplevel19,    toplevel20,    toplevel21,    toplevel22,    toplevel23,    toplevel24,    toplevel25,    toplevel26,    toplevel27,    toplevel28,    toplevel29,    toplevel30,    toplevel31,    toplevel32,    toplevel33,    toplevel34,    toplevel35,    toplevel36,    toplevel37,    toplevel38,    toplevel39,    toplevel40,    toplevel41,    toplevel42,    toplevel43,    toplevel44,    toplevel45,    toplevel46,    toplevel47,    toplevel48,    toplevel49,    toplevel50,    toplevel51,
-  };
   VRuntime * runtime;
   VInitRuntime2(&runtime, argc, argv);
-  return VDecodeExitCode(VStart2(runtime, sizeof toplevels / sizeof *toplevels, toplevels));
+  return VDecodeExitCode(VStart2(runtime, VanityToplevelCount, VanityToplevels));
 }

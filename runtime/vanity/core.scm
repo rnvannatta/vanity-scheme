@@ -791,7 +791,12 @@
       ret))
   (define (with-exception-handler handler thunk)
     (##vcore.push-exception-handler handler)
-    (let ((ret (thunk)))
+    (call-with-values
+      thunk
+      (lambda rets
+        (##vcore.pop-exception-handler handler)
+        (apply values rets)))
+    #;(let ((ret (thunk)))
       (##vcore.pop-exception-handler handler)
       ret))
 

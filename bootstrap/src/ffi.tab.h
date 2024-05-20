@@ -56,42 +56,29 @@ extern int yydebug;
     YYUNDEF = 257,                 /* "invalid token"  */
     T_STRUCT = 258,                /* T_STRUCT  */
     T_ENUM = 259,                  /* T_ENUM  */
-    T_TYPE = 260,                  /* T_TYPE  */
-    T_QUALIFIER = 261,             /* T_QUALIFIER  */
-    T_FUNCTION_QUALIFIER = 262,    /* T_FUNCTION_QUALIFIER  */
-    T_STORAGE = 263,               /* T_STORAGE  */
-    T_INTEGER = 264,               /* T_INTEGER  */
-    T_TYPENAME = 265,              /* T_TYPENAME  */
-    T_VARIABLE = 266               /* T_VARIABLE  */
+    T_ERROR = 260,                 /* T_ERROR  */
+    T_TYPE = 261,                  /* T_TYPE  */
+    T_QUALIFIER = 262,             /* T_QUALIFIER  */
+    T_FUNCTION_QUALIFIER = 263,    /* T_FUNCTION_QUALIFIER  */
+    T_STORAGE = 264,               /* T_STORAGE  */
+    T_INTEGER = 265,               /* T_INTEGER  */
+    T_TYPENAME = 266,              /* T_TYPENAME  */
+    T_VARIABLE = 267               /* T_VARIABLE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
-/* Token kinds.  */
-#define YYEMPTY -2
-#define YYEOF 0
-#define YYerror 256
-#define YYUNDEF 257
-#define T_STRUCT 258
-#define T_ENUM 259
-#define T_TYPE 260
-#define T_QUALIFIER 261
-#define T_FUNCTION_QUALIFIER 262
-#define T_STORAGE 263
-#define T_INTEGER 264
-#define T_TYPENAME 265
-#define T_VARIABLE 266
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 231 "src/ffi.y"
+#line 234 "src/ffi.y"
 
   unsigned long long int_val;
   int keyword_val;
   VWORD vword_val;
 
-#line 95 "ffi.tab.h"
+#line 82 "ffi.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

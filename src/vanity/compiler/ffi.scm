@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler ffi)
-  (export mangle-foreign-function validate-foreign-function print-foreign-function resolve-foreign-import)
+  (export mangle-foreign-function validate-foreign-function print-foreign-function resolve-foreign-import get-foreign-encoder get-foreign-decoder)
   (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler config))
 
   ; user exposed syntax:
@@ -172,11 +172,11 @@
     (let ((expr (reduce-declare ret decl table)))
       (match expr
         (('function name ret . args)
-         (if (not (get-encoder ret)) (compiler-error "Unsupported return type in C foreign-function" expr))
+         (if (not (get-foreign-encoder ret)) (compiler-error "Unsupported return type in C foreign-function" expr))
          (if (not (string? name)) (compiler-error "Not a simple function declaration: ~A" expr))
          (for-each
              (lambda (arg)
-               (if (not (get-decoder arg)) (compiler-error "Unsupported arg type in C foreign-function" name arg)))
+               (if (not (get-foreign-decoder arg)) (compiler-error "Unsupported arg type in C foreign-function" name arg)))
              args)
          `(function ,(string->symbol name) ,ret . ,args))
         (else (compiler-error "Unsupported C declaration" expr)))))
@@ -305,11 +305,11 @@
   (define (mangle-foreign-function name)
     (sprintf "_V30~A_shim" name))
 
-  (define (get-encoder type)
+  (define (get-foreign-encoder type)
     (if #;(equal? type '(pointer void))
         ; a temporary thing that will become a compiler flag eventually
         (and (pair? type) (eqv? (car type) 'pointer))
-        '((pointer void) . "VEncodeForeignPointer")
+        '(void-pointer . "VEncodeForeignPointer")
         (assv type '((void . #t)
                      (_Bool . "VEncodeBool")
                      (char . "VEncodeChar")
@@ -330,7 +330,7 @@
                      ; no c string yet
                      ; no FILE yet
                     ))))
-  (define (get-decoder type)
+  (define (get-foreign-decoder type)
     (if (and (pair? type) (eqv? (car type) 'pointer))
         (match (cadr type)
           ('char '(c-string . "VCheckedDecodeCString2"))
@@ -363,7 +363,7 @@
        (let ((mangled (mangle-foreign-function name))
              (names (iota (length args))))
          (define (print-arg arg argname)
-           (printf "~A(runtime, _arg~A, \"~A\")" (cdr (get-decoder arg)) argname name))
+           (printf "~A(runtime, _arg~A, \"~A\")" (cdr (get-foreign-decoder arg)) argname name))
          (printf "~A;~N" decl)
          (printf "void _V30~A_shim(V_CORE_ARGS, VWORD _k" name)
          (for-each (lambda (e) (printf ", VWORD _arg~A" e)) names)
@@ -374,7 +374,7 @@
          (printf ") {~N")
          (if (eqv? ret 'void)
              (printf "(~A(" name)
-             (printf "    VWORD _ret = ~A(~A(" (cdr (get-encoder ret)) name))
+             (printf "    VWORD _ret = ~A(~A(" (cdr (get-foreign-encoder ret)) name))
          (if (pair? args)
              (begin
                (print-arg (car args) (car names))

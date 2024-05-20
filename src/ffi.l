@@ -118,6 +118,8 @@ WHITESPACE [ \t]|\\\n
 "//"([^\n\\]|\\+(.|\n))*\n
 \/\*([^*]|\*+[^*/])*\*+\/
 
+  /* .* { printf("unable to lex input: %s\n", yytext); return T_ERROR; } */
+
 %%
 
 int yywrap(void) {
@@ -125,6 +127,12 @@ int yywrap(void) {
   (void)yyunput;
   return 1;
 }
-void yyerror(char * c) {
-  fprintf(stderr, "syntax error\n");
+void yyerror(const char * c) {
+  fprintf(stderr, "ffi: %s\n", c);
+}
+
+void yy_set_buffer(FILE * in) {
+  yyin = in;
+  YY_FLUSH_BUFFER;
+  BEGIN(0);
 }
