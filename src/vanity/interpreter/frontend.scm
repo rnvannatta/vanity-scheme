@@ -37,8 +37,9 @@
         (sprintf "~A/" ((##vcore.function "VExePath")))))
 
   (define paths (list (sprintf "~Ainclude" (get-install-root))))
-  (define (eval-scheme expr)
-    (let* ((expanded (expand-toplevel expr paths))
+  (define (eval-scheme expr path)
+    (let* ((architecture (if (eqv? platform 'windows) "windows_amd64" "sysv_amd64"))
+           (expanded (expand-toplevel expr (if path (cons path paths) paths) architecture))
            (alpha (map alpha-convert expanded))
            (cps (map to-cps alpha))
            (opt (map (lambda (e) (optimize e #f)) cps))
@@ -51,14 +52,14 @@
     (define port (open-input-file file))
     (define evaluate
       (case lang
-        ((vasm) eval-vasm)
+        ((vasm) (lambda (expr path) (eval-vasm expr)))
         ((scheme) eval-scheme)))
     (if (not port) (error "load: file does not exist" file))
     (let load-loop ()
       (let ((tape (read port)))
         (if (not (eof-object? tape))
             (call-with-values
-              (lambda () (evaluate tape))
+              (lambda () (evaluate tape (dirname (realpath file))))
               (lambda args (load-loop))))))
     (close-port port))
   (define (display-help)
@@ -104,7 +105,7 @@
           (else #f))
     (let ((evaluate
            (case lang
-            ((vasm) eval-vasm)
+            ((vasm) (lambda (expr path) (eval-vasm expr)))
             ((scheme) eval-scheme))))
       (define port
         (if file
@@ -134,7 +135,14 @@
             (if (not (eof-object? tape))
                 (begin
                   (call-with-values
-                    (lambda () (with-exception-handler handle-error (lambda () (evaluate tape))))
+                    (lambda ()
+                      (with-exception-handler handle-error
+                        (lambda ()
+                          (evaluate
+                            tape
+                            (if file
+                                (dirname (realpath file))
+                                #f)))))
                     (lambda rets
                       (if (and is-tty? (not (equal? rets `(,(let ((x #f)) (set! x #f))))))
                           (for-each writeln rets))))

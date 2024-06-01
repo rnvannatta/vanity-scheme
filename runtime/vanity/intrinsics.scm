@@ -193,7 +193,6 @@
          ((##vcore.system) "VSystem2")
          ((##vcore.open-input-process) "VOpenInputProcess2")
          ((##vcore.open-output-process) "VOpenOutputProcess2")
-         ((##vcore.make-temporary-file) "VMakeTemporaryFile2")
          ((##vcore.command-line) "VCommandLine2")
          ((##vcore.register-sigint) "VRegisterSigint")
 
@@ -212,6 +211,8 @@
 
          ; Filesystem
          ((##vcore.realpath) "VRealpath")
+         ((##vcore.make-temporary-file) "VMakeTemporaryFile2")
+         ((##vcore.access) "VAccess")
 
          (else #f)))
   (define (lookup-intrinsic sym)
@@ -370,7 +371,6 @@
          ((##vcore.system) ##vcore.system)
          ((##vcore.open-input-process) ##vcore.open-input-process)
          ((##vcore.open-output-process) ##vcore.open-output-process)
-         ((##vcore.make-temporary-file) ##vcore.make-temporary-file)
          ((##vcore.command-line) ##vcore.command-line)
 
          ; Random
@@ -388,5 +388,7 @@
 
          ; Filesystem
          ((##vcore.realpath) ##vcore.realpath)
+         ((##vcore.make-temporary-file) ##vcore.make-temporary-file)
+         ((##vcore.access) ##vcore.access)
 
          (else #f))))

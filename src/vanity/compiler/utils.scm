@@ -24,8 +24,8 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler utils)
-  (import (vanity core))
-  (export read-all search-open-input-file compiler-error gensym filter)
+  (import (vanity core) (vanity compiler config))
+  (export read-all search-open-input-file compiler-error gensym filter gcc-path)
   (define (read-all port)
     (let ((expr (read port)))
       (if (eof-object? expr) '()
@@ -41,4 +41,8 @@
     (cond ((null? lst) '())
           ((p (car lst)) (cons (car lst) (filter p (cdr lst))))
           (else (filter p (cdr lst)))))
+  (define gcc-path
+    (if (eqv? platform 'windows)
+        (sprintf "~A/~A" ((##vcore.function "VExePath")) "mingw64/bin/gcc.exe")
+        "gcc"))
   (define gensym ##vcore.gensym))

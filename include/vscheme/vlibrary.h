@@ -146,7 +146,6 @@ SYSV_CALL void VApplyCps(V_CORE_ARGS, VWORD k, VWORD proc, VWORD lst);
 SYSV_CALL void VSystem2(V_CORE_ARGS, VWORD k, VWORD cmd);
 SYSV_CALL void VOpenInputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
 SYSV_CALL void VOpenOutputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
-SYSV_CALL void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD prefix, ...);
 
 // rng
 SYSV_CALL void VMakeRandom(V_CORE_ARGS, VWORD k, VWORD seed, VWORD stream);
@@ -158,3 +157,5 @@ SYSV_CALL void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD step);
 
 // filesystem
 SYSV_CALL void VRealpath(V_CORE_ARGS, VWORD k, VWORD relpath);
+SYSV_CALL void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD prefix, ...);
+SYSV_CALL void VAccess(V_CORE_ARGS, VWORD k, VWORD path, VWORD mode);

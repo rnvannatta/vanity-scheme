@@ -254,6 +254,7 @@
         (if shared? " -fPIC" "")))
     (define cc-command (apply string-append cc-command-flags c-options))
 
+    (define architecture (if (equal? platform "windows") "windows_amd64" "sysv_amd64"))
     (define stdout (current-output-port))
     ; 1. transpile
     (define num-mains
@@ -268,7 +269,7 @@
                 (lambda ()
                   (let* ((fd (open-input-file scm-file))
                          (file (if fd (append (read-all fd)) (compiler-error "file does not exist" scm-file)))
-                         (expanded  (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths)))) file)))
+                         (expanded  (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths) architecture))) file)))
                     (if (eq? expand? 0) (for-each pretty-print expanded)
                         (let ((cps (map (lambda (expr) (to-cps expr)) (apply append expanded))))
                          (if (eq? expand? 1) (for-each pretty-print cps)
