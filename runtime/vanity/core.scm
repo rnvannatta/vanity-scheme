@@ -77,7 +77,9 @@
     system
     open-input-process
     open-output-process
+    ; filesystem
     make-temporary-file
+    file-exists?
     exit
     ; fibers
     fiber-fork fiber-fork-list fiber-map async await
@@ -706,6 +708,12 @@
   (define open-input-process ##vcore.open-input-process)
   (define open-output-process ##vcore.open-output-process)
   (define make-temporary-file ##vcore.make-temporary-file)
+  (define file-exists?
+    (case-lambda
+      ((path)
+       (##vcore.access path 0))
+      ((path mode)
+       (##vcore.access path mode))))
   (define exit ##vcore.exit)
 
   ; (: exact (procedure number? -> exact?))

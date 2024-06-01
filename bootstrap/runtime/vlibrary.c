@@ -1576,6 +1576,7 @@ SYSV_CALL void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD _n) {
 }
 
 SYSV_CALL void VRealpath(V_CORE_ARGS, VWORD k, VWORD _relpath) {
+  V_ARG_CHECK3(runtime, "realpath", 2, argc);
   VBlob * relpath = VCheckedDecodeString2(runtime, _relpath, "realpath");
   VBlob * ret = alloca(sizeof(VBlob) + PATH_MAX);
   *ret = (VBlob){ .base = VMakeSmallObject(VSTRING), .len = PATH_MAX };
@@ -1589,4 +1590,23 @@ SYSV_CALL void VRealpath(V_CORE_ARGS, VWORD k, VWORD _relpath) {
 #endif
   ret->len = strlen(ret->buf)+1;
   V_CALL(k, runtime, ok ? VEncodePointer(ret, VPOINTER_OTHER) : VFALSE);
+}
+
+SYSV_CALL void VAccess(V_CORE_ARGS, VWORD k, VWORD _path, VWORD _mode) {
+  V_ARG_CHECK3(runtime, "access", 3, argc);
+  VBlob * path = VCheckedDecodeString2(runtime, _path, "access");
+  int usermode = VCheckedDecodeInt2(runtime, _mode, "access");
+
+  int mode = 0;
+  if(!usermode) mode = F_OK;
+  if(usermode & 4) mode |= R_OK;
+  if(usermode & 2) mode |= W_OK;
+#ifdef _WIN64
+  if(usermode & 1) mode |= R_OK;
+#else
+  if(usermode & 1) mode |= X_OK;
+#endif
+
+  int ret = access(path->buf, mode);
+  V_CALL(k, runtime, VEncodeBool(!ret));
 }

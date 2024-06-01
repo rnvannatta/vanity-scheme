@@ -2107,8 +2107,8 @@ void yyerror(const char * c) {
 }
 
 void yy_set_buffer(FILE * in) {
-  yyin = in;
   YY_FLUSH_BUFFER;
+  yyin = in;
   BEGIN(0);
 }
 

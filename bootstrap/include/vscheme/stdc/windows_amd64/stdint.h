@@ -29,12 +29,12 @@
 typedef signed char int8_t;
 typedef short int int16_t;
 typedef int int32_t;
-typedef long int int64_t;
+typedef long long int int64_t;
 
 typedef unsigned char uint8_t;
 typedef unsigned short int uint16_t;
 typedef unsigned int uint32_t;
-typedef unsigned long int uint64_t;
+typedef unsigned long long int uint64_t;
 
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
@@ -47,20 +47,20 @@ typedef uint32_t uint_least32_t;
 typedef uint64_t uint_least64_t;
 
 typedef signed char int_fast8_t;
-typedef long int int_fast16_t;
+typedef short int int_fast16_t;
 typedef long int int_fast32_t;
-typedef long int int_fast64_t;
+typedef long long int int_fast64_t;
 
 typedef unsigned char uint_fast8_t;
-typedef unsigned long int uint_fast16_t;
+typedef unsigned short int uint_fast16_t;
 typedef unsigned long int uint_fast32_t;
-typedef unsigned long int uint_fast64_t;
+typedef unsigned long long int uint_fast64_t;
 
-typedef long int intptr_t;
-typedef unsigned long int uintptr_t;
+typedef long long int intptr_t;
+typedef unsigned long long int uintptr_t;
 
-typedef long int intmax_t;
-typedef unsigned long int uintmax_t;
+typedef long long int intmax_t;
+typedef unsigned long long int uintmax_t;
 
 #define INT8_MIN (-128)
 #define INT16_MIN (-32768)
@@ -93,18 +93,18 @@ typedef unsigned long int uintmax_t;
 #define UINT_LEAST64_MAX UINT64_MAX
 
 #define INT_FAST8_MIN INT8_MIN
-#define INT_FAST16_MIN INT64_MIN
-#define INT_FAST32_MIN INT64_MIN
+#define INT_FAST16_MIN INT16_MIN
+#define INT_FAST32_MIN INT32_MIN
 #define INT_FAST32_MIN INT64_MIN
 
 #define INT_FAST8_MAX INT8_MAX
-#define INT_FAST16_MAX INT64_MAX
-#define INT_FAST32_MAX INT64_MAX
+#define INT_FAST16_MAX INT16_MAX
+#define INT_FAST32_MAX INT32_MAX
 #define INT_FAST32_MAX INT64_MAX
 
 #define UINT_FAST8_MAX UINT8_MAX
-#define UINT_FAST16_MAX UINT64_MAX
-#define UINT_FAST32_MAX UINT64_MAX
+#define UINT_FAST16_MAX UINT16_MAX
+#define UINT_FAST32_MAX UINT32_MAX
 #define UINT_FAST32_MAX UINT64_MAX
 
 #define INTPTR_MIN INT64_MIN
@@ -119,5 +119,5 @@ typedef unsigned long int uintmax_t;
 #define PTRDIFF_MAX INT64_MAX
 
 #define SIZE_MAX UINT64_MAX
-#define WCHAR_MIN INT32_MIN
-#define WCHAR_MAX INT32_MAX
+#define WCHAR_MIN 0
+#define WCHAR_MAX UINT16_MAX

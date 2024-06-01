@@ -278,19 +278,23 @@
     (if (null? paths)
         (compiler-error "Unable to open header file" file)
         (let ((path (sprintf "~A/~A" (car paths) file)))
-          (if (= 0 (system (sprintf "[ ~A ]" path)))
+          (if (file-exists? path 4) #;(= 0 (system (sprintf "[ -f ~A ]" path)))
               path
               (find-file file (cdr paths))))))
-  (define (make-preprocess-command file)
-    (sprintf "gcc -E -P -undef -std=c11 -nostdinc -D__VANITY__ -w ~A -I~A/~A" file install-root "include/vscheme/stdc/sysv_amd64/"))
-  (define (resolve-foreign-import expr paths)
+  (define (get-install-root)
+    (if install-root
+        install-root
+        (sprintf "~A/" ((##vcore.function "VExePath")))))
+  (define (make-preprocess-command file architecture)
+    (sprintf "~A -E -P -undef -std=c11 -nostdinc -D__VANITY__ -w ~A -I~A/~A/~A/" gcc-path file (get-install-root) "include/vscheme/stdc" architecture))
+  (define (resolve-foreign-import expr paths architecture)
     (define parse-header-c (##vcore.function "VForeignParseHeaderC"))
     (define release-parse (##vcore.function "VForeignReleaseParse"))
     (match expr
       (('##foreign.import lang file)
        (if (not (equal? lang "C")) (compiler-error "Unsupported foreign function language" expr))
        (if (not (string? file)) (compiler-error "File must be a string" expr))
-       (let* ((cmd (make-preprocess-command (find-file file paths)))
+       (let* ((cmd (make-preprocess-command (find-file file paths) architecture))
               (fd (open-input-process cmd))
               (parse (deep-copy (parse-header-c fd))))
          (release-parse)

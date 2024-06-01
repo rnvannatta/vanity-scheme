@@ -2260,24 +2260,23 @@ bool parse_error = false;
 VWORD parse_ret;
 VRuntime * global_runtime;
 
+struct yy_buffer_state * yy_scan_string(char * str);
+void yy_delete_buffer(struct yy_buffer_state * buf);
+
 void VForeignParseDeclCImpl(V_CORE_ARGS, VWORD k, VWORD decl) {
-#ifdef __linux__
   global_runtime = runtime;
   V_ARG_CHECK3(runtime, "foreign-parse-decl-c", 2, argc);
   V_GC_CHECK2_VARARGS((VFunc)VForeignParseDeclCImpl, runtime, statics, 2, argc, k, decl) {
     VBlob * buf = VCheckedDecodeString2(runtime, decl, "foreign-parse-decl-c");
-    FILE * f = fmemopen(buf->buf, buf->len-1, "r");
-    if(!f) VErrorC(runtime, "foreign-parse-decl-c: failed to parse, out of file descriptors!\n");
-    yy_set_buffer(f);
+
+    struct yy_buffer_state * yaccbuf = yy_scan_string(buf->buf);
     parse_error = false;
     int err = yyparse();
-
-    fclose(f);
+    yy_delete_buffer(yaccbuf);
 
     if(err || parse_error) VErrorC(runtime, "foreign-parse-decl-c: error during parsing\n");
   }
   V_CALL(k, runtime, parse_ret);
-#endif
   VErrorC(runtime, "foreign-parse-decl-c: unsupported platform");
 }
 void VForeignParseHeaderCImpl(V_CORE_ARGS, VWORD k, VWORD header) {

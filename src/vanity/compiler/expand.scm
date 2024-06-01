@@ -327,20 +327,20 @@
        (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
        (list `(define ,x ,(expand-syntax body))))
       (else (compiler-error "malformed define" expr))))
-  (define (expand-toplevel expr paths)
+  (define (expand-toplevel expr paths architecture)
     (match expr
       (('begin . ys)
-       (apply append (map (lambda (e) (expand-toplevel e paths)) ys)))
+       (apply append (map (lambda (e) (expand-toplevel e paths architecture)) ys)))
 
       (('define-library lib . body) (list (expand-library `(define-library ,lib . ,body) paths)))
       (('define-library . noise) (compiler-error "malformed define-library" `(define-library . ,noise)))
 
-      (('define-record-type . body) (expand-toplevel (expand-define-record-type expr) paths))
+      (('define-record-type . body) (expand-toplevel (expand-define-record-type expr) paths architecture))
 
       (('import) '())
       (('import lib . rest)
        (cons `(##vcore.multidefine (##vcore.load-library ,(mangle-library lib)))
-             (expand-toplevel `(import . ,rest) paths)))
+             (expand-toplevel `(import . ,rest) paths architecture)))
 
       (('define (f . xs) . body) (expand-define `(define ,f (lambda ,xs . ,body))))
       (('define x body)
@@ -360,12 +360,12 @@
        (if (not (string? str)) (compiler-error "##foreign.declare's first argument is not a string" str))
        (list expr))
       (('##foreign.import lang str)
-       (resolve-foreign-import expr paths))
+       (resolve-foreign-import expr paths "sysv_amd64"))
 
       (('foreign-declare . rest)
-       (expand-toplevel (cons '##foreign.declare rest) paths))
+       (expand-toplevel (cons '##foreign.declare rest) paths architecture))
       (('foreign-import . rest)
-       (expand-toplevel (cons '##foreign.import rest) paths))
+       (expand-toplevel (cons '##foreign.import rest) paths architecture))
 
       (expr (list (expand-syntax expr)))))
 
