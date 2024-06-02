@@ -8,15 +8,17 @@ It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it
 
 The parallelism model uses cooperative M:N fibers with a continuation-stealing scheduler. There are two principle parallelism operators: `fiber-fork` and `async`/`await`. `fiber-fork` pauses the current fiber, launching N child fibers and waiting on them. `async` launches a child fiber and returns a future, while `await` waits on the future. `await` can be safely called multiple times from multiple fibers.
 
-It is capable of producing executables which run on Linux and Windows, using GCC and MinGW. The compiler itself only runs on Linux.
+It is capable of producing executables which run on Linux and Windows, using GCC and MinGW. The compiler itself only runs on Linux. An interpreter is also provided, as well as windows builds for that interpreter. The interpreter is fully capable of running any vanity scheme program. There are no limitations on FFI code, unlike e.g. Chicken Scheme.
 
 The compiler is free software under GPL v2.0, and the runtime is free software under LGPL v2.1. So, just as with gcc, you may use the compiler to build and link nonfree software if you do not statically link the runtime library.
 
 ## Install Instructions
 
-At the moment, x64 Linux is a requirement to run the compiler.
+At the moment, x64 Linux is a requirement to run the compiler and thus to compile the project.
 
-Dependencies:
+Prebuilt Windows releases of the interpreter are provided on github. The releases include vendored copies of all dependencies.
+
+Linux Dependencies:
 * gcc
 * mingw-w64
 * gnumake
@@ -83,23 +85,6 @@ Here's a toy demonstration of async/await usage:
 
 Note that because of implementation quirks, it's more memory efficient to `await` in reverse order of `async` launches. It causes the fibers to retire more efficiently. `fiber-fork` is much more resource efficient than `async`, so that should be used whenever the workload is conducive. `async` should be primarily used for long-running tasks, for example loading level data across several frames in a video game.
 
-```
-(define-library (powerset)
-  (import (vanity core))
-  (export powerset)
-
-  (define (powerset set)
-    (if (null? set) '(())
-        (let ((x (car set))
-              (pset (powerset (cdr set))))
-          (append (map (lambda (e) (cons x e)) pset) pset)))))
-
-(import (powerset) (vanity core))
-(define set '(0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J))
-(printf "The powerset of ~A is...~N" set)
-(displayln (powerset set))
-```
-
 The `(vanity core)` library contains a good chunk of R7RS, though not all of it, plus a few additional critical procedures for the compiler, like `system`, `make-temporary-file`, and the almighty `printf`. The `(scheme r7rs)` library has my bonus procedures removed.
 
 The compiler is able to import C functions and C header files with one line. Try this with `vsc -Wc,-lm example.scm && ./a.out`.
@@ -127,23 +112,6 @@ There's also a bit of cool syntax in the compiler: pattern matching! Here's an e
 (displayln (expand '(let ((x 1) (y 2)) (cons x y))))
 ```
 
-A classic program: call/cc is quite trivial to implement in a continuation passing style compiler.
-
-```
-(import (vanity core))
-(let* ((yin ((lambda (foo) (newline) foo)
-             (call/cc (lambda (bar) bar))))
-       (yang ((lambda (foo) (display #\*) foo)
-              (call/cc (lambda (bar) bar)))))
-  (yin yang))
-```
-
-Another program: My favorite infinite loop. Neither recursion nor closures nor self reference required.
-
-```
-((lambda (x) (x x)) (lambda (x) (x x)))
-```
-
 ## Roadmap
 
 A rough ordering of the next few improvements I'll be making:
@@ -154,7 +122,10 @@ A rough ordering of the next few improvements I'll be making:
 4. DONE: Emit header files for compiled libraries.
 5. DONE: Windows cross compilation.
 6. DONE Implement Fibers.
-7. Add a repl via bytecode
+7. DONE Add a repl via bytecode
+8. Windows Compiler
+9. Polish
+10. Documentation
 
 Progress is very slow as I am moonlighting this project while daylighting as a graphics programmer.
 
