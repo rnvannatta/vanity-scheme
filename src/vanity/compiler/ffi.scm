@@ -284,9 +284,14 @@
   (define (get-install-root)
     (if install-root
         install-root
-        (sprintf "~A/" ((##vcore.function "VExePath")))))
+        (sprintf "~A/../" ((##vcore.function "VExePath")))))
   (define (make-preprocess-command file architecture)
-    (sprintf "~A -E -P -undef -std=c11 -nostdinc -D__VANITY__ -w ~A -I~A/~A/~A/" gcc-path file (get-install-root) "include/vscheme/stdc" architecture))
+    (if (eqv? platform 'windows)
+        ; Thank you, Bill Gates.
+        ; system() strips the leading and trailing double quote if there's more than two quotes in a command
+        ; Absolutely cursed behavior from windows
+        (sprintf "\"\"~A\" -E -P -undef -std=c11 -nostdinc -D__VANITY__ -w \"~A\" -I \"~A/~A/~A/\"\"" gcc-path file (get-install-root) "include/vscheme/stdc" architecture)
+        (sprintf "\"~A\" -E -P -undef -std=c11 -nostdinc -D__VANITY__ -w \"~A\" -I \"~A/~A/~A/\"" gcc-path file (get-install-root) "include/vscheme/stdc" architecture)))
   (define (resolve-foreign-import expr paths architecture)
     (define parse-header-c (##vcore.function "VForeignParseHeaderC"))
     (define release-parse (##vcore.function "VForeignReleaseParse"))

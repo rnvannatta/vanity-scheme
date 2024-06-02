@@ -166,9 +166,11 @@ bin/vsc : $(OBJ) $(COMPILE_OBJ)
 bin/vanity : $(OBJ) $(INTERP_OBJ)
 	vsc -o $@ $^ $(SCMFLAGS)
 
-bin/x86_64-w64-mingw32/vanity.exe : $(WINDOWS_OBJ) $(WINDOWS_INTERP_OBJ)
+# I don't like this, any files vsc doesn't understand should just be passed to cc
+bin/x86_64-w64-mingw32/vanity.exe : $(WINDOWS_OBJ) $(WINDOWS_INTERP_OBJ) build/vanity.res
 	@mkdir -p `dirname $@`
-	vsc -o $@ $^ $(SCMFLAGS)
+#	vsc -o $@ $^ $(SCMFLAGS)
+	/usr/bin/x86_64-w64-mingw32-gcc -o $@ $^ $(CFLAGS) -L$(INSTALL_DIR)/x86_64-w64-mingw32/lib/ -lvscheme -Wl,--no-as-needed -Wl,--export-all-symbols -Wl,--stack,8388608 -Wmissing-braces -masm=intel
 
 lib/libvscheme.so : $(RUNTIME_OBJ)
 	gcc -o $@ $^ $(LIBS) $(CFLAGS) -shared
@@ -179,7 +181,6 @@ lib/x86_64-w64-mingw32/vscheme.dll : $(WINDOWS_RUNTIME_OBJ)
 
 build/%.o : build/%.scm
 	vsc -c $< -o $@ $(SCMFLAGS) -Wc,-fPIC -Iinclude -Ibuild/include
-
 build/%.o : build/%.c
 	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS) -Iruntime -Isrc
 
@@ -196,5 +197,8 @@ bin/testffi : build/ffi.lex.o build/ffi.tab.o test/testffi.c
 	gcc -o $@ $^ $(CFLAGS) -lvscheme
 
 testffi : bin/testffi
+
+build/vanity.res : resources/vanity.rc resources/vanity.ico
+	/usr/bin/x86_64-w64-mingw32-windres -O coff -i $< -o $@
 
 .NOTINTERMEDIATE : $(addprefix build/, $(ASSEMBLY_SRC) $(COMPILE_SRC) $(INTERP_SRC) ffi.y ffi.l) $(addprefix build/x86_64-w64-mingw32/, $(WINDOWS_ASSEMBLY_SRC) $(COMPILE_SRC) $(INTERP_SRC) ffi.y ffi.l)

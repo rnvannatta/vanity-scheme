@@ -635,6 +635,7 @@ SYSV_CALL static VEnvironment * VCheckedMoveEnviron(VRuntime * runtime, VEnviron
     ret->runtime->dynamics = VMoveDispatch(runtime, ret->runtime->dynamics);
     ret->runtime->exception_handlers = VMoveDispatch(runtime, ret->runtime->exception_handlers);
     ret->runtime->declare_list = VMoveDispatch(runtime, ret->runtime->declare_list);
+    ret->runtime->library_list = VMoveDispatch(runtime, ret->runtime->library_list);
   }
 
   return ret;
@@ -1950,6 +1951,25 @@ static VPair * VAssocDeclares(VRuntime * runtime, VBlob * string) {
   return NULL;
 }
 
+SYSV_CALL void VDlopenLibraryImpl(V_CORE_ARGS, VWORD k, VWORD _string) {
+  V_ARG_CHECK3(runtime, "dlopen-library!", 2, argc);
+  VBlob * string = VCheckedDecodeString2(runtime, _string, "dlopen-library!");
+#ifdef __linux__
+  void * handle = dlopen(string->buf, RTLD_LAZY | RTLD_GLOBAL);
+  if(!handle) VErrorC(runtime, "dlopen-library!: failed to dlopen ~S: ~Z", _string, dlerror());
+#endif
+#ifdef _WIN64
+  void * handle = LoadLibraryA(string->buf);
+  if(!handle) VErrorC(runtime, "dlopen-library!: failed to LoadLibraryA ~S", _string);
+
+  //VPair newlibrary = VMakePair(_string, VEncodeForeignPointer(handle));
+  //VPair newnode = VMakePair(VEncodePair(&newlibrary), runtime->library_list);
+  //runtime->library_list = VEncodePair(&newnode);
+#endif
+  V_CALL(k, runtime, VVOID);
+}
+VFunc VDlopenLibrary = (VFunc)VDlopenLibraryImpl;
+
 SYSV_CALL void VSetDeclare(V_CORE_ARGS, VWORD k, VWORD _string, VWORD proc) {
   if(!VIsMain(runtime)) {
     VErrorC(runtime, "set-declare!: not permitted inside of a fiber or during active asynchronous execution");
@@ -2391,6 +2411,7 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   r->gensym_index = (_Atomic uint64_t*)&r->gensym_storage;
 
   r->declare_list = VNULL;
+  r->library_list = VNULL;
 }
 
 static VClosure next_closure = { .base = { .tag = VCLOSURE }, .func = (VFunc)VNext2, .env = NULL };
@@ -2674,6 +2695,7 @@ static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * f
   r->gensym_index = (_Atomic uint64_t*)runtime->gensym_index;
 
   r->declare_list = runtime->declare_list;
+  r->library_list = runtime->library_list;
 
   for(int i = 0; i < 2; i++) {
     r->VHeaps[i].begin = NULL;

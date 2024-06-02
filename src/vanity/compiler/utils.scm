@@ -43,6 +43,6 @@
           (else (filter p (cdr lst)))))
   (define gcc-path
     (if (eqv? platform 'windows)
-        (sprintf "~A/~A" ((##vcore.function "VExePath")) "mingw64/bin/gcc.exe")
+        (sprintf "~A/../~A" ((##vcore.function "VExePath")) "mingw64/bin/gcc.exe")
         "gcc"))
   (define gensym ##vcore.gensym))

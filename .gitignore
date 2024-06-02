@@ -16,3 +16,5 @@ a.out
 *.dll
 core
 .gdb_history
+
+!demos/pong/SDL2.dll
