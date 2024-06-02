@@ -28,13 +28,13 @@
 
   (define (filetype file)
     (let* ((ext (extension file))
-           (lookup (assoc ext '((".vasm" . vasm) (".scm" . scheme)))))
+           (lookup (assoc ext '((".vasm" . vasm) (".scm" . scheme) (".ss" . scheme)))))
       (if lookup (cdr lookup) (error "vanity: unknown file extension" ext))))
 
   (define (get-install-root)
     (if install-root
         install-root
-        (sprintf "~A/" ((##vcore.function "VExePath")))))
+        (sprintf "~A/../" ((##vcore.function "VExePath")))))
 
   (define paths (list (sprintf "~Ainclude" (get-install-root))))
   (define (eval-scheme expr path)
@@ -62,12 +62,21 @@
               (lambda () (evaluate tape (dirname (realpath file))))
               (lambda args (load-loop))))))
     (close-port port))
+  (define (strchr str chr)
+    (let ((len (string-length str)))
+      (let loop ((i 0))
+        (cond ((= i len) #f)
+              ((eq? (string-ref str i) chr) i)
+              (else (loop (+ i 1)))))))
+
   (define (display-help)
     (displayln "Usage: vanity [options]")
     (displayln "       vanity [options] file")
     (displayln "Launching without a file opens a repl.")
     (displayln "Options:")
     (displayln "  -I<dir>     Add the directory to the list to be searched for scheme header files")
+    (displayln "  -l<lib>     Open the shared library lib<lib>.so into vanity's address space before execution. If")
+    (displayln "                <lib> contains a slash it is treated as a direct path to the library instead.")
     (displayln "  --scheme    Interpret the file as a scheme source file regardless of file extension")
     (displayln "  --vasm      Interpret the file as a vanity bytecode assembly file regardless of file extension")
     (displayln "  --help      You know about this")
@@ -75,10 +84,11 @@
   (define (display-version)
     (printf "Vanity Scheme Interpreter ~A.~A~N" (car version) (cadr version))
     (displayln "Copyright (C) 2024 Richard Van Natta"))
+  (define dlopen-library! (##vcore.function "VDlopenLibrary"))
   (define (##vcore.vanity-main)
     (define file #f)
     (define lang #f)
-    (let main-loop ((args (getopt "I:" (command-line) '((help #f help) (version #f version) (scheme #f scheme) (vasm #f vasm)))))
+    (let main-loop ((args (getopt "I:l:" (command-line) '((help #f help) (version #f version) (scheme #f scheme) (vasm #f vasm)))))
       (if (not (null? args))
           (begin
             (case (caar args)
@@ -96,6 +106,10 @@
                (let ((path (##vcore.realpath (cdar args))))
                  (if (not path) (error "vanity: path does not exist" path))
                  (set! paths (append paths (list path)))))
+              ((#\l)
+               (if (or (strchr (cdar args) #\/) (and (eqv? platform 'windows) (strchr (cdar args) #\\)))
+                   (dlopen-library! (##vcore.realpath (cdar args)))
+                   (dlopen-library! (sprintf (if (eqv? platform 'windows) "~A.dll" "lib~A.so") (cdar args)))))
               (else
                (error "vanity: unknown command line option" (car args))))
             (main-loop (cdr args)))))

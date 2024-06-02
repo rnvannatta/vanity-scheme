@@ -1,0 +1,8 @@
+(import (vanity core) (vanity list))
+(let* ((x (async (lambda () (iota 100))))
+       (y (async (lambda () (iota 1000000) (iota 100 100)))))
+  (displayln "doing important work...")
+  (await y)
+  (await x)
+  (displayln "all done!")
+  (displayln (append (await x) (await y))))

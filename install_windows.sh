@@ -9,8 +9,10 @@ INSTALL=~/.wine/drive_c/Program\ Files\ \(x86\)/Vanity\ Scheme/
 echo mkdir -p "$INSTALL/bin"
 mkdir -p "$INSTALL/bin"
 
-echo cp -R mingw64 "$INSTALL/."
-cp -R mingw64 "$INSTALL/."
+if ! [ -d "$INSTALL/mingw64" ]; then
+  echo cp -R mingw64 "$INSTALL/."
+  cp -R mingw64 "$INSTALL/."
+fi
 
 echo cp -R bin/x86_64-w64-mingw32/vanity.exe "$INSTALL/bin/."
 cp -R bin/x86_64-w64-mingw32/vanity.exe "$INSTALL/bin/."

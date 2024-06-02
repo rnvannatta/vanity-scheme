@@ -95,7 +95,7 @@
 ; This is calling our RHI around SDL2_Renderer, written in C
 (define win (make_window 800 600 "Pong Endurance Mode"))
 ; Quick demonstration of finalizers with some text for demonstration purposes
-(##sys.set-finalizer! win (lambda (win) (close_window win) (displayln "Thank you for playing!")))
+(##vcore.set-finalizer! win (lambda (win) (close_window win) (displayln "Thank you for playing!")))
 
 ; The best thing to do is to wrap the create and close with a bit of glue
 ; to prevent leaks and accident double frees
@@ -104,13 +104,13 @@
 (define (wrap-finalizer creator finalizer)
   (lambda args
     (let ((ret (apply creator args)))
-      (##sys.set-finalizer! ret finalizer)
+      (##vcore.set-finalizer! ret finalizer)
       ret)))
 (define make_frametimer
   (wrap-finalizer
     make_frametimer_impl
     (lambda (e) (displayln "closing timer") (close_frametimer_impl e))))
-(define close_frametimer ##sys.finalize!)
+(define close_frametimer ##vcore.finalize!)
 (define frametimer (make_frametimer))
 
 ; Eventually the boilerplate will be eliminated by adding annotations
@@ -147,14 +147,14 @@
         (draw-paddle paddle-x paddle-y)
         (draw-ball ($ ball 0) ($ ball 1))
         ; don't have to call this, nice to call at eof for consistency though
-        (##sys.garbage-collect #t)
+        (##vcore.garbage-collect #t)
         (present_window win)
         (if (and (not die?) (not (get_exit_request win)))
             (loop ball ball-vel nbounces)
             (printf "You lasted ~A bounces before dying\n" nbounces))))))
 
-(##sys.finalize! frametimer)
+(##vcore.finalize! frametimer)
 ; It's better performancewise to close your finalizers
 ; but whoops, we forgot to close the window
 ; luckily finalizers got our back
-;(##sys.finalize! win)
+;(##vcore.finalize! win)
