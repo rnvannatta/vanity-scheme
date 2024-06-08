@@ -156,7 +156,7 @@
                             tape
                             (if file
                                 (dirname (realpath file))
-                                #f)))))
+                                (realpath "."))))))
                     (lambda rets
                       (if (and is-tty? (not (equal? rets `(,(let ((x #f)) (set! x #f))))))
                           (for-each writeln rets))))

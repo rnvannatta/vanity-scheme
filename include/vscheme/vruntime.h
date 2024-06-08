@@ -105,6 +105,21 @@ static_assert(VTAG_END < 255);
 typedef unsigned VTAG;
 typedef unsigned short VNEWTAG;
 
+enum VBUFFER_TYPE {
+  BUF_S8,
+  BUF_S16,
+  BUF_S32,
+  BUF_S64,
+
+  BUF_U8,
+  BUF_U16,
+  BUF_U32,
+  BUF_U64,
+
+  BUF_F32,
+  BUF_F64,
+};
+
 enum VOBJECT_FLAGS {
   VFLAG_STATIC = 1,
   VFLAG_IMMUTABLE = 2,

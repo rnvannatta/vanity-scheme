@@ -117,6 +117,17 @@
          ((##vcore.vector-set!) "VVectorSet2")
          ((##vcore.vector-length) "VVectorLength2")
 
+         ; Typevectors
+         ((##vcore.make-f64vector) "VMakeF64Vector")
+         ((##vcore.f64vector-ref) "VF64VectorRef")
+         ((##vcore.f64vector-set!) "VF64VectorSet")
+         ((##vcore.f64vector-length) "VF64VectorLength")
+
+         ((##vcore.make-f32vector) "VMakeF32Vector")
+         ((##vcore.f32vector-ref) "VF32VectorRef")
+         ((##vcore.f32vector-set!) "VF32VectorSet")
+         ((##vcore.f32vector-length) "VF32VectorLength")
+
          ; Records
          ((##vcore.record) "VCreateRecord2")
          ((##vcore.record-ref) "VRecordRef2")
@@ -294,6 +305,17 @@
          ((##vcore.vector-ref) ##vcore.vector-ref)
          ((##vcore.vector-set!) ##vcore.vector-set!)
          ((##vcore.vector-length) ##vcore.vector-length)
+
+         ; Typevectors
+         ((##vcore.make-f64vector) ##vcore.make-f64vector)
+         ((##vcore.f64vector-ref) ##vcore.f64vector-ref)
+         ((##vcore.f64vector-set!) ##vcore.f64vector-set!)
+         ((##vcore.f64vector-length) ##vcore.f64vector-length)
+
+         ((##vcore.make-f32vector) ##vcore.make-f32vector)
+         ((##vcore.f32vector-ref) ##vcore.f32vector-ref)
+         ((##vcore.f32vector-set!) ##vcore.f32vector-set!)
+         ((##vcore.f32vector-length) ##vcore.f32vector-length)
 
          ; Records
          ((##vcore.record) ##vcore.record)

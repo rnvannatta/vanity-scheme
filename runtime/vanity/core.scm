@@ -57,6 +57,9 @@
     symbol->string
     ; vectors
     list->vector vector->list vector vector-ref vector-set! vector-length vector-for-each 
+    ; typevectors
+    list->f32vector make-f32vector f32vector f32vector-ref f32vector-set! f32vector-length
+    list->f64vector make-f64vector f64vector f64vector-ref f64vector-set! f64vector-length
     ; records
     record record-ref record-set! record-length
     ; hash table
@@ -486,6 +489,42 @@
   (define vector-ref ##vcore.vector-ref)
   (define vector-set! ##vcore.vector-set!)
   (define vector-length ##vcore.vector-length)
+
+  ; typevectors
+  (define make-f32vector
+    (case-lambda
+      ((len) (##vcore.make-f32vector len #f))
+      ((len fill) (##vcore.make-f32vector len fill))))
+  (define (list->f32vector lst)
+    (let ((vec (make-f32vector (length lst))))
+      (let loop ((i 0) (lst lst))
+        (if (not (null? lst))
+            (begin
+              (f32vector-set! vec i (car lst))
+              (loop (+ i 1) (cdr lst)))))
+      vec))
+  (define f32vector (lambda args (list->f32vector args)))
+  (define f32vector-ref ##vcore.f32vector-ref)
+  (define f32vector-set! ##vcore.f32vector-set!)
+  (define f32vector-length ##vcore.f32vector-length)
+
+  (define make-f64vector
+    (case-lambda
+      ((len) (##vcore.make-f64vector len #f))
+      ((len fill) (##vcore.make-f64vector len fill))))
+  (define (list->f64vector lst)
+    (let ((vec (make-f64vector (length lst))))
+      (let loop ((i 0) (lst lst))
+        (if (not (null? lst))
+            (begin
+              (f64vector-set! vec i (car lst))
+              (loop (+ i 1) (cdr lst)))))
+      vec))
+  (define f64vector (lambda args (list->f64vector args)))
+  (define f64vector-ref ##vcore.f64vector-ref)
+  (define f64vector-set! ##vcore.f64vector-set!)
+  (define f64vector-length ##vcore.f64vector-length)
+
 
   (define (vector->list vec)
     (let ((len (vector-length vec)))
