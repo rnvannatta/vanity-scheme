@@ -573,6 +573,10 @@ SYSV_CALL static inline bool VIsFuture(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VFUTURE;
 }
 
+SYSV_CALL static inline bool VIsPointerTo(VWORD v, VNEWTAG tag) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == tag;
+}
+
 /* ======================== Checked Decoding ======================= */
 
 SYSV_CALL static inline int VCheckedDecodeInt2(VRuntime * runtime, VWORD v, char const * proc) {
@@ -740,6 +744,30 @@ SYSV_CALL static inline void const * VCheckedDecodeConstVoidPtr2(VRuntime * runt
     return VDecodeBlob(v)->buf;
   }
   VErrorC(runtime, "~Z: not castable to const void pointer: ~S\n", proc, v);
+  return NULL;
+}
+SYSV_CALL static inline float * VCheckedDecodeF32Ptr(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsForeignPointer(v)) {
+    return (void*)VDecodePointer(v);
+  }
+  if(VIsPointerTo(v, VBUFFER)) {
+    VBlob * b = VDecodeBlob(v);
+    if(b->buf[0] == BUF_F32)
+      return (float*)(b->buf + 4);
+  } 
+  VErrorC(runtime, "~Z: not castable to float pointer: ~S\n", proc, v);
+  return NULL;
+}
+SYSV_CALL static inline double * VCheckedDecodeF64Ptr(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsForeignPointer(v)) {
+    return (void*)VDecodePointer(v);
+  }
+  if(VIsPointerTo(v, VBUFFER)) {
+    VBlob * b = VDecodeBlob(v);
+    if(b->buf[0] == BUF_F64)
+      return (double*)(b->buf + 8);
+  } 
+  VErrorC(runtime, "~Z: not castable to double pointer: ~S\n", proc, v);
   return NULL;
 }
 

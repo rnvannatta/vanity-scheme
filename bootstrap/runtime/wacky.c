@@ -103,6 +103,10 @@ void VApplyForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD func, VWORD return_ty
         reg = (uintptr_t)VCheckedDecodeCString2(runtime, arg, "ffi-call");
       } else if(!strcmp(type->buf, "const-c-string")) {
         reg = (uintptr_t)VCheckedDecodeConstCString2(runtime, arg, "ffi-call");
+      } else if(!strcmp(type->buf, "f32-pointer")) {
+        reg = (uintptr_t)VCheckedDecodeF32Ptr(runtime, arg, "ffi-call");
+      } else if(!strcmp(type->buf, "f64-pointer")) {
+        reg = (uintptr_t)VCheckedDecodeF64Ptr(runtime, arg, "ffi-call");
       } else if(!strcmp(type->buf, "VWORD")) {
       } else {
         VErrorC(runtime, "ffi-call: Unknown type: ~S", typenode->first);
@@ -250,6 +254,10 @@ void VApplyForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD func, VWORD return_ty
         reg = (uintptr_t)VCheckedDecodeCString2(runtime, arg, "ffi-call");
       } else if(!strcmp(type->buf, "const-c-string")) {
         reg = (uintptr_t)VCheckedDecodeConstCString2(runtime, arg, "ffi-call");
+      } else if(!strcmp(type->buf, "f32-pointer")) {
+        reg = (uintptr_t)VCheckedDecodeF32Ptr(runtime, arg, "ffi-call");
+      } else if(!strcmp(type->buf, "f64-pointer")) {
+        reg = (uintptr_t)VCheckedDecodeF64Ptr(runtime, arg, "ffi-call");
       } else if(!strcmp(type->buf, "VWORD")) {
       } else {
         VErrorC(runtime, "ffi-call: Unknown type: ~S", typenode->first);
