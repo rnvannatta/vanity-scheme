@@ -2249,6 +2249,38 @@ static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
           }
           break;
         }
+        case VBUFFER:
+        {
+          VBlob * blob = ptr;
+          switch(blob->buf[0]) {
+            case BUF_F32:
+            {
+              unsigned len = (blob->len/4)-1;
+              float * floats = (float*)(blob->buf+4);
+              fprintf(f, "#f32(");
+              for(int i = 0; i < len-1; i++)
+                fprintf(f, "%f ", floats[i]);
+              if(len)
+                fprintf(f, "%f", floats[len-1]);
+              fprintf(f, ")");
+              break;
+            }
+            case BUF_F64:
+            {
+              unsigned len = (blob->len/8)-1;
+              double * doubles = (double*)(blob->buf+8);
+              fprintf(f, "#f32(");
+              for(int i = 0; i < len-1; i++)
+                fprintf(f, "%f ", doubles[i]);
+              if(len)
+                fprintf(f, "%f", doubles[len-1]);
+              fprintf(f, ")");
+              break;
+              break;
+            }
+          }
+          break;
+        }
         case VVECTOR:
         {
           fprintf(f, "#vector");
