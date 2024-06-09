@@ -54,7 +54,7 @@ static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D85 = { { .base = { .ta
 static struct { VBlob sym; char bytes[4]; } _V10_Dstring_D84 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 4 }, "gcc" };
 static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D83 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VExePath" };
 static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D82 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "mingw64/bin/gcc.exe" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D81 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "~A/~A" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D81 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "~A/../~A" };
 static __attribute__((constructor)) void VDllMain1() {
   _V0eof__object_Q = VEncodePointer(VLookupConstant("_V0eof__object_Q", &_VW_V0eof__object_Q), VPOINTER_OTHER);
   _V0read = VEncodePointer(VLookupConstant("_V0read", &_VW_V0read), VPOINTER_OTHER);

@@ -70,6 +70,18 @@ SYSV_CALL void VListVector2(V_CORE_ARGS, VWORD k, VWORD vec);
 SYSV_CALL void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i);
 SYSV_CALL void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vec);
 
+// typevectors
+
+SYSV_CALL void VMakeF64Vector(V_CORE_ARGS, VWORD k, VWORD len, VWORD fill);
+SYSV_CALL void VF64VectorRef(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i);
+SYSV_CALL void VF64VectorSet(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i, VWORD x);
+SYSV_CALL void VF64VectorLength(V_CORE_ARGS, VWORD k, VWORD vec);
+
+SYSV_CALL void VMakeF32Vector(V_CORE_ARGS, VWORD k, VWORD len, VWORD fill);
+SYSV_CALL void VF32VectorRef(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i);
+SYSV_CALL void VF32VectorSet(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i, VWORD x);
+SYSV_CALL void VF32VectorLength(V_CORE_ARGS, VWORD k, VWORD vec);
+
 // records
 
 SYSV_CALL void VCreateRecord2(V_CORE_ARGS, VWORD k, VWORD type, ...);

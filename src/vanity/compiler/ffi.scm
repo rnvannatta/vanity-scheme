@@ -346,6 +346,12 @@
           (('const 'char) '(const-c-string . "VCheckedDecodeConstCString2"))
           (('const 'void) '(const-void-pointer . "VCheckedDecodeConstVoidPtr2"))
           ('void '(void-pointer . "VCheckedDecodeVoidPtr2"))
+
+          ('float '(f32-pointer . "VCheckedDecodeF32Ptr"))
+          ('double '(f64-pointer . "VCheckedDecodeF64Ptr"))
+          (('const 'float) '(f32-pointer . "VCheckedDecodeF32Ptr"))
+          (('const 'double) '(f64-pointer . "VCheckedDecodeF64Ptr"))
+
           (else '(void-pointer . "VCheckedDecodeForeignPointer2")))
         (assv type '((_Bool . "VCheckedDecodeBool2")
                      (char . "VCheckedDecodeChar2")

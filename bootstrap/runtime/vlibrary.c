@@ -1610,3 +1610,159 @@ SYSV_CALL void VAccess(V_CORE_ARGS, VWORD k, VWORD _path, VWORD _mode) {
   int ret = access(path->buf, mode);
   V_CALL(k, runtime, VEncodeBool(!ret));
 }
+
+//
+// Buffers
+//
+
+void VBufferP(V_CORE_ARGS, VWORD k, VWORD _buf, VWORD _type) {
+  V_ARG_CHECK3(runtime, "buffer?", 3, argc);
+  VWORD ret = VFALSE;
+  int type = VCheckedDecodeInt2(runtime, _type, "buffer?");
+  if(VIsBlob(_buf)) {
+    VBlob * buf = VDecodeBlob(_buf);
+    if(type == buf->buf[0])
+      ret = VTRUE;
+  }
+  V_CALL(k, runtime, ret);
+}
+
+static VWORD F32Read(VRuntime * runtime, VBlob * buffer, unsigned offset) {
+  if(buffer->len < offset + 4)
+    VErrorC(runtime, "f32vector-ref!: index out of bounds ~D", (offset-4)/4);
+  float f = 0;
+  memcpy(&f, buffer->buf + offset, 4);
+  return VEncodeNumber(f);
+}
+static VWORD F64Read(VRuntime * runtime, VBlob * buffer, unsigned offset) {
+  if(buffer->len < offset + 8)
+    VErrorC(runtime, "f32vector-ref!: index out of bounds ~D", (offset-8)/8);
+  double d = 0;
+  memcpy(&d, buffer->buf + offset, 8);
+  return VEncodeNumber(d);
+}
+
+static void F32Write(VRuntime * runtime, VBlob * buffer, unsigned offset, VWORD v) {
+  if(buffer->len < offset + 4)
+    VErrorC(runtime, "f32vector-set!: index out of bounds ~D", (offset-4)/4);
+  float f = 0;
+  if(VIsDouble(v))
+    f = VDecodeNumber(v);
+  else if(VWordType(v) == VIMM_INT)
+    f = VDecodeInt(v);
+  else
+    VErrorC(runtime, "f32vector-set!: not an int or a double ~S", v);
+  memcpy(buffer->buf + offset, &f, 4);
+}
+static void F64Write(VRuntime * runtime, VBlob * buffer, unsigned offset, VWORD v) {
+  if(buffer->len < offset + 8)
+    VErrorC(runtime, "f32vector-set!: index out of bounds ~D", (offset-8)/8);
+  double d = 0;
+  if(VIsDouble(v))
+    d = VDecodeNumber(v);
+  else if(VWordType(v) == VIMM_INT)
+    d = VDecodeInt(v);
+  else
+    VErrorC(runtime, "f32vector-set!: not an int or a double ~S", v);
+  memcpy(buffer->buf + offset, &d, 8);
+}
+
+#define IMPLEMENT_BUFFER(prefix, Prefix, elem_width) \
+void VMake ## Prefix ## Vector(V_CORE_ARGS, VWORD k, VWORD _len, VWORD fill) { \
+  V_ARG_CHECK3(runtime, "make-" #prefix "vector", 3, argc); \
+  V_GC_CHECK2_VARARGS((VFunc)VMake ## Prefix ## Vector, runtime, statics, 3, argc, k, _len, fill) { \
+    unsigned len = VCheckedDecodeInt2(runtime, _len, "make-" #prefix "vector"); \
+    if(len > INT_MAX) \
+      VErrorC(runtime, "make-" #prefix "vector: tried to make a vector of length ~D, maximum vector length is ~D", len, INT_MAX); \
+    unsigned size = elem_width * (len+1); \
+    VBlob * ret = V_ALLOCA_BLOB(size); \
+    ret->base = VMakeSmallObject(VBUFFER); \
+    ret->len = size; \
+    ret->buf[0] = BUF_ ## Prefix; \
+    if(VDecodeBool(fill)) { \
+      unsigned offset = elem_width; \
+      for(unsigned i = 0; i < len; i++) { \
+        Prefix ## Write(runtime, ret, offset, fill); \
+        offset += elem_width; \
+      } \
+    } \
+    V_CALL(k, runtime, VEncodePointer(ret, VPOINTER_OTHER)); \
+  } \
+} \
+void V ## Prefix ## VectorLength(V_CORE_ARGS, VWORD k, VWORD _buf) { \
+  V_ARG_CHECK3(runtime, #prefix "vector-length", 2, argc); \
+  VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, #prefix "vector-length"); \
+  if(buf->buf[0] != BUF_ ## Prefix) \
+    VErrorC(runtime, #prefix "vector-length: not a vector of the right type.", _buf); \
+  V_CALL(k, runtime, VEncodeInt(buf->len/elem_width - 1)); \
+} \
+void V ## Prefix ## VectorRef(V_CORE_ARGS, VWORD k, VWORD _buf, VWORD _i) { \
+  V_ARG_CHECK3(runtime, #prefix "vector-ref", 3, argc); \
+  int i = VCheckedDecodeInt2(runtime, _i, #prefix "vector-ref"); \
+  VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, #prefix "vector-ref"); \
+  if(buf->buf[0] != BUF_ ## Prefix) \
+    VErrorC(runtime, #prefix "vector-length: not a vector of the right type.", _buf); \
+  V_CALL(k, runtime, Prefix ## Read(runtime, buf, elem_width*(i+1))); \
+} \
+void V ## Prefix ## VectorSet(V_CORE_ARGS, VWORD k, VWORD _buf, VWORD _i, VWORD val) { \
+  V_ARG_CHECK3(runtime, #prefix "vector-set!", 4, argc); \
+  int i = VCheckedDecodeInt2(runtime, _i, #prefix "vector-set!"); \
+  VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, #prefix "vector-set!"); \
+  if(buf->buf[0] != BUF_ ## Prefix) \
+    VErrorC(runtime, #prefix "vector-set!: not a vector of the right type.", _buf); \
+  Prefix ## Write(runtime, buf, elem_width*(i+1), val); \
+  V_CALL(k, runtime, VVOID); \
+}
+
+IMPLEMENT_BUFFER(f32, F32, 4)
+IMPLEMENT_BUFFER(f64, F64, 8)
+
+/*
+void VListBuffer(V_CORE_ARGS, VWORD k, VWORD lst, VWORD _type) {
+  V_ARG_CHECK3(runtime, "list->buffer", 3, argc);
+  V_GC_CHECK2_VARARGS((VFunc)VListBuffer, runtime, statics, 3, argc, k, lst, _type) {
+    int type = VCheckedDecodeInt2(runtime, _type, "list->buffer");
+
+    unsigned len = 0;
+    VWORD v = lst;
+    while(VWordType(v) == VPOINTER_PAIR) {
+      len++;
+      v = VDecodePair(v)->rest;
+    }
+    if(VBits(v) != VBits(VNULL)) VErrorC(runtime, "list->buffer: not a null-terminated list\n");
+    if(len > INT_MAX)
+      VErrorC(runtime, "make-buffer: tried to make a buffer of length ~D, maximum buffer length is ~D\n", len, INT_MAX);
+
+    int elem_width = 0;
+    void(*Write)(VBlob*,size_t,VWORD);
+    switch(_type) {
+      case BUF_F32:
+        elem_width = 4;
+        Write = F32Write;
+        break;
+      case BUF_F64:
+        elem_width = 8;
+        Write = f64Write;
+        break;
+      default:
+        VErrorC(runtime, "list->buffer: unknown buffer type\n");
+    }
+
+    unsigned size = elem_width * (len+1);
+    VBlob * ret = V_ALLOCA_BLOB(size);
+    ret->base = VMakeSmallObject(VBUFFER);
+    ret->len = size;
+    ret->buf[0] = type;
+
+    v = lst;
+    unsigned offset = elem_width;
+    while(VWordType(v) == VPOINTER_PAIR) {
+      VPair * p = VDecodePair(v);
+      Write(ret, offset, p->first);
+      offset += elem_width;
+      v = p->rest;
+    }
+    V_CALL(k, runtime, VEncodePointer(ret, VPOINTER_OTHER));
+  }
+}
+*/
