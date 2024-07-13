@@ -497,7 +497,9 @@ VWORD parse_ret;
 VRuntime * global_runtime;
 
 struct yy_buffer_state * yy_scan_string(char * str);
+struct yy_buffer_state * yy_create_buffer(FILE * f, int size);
 void yy_delete_buffer(struct yy_buffer_state * buf);
+void yy_switch_to_buffer(struct yy_buffer_state * buf);
 
 void VForeignParseDeclCImpl(V_CORE_ARGS, VWORD k, VWORD decl) {
   global_runtime = runtime;
@@ -522,9 +524,14 @@ void VForeignParseHeaderCImpl(V_CORE_ARGS, VWORD k, VWORD header) {
     VPort * port = VCheckedDecodePort2(runtime, header, "foreign-parse-header-c");
     FILE * f = port->stream;
     if(!f || !(port->flags & PFLAG_READ)) VErrorC(runtime, "foreign-parse-header-c: failed to parse, port is not an opened input port!\n");
-    yy_set_buffer(f);
+    //yy_set_buffer(f);
+    struct yy_buffer_state * buf = yy_create_buffer(f, 32768);
+    yy_switch_to_buffer(buf);
     parse_error = false;
-    if(yyparse()) VErrorC(runtime, "foreign-parse-header-c: error during parsing\n");
+    int notok = yyparse();
+    if(notok) VErrorC(runtime, "foreign-parse-header-c: error during parsing\n");
+    yy_delete_buffer(buf);
+
 
     if(parse_error || !VDecodeBool(parse_ret)) VErrorC(runtime, "foreign-parse-decl-c: error during parsing (returned false)\n");
   }
@@ -534,6 +541,7 @@ void VForeignReleaseParseImpl(V_CORE_ARGS, VWORD k) {
   global_runtime = runtime;
   V_ARG_CHECK3(runtime, "foreign-release-parse", 1, argc);
   VDestroyMemoryPool(&parse_pool);
+  typedef_table = (VWORD){ LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
   V_CALL(k, runtime, VFALSE);
 }
 
