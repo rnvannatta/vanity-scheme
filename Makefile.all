@@ -188,7 +188,7 @@ build/%.o : build/%.S
 	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS)
 
 build/%.lex.c : build/%.l
-	lex -t $< > $@
+	lex -o $@ $< 
 
 build/%.tab.h build/%.tab.c &: build/%.y
 	bison -d -b build/$* $<

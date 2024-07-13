@@ -185,6 +185,10 @@
     (define (extract-exports lib)
       (cond ((assoc 'export (cddr lib)) => cdr)
             (else '())))
+
+    (define declares '())
+    (define defines '())
+
     (define (expand-library-expr expr)
       (match expr
         (('export . syms)
@@ -195,27 +199,44 @@
           (fold append imports (reverse (map (lambda (import) (extract-exports (find-library-interface! import paths))) libs))))
          (set! mangled-imports (append (map mangle-library libs) mangled-imports))
          (list))
-        (('define (f . xs) . body) (expand-define `(define ,f (lambda ,xs . ,body))))
+        (('define (f . xs) . body)
+         (if (not (symbol? f)) (compiler-error "define's first argument is not a symbol" f))
+         (set! defines (cons `(define ,f ,(expand-syntax `(lambda ,xs . ,body))) defines))
+         (list))
         (('define f ('lambda . body))
          (if (not (symbol? f)) (compiler-error "define's first argument is not a symbol" f))
-         (list `(define ,f ,(expand-syntax `(lambda . ,body)))))
+         (set! defines (cons `(define ,f ,(expand-syntax `(lambda . ,body))) defines))
+         (list))
         (('define f ('case-lambda . body))
          (if (not (symbol? f)) (compiler-error "define's first argument is not a symbol" f))
-         (list `(define ,f ,(expand-syntax `(case-lambda . ,body)))))
-        (('define x y) (list `(define ,x ,(expand-syntax y))))
+         (set! defines (cons `(define ,f ,(expand-syntax `(case-lambda . ,body))) defines))
+         (list))
+        (('define x y)
+         (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
+         (set! defines (cons `(define ,x #f) defines))
+         (list `(set! ,x ,(expand-syntax y))))
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
         (('begin x) (expand-library-expr x))
-        (('begin x . xs) (append (expand-library-expr x) (expand-library-expr (cons 'begin xs))))
+        (('begin . xs) (apply append (map expand-library-expr xs)))
         (('define-record-type . rest)
          (expand-library-expr (expand-define-record-type expr)))
-        ; TODO why not? we've done everything we need for expressions in libraries
-        (else (compiler-error "expressions not permitted in libraries yet" expr))))
+        ; resolve-foreign-import also inserts a foreign-declare which we need to lift to the toplevel
+        (('foreign-import lang str)
+         (expand-library-expr `(##foreign.import ,lang ,str)))
+        (('##foreign.import lang str)
+         (let ((decl-defines (resolve-foreign-import expr paths "sysv_amd64")))
+          (set! declares (cons (car decl-defines) declares))
+          (apply append (map expand-library-expr (cdr decl-defines)))))
+        (else (list expr))))
     ; still has free variables
     (define basic-library
-       (expand-syntax
-         `(lambda ()
-            . ,(append (apply append (map expand-library-expr (cddr lib)))
-                       (list (make-library-output exports))))))
+      (let ((expanded (map expand-library-expr (cddr lib))))
+        (expand-syntax
+           `(lambda ()
+              ,@(reverse defines)
+              . ,(append (apply append expanded)
+                         (list (make-library-output exports)))))))
+
     (define free-vars
       (free-variables basic-library))
     (let ((unbound-vars (filter (lambda (var) (not (memv var imports))) free-vars)))
@@ -225,13 +246,14 @@
       (if (not (fold (lambda (a b) (and a b)) #t (map string? mangled-imports))) (compiler-error "imports to library must all be c strings"))
       (if (and (null? mangled-imports) (not (null? free-vars)))
           (compiler-error "library has free variables but no imports:" (cadr lib) free-vars))
-      `(##vcore.declare ,libname
-         (lambda ()
-          ,(expand-syntax
-          `(let ((##vcore.import (##vcore.make-import ,libname . ,(map (lambda (i) `(##vcore.load-library ,i)) mangled-imports))))
-            (let ,(map (lambda (f) `(,f (##vcore.import ,(list 'quote f)))) free-vars)
-            .
-            ,(cddr basic-library))))))))
+      `(,@(reverse declares)
+        (##vcore.declare ,libname
+           (lambda ()
+            ,(expand-syntax
+            `(let ((##vcore.import (##vcore.make-import ,libname . ,(map (lambda (i) `(##vcore.load-library ,i)) mangled-imports))))
+              (let ,(map (lambda (f) `(,f (##vcore.import ,(list 'quote f)))) free-vars)
+              .
+              ,(cddr basic-library)))))))))
 
   (define (valid-identifier? s) (symbol? s))
   (define (valid-arguments? args)
@@ -332,7 +354,7 @@
       (('begin . ys)
        (apply append (map (lambda (e) (expand-toplevel e paths architecture)) ys)))
 
-      (('define-library lib . body) (list (expand-library `(define-library ,lib . ,body) paths)))
+      (('define-library lib . body) (expand-library `(define-library ,lib . ,body) paths))
       (('define-library . noise) (compiler-error "malformed define-library" `(define-library . ,noise)))
 
       (('define-record-type . body) (expand-toplevel (expand-define-record-type expr) paths architecture))
