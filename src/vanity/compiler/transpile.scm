@@ -87,8 +87,9 @@
     (define (print-intrinsic x)
        (printf "_V40~A" (mangle-symbol x)))
     (define (print-literal x)
-      (cond ((integer? x) (printf "VEncodeInt(~Al)" x)) ; FIXME bounds check
+      (cond ((integer? x) (printf "VEncodeInt(~Al)" x))
             ((number? x) (printf "VEncodeNumber(~A)" x))
+            ((##vcore.void? x) (printf "VVOID"))
             ((char? x) (printf "VEncodeChar('~A')" (escape-char x)))
             ((eq? x #t) (printf "VEncodeBool(true)"))
             ((eq? x #f) (printf "VEncodeBool(false)"))

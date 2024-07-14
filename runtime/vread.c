@@ -27,6 +27,7 @@
 
 #include <errno.h>
 #include <assert.h>
+#include <math.h>
 
 #include "vscheme/vruntime.h"
 #include "vruntime_private.h"
@@ -52,6 +53,8 @@ enum lex_t {
   LEX_DOT,
   LEX_2DOT,
   LEX_SHARP,
+  LEX_SHARP_TF,
+  LEX_SHARP_WORD,
   LEX_VECTOR,
   LEX_CODE_COMMENT,
   LEX_QUOTE,
@@ -164,12 +167,14 @@ SYSV_CALL static int VLex2Dot(int c, bool * satisfied, bool * unget) {
 
 SYSV_CALL static int VLexSharp(int c, bool * satisfied, bool * unget) {
   switch(c) {
+    //case 't':
+      //*satisfied = true;
+      //return LEX_TRUE;
     case 't':
-      *satisfied = true;
-      return LEX_TRUE;
     case 'f':
-      *satisfied = true;
-      return LEX_FALSE;
+      //*satisfied = true;
+      //return LEX_FALSE;
+      return LEX_SHARP_TF;
     case ';':
       *satisfied = true;
       return LEX_CODE_COMMENT;
@@ -181,8 +186,37 @@ SYSV_CALL static int VLexSharp(int c, bool * satisfied, bool * unget) {
     case '#':
       return LEX_SYMBOL;
     default:
+      if('0' <= c && c <= '9') return LEX_SHARP_WORD;
+      if('a' <= c && c <= 'z') return LEX_SHARP_WORD;
+      if('A' <= c && c <= 'Z') return LEX_SHARP_WORD;
+
       *satisfied = true;
       return LEX_ERROR;
+  }
+}
+
+SYSV_CALL static int VLexSharpTF(int c, bool * satisfied, bool * unget) {
+  if('0' <= c && c <= '9') return LEX_SHARP_WORD;
+  if('a' <= c && c <= 'z') return LEX_SHARP_WORD;
+  if('A' <= c && c <= 'Z') return LEX_SHARP_WORD;
+
+  *satisfied = true;
+  *unget = true;
+  return LEX_SHARP_WORD;
+}
+
+SYSV_CALL static int VLexSharpWord(int c, bool * satisfied, bool * unget) {
+  if('0' <= c && c <= '9') return LEX_SHARP_WORD;
+  if('a' <= c && c <= 'z') return LEX_SHARP_WORD;
+  if('A' <= c && c <= 'Z') return LEX_SHARP_WORD;
+  switch(c) {
+    case '(':
+      *satisfied = true;
+      return LEX_SHARP_WORD;
+    default:
+      *satisfied = true;
+      *unget = true;
+      return LEX_SHARP_WORD;
   }
 }
 
@@ -411,6 +445,12 @@ SYSV_CALL static int VLex(VRuntime * runtime, FILE * f) {
       case LEX_SHARP:
         lex_state = VLexSharp(c, &satisfied, &unget);
         break;
+      case LEX_SHARP_TF:
+        lex_state = VLexSharpTF(c, &satisfied, &unget);
+        break;
+      case LEX_SHARP_WORD:
+        lex_state = VLexSharpWord(c, &satisfied, &unget);
+        break;
       case LEX_CHAR:
         lex_state = VLexChar(c, &satisfied, &unget);
         break;
@@ -446,6 +486,7 @@ SYSV_CALL static int VLex(VRuntime * runtime, FILE * f) {
   }
 }
 
+
 SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
 SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, VWORD _cur) {
   // cur's first value is a pointer to the list we are CONSing to
@@ -456,6 +497,57 @@ SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, V
   char * alloced = (char*)&argc;
   while(VBits(root->rest) != VBits(VNULL)) {
     VPair * p = (VPair*)VDecodePointer(root->rest);
+
+  /* ugly ass macro because we alloca */
+#define VTreeifyBuffer(Prefix, prefix, ctype, Decode, MIN, MAX) { \
+  /* we drop p, don't need it */ \
+  /* but we do need to find cur's parent */ \
+  VPair * parent = root; \
+  VWORD curword = VEncodePair(cur); \
+  while(VBits(parent->first) != VBits(curword)) { \
+    parent = (VPair*)VDecodePointer(parent->first); \
+  } \
+  /* if we were doing ((* a b c) x y z) */ \
+  /* where * indicates where we were consing to */ \
+  /* now we are doing (* #(a b c) x y z) */ \
+  VPair * new_cur = parent; \
+  VPair * vecpair = (VPair*)VDecodePair(new_cur->first); \
+  VWORD list = vecpair->first; \
+  int len = 0; \
+  VWORD iter = list; \
+  while(VWordType(iter) == VPOINTER_PAIR) { \
+    iter = VDecodePair(iter)->rest; \
+    len++; \
+  } \
+  if(!VIsToken(iter, VTOK_NULL)) \
+    VErrorC(runtime, "read: vector literal contains dot syntax\n"); \
+  size_t size = sizeof(ctype[len+1]); \
+  VBlob * blob = V_ALLOCA_BLOB2(alloced, runtime, size); \
+  alloced = (char*)blob; \
+  if(!blob) { \
+    VTrackMutation(runtime, root, &root->rest, root->rest); \
+    VGarbageCollect2Args((VFunc)VTreeify, runtime, statics, 4, argc, k, _port, VEncodePair(root), VEncodePair(cur)); \
+  } \
+  root->rest = p->rest; \
+  cur = new_cur; \
+  *blob = (VBlob){ .base = { .tag = VBUFFER }, .len = size }; \
+  blob->buf[0] = BUF_ ## Prefix; \
+  int i = 0; \
+  iter = list; \
+  while(VWordType(iter) == VPOINTER_PAIR) { \
+    VPair * p = VDecodePair(iter); \
+    double x = Decode(runtime, p->first, "read-" #prefix "vector"); \
+    /* specifically chosen so NaNs can be used, as comparison with a NaN is always false */ \
+    if(x < MIN || x > MAX) \
+      VErrorC(runtime, "read-" #prefix "vector: element out of bounds"); \
+    ctype casted = x; \
+    memcpy(&blob->buf[sizeof(ctype) * ++i], &casted, sizeof casted); \
+    iter = p->rest; \
+  } \
+  assert(i == len); \
+  VSetFirst(runtime, vecpair, VEncodePointer(blob, VPOINTER_OTHER)); \
+} while(0)
+
     if(p->base.tag == VCONST_PAIR) {
       // open paren or close paren
       if(VIsToken(p->first, VTOK_LEX_OPENPAREN)) {
@@ -518,6 +610,21 @@ SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, V
         }
         assert(i == len);
         VSetFirst(runtime, vecpair, VEncodePointer(vec, VPOINTER_OTHER));
+
+      }  else if(VIsToken(p->first, VTOK_LEX_F64VECTOR)) {
+        VTreeifyBuffer(F64, f64, double, VCheckedDecodeNumber2, NAN, NAN);
+      }  else if(VIsToken(p->first, VTOK_LEX_F32VECTOR)) {
+        VTreeifyBuffer(F32, f32, float, VCheckedDecodeNumber2, NAN, NAN);
+      }  else if(VIsToken(p->first, VTOK_LEX_S32VECTOR)) {
+        VTreeifyBuffer(S32, s32, int, VCheckedDecodeInt2, INT32_MIN, INT32_MAX);
+      }  else if(VIsToken(p->first, VTOK_LEX_U16VECTOR)) {
+        VTreeifyBuffer(U16, u16, uint16_t, VCheckedDecodeInt2, 0, UINT16_MAX);
+      }  else if(VIsToken(p->first, VTOK_LEX_S16VECTOR)) {
+        VTreeifyBuffer(S16, s16, int16_t, VCheckedDecodeInt2, INT16_MIN, INT16_MAX);
+      }  else if(VIsToken(p->first, VTOK_LEX_U8VECTOR)) {
+        VTreeifyBuffer(U8, u8, uint8_t, VCheckedDecodeInt2, 0, UINT8_MAX);
+      }  else if(VIsToken(p->first, VTOK_LEX_S8VECTOR)) {
+        VTreeifyBuffer(S8, s8, int8_t, VCheckedDecodeInt2, INT8_MIN, INT8_MAX);
 
       } else if(VIsToken(p->first, VTOK_LEX_CLOSEPAREN)) {
         root->rest = p->rest;
@@ -783,6 +890,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
         read_more = true;
         break;
       }
+      /*
       case LEX_TRUE:
       case LEX_FALSE:
       {
@@ -791,6 +899,71 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
         VPair * pair = myalloca(sizeof(VPair));
         *pair = VMakePair(elem, root->rest);
         root->rest = VEncodePair(pair);
+        break;
+      }
+      */
+      case LEX_SHARP_WORD:
+      {
+        bool is_vector = false;
+        bool opens_list = false;
+        elem = VVOID;
+        if(!strcmp(runtime->lex_buf, "#t"))
+          elem = VTRUE;
+        else if(!strcmp(runtime->lex_buf, "#f")) 
+          elem = VFALSE;
+        else if(!strcmp(runtime->lex_buf, "#void"))
+          elem = VVOID;
+        else if(!strcmp(runtime->lex_buf, "#void(")) {
+          opens_list = true;
+          elem = VVOID;
+        }
+        else if(!strcmp(runtime->lex_buf, "#u8(")) {
+          is_vector = true;
+          elem = VEncodeToken(VTOK_LEX_U8VECTOR);
+        }
+        else if(!strcmp(runtime->lex_buf, "#s8(")) {
+          is_vector = true;
+          elem = VEncodeToken(VTOK_LEX_S8VECTOR);
+        }
+        else if(!strcmp(runtime->lex_buf, "#u16(")) {
+          is_vector = true;
+          elem = VEncodeToken(VTOK_LEX_U16VECTOR);
+        }
+        else if(!strcmp(runtime->lex_buf, "#s16(")) {
+          is_vector = true;
+          elem = VEncodeToken(VTOK_LEX_S16VECTOR);
+        }
+        else if(!strcmp(runtime->lex_buf, "#s32(")) {
+          is_vector = true;
+          elem = VEncodeToken(VTOK_LEX_S32VECTOR);
+        }
+        else if(!strcmp(runtime->lex_buf, "#f32(")) {
+          is_vector = true;
+          elem = VEncodeToken(VTOK_LEX_F32VECTOR);
+        }
+        else if(!strcmp(runtime->lex_buf, "#f64(")) {
+          is_vector = true;
+          elem = VEncodeToken(VTOK_LEX_F64VECTOR);
+        }
+
+        if(!is_vector) {
+          VPair * pair = myalloca(sizeof(VPair));
+          *pair = VMakePair(elem, root->rest);
+          root->rest = VEncodePair(pair);
+        }
+        if(opens_list) {
+          elem = VEncodeToken(VTOK_LEX_OPENPAREN);
+        }
+        if(opens_list || is_vector) {
+          VPair * pair = myalloca(sizeof(VPair));
+          // using CONST_PAIR as a marker to indicate beginning or end of a list
+          // a const pair with a VTOK_LEX_OPENPAREN in the CAR indicates a open paren, ie beginning
+          *pair = VMakePair(elem, root->rest);
+          pair->base = VMakeObject(VCONST_PAIR);
+          root->rest = VEncodePair(pair);
+          depth++;
+        }
+
         break;
       }
       case LEX_CHAR:

@@ -77,6 +77,16 @@ enum VTOK_T {
   VTOK_LEX_OPENPAREN, VTOK_LEX_CLOSEPAREN, VTOK_LEX_VECPAREN, VTOK_LEX_DOT, VTOK_LEX_COMMENT,
   VTOK_LEX_QUOTE, VTOK_LEX_QUASIQUOTE, VTOK_LEX_UNQUOTE, VTOK_LEX_UNQUOTE_SPLICING,
   VTOK_ERROR, VTOK_LEX_VECTOR,
+
+  VTOK_LEX_U8VECTOR,
+  VTOK_LEX_S8VECTOR,
+  VTOK_LEX_U16VECTOR,
+  VTOK_LEX_S16VECTOR,
+  VTOK_LEX_S32VECTOR,
+
+  VTOK_LEX_F32VECTOR,
+  VTOK_LEX_F64VECTOR,
+
   VNUM_TOKS
 };
 
@@ -746,30 +756,29 @@ SYSV_CALL static inline void const * VCheckedDecodeConstVoidPtr2(VRuntime * runt
   VErrorC(runtime, "~Z: not castable to const void pointer: ~S\n", proc, v);
   return NULL;
 }
-SYSV_CALL static inline float * VCheckedDecodeF32Ptr(VRuntime * runtime, VWORD v, char const * proc) {
-  if(VIsForeignPointer(v)) {
-    return (void*)VDecodePointer(v);
-  }
-  if(VIsPointerTo(v, VBUFFER)) {
-    VBlob * b = VDecodeBlob(v);
-    if(b->buf[0] == BUF_F32)
-      return (float*)(b->buf + 4);
-  } 
-  VErrorC(runtime, "~Z: not castable to float pointer: ~S\n", proc, v);
-  return NULL;
+
+#define IMPLEMENT_DECODE_BUFFER(Prefix, ctype) \
+SYSV_CALL static inline ctype * VCheckedDecode ## Prefix ## Ptr(VRuntime * runtime, VWORD v, char const * proc) { \
+  if(VIsForeignPointer(v)) { \
+    return (void*)VDecodePointer(v); \
+  } \
+  if(VIsPointerTo(v, VBUFFER)) { \
+    VBlob * b = VDecodeBlob(v); \
+    if(b->buf[0] == BUF_ ## Prefix) \
+      return (ctype*)(b->buf + sizeof(ctype)); \
+  } \
+  VErrorC(runtime, "~Z: not castable to float pointer: ~S\n", proc, v); \
+  return NULL; \
 }
-SYSV_CALL static inline double * VCheckedDecodeF64Ptr(VRuntime * runtime, VWORD v, char const * proc) {
-  if(VIsForeignPointer(v)) {
-    return (void*)VDecodePointer(v);
-  }
-  if(VIsPointerTo(v, VBUFFER)) {
-    VBlob * b = VDecodeBlob(v);
-    if(b->buf[0] == BUF_F64)
-      return (double*)(b->buf + 8);
-  } 
-  VErrorC(runtime, "~Z: not castable to double pointer: ~S\n", proc, v);
-  return NULL;
-}
+
+IMPLEMENT_DECODE_BUFFER(F32, float)
+IMPLEMENT_DECODE_BUFFER(F64, double)
+
+IMPLEMENT_DECODE_BUFFER(S32, int)
+IMPLEMENT_DECODE_BUFFER(U16, uint16_t)
+IMPLEMENT_DECODE_BUFFER(S16, int16_t)
+IMPLEMENT_DECODE_BUFFER(U8, uint8_t)
+IMPLEMENT_DECODE_BUFFER(S8, int8_t)
 
 /* ======================== Construction ======================= */
 
@@ -839,6 +848,16 @@ SYSV_CALL static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned le
   memcpy(blob->buf, dat, len);
   return blob;
 }
+#define V_ALLOCA_BLOB2(last_alloced, runtime, len) \
+  ({ \
+    VBlob * _ret = NULL; \
+    if(len > INT32_MAX) \
+      VErrorC(runtime, "cannot allocate blob with more than ~D elements, asked to allocate one with ~D\n", INT32_MAX, len); \
+    size_t _size = sizeof(VVector) + len; \
+    if(!VStackOverflowNoInline2(runtime, ((char*)last_alloced) - _size)) \
+      _ret = alloca(_size); \
+    _ret;\
+  })
 
 #define V_STATIC_STRING(name, str) struct { VBlob b; char buf[sizeof str]; } name = { { .base = { .tag =VSTRING, .flags = 0, .pincount = 0, }, .len = sizeof str }, str };
 

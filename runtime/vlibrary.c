@@ -404,6 +404,10 @@ SYSV_CALL void VCharP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK3(runtime, "char?", 2, argc);
   V_CALL(k, runtime, VEncodeBool(VWordType(x) == VIMM_CHAR));
 }
+SYSV_CALL void VVoidP2(V_CORE_ARGS, VWORD k, VWORD x) {
+  V_ARG_CHECK3(runtime, "##vcore.void?", 2, argc);
+  V_CALL(k, runtime, VEncodeBool(VBits(x) == VBits(VVOID)));
+}
 
 // equality
 SYSV_CALL void VEq2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
@@ -1615,17 +1619,38 @@ SYSV_CALL void VAccess(V_CORE_ARGS, VWORD k, VWORD _path, VWORD _mode) {
 // Buffers
 //
 
-void VBufferP(V_CORE_ARGS, VWORD k, VWORD _buf, VWORD _type) {
-  V_ARG_CHECK3(runtime, "buffer?", 3, argc);
-  VWORD ret = VFALSE;
-  int type = VCheckedDecodeInt2(runtime, _type, "buffer?");
-  if(VIsBlob(_buf)) {
-    VBlob * buf = VDecodeBlob(_buf);
-    if(type == buf->buf[0])
-      ret = VTRUE;
-  }
-  V_CALL(k, runtime, ret);
+#define IMPLEMENT_BUFFER_READWRITE(prefix, Prefix, elem_width, ctype, CType) \
+static void Prefix ## Write(VRuntime * runtime, VBlob * buffer, unsigned offset, VWORD v) { \
+  const int stride = elem_width; \
+  if(buffer->len < offset + stride) \
+    VErrorC(runtime, #prefix "vector-set!: index out of bounds ~D", (offset-stride)/stride); \
+  int i = 0; \
+  if(VWordType(v) == VIMM_INT) \
+    i = VDecodeInt(v); \
+  else \
+    VErrorC(runtime, #prefix "vector-set!: not an int ~S", v); \
+  if(!(CType ## _MIN <= i && i <= CType ## _MAX)) \
+    VErrorC(runtime, #prefix "vector-set!: not a " #ctype " ~S", v); \
+  ctype ## _t x = i; \
+  memcpy(buffer->buf + offset, &x, stride); \
+} \
+static VWORD Prefix ## Read(VRuntime * runtime, VBlob * buffer, unsigned offset) { \
+  if(buffer->len < offset + elem_width) \
+    VErrorC(runtime, "s32vector-ref!: index out of bounds ~D", (offset-elem_width)/elem_width); \
+  ctype ## _t i = 0; \
+  memcpy(&i, buffer->buf + offset, elem_width); \
+  return VEncodeInt(i); \
 }
+
+#define UINT8_MIN 0
+#define UINT16_MIN 0
+#define UINT32_MIN 0
+
+IMPLEMENT_BUFFER_READWRITE(s8, S8, 1, int8, INT8)
+IMPLEMENT_BUFFER_READWRITE(u8, U8, 1, uint8, UINT8)
+IMPLEMENT_BUFFER_READWRITE(s16, S16, 2, int16, INT16)
+IMPLEMENT_BUFFER_READWRITE(u16, U16, 2, uint16, UINT16)
+IMPLEMENT_BUFFER_READWRITE(s32, S32, 4, int32, INT32)
 
 static VWORD F32Read(VRuntime * runtime, VBlob * buffer, unsigned offset) {
   if(buffer->len < offset + 4)
@@ -1668,6 +1693,16 @@ static void F64Write(VRuntime * runtime, VBlob * buffer, unsigned offset, VWORD 
 }
 
 #define IMPLEMENT_BUFFER(prefix, Prefix, elem_width) \
+void V ## Prefix ## VectorP(V_CORE_ARGS, VWORD k, VWORD _buf) { \
+  V_ARG_CHECK3(runtime, #prefix "vector?", 2, argc); \
+  VWORD ret = VFALSE; \
+  if(VIsBlob(_buf)) { \
+    VBlob * buf = VDecodeBlob(_buf); \
+    if(buf->base.tag == VBUFFER && BUF_ ## Prefix == buf->buf[0]) \
+      ret = VTRUE; \
+  } \
+  V_CALL(k, runtime, ret); \
+} \
 void VMake ## Prefix ## Vector(V_CORE_ARGS, VWORD k, VWORD _len, VWORD fill) { \
   V_ARG_CHECK3(runtime, "make-" #prefix "vector", 3, argc); \
   V_GC_CHECK2_VARARGS((VFunc)VMake ## Prefix ## Vector, runtime, statics, 3, argc, k, _len, fill) { \
@@ -1687,6 +1722,34 @@ void VMake ## Prefix ## Vector(V_CORE_ARGS, VWORD k, VWORD _len, VWORD fill) { \
       } \
     } \
     V_CALL(k, runtime, VEncodePointer(ret, VPOINTER_OTHER)); \
+  } \
+} \
+void VList ## Prefix ## Vector (V_CORE_ARGS, VWORD k, VWORD lst) { \
+  V_ARG_CHECK3(runtime, "list->" #prefix "vector", 2, argc); \
+  V_GC_CHECK2_VARARGS((VFunc)VList ## Prefix ## Vector, runtime, statics, 2, argc, k, lst) { \
+    int len = 0; \
+    VWORD v = lst; \
+    while(VWordType(v) == VPOINTER_PAIR) { \
+      len++; \
+      v = VDecodePair(v)->rest; \
+    } \
+    if(VBits(v) != VBits(VNULL)) VErrorC(runtime, "list->" #prefix "vector: not a null-terminated list\n"); \
+    unsigned size = elem_width * (len+1); \
+    VBlob * vec = V_ALLOCA_BLOB(size); \
+    vec->base = VMakeSmallObject(VBUFFER); \
+    vec->len = size; \
+    vec->buf[0] = BUF_ ## Prefix; \
+    v = lst; \
+    int i = 0; \
+    unsigned offset = elem_width; \
+    while(VWordType(v) == VPOINTER_PAIR) { \
+      VPair * p = VDecodePair(v); \
+      Prefix ## Write(runtime, vec, offset, p->first); \
+      offset += elem_width; \
+      i++; \
+      v = p->rest; \
+    } \
+    V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER)); \
   } \
 } \
 void V ## Prefix ## VectorLength(V_CORE_ARGS, VWORD k, VWORD _buf) { \
@@ -1713,6 +1776,12 @@ void V ## Prefix ## VectorSet(V_CORE_ARGS, VWORD k, VWORD _buf, VWORD _i, VWORD 
   Prefix ## Write(runtime, buf, elem_width*(i+1), val); \
   V_CALL(k, runtime, VVOID); \
 }
+
+IMPLEMENT_BUFFER(s8, S8, 1)
+IMPLEMENT_BUFFER(u8, U8, 1)
+IMPLEMENT_BUFFER(s16, S16, 2)
+IMPLEMENT_BUFFER(u16, U16, 2)
+IMPLEMENT_BUFFER(s32, S32, 4)
 
 IMPLEMENT_BUFFER(f32, F32, 4)
 IMPLEMENT_BUFFER(f64, F64, 8)

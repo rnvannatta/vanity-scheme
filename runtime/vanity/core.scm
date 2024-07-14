@@ -58,8 +58,17 @@
     ; vectors
     list->vector vector->list vector vector-ref vector-set! vector-length vector-for-each 
     ; typevectors
-    list->f32vector make-f32vector f32vector f32vector-ref f32vector-set! f32vector-length
-    list->f64vector make-f64vector f64vector f64vector-ref f64vector-set! f64vector-length
+    f64vector? list->f64vector f64vector->list make-f64vector f64vector f64vector-ref f64vector-set! f64vector-length
+    f32vector? list->f32vector f32vector->list make-f32vector f32vector f32vector-ref f32vector-set! f32vector-length
+    s32vector? list->s32vector s32vector->list make-s32vector s32vector s32vector-ref s32vector-set! s32vector-length
+    u16vector? list->u16vector u16vector->list make-u16vector u16vector u16vector-ref u16vector-set! u16vector-length
+    s16vector? list->s16vector s16vector->list make-s16vector s16vector s16vector-ref s16vector-set! s16vector-length
+    u8vector? list->u8vector u8vector->list make-u8vector u8vector u8vector-ref u8vector-set! u8vector-length
+    s8vector? list->s8vector s8vector->list make-s8vector s8vector s8vector-ref s8vector-set! s8vector-length
+    bytevector? list->bytevector bytevector->list make-bytevector bytevector bytevector-u8-ref bytevector-u8-set! bytevector-length
+
+    typevector?
+
     ; records
     record record-ref record-set! record-length
     ; hash table
@@ -138,6 +147,63 @@
             ((= i len) #t)
             ((equal? (vector-ref x i) (vector-ref y i)) (loop (+ i 1) len))
             (else #f)))))
+  (define (f32vector=? x y)
+    (if (not (= (f32vector-length x) (f32vector-length y)))
+        #f
+        (let loop ((i 0) (len (f32vector-length x)))
+          (cond
+            ((= i len) #t)
+            ((eq? (f32vector-ref x i) (f32vector-ref y i)) (loop (+ i 1) len))
+            (else #f)))))
+  (define (f64vector=? x y)
+    (if (not (= (f64vector-length x) (f64vector-length y)))
+        #f
+        (let loop ((i 0) (len (f64vector-length x)))
+          (cond
+            ((= i len) #t)
+            ((eq? (f64vector-ref x i) (f64vector-ref y i)) (loop (+ i 1) len))
+            (else #f)))))
+  (define (s32vector=? x y)
+    (if (not (= (s32vector-length x) (s32vector-length y)))
+        #f
+        (let loop ((i 0) (len (s32vector-length x)))
+          (cond
+            ((= i len) #t)
+            ((eq? (s32vector-ref x i) (s32vector-ref y i)) (loop (+ i 1) len))
+            (else #f)))))
+  (define (u16vector=? x y)
+    (if (not (= (u16vector-length x) (u16vector-length y)))
+        #f
+        (let loop ((i 0) (len (u16vector-length x)))
+          (cond
+            ((= i len) #t)
+            ((eq? (u16vector-ref x i) (u16vector-ref y i)) (loop (+ i 1) len))
+            (else #f)))))
+  (define (s16vector=? x y)
+    (if (not (= (s16vector-length x) (s16vector-length y)))
+        #f
+        (let loop ((i 0) (len (s16vector-length x)))
+          (cond
+            ((= i len) #t)
+            ((eq? (s16vector-ref x i) (s16vector-ref y i)) (loop (+ i 1) len))
+            (else #f)))))
+  (define (u8vector=? x y)
+    (if (not (= (u8vector-length x) (u8vector-length y)))
+        #f
+        (let loop ((i 0) (len (u8vector-length x)))
+          (cond
+            ((= i len) #t)
+            ((eq? (u8vector-ref x i) (u8vector-ref y i)) (loop (+ i 1) len))
+            (else #f)))))
+  (define (s8vector=? x y)
+    (if (not (= (s8vector-length x) (s8vector-length y)))
+        #f
+        (let loop ((i 0) (len (s8vector-length x)))
+          (cond
+            ((= i len) #t)
+            ((eq? (s8vector-ref x i) (s8vector-ref y i)) (loop (+ i 1) len))
+            (else #f)))))
+
   (define (record=? x y)
     (if (not (and (= (record-length x) (record-length y))
                   (eqv? (record-ref x 0) (record-ref y 0))))
@@ -152,6 +218,13 @@
         (and (##vcore.blob? x) (##vcore.blob? y) (##vcore.blob=? x y))
         (and (##vcore.pair? x) (##vcore.pair? y) (equal? (##vcore.car x) (##vcore.car y)) (equal? (##vcore.cdr x) (##vcore.cdr y)))
         (and (##vcore.vector? x) (##vcore.vector? y) (vector=? x y))
+        (and (##vcore.f32vector? x) (##vcore.f32vector? y) (f32vector=? x y))
+        (and (##vcore.f64vector? x) (##vcore.f64vector? y) (f64vector=? x y))
+        (and (##vcore.s32vector? x) (##vcore.s32vector? y) (s32vector=? x y))
+        (and (##vcore.u16vector? x) (##vcore.u16vector? y) (u16vector=? x y))
+        (and (##vcore.s16vector? x) (##vcore.s16vector? y) (s16vector=? x y))
+        (and (##vcore.u8vector? x) (##vcore.u8vector? y) (u8vector=? x y))
+        (and (##vcore.s8vector? x) (##vcore.s8vector? y) (s8vector=? x y))
         (and (##vcore.record? x) (##vcore.record? y) (record=? x y))))
 
   ; logic
@@ -491,40 +564,142 @@
   (define vector-length ##vcore.vector-length)
 
   ; typevectors
+  (define f32vector? ##vcore.f32vector?)
   (define make-f32vector
     (case-lambda
       ((len) (##vcore.make-f32vector len #f))
       ((len fill) (##vcore.make-f32vector len fill))))
-  (define (list->f32vector lst)
-    (let ((vec (make-f32vector (length lst))))
-      (let loop ((i 0) (lst lst))
-        (if (not (null? lst))
-            (begin
-              (f32vector-set! vec i (car lst))
-              (loop (+ i 1) (cdr lst)))))
-      vec))
+  (define list->f32vector ##vcore.list->f32vector)
   (define f32vector (lambda args (list->f32vector args)))
   (define f32vector-ref ##vcore.f32vector-ref)
   (define f32vector-set! ##vcore.f32vector-set!)
   (define f32vector-length ##vcore.f32vector-length)
+  (define (f32vector->list vec)
+    (let ((len (f32vector-length vec)))
+      (let loop ((acc '()) (i (- len 1)))
+        (if (< i 0)
+            acc
+            (loop (cons (f32vector-ref vec i) acc) (- i 1))))))
 
+  (define f64vector? ##vcore.f64vector?)
   (define make-f64vector
     (case-lambda
       ((len) (##vcore.make-f64vector len #f))
       ((len fill) (##vcore.make-f64vector len fill))))
-  (define (list->f64vector lst)
-    (let ((vec (make-f64vector (length lst))))
-      (let loop ((i 0) (lst lst))
-        (if (not (null? lst))
-            (begin
-              (f64vector-set! vec i (car lst))
-              (loop (+ i 1) (cdr lst)))))
-      vec))
+  (define list->f64vector ##vcore.list->f64vector)
   (define f64vector (lambda args (list->f64vector args)))
   (define f64vector-ref ##vcore.f64vector-ref)
   (define f64vector-set! ##vcore.f64vector-set!)
   (define f64vector-length ##vcore.f64vector-length)
+  (define (f64vector->list vec)
+    (let ((len (f64vector-length vec)))
+      (let loop ((acc '()) (i (- len 1)))
+        (if (< i 0)
+            acc
+            (loop (cons (f64vector-ref vec i) acc) (- i 1))))))
 
+  (define s32vector? ##vcore.s32vector?)
+  (define make-s32vector
+    (case-lambda
+      ((len) (##vcore.make-s32vector len #f))
+      ((len fill) (##vcore.make-s32vector len fill))))
+  (define list->s32vector ##vcore.list->s32vector)
+  (define s32vector (lambda args (list->s32vector args)))
+  (define s32vector-ref ##vcore.s32vector-ref)
+  (define s32vector-set! ##vcore.s32vector-set!)
+  (define s32vector-length ##vcore.s32vector-length)
+  (define (s32vector->list vec)
+    (let ((len (s32vector-length vec)))
+      (let loop ((acc '()) (i (- len 1)))
+        (if (< i 0)
+            acc
+            (loop (cons (s32vector-ref vec i) acc) (- i 1))))))
+
+  (define u16vector? ##vcore.u16vector?)
+  (define make-u16vector
+    (case-lambda
+      ((len) (##vcore.make-u16vector len #f))
+      ((len fill) (##vcore.make-u16vector len fill))))
+  (define list->u16vector ##vcore.list->u16vector)
+  (define u16vector (lambda args (list->u16vector args)))
+  (define u16vector-ref ##vcore.u16vector-ref)
+  (define u16vector-set! ##vcore.u16vector-set!)
+  (define u16vector-length ##vcore.u16vector-length)
+  (define (u16vector->list vec)
+    (let ((len (u16vector-length vec)))
+      (let loop ((acc '()) (i (- len 1)))
+        (if (< i 0)
+            acc
+            (loop (cons (u16vector-ref vec i) acc) (- i 1))))))
+
+  (define s16vector? ##vcore.s16vector?)
+  (define make-s16vector
+    (case-lambda
+      ((len) (##vcore.make-s16vector len #f))
+      ((len fill) (##vcore.make-s16vector len fill))))
+  (define list->s16vector ##vcore.list->s16vector)
+  (define s16vector (lambda args (list->s16vector args)))
+  (define s16vector-ref ##vcore.s16vector-ref)
+  (define s16vector-set! ##vcore.s16vector-set!)
+  (define s16vector-length ##vcore.s16vector-length)
+  (define (s16vector->list vec)
+    (let ((len (s16vector-length vec)))
+      (let loop ((acc '()) (i (- len 1)))
+        (if (< i 0)
+            acc
+            (loop (cons (s16vector-ref vec i) acc) (- i 1))))))
+
+  (define u8vector? ##vcore.u8vector?)
+  (define make-u8vector
+    (case-lambda
+      ((len) (##vcore.make-u8vector len #f))
+      ((len fill) (##vcore.make-u8vector len fill))))
+  (define list->u8vector ##vcore.list->u8vector)
+  (define u8vector (lambda args (list->u8vector args)))
+  (define u8vector-ref ##vcore.u8vector-ref)
+  (define u8vector-set! ##vcore.u8vector-set!)
+  (define u8vector-length ##vcore.u8vector-length)
+  (define (u8vector->list vec)
+    (let ((len (u8vector-length vec)))
+      (let loop ((acc '()) (i (- len 1)))
+        (if (< i 0)
+            acc
+            (loop (cons (u8vector-ref vec i) acc) (- i 1))))))
+
+  (define bytevector? u8vector?)
+  (define make-bytevector make-u8vector)
+  (define list->bytevector list->u8vector)
+  (define bytevector->list u8vector->list)
+  (define bytevector u8vector)
+  (define bytevector-u8-ref u8vector-ref)
+  (define bytevector-u8-set! u8vector-set!)
+  (define bytevector-length u8vector-length)
+
+  (define s8vector? ##vcore.s8vector?)
+  (define make-s8vector
+    (case-lambda
+      ((len) (##vcore.make-s8vector len #f))
+      ((len fill) (##vcore.make-s8vector len fill))))
+  (define list->s8vector ##vcore.list->s8vector)
+  (define s8vector (lambda args (list->s8vector args)))
+  (define s8vector-ref ##vcore.s8vector-ref)
+  (define s8vector-set! ##vcore.s8vector-set!)
+  (define s8vector-length ##vcore.s8vector-length)
+  (define (s8vector->list vec)
+    (let ((len (s8vector-length vec)))
+      (let loop ((acc '()) (i (- len 1)))
+        (if (< i 0)
+            acc
+            (loop (cons (s8vector-ref vec i) acc) (- i 1))))))
+
+  (define (typevector? x)
+    (or (s8vector? x)
+        (u8vector? x)
+        (s16vector? x)
+        (u16vector? x)
+        (s32vector? x)
+        (f32vector? x)
+        (f64vector? x)))
 
   (define (vector->list vec)
     (let ((len (vector-length vec)))
