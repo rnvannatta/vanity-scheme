@@ -3,6 +3,9 @@ include Makefile.sources
 .PHONY : deps all install compiler interpreter windows_interpreter runtime windows_runtime tests tests_linux tests_windows install_compiler lay_egg testffi
 
 CC = gcc
+# for when I fuck up the bootstrap
+#PATCH := LD_PRELOAD=~/vscheme/libpatch.so
+PATCH =
 
 windows_runtime windows_interpreter : CC = /usr/bin/x86_64-w64-mingw32-gcc
 windows_runtime windows_interpreter : CFLAGS += -Wa,--no-warn -lshlwapi
@@ -69,12 +72,12 @@ tests_linux : compiler runtime
     ( EXE=`mktemp` ; \
 		echo "bin/vsc $$test && ./a.out" ; \
     OVERRIDE=`realpath lib/` ; \
-		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
+		if ! ($(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
 			echo "COMPILE FAILURE: $$test"; \
       \rm -f $$EXE ; \
 			exit 1; \
 	  fi ; \
-		if ! (cd `dirname $$test` ; LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH $$EXE) ; then \
+		if ! (cd `dirname $$test` ; $(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH $$EXE) ; then \
 			echo "FAILURE: $$test"; \
       \rm -f $$EXE ; \
 			exit 1; \
@@ -112,15 +115,15 @@ lay_egg : $(BOOT)
 
 bin/bootstrap/runtime/%.c : runtime/%.scm
 	@mkdir -p `dirname $@`
-	vsc -t $< -o $@ $(SCMFLAGS) --shared -Iinclude
+	$(PATCH) vsc -t $< -o $@ $(SCMFLAGS) --shared -Iinclude
 	@{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
 bin/bootstrap/src/%.c : src/%.scm
 	@mkdir -p `dirname $@`
-	vsc -t $< -o $@ $(SCMFLAGS) -Ibuild/include
+	$(PATCH) vsc -t $< -o $@ $(SCMFLAGS) -Ibuild/include
 	@{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
 bin/bootstrap/src/%.c : config/%.scm
 	@mkdir -p `dirname $@`
-	vsc -t $< -o $@ $(SCMFLAGS) -Ibuild/include
+	$(PATCH) vsc -t $< -o $@ $(SCMFLAGS) -Ibuild/include
 	@{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
 bin/bootstrap/src/%.c : src/%.c
 	cp $< $@
@@ -180,7 +183,7 @@ lib/x86_64-w64-mingw32/vscheme.dll : $(WINDOWS_RUNTIME_OBJ)
 	/usr/bin/x86_64-w64-mingw32-gcc -o $@ $^ $(CFLAGS) -shared -Wl,--export-all-symbols -Wl,--stack,8388608
 
 build/%.o : build/%.scm
-	vsc -c $< -o $@ $(SCMFLAGS) -Wc,-fPIC -Iinclude -Ibuild/include
+	$(PATCH) vsc -c $< -o $@ $(SCMFLAGS) -Wc,-fPIC -Iinclude -Ibuild/include
 build/%.o : build/%.c
 	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS) -Iruntime -Isrc
 

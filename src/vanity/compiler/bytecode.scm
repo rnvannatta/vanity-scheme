@@ -49,6 +49,7 @@
   (define (process-literal x)
     (cond ((or (integer? x)
                (number? x)
+               (##vcore.void? x)
                (char? x)
                (string? x)
                (eq? x #t)

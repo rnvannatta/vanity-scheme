@@ -2119,6 +2119,24 @@ SYSV_CALL void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   }
 }
 
+#define IMPLEMENT_PRINT_VECTOR(Prefix, prefix, stride, ctype, format) \
+static void Print ## Prefix(FILE * f, VBlob * blob) {\
+  unsigned len = (blob->len/stride)-1; \
+  ctype * ints = (ctype*)(blob->buf+stride); \
+  fprintf(f, "#" #prefix "("); \
+  for(int i = 0; i < len-1; i++) \
+    fprintf(f, format " ", ints[i]); \
+  if(len) \
+    fprintf(f, format, ints[len-1]); \
+  fprintf(f, ")"); \
+}
+
+IMPLEMENT_PRINT_VECTOR(S8, s8, 1, int8_t, "%hhd")
+IMPLEMENT_PRINT_VECTOR(U8, u8, 1, uint8_t, "%hhu")
+IMPLEMENT_PRINT_VECTOR(S16, s16, 2, int16_t, "%hd")
+IMPLEMENT_PRINT_VECTOR(U16, u16, 2, uint16_t, "%hu")
+IMPLEMENT_PRINT_VECTOR(S32, s32, 4, int32_t, "%d")
+
 static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
   uint64_t type = VWordType(v);
   switch(type) {
@@ -2246,6 +2264,53 @@ static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
             fputc('"', f);
           } else {
             fprintf(f, "%s", blob->buf);
+          }
+          break;
+        }
+        case VBUFFER:
+        {
+          VBlob * blob = ptr;
+          switch(blob->buf[0]) {
+            case BUF_S8:
+              PrintS8(f, blob);
+              break;
+            case BUF_U8:
+              PrintU8(f, blob);
+              break;
+            case BUF_S16:
+              PrintS16(f, blob);
+              break;
+            case BUF_U16:
+              PrintU16(f, blob);
+              break;
+            case BUF_S32:
+              PrintS32(f, blob);
+              break;
+            case BUF_F32:
+            {
+              unsigned len = (blob->len/4)-1;
+              float * floats = (float*)(blob->buf+4);
+              fprintf(f, "#f32(");
+              for(int i = 0; i < len-1; i++)
+                fprintf(f, "%f ", floats[i]);
+              if(len)
+                fprintf(f, "%f", floats[len-1]);
+              fprintf(f, ")");
+              break;
+            }
+            case BUF_F64:
+            {
+              unsigned len = (blob->len/8)-1;
+              double * doubles = (double*)(blob->buf+8);
+              fprintf(f, "#f64(");
+              for(int i = 0; i < len-1; i++)
+                fprintf(f, "%f ", doubles[i]);
+              if(len)
+                fprintf(f, "%f", doubles[len-1]);
+              fprintf(f, ")");
+              break;
+              break;
+            }
           }
           break;
         }

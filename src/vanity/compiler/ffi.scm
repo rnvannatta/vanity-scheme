@@ -349,6 +349,13 @@
 
           ('float '(f32-pointer . "VCheckedDecodeF32Ptr"))
           ('double '(f64-pointer . "VCheckedDecodeF64Ptr"))
+
+          ('int '(s32-pointer . "VCheckedDecodeS32Ptr"))
+          ('unsigned-short '(u16-pointer . "VCheckedDecodeU16Ptr"))
+          ('short '(s16-pointer . "VCheckedDecodeS16Ptr"))
+          ('unsigned-char '(u8-pointer . "VCheckedDecodeU8Ptr"))
+          ('signed-char '(s8-pointer . "VCheckedDecodeS8Ptr"))
+
           (('const 'float) '(f32-pointer . "VCheckedDecodeF32Ptr"))
           (('const 'double) '(f64-pointer . "VCheckedDecodeF64Ptr"))
 

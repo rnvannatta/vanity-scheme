@@ -115,6 +115,7 @@
       (if lifting-literals?
           (cond ((integer? x) x)
                 ((number? x) x)
+                ((##vcore.void? x) x)
                 ((char? x) x)
                 ((eq? x #t) x)
                 ((eq? x #f) x)
