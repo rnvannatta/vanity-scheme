@@ -16,8 +16,3 @@ void draw_rect(Window * win, float x, float y, float w, float h);
 void present_window(Window * win);
 
 void floatsleep(double seconds);
-
-typedef struct FrameTimer FrameTimer;
-struct FrameTimer * make_frametimer_impl();
-double frametimer_lap(FrameTimer * ft);
-void close_frametimer_impl(FrameTimer * ft);

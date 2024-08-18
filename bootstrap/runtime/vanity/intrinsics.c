@@ -27,12 +27,14 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D533 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
-static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D532 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "_V0vanity_V0intrinsics_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D545 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
+static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D544 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "_V0vanity_V0intrinsics_V20" };
 VWEAK VWORD _V0eqv_Q;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0eqv_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "eqv\?" };
 VWEAK VWORD _V0lookup__intrinsic;VWEAK struct { VBlob sym; char bytes[17]; } _VW_V0lookup__intrinsic = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 17 }, "lookup-intrinsic" };
 VWEAK VWORD _V0lookup__intrinsic__name;VWEAK struct { VBlob sym; char bytes[22]; } _VW_V0lookup__intrinsic__name = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 22 }, "lookup-intrinsic-name" };
 VWEAK VWORD _V0lookup__inline__name;VWEAK struct { VBlob sym; char bytes[19]; } _VW_V0lookup__inline__name = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 19 }, "lookup-inline-name" };
+VWEAK VWORD _V40_V10vcore_Djiffies__per__second;VWEAK VClosure _VW_V40_V10vcore_Djiffies__per__second = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VJiffiesPerSecond, NULL };
+VWEAK VWORD _V40_V10vcore_Dcurrent__jiffy;VWEAK VClosure _VW_V40_V10vcore_Dcurrent__jiffy = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCurrentJiffy, NULL };
 VWEAK VWORD _V40_V10vcore_Daccess;VWEAK VClosure _VW_V40_V10vcore_Daccess = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VAccess, NULL };
 VWEAK VWORD _V40_V10vcore_Dmake__temporary__file;VWEAK VClosure _VW_V40_V10vcore_Dmake__temporary__file = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMakeTemporaryFile2, NULL };
 VWEAK VWORD _V40_V10vcore_Drealpath;VWEAK VClosure _VW_V40_V10vcore_Drealpath = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRealpath, NULL };
@@ -193,6 +195,10 @@ VWEAK VWORD _V40_V10vcore_D_W;VWEAK VClosure _VW_V40_V10vcore_D_W = { .base = { 
 VWEAK VWORD _V40_V10vcore_D_S;VWEAK VClosure _VW_V40_V10vcore_D_S = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMul2, NULL };
 VWEAK VWORD _V40_V10vcore_D__;VWEAK VClosure _VW_V40_V10vcore_D__ = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSub2, NULL };
 VWEAK VWORD _V40_V10vcore_D_P;VWEAK VClosure _VW_V40_V10vcore_D_P = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VAdd2, NULL };
+VWEAK VWORD _V40_V10vcore_Dexact;VWEAK VClosure _VW_V40_V10vcore_Dexact = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VExact, NULL };
+VWEAK VWORD _V40_V10vcore_Dinexact;VWEAK VClosure _VW_V40_V10vcore_Dinexact = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VInexact, NULL };
+VWEAK VWORD _V10vcore_Dinexact;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V10vcore_Dinexact = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "##vcore.inexact" };
+VWEAK VWORD _V10vcore_Dexact;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V10vcore_Dexact = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 14 }, "##vcore.exact" };
 VWEAK VWORD _V10vcore_D_P;VWEAK struct { VBlob sym; char bytes[10]; } _VW_V10vcore_D_P = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 10 }, "##vcore.+" };
 VWEAK VWORD _V10vcore_D__;VWEAK struct { VBlob sym; char bytes[10]; } _VW_V10vcore_D__ = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 10 }, "##vcore.-" };
 VWEAK VWORD _V10vcore_D_S;VWEAK struct { VBlob sym; char bytes[10]; } _VW_V10vcore_D_S = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 10 }, "##vcore.*" };
@@ -348,167 +354,173 @@ VWEAK VWORD _V10vcore_Dawait;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V10
 VWEAK VWORD _V10vcore_Drealpath;VWEAK struct { VBlob sym; char bytes[17]; } _VW_V10vcore_Drealpath = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 17 }, "##vcore.realpath" };
 VWEAK VWORD _V10vcore_Dmake__temporary__file;VWEAK struct { VBlob sym; char bytes[28]; } _VW_V10vcore_Dmake__temporary__file = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 28 }, "##vcore.make-temporary-file" };
 VWEAK VWORD _V10vcore_Daccess;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V10vcore_Daccess = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "##vcore.access" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D531 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAccess" };
-static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D530 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VMakeTemporaryFile2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D529 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRealpath" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D528 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAwait" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D527 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAsync" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D526 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VFiberForkList" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D525 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRandomAdvance" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D524 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VRandomSampleFloat" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D523 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VRandomSampleBounded" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D522 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VRandomSample" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D521 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRandomCopy" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D520 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VMakeRandom" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D519 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VRegisterSigint" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D518 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCommandLine2" };
-static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D517 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VOpenOutputProcess2" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D516 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenInputProcess2" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D515 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSystem2" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D514 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VGarbageCollect" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D513 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VFinalize" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D512 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHasFinalizer" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D511 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VSetFinalizer" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D510 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VNewlineStdout" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D509 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VWriteStdout" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D508 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VDisplayStdout" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D507 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VNewline2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D506 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VWrite2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D505 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDisplay2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D504 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRead2" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D503 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadLine2" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D502 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadChar2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D501 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VEofP2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D500 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VGetOutputString2" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D499 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputString2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D498 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VTtyPortP" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D497 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCloseStream2" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D496 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputStream2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D495 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VOpenInputStream2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D494 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VDupStderr2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D493 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VDupStdout2" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D492 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VDupStdin2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D491 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStderrPort" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D490 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStdoutPort" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D489 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VStdinPort" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D488 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VCharInt2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D487 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VGensym" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D486 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSymbolString2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D485 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringNumber2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D484 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringSymbol2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D483 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringLength2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D482 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringSet2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D481 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringRef2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D480 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VStringCopy2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D479 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSubstring2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D478 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeString2" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D477 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VHashTableDelete" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D476 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D475 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableRef" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D474 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VHashTableHashFunc" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D473 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VHashTableEqvFunc" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D472 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeHashTable" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D471 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRecordLength2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D470 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordSet2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D469 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordRef2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D468 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VCreateRecord2" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D467 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VS8VectorLength" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D466 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorSet" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D465 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorRef" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D464 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListS8Vector" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D463 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeS8Vector" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D462 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS8VectorP" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D461 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VU8VectorLength" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D460 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorSet" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D459 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorRef" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D458 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListU8Vector" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D457 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeU8Vector" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D456 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VU8VectorP" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D455 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS16VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D454 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D453 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D452 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS16Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D451 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS16Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D450 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS16VectorP" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D449 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VU16VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D448 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D447 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D446 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListU16Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D445 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeU16Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D444 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VU16VectorP" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D443 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS32VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D442 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D441 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D440 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS32Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D439 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS32Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D438 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS32VectorP" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D437 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF32VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D436 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D435 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D434 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF32Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D433 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF32Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D432 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF32VectorP" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D431 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF64VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D430 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D429 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D428 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF64Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D427 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF64Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D426 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF64VectorP" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D425 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VVectorLength2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D424 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorSet2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D423 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorRef2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D422 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VListVector2" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D421 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCdr2" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D420 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCar2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D419 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCdr2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D418 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCar2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D417 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCons2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D416 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VLoadLibrary2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D415 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeImport2" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D414 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VLookupLibrary2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D413 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMultiDefine2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D412 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSetDeclare" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D411 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VFunction2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D410 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSetGlobalVar2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D409 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VDefineGlobalVar2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D408 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VExit2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D407 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAbort2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D406 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VApplyCps" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D405 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VApply2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D404 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VCallValues2" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D403 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VCallCC2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D402 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VNext2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D401 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRaise" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D400 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VPopExceptionHandler" };
-static struct { VBlob sym; char bytes[22]; } _V10_Dstring_D399 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 22 }, "VPushExceptionHandler" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D398 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VGetExceptionHandler" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D397 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VPopDynamic" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D396 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VPushDynamic" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D395 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VGetDynamics" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D394 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VNot2" };
-static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D393 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "VEqv" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D392 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VBlobEqv2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D391 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSymbolEqv2" };
-static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D390 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "VEq2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D389 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VVoidP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D388 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VCharP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D387 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDoubleP2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D386 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VIntP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D385 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VStringP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D384 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VSymbolP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D383 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VBlobP2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D382 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VProcedureP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D381 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VVectorP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D380 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRecordP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D379 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VPairP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D378 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VNullP2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D377 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VRem2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D376 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VQuot2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D375 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCmp2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D374 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VDiv2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D373 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VMul2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D372 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VSub2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D371 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VAdd2" };
+VWEAK VWORD _V10vcore_Dcurrent__jiffy;VWEAK struct { VBlob sym; char bytes[22]; } _VW_V10vcore_Dcurrent__jiffy = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 22 }, "##vcore.current-jiffy" };
+VWEAK VWORD _V10vcore_Djiffies__per__second;VWEAK struct { VBlob sym; char bytes[27]; } _VW_V10vcore_Djiffies__per__second = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 27 }, "##vcore.jiffies-per-second" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D543 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VJiffiesPerSecond" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D542 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCurrentJiffy" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D541 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAccess" };
+static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D540 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VMakeTemporaryFile2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D539 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRealpath" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D538 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAwait" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D537 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAsync" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D536 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VFiberForkList" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D535 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRandomAdvance" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D534 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VRandomSampleFloat" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D533 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VRandomSampleBounded" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D532 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VRandomSample" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D531 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRandomCopy" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D530 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VMakeRandom" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D529 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VRegisterSigint" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D528 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCommandLine2" };
+static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D527 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VOpenOutputProcess2" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D526 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenInputProcess2" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D525 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSystem2" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D524 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VGarbageCollect" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D523 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VFinalize" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D522 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHasFinalizer" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D521 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VSetFinalizer" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D520 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VNewlineStdout" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D519 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VWriteStdout" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D518 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VDisplayStdout" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D517 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VNewline2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D516 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VWrite2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D515 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDisplay2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D514 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRead2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D513 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadLine2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D512 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadChar2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D511 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VEofP2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D510 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VGetOutputString2" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D509 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputString2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D508 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VTtyPortP" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D507 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCloseStream2" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D506 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputStream2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D505 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VOpenInputStream2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D504 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VDupStderr2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D503 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VDupStdout2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D502 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VDupStdin2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D501 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStderrPort" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D500 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStdoutPort" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D499 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VStdinPort" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D498 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VCharInt2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D497 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VGensym" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D496 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSymbolString2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D495 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringNumber2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D494 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringSymbol2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D493 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringLength2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D492 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringSet2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D491 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringRef2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D490 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VStringCopy2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D489 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSubstring2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D488 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeString2" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D487 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VHashTableDelete" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D486 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D485 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableRef" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D484 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VHashTableHashFunc" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D483 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VHashTableEqvFunc" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D482 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeHashTable" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D481 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRecordLength2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D480 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordSet2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D479 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordRef2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D478 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VCreateRecord2" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D477 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VS8VectorLength" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D476 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorSet" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D475 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorRef" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D474 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListS8Vector" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D473 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeS8Vector" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D472 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS8VectorP" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D471 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VU8VectorLength" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D470 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorSet" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D469 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorRef" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D468 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListU8Vector" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D467 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeU8Vector" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D466 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VU8VectorP" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D465 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS16VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D464 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D463 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D462 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS16Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D461 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS16Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D460 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS16VectorP" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D459 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VU16VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D458 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D457 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D456 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListU16Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D455 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeU16Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D454 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VU16VectorP" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D453 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS32VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D452 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D451 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D450 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS32Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D449 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS32Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D448 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS32VectorP" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D447 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF32VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D446 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D445 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D444 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF32Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D443 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF32Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D442 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF32VectorP" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D441 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF64VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D440 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D439 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D438 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF64Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D437 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF64Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D436 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF64VectorP" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D435 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VVectorLength2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D434 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorSet2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D433 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorRef2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D432 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VListVector2" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D431 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCdr2" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D430 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCar2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D429 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCdr2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D428 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCar2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D427 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCons2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D426 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VLoadLibrary2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D425 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeImport2" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D424 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VLookupLibrary2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D423 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMultiDefine2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D422 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSetDeclare" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D421 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VFunction2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D420 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSetGlobalVar2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D419 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VDefineGlobalVar2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D418 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VExit2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D417 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAbort2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D416 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VApplyCps" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D415 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VApply2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D414 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VCallValues2" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D413 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VCallCC2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D412 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VNext2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D411 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRaise" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D410 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VPopExceptionHandler" };
+static struct { VBlob sym; char bytes[22]; } _V10_Dstring_D409 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 22 }, "VPushExceptionHandler" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D408 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VGetExceptionHandler" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D407 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VPopDynamic" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D406 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VPushDynamic" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D405 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VGetDynamics" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D404 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VNot2" };
+static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D403 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "VEqv" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D402 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VBlobEqv2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D401 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSymbolEqv2" };
+static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D400 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "VEq2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D399 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VVoidP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D398 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VCharP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D397 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDoubleP2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D396 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VIntP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D395 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VStringP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D394 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VSymbolP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D393 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VBlobP2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D392 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VProcedureP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D391 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VVectorP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D390 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRecordP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D389 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VPairP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D388 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VNullP2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D387 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VRem2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D386 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VQuot2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D385 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCmp2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D384 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VDiv2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D383 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VMul2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D382 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VSub2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D381 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VAdd2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D380 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VExact" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D379 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VInexact" };
 VWEAK VWORD _V10vcore_Dnull_Q;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V10vcore_Dnull_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 14 }, "##vcore.null\?" };
 VWEAK VWORD _V10vcore_Dpair_Q;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V10vcore_Dpair_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 14 }, "##vcore.pair\?" };
 VWEAK VWORD _V10vcore_Dnot;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V10vcore_Dnot = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "##vcore.not" };
@@ -516,19 +528,21 @@ VWEAK VWORD _V10vcore_Deq_Q;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V10v
 VWEAK VWORD _V10vcore_Dcons;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V10vcore_Dcons = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "##vcore.cons" };
 VWEAK VWORD _V10vcore_Dcar;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V10vcore_Dcar = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "##vcore.car" };
 VWEAK VWORD _V10vcore_Dcdr;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V10vcore_Dcdr = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "##vcore.cdr" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D370 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineCdr2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D369 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineCar2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D368 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VInlineCons2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D378 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineCdr2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D377 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineCar2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D376 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VInlineCons2" };
 VWEAK VWORD _V10vcore_Dqcons;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V10vcore_Dqcons = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 14 }, "##vcore.qcons" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D367 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VInlineEq2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D366 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineNot2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D365 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VInlinePairP2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D364 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VInlineNullP2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D375 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VInlineEq2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D374 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineNot2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D373 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VInlinePairP2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D372 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VInlineNullP2" };
 static __attribute__((constructor)) void VDllMain1() {
   _V0eqv_Q = VEncodePointer(VLookupConstant("_V0eqv_Q", &_VW_V0eqv_Q), VPOINTER_OTHER);
   _V0lookup__intrinsic = VEncodePointer(VLookupConstant("_V0lookup__intrinsic", &_VW_V0lookup__intrinsic), VPOINTER_OTHER);
   _V0lookup__intrinsic__name = VEncodePointer(VLookupConstant("_V0lookup__intrinsic__name", &_VW_V0lookup__intrinsic__name), VPOINTER_OTHER);
   _V0lookup__inline__name = VEncodePointer(VLookupConstant("_V0lookup__inline__name", &_VW_V0lookup__inline__name), VPOINTER_OTHER);
+  _V40_V10vcore_Djiffies__per__second = VEncodePointer(VLookupConstant("_V40_V10vcore_Djiffies__per__second", &_VW_V40_V10vcore_Djiffies__per__second), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcurrent__jiffy = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcurrent__jiffy", &_VW_V40_V10vcore_Dcurrent__jiffy), VPOINTER_CLOSURE);
   _V40_V10vcore_Daccess = VEncodePointer(VLookupConstant("_V40_V10vcore_Daccess", &_VW_V40_V10vcore_Daccess), VPOINTER_CLOSURE);
   _V40_V10vcore_Dmake__temporary__file = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__temporary__file", &_VW_V40_V10vcore_Dmake__temporary__file), VPOINTER_CLOSURE);
   _V40_V10vcore_Drealpath = VEncodePointer(VLookupConstant("_V40_V10vcore_Drealpath", &_VW_V40_V10vcore_Drealpath), VPOINTER_CLOSURE);
@@ -689,6 +703,10 @@ static __attribute__((constructor)) void VDllMain1() {
   _V40_V10vcore_D_S = VEncodePointer(VLookupConstant("_V40_V10vcore_D_S", &_VW_V40_V10vcore_D_S), VPOINTER_CLOSURE);
   _V40_V10vcore_D__ = VEncodePointer(VLookupConstant("_V40_V10vcore_D__", &_VW_V40_V10vcore_D__), VPOINTER_CLOSURE);
   _V40_V10vcore_D_P = VEncodePointer(VLookupConstant("_V40_V10vcore_D_P", &_VW_V40_V10vcore_D_P), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dexact", &_VW_V40_V10vcore_Dexact), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dinexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dinexact", &_VW_V40_V10vcore_Dinexact), VPOINTER_CLOSURE);
+  _V10vcore_Dinexact = VEncodePointer(VLookupConstant("_V10vcore_Dinexact", &_VW_V10vcore_Dinexact), VPOINTER_OTHER);
+  _V10vcore_Dexact = VEncodePointer(VLookupConstant("_V10vcore_Dexact", &_VW_V10vcore_Dexact), VPOINTER_OTHER);
   _V10vcore_D_P = VEncodePointer(VLookupConstant("_V10vcore_D_P", &_VW_V10vcore_D_P), VPOINTER_OTHER);
   _V10vcore_D__ = VEncodePointer(VLookupConstant("_V10vcore_D__", &_VW_V10vcore_D__), VPOINTER_OTHER);
   _V10vcore_D_S = VEncodePointer(VLookupConstant("_V10vcore_D_S", &_VW_V10vcore_D_S), VPOINTER_OTHER);
@@ -844,6 +862,8 @@ static __attribute__((constructor)) void VDllMain1() {
   _V10vcore_Drealpath = VEncodePointer(VLookupConstant("_V10vcore_Drealpath", &_VW_V10vcore_Drealpath), VPOINTER_OTHER);
   _V10vcore_Dmake__temporary__file = VEncodePointer(VLookupConstant("_V10vcore_Dmake__temporary__file", &_VW_V10vcore_Dmake__temporary__file), VPOINTER_OTHER);
   _V10vcore_Daccess = VEncodePointer(VLookupConstant("_V10vcore_Daccess", &_VW_V10vcore_Daccess), VPOINTER_OTHER);
+  _V10vcore_Dcurrent__jiffy = VEncodePointer(VLookupConstant("_V10vcore_Dcurrent__jiffy", &_VW_V10vcore_Dcurrent__jiffy), VPOINTER_OTHER);
+  _V10vcore_Djiffies__per__second = VEncodePointer(VLookupConstant("_V10vcore_Djiffies__per__second", &_VW_V10vcore_Djiffies__per__second), VPOINTER_OTHER);
   _V10vcore_Dnull_Q = VEncodePointer(VLookupConstant("_V10vcore_Dnull_Q", &_VW_V10vcore_Dnull_Q), VPOINTER_OTHER);
   _V10vcore_Dpair_Q = VEncodePointer(VLookupConstant("_V10vcore_Dpair_Q", &_VW_V10vcore_Dpair_Q), VPOINTER_OTHER);
   _V10vcore_Dnot = VEncodePointer(VLookupConstant("_V10vcore_Dnot", &_VW_V10vcore_Dnot), VPOINTER_OTHER);
@@ -884,11 +904,11 @@ static void _V10_Dlookup__inline__name_D5_k12(VRuntime * runtime, VEnv * upenv, 
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__inline__name_D5_k12, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.23 0 0) ((bruijn ##.k.16 9 0) (##string ##.string.370)) ((bruijn ##.k.16 9 0) #f))
+  // (if (bruijn ##.p.23 0 0) ((bruijn ##.k.16 9 0) (##string ##.string.378)) ((bruijn ##.k.16 9 0) #f))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 9-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D370.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D378.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 9-1, 0), runtime,
       VEncodeBool(false));
@@ -908,11 +928,11 @@ static void _V10_Dlookup__inline__name_D5_k11(VRuntime * runtime, VEnv * upenv, 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.22 0 0) ((bruijn ##.k.16 8 0) (##string ##.string.369)) ((bruijn ##.eqv?.4 10 0) (close _V10_Dlookup__inline__name_D5_k12) (bruijn ##.x.0.9 7 0) '##vcore.cdr))
+  // (if (bruijn ##.p.22 0 0) ((bruijn ##.k.16 8 0) (##string ##.string.377)) ((bruijn ##.eqv?.4 10 0) (close _V10_Dlookup__inline__name_D5_k12) (bruijn ##.x.0.9 7 0) '##vcore.cdr))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 8-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D369.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D377.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 10-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D5_k12, env)}),
@@ -934,11 +954,11 @@ static void _V10_Dlookup__inline__name_D5_k10(VRuntime * runtime, VEnv * upenv, 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.21 0 0) ((bruijn ##.k.16 7 0) (##string ##.string.368)) ((bruijn ##.eqv?.4 9 0) (close _V10_Dlookup__inline__name_D5_k11) (bruijn ##.x.0.9 6 0) '##vcore.car))
+  // (if (bruijn ##.p.21 0 0) ((bruijn ##.k.16 7 0) (##string ##.string.376)) ((bruijn ##.eqv?.4 9 0) (close _V10_Dlookup__inline__name_D5_k11) (bruijn ##.x.0.9 6 0) '##vcore.car))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 7-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D368.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D376.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 9-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D5_k11, env)}),
@@ -978,11 +998,11 @@ static void _V10_Dlookup__inline__name_D5_k7(VRuntime * runtime, VEnv * upenv, i
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.20 0 0) ((bruijn ##.k.16 5 0) (##string ##.string.367)) ((bruijn ##.eqv?.4 7 0) (close _V10_Dlookup__inline__name_D5_k8) (bruijn ##.x.0.9 4 0) '##vcore.cons))
+  // (if (bruijn ##.p.20 0 0) ((bruijn ##.k.16 5 0) (##string ##.string.375)) ((bruijn ##.eqv?.4 7 0) (close _V10_Dlookup__inline__name_D5_k8) (bruijn ##.x.0.9 4 0) '##vcore.cons))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 5-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D367.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D375.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 7-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D5_k8, env)}),
@@ -1004,11 +1024,11 @@ static void _V10_Dlookup__inline__name_D5_k6(VRuntime * runtime, VEnv * upenv, i
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.19 0 0) ((bruijn ##.k.16 4 0) (##string ##.string.366)) ((bruijn ##.eqv?.4 6 0) (close _V10_Dlookup__inline__name_D5_k7) (bruijn ##.x.0.9 3 0) '##vcore.eq?))
+  // (if (bruijn ##.p.19 0 0) ((bruijn ##.k.16 4 0) (##string ##.string.374)) ((bruijn ##.eqv?.4 6 0) (close _V10_Dlookup__inline__name_D5_k7) (bruijn ##.x.0.9 3 0) '##vcore.eq?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(upenv->up->up->up->vars[0], runtime,
-      VEncodePointer(&_V10_Dstring_D366.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D374.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 6-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D5_k7, env)}),
@@ -1030,11 +1050,11 @@ static void _V10_Dlookup__inline__name_D5_k5(VRuntime * runtime, VEnv * upenv, i
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.18 0 0) ((bruijn ##.k.16 3 0) (##string ##.string.365)) ((bruijn ##.eqv?.4 5 0) (close _V10_Dlookup__inline__name_D5_k6) (bruijn ##.x.0.9 2 0) '##vcore.not))
+  // (if (bruijn ##.p.18 0 0) ((bruijn ##.k.16 3 0) (##string ##.string.373)) ((bruijn ##.eqv?.4 5 0) (close _V10_Dlookup__inline__name_D5_k6) (bruijn ##.x.0.9 2 0) '##vcore.not))
 if(VDecodeBool(
 _var0)) {
     V_CALL(upenv->up->up->vars[0], runtime,
-      VEncodePointer(&_V10_Dstring_D365.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D373.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 5-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D5_k6, env)}),
@@ -1056,11 +1076,11 @@ static void _V10_Dlookup__inline__name_D5_k4(VRuntime * runtime, VEnv * upenv, i
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.17 0 0) ((bruijn ##.k.16 2 0) (##string ##.string.364)) ((bruijn ##.eqv?.4 4 0) (close _V10_Dlookup__inline__name_D5_k5) (bruijn ##.x.0.9 1 0) '##vcore.pair?))
+  // (if (bruijn ##.p.17 0 0) ((bruijn ##.k.16 2 0) (##string ##.string.372)) ((bruijn ##.eqv?.4 4 0) (close _V10_Dlookup__inline__name_D5_k5) (bruijn ##.x.0.9 1 0) '##vcore.pair?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(upenv->up->vars[0], runtime,
-      VEncodePointer(&_V10_Dstring_D364.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D372.sym, VPOINTER_OTHER));
 } else {
     V_CALL(upenv->up->up->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D5_k5, env)}),
@@ -1103,25 +1123,123 @@ static void _V10_Dlookup__inline__name_D5_lambda2(VRuntime * runtime, VEnv * upe
       _var1);
  }
 }
-static void _V10_Dlookup__intrinsic__name_D6_k61(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10_Dlookup__intrinsic__name_D6_k61" };
+static void _V10_Dlookup__intrinsic__name_D6_k63(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic__name_D6_k63" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D6_k61, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D6_k63, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
- V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic__name_D6_k61, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.189 1 0) ((bruijn ##.k.190 0 0) (bruijn ##.p.189 1 0)) ((bruijn ##.eqv?.4 52 0) (bruijn ##.k.190 0 0) (bruijn ##.x.1.11 49 0) '##vcore.qcons))
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic__name_D6_k63, runtime, upenv, 1, argc, _var0) {
+  // (if (bruijn ##.p.193 1 0) ((bruijn ##.k.194 0 0) (bruijn ##.p.193 1 0)) ((bruijn ##.eqv?.4 54 0) (bruijn ##.k.194 0 0) (bruijn ##.x.1.11 51 0) '##vcore.qcons))
 if(VDecodeBool(
 upenv->vars[0])) {
     V_CALL(_var0, runtime,
       upenv->vars[0]);
 } else {
-    V_CALL(VGetArg(upenv, 52-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 54-1, 0), runtime,
       _var0,
-      VGetArg(upenv, 49-1, 0),
+      VGetArg(upenv, 51-1, 0),
       _V10vcore_Dqcons);
+}
+ }
+}
+static void _V10_Dlookup__intrinsic__name_D6_k180(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic__name_D6_k180" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D6_k180, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic__name_D6_k180, runtime, upenv, 1, argc, _var0) {
+  // (if (bruijn ##.p.192 0 0) ((bruijn ##.k.26 168 0) (##string ##.string.543)) ((bruijn ##.k.26 168 0) #f))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 168-1, 0), runtime,
+      VEncodePointer(&_V10_Dstring_D543.sym, VPOINTER_OTHER));
+} else {
+    V_CALL(VGetArg(upenv, 168-1, 0), runtime,
+      VEncodeBool(false));
+}
+ }
+}
+static void _V10_Dlookup__intrinsic__name_D6_k179(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic__name_D6_k179" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D6_k179, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic__name_D6_k179, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.191 0 0) ((bruijn ##.k.26 167 0) (##string ##.string.542)) ((bruijn ##.eqv?.4 169 0) (close _V10_Dlookup__intrinsic__name_D6_k180) (bruijn ##.x.1.11 166 0) '##vcore.jiffies-per-second))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 167-1, 0), runtime,
+      VEncodePointer(&_V10_Dstring_D542.sym, VPOINTER_OTHER));
+} else {
+    V_CALL(VGetArg(upenv, 169-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k180, env)}),
+      VGetArg(upenv, 166-1, 0),
+      _V10vcore_Djiffies__per__second);
+}
+ }
+}
+static void _V10_Dlookup__intrinsic__name_D6_k178(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic__name_D6_k178" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D6_k178, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic__name_D6_k178, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.190 0 0) ((bruijn ##.k.26 166 0) (##string ##.string.541)) ((bruijn ##.eqv?.4 168 0) (close _V10_Dlookup__intrinsic__name_D6_k179) (bruijn ##.x.1.11 165 0) '##vcore.current-jiffy))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 166-1, 0), runtime,
+      VEncodePointer(&_V10_Dstring_D541.sym, VPOINTER_OTHER));
+} else {
+    V_CALL(VGetArg(upenv, 168-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k179, env)}),
+      VGetArg(upenv, 165-1, 0),
+      _V10vcore_Dcurrent__jiffy);
+}
+ }
+}
+static void _V10_Dlookup__intrinsic__name_D6_k177(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic__name_D6_k177" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D6_k177, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic__name_D6_k177, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.189 0 0) ((bruijn ##.k.26 165 0) (##string ##.string.540)) ((bruijn ##.eqv?.4 167 0) (close _V10_Dlookup__intrinsic__name_D6_k178) (bruijn ##.x.1.11 164 0) '##vcore.access))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 165-1, 0), runtime,
+      VEncodePointer(&_V10_Dstring_D540.sym, VPOINTER_OTHER));
+} else {
+    V_CALL(VGetArg(upenv, 167-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k178, env)}),
+      VGetArg(upenv, 164-1, 0),
+      _V10vcore_Daccess);
 }
  }
 }
@@ -1134,14 +1252,20 @@ static void _V10_Dlookup__intrinsic__name_D6_k176(VRuntime * runtime, VEnv * upe
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic__name_D6_k176, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.188 0 0) ((bruijn ##.k.26 164 0) (##string ##.string.531)) ((bruijn ##.k.26 164 0) #f))
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.188 0 0) ((bruijn ##.k.26 164 0) (##string ##.string.539)) ((bruijn ##.eqv?.4 166 0) (close _V10_Dlookup__intrinsic__name_D6_k177) (bruijn ##.x.1.11 163 0) '##vcore.make-temporary-file))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 164-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D531.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D539.sym, VPOINTER_OTHER));
 } else {
-    V_CALL(VGetArg(upenv, 164-1, 0), runtime,
-      VEncodeBool(false));
+    V_CALL(VGetArg(upenv, 166-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k177, env)}),
+      VGetArg(upenv, 163-1, 0),
+      _V10vcore_Dmake__temporary__file);
 }
  }
 }
@@ -1158,16 +1282,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k175(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.187 0 0) ((bruijn ##.k.26 163 0) (##string ##.string.530)) ((bruijn ##.eqv?.4 165 0) (close _V10_Dlookup__intrinsic__name_D6_k176) (bruijn ##.x.1.11 162 0) '##vcore.access))
+  // (if (bruijn ##.p.187 0 0) ((bruijn ##.k.26 163 0) (##string ##.string.538)) ((bruijn ##.eqv?.4 165 0) (close _V10_Dlookup__intrinsic__name_D6_k176) (bruijn ##.x.1.11 162 0) '##vcore.realpath))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 163-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D530.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D538.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 165-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k176, env)}),
       VGetArg(upenv, 162-1, 0),
-      _V10vcore_Daccess);
+      _V10vcore_Drealpath);
 }
  }
 }
@@ -1184,16 +1308,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k174(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.186 0 0) ((bruijn ##.k.26 162 0) (##string ##.string.529)) ((bruijn ##.eqv?.4 164 0) (close _V10_Dlookup__intrinsic__name_D6_k175) (bruijn ##.x.1.11 161 0) '##vcore.make-temporary-file))
+  // (if (bruijn ##.p.186 0 0) ((bruijn ##.k.26 162 0) (##string ##.string.537)) ((bruijn ##.eqv?.4 164 0) (close _V10_Dlookup__intrinsic__name_D6_k175) (bruijn ##.x.1.11 161 0) '##vcore.await))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 162-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D529.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D537.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 164-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k175, env)}),
       VGetArg(upenv, 161-1, 0),
-      _V10vcore_Dmake__temporary__file);
+      _V10vcore_Dawait);
 }
  }
 }
@@ -1210,16 +1334,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k173(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.185 0 0) ((bruijn ##.k.26 161 0) (##string ##.string.528)) ((bruijn ##.eqv?.4 163 0) (close _V10_Dlookup__intrinsic__name_D6_k174) (bruijn ##.x.1.11 160 0) '##vcore.realpath))
+  // (if (bruijn ##.p.185 0 0) ((bruijn ##.k.26 161 0) (##string ##.string.536)) ((bruijn ##.eqv?.4 163 0) (close _V10_Dlookup__intrinsic__name_D6_k174) (bruijn ##.x.1.11 160 0) '##vcore.async))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 161-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D528.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D536.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 163-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k174, env)}),
       VGetArg(upenv, 160-1, 0),
-      _V10vcore_Drealpath);
+      _V10vcore_Dasync);
 }
  }
 }
@@ -1236,16 +1360,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k172(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.184 0 0) ((bruijn ##.k.26 160 0) (##string ##.string.527)) ((bruijn ##.eqv?.4 162 0) (close _V10_Dlookup__intrinsic__name_D6_k173) (bruijn ##.x.1.11 159 0) '##vcore.await))
+  // (if (bruijn ##.p.184 0 0) ((bruijn ##.k.26 160 0) (##string ##.string.535)) ((bruijn ##.eqv?.4 162 0) (close _V10_Dlookup__intrinsic__name_D6_k173) (bruijn ##.x.1.11 159 0) '##vcore.fiber-fork-list))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 160-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D527.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D535.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 162-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k173, env)}),
       VGetArg(upenv, 159-1, 0),
-      _V10vcore_Dawait);
+      _V10vcore_Dfiber__fork__list);
 }
  }
 }
@@ -1262,16 +1386,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k171(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.183 0 0) ((bruijn ##.k.26 159 0) (##string ##.string.526)) ((bruijn ##.eqv?.4 161 0) (close _V10_Dlookup__intrinsic__name_D6_k172) (bruijn ##.x.1.11 158 0) '##vcore.async))
+  // (if (bruijn ##.p.183 0 0) ((bruijn ##.k.26 159 0) (##string ##.string.534)) ((bruijn ##.eqv?.4 161 0) (close _V10_Dlookup__intrinsic__name_D6_k172) (bruijn ##.x.1.11 158 0) '##vcore.random-advance!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 159-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D526.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D534.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 161-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k172, env)}),
       VGetArg(upenv, 158-1, 0),
-      _V10vcore_Dasync);
+      _V10vcore_Drandom__advance_B);
 }
  }
 }
@@ -1288,16 +1412,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k170(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.182 0 0) ((bruijn ##.k.26 158 0) (##string ##.string.525)) ((bruijn ##.eqv?.4 160 0) (close _V10_Dlookup__intrinsic__name_D6_k171) (bruijn ##.x.1.11 157 0) '##vcore.fiber-fork-list))
+  // (if (bruijn ##.p.182 0 0) ((bruijn ##.k.26 158 0) (##string ##.string.533)) ((bruijn ##.eqv?.4 160 0) (close _V10_Dlookup__intrinsic__name_D6_k171) (bruijn ##.x.1.11 157 0) '##vcore.random-sample-float!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 158-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D525.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D533.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 160-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k171, env)}),
       VGetArg(upenv, 157-1, 0),
-      _V10vcore_Dfiber__fork__list);
+      _V10vcore_Drandom__sample__float_B);
 }
  }
 }
@@ -1314,16 +1438,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k169(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.181 0 0) ((bruijn ##.k.26 157 0) (##string ##.string.524)) ((bruijn ##.eqv?.4 159 0) (close _V10_Dlookup__intrinsic__name_D6_k170) (bruijn ##.x.1.11 156 0) '##vcore.random-advance!))
+  // (if (bruijn ##.p.181 0 0) ((bruijn ##.k.26 157 0) (##string ##.string.532)) ((bruijn ##.eqv?.4 159 0) (close _V10_Dlookup__intrinsic__name_D6_k170) (bruijn ##.x.1.11 156 0) '##vcore.random-sample-bounded!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 157-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D524.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D532.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 159-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k170, env)}),
       VGetArg(upenv, 156-1, 0),
-      _V10vcore_Drandom__advance_B);
+      _V10vcore_Drandom__sample__bounded_B);
 }
  }
 }
@@ -1340,16 +1464,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k168(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.180 0 0) ((bruijn ##.k.26 156 0) (##string ##.string.523)) ((bruijn ##.eqv?.4 158 0) (close _V10_Dlookup__intrinsic__name_D6_k169) (bruijn ##.x.1.11 155 0) '##vcore.random-sample-float!))
+  // (if (bruijn ##.p.180 0 0) ((bruijn ##.k.26 156 0) (##string ##.string.531)) ((bruijn ##.eqv?.4 158 0) (close _V10_Dlookup__intrinsic__name_D6_k169) (bruijn ##.x.1.11 155 0) '##vcore.random-sample!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 156-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D523.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D531.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 158-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k169, env)}),
       VGetArg(upenv, 155-1, 0),
-      _V10vcore_Drandom__sample__float_B);
+      _V10vcore_Drandom__sample_B);
 }
  }
 }
@@ -1366,16 +1490,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k167(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.179 0 0) ((bruijn ##.k.26 155 0) (##string ##.string.522)) ((bruijn ##.eqv?.4 157 0) (close _V10_Dlookup__intrinsic__name_D6_k168) (bruijn ##.x.1.11 154 0) '##vcore.random-sample-bounded!))
+  // (if (bruijn ##.p.179 0 0) ((bruijn ##.k.26 155 0) (##string ##.string.530)) ((bruijn ##.eqv?.4 157 0) (close _V10_Dlookup__intrinsic__name_D6_k168) (bruijn ##.x.1.11 154 0) '##vcore.random-copy))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 155-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D522.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D530.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 157-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k168, env)}),
       VGetArg(upenv, 154-1, 0),
-      _V10vcore_Drandom__sample__bounded_B);
+      _V10vcore_Drandom__copy);
 }
  }
 }
@@ -1392,16 +1516,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k166(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.178 0 0) ((bruijn ##.k.26 154 0) (##string ##.string.521)) ((bruijn ##.eqv?.4 156 0) (close _V10_Dlookup__intrinsic__name_D6_k167) (bruijn ##.x.1.11 153 0) '##vcore.random-sample!))
+  // (if (bruijn ##.p.178 0 0) ((bruijn ##.k.26 154 0) (##string ##.string.529)) ((bruijn ##.eqv?.4 156 0) (close _V10_Dlookup__intrinsic__name_D6_k167) (bruijn ##.x.1.11 153 0) '##vcore.make-random))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 154-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D521.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D529.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 156-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k167, env)}),
       VGetArg(upenv, 153-1, 0),
-      _V10vcore_Drandom__sample_B);
+      _V10vcore_Dmake__random);
 }
  }
 }
@@ -1418,16 +1542,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k165(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.177 0 0) ((bruijn ##.k.26 153 0) (##string ##.string.520)) ((bruijn ##.eqv?.4 155 0) (close _V10_Dlookup__intrinsic__name_D6_k166) (bruijn ##.x.1.11 152 0) '##vcore.random-copy))
+  // (if (bruijn ##.p.177 0 0) ((bruijn ##.k.26 153 0) (##string ##.string.528)) ((bruijn ##.eqv?.4 155 0) (close _V10_Dlookup__intrinsic__name_D6_k166) (bruijn ##.x.1.11 152 0) '##vcore.register-sigint))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 153-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D520.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D528.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 155-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k166, env)}),
       VGetArg(upenv, 152-1, 0),
-      _V10vcore_Drandom__copy);
+      _V10vcore_Dregister__sigint);
 }
  }
 }
@@ -1444,16 +1568,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k164(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.176 0 0) ((bruijn ##.k.26 152 0) (##string ##.string.519)) ((bruijn ##.eqv?.4 154 0) (close _V10_Dlookup__intrinsic__name_D6_k165) (bruijn ##.x.1.11 151 0) '##vcore.make-random))
+  // (if (bruijn ##.p.176 0 0) ((bruijn ##.k.26 152 0) (##string ##.string.527)) ((bruijn ##.eqv?.4 154 0) (close _V10_Dlookup__intrinsic__name_D6_k165) (bruijn ##.x.1.11 151 0) '##vcore.command-line))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 152-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D519.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D527.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 154-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k165, env)}),
       VGetArg(upenv, 151-1, 0),
-      _V10vcore_Dmake__random);
+      _V10vcore_Dcommand__line);
 }
  }
 }
@@ -1470,16 +1594,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k163(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.175 0 0) ((bruijn ##.k.26 151 0) (##string ##.string.518)) ((bruijn ##.eqv?.4 153 0) (close _V10_Dlookup__intrinsic__name_D6_k164) (bruijn ##.x.1.11 150 0) '##vcore.register-sigint))
+  // (if (bruijn ##.p.175 0 0) ((bruijn ##.k.26 151 0) (##string ##.string.526)) ((bruijn ##.eqv?.4 153 0) (close _V10_Dlookup__intrinsic__name_D6_k164) (bruijn ##.x.1.11 150 0) '##vcore.open-output-process))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 151-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D518.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D526.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 153-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k164, env)}),
       VGetArg(upenv, 150-1, 0),
-      _V10vcore_Dregister__sigint);
+      _V10vcore_Dopen__output__process);
 }
  }
 }
@@ -1496,16 +1620,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k162(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.174 0 0) ((bruijn ##.k.26 150 0) (##string ##.string.517)) ((bruijn ##.eqv?.4 152 0) (close _V10_Dlookup__intrinsic__name_D6_k163) (bruijn ##.x.1.11 149 0) '##vcore.command-line))
+  // (if (bruijn ##.p.174 0 0) ((bruijn ##.k.26 150 0) (##string ##.string.525)) ((bruijn ##.eqv?.4 152 0) (close _V10_Dlookup__intrinsic__name_D6_k163) (bruijn ##.x.1.11 149 0) '##vcore.open-input-process))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 150-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D517.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D525.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 152-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k163, env)}),
       VGetArg(upenv, 149-1, 0),
-      _V10vcore_Dcommand__line);
+      _V10vcore_Dopen__input__process);
 }
  }
 }
@@ -1522,16 +1646,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k161(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.173 0 0) ((bruijn ##.k.26 149 0) (##string ##.string.516)) ((bruijn ##.eqv?.4 151 0) (close _V10_Dlookup__intrinsic__name_D6_k162) (bruijn ##.x.1.11 148 0) '##vcore.open-output-process))
+  // (if (bruijn ##.p.173 0 0) ((bruijn ##.k.26 149 0) (##string ##.string.524)) ((bruijn ##.eqv?.4 151 0) (close _V10_Dlookup__intrinsic__name_D6_k162) (bruijn ##.x.1.11 148 0) '##vcore.system))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 149-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D516.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D524.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 151-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k162, env)}),
       VGetArg(upenv, 148-1, 0),
-      _V10vcore_Dopen__output__process);
+      _V10vcore_Dsystem);
 }
  }
 }
@@ -1548,16 +1672,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k160(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.172 0 0) ((bruijn ##.k.26 148 0) (##string ##.string.515)) ((bruijn ##.eqv?.4 150 0) (close _V10_Dlookup__intrinsic__name_D6_k161) (bruijn ##.x.1.11 147 0) '##vcore.open-input-process))
+  // (if (bruijn ##.p.172 0 0) ((bruijn ##.k.26 148 0) (##string ##.string.523)) ((bruijn ##.eqv?.4 150 0) (close _V10_Dlookup__intrinsic__name_D6_k161) (bruijn ##.x.1.11 147 0) '##vcore.garbage-collect))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 148-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D515.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D523.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 150-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k161, env)}),
       VGetArg(upenv, 147-1, 0),
-      _V10vcore_Dopen__input__process);
+      _V10vcore_Dgarbage__collect);
 }
  }
 }
@@ -1574,16 +1698,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k159(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.171 0 0) ((bruijn ##.k.26 147 0) (##string ##.string.514)) ((bruijn ##.eqv?.4 149 0) (close _V10_Dlookup__intrinsic__name_D6_k160) (bruijn ##.x.1.11 146 0) '##vcore.system))
+  // (if (bruijn ##.p.171 0 0) ((bruijn ##.k.26 147 0) (##string ##.string.522)) ((bruijn ##.eqv?.4 149 0) (close _V10_Dlookup__intrinsic__name_D6_k160) (bruijn ##.x.1.11 146 0) '##vcore.finalize!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 147-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D514.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D522.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 149-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k160, env)}),
       VGetArg(upenv, 146-1, 0),
-      _V10vcore_Dsystem);
+      _V10vcore_Dfinalize_B);
 }
  }
 }
@@ -1600,16 +1724,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k158(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.170 0 0) ((bruijn ##.k.26 146 0) (##string ##.string.513)) ((bruijn ##.eqv?.4 148 0) (close _V10_Dlookup__intrinsic__name_D6_k159) (bruijn ##.x.1.11 145 0) '##vcore.garbage-collect))
+  // (if (bruijn ##.p.170 0 0) ((bruijn ##.k.26 146 0) (##string ##.string.521)) ((bruijn ##.eqv?.4 148 0) (close _V10_Dlookup__intrinsic__name_D6_k159) (bruijn ##.x.1.11 145 0) '##vcore.has-finalizer?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 146-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D513.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D521.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 148-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k159, env)}),
       VGetArg(upenv, 145-1, 0),
-      _V10vcore_Dgarbage__collect);
+      _V10vcore_Dhas__finalizer_Q);
 }
  }
 }
@@ -1626,16 +1750,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k157(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.169 0 0) ((bruijn ##.k.26 145 0) (##string ##.string.512)) ((bruijn ##.eqv?.4 147 0) (close _V10_Dlookup__intrinsic__name_D6_k158) (bruijn ##.x.1.11 144 0) '##vcore.finalize!))
+  // (if (bruijn ##.p.169 0 0) ((bruijn ##.k.26 145 0) (##string ##.string.520)) ((bruijn ##.eqv?.4 147 0) (close _V10_Dlookup__intrinsic__name_D6_k158) (bruijn ##.x.1.11 144 0) '##vcore.set-finalizer!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 145-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D512.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D520.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 147-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k158, env)}),
       VGetArg(upenv, 144-1, 0),
-      _V10vcore_Dfinalize_B);
+      _V10vcore_Dset__finalizer_B);
 }
  }
 }
@@ -1652,16 +1776,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k156(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.168 0 0) ((bruijn ##.k.26 144 0) (##string ##.string.511)) ((bruijn ##.eqv?.4 146 0) (close _V10_Dlookup__intrinsic__name_D6_k157) (bruijn ##.x.1.11 143 0) '##vcore.has-finalizer?))
+  // (if (bruijn ##.p.168 0 0) ((bruijn ##.k.26 144 0) (##string ##.string.519)) ((bruijn ##.eqv?.4 146 0) (close _V10_Dlookup__intrinsic__name_D6_k157) (bruijn ##.x.1.11 143 0) '##vcore.newline-stdout))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 144-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D511.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D519.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 146-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k157, env)}),
       VGetArg(upenv, 143-1, 0),
-      _V10vcore_Dhas__finalizer_Q);
+      _V10vcore_Dnewline__stdout);
 }
  }
 }
@@ -1678,16 +1802,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k155(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.167 0 0) ((bruijn ##.k.26 143 0) (##string ##.string.510)) ((bruijn ##.eqv?.4 145 0) (close _V10_Dlookup__intrinsic__name_D6_k156) (bruijn ##.x.1.11 142 0) '##vcore.set-finalizer!))
+  // (if (bruijn ##.p.167 0 0) ((bruijn ##.k.26 143 0) (##string ##.string.518)) ((bruijn ##.eqv?.4 145 0) (close _V10_Dlookup__intrinsic__name_D6_k156) (bruijn ##.x.1.11 142 0) '##vcore.write-stdout))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 143-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D510.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D518.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 145-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k156, env)}),
       VGetArg(upenv, 142-1, 0),
-      _V10vcore_Dset__finalizer_B);
+      _V10vcore_Dwrite__stdout);
 }
  }
 }
@@ -1704,16 +1828,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k154(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.166 0 0) ((bruijn ##.k.26 142 0) (##string ##.string.509)) ((bruijn ##.eqv?.4 144 0) (close _V10_Dlookup__intrinsic__name_D6_k155) (bruijn ##.x.1.11 141 0) '##vcore.newline-stdout))
+  // (if (bruijn ##.p.166 0 0) ((bruijn ##.k.26 142 0) (##string ##.string.517)) ((bruijn ##.eqv?.4 144 0) (close _V10_Dlookup__intrinsic__name_D6_k155) (bruijn ##.x.1.11 141 0) '##vcore.display-stdout))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 142-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D509.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D517.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 144-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k155, env)}),
       VGetArg(upenv, 141-1, 0),
-      _V10vcore_Dnewline__stdout);
+      _V10vcore_Ddisplay__stdout);
 }
  }
 }
@@ -1730,16 +1854,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k153(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.165 0 0) ((bruijn ##.k.26 141 0) (##string ##.string.508)) ((bruijn ##.eqv?.4 143 0) (close _V10_Dlookup__intrinsic__name_D6_k154) (bruijn ##.x.1.11 140 0) '##vcore.write-stdout))
+  // (if (bruijn ##.p.165 0 0) ((bruijn ##.k.26 141 0) (##string ##.string.516)) ((bruijn ##.eqv?.4 143 0) (close _V10_Dlookup__intrinsic__name_D6_k154) (bruijn ##.x.1.11 140 0) '##vcore.newline))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 141-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D508.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D516.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 143-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k154, env)}),
       VGetArg(upenv, 140-1, 0),
-      _V10vcore_Dwrite__stdout);
+      _V10vcore_Dnewline);
 }
  }
 }
@@ -1756,16 +1880,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k152(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.164 0 0) ((bruijn ##.k.26 140 0) (##string ##.string.507)) ((bruijn ##.eqv?.4 142 0) (close _V10_Dlookup__intrinsic__name_D6_k153) (bruijn ##.x.1.11 139 0) '##vcore.display-stdout))
+  // (if (bruijn ##.p.164 0 0) ((bruijn ##.k.26 140 0) (##string ##.string.515)) ((bruijn ##.eqv?.4 142 0) (close _V10_Dlookup__intrinsic__name_D6_k153) (bruijn ##.x.1.11 139 0) '##vcore.write))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 140-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D507.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D515.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 142-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k153, env)}),
       VGetArg(upenv, 139-1, 0),
-      _V10vcore_Ddisplay__stdout);
+      _V10vcore_Dwrite);
 }
  }
 }
@@ -1782,16 +1906,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k151(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.163 0 0) ((bruijn ##.k.26 139 0) (##string ##.string.506)) ((bruijn ##.eqv?.4 141 0) (close _V10_Dlookup__intrinsic__name_D6_k152) (bruijn ##.x.1.11 138 0) '##vcore.newline))
+  // (if (bruijn ##.p.163 0 0) ((bruijn ##.k.26 139 0) (##string ##.string.514)) ((bruijn ##.eqv?.4 141 0) (close _V10_Dlookup__intrinsic__name_D6_k152) (bruijn ##.x.1.11 138 0) '##vcore.display-word))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 139-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D506.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D514.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 141-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k152, env)}),
       VGetArg(upenv, 138-1, 0),
-      _V10vcore_Dnewline);
+      _V10vcore_Ddisplay__word);
 }
  }
 }
@@ -1808,16 +1932,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k150(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.162 0 0) ((bruijn ##.k.26 138 0) (##string ##.string.505)) ((bruijn ##.eqv?.4 140 0) (close _V10_Dlookup__intrinsic__name_D6_k151) (bruijn ##.x.1.11 137 0) '##vcore.write))
+  // (if (bruijn ##.p.162 0 0) ((bruijn ##.k.26 138 0) (##string ##.string.513)) ((bruijn ##.eqv?.4 140 0) (close _V10_Dlookup__intrinsic__name_D6_k151) (bruijn ##.x.1.11 137 0) '##vcore.read))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 138-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D505.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D513.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 140-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k151, env)}),
       VGetArg(upenv, 137-1, 0),
-      _V10vcore_Dwrite);
+      _V10vcore_Dread);
 }
  }
 }
@@ -1834,16 +1958,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k149(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.161 0 0) ((bruijn ##.k.26 137 0) (##string ##.string.504)) ((bruijn ##.eqv?.4 139 0) (close _V10_Dlookup__intrinsic__name_D6_k150) (bruijn ##.x.1.11 136 0) '##vcore.display-word))
+  // (if (bruijn ##.p.161 0 0) ((bruijn ##.k.26 137 0) (##string ##.string.512)) ((bruijn ##.eqv?.4 139 0) (close _V10_Dlookup__intrinsic__name_D6_k150) (bruijn ##.x.1.11 136 0) '##vcore.read-line))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 137-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D504.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D512.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 139-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k150, env)}),
       VGetArg(upenv, 136-1, 0),
-      _V10vcore_Ddisplay__word);
+      _V10vcore_Dread__line);
 }
  }
 }
@@ -1860,16 +1984,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k148(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.160 0 0) ((bruijn ##.k.26 136 0) (##string ##.string.503)) ((bruijn ##.eqv?.4 138 0) (close _V10_Dlookup__intrinsic__name_D6_k149) (bruijn ##.x.1.11 135 0) '##vcore.read))
+  // (if (bruijn ##.p.160 0 0) ((bruijn ##.k.26 136 0) (##string ##.string.511)) ((bruijn ##.eqv?.4 138 0) (close _V10_Dlookup__intrinsic__name_D6_k149) (bruijn ##.x.1.11 135 0) '##vcore.read-char))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 136-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D503.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D511.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 138-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k149, env)}),
       VGetArg(upenv, 135-1, 0),
-      _V10vcore_Dread);
+      _V10vcore_Dread__char);
 }
  }
 }
@@ -1886,16 +2010,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k147(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.159 0 0) ((bruijn ##.k.26 135 0) (##string ##.string.502)) ((bruijn ##.eqv?.4 137 0) (close _V10_Dlookup__intrinsic__name_D6_k148) (bruijn ##.x.1.11 134 0) '##vcore.read-line))
+  // (if (bruijn ##.p.159 0 0) ((bruijn ##.k.26 135 0) (##string ##.string.510)) ((bruijn ##.eqv?.4 137 0) (close _V10_Dlookup__intrinsic__name_D6_k148) (bruijn ##.x.1.11 134 0) '##vcore.eof-object?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 135-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D502.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D510.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 137-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k148, env)}),
       VGetArg(upenv, 134-1, 0),
-      _V10vcore_Dread__line);
+      _V10vcore_Deof__object_Q);
 }
  }
 }
@@ -1912,16 +2036,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k146(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.158 0 0) ((bruijn ##.k.26 134 0) (##string ##.string.501)) ((bruijn ##.eqv?.4 136 0) (close _V10_Dlookup__intrinsic__name_D6_k147) (bruijn ##.x.1.11 133 0) '##vcore.read-char))
+  // (if (bruijn ##.p.158 0 0) ((bruijn ##.k.26 134 0) (##string ##.string.509)) ((bruijn ##.eqv?.4 136 0) (close _V10_Dlookup__intrinsic__name_D6_k147) (bruijn ##.x.1.11 133 0) '##vcore.get-output-string))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 134-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D501.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D509.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 136-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k147, env)}),
       VGetArg(upenv, 133-1, 0),
-      _V10vcore_Dread__char);
+      _V10vcore_Dget__output__string);
 }
  }
 }
@@ -1938,16 +2062,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k145(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.157 0 0) ((bruijn ##.k.26 133 0) (##string ##.string.500)) ((bruijn ##.eqv?.4 135 0) (close _V10_Dlookup__intrinsic__name_D6_k146) (bruijn ##.x.1.11 132 0) '##vcore.eof-object?))
+  // (if (bruijn ##.p.157 0 0) ((bruijn ##.k.26 133 0) (##string ##.string.508)) ((bruijn ##.eqv?.4 135 0) (close _V10_Dlookup__intrinsic__name_D6_k146) (bruijn ##.x.1.11 132 0) '##vcore.open-output-string))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 133-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D500.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D508.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 135-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k146, env)}),
       VGetArg(upenv, 132-1, 0),
-      _V10vcore_Deof__object_Q);
+      _V10vcore_Dopen__output__string);
 }
  }
 }
@@ -1964,16 +2088,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k144(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.156 0 0) ((bruijn ##.k.26 132 0) (##string ##.string.499)) ((bruijn ##.eqv?.4 134 0) (close _V10_Dlookup__intrinsic__name_D6_k145) (bruijn ##.x.1.11 131 0) '##vcore.get-output-string))
+  // (if (bruijn ##.p.156 0 0) ((bruijn ##.k.26 132 0) (##string ##.string.507)) ((bruijn ##.eqv?.4 134 0) (close _V10_Dlookup__intrinsic__name_D6_k145) (bruijn ##.x.1.11 131 0) '##vcore.tty-port?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 132-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D499.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D507.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 134-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k145, env)}),
       VGetArg(upenv, 131-1, 0),
-      _V10vcore_Dget__output__string);
+      _V10vcore_Dtty__port_Q);
 }
  }
 }
@@ -1990,16 +2114,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k143(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.155 0 0) ((bruijn ##.k.26 131 0) (##string ##.string.498)) ((bruijn ##.eqv?.4 133 0) (close _V10_Dlookup__intrinsic__name_D6_k144) (bruijn ##.x.1.11 130 0) '##vcore.open-output-string))
+  // (if (bruijn ##.p.155 0 0) ((bruijn ##.k.26 131 0) (##string ##.string.506)) ((bruijn ##.eqv?.4 133 0) (close _V10_Dlookup__intrinsic__name_D6_k144) (bruijn ##.x.1.11 130 0) '##vcore.close-stream))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 131-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D498.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D506.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 133-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k144, env)}),
       VGetArg(upenv, 130-1, 0),
-      _V10vcore_Dopen__output__string);
+      _V10vcore_Dclose__stream);
 }
  }
 }
@@ -2016,16 +2140,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k142(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.154 0 0) ((bruijn ##.k.26 130 0) (##string ##.string.497)) ((bruijn ##.eqv?.4 132 0) (close _V10_Dlookup__intrinsic__name_D6_k143) (bruijn ##.x.1.11 129 0) '##vcore.tty-port?))
+  // (if (bruijn ##.p.154 0 0) ((bruijn ##.k.26 130 0) (##string ##.string.505)) ((bruijn ##.eqv?.4 132 0) (close _V10_Dlookup__intrinsic__name_D6_k143) (bruijn ##.x.1.11 129 0) '##vcore.open-output-stream))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 130-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D497.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D505.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 132-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k143, env)}),
       VGetArg(upenv, 129-1, 0),
-      _V10vcore_Dtty__port_Q);
+      _V10vcore_Dopen__output__stream);
 }
  }
 }
@@ -2042,16 +2166,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k141(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.153 0 0) ((bruijn ##.k.26 129 0) (##string ##.string.496)) ((bruijn ##.eqv?.4 131 0) (close _V10_Dlookup__intrinsic__name_D6_k142) (bruijn ##.x.1.11 128 0) '##vcore.close-stream))
+  // (if (bruijn ##.p.153 0 0) ((bruijn ##.k.26 129 0) (##string ##.string.504)) ((bruijn ##.eqv?.4 131 0) (close _V10_Dlookup__intrinsic__name_D6_k142) (bruijn ##.x.1.11 128 0) '##vcore.open-input-stream))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 129-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D496.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D504.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 131-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k142, env)}),
       VGetArg(upenv, 128-1, 0),
-      _V10vcore_Dclose__stream);
+      _V10vcore_Dopen__input__stream);
 }
  }
 }
@@ -2068,16 +2192,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k140(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.152 0 0) ((bruijn ##.k.26 128 0) (##string ##.string.495)) ((bruijn ##.eqv?.4 130 0) (close _V10_Dlookup__intrinsic__name_D6_k141) (bruijn ##.x.1.11 127 0) '##vcore.open-output-stream))
+  // (if (bruijn ##.p.152 0 0) ((bruijn ##.k.26 128 0) (##string ##.string.503)) ((bruijn ##.eqv?.4 130 0) (close _V10_Dlookup__intrinsic__name_D6_k141) (bruijn ##.x.1.11 127 0) '##vcore.dup-stderr))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 128-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D495.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D503.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 130-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k141, env)}),
       VGetArg(upenv, 127-1, 0),
-      _V10vcore_Dopen__output__stream);
+      _V10vcore_Ddup__stderr);
 }
  }
 }
@@ -2094,16 +2218,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k139(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.151 0 0) ((bruijn ##.k.26 127 0) (##string ##.string.494)) ((bruijn ##.eqv?.4 129 0) (close _V10_Dlookup__intrinsic__name_D6_k140) (bruijn ##.x.1.11 126 0) '##vcore.open-input-stream))
+  // (if (bruijn ##.p.151 0 0) ((bruijn ##.k.26 127 0) (##string ##.string.502)) ((bruijn ##.eqv?.4 129 0) (close _V10_Dlookup__intrinsic__name_D6_k140) (bruijn ##.x.1.11 126 0) '##vcore.dup-stdout))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 127-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D494.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D502.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 129-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k140, env)}),
       VGetArg(upenv, 126-1, 0),
-      _V10vcore_Dopen__input__stream);
+      _V10vcore_Ddup__stdout);
 }
  }
 }
@@ -2120,16 +2244,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k138(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.150 0 0) ((bruijn ##.k.26 126 0) (##string ##.string.493)) ((bruijn ##.eqv?.4 128 0) (close _V10_Dlookup__intrinsic__name_D6_k139) (bruijn ##.x.1.11 125 0) '##vcore.dup-stderr))
+  // (if (bruijn ##.p.150 0 0) ((bruijn ##.k.26 126 0) (##string ##.string.501)) ((bruijn ##.eqv?.4 128 0) (close _V10_Dlookup__intrinsic__name_D6_k139) (bruijn ##.x.1.11 125 0) '##vcore.dup-stdin))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 126-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D493.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D501.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 128-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k139, env)}),
       VGetArg(upenv, 125-1, 0),
-      _V10vcore_Ddup__stderr);
+      _V10vcore_Ddup__stdin);
 }
  }
 }
@@ -2146,16 +2270,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k137(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.149 0 0) ((bruijn ##.k.26 125 0) (##string ##.string.492)) ((bruijn ##.eqv?.4 127 0) (close _V10_Dlookup__intrinsic__name_D6_k138) (bruijn ##.x.1.11 124 0) '##vcore.dup-stdout))
+  // (if (bruijn ##.p.149 0 0) ((bruijn ##.k.26 125 0) (##string ##.string.500)) ((bruijn ##.eqv?.4 127 0) (close _V10_Dlookup__intrinsic__name_D6_k138) (bruijn ##.x.1.11 124 0) '##vcore.stderr->port))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 125-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D492.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D500.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 127-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k138, env)}),
       VGetArg(upenv, 124-1, 0),
-      _V10vcore_Ddup__stdout);
+      _V10vcore_Dstderr___Gport);
 }
  }
 }
@@ -2172,16 +2296,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k136(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.148 0 0) ((bruijn ##.k.26 124 0) (##string ##.string.491)) ((bruijn ##.eqv?.4 126 0) (close _V10_Dlookup__intrinsic__name_D6_k137) (bruijn ##.x.1.11 123 0) '##vcore.dup-stdin))
+  // (if (bruijn ##.p.148 0 0) ((bruijn ##.k.26 124 0) (##string ##.string.499)) ((bruijn ##.eqv?.4 126 0) (close _V10_Dlookup__intrinsic__name_D6_k137) (bruijn ##.x.1.11 123 0) '##vcore.stdout->port))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 124-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D491.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D499.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 126-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k137, env)}),
       VGetArg(upenv, 123-1, 0),
-      _V10vcore_Ddup__stdin);
+      _V10vcore_Dstdout___Gport);
 }
  }
 }
@@ -2198,16 +2322,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k135(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.147 0 0) ((bruijn ##.k.26 123 0) (##string ##.string.490)) ((bruijn ##.eqv?.4 125 0) (close _V10_Dlookup__intrinsic__name_D6_k136) (bruijn ##.x.1.11 122 0) '##vcore.stderr->port))
+  // (if (bruijn ##.p.147 0 0) ((bruijn ##.k.26 123 0) (##string ##.string.498)) ((bruijn ##.eqv?.4 125 0) (close _V10_Dlookup__intrinsic__name_D6_k136) (bruijn ##.x.1.11 122 0) '##vcore.stdin->port))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 123-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D490.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D498.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 125-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k136, env)}),
       VGetArg(upenv, 122-1, 0),
-      _V10vcore_Dstderr___Gport);
+      _V10vcore_Dstdin___Gport);
 }
  }
 }
@@ -2224,16 +2348,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k134(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.146 0 0) ((bruijn ##.k.26 122 0) (##string ##.string.489)) ((bruijn ##.eqv?.4 124 0) (close _V10_Dlookup__intrinsic__name_D6_k135) (bruijn ##.x.1.11 121 0) '##vcore.stdout->port))
+  // (if (bruijn ##.p.146 0 0) ((bruijn ##.k.26 122 0) (##string ##.string.497)) ((bruijn ##.eqv?.4 124 0) (close _V10_Dlookup__intrinsic__name_D6_k135) (bruijn ##.x.1.11 121 0) '##vcore.char-integer))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 122-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D489.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D497.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 124-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k135, env)}),
       VGetArg(upenv, 121-1, 0),
-      _V10vcore_Dstdout___Gport);
+      _V10vcore_Dchar__integer);
 }
  }
 }
@@ -2250,16 +2374,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k133(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.145 0 0) ((bruijn ##.k.26 121 0) (##string ##.string.488)) ((bruijn ##.eqv?.4 123 0) (close _V10_Dlookup__intrinsic__name_D6_k134) (bruijn ##.x.1.11 120 0) '##vcore.stdin->port))
+  // (if (bruijn ##.p.145 0 0) ((bruijn ##.k.26 121 0) (##string ##.string.496)) ((bruijn ##.eqv?.4 123 0) (close _V10_Dlookup__intrinsic__name_D6_k134) (bruijn ##.x.1.11 120 0) '##vcore.gensym))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 121-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D488.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D496.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 123-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k134, env)}),
       VGetArg(upenv, 120-1, 0),
-      _V10vcore_Dstdin___Gport);
+      _V10vcore_Dgensym);
 }
  }
 }
@@ -2276,16 +2400,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k132(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.144 0 0) ((bruijn ##.k.26 120 0) (##string ##.string.487)) ((bruijn ##.eqv?.4 122 0) (close _V10_Dlookup__intrinsic__name_D6_k133) (bruijn ##.x.1.11 119 0) '##vcore.char-integer))
+  // (if (bruijn ##.p.144 0 0) ((bruijn ##.k.26 120 0) (##string ##.string.495)) ((bruijn ##.eqv?.4 122 0) (close _V10_Dlookup__intrinsic__name_D6_k133) (bruijn ##.x.1.11 119 0) '##vcore.symbol->string))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 120-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D487.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D495.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 122-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k133, env)}),
       VGetArg(upenv, 119-1, 0),
-      _V10vcore_Dchar__integer);
+      _V10vcore_Dsymbol___Gstring);
 }
  }
 }
@@ -2302,16 +2426,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k131(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.143 0 0) ((bruijn ##.k.26 119 0) (##string ##.string.486)) ((bruijn ##.eqv?.4 121 0) (close _V10_Dlookup__intrinsic__name_D6_k132) (bruijn ##.x.1.11 118 0) '##vcore.gensym))
+  // (if (bruijn ##.p.143 0 0) ((bruijn ##.k.26 119 0) (##string ##.string.494)) ((bruijn ##.eqv?.4 121 0) (close _V10_Dlookup__intrinsic__name_D6_k132) (bruijn ##.x.1.11 118 0) '##vcore.string->number))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 119-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D486.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D494.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 121-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k132, env)}),
       VGetArg(upenv, 118-1, 0),
-      _V10vcore_Dgensym);
+      _V10vcore_Dstring___Gnumber);
 }
  }
 }
@@ -2328,16 +2452,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k130(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.142 0 0) ((bruijn ##.k.26 118 0) (##string ##.string.485)) ((bruijn ##.eqv?.4 120 0) (close _V10_Dlookup__intrinsic__name_D6_k131) (bruijn ##.x.1.11 117 0) '##vcore.symbol->string))
+  // (if (bruijn ##.p.142 0 0) ((bruijn ##.k.26 118 0) (##string ##.string.493)) ((bruijn ##.eqv?.4 120 0) (close _V10_Dlookup__intrinsic__name_D6_k131) (bruijn ##.x.1.11 117 0) '##vcore.string->symbol))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 118-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D485.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D493.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 120-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k131, env)}),
       VGetArg(upenv, 117-1, 0),
-      _V10vcore_Dsymbol___Gstring);
+      _V10vcore_Dstring___Gsymbol);
 }
  }
 }
@@ -2354,16 +2478,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k129(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.141 0 0) ((bruijn ##.k.26 117 0) (##string ##.string.484)) ((bruijn ##.eqv?.4 119 0) (close _V10_Dlookup__intrinsic__name_D6_k130) (bruijn ##.x.1.11 116 0) '##vcore.string->number))
+  // (if (bruijn ##.p.141 0 0) ((bruijn ##.k.26 117 0) (##string ##.string.492)) ((bruijn ##.eqv?.4 119 0) (close _V10_Dlookup__intrinsic__name_D6_k130) (bruijn ##.x.1.11 116 0) '##vcore.string-length))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 117-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D484.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D492.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 119-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k130, env)}),
       VGetArg(upenv, 116-1, 0),
-      _V10vcore_Dstring___Gnumber);
+      _V10vcore_Dstring__length);
 }
  }
 }
@@ -2380,16 +2504,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k128(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.140 0 0) ((bruijn ##.k.26 116 0) (##string ##.string.483)) ((bruijn ##.eqv?.4 118 0) (close _V10_Dlookup__intrinsic__name_D6_k129) (bruijn ##.x.1.11 115 0) '##vcore.string->symbol))
+  // (if (bruijn ##.p.140 0 0) ((bruijn ##.k.26 116 0) (##string ##.string.491)) ((bruijn ##.eqv?.4 118 0) (close _V10_Dlookup__intrinsic__name_D6_k129) (bruijn ##.x.1.11 115 0) '##vcore.string-set!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 116-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D483.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D491.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 118-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k129, env)}),
       VGetArg(upenv, 115-1, 0),
-      _V10vcore_Dstring___Gsymbol);
+      _V10vcore_Dstring__set_B);
 }
  }
 }
@@ -2406,16 +2530,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k127(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.139 0 0) ((bruijn ##.k.26 115 0) (##string ##.string.482)) ((bruijn ##.eqv?.4 117 0) (close _V10_Dlookup__intrinsic__name_D6_k128) (bruijn ##.x.1.11 114 0) '##vcore.string-length))
+  // (if (bruijn ##.p.139 0 0) ((bruijn ##.k.26 115 0) (##string ##.string.490)) ((bruijn ##.eqv?.4 117 0) (close _V10_Dlookup__intrinsic__name_D6_k128) (bruijn ##.x.1.11 114 0) '##vcore.string-ref))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 115-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D482.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D490.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 117-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k128, env)}),
       VGetArg(upenv, 114-1, 0),
-      _V10vcore_Dstring__length);
+      _V10vcore_Dstring__ref);
 }
  }
 }
@@ -2432,16 +2556,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k126(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.138 0 0) ((bruijn ##.k.26 114 0) (##string ##.string.481)) ((bruijn ##.eqv?.4 116 0) (close _V10_Dlookup__intrinsic__name_D6_k127) (bruijn ##.x.1.11 113 0) '##vcore.string-set!))
+  // (if (bruijn ##.p.138 0 0) ((bruijn ##.k.26 114 0) (##string ##.string.489)) ((bruijn ##.eqv?.4 116 0) (close _V10_Dlookup__intrinsic__name_D6_k127) (bruijn ##.x.1.11 113 0) '##vcore.string-copy!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 114-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D481.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D489.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 116-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k127, env)}),
       VGetArg(upenv, 113-1, 0),
-      _V10vcore_Dstring__set_B);
+      _V10vcore_Dstring__copy_B);
 }
  }
 }
@@ -2458,16 +2582,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k125(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.137 0 0) ((bruijn ##.k.26 113 0) (##string ##.string.480)) ((bruijn ##.eqv?.4 115 0) (close _V10_Dlookup__intrinsic__name_D6_k126) (bruijn ##.x.1.11 112 0) '##vcore.string-ref))
+  // (if (bruijn ##.p.137 0 0) ((bruijn ##.k.26 113 0) (##string ##.string.488)) ((bruijn ##.eqv?.4 115 0) (close _V10_Dlookup__intrinsic__name_D6_k126) (bruijn ##.x.1.11 112 0) '##vcore.substring))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 113-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D480.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D488.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 115-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k126, env)}),
       VGetArg(upenv, 112-1, 0),
-      _V10vcore_Dstring__ref);
+      _V10vcore_Dsubstring);
 }
  }
 }
@@ -2484,16 +2608,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k124(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.136 0 0) ((bruijn ##.k.26 112 0) (##string ##.string.479)) ((bruijn ##.eqv?.4 114 0) (close _V10_Dlookup__intrinsic__name_D6_k125) (bruijn ##.x.1.11 111 0) '##vcore.string-copy!))
+  // (if (bruijn ##.p.136 0 0) ((bruijn ##.k.26 112 0) (##string ##.string.487)) ((bruijn ##.eqv?.4 114 0) (close _V10_Dlookup__intrinsic__name_D6_k125) (bruijn ##.x.1.11 111 0) '##vcore.make-string))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 112-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D479.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D487.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 114-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k125, env)}),
       VGetArg(upenv, 111-1, 0),
-      _V10vcore_Dstring__copy_B);
+      _V10vcore_Dmake__string);
 }
  }
 }
@@ -2510,16 +2634,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k123(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.135 0 0) ((bruijn ##.k.26 111 0) (##string ##.string.478)) ((bruijn ##.eqv?.4 113 0) (close _V10_Dlookup__intrinsic__name_D6_k124) (bruijn ##.x.1.11 110 0) '##vcore.substring))
+  // (if (bruijn ##.p.135 0 0) ((bruijn ##.k.26 111 0) (##string ##.string.486)) ((bruijn ##.eqv?.4 113 0) (close _V10_Dlookup__intrinsic__name_D6_k124) (bruijn ##.x.1.11 110 0) '##vcore.hash-table-delete!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 111-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D478.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D486.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 113-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k124, env)}),
       VGetArg(upenv, 110-1, 0),
-      _V10vcore_Dsubstring);
+      _V10vcore_Dhash__table__delete_B);
 }
  }
 }
@@ -2536,16 +2660,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k122(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.134 0 0) ((bruijn ##.k.26 110 0) (##string ##.string.477)) ((bruijn ##.eqv?.4 112 0) (close _V10_Dlookup__intrinsic__name_D6_k123) (bruijn ##.x.1.11 109 0) '##vcore.make-string))
+  // (if (bruijn ##.p.134 0 0) ((bruijn ##.k.26 110 0) (##string ##.string.485)) ((bruijn ##.eqv?.4 112 0) (close _V10_Dlookup__intrinsic__name_D6_k123) (bruijn ##.x.1.11 109 0) '##vcore.hash-table-set!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 110-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D477.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D485.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 112-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k123, env)}),
       VGetArg(upenv, 109-1, 0),
-      _V10vcore_Dmake__string);
+      _V10vcore_Dhash__table__set_B);
 }
  }
 }
@@ -2562,16 +2686,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k121(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.133 0 0) ((bruijn ##.k.26 109 0) (##string ##.string.476)) ((bruijn ##.eqv?.4 111 0) (close _V10_Dlookup__intrinsic__name_D6_k122) (bruijn ##.x.1.11 108 0) '##vcore.hash-table-delete!))
+  // (if (bruijn ##.p.133 0 0) ((bruijn ##.k.26 109 0) (##string ##.string.484)) ((bruijn ##.eqv?.4 111 0) (close _V10_Dlookup__intrinsic__name_D6_k122) (bruijn ##.x.1.11 108 0) '##vcore.hash-table-ref))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 109-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D476.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D484.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 111-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k122, env)}),
       VGetArg(upenv, 108-1, 0),
-      _V10vcore_Dhash__table__delete_B);
+      _V10vcore_Dhash__table__ref);
 }
  }
 }
@@ -2588,16 +2712,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k120(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.132 0 0) ((bruijn ##.k.26 108 0) (##string ##.string.475)) ((bruijn ##.eqv?.4 110 0) (close _V10_Dlookup__intrinsic__name_D6_k121) (bruijn ##.x.1.11 107 0) '##vcore.hash-table-set!))
+  // (if (bruijn ##.p.132 0 0) ((bruijn ##.k.26 108 0) (##string ##.string.483)) ((bruijn ##.eqv?.4 110 0) (close _V10_Dlookup__intrinsic__name_D6_k121) (bruijn ##.x.1.11 107 0) '##vcore.hash-table-hash-function))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 108-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D475.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D483.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 110-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k121, env)}),
       VGetArg(upenv, 107-1, 0),
-      _V10vcore_Dhash__table__set_B);
+      _V10vcore_Dhash__table__hash__function);
 }
  }
 }
@@ -2614,16 +2738,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k119(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.131 0 0) ((bruijn ##.k.26 107 0) (##string ##.string.474)) ((bruijn ##.eqv?.4 109 0) (close _V10_Dlookup__intrinsic__name_D6_k120) (bruijn ##.x.1.11 106 0) '##vcore.hash-table-ref))
+  // (if (bruijn ##.p.131 0 0) ((bruijn ##.k.26 107 0) (##string ##.string.482)) ((bruijn ##.eqv?.4 109 0) (close _V10_Dlookup__intrinsic__name_D6_k120) (bruijn ##.x.1.11 106 0) '##vcore.hash-table-equivalence-function))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 107-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D474.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D482.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 109-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k120, env)}),
       VGetArg(upenv, 106-1, 0),
-      _V10vcore_Dhash__table__ref);
+      _V10vcore_Dhash__table__equivalence__function);
 }
  }
 }
@@ -2640,16 +2764,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k118(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.130 0 0) ((bruijn ##.k.26 106 0) (##string ##.string.473)) ((bruijn ##.eqv?.4 108 0) (close _V10_Dlookup__intrinsic__name_D6_k119) (bruijn ##.x.1.11 105 0) '##vcore.hash-table-hash-function))
+  // (if (bruijn ##.p.130 0 0) ((bruijn ##.k.26 106 0) (##string ##.string.481)) ((bruijn ##.eqv?.4 108 0) (close _V10_Dlookup__intrinsic__name_D6_k119) (bruijn ##.x.1.11 105 0) '##vcore.make-hash-table))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 106-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D473.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D481.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 108-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k119, env)}),
       VGetArg(upenv, 105-1, 0),
-      _V10vcore_Dhash__table__hash__function);
+      _V10vcore_Dmake__hash__table);
 }
  }
 }
@@ -2666,16 +2790,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k117(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.129 0 0) ((bruijn ##.k.26 105 0) (##string ##.string.472)) ((bruijn ##.eqv?.4 107 0) (close _V10_Dlookup__intrinsic__name_D6_k118) (bruijn ##.x.1.11 104 0) '##vcore.hash-table-equivalence-function))
+  // (if (bruijn ##.p.129 0 0) ((bruijn ##.k.26 105 0) (##string ##.string.480)) ((bruijn ##.eqv?.4 107 0) (close _V10_Dlookup__intrinsic__name_D6_k118) (bruijn ##.x.1.11 104 0) '##vcore.record-length))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 105-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D472.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D480.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 107-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k118, env)}),
       VGetArg(upenv, 104-1, 0),
-      _V10vcore_Dhash__table__equivalence__function);
+      _V10vcore_Drecord__length);
 }
  }
 }
@@ -2692,16 +2816,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k116(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.128 0 0) ((bruijn ##.k.26 104 0) (##string ##.string.471)) ((bruijn ##.eqv?.4 106 0) (close _V10_Dlookup__intrinsic__name_D6_k117) (bruijn ##.x.1.11 103 0) '##vcore.make-hash-table))
+  // (if (bruijn ##.p.128 0 0) ((bruijn ##.k.26 104 0) (##string ##.string.479)) ((bruijn ##.eqv?.4 106 0) (close _V10_Dlookup__intrinsic__name_D6_k117) (bruijn ##.x.1.11 103 0) '##vcore.record-set!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 104-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D471.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D479.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 106-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k117, env)}),
       VGetArg(upenv, 103-1, 0),
-      _V10vcore_Dmake__hash__table);
+      _V10vcore_Drecord__set_B);
 }
  }
 }
@@ -2718,16 +2842,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k115(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.127 0 0) ((bruijn ##.k.26 103 0) (##string ##.string.470)) ((bruijn ##.eqv?.4 105 0) (close _V10_Dlookup__intrinsic__name_D6_k116) (bruijn ##.x.1.11 102 0) '##vcore.record-length))
+  // (if (bruijn ##.p.127 0 0) ((bruijn ##.k.26 103 0) (##string ##.string.478)) ((bruijn ##.eqv?.4 105 0) (close _V10_Dlookup__intrinsic__name_D6_k116) (bruijn ##.x.1.11 102 0) '##vcore.record-ref))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 103-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D470.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D478.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 105-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k116, env)}),
       VGetArg(upenv, 102-1, 0),
-      _V10vcore_Drecord__length);
+      _V10vcore_Drecord__ref);
 }
  }
 }
@@ -2744,16 +2868,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k114(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.126 0 0) ((bruijn ##.k.26 102 0) (##string ##.string.469)) ((bruijn ##.eqv?.4 104 0) (close _V10_Dlookup__intrinsic__name_D6_k115) (bruijn ##.x.1.11 101 0) '##vcore.record-set!))
+  // (if (bruijn ##.p.126 0 0) ((bruijn ##.k.26 102 0) (##string ##.string.477)) ((bruijn ##.eqv?.4 104 0) (close _V10_Dlookup__intrinsic__name_D6_k115) (bruijn ##.x.1.11 101 0) '##vcore.record))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 102-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D469.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D477.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 104-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k115, env)}),
       VGetArg(upenv, 101-1, 0),
-      _V10vcore_Drecord__set_B);
+      _V10vcore_Drecord);
 }
  }
 }
@@ -2770,16 +2894,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k113(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.125 0 0) ((bruijn ##.k.26 101 0) (##string ##.string.468)) ((bruijn ##.eqv?.4 103 0) (close _V10_Dlookup__intrinsic__name_D6_k114) (bruijn ##.x.1.11 100 0) '##vcore.record-ref))
+  // (if (bruijn ##.p.125 0 0) ((bruijn ##.k.26 101 0) (##string ##.string.476)) ((bruijn ##.eqv?.4 103 0) (close _V10_Dlookup__intrinsic__name_D6_k114) (bruijn ##.x.1.11 100 0) '##vcore.s8vector-length))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 101-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D468.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D476.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 103-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k114, env)}),
       VGetArg(upenv, 100-1, 0),
-      _V10vcore_Drecord__ref);
+      _V10vcore_Ds8vector__length);
 }
  }
 }
@@ -2796,16 +2920,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k112(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.124 0 0) ((bruijn ##.k.26 100 0) (##string ##.string.467)) ((bruijn ##.eqv?.4 102 0) (close _V10_Dlookup__intrinsic__name_D6_k113) (bruijn ##.x.1.11 99 0) '##vcore.record))
+  // (if (bruijn ##.p.124 0 0) ((bruijn ##.k.26 100 0) (##string ##.string.475)) ((bruijn ##.eqv?.4 102 0) (close _V10_Dlookup__intrinsic__name_D6_k113) (bruijn ##.x.1.11 99 0) '##vcore.s8vector-set!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 100-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D467.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D475.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 102-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k113, env)}),
       VGetArg(upenv, 99-1, 0),
-      _V10vcore_Drecord);
+      _V10vcore_Ds8vector__set_B);
 }
  }
 }
@@ -2822,16 +2946,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k111(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.123 0 0) ((bruijn ##.k.26 99 0) (##string ##.string.466)) ((bruijn ##.eqv?.4 101 0) (close _V10_Dlookup__intrinsic__name_D6_k112) (bruijn ##.x.1.11 98 0) '##vcore.s8vector-length))
+  // (if (bruijn ##.p.123 0 0) ((bruijn ##.k.26 99 0) (##string ##.string.474)) ((bruijn ##.eqv?.4 101 0) (close _V10_Dlookup__intrinsic__name_D6_k112) (bruijn ##.x.1.11 98 0) '##vcore.s8vector-ref))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 99-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D466.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D474.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 101-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k112, env)}),
       VGetArg(upenv, 98-1, 0),
-      _V10vcore_Ds8vector__length);
+      _V10vcore_Ds8vector__ref);
 }
  }
 }
@@ -2848,16 +2972,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k110(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.122 0 0) ((bruijn ##.k.26 98 0) (##string ##.string.465)) ((bruijn ##.eqv?.4 100 0) (close _V10_Dlookup__intrinsic__name_D6_k111) (bruijn ##.x.1.11 97 0) '##vcore.s8vector-set!))
+  // (if (bruijn ##.p.122 0 0) ((bruijn ##.k.26 98 0) (##string ##.string.473)) ((bruijn ##.eqv?.4 100 0) (close _V10_Dlookup__intrinsic__name_D6_k111) (bruijn ##.x.1.11 97 0) '##vcore.list->s8vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 98-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D465.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D473.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 100-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k111, env)}),
       VGetArg(upenv, 97-1, 0),
-      _V10vcore_Ds8vector__set_B);
+      _V10vcore_Dlist___Gs8vector);
 }
  }
 }
@@ -2874,16 +2998,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k109(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.121 0 0) ((bruijn ##.k.26 97 0) (##string ##.string.464)) ((bruijn ##.eqv?.4 99 0) (close _V10_Dlookup__intrinsic__name_D6_k110) (bruijn ##.x.1.11 96 0) '##vcore.s8vector-ref))
+  // (if (bruijn ##.p.121 0 0) ((bruijn ##.k.26 97 0) (##string ##.string.472)) ((bruijn ##.eqv?.4 99 0) (close _V10_Dlookup__intrinsic__name_D6_k110) (bruijn ##.x.1.11 96 0) '##vcore.make-s8vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 97-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D464.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D472.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 99-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k110, env)}),
       VGetArg(upenv, 96-1, 0),
-      _V10vcore_Ds8vector__ref);
+      _V10vcore_Dmake__s8vector);
 }
  }
 }
@@ -2900,16 +3024,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k108(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.120 0 0) ((bruijn ##.k.26 96 0) (##string ##.string.463)) ((bruijn ##.eqv?.4 98 0) (close _V10_Dlookup__intrinsic__name_D6_k109) (bruijn ##.x.1.11 95 0) '##vcore.list->s8vector))
+  // (if (bruijn ##.p.120 0 0) ((bruijn ##.k.26 96 0) (##string ##.string.471)) ((bruijn ##.eqv?.4 98 0) (close _V10_Dlookup__intrinsic__name_D6_k109) (bruijn ##.x.1.11 95 0) '##vcore.s8vector?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 96-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D463.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D471.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 98-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k109, env)}),
       VGetArg(upenv, 95-1, 0),
-      _V10vcore_Dlist___Gs8vector);
+      _V10vcore_Ds8vector_Q);
 }
  }
 }
@@ -2926,16 +3050,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k107(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.119 0 0) ((bruijn ##.k.26 95 0) (##string ##.string.462)) ((bruijn ##.eqv?.4 97 0) (close _V10_Dlookup__intrinsic__name_D6_k108) (bruijn ##.x.1.11 94 0) '##vcore.make-s8vector))
+  // (if (bruijn ##.p.119 0 0) ((bruijn ##.k.26 95 0) (##string ##.string.470)) ((bruijn ##.eqv?.4 97 0) (close _V10_Dlookup__intrinsic__name_D6_k108) (bruijn ##.x.1.11 94 0) '##vcore.u8vector-length))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 95-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D462.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D470.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 97-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k108, env)}),
       VGetArg(upenv, 94-1, 0),
-      _V10vcore_Dmake__s8vector);
+      _V10vcore_Du8vector__length);
 }
  }
 }
@@ -2952,16 +3076,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k106(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.118 0 0) ((bruijn ##.k.26 94 0) (##string ##.string.461)) ((bruijn ##.eqv?.4 96 0) (close _V10_Dlookup__intrinsic__name_D6_k107) (bruijn ##.x.1.11 93 0) '##vcore.s8vector?))
+  // (if (bruijn ##.p.118 0 0) ((bruijn ##.k.26 94 0) (##string ##.string.469)) ((bruijn ##.eqv?.4 96 0) (close _V10_Dlookup__intrinsic__name_D6_k107) (bruijn ##.x.1.11 93 0) '##vcore.u8vector-set!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 94-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D461.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D469.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 96-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k107, env)}),
       VGetArg(upenv, 93-1, 0),
-      _V10vcore_Ds8vector_Q);
+      _V10vcore_Du8vector__set_B);
 }
  }
 }
@@ -2978,16 +3102,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k105(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.117 0 0) ((bruijn ##.k.26 93 0) (##string ##.string.460)) ((bruijn ##.eqv?.4 95 0) (close _V10_Dlookup__intrinsic__name_D6_k106) (bruijn ##.x.1.11 92 0) '##vcore.u8vector-length))
+  // (if (bruijn ##.p.117 0 0) ((bruijn ##.k.26 93 0) (##string ##.string.468)) ((bruijn ##.eqv?.4 95 0) (close _V10_Dlookup__intrinsic__name_D6_k106) (bruijn ##.x.1.11 92 0) '##vcore.u8vector-ref))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 93-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D460.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D468.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 95-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k106, env)}),
       VGetArg(upenv, 92-1, 0),
-      _V10vcore_Du8vector__length);
+      _V10vcore_Du8vector__ref);
 }
  }
 }
@@ -3004,16 +3128,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k104(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.116 0 0) ((bruijn ##.k.26 92 0) (##string ##.string.459)) ((bruijn ##.eqv?.4 94 0) (close _V10_Dlookup__intrinsic__name_D6_k105) (bruijn ##.x.1.11 91 0) '##vcore.u8vector-set!))
+  // (if (bruijn ##.p.116 0 0) ((bruijn ##.k.26 92 0) (##string ##.string.467)) ((bruijn ##.eqv?.4 94 0) (close _V10_Dlookup__intrinsic__name_D6_k105) (bruijn ##.x.1.11 91 0) '##vcore.list->u8vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 92-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D459.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D467.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 94-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k105, env)}),
       VGetArg(upenv, 91-1, 0),
-      _V10vcore_Du8vector__set_B);
+      _V10vcore_Dlist___Gu8vector);
 }
  }
 }
@@ -3030,16 +3154,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k103(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.115 0 0) ((bruijn ##.k.26 91 0) (##string ##.string.458)) ((bruijn ##.eqv?.4 93 0) (close _V10_Dlookup__intrinsic__name_D6_k104) (bruijn ##.x.1.11 90 0) '##vcore.u8vector-ref))
+  // (if (bruijn ##.p.115 0 0) ((bruijn ##.k.26 91 0) (##string ##.string.466)) ((bruijn ##.eqv?.4 93 0) (close _V10_Dlookup__intrinsic__name_D6_k104) (bruijn ##.x.1.11 90 0) '##vcore.make-u8vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 91-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D458.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D466.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 93-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k104, env)}),
       VGetArg(upenv, 90-1, 0),
-      _V10vcore_Du8vector__ref);
+      _V10vcore_Dmake__u8vector);
 }
  }
 }
@@ -3056,16 +3180,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k102(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.114 0 0) ((bruijn ##.k.26 90 0) (##string ##.string.457)) ((bruijn ##.eqv?.4 92 0) (close _V10_Dlookup__intrinsic__name_D6_k103) (bruijn ##.x.1.11 89 0) '##vcore.list->u8vector))
+  // (if (bruijn ##.p.114 0 0) ((bruijn ##.k.26 90 0) (##string ##.string.465)) ((bruijn ##.eqv?.4 92 0) (close _V10_Dlookup__intrinsic__name_D6_k103) (bruijn ##.x.1.11 89 0) '##vcore.u8vector?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 90-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D457.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D465.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 92-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k103, env)}),
       VGetArg(upenv, 89-1, 0),
-      _V10vcore_Dlist___Gu8vector);
+      _V10vcore_Du8vector_Q);
 }
  }
 }
@@ -3082,16 +3206,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k101(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.113 0 0) ((bruijn ##.k.26 89 0) (##string ##.string.456)) ((bruijn ##.eqv?.4 91 0) (close _V10_Dlookup__intrinsic__name_D6_k102) (bruijn ##.x.1.11 88 0) '##vcore.make-u8vector))
+  // (if (bruijn ##.p.113 0 0) ((bruijn ##.k.26 89 0) (##string ##.string.464)) ((bruijn ##.eqv?.4 91 0) (close _V10_Dlookup__intrinsic__name_D6_k102) (bruijn ##.x.1.11 88 0) '##vcore.s16vector-length))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 89-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D456.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D464.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 91-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k102, env)}),
       VGetArg(upenv, 88-1, 0),
-      _V10vcore_Dmake__u8vector);
+      _V10vcore_Ds16vector__length);
 }
  }
 }
@@ -3108,16 +3232,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k100(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.112 0 0) ((bruijn ##.k.26 88 0) (##string ##.string.455)) ((bruijn ##.eqv?.4 90 0) (close _V10_Dlookup__intrinsic__name_D6_k101) (bruijn ##.x.1.11 87 0) '##vcore.u8vector?))
+  // (if (bruijn ##.p.112 0 0) ((bruijn ##.k.26 88 0) (##string ##.string.463)) ((bruijn ##.eqv?.4 90 0) (close _V10_Dlookup__intrinsic__name_D6_k101) (bruijn ##.x.1.11 87 0) '##vcore.s16vector-set!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 88-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D455.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D463.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 90-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k101, env)}),
       VGetArg(upenv, 87-1, 0),
-      _V10vcore_Du8vector_Q);
+      _V10vcore_Ds16vector__set_B);
 }
  }
 }
@@ -3134,16 +3258,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k99(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.111 0 0) ((bruijn ##.k.26 87 0) (##string ##.string.454)) ((bruijn ##.eqv?.4 89 0) (close _V10_Dlookup__intrinsic__name_D6_k100) (bruijn ##.x.1.11 86 0) '##vcore.s16vector-length))
+  // (if (bruijn ##.p.111 0 0) ((bruijn ##.k.26 87 0) (##string ##.string.462)) ((bruijn ##.eqv?.4 89 0) (close _V10_Dlookup__intrinsic__name_D6_k100) (bruijn ##.x.1.11 86 0) '##vcore.s16vector-ref))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 87-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D454.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D462.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 89-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k100, env)}),
       VGetArg(upenv, 86-1, 0),
-      _V10vcore_Ds16vector__length);
+      _V10vcore_Ds16vector__ref);
 }
  }
 }
@@ -3160,16 +3284,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k98(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.110 0 0) ((bruijn ##.k.26 86 0) (##string ##.string.453)) ((bruijn ##.eqv?.4 88 0) (close _V10_Dlookup__intrinsic__name_D6_k99) (bruijn ##.x.1.11 85 0) '##vcore.s16vector-set!))
+  // (if (bruijn ##.p.110 0 0) ((bruijn ##.k.26 86 0) (##string ##.string.461)) ((bruijn ##.eqv?.4 88 0) (close _V10_Dlookup__intrinsic__name_D6_k99) (bruijn ##.x.1.11 85 0) '##vcore.list->s16vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 86-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D453.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D461.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 88-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k99, env)}),
       VGetArg(upenv, 85-1, 0),
-      _V10vcore_Ds16vector__set_B);
+      _V10vcore_Dlist___Gs16vector);
 }
  }
 }
@@ -3186,16 +3310,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k97(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.109 0 0) ((bruijn ##.k.26 85 0) (##string ##.string.452)) ((bruijn ##.eqv?.4 87 0) (close _V10_Dlookup__intrinsic__name_D6_k98) (bruijn ##.x.1.11 84 0) '##vcore.s16vector-ref))
+  // (if (bruijn ##.p.109 0 0) ((bruijn ##.k.26 85 0) (##string ##.string.460)) ((bruijn ##.eqv?.4 87 0) (close _V10_Dlookup__intrinsic__name_D6_k98) (bruijn ##.x.1.11 84 0) '##vcore.make-s16vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 85-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D452.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D460.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 87-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k98, env)}),
       VGetArg(upenv, 84-1, 0),
-      _V10vcore_Ds16vector__ref);
+      _V10vcore_Dmake__s16vector);
 }
  }
 }
@@ -3212,16 +3336,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k96(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.108 0 0) ((bruijn ##.k.26 84 0) (##string ##.string.451)) ((bruijn ##.eqv?.4 86 0) (close _V10_Dlookup__intrinsic__name_D6_k97) (bruijn ##.x.1.11 83 0) '##vcore.list->s16vector))
+  // (if (bruijn ##.p.108 0 0) ((bruijn ##.k.26 84 0) (##string ##.string.459)) ((bruijn ##.eqv?.4 86 0) (close _V10_Dlookup__intrinsic__name_D6_k97) (bruijn ##.x.1.11 83 0) '##vcore.s16vector?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 84-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D451.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D459.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 86-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k97, env)}),
       VGetArg(upenv, 83-1, 0),
-      _V10vcore_Dlist___Gs16vector);
+      _V10vcore_Ds16vector_Q);
 }
  }
 }
@@ -3238,16 +3362,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k95(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.107 0 0) ((bruijn ##.k.26 83 0) (##string ##.string.450)) ((bruijn ##.eqv?.4 85 0) (close _V10_Dlookup__intrinsic__name_D6_k96) (bruijn ##.x.1.11 82 0) '##vcore.make-s16vector))
+  // (if (bruijn ##.p.107 0 0) ((bruijn ##.k.26 83 0) (##string ##.string.458)) ((bruijn ##.eqv?.4 85 0) (close _V10_Dlookup__intrinsic__name_D6_k96) (bruijn ##.x.1.11 82 0) '##vcore.u16vector-length))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 83-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D450.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D458.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 85-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k96, env)}),
       VGetArg(upenv, 82-1, 0),
-      _V10vcore_Dmake__s16vector);
+      _V10vcore_Du16vector__length);
 }
  }
 }
@@ -3264,16 +3388,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k94(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.106 0 0) ((bruijn ##.k.26 82 0) (##string ##.string.449)) ((bruijn ##.eqv?.4 84 0) (close _V10_Dlookup__intrinsic__name_D6_k95) (bruijn ##.x.1.11 81 0) '##vcore.s16vector?))
+  // (if (bruijn ##.p.106 0 0) ((bruijn ##.k.26 82 0) (##string ##.string.457)) ((bruijn ##.eqv?.4 84 0) (close _V10_Dlookup__intrinsic__name_D6_k95) (bruijn ##.x.1.11 81 0) '##vcore.u16vector-set!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 82-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D449.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D457.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 84-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k95, env)}),
       VGetArg(upenv, 81-1, 0),
-      _V10vcore_Ds16vector_Q);
+      _V10vcore_Du16vector__set_B);
 }
  }
 }
@@ -3290,16 +3414,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k93(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.105 0 0) ((bruijn ##.k.26 81 0) (##string ##.string.448)) ((bruijn ##.eqv?.4 83 0) (close _V10_Dlookup__intrinsic__name_D6_k94) (bruijn ##.x.1.11 80 0) '##vcore.u16vector-length))
+  // (if (bruijn ##.p.105 0 0) ((bruijn ##.k.26 81 0) (##string ##.string.456)) ((bruijn ##.eqv?.4 83 0) (close _V10_Dlookup__intrinsic__name_D6_k94) (bruijn ##.x.1.11 80 0) '##vcore.u16vector-ref))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 81-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D448.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D456.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 83-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k94, env)}),
       VGetArg(upenv, 80-1, 0),
-      _V10vcore_Du16vector__length);
+      _V10vcore_Du16vector__ref);
 }
  }
 }
@@ -3316,16 +3440,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k92(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.104 0 0) ((bruijn ##.k.26 80 0) (##string ##.string.447)) ((bruijn ##.eqv?.4 82 0) (close _V10_Dlookup__intrinsic__name_D6_k93) (bruijn ##.x.1.11 79 0) '##vcore.u16vector-set!))
+  // (if (bruijn ##.p.104 0 0) ((bruijn ##.k.26 80 0) (##string ##.string.455)) ((bruijn ##.eqv?.4 82 0) (close _V10_Dlookup__intrinsic__name_D6_k93) (bruijn ##.x.1.11 79 0) '##vcore.list->u16vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 80-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D447.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D455.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 82-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k93, env)}),
       VGetArg(upenv, 79-1, 0),
-      _V10vcore_Du16vector__set_B);
+      _V10vcore_Dlist___Gu16vector);
 }
  }
 }
@@ -3342,16 +3466,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k91(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.103 0 0) ((bruijn ##.k.26 79 0) (##string ##.string.446)) ((bruijn ##.eqv?.4 81 0) (close _V10_Dlookup__intrinsic__name_D6_k92) (bruijn ##.x.1.11 78 0) '##vcore.u16vector-ref))
+  // (if (bruijn ##.p.103 0 0) ((bruijn ##.k.26 79 0) (##string ##.string.454)) ((bruijn ##.eqv?.4 81 0) (close _V10_Dlookup__intrinsic__name_D6_k92) (bruijn ##.x.1.11 78 0) '##vcore.make-u16vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 79-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D446.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D454.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 81-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k92, env)}),
       VGetArg(upenv, 78-1, 0),
-      _V10vcore_Du16vector__ref);
+      _V10vcore_Dmake__u16vector);
 }
  }
 }
@@ -3368,16 +3492,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k90(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.102 0 0) ((bruijn ##.k.26 78 0) (##string ##.string.445)) ((bruijn ##.eqv?.4 80 0) (close _V10_Dlookup__intrinsic__name_D6_k91) (bruijn ##.x.1.11 77 0) '##vcore.list->u16vector))
+  // (if (bruijn ##.p.102 0 0) ((bruijn ##.k.26 78 0) (##string ##.string.453)) ((bruijn ##.eqv?.4 80 0) (close _V10_Dlookup__intrinsic__name_D6_k91) (bruijn ##.x.1.11 77 0) '##vcore.u16vector?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 78-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D445.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D453.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 80-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k91, env)}),
       VGetArg(upenv, 77-1, 0),
-      _V10vcore_Dlist___Gu16vector);
+      _V10vcore_Du16vector_Q);
 }
  }
 }
@@ -3394,16 +3518,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k89(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.101 0 0) ((bruijn ##.k.26 77 0) (##string ##.string.444)) ((bruijn ##.eqv?.4 79 0) (close _V10_Dlookup__intrinsic__name_D6_k90) (bruijn ##.x.1.11 76 0) '##vcore.make-u16vector))
+  // (if (bruijn ##.p.101 0 0) ((bruijn ##.k.26 77 0) (##string ##.string.452)) ((bruijn ##.eqv?.4 79 0) (close _V10_Dlookup__intrinsic__name_D6_k90) (bruijn ##.x.1.11 76 0) '##vcore.s32vector-length))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 77-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D444.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D452.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 79-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k90, env)}),
       VGetArg(upenv, 76-1, 0),
-      _V10vcore_Dmake__u16vector);
+      _V10vcore_Ds32vector__length);
 }
  }
 }
@@ -3420,16 +3544,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k88(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.100 0 0) ((bruijn ##.k.26 76 0) (##string ##.string.443)) ((bruijn ##.eqv?.4 78 0) (close _V10_Dlookup__intrinsic__name_D6_k89) (bruijn ##.x.1.11 75 0) '##vcore.u16vector?))
+  // (if (bruijn ##.p.100 0 0) ((bruijn ##.k.26 76 0) (##string ##.string.451)) ((bruijn ##.eqv?.4 78 0) (close _V10_Dlookup__intrinsic__name_D6_k89) (bruijn ##.x.1.11 75 0) '##vcore.s32vector-set!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 76-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D443.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D451.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 78-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k89, env)}),
       VGetArg(upenv, 75-1, 0),
-      _V10vcore_Du16vector_Q);
+      _V10vcore_Ds32vector__set_B);
 }
  }
 }
@@ -3446,16 +3570,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k87(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.99 0 0) ((bruijn ##.k.26 75 0) (##string ##.string.442)) ((bruijn ##.eqv?.4 77 0) (close _V10_Dlookup__intrinsic__name_D6_k88) (bruijn ##.x.1.11 74 0) '##vcore.s32vector-length))
+  // (if (bruijn ##.p.99 0 0) ((bruijn ##.k.26 75 0) (##string ##.string.450)) ((bruijn ##.eqv?.4 77 0) (close _V10_Dlookup__intrinsic__name_D6_k88) (bruijn ##.x.1.11 74 0) '##vcore.s32vector-ref))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 75-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D442.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D450.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 77-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k88, env)}),
       VGetArg(upenv, 74-1, 0),
-      _V10vcore_Ds32vector__length);
+      _V10vcore_Ds32vector__ref);
 }
  }
 }
@@ -3472,16 +3596,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k86(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.98 0 0) ((bruijn ##.k.26 74 0) (##string ##.string.441)) ((bruijn ##.eqv?.4 76 0) (close _V10_Dlookup__intrinsic__name_D6_k87) (bruijn ##.x.1.11 73 0) '##vcore.s32vector-set!))
+  // (if (bruijn ##.p.98 0 0) ((bruijn ##.k.26 74 0) (##string ##.string.449)) ((bruijn ##.eqv?.4 76 0) (close _V10_Dlookup__intrinsic__name_D6_k87) (bruijn ##.x.1.11 73 0) '##vcore.list->s32vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 74-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D441.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D449.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 76-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k87, env)}),
       VGetArg(upenv, 73-1, 0),
-      _V10vcore_Ds32vector__set_B);
+      _V10vcore_Dlist___Gs32vector);
 }
  }
 }
@@ -3498,16 +3622,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k85(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.97 0 0) ((bruijn ##.k.26 73 0) (##string ##.string.440)) ((bruijn ##.eqv?.4 75 0) (close _V10_Dlookup__intrinsic__name_D6_k86) (bruijn ##.x.1.11 72 0) '##vcore.s32vector-ref))
+  // (if (bruijn ##.p.97 0 0) ((bruijn ##.k.26 73 0) (##string ##.string.448)) ((bruijn ##.eqv?.4 75 0) (close _V10_Dlookup__intrinsic__name_D6_k86) (bruijn ##.x.1.11 72 0) '##vcore.make-s32vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 73-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D440.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D448.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 75-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k86, env)}),
       VGetArg(upenv, 72-1, 0),
-      _V10vcore_Ds32vector__ref);
+      _V10vcore_Dmake__s32vector);
 }
  }
 }
@@ -3524,16 +3648,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k84(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.96 0 0) ((bruijn ##.k.26 72 0) (##string ##.string.439)) ((bruijn ##.eqv?.4 74 0) (close _V10_Dlookup__intrinsic__name_D6_k85) (bruijn ##.x.1.11 71 0) '##vcore.list->s32vector))
+  // (if (bruijn ##.p.96 0 0) ((bruijn ##.k.26 72 0) (##string ##.string.447)) ((bruijn ##.eqv?.4 74 0) (close _V10_Dlookup__intrinsic__name_D6_k85) (bruijn ##.x.1.11 71 0) '##vcore.s32vector?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 72-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D439.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D447.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 74-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k85, env)}),
       VGetArg(upenv, 71-1, 0),
-      _V10vcore_Dlist___Gs32vector);
+      _V10vcore_Ds32vector_Q);
 }
  }
 }
@@ -3550,16 +3674,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k83(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.95 0 0) ((bruijn ##.k.26 71 0) (##string ##.string.438)) ((bruijn ##.eqv?.4 73 0) (close _V10_Dlookup__intrinsic__name_D6_k84) (bruijn ##.x.1.11 70 0) '##vcore.make-s32vector))
+  // (if (bruijn ##.p.95 0 0) ((bruijn ##.k.26 71 0) (##string ##.string.446)) ((bruijn ##.eqv?.4 73 0) (close _V10_Dlookup__intrinsic__name_D6_k84) (bruijn ##.x.1.11 70 0) '##vcore.f32vector-length))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 71-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D438.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D446.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 73-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k84, env)}),
       VGetArg(upenv, 70-1, 0),
-      _V10vcore_Dmake__s32vector);
+      _V10vcore_Df32vector__length);
 }
  }
 }
@@ -3576,16 +3700,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k82(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.94 0 0) ((bruijn ##.k.26 70 0) (##string ##.string.437)) ((bruijn ##.eqv?.4 72 0) (close _V10_Dlookup__intrinsic__name_D6_k83) (bruijn ##.x.1.11 69 0) '##vcore.s32vector?))
+  // (if (bruijn ##.p.94 0 0) ((bruijn ##.k.26 70 0) (##string ##.string.445)) ((bruijn ##.eqv?.4 72 0) (close _V10_Dlookup__intrinsic__name_D6_k83) (bruijn ##.x.1.11 69 0) '##vcore.f32vector-set!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 70-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D437.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D445.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 72-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k83, env)}),
       VGetArg(upenv, 69-1, 0),
-      _V10vcore_Ds32vector_Q);
+      _V10vcore_Df32vector__set_B);
 }
  }
 }
@@ -3602,16 +3726,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k81(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.93 0 0) ((bruijn ##.k.26 69 0) (##string ##.string.436)) ((bruijn ##.eqv?.4 71 0) (close _V10_Dlookup__intrinsic__name_D6_k82) (bruijn ##.x.1.11 68 0) '##vcore.f32vector-length))
+  // (if (bruijn ##.p.93 0 0) ((bruijn ##.k.26 69 0) (##string ##.string.444)) ((bruijn ##.eqv?.4 71 0) (close _V10_Dlookup__intrinsic__name_D6_k82) (bruijn ##.x.1.11 68 0) '##vcore.f32vector-ref))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 69-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D436.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D444.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 71-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k82, env)}),
       VGetArg(upenv, 68-1, 0),
-      _V10vcore_Df32vector__length);
+      _V10vcore_Df32vector__ref);
 }
  }
 }
@@ -3628,16 +3752,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k80(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.92 0 0) ((bruijn ##.k.26 68 0) (##string ##.string.435)) ((bruijn ##.eqv?.4 70 0) (close _V10_Dlookup__intrinsic__name_D6_k81) (bruijn ##.x.1.11 67 0) '##vcore.f32vector-set!))
+  // (if (bruijn ##.p.92 0 0) ((bruijn ##.k.26 68 0) (##string ##.string.443)) ((bruijn ##.eqv?.4 70 0) (close _V10_Dlookup__intrinsic__name_D6_k81) (bruijn ##.x.1.11 67 0) '##vcore.list->f32vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 68-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D435.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D443.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 70-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k81, env)}),
       VGetArg(upenv, 67-1, 0),
-      _V10vcore_Df32vector__set_B);
+      _V10vcore_Dlist___Gf32vector);
 }
  }
 }
@@ -3654,16 +3778,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k79(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.91 0 0) ((bruijn ##.k.26 67 0) (##string ##.string.434)) ((bruijn ##.eqv?.4 69 0) (close _V10_Dlookup__intrinsic__name_D6_k80) (bruijn ##.x.1.11 66 0) '##vcore.f32vector-ref))
+  // (if (bruijn ##.p.91 0 0) ((bruijn ##.k.26 67 0) (##string ##.string.442)) ((bruijn ##.eqv?.4 69 0) (close _V10_Dlookup__intrinsic__name_D6_k80) (bruijn ##.x.1.11 66 0) '##vcore.make-f32vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 67-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D434.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D442.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 69-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k80, env)}),
       VGetArg(upenv, 66-1, 0),
-      _V10vcore_Df32vector__ref);
+      _V10vcore_Dmake__f32vector);
 }
  }
 }
@@ -3680,16 +3804,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k78(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.90 0 0) ((bruijn ##.k.26 66 0) (##string ##.string.433)) ((bruijn ##.eqv?.4 68 0) (close _V10_Dlookup__intrinsic__name_D6_k79) (bruijn ##.x.1.11 65 0) '##vcore.list->f32vector))
+  // (if (bruijn ##.p.90 0 0) ((bruijn ##.k.26 66 0) (##string ##.string.441)) ((bruijn ##.eqv?.4 68 0) (close _V10_Dlookup__intrinsic__name_D6_k79) (bruijn ##.x.1.11 65 0) '##vcore.f32vector?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 66-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D433.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D441.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 68-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k79, env)}),
       VGetArg(upenv, 65-1, 0),
-      _V10vcore_Dlist___Gf32vector);
+      _V10vcore_Df32vector_Q);
 }
  }
 }
@@ -3706,16 +3830,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k77(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.89 0 0) ((bruijn ##.k.26 65 0) (##string ##.string.432)) ((bruijn ##.eqv?.4 67 0) (close _V10_Dlookup__intrinsic__name_D6_k78) (bruijn ##.x.1.11 64 0) '##vcore.make-f32vector))
+  // (if (bruijn ##.p.89 0 0) ((bruijn ##.k.26 65 0) (##string ##.string.440)) ((bruijn ##.eqv?.4 67 0) (close _V10_Dlookup__intrinsic__name_D6_k78) (bruijn ##.x.1.11 64 0) '##vcore.f64vector-length))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 65-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D432.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D440.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 67-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k78, env)}),
       VGetArg(upenv, 64-1, 0),
-      _V10vcore_Dmake__f32vector);
+      _V10vcore_Df64vector__length);
 }
  }
 }
@@ -3732,16 +3856,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k76(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.88 0 0) ((bruijn ##.k.26 64 0) (##string ##.string.431)) ((bruijn ##.eqv?.4 66 0) (close _V10_Dlookup__intrinsic__name_D6_k77) (bruijn ##.x.1.11 63 0) '##vcore.f32vector?))
+  // (if (bruijn ##.p.88 0 0) ((bruijn ##.k.26 64 0) (##string ##.string.439)) ((bruijn ##.eqv?.4 66 0) (close _V10_Dlookup__intrinsic__name_D6_k77) (bruijn ##.x.1.11 63 0) '##vcore.f64vector-set!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 64-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D431.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D439.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 66-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k77, env)}),
       VGetArg(upenv, 63-1, 0),
-      _V10vcore_Df32vector_Q);
+      _V10vcore_Df64vector__set_B);
 }
  }
 }
@@ -3758,16 +3882,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k75(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.87 0 0) ((bruijn ##.k.26 63 0) (##string ##.string.430)) ((bruijn ##.eqv?.4 65 0) (close _V10_Dlookup__intrinsic__name_D6_k76) (bruijn ##.x.1.11 62 0) '##vcore.f64vector-length))
+  // (if (bruijn ##.p.87 0 0) ((bruijn ##.k.26 63 0) (##string ##.string.438)) ((bruijn ##.eqv?.4 65 0) (close _V10_Dlookup__intrinsic__name_D6_k76) (bruijn ##.x.1.11 62 0) '##vcore.f64vector-ref))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 63-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D430.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D438.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 65-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k76, env)}),
       VGetArg(upenv, 62-1, 0),
-      _V10vcore_Df64vector__length);
+      _V10vcore_Df64vector__ref);
 }
  }
 }
@@ -3784,16 +3908,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k74(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.86 0 0) ((bruijn ##.k.26 62 0) (##string ##.string.429)) ((bruijn ##.eqv?.4 64 0) (close _V10_Dlookup__intrinsic__name_D6_k75) (bruijn ##.x.1.11 61 0) '##vcore.f64vector-set!))
+  // (if (bruijn ##.p.86 0 0) ((bruijn ##.k.26 62 0) (##string ##.string.437)) ((bruijn ##.eqv?.4 64 0) (close _V10_Dlookup__intrinsic__name_D6_k75) (bruijn ##.x.1.11 61 0) '##vcore.list->f64vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 62-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D429.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D437.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 64-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k75, env)}),
       VGetArg(upenv, 61-1, 0),
-      _V10vcore_Df64vector__set_B);
+      _V10vcore_Dlist___Gf64vector);
 }
  }
 }
@@ -3810,16 +3934,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k73(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.85 0 0) ((bruijn ##.k.26 61 0) (##string ##.string.428)) ((bruijn ##.eqv?.4 63 0) (close _V10_Dlookup__intrinsic__name_D6_k74) (bruijn ##.x.1.11 60 0) '##vcore.f64vector-ref))
+  // (if (bruijn ##.p.85 0 0) ((bruijn ##.k.26 61 0) (##string ##.string.436)) ((bruijn ##.eqv?.4 63 0) (close _V10_Dlookup__intrinsic__name_D6_k74) (bruijn ##.x.1.11 60 0) '##vcore.make-f64vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 61-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D428.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D436.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 63-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k74, env)}),
       VGetArg(upenv, 60-1, 0),
-      _V10vcore_Df64vector__ref);
+      _V10vcore_Dmake__f64vector);
 }
  }
 }
@@ -3836,16 +3960,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k72(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.84 0 0) ((bruijn ##.k.26 60 0) (##string ##.string.427)) ((bruijn ##.eqv?.4 62 0) (close _V10_Dlookup__intrinsic__name_D6_k73) (bruijn ##.x.1.11 59 0) '##vcore.list->f64vector))
+  // (if (bruijn ##.p.84 0 0) ((bruijn ##.k.26 60 0) (##string ##.string.435)) ((bruijn ##.eqv?.4 62 0) (close _V10_Dlookup__intrinsic__name_D6_k73) (bruijn ##.x.1.11 59 0) '##vcore.f64vector?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 60-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D427.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D435.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 62-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k73, env)}),
       VGetArg(upenv, 59-1, 0),
-      _V10vcore_Dlist___Gf64vector);
+      _V10vcore_Df64vector_Q);
 }
  }
 }
@@ -3862,16 +3986,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k71(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.83 0 0) ((bruijn ##.k.26 59 0) (##string ##.string.426)) ((bruijn ##.eqv?.4 61 0) (close _V10_Dlookup__intrinsic__name_D6_k72) (bruijn ##.x.1.11 58 0) '##vcore.make-f64vector))
+  // (if (bruijn ##.p.83 0 0) ((bruijn ##.k.26 59 0) (##string ##.string.434)) ((bruijn ##.eqv?.4 61 0) (close _V10_Dlookup__intrinsic__name_D6_k72) (bruijn ##.x.1.11 58 0) '##vcore.vector-length))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 59-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D426.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D434.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 61-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k72, env)}),
       VGetArg(upenv, 58-1, 0),
-      _V10vcore_Dmake__f64vector);
+      _V10vcore_Dvector__length);
 }
  }
 }
@@ -3888,16 +4012,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k70(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.82 0 0) ((bruijn ##.k.26 58 0) (##string ##.string.425)) ((bruijn ##.eqv?.4 60 0) (close _V10_Dlookup__intrinsic__name_D6_k71) (bruijn ##.x.1.11 57 0) '##vcore.f64vector?))
+  // (if (bruijn ##.p.82 0 0) ((bruijn ##.k.26 58 0) (##string ##.string.433)) ((bruijn ##.eqv?.4 60 0) (close _V10_Dlookup__intrinsic__name_D6_k71) (bruijn ##.x.1.11 57 0) '##vcore.vector-set!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 58-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D425.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D433.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 60-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k71, env)}),
       VGetArg(upenv, 57-1, 0),
-      _V10vcore_Df64vector_Q);
+      _V10vcore_Dvector__set_B);
 }
  }
 }
@@ -3914,16 +4038,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k69(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.81 0 0) ((bruijn ##.k.26 57 0) (##string ##.string.424)) ((bruijn ##.eqv?.4 59 0) (close _V10_Dlookup__intrinsic__name_D6_k70) (bruijn ##.x.1.11 56 0) '##vcore.vector-length))
+  // (if (bruijn ##.p.81 0 0) ((bruijn ##.k.26 57 0) (##string ##.string.432)) ((bruijn ##.eqv?.4 59 0) (close _V10_Dlookup__intrinsic__name_D6_k70) (bruijn ##.x.1.11 56 0) '##vcore.vector-ref))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 57-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D424.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D432.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 59-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k70, env)}),
       VGetArg(upenv, 56-1, 0),
-      _V10vcore_Dvector__length);
+      _V10vcore_Dvector__ref);
 }
  }
 }
@@ -3940,16 +4064,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k68(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.80 0 0) ((bruijn ##.k.26 56 0) (##string ##.string.423)) ((bruijn ##.eqv?.4 58 0) (close _V10_Dlookup__intrinsic__name_D6_k69) (bruijn ##.x.1.11 55 0) '##vcore.vector-set!))
+  // (if (bruijn ##.p.80 0 0) ((bruijn ##.k.26 56 0) (##string ##.string.431)) ((bruijn ##.eqv?.4 58 0) (close _V10_Dlookup__intrinsic__name_D6_k69) (bruijn ##.x.1.11 55 0) '##vcore.list->vector))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 56-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D423.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D431.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 58-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k69, env)}),
       VGetArg(upenv, 55-1, 0),
-      _V10vcore_Dvector__set_B);
+      _V10vcore_Dlist___Gvector);
 }
  }
 }
@@ -3966,16 +4090,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k67(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.79 0 0) ((bruijn ##.k.26 55 0) (##string ##.string.422)) ((bruijn ##.eqv?.4 57 0) (close _V10_Dlookup__intrinsic__name_D6_k68) (bruijn ##.x.1.11 54 0) '##vcore.vector-ref))
+  // (if (bruijn ##.p.79 0 0) ((bruijn ##.k.26 55 0) (##string ##.string.430)) ((bruijn ##.eqv?.4 57 0) (close _V10_Dlookup__intrinsic__name_D6_k68) (bruijn ##.x.1.11 54 0) '##vcore.set-cdr!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 55-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D422.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D430.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 57-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k68, env)}),
       VGetArg(upenv, 54-1, 0),
-      _V10vcore_Dvector__ref);
+      _V10vcore_Dset__cdr_B);
 }
  }
 }
@@ -3992,16 +4116,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k66(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.78 0 0) ((bruijn ##.k.26 54 0) (##string ##.string.421)) ((bruijn ##.eqv?.4 56 0) (close _V10_Dlookup__intrinsic__name_D6_k67) (bruijn ##.x.1.11 53 0) '##vcore.list->vector))
+  // (if (bruijn ##.p.78 0 0) ((bruijn ##.k.26 54 0) (##string ##.string.429)) ((bruijn ##.eqv?.4 56 0) (close _V10_Dlookup__intrinsic__name_D6_k67) (bruijn ##.x.1.11 53 0) '##vcore.set-car!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 54-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D421.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D429.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 56-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k67, env)}),
       VGetArg(upenv, 53-1, 0),
-      _V10vcore_Dlist___Gvector);
+      _V10vcore_Dset__car_B);
 }
  }
 }
@@ -4018,16 +4142,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k65(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.77 0 0) ((bruijn ##.k.26 53 0) (##string ##.string.420)) ((bruijn ##.eqv?.4 55 0) (close _V10_Dlookup__intrinsic__name_D6_k66) (bruijn ##.x.1.11 52 0) '##vcore.set-cdr!))
+  // (if (bruijn ##.p.77 0 0) ((bruijn ##.k.26 53 0) (##string ##.string.428)) ((bruijn ##.eqv?.4 55 0) (close _V10_Dlookup__intrinsic__name_D6_k66) (bruijn ##.x.1.11 52 0) '##vcore.cdr))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 53-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D420.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D428.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 55-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k66, env)}),
       VGetArg(upenv, 52-1, 0),
-      _V10vcore_Dset__cdr_B);
+      _V10vcore_Dcdr);
 }
  }
 }
@@ -4044,42 +4168,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k64(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.76 0 0) ((bruijn ##.k.26 52 0) (##string ##.string.419)) ((bruijn ##.eqv?.4 54 0) (close _V10_Dlookup__intrinsic__name_D6_k65) (bruijn ##.x.1.11 51 0) '##vcore.set-car!))
+  // (if (bruijn ##.p.76 0 0) ((bruijn ##.k.26 52 0) (##string ##.string.427)) ((bruijn ##.eqv?.4 54 0) (close _V10_Dlookup__intrinsic__name_D6_k65) (bruijn ##.x.1.11 51 0) '##vcore.car))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 52-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D419.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D427.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 54-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k65, env)}),
       VGetArg(upenv, 51-1, 0),
-      _V10vcore_Dset__car_B);
-}
- }
-}
-static void _V10_Dlookup__intrinsic__name_D6_k63(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10_Dlookup__intrinsic__name_D6_k63" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D6_k63, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic__name_D6_k63, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (if (bruijn ##.p.75 0 0) ((bruijn ##.k.26 51 0) (##string ##.string.418)) ((bruijn ##.eqv?.4 53 0) (close _V10_Dlookup__intrinsic__name_D6_k64) (bruijn ##.x.1.11 50 0) '##vcore.cdr))
-if(VDecodeBool(
-_var0)) {
-    V_CALL(VGetArg(upenv, 51-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D418.sym, VPOINTER_OTHER));
-} else {
-    V_CALL(VGetArg(upenv, 53-1, 0), runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k64, env)}),
-      VGetArg(upenv, 50-1, 0),
-      _V10vcore_Dcdr);
+      _V10vcore_Dcar);
 }
  }
 }
@@ -4096,16 +4194,34 @@ static void _V10_Dlookup__intrinsic__name_D6_k62(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.74 0 0) ((bruijn ##.k.26 50 0) (##string ##.string.417)) ((bruijn ##.eqv?.4 52 0) (close _V10_Dlookup__intrinsic__name_D6_k63) (bruijn ##.x.1.11 49 0) '##vcore.car))
+  // ((close _V10_Dlookup__intrinsic__name_D6_k63) (close _V10_Dlookup__intrinsic__name_D6_k64))
+    V_CALL_FUNC(_V10_Dlookup__intrinsic__name_D6_k63, env, runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k64, env)}));
+ }
+}
+static void _V10_Dlookup__intrinsic__name_D6_k61(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic__name_D6_k61" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D6_k61, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic__name_D6_k61, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.75 0 0) ((bruijn ##.k.26 50 0) (##string ##.string.426)) ((bruijn ##.eqv?.4 52 0) (close _V10_Dlookup__intrinsic__name_D6_k62) (bruijn ##.x.1.11 49 0) '##vcore.cons))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 50-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D417.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D426.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 52-1, 0), runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k63, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k62, env)}),
       VGetArg(upenv, 49-1, 0),
-      _V10vcore_Dcar);
+      _V10vcore_Dcons);
 }
  }
 }
@@ -4122,9 +4238,17 @@ static void _V10_Dlookup__intrinsic__name_D6_k60(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((close _V10_Dlookup__intrinsic__name_D6_k61) (close _V10_Dlookup__intrinsic__name_D6_k62))
-    V_CALL_FUNC(_V10_Dlookup__intrinsic__name_D6_k61, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k62, env)}));
+  // (if (bruijn ##.p.74 0 0) ((bruijn ##.k.26 49 0) (##string ##.string.425)) ((bruijn ##.eqv?.4 51 0) (close _V10_Dlookup__intrinsic__name_D6_k61) (bruijn ##.x.1.11 48 0) '##vcore.load-library))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 49-1, 0), runtime,
+      VEncodePointer(&_V10_Dstring_D425.sym, VPOINTER_OTHER));
+} else {
+    V_CALL(VGetArg(upenv, 51-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k61, env)}),
+      VGetArg(upenv, 48-1, 0),
+      _V10vcore_Dload__library);
+}
  }
 }
 static void _V10_Dlookup__intrinsic__name_D6_k59(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -4140,16 +4264,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k59(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.73 0 0) ((bruijn ##.k.26 48 0) (##string ##.string.416)) ((bruijn ##.eqv?.4 50 0) (close _V10_Dlookup__intrinsic__name_D6_k60) (bruijn ##.x.1.11 47 0) '##vcore.cons))
+  // (if (bruijn ##.p.73 0 0) ((bruijn ##.k.26 48 0) (##string ##.string.424)) ((bruijn ##.eqv?.4 50 0) (close _V10_Dlookup__intrinsic__name_D6_k60) (bruijn ##.x.1.11 47 0) '##vcore.make-import))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 48-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D416.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D424.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 50-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k60, env)}),
       VGetArg(upenv, 47-1, 0),
-      _V10vcore_Dcons);
+      _V10vcore_Dmake__import);
 }
  }
 }
@@ -4166,16 +4290,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k58(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.72 0 0) ((bruijn ##.k.26 47 0) (##string ##.string.415)) ((bruijn ##.eqv?.4 49 0) (close _V10_Dlookup__intrinsic__name_D6_k59) (bruijn ##.x.1.11 46 0) '##vcore.load-library))
+  // (if (bruijn ##.p.72 0 0) ((bruijn ##.k.26 47 0) (##string ##.string.423)) ((bruijn ##.eqv?.4 49 0) (close _V10_Dlookup__intrinsic__name_D6_k59) (bruijn ##.x.1.11 46 0) '##vcore.lookup-library))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 47-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D415.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D423.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 49-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k59, env)}),
       VGetArg(upenv, 46-1, 0),
-      _V10vcore_Dload__library);
+      _V10vcore_Dlookup__library);
 }
  }
 }
@@ -4192,16 +4316,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k57(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.71 0 0) ((bruijn ##.k.26 46 0) (##string ##.string.414)) ((bruijn ##.eqv?.4 48 0) (close _V10_Dlookup__intrinsic__name_D6_k58) (bruijn ##.x.1.11 45 0) '##vcore.make-import))
+  // (if (bruijn ##.p.71 0 0) ((bruijn ##.k.26 46 0) (##string ##.string.419)) ((bruijn ##.eqv?.4 48 0) (close _V10_Dlookup__intrinsic__name_D6_k58) (bruijn ##.x.1.11 45 0) '##vcore.multidefine))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 46-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D414.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D419.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 48-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k58, env)}),
       VGetArg(upenv, 45-1, 0),
-      _V10vcore_Dmake__import);
+      _V10vcore_Dmultidefine);
 }
  }
 }
@@ -4218,16 +4342,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k56(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.70 0 0) ((bruijn ##.k.26 45 0) (##string ##.string.413)) ((bruijn ##.eqv?.4 47 0) (close _V10_Dlookup__intrinsic__name_D6_k57) (bruijn ##.x.1.11 44 0) '##vcore.lookup-library))
+  // (if (bruijn ##.p.70 0 0) ((bruijn ##.k.26 45 0) (##string ##.string.422)) ((bruijn ##.eqv?.4 47 0) (close _V10_Dlookup__intrinsic__name_D6_k57) (bruijn ##.x.1.11 44 0) '##vcore.define))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 45-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D413.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D422.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 47-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k57, env)}),
       VGetArg(upenv, 44-1, 0),
-      _V10vcore_Dlookup__library);
+      _V10vcore_Ddefine);
 }
  }
 }
@@ -4244,16 +4368,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k55(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.69 0 0) ((bruijn ##.k.26 44 0) (##string ##.string.409)) ((bruijn ##.eqv?.4 46 0) (close _V10_Dlookup__intrinsic__name_D6_k56) (bruijn ##.x.1.11 43 0) '##vcore.multidefine))
+  // (if (bruijn ##.p.69 0 0) ((bruijn ##.k.26 44 0) (##string ##.string.421)) ((bruijn ##.eqv?.4 46 0) (close _V10_Dlookup__intrinsic__name_D6_k56) (bruijn ##.x.1.11 43 0) '##vcore.set-declare!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 44-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D409.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D421.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 46-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k56, env)}),
       VGetArg(upenv, 43-1, 0),
-      _V10vcore_Dmultidefine);
+      _V10vcore_Dset__declare_B);
 }
  }
 }
@@ -4270,16 +4394,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k54(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.68 0 0) ((bruijn ##.k.26 43 0) (##string ##.string.412)) ((bruijn ##.eqv?.4 45 0) (close _V10_Dlookup__intrinsic__name_D6_k55) (bruijn ##.x.1.11 42 0) '##vcore.define))
+  // (if (bruijn ##.p.68 0 0) ((bruijn ##.k.26 43 0) (##string ##.string.420)) ((bruijn ##.eqv?.4 45 0) (close _V10_Dlookup__intrinsic__name_D6_k55) (bruijn ##.x.1.11 42 0) '##vcore.function))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 43-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D412.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D420.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 45-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k55, env)}),
       VGetArg(upenv, 42-1, 0),
-      _V10vcore_Ddefine);
+      _V10vcore_Dfunction);
 }
  }
 }
@@ -4296,16 +4420,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k53(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.67 0 0) ((bruijn ##.k.26 42 0) (##string ##.string.411)) ((bruijn ##.eqv?.4 44 0) (close _V10_Dlookup__intrinsic__name_D6_k54) (bruijn ##.x.1.11 41 0) '##vcore.set-declare!))
+  // (if (bruijn ##.p.67 0 0) ((bruijn ##.k.26 42 0) (##string ##.string.419)) ((bruijn ##.eqv?.4 44 0) (close _V10_Dlookup__intrinsic__name_D6_k54) (bruijn ##.x.1.11 41 0) '##vcore.set-global!))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 42-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D411.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D419.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 44-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k54, env)}),
       VGetArg(upenv, 41-1, 0),
-      _V10vcore_Dset__declare_B);
+      _V10vcore_Dset__global_B);
 }
  }
 }
@@ -4322,16 +4446,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k52(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.66 0 0) ((bruijn ##.k.26 41 0) (##string ##.string.410)) ((bruijn ##.eqv?.4 43 0) (close _V10_Dlookup__intrinsic__name_D6_k53) (bruijn ##.x.1.11 40 0) '##vcore.function))
+  // (if (bruijn ##.p.66 0 0) ((bruijn ##.k.26 41 0) (##string ##.string.418)) ((bruijn ##.eqv?.4 43 0) (close _V10_Dlookup__intrinsic__name_D6_k53) (bruijn ##.x.1.11 40 0) '##vcore.define-global))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 41-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D410.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D418.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 43-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k53, env)}),
       VGetArg(upenv, 40-1, 0),
-      _V10vcore_Dfunction);
+      _V10vcore_Ddefine__global);
 }
  }
 }
@@ -4348,16 +4472,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k51(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.65 0 0) ((bruijn ##.k.26 40 0) (##string ##.string.409)) ((bruijn ##.eqv?.4 42 0) (close _V10_Dlookup__intrinsic__name_D6_k52) (bruijn ##.x.1.11 39 0) '##vcore.set-global!))
+  // (if (bruijn ##.p.65 0 0) ((bruijn ##.k.26 40 0) (##string ##.string.417)) ((bruijn ##.eqv?.4 42 0) (close _V10_Dlookup__intrinsic__name_D6_k52) (bruijn ##.x.1.11 39 0) '##vcore.exit))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 40-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D409.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D417.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 42-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k52, env)}),
       VGetArg(upenv, 39-1, 0),
-      _V10vcore_Dset__global_B);
+      _V10vcore_Dexit);
 }
  }
 }
@@ -4374,16 +4498,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k50(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.64 0 0) ((bruijn ##.k.26 39 0) (##string ##.string.408)) ((bruijn ##.eqv?.4 41 0) (close _V10_Dlookup__intrinsic__name_D6_k51) (bruijn ##.x.1.11 38 0) '##vcore.define-global))
+  // (if (bruijn ##.p.64 0 0) ((bruijn ##.k.26 39 0) (##string ##.string.416)) ((bruijn ##.eqv?.4 41 0) (close _V10_Dlookup__intrinsic__name_D6_k51) (bruijn ##.x.1.11 38 0) '##vcore.abort))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 39-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D408.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D416.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 41-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k51, env)}),
       VGetArg(upenv, 38-1, 0),
-      _V10vcore_Ddefine__global);
+      _V10vcore_Dabort);
 }
  }
 }
@@ -4400,16 +4524,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k49(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.63 0 0) ((bruijn ##.k.26 38 0) (##string ##.string.407)) ((bruijn ##.eqv?.4 40 0) (close _V10_Dlookup__intrinsic__name_D6_k50) (bruijn ##.x.1.11 37 0) '##vcore.exit))
+  // (if (bruijn ##.p.63 0 0) ((bruijn ##.k.26 38 0) (##string ##.string.415)) ((bruijn ##.eqv?.4 40 0) (close _V10_Dlookup__intrinsic__name_D6_k50) (bruijn ##.x.1.11 37 0) '##vcore.apply-cps))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 38-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D407.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D415.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 40-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k50, env)}),
       VGetArg(upenv, 37-1, 0),
-      _V10vcore_Dexit);
+      _V10vcore_Dapply__cps);
 }
  }
 }
@@ -4426,16 +4550,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k48(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.62 0 0) ((bruijn ##.k.26 37 0) (##string ##.string.406)) ((bruijn ##.eqv?.4 39 0) (close _V10_Dlookup__intrinsic__name_D6_k49) (bruijn ##.x.1.11 36 0) '##vcore.abort))
+  // (if (bruijn ##.p.62 0 0) ((bruijn ##.k.26 37 0) (##string ##.string.414)) ((bruijn ##.eqv?.4 39 0) (close _V10_Dlookup__intrinsic__name_D6_k49) (bruijn ##.x.1.11 36 0) '##vcore.apply))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 37-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D406.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D414.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 39-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k49, env)}),
       VGetArg(upenv, 36-1, 0),
-      _V10vcore_Dabort);
+      _V10vcore_Dapply);
 }
  }
 }
@@ -4452,16 +4576,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k47(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.61 0 0) ((bruijn ##.k.26 36 0) (##string ##.string.405)) ((bruijn ##.eqv?.4 38 0) (close _V10_Dlookup__intrinsic__name_D6_k48) (bruijn ##.x.1.11 35 0) '##vcore.apply-cps))
+  // (if (bruijn ##.p.61 0 0) ((bruijn ##.k.26 36 0) (##string ##.string.413)) ((bruijn ##.eqv?.4 38 0) (close _V10_Dlookup__intrinsic__name_D6_k48) (bruijn ##.x.1.11 35 0) '##vcore.call-with-values))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 36-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D405.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D413.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 38-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k48, env)}),
       VGetArg(upenv, 35-1, 0),
-      _V10vcore_Dapply__cps);
+      _V10vcore_Dcall__with__values);
 }
  }
 }
@@ -4478,16 +4602,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k46(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.60 0 0) ((bruijn ##.k.26 35 0) (##string ##.string.404)) ((bruijn ##.eqv?.4 37 0) (close _V10_Dlookup__intrinsic__name_D6_k47) (bruijn ##.x.1.11 34 0) '##vcore.apply))
+  // (if (bruijn ##.p.60 0 0) ((bruijn ##.k.26 35 0) (##string ##.string.412)) ((bruijn ##.eqv?.4 37 0) (close _V10_Dlookup__intrinsic__name_D6_k47) (bruijn ##.x.1.11 34 0) '##vcore.call/cc))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 35-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D404.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D412.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 37-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k47, env)}),
       VGetArg(upenv, 34-1, 0),
-      _V10vcore_Dapply);
+      _V10vcore_Dcall_Wcc);
 }
  }
 }
@@ -4504,16 +4628,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k45(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.59 0 0) ((bruijn ##.k.26 34 0) (##string ##.string.403)) ((bruijn ##.eqv?.4 36 0) (close _V10_Dlookup__intrinsic__name_D6_k46) (bruijn ##.x.1.11 33 0) '##vcore.call-with-values))
+  // (if (bruijn ##.p.59 0 0) ((bruijn ##.k.26 34 0) (##string ##.string.411)) ((bruijn ##.eqv?.4 36 0) (close _V10_Dlookup__intrinsic__name_D6_k46) (bruijn ##.x.1.11 33 0) '##vcore.next))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 34-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D403.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D411.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 36-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k46, env)}),
       VGetArg(upenv, 33-1, 0),
-      _V10vcore_Dcall__with__values);
+      _V10vcore_Dnext);
 }
  }
 }
@@ -4530,16 +4654,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k44(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.58 0 0) ((bruijn ##.k.26 33 0) (##string ##.string.402)) ((bruijn ##.eqv?.4 35 0) (close _V10_Dlookup__intrinsic__name_D6_k45) (bruijn ##.x.1.11 32 0) '##vcore.call/cc))
+  // (if (bruijn ##.p.58 0 0) ((bruijn ##.k.26 33 0) (##string ##.string.410)) ((bruijn ##.eqv?.4 35 0) (close _V10_Dlookup__intrinsic__name_D6_k45) (bruijn ##.x.1.11 32 0) '##vcore.raise))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 33-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D402.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D410.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 35-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k45, env)}),
       VGetArg(upenv, 32-1, 0),
-      _V10vcore_Dcall_Wcc);
+      _V10vcore_Draise);
 }
  }
 }
@@ -4556,16 +4680,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k43(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.57 0 0) ((bruijn ##.k.26 32 0) (##string ##.string.401)) ((bruijn ##.eqv?.4 34 0) (close _V10_Dlookup__intrinsic__name_D6_k44) (bruijn ##.x.1.11 31 0) '##vcore.next))
+  // (if (bruijn ##.p.57 0 0) ((bruijn ##.k.26 32 0) (##string ##.string.409)) ((bruijn ##.eqv?.4 34 0) (close _V10_Dlookup__intrinsic__name_D6_k44) (bruijn ##.x.1.11 31 0) '##vcore.pop-exception-handler))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 32-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D401.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D409.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 34-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k44, env)}),
       VGetArg(upenv, 31-1, 0),
-      _V10vcore_Dnext);
+      _V10vcore_Dpop__exception__handler);
 }
  }
 }
@@ -4582,16 +4706,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k42(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.56 0 0) ((bruijn ##.k.26 31 0) (##string ##.string.400)) ((bruijn ##.eqv?.4 33 0) (close _V10_Dlookup__intrinsic__name_D6_k43) (bruijn ##.x.1.11 30 0) '##vcore.raise))
+  // (if (bruijn ##.p.56 0 0) ((bruijn ##.k.26 31 0) (##string ##.string.408)) ((bruijn ##.eqv?.4 33 0) (close _V10_Dlookup__intrinsic__name_D6_k43) (bruijn ##.x.1.11 30 0) '##vcore.push-exception-handler))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 31-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D400.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D408.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 33-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k43, env)}),
       VGetArg(upenv, 30-1, 0),
-      _V10vcore_Draise);
+      _V10vcore_Dpush__exception__handler);
 }
  }
 }
@@ -4608,16 +4732,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k41(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.55 0 0) ((bruijn ##.k.26 30 0) (##string ##.string.399)) ((bruijn ##.eqv?.4 32 0) (close _V10_Dlookup__intrinsic__name_D6_k42) (bruijn ##.x.1.11 29 0) '##vcore.pop-exception-handler))
+  // (if (bruijn ##.p.55 0 0) ((bruijn ##.k.26 30 0) (##string ##.string.407)) ((bruijn ##.eqv?.4 32 0) (close _V10_Dlookup__intrinsic__name_D6_k42) (bruijn ##.x.1.11 29 0) '##vcore.get-exception-handler))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 30-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D399.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D407.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 32-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k42, env)}),
       VGetArg(upenv, 29-1, 0),
-      _V10vcore_Dpop__exception__handler);
+      _V10vcore_Dget__exception__handler);
 }
  }
 }
@@ -4634,16 +4758,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k40(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.54 0 0) ((bruijn ##.k.26 29 0) (##string ##.string.398)) ((bruijn ##.eqv?.4 31 0) (close _V10_Dlookup__intrinsic__name_D6_k41) (bruijn ##.x.1.11 28 0) '##vcore.push-exception-handler))
+  // (if (bruijn ##.p.54 0 0) ((bruijn ##.k.26 29 0) (##string ##.string.406)) ((bruijn ##.eqv?.4 31 0) (close _V10_Dlookup__intrinsic__name_D6_k41) (bruijn ##.x.1.11 28 0) '##vcore.pop-dynamic))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 29-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D398.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D406.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 31-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k41, env)}),
       VGetArg(upenv, 28-1, 0),
-      _V10vcore_Dpush__exception__handler);
+      _V10vcore_Dpop__dynamic);
 }
  }
 }
@@ -4660,16 +4784,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k39(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.53 0 0) ((bruijn ##.k.26 28 0) (##string ##.string.397)) ((bruijn ##.eqv?.4 30 0) (close _V10_Dlookup__intrinsic__name_D6_k40) (bruijn ##.x.1.11 27 0) '##vcore.get-exception-handler))
+  // (if (bruijn ##.p.53 0 0) ((bruijn ##.k.26 28 0) (##string ##.string.405)) ((bruijn ##.eqv?.4 30 0) (close _V10_Dlookup__intrinsic__name_D6_k40) (bruijn ##.x.1.11 27 0) '##vcore.push-dynamic))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 28-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D397.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D405.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 30-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k40, env)}),
       VGetArg(upenv, 27-1, 0),
-      _V10vcore_Dget__exception__handler);
+      _V10vcore_Dpush__dynamic);
 }
  }
 }
@@ -4686,16 +4810,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k38(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.52 0 0) ((bruijn ##.k.26 27 0) (##string ##.string.396)) ((bruijn ##.eqv?.4 29 0) (close _V10_Dlookup__intrinsic__name_D6_k39) (bruijn ##.x.1.11 26 0) '##vcore.pop-dynamic))
+  // (if (bruijn ##.p.52 0 0) ((bruijn ##.k.26 27 0) (##string ##.string.404)) ((bruijn ##.eqv?.4 29 0) (close _V10_Dlookup__intrinsic__name_D6_k39) (bruijn ##.x.1.11 26 0) '##vcore.get-dynamics))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 27-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D396.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D404.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 29-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k39, env)}),
       VGetArg(upenv, 26-1, 0),
-      _V10vcore_Dpop__dynamic);
+      _V10vcore_Dget__dynamics);
 }
  }
 }
@@ -4712,16 +4836,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k37(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.51 0 0) ((bruijn ##.k.26 26 0) (##string ##.string.395)) ((bruijn ##.eqv?.4 28 0) (close _V10_Dlookup__intrinsic__name_D6_k38) (bruijn ##.x.1.11 25 0) '##vcore.push-dynamic))
+  // (if (bruijn ##.p.51 0 0) ((bruijn ##.k.26 26 0) (##string ##.string.403)) ((bruijn ##.eqv?.4 28 0) (close _V10_Dlookup__intrinsic__name_D6_k38) (bruijn ##.x.1.11 25 0) '##vcore.not))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 26-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D395.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D403.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 28-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k38, env)}),
       VGetArg(upenv, 25-1, 0),
-      _V10vcore_Dpush__dynamic);
+      _V10vcore_Dnot);
 }
  }
 }
@@ -4738,16 +4862,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k36(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.50 0 0) ((bruijn ##.k.26 25 0) (##string ##.string.394)) ((bruijn ##.eqv?.4 27 0) (close _V10_Dlookup__intrinsic__name_D6_k37) (bruijn ##.x.1.11 24 0) '##vcore.get-dynamics))
+  // (if (bruijn ##.p.50 0 0) ((bruijn ##.k.26 25 0) (##string ##.string.402)) ((bruijn ##.eqv?.4 27 0) (close _V10_Dlookup__intrinsic__name_D6_k37) (bruijn ##.x.1.11 24 0) '##vcore.eqv?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 25-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D394.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D402.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 27-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k37, env)}),
       VGetArg(upenv, 24-1, 0),
-      _V10vcore_Dget__dynamics);
+      _V10vcore_Deqv_Q);
 }
  }
 }
@@ -4764,16 +4888,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k35(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.49 0 0) ((bruijn ##.k.26 24 0) (##string ##.string.393)) ((bruijn ##.eqv?.4 26 0) (close _V10_Dlookup__intrinsic__name_D6_k36) (bruijn ##.x.1.11 23 0) '##vcore.not))
+  // (if (bruijn ##.p.49 0 0) ((bruijn ##.k.26 24 0) (##string ##.string.401)) ((bruijn ##.eqv?.4 26 0) (close _V10_Dlookup__intrinsic__name_D6_k36) (bruijn ##.x.1.11 23 0) '##vcore.blob=?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 24-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D393.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D401.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 26-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k36, env)}),
       VGetArg(upenv, 23-1, 0),
-      _V10vcore_Dnot);
+      _V10vcore_Dblob_E_Q);
 }
  }
 }
@@ -4790,16 +4914,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k34(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.48 0 0) ((bruijn ##.k.26 23 0) (##string ##.string.392)) ((bruijn ##.eqv?.4 25 0) (close _V10_Dlookup__intrinsic__name_D6_k35) (bruijn ##.x.1.11 22 0) '##vcore.eqv?))
+  // (if (bruijn ##.p.48 0 0) ((bruijn ##.k.26 23 0) (##string ##.string.400)) ((bruijn ##.eqv?.4 25 0) (close _V10_Dlookup__intrinsic__name_D6_k35) (bruijn ##.x.1.11 22 0) '##vcore.symbol=?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 23-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D392.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D400.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 25-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k35, env)}),
       VGetArg(upenv, 22-1, 0),
-      _V10vcore_Deqv_Q);
+      _V10vcore_Dsymbol_E_Q);
 }
  }
 }
@@ -4816,16 +4940,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k33(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.47 0 0) ((bruijn ##.k.26 22 0) (##string ##.string.391)) ((bruijn ##.eqv?.4 24 0) (close _V10_Dlookup__intrinsic__name_D6_k34) (bruijn ##.x.1.11 21 0) '##vcore.blob=?))
+  // (if (bruijn ##.p.47 0 0) ((bruijn ##.k.26 22 0) (##string ##.string.399)) ((bruijn ##.eqv?.4 24 0) (close _V10_Dlookup__intrinsic__name_D6_k34) (bruijn ##.x.1.11 21 0) '##vcore.eq?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 22-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D391.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D399.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 24-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k34, env)}),
       VGetArg(upenv, 21-1, 0),
-      _V10vcore_Dblob_E_Q);
+      _V10vcore_Deq_Q);
 }
  }
 }
@@ -4842,16 +4966,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k32(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.46 0 0) ((bruijn ##.k.26 21 0) (##string ##.string.390)) ((bruijn ##.eqv?.4 23 0) (close _V10_Dlookup__intrinsic__name_D6_k33) (bruijn ##.x.1.11 20 0) '##vcore.symbol=?))
+  // (if (bruijn ##.p.46 0 0) ((bruijn ##.k.26 21 0) (##string ##.string.398)) ((bruijn ##.eqv?.4 23 0) (close _V10_Dlookup__intrinsic__name_D6_k33) (bruijn ##.x.1.11 20 0) '##vcore.void?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 21-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D390.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D398.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 23-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k33, env)}),
       VGetArg(upenv, 20-1, 0),
-      _V10vcore_Dsymbol_E_Q);
+      _V10vcore_Dvoid_Q);
 }
  }
 }
@@ -4868,16 +4992,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k31(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.45 0 0) ((bruijn ##.k.26 20 0) (##string ##.string.389)) ((bruijn ##.eqv?.4 22 0) (close _V10_Dlookup__intrinsic__name_D6_k32) (bruijn ##.x.1.11 19 0) '##vcore.eq?))
+  // (if (bruijn ##.p.45 0 0) ((bruijn ##.k.26 20 0) (##string ##.string.397)) ((bruijn ##.eqv?.4 22 0) (close _V10_Dlookup__intrinsic__name_D6_k32) (bruijn ##.x.1.11 19 0) '##vcore.char?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 20-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D389.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D397.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 22-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k32, env)}),
       VGetArg(upenv, 19-1, 0),
-      _V10vcore_Deq_Q);
+      _V10vcore_Dchar_Q);
 }
  }
 }
@@ -4894,16 +5018,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k30(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.44 0 0) ((bruijn ##.k.26 19 0) (##string ##.string.388)) ((bruijn ##.eqv?.4 21 0) (close _V10_Dlookup__intrinsic__name_D6_k31) (bruijn ##.x.1.11 18 0) '##vcore.void?))
+  // (if (bruijn ##.p.44 0 0) ((bruijn ##.k.26 19 0) (##string ##.string.396)) ((bruijn ##.eqv?.4 21 0) (close _V10_Dlookup__intrinsic__name_D6_k31) (bruijn ##.x.1.11 18 0) '##vcore.double?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 19-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D388.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D396.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 21-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k31, env)}),
       VGetArg(upenv, 18-1, 0),
-      _V10vcore_Dvoid_Q);
+      _V10vcore_Ddouble_Q);
 }
  }
 }
@@ -4920,16 +5044,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k29(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.43 0 0) ((bruijn ##.k.26 18 0) (##string ##.string.387)) ((bruijn ##.eqv?.4 20 0) (close _V10_Dlookup__intrinsic__name_D6_k30) (bruijn ##.x.1.11 17 0) '##vcore.char?))
+  // (if (bruijn ##.p.43 0 0) ((bruijn ##.k.26 18 0) (##string ##.string.395)) ((bruijn ##.eqv?.4 20 0) (close _V10_Dlookup__intrinsic__name_D6_k30) (bruijn ##.x.1.11 17 0) '##vcore.int?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 18-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D387.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D395.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 20-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k30, env)}),
       VGetArg(upenv, 17-1, 0),
-      _V10vcore_Dchar_Q);
+      _V10vcore_Dint_Q);
 }
  }
 }
@@ -4946,16 +5070,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k28(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.42 0 0) ((bruijn ##.k.26 17 0) (##string ##.string.386)) ((bruijn ##.eqv?.4 19 0) (close _V10_Dlookup__intrinsic__name_D6_k29) (bruijn ##.x.1.11 16 0) '##vcore.double?))
+  // (if (bruijn ##.p.42 0 0) ((bruijn ##.k.26 17 0) (##string ##.string.394)) ((bruijn ##.eqv?.4 19 0) (close _V10_Dlookup__intrinsic__name_D6_k29) (bruijn ##.x.1.11 16 0) '##vcore.string?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 17-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D386.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D394.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 19-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k29, env)}),
       VGetArg(upenv, 16-1, 0),
-      _V10vcore_Ddouble_Q);
+      _V10vcore_Dstring_Q);
 }
  }
 }
@@ -4972,16 +5096,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k27(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.41 0 0) ((bruijn ##.k.26 16 0) (##string ##.string.385)) ((bruijn ##.eqv?.4 18 0) (close _V10_Dlookup__intrinsic__name_D6_k28) (bruijn ##.x.1.11 15 0) '##vcore.int?))
+  // (if (bruijn ##.p.41 0 0) ((bruijn ##.k.26 16 0) (##string ##.string.393)) ((bruijn ##.eqv?.4 18 0) (close _V10_Dlookup__intrinsic__name_D6_k28) (bruijn ##.x.1.11 15 0) '##vcore.symbol?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 16-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D385.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D393.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 18-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k28, env)}),
       VGetArg(upenv, 15-1, 0),
-      _V10vcore_Dint_Q);
+      _V10vcore_Dsymbol_Q);
 }
  }
 }
@@ -4998,16 +5122,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k26(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.40 0 0) ((bruijn ##.k.26 15 0) (##string ##.string.384)) ((bruijn ##.eqv?.4 17 0) (close _V10_Dlookup__intrinsic__name_D6_k27) (bruijn ##.x.1.11 14 0) '##vcore.string?))
+  // (if (bruijn ##.p.40 0 0) ((bruijn ##.k.26 15 0) (##string ##.string.392)) ((bruijn ##.eqv?.4 17 0) (close _V10_Dlookup__intrinsic__name_D6_k27) (bruijn ##.x.1.11 14 0) '##vcore.blob?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 15-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D384.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D392.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 17-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k27, env)}),
       VGetArg(upenv, 14-1, 0),
-      _V10vcore_Dstring_Q);
+      _V10vcore_Dblob_Q);
 }
  }
 }
@@ -5024,16 +5148,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k25(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.39 0 0) ((bruijn ##.k.26 14 0) (##string ##.string.383)) ((bruijn ##.eqv?.4 16 0) (close _V10_Dlookup__intrinsic__name_D6_k26) (bruijn ##.x.1.11 13 0) '##vcore.symbol?))
+  // (if (bruijn ##.p.39 0 0) ((bruijn ##.k.26 14 0) (##string ##.string.391)) ((bruijn ##.eqv?.4 16 0) (close _V10_Dlookup__intrinsic__name_D6_k26) (bruijn ##.x.1.11 13 0) '##vcore.procedure?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 14-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D383.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D391.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 16-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k26, env)}),
       VGetArg(upenv, 13-1, 0),
-      _V10vcore_Dsymbol_Q);
+      _V10vcore_Dprocedure_Q);
 }
  }
 }
@@ -5050,16 +5174,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k24(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.38 0 0) ((bruijn ##.k.26 13 0) (##string ##.string.382)) ((bruijn ##.eqv?.4 15 0) (close _V10_Dlookup__intrinsic__name_D6_k25) (bruijn ##.x.1.11 12 0) '##vcore.blob?))
+  // (if (bruijn ##.p.38 0 0) ((bruijn ##.k.26 13 0) (##string ##.string.390)) ((bruijn ##.eqv?.4 15 0) (close _V10_Dlookup__intrinsic__name_D6_k25) (bruijn ##.x.1.11 12 0) '##vcore.vector?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 13-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D382.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D390.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 15-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k25, env)}),
       VGetArg(upenv, 12-1, 0),
-      _V10vcore_Dblob_Q);
+      _V10vcore_Dvector_Q);
 }
  }
 }
@@ -5076,16 +5200,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k23(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.37 0 0) ((bruijn ##.k.26 12 0) (##string ##.string.381)) ((bruijn ##.eqv?.4 14 0) (close _V10_Dlookup__intrinsic__name_D6_k24) (bruijn ##.x.1.11 11 0) '##vcore.procedure?))
+  // (if (bruijn ##.p.37 0 0) ((bruijn ##.k.26 12 0) (##string ##.string.389)) ((bruijn ##.eqv?.4 14 0) (close _V10_Dlookup__intrinsic__name_D6_k24) (bruijn ##.x.1.11 11 0) '##vcore.record?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 12-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D381.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D389.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 14-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k24, env)}),
       VGetArg(upenv, 11-1, 0),
-      _V10vcore_Dprocedure_Q);
+      _V10vcore_Drecord_Q);
 }
  }
 }
@@ -5102,16 +5226,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k22(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.36 0 0) ((bruijn ##.k.26 11 0) (##string ##.string.380)) ((bruijn ##.eqv?.4 13 0) (close _V10_Dlookup__intrinsic__name_D6_k23) (bruijn ##.x.1.11 10 0) '##vcore.vector?))
+  // (if (bruijn ##.p.36 0 0) ((bruijn ##.k.26 11 0) (##string ##.string.388)) ((bruijn ##.eqv?.4 13 0) (close _V10_Dlookup__intrinsic__name_D6_k23) (bruijn ##.x.1.11 10 0) '##vcore.pair?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 11-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D380.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D388.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 13-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k23, env)}),
       VGetArg(upenv, 10-1, 0),
-      _V10vcore_Dvector_Q);
+      _V10vcore_Dpair_Q);
 }
  }
 }
@@ -5128,16 +5252,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k21(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.35 0 0) ((bruijn ##.k.26 10 0) (##string ##.string.379)) ((bruijn ##.eqv?.4 12 0) (close _V10_Dlookup__intrinsic__name_D6_k22) (bruijn ##.x.1.11 9 0) '##vcore.record?))
+  // (if (bruijn ##.p.35 0 0) ((bruijn ##.k.26 10 0) (##string ##.string.387)) ((bruijn ##.eqv?.4 12 0) (close _V10_Dlookup__intrinsic__name_D6_k22) (bruijn ##.x.1.11 9 0) '##vcore.null?))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 10-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D379.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D387.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 12-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k22, env)}),
       VGetArg(upenv, 9-1, 0),
-      _V10vcore_Drecord_Q);
+      _V10vcore_Dnull_Q);
 }
  }
 }
@@ -5154,16 +5278,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k20(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.34 0 0) ((bruijn ##.k.26 9 0) (##string ##.string.378)) ((bruijn ##.eqv?.4 11 0) (close _V10_Dlookup__intrinsic__name_D6_k21) (bruijn ##.x.1.11 8 0) '##vcore.pair?))
+  // (if (bruijn ##.p.34 0 0) ((bruijn ##.k.26 9 0) (##string ##.string.386)) ((bruijn ##.eqv?.4 11 0) (close _V10_Dlookup__intrinsic__name_D6_k21) (bruijn ##.x.1.11 8 0) '##vcore.remainder))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 9-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D378.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D386.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 11-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k21, env)}),
       VGetArg(upenv, 8-1, 0),
-      _V10vcore_Dpair_Q);
+      _V10vcore_Dremainder);
 }
  }
 }
@@ -5180,16 +5304,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k19(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.33 0 0) ((bruijn ##.k.26 8 0) (##string ##.string.377)) ((bruijn ##.eqv?.4 10 0) (close _V10_Dlookup__intrinsic__name_D6_k20) (bruijn ##.x.1.11 7 0) '##vcore.null?))
+  // (if (bruijn ##.p.33 0 0) ((bruijn ##.k.26 8 0) (##string ##.string.385)) ((bruijn ##.eqv?.4 10 0) (close _V10_Dlookup__intrinsic__name_D6_k20) (bruijn ##.x.1.11 7 0) '##vcore.quotient))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 8-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D377.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D385.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 10-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k20, env)}),
       VGetArg(upenv, 7-1, 0),
-      _V10vcore_Dnull_Q);
+      _V10vcore_Dquotient);
 }
  }
 }
@@ -5206,16 +5330,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k18(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.32 0 0) ((bruijn ##.k.26 7 0) (##string ##.string.376)) ((bruijn ##.eqv?.4 9 0) (close _V10_Dlookup__intrinsic__name_D6_k19) (bruijn ##.x.1.11 6 0) '##vcore.remainder))
+  // (if (bruijn ##.p.32 0 0) ((bruijn ##.k.26 7 0) (##string ##.string.384)) ((bruijn ##.eqv?.4 9 0) (close _V10_Dlookup__intrinsic__name_D6_k19) (bruijn ##.x.1.11 6 0) '##vcore.cmp))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 7-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D376.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D384.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 9-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k19, env)}),
       VGetArg(upenv, 6-1, 0),
-      _V10vcore_Dremainder);
+      _V10vcore_Dcmp);
 }
  }
 }
@@ -5232,16 +5356,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k17(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.31 0 0) ((bruijn ##.k.26 6 0) (##string ##.string.375)) ((bruijn ##.eqv?.4 8 0) (close _V10_Dlookup__intrinsic__name_D6_k18) (bruijn ##.x.1.11 5 0) '##vcore.quotient))
+  // (if (bruijn ##.p.31 0 0) ((bruijn ##.k.26 6 0) (##string ##.string.383)) ((bruijn ##.eqv?.4 8 0) (close _V10_Dlookup__intrinsic__name_D6_k18) (bruijn ##.x.1.11 5 0) '##vcore./))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 6-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D375.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D383.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 8-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k18, env)}),
       VGetArg(upenv, 5-1, 0),
-      _V10vcore_Dquotient);
+      _V10vcore_D_W);
 }
  }
 }
@@ -5258,16 +5382,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k16(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.30 0 0) ((bruijn ##.k.26 5 0) (##string ##.string.374)) ((bruijn ##.eqv?.4 7 0) (close _V10_Dlookup__intrinsic__name_D6_k17) (bruijn ##.x.1.11 4 0) '##vcore.cmp))
+  // (if (bruijn ##.p.30 0 0) ((bruijn ##.k.26 5 0) (##string ##.string.382)) ((bruijn ##.eqv?.4 7 0) (close _V10_Dlookup__intrinsic__name_D6_k17) (bruijn ##.x.1.11 4 0) '##vcore.*))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 5-1, 0), runtime,
-      VEncodePointer(&_V10_Dstring_D374.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D382.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 7-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k17, env)}),
       upenv->up->up->up->vars[0],
-      _V10vcore_Dcmp);
+      _V10vcore_D_S);
 }
  }
 }
@@ -5284,16 +5408,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k15(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.29 0 0) ((bruijn ##.k.26 4 0) (##string ##.string.373)) ((bruijn ##.eqv?.4 6 0) (close _V10_Dlookup__intrinsic__name_D6_k16) (bruijn ##.x.1.11 3 0) '##vcore./))
+  // (if (bruijn ##.p.29 0 0) ((bruijn ##.k.26 4 0) (##string ##.string.381)) ((bruijn ##.eqv?.4 6 0) (close _V10_Dlookup__intrinsic__name_D6_k16) (bruijn ##.x.1.11 3 0) '##vcore.-))
 if(VDecodeBool(
 _var0)) {
     V_CALL(upenv->up->up->up->vars[0], runtime,
-      VEncodePointer(&_V10_Dstring_D373.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D381.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 6-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k16, env)}),
       upenv->up->up->vars[0],
-      _V10vcore_D_W);
+      _V10vcore_D__);
 }
  }
 }
@@ -5310,16 +5434,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k14(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.28 0 0) ((bruijn ##.k.26 3 0) (##string ##.string.372)) ((bruijn ##.eqv?.4 5 0) (close _V10_Dlookup__intrinsic__name_D6_k15) (bruijn ##.x.1.11 2 0) '##vcore.*))
+  // (if (bruijn ##.p.28 0 0) ((bruijn ##.k.26 3 0) (##string ##.string.380)) ((bruijn ##.eqv?.4 5 0) (close _V10_Dlookup__intrinsic__name_D6_k15) (bruijn ##.x.1.11 2 0) '##vcore.+))
 if(VDecodeBool(
 _var0)) {
     V_CALL(upenv->up->up->vars[0], runtime,
-      VEncodePointer(&_V10_Dstring_D372.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D380.sym, VPOINTER_OTHER));
 } else {
     V_CALL(VGetArg(upenv, 5-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k15, env)}),
       upenv->up->vars[0],
-      _V10vcore_D_S);
+      _V10vcore_D_P);
 }
  }
 }
@@ -5336,16 +5460,16 @@ static void _V10_Dlookup__intrinsic__name_D6_k13(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.27 0 0) ((bruijn ##.k.26 2 0) (##string ##.string.371)) ((bruijn ##.eqv?.4 4 0) (close _V10_Dlookup__intrinsic__name_D6_k14) (bruijn ##.x.1.11 1 0) '##vcore.-))
+  // (if (bruijn ##.p.27 0 0) ((bruijn ##.k.26 2 0) (##string ##.string.379)) ((bruijn ##.eqv?.4 4 0) (close _V10_Dlookup__intrinsic__name_D6_k14) (bruijn ##.x.1.11 1 0) '##vcore.exact))
 if(VDecodeBool(
 _var0)) {
     V_CALL(upenv->up->vars[0], runtime,
-      VEncodePointer(&_V10_Dstring_D371.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D379.sym, VPOINTER_OTHER));
 } else {
     V_CALL(upenv->up->up->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k14, env)}),
       upenv->vars[0],
-      _V10vcore_D__);
+      _V10vcore_Dexact);
 }
  }
 }
@@ -5357,11 +5481,11 @@ static void _V10_Dlookup__intrinsic__name_D6_lambda5(VRuntime * runtime, VEnv * 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((bruijn ##.eqv?.4 3 0) (close _V10_Dlookup__intrinsic__name_D6_k13) (bruijn ##.x.1.11 0 0) '##vcore.+)
+  // ((bruijn ##.eqv?.4 3 0) (close _V10_Dlookup__intrinsic__name_D6_k13) (bruijn ##.x.1.11 0 0) '##vcore.inexact)
     V_CALL(upenv->up->up->vars[0], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D6_k13, env)}),
       _var0,
-      _V10vcore_D_P);
+      _V10vcore_Dinexact);
  }
 }
 static void _V10_Dlookup__intrinsic__name_D6_lambda4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -5383,25 +5507,227 @@ static void _V10_Dlookup__intrinsic__name_D6_lambda4(VRuntime * runtime, VEnv * 
       _var1);
  }
 }
-static void _V10_Dlookup__intrinsic_D7_k228(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k228" };
+static void _V10_Dlookup__intrinsic_D7_k234(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k234" };
  VRecordCall2(runtime, &dbg);
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k228, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k234, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
- V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k228, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.356 1 0) ((bruijn ##.k.357 0 0) (bruijn ##.p.356 1 0)) ((bruijn ##.eqv?.4 55 0) (bruijn ##.k.357 0 0) (bruijn ##.x.2.13 52 0) '##vcore.qcons))
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k234, runtime, upenv, 1, argc, _var0) {
+  // (if (bruijn ##.p.364 1 0) ((bruijn ##.k.365 0 0) (bruijn ##.p.364 1 0)) ((bruijn ##.eqv?.4 57 0) (bruijn ##.k.365 0 0) (bruijn ##.x.2.13 54 0) '##vcore.qcons))
 if(VDecodeBool(
 upenv->vars[0])) {
     V_CALL(_var0, runtime,
       upenv->vars[0]);
 } else {
-    V_CALL(VGetArg(upenv, 55-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 57-1, 0), runtime,
       _var0,
-      VGetArg(upenv, 52-1, 0),
+      VGetArg(upenv, 54-1, 0),
       _V10vcore_Dqcons);
+}
+ }
+}
+static void _V10_Dlookup__intrinsic_D7_k350(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k350" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k350, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k350, runtime, upenv, 1, argc, _var0) {
+  // (if (bruijn ##.p.363 0 0) ((bruijn ##.k.195 170 0) (##intrinsic ##vcore.jiffies-per-second)) ((bruijn ##.k.195 170 0) #f))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 170-1, 0), runtime,
+      _V40_V10vcore_Djiffies__per__second);
+} else {
+    V_CALL(VGetArg(upenv, 170-1, 0), runtime,
+      VEncodeBool(false));
+}
+ }
+}
+static void _V10_Dlookup__intrinsic_D7_k349(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k349" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k349, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k349, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.362 0 0) ((bruijn ##.k.195 169 0) (##intrinsic ##vcore.current-jiffy)) ((bruijn ##.eqv?.4 171 0) (close _V10_Dlookup__intrinsic_D7_k350) (bruijn ##.x.2.13 168 0) '##vcore.jiffies-per-second))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 169-1, 0), runtime,
+      _V40_V10vcore_Dcurrent__jiffy);
+} else {
+    V_CALL(VGetArg(upenv, 171-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k350, env)}),
+      VGetArg(upenv, 168-1, 0),
+      _V10vcore_Djiffies__per__second);
+}
+ }
+}
+static void _V10_Dlookup__intrinsic_D7_k348(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k348" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k348, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k348, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.361 0 0) ((bruijn ##.k.195 168 0) (##intrinsic ##vcore.access)) ((bruijn ##.eqv?.4 170 0) (close _V10_Dlookup__intrinsic_D7_k349) (bruijn ##.x.2.13 167 0) '##vcore.current-jiffy))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 168-1, 0), runtime,
+      _V40_V10vcore_Daccess);
+} else {
+    V_CALL(VGetArg(upenv, 170-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k349, env)}),
+      VGetArg(upenv, 167-1, 0),
+      _V10vcore_Dcurrent__jiffy);
+}
+ }
+}
+static void _V10_Dlookup__intrinsic_D7_k347(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k347" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k347, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k347, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.360 0 0) ((bruijn ##.k.195 167 0) (##intrinsic ##vcore.make-temporary-file)) ((bruijn ##.eqv?.4 169 0) (close _V10_Dlookup__intrinsic_D7_k348) (bruijn ##.x.2.13 166 0) '##vcore.access))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 167-1, 0), runtime,
+      _V40_V10vcore_Dmake__temporary__file);
+} else {
+    V_CALL(VGetArg(upenv, 169-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k348, env)}),
+      VGetArg(upenv, 166-1, 0),
+      _V10vcore_Daccess);
+}
+ }
+}
+static void _V10_Dlookup__intrinsic_D7_k346(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k346" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k346, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k346, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.359 0 0) ((bruijn ##.k.195 166 0) (##intrinsic ##vcore.realpath)) ((bruijn ##.eqv?.4 168 0) (close _V10_Dlookup__intrinsic_D7_k347) (bruijn ##.x.2.13 165 0) '##vcore.make-temporary-file))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 166-1, 0), runtime,
+      _V40_V10vcore_Drealpath);
+} else {
+    V_CALL(VGetArg(upenv, 168-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k347, env)}),
+      VGetArg(upenv, 165-1, 0),
+      _V10vcore_Dmake__temporary__file);
+}
+ }
+}
+static void _V10_Dlookup__intrinsic_D7_k345(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k345" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k345, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k345, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.358 0 0) ((bruijn ##.k.195 165 0) (##intrinsic ##vcore.await)) ((bruijn ##.eqv?.4 167 0) (close _V10_Dlookup__intrinsic_D7_k346) (bruijn ##.x.2.13 164 0) '##vcore.realpath))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 165-1, 0), runtime,
+      _V40_V10vcore_Dawait);
+} else {
+    V_CALL(VGetArg(upenv, 167-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k346, env)}),
+      VGetArg(upenv, 164-1, 0),
+      _V10vcore_Drealpath);
+}
+ }
+}
+static void _V10_Dlookup__intrinsic_D7_k344(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k344" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k344, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k344, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.357 0 0) ((bruijn ##.k.195 164 0) (##intrinsic ##vcore.async)) ((bruijn ##.eqv?.4 166 0) (close _V10_Dlookup__intrinsic_D7_k345) (bruijn ##.x.2.13 163 0) '##vcore.await))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 164-1, 0), runtime,
+      _V40_V10vcore_Dasync);
+} else {
+    V_CALL(VGetArg(upenv, 166-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k345, env)}),
+      VGetArg(upenv, 163-1, 0),
+      _V10vcore_Dawait);
+}
+ }
+}
+static void _V10_Dlookup__intrinsic_D7_k343(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k343" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k343, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k343, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.356 0 0) ((bruijn ##.k.195 163 0) (##intrinsic ##vcore.fiber-fork-list)) ((bruijn ##.eqv?.4 165 0) (close _V10_Dlookup__intrinsic_D7_k344) (bruijn ##.x.2.13 162 0) '##vcore.async))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 163-1, 0), runtime,
+      _V40_V10vcore_Dfiber__fork__list);
+} else {
+    V_CALL(VGetArg(upenv, 165-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k344, env)}),
+      VGetArg(upenv, 162-1, 0),
+      _V10vcore_Dasync);
 }
  }
 }
@@ -5414,14 +5740,20 @@ static void _V10_Dlookup__intrinsic_D7_k342(VRuntime * runtime, VEnv * upenv, in
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k342, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.355 0 0) ((bruijn ##.k.191 166 0) (##intrinsic ##vcore.access)) ((bruijn ##.k.191 166 0) #f))
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.355 0 0) ((bruijn ##.k.195 162 0) (##intrinsic ##vcore.random-advance!)) ((bruijn ##.eqv?.4 164 0) (close _V10_Dlookup__intrinsic_D7_k343) (bruijn ##.x.2.13 161 0) '##vcore.fiber-fork-list))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 166-1, 0), runtime,
-      _V40_V10vcore_Daccess);
+    V_CALL(VGetArg(upenv, 162-1, 0), runtime,
+      _V40_V10vcore_Drandom__advance_B);
 } else {
-    V_CALL(VGetArg(upenv, 166-1, 0), runtime,
-      VEncodeBool(false));
+    V_CALL(VGetArg(upenv, 164-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k343, env)}),
+      VGetArg(upenv, 161-1, 0),
+      _V10vcore_Dfiber__fork__list);
 }
  }
 }
@@ -5438,16 +5770,16 @@ static void _V10_Dlookup__intrinsic_D7_k341(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.354 0 0) ((bruijn ##.k.191 165 0) (##intrinsic ##vcore.make-temporary-file)) ((bruijn ##.eqv?.4 167 0) (close _V10_Dlookup__intrinsic_D7_k342) (bruijn ##.x.2.13 164 0) '##vcore.access))
+  // (if (bruijn ##.p.354 0 0) ((bruijn ##.k.195 161 0) (##intrinsic ##vcore.random-sample-float!)) ((bruijn ##.eqv?.4 163 0) (close _V10_Dlookup__intrinsic_D7_k342) (bruijn ##.x.2.13 160 0) '##vcore.random-advance!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 165-1, 0), runtime,
-      _V40_V10vcore_Dmake__temporary__file);
+    V_CALL(VGetArg(upenv, 161-1, 0), runtime,
+      _V40_V10vcore_Drandom__sample__float_B);
 } else {
-    V_CALL(VGetArg(upenv, 167-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 163-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k342, env)}),
-      VGetArg(upenv, 164-1, 0),
-      _V10vcore_Daccess);
+      VGetArg(upenv, 160-1, 0),
+      _V10vcore_Drandom__advance_B);
 }
  }
 }
@@ -5464,16 +5796,16 @@ static void _V10_Dlookup__intrinsic_D7_k340(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.353 0 0) ((bruijn ##.k.191 164 0) (##intrinsic ##vcore.realpath)) ((bruijn ##.eqv?.4 166 0) (close _V10_Dlookup__intrinsic_D7_k341) (bruijn ##.x.2.13 163 0) '##vcore.make-temporary-file))
+  // (if (bruijn ##.p.353 0 0) ((bruijn ##.k.195 160 0) (##intrinsic ##vcore.random-sample-bounded!)) ((bruijn ##.eqv?.4 162 0) (close _V10_Dlookup__intrinsic_D7_k341) (bruijn ##.x.2.13 159 0) '##vcore.random-sample-float!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 164-1, 0), runtime,
-      _V40_V10vcore_Drealpath);
+    V_CALL(VGetArg(upenv, 160-1, 0), runtime,
+      _V40_V10vcore_Drandom__sample__bounded_B);
 } else {
-    V_CALL(VGetArg(upenv, 166-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 162-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k341, env)}),
-      VGetArg(upenv, 163-1, 0),
-      _V10vcore_Dmake__temporary__file);
+      VGetArg(upenv, 159-1, 0),
+      _V10vcore_Drandom__sample__float_B);
 }
  }
 }
@@ -5490,16 +5822,16 @@ static void _V10_Dlookup__intrinsic_D7_k339(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.352 0 0) ((bruijn ##.k.191 163 0) (##intrinsic ##vcore.await)) ((bruijn ##.eqv?.4 165 0) (close _V10_Dlookup__intrinsic_D7_k340) (bruijn ##.x.2.13 162 0) '##vcore.realpath))
+  // (if (bruijn ##.p.352 0 0) ((bruijn ##.k.195 159 0) (##intrinsic ##vcore.random-sample!)) ((bruijn ##.eqv?.4 161 0) (close _V10_Dlookup__intrinsic_D7_k340) (bruijn ##.x.2.13 158 0) '##vcore.random-sample-bounded!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 163-1, 0), runtime,
-      _V40_V10vcore_Dawait);
+    V_CALL(VGetArg(upenv, 159-1, 0), runtime,
+      _V40_V10vcore_Drandom__sample_B);
 } else {
-    V_CALL(VGetArg(upenv, 165-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 161-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k340, env)}),
-      VGetArg(upenv, 162-1, 0),
-      _V10vcore_Drealpath);
+      VGetArg(upenv, 158-1, 0),
+      _V10vcore_Drandom__sample__bounded_B);
 }
  }
 }
@@ -5516,16 +5848,16 @@ static void _V10_Dlookup__intrinsic_D7_k338(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.351 0 0) ((bruijn ##.k.191 162 0) (##intrinsic ##vcore.async)) ((bruijn ##.eqv?.4 164 0) (close _V10_Dlookup__intrinsic_D7_k339) (bruijn ##.x.2.13 161 0) '##vcore.await))
+  // (if (bruijn ##.p.351 0 0) ((bruijn ##.k.195 158 0) (##intrinsic ##vcore.random-copy)) ((bruijn ##.eqv?.4 160 0) (close _V10_Dlookup__intrinsic_D7_k339) (bruijn ##.x.2.13 157 0) '##vcore.random-sample!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 162-1, 0), runtime,
-      _V40_V10vcore_Dasync);
+    V_CALL(VGetArg(upenv, 158-1, 0), runtime,
+      _V40_V10vcore_Drandom__copy);
 } else {
-    V_CALL(VGetArg(upenv, 164-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 160-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k339, env)}),
-      VGetArg(upenv, 161-1, 0),
-      _V10vcore_Dawait);
+      VGetArg(upenv, 157-1, 0),
+      _V10vcore_Drandom__sample_B);
 }
  }
 }
@@ -5542,16 +5874,16 @@ static void _V10_Dlookup__intrinsic_D7_k337(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.350 0 0) ((bruijn ##.k.191 161 0) (##intrinsic ##vcore.fiber-fork-list)) ((bruijn ##.eqv?.4 163 0) (close _V10_Dlookup__intrinsic_D7_k338) (bruijn ##.x.2.13 160 0) '##vcore.async))
+  // (if (bruijn ##.p.350 0 0) ((bruijn ##.k.195 157 0) (##intrinsic ##vcore.make-random)) ((bruijn ##.eqv?.4 159 0) (close _V10_Dlookup__intrinsic_D7_k338) (bruijn ##.x.2.13 156 0) '##vcore.random-copy))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 161-1, 0), runtime,
-      _V40_V10vcore_Dfiber__fork__list);
+    V_CALL(VGetArg(upenv, 157-1, 0), runtime,
+      _V40_V10vcore_Dmake__random);
 } else {
-    V_CALL(VGetArg(upenv, 163-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 159-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k338, env)}),
-      VGetArg(upenv, 160-1, 0),
-      _V10vcore_Dasync);
+      VGetArg(upenv, 156-1, 0),
+      _V10vcore_Drandom__copy);
 }
  }
 }
@@ -5568,16 +5900,16 @@ static void _V10_Dlookup__intrinsic_D7_k336(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.349 0 0) ((bruijn ##.k.191 160 0) (##intrinsic ##vcore.random-advance!)) ((bruijn ##.eqv?.4 162 0) (close _V10_Dlookup__intrinsic_D7_k337) (bruijn ##.x.2.13 159 0) '##vcore.fiber-fork-list))
+  // (if (bruijn ##.p.349 0 0) ((bruijn ##.k.195 156 0) (##intrinsic ##vcore.command-line)) ((bruijn ##.eqv?.4 158 0) (close _V10_Dlookup__intrinsic_D7_k337) (bruijn ##.x.2.13 155 0) '##vcore.make-random))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 160-1, 0), runtime,
-      _V40_V10vcore_Drandom__advance_B);
+    V_CALL(VGetArg(upenv, 156-1, 0), runtime,
+      _V40_V10vcore_Dcommand__line);
 } else {
-    V_CALL(VGetArg(upenv, 162-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 158-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k337, env)}),
-      VGetArg(upenv, 159-1, 0),
-      _V10vcore_Dfiber__fork__list);
+      VGetArg(upenv, 155-1, 0),
+      _V10vcore_Dmake__random);
 }
  }
 }
@@ -5594,16 +5926,16 @@ static void _V10_Dlookup__intrinsic_D7_k335(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.348 0 0) ((bruijn ##.k.191 159 0) (##intrinsic ##vcore.random-sample-float!)) ((bruijn ##.eqv?.4 161 0) (close _V10_Dlookup__intrinsic_D7_k336) (bruijn ##.x.2.13 158 0) '##vcore.random-advance!))
+  // (if (bruijn ##.p.348 0 0) ((bruijn ##.k.195 155 0) (##intrinsic ##vcore.open-output-process)) ((bruijn ##.eqv?.4 157 0) (close _V10_Dlookup__intrinsic_D7_k336) (bruijn ##.x.2.13 154 0) '##vcore.command-line))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 159-1, 0), runtime,
-      _V40_V10vcore_Drandom__sample__float_B);
+    V_CALL(VGetArg(upenv, 155-1, 0), runtime,
+      _V40_V10vcore_Dopen__output__process);
 } else {
-    V_CALL(VGetArg(upenv, 161-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 157-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k336, env)}),
-      VGetArg(upenv, 158-1, 0),
-      _V10vcore_Drandom__advance_B);
+      VGetArg(upenv, 154-1, 0),
+      _V10vcore_Dcommand__line);
 }
  }
 }
@@ -5620,16 +5952,16 @@ static void _V10_Dlookup__intrinsic_D7_k334(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.347 0 0) ((bruijn ##.k.191 158 0) (##intrinsic ##vcore.random-sample-bounded!)) ((bruijn ##.eqv?.4 160 0) (close _V10_Dlookup__intrinsic_D7_k335) (bruijn ##.x.2.13 157 0) '##vcore.random-sample-float!))
+  // (if (bruijn ##.p.347 0 0) ((bruijn ##.k.195 154 0) (##intrinsic ##vcore.open-input-process)) ((bruijn ##.eqv?.4 156 0) (close _V10_Dlookup__intrinsic_D7_k335) (bruijn ##.x.2.13 153 0) '##vcore.open-output-process))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 158-1, 0), runtime,
-      _V40_V10vcore_Drandom__sample__bounded_B);
+    V_CALL(VGetArg(upenv, 154-1, 0), runtime,
+      _V40_V10vcore_Dopen__input__process);
 } else {
-    V_CALL(VGetArg(upenv, 160-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 156-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k335, env)}),
-      VGetArg(upenv, 157-1, 0),
-      _V10vcore_Drandom__sample__float_B);
+      VGetArg(upenv, 153-1, 0),
+      _V10vcore_Dopen__output__process);
 }
  }
 }
@@ -5646,16 +5978,16 @@ static void _V10_Dlookup__intrinsic_D7_k333(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.346 0 0) ((bruijn ##.k.191 157 0) (##intrinsic ##vcore.random-sample!)) ((bruijn ##.eqv?.4 159 0) (close _V10_Dlookup__intrinsic_D7_k334) (bruijn ##.x.2.13 156 0) '##vcore.random-sample-bounded!))
+  // (if (bruijn ##.p.346 0 0) ((bruijn ##.k.195 153 0) (##intrinsic ##vcore.system)) ((bruijn ##.eqv?.4 155 0) (close _V10_Dlookup__intrinsic_D7_k334) (bruijn ##.x.2.13 152 0) '##vcore.open-input-process))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 157-1, 0), runtime,
-      _V40_V10vcore_Drandom__sample_B);
+    V_CALL(VGetArg(upenv, 153-1, 0), runtime,
+      _V40_V10vcore_Dsystem);
 } else {
-    V_CALL(VGetArg(upenv, 159-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 155-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k334, env)}),
-      VGetArg(upenv, 156-1, 0),
-      _V10vcore_Drandom__sample__bounded_B);
+      VGetArg(upenv, 152-1, 0),
+      _V10vcore_Dopen__input__process);
 }
  }
 }
@@ -5672,16 +6004,16 @@ static void _V10_Dlookup__intrinsic_D7_k332(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.345 0 0) ((bruijn ##.k.191 156 0) (##intrinsic ##vcore.random-copy)) ((bruijn ##.eqv?.4 158 0) (close _V10_Dlookup__intrinsic_D7_k333) (bruijn ##.x.2.13 155 0) '##vcore.random-sample!))
+  // (if (bruijn ##.p.345 0 0) ((bruijn ##.k.195 152 0) (##intrinsic ##vcore.garbage-collect)) ((bruijn ##.eqv?.4 154 0) (close _V10_Dlookup__intrinsic_D7_k333) (bruijn ##.x.2.13 151 0) '##vcore.system))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 156-1, 0), runtime,
-      _V40_V10vcore_Drandom__copy);
+    V_CALL(VGetArg(upenv, 152-1, 0), runtime,
+      _V40_V10vcore_Dgarbage__collect);
 } else {
-    V_CALL(VGetArg(upenv, 158-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 154-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k333, env)}),
-      VGetArg(upenv, 155-1, 0),
-      _V10vcore_Drandom__sample_B);
+      VGetArg(upenv, 151-1, 0),
+      _V10vcore_Dsystem);
 }
  }
 }
@@ -5698,16 +6030,16 @@ static void _V10_Dlookup__intrinsic_D7_k331(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.344 0 0) ((bruijn ##.k.191 155 0) (##intrinsic ##vcore.make-random)) ((bruijn ##.eqv?.4 157 0) (close _V10_Dlookup__intrinsic_D7_k332) (bruijn ##.x.2.13 154 0) '##vcore.random-copy))
+  // (if (bruijn ##.p.344 0 0) ((bruijn ##.k.195 151 0) (##intrinsic ##vcore.finalize!)) ((bruijn ##.eqv?.4 153 0) (close _V10_Dlookup__intrinsic_D7_k332) (bruijn ##.x.2.13 150 0) '##vcore.garbage-collect))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 155-1, 0), runtime,
-      _V40_V10vcore_Dmake__random);
+    V_CALL(VGetArg(upenv, 151-1, 0), runtime,
+      _V40_V10vcore_Dfinalize_B);
 } else {
-    V_CALL(VGetArg(upenv, 157-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 153-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k332, env)}),
-      VGetArg(upenv, 154-1, 0),
-      _V10vcore_Drandom__copy);
+      VGetArg(upenv, 150-1, 0),
+      _V10vcore_Dgarbage__collect);
 }
  }
 }
@@ -5724,16 +6056,16 @@ static void _V10_Dlookup__intrinsic_D7_k330(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.343 0 0) ((bruijn ##.k.191 154 0) (##intrinsic ##vcore.command-line)) ((bruijn ##.eqv?.4 156 0) (close _V10_Dlookup__intrinsic_D7_k331) (bruijn ##.x.2.13 153 0) '##vcore.make-random))
+  // (if (bruijn ##.p.343 0 0) ((bruijn ##.k.195 150 0) (##intrinsic ##vcore.has-finalizer?)) ((bruijn ##.eqv?.4 152 0) (close _V10_Dlookup__intrinsic_D7_k331) (bruijn ##.x.2.13 149 0) '##vcore.finalize!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 154-1, 0), runtime,
-      _V40_V10vcore_Dcommand__line);
+    V_CALL(VGetArg(upenv, 150-1, 0), runtime,
+      _V40_V10vcore_Dhas__finalizer_Q);
 } else {
-    V_CALL(VGetArg(upenv, 156-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 152-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k331, env)}),
-      VGetArg(upenv, 153-1, 0),
-      _V10vcore_Dmake__random);
+      VGetArg(upenv, 149-1, 0),
+      _V10vcore_Dfinalize_B);
 }
  }
 }
@@ -5750,16 +6082,16 @@ static void _V10_Dlookup__intrinsic_D7_k329(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.342 0 0) ((bruijn ##.k.191 153 0) (##intrinsic ##vcore.open-output-process)) ((bruijn ##.eqv?.4 155 0) (close _V10_Dlookup__intrinsic_D7_k330) (bruijn ##.x.2.13 152 0) '##vcore.command-line))
+  // (if (bruijn ##.p.342 0 0) ((bruijn ##.k.195 149 0) (##intrinsic ##vcore.set-finalizer!)) ((bruijn ##.eqv?.4 151 0) (close _V10_Dlookup__intrinsic_D7_k330) (bruijn ##.x.2.13 148 0) '##vcore.has-finalizer?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 153-1, 0), runtime,
-      _V40_V10vcore_Dopen__output__process);
+    V_CALL(VGetArg(upenv, 149-1, 0), runtime,
+      _V40_V10vcore_Dset__finalizer_B);
 } else {
-    V_CALL(VGetArg(upenv, 155-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 151-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k330, env)}),
-      VGetArg(upenv, 152-1, 0),
-      _V10vcore_Dcommand__line);
+      VGetArg(upenv, 148-1, 0),
+      _V10vcore_Dhas__finalizer_Q);
 }
  }
 }
@@ -5776,16 +6108,16 @@ static void _V10_Dlookup__intrinsic_D7_k328(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.341 0 0) ((bruijn ##.k.191 152 0) (##intrinsic ##vcore.open-input-process)) ((bruijn ##.eqv?.4 154 0) (close _V10_Dlookup__intrinsic_D7_k329) (bruijn ##.x.2.13 151 0) '##vcore.open-output-process))
+  // (if (bruijn ##.p.341 0 0) ((bruijn ##.k.195 148 0) (##intrinsic ##vcore.newline-stdout)) ((bruijn ##.eqv?.4 150 0) (close _V10_Dlookup__intrinsic_D7_k329) (bruijn ##.x.2.13 147 0) '##vcore.set-finalizer!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 152-1, 0), runtime,
-      _V40_V10vcore_Dopen__input__process);
+    V_CALL(VGetArg(upenv, 148-1, 0), runtime,
+      _V40_V10vcore_Dnewline__stdout);
 } else {
-    V_CALL(VGetArg(upenv, 154-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 150-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k329, env)}),
-      VGetArg(upenv, 151-1, 0),
-      _V10vcore_Dopen__output__process);
+      VGetArg(upenv, 147-1, 0),
+      _V10vcore_Dset__finalizer_B);
 }
  }
 }
@@ -5802,16 +6134,16 @@ static void _V10_Dlookup__intrinsic_D7_k327(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.340 0 0) ((bruijn ##.k.191 151 0) (##intrinsic ##vcore.system)) ((bruijn ##.eqv?.4 153 0) (close _V10_Dlookup__intrinsic_D7_k328) (bruijn ##.x.2.13 150 0) '##vcore.open-input-process))
+  // (if (bruijn ##.p.340 0 0) ((bruijn ##.k.195 147 0) (##intrinsic ##vcore.write-stdout)) ((bruijn ##.eqv?.4 149 0) (close _V10_Dlookup__intrinsic_D7_k328) (bruijn ##.x.2.13 146 0) '##vcore.newline-stdout))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 151-1, 0), runtime,
-      _V40_V10vcore_Dsystem);
+    V_CALL(VGetArg(upenv, 147-1, 0), runtime,
+      _V40_V10vcore_Dwrite__stdout);
 } else {
-    V_CALL(VGetArg(upenv, 153-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 149-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k328, env)}),
-      VGetArg(upenv, 150-1, 0),
-      _V10vcore_Dopen__input__process);
+      VGetArg(upenv, 146-1, 0),
+      _V10vcore_Dnewline__stdout);
 }
  }
 }
@@ -5828,16 +6160,16 @@ static void _V10_Dlookup__intrinsic_D7_k326(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.339 0 0) ((bruijn ##.k.191 150 0) (##intrinsic ##vcore.garbage-collect)) ((bruijn ##.eqv?.4 152 0) (close _V10_Dlookup__intrinsic_D7_k327) (bruijn ##.x.2.13 149 0) '##vcore.system))
+  // (if (bruijn ##.p.339 0 0) ((bruijn ##.k.195 146 0) (##intrinsic ##vcore.display-stdout)) ((bruijn ##.eqv?.4 148 0) (close _V10_Dlookup__intrinsic_D7_k327) (bruijn ##.x.2.13 145 0) '##vcore.write-stdout))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 150-1, 0), runtime,
-      _V40_V10vcore_Dgarbage__collect);
+    V_CALL(VGetArg(upenv, 146-1, 0), runtime,
+      _V40_V10vcore_Ddisplay__stdout);
 } else {
-    V_CALL(VGetArg(upenv, 152-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 148-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k327, env)}),
-      VGetArg(upenv, 149-1, 0),
-      _V10vcore_Dsystem);
+      VGetArg(upenv, 145-1, 0),
+      _V10vcore_Dwrite__stdout);
 }
  }
 }
@@ -5854,16 +6186,16 @@ static void _V10_Dlookup__intrinsic_D7_k325(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.338 0 0) ((bruijn ##.k.191 149 0) (##intrinsic ##vcore.finalize!)) ((bruijn ##.eqv?.4 151 0) (close _V10_Dlookup__intrinsic_D7_k326) (bruijn ##.x.2.13 148 0) '##vcore.garbage-collect))
+  // (if (bruijn ##.p.338 0 0) ((bruijn ##.k.195 145 0) (##intrinsic ##vcore.newline)) ((bruijn ##.eqv?.4 147 0) (close _V10_Dlookup__intrinsic_D7_k326) (bruijn ##.x.2.13 144 0) '##vcore.display-stdout))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 149-1, 0), runtime,
-      _V40_V10vcore_Dfinalize_B);
+    V_CALL(VGetArg(upenv, 145-1, 0), runtime,
+      _V40_V10vcore_Dnewline);
 } else {
-    V_CALL(VGetArg(upenv, 151-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 147-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k326, env)}),
-      VGetArg(upenv, 148-1, 0),
-      _V10vcore_Dgarbage__collect);
+      VGetArg(upenv, 144-1, 0),
+      _V10vcore_Ddisplay__stdout);
 }
  }
 }
@@ -5880,16 +6212,16 @@ static void _V10_Dlookup__intrinsic_D7_k324(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.337 0 0) ((bruijn ##.k.191 148 0) (##intrinsic ##vcore.has-finalizer?)) ((bruijn ##.eqv?.4 150 0) (close _V10_Dlookup__intrinsic_D7_k325) (bruijn ##.x.2.13 147 0) '##vcore.finalize!))
+  // (if (bruijn ##.p.337 0 0) ((bruijn ##.k.195 144 0) (##intrinsic ##vcore.write)) ((bruijn ##.eqv?.4 146 0) (close _V10_Dlookup__intrinsic_D7_k325) (bruijn ##.x.2.13 143 0) '##vcore.newline))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 148-1, 0), runtime,
-      _V40_V10vcore_Dhas__finalizer_Q);
+    V_CALL(VGetArg(upenv, 144-1, 0), runtime,
+      _V40_V10vcore_Dwrite);
 } else {
-    V_CALL(VGetArg(upenv, 150-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 146-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k325, env)}),
-      VGetArg(upenv, 147-1, 0),
-      _V10vcore_Dfinalize_B);
+      VGetArg(upenv, 143-1, 0),
+      _V10vcore_Dnewline);
 }
  }
 }
@@ -5906,16 +6238,16 @@ static void _V10_Dlookup__intrinsic_D7_k323(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.336 0 0) ((bruijn ##.k.191 147 0) (##intrinsic ##vcore.set-finalizer!)) ((bruijn ##.eqv?.4 149 0) (close _V10_Dlookup__intrinsic_D7_k324) (bruijn ##.x.2.13 146 0) '##vcore.has-finalizer?))
+  // (if (bruijn ##.p.336 0 0) ((bruijn ##.k.195 143 0) (##intrinsic ##vcore.display-word)) ((bruijn ##.eqv?.4 145 0) (close _V10_Dlookup__intrinsic_D7_k324) (bruijn ##.x.2.13 142 0) '##vcore.write))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 147-1, 0), runtime,
-      _V40_V10vcore_Dset__finalizer_B);
+    V_CALL(VGetArg(upenv, 143-1, 0), runtime,
+      _V40_V10vcore_Ddisplay__word);
 } else {
-    V_CALL(VGetArg(upenv, 149-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 145-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k324, env)}),
-      VGetArg(upenv, 146-1, 0),
-      _V10vcore_Dhas__finalizer_Q);
+      VGetArg(upenv, 142-1, 0),
+      _V10vcore_Dwrite);
 }
  }
 }
@@ -5932,16 +6264,16 @@ static void _V10_Dlookup__intrinsic_D7_k322(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.335 0 0) ((bruijn ##.k.191 146 0) (##intrinsic ##vcore.newline-stdout)) ((bruijn ##.eqv?.4 148 0) (close _V10_Dlookup__intrinsic_D7_k323) (bruijn ##.x.2.13 145 0) '##vcore.set-finalizer!))
+  // (if (bruijn ##.p.335 0 0) ((bruijn ##.k.195 142 0) (##intrinsic ##vcore.read)) ((bruijn ##.eqv?.4 144 0) (close _V10_Dlookup__intrinsic_D7_k323) (bruijn ##.x.2.13 141 0) '##vcore.display-word))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 146-1, 0), runtime,
-      _V40_V10vcore_Dnewline__stdout);
+    V_CALL(VGetArg(upenv, 142-1, 0), runtime,
+      _V40_V10vcore_Dread);
 } else {
-    V_CALL(VGetArg(upenv, 148-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 144-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k323, env)}),
-      VGetArg(upenv, 145-1, 0),
-      _V10vcore_Dset__finalizer_B);
+      VGetArg(upenv, 141-1, 0),
+      _V10vcore_Ddisplay__word);
 }
  }
 }
@@ -5958,16 +6290,16 @@ static void _V10_Dlookup__intrinsic_D7_k321(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.334 0 0) ((bruijn ##.k.191 145 0) (##intrinsic ##vcore.write-stdout)) ((bruijn ##.eqv?.4 147 0) (close _V10_Dlookup__intrinsic_D7_k322) (bruijn ##.x.2.13 144 0) '##vcore.newline-stdout))
+  // (if (bruijn ##.p.334 0 0) ((bruijn ##.k.195 141 0) (##intrinsic ##vcore.read-line)) ((bruijn ##.eqv?.4 143 0) (close _V10_Dlookup__intrinsic_D7_k322) (bruijn ##.x.2.13 140 0) '##vcore.read))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 145-1, 0), runtime,
-      _V40_V10vcore_Dwrite__stdout);
+    V_CALL(VGetArg(upenv, 141-1, 0), runtime,
+      _V40_V10vcore_Dread__line);
 } else {
-    V_CALL(VGetArg(upenv, 147-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 143-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k322, env)}),
-      VGetArg(upenv, 144-1, 0),
-      _V10vcore_Dnewline__stdout);
+      VGetArg(upenv, 140-1, 0),
+      _V10vcore_Dread);
 }
  }
 }
@@ -5984,16 +6316,16 @@ static void _V10_Dlookup__intrinsic_D7_k320(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.333 0 0) ((bruijn ##.k.191 144 0) (##intrinsic ##vcore.display-stdout)) ((bruijn ##.eqv?.4 146 0) (close _V10_Dlookup__intrinsic_D7_k321) (bruijn ##.x.2.13 143 0) '##vcore.write-stdout))
+  // (if (bruijn ##.p.333 0 0) ((bruijn ##.k.195 140 0) (##intrinsic ##vcore.read-char)) ((bruijn ##.eqv?.4 142 0) (close _V10_Dlookup__intrinsic_D7_k321) (bruijn ##.x.2.13 139 0) '##vcore.read-line))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 144-1, 0), runtime,
-      _V40_V10vcore_Ddisplay__stdout);
+    V_CALL(VGetArg(upenv, 140-1, 0), runtime,
+      _V40_V10vcore_Dread__char);
 } else {
-    V_CALL(VGetArg(upenv, 146-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 142-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k321, env)}),
-      VGetArg(upenv, 143-1, 0),
-      _V10vcore_Dwrite__stdout);
+      VGetArg(upenv, 139-1, 0),
+      _V10vcore_Dread__line);
 }
  }
 }
@@ -6010,16 +6342,16 @@ static void _V10_Dlookup__intrinsic_D7_k319(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.332 0 0) ((bruijn ##.k.191 143 0) (##intrinsic ##vcore.newline)) ((bruijn ##.eqv?.4 145 0) (close _V10_Dlookup__intrinsic_D7_k320) (bruijn ##.x.2.13 142 0) '##vcore.display-stdout))
+  // (if (bruijn ##.p.332 0 0) ((bruijn ##.k.195 139 0) (##intrinsic ##vcore.eof-object?)) ((bruijn ##.eqv?.4 141 0) (close _V10_Dlookup__intrinsic_D7_k320) (bruijn ##.x.2.13 138 0) '##vcore.read-char))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 143-1, 0), runtime,
-      _V40_V10vcore_Dnewline);
+    V_CALL(VGetArg(upenv, 139-1, 0), runtime,
+      _V40_V10vcore_Deof__object_Q);
 } else {
-    V_CALL(VGetArg(upenv, 145-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 141-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k320, env)}),
-      VGetArg(upenv, 142-1, 0),
-      _V10vcore_Ddisplay__stdout);
+      VGetArg(upenv, 138-1, 0),
+      _V10vcore_Dread__char);
 }
  }
 }
@@ -6036,16 +6368,16 @@ static void _V10_Dlookup__intrinsic_D7_k318(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.331 0 0) ((bruijn ##.k.191 142 0) (##intrinsic ##vcore.write)) ((bruijn ##.eqv?.4 144 0) (close _V10_Dlookup__intrinsic_D7_k319) (bruijn ##.x.2.13 141 0) '##vcore.newline))
+  // (if (bruijn ##.p.331 0 0) ((bruijn ##.k.195 138 0) (##intrinsic ##vcore.get-output-string)) ((bruijn ##.eqv?.4 140 0) (close _V10_Dlookup__intrinsic_D7_k319) (bruijn ##.x.2.13 137 0) '##vcore.eof-object?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 142-1, 0), runtime,
-      _V40_V10vcore_Dwrite);
+    V_CALL(VGetArg(upenv, 138-1, 0), runtime,
+      _V40_V10vcore_Dget__output__string);
 } else {
-    V_CALL(VGetArg(upenv, 144-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 140-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k319, env)}),
-      VGetArg(upenv, 141-1, 0),
-      _V10vcore_Dnewline);
+      VGetArg(upenv, 137-1, 0),
+      _V10vcore_Deof__object_Q);
 }
  }
 }
@@ -6062,16 +6394,16 @@ static void _V10_Dlookup__intrinsic_D7_k317(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.330 0 0) ((bruijn ##.k.191 141 0) (##intrinsic ##vcore.display-word)) ((bruijn ##.eqv?.4 143 0) (close _V10_Dlookup__intrinsic_D7_k318) (bruijn ##.x.2.13 140 0) '##vcore.write))
+  // (if (bruijn ##.p.330 0 0) ((bruijn ##.k.195 137 0) (##intrinsic ##vcore.open-output-string)) ((bruijn ##.eqv?.4 139 0) (close _V10_Dlookup__intrinsic_D7_k318) (bruijn ##.x.2.13 136 0) '##vcore.get-output-string))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 141-1, 0), runtime,
-      _V40_V10vcore_Ddisplay__word);
+    V_CALL(VGetArg(upenv, 137-1, 0), runtime,
+      _V40_V10vcore_Dopen__output__string);
 } else {
-    V_CALL(VGetArg(upenv, 143-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 139-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k318, env)}),
-      VGetArg(upenv, 140-1, 0),
-      _V10vcore_Dwrite);
+      VGetArg(upenv, 136-1, 0),
+      _V10vcore_Dget__output__string);
 }
  }
 }
@@ -6088,16 +6420,16 @@ static void _V10_Dlookup__intrinsic_D7_k316(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.329 0 0) ((bruijn ##.k.191 140 0) (##intrinsic ##vcore.read)) ((bruijn ##.eqv?.4 142 0) (close _V10_Dlookup__intrinsic_D7_k317) (bruijn ##.x.2.13 139 0) '##vcore.display-word))
+  // (if (bruijn ##.p.329 0 0) ((bruijn ##.k.195 136 0) (##intrinsic ##vcore.tty-port?)) ((bruijn ##.eqv?.4 138 0) (close _V10_Dlookup__intrinsic_D7_k317) (bruijn ##.x.2.13 135 0) '##vcore.open-output-string))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 140-1, 0), runtime,
-      _V40_V10vcore_Dread);
+    V_CALL(VGetArg(upenv, 136-1, 0), runtime,
+      _V40_V10vcore_Dtty__port_Q);
 } else {
-    V_CALL(VGetArg(upenv, 142-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 138-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k317, env)}),
-      VGetArg(upenv, 139-1, 0),
-      _V10vcore_Ddisplay__word);
+      VGetArg(upenv, 135-1, 0),
+      _V10vcore_Dopen__output__string);
 }
  }
 }
@@ -6114,16 +6446,16 @@ static void _V10_Dlookup__intrinsic_D7_k315(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.328 0 0) ((bruijn ##.k.191 139 0) (##intrinsic ##vcore.read-line)) ((bruijn ##.eqv?.4 141 0) (close _V10_Dlookup__intrinsic_D7_k316) (bruijn ##.x.2.13 138 0) '##vcore.read))
+  // (if (bruijn ##.p.328 0 0) ((bruijn ##.k.195 135 0) (##intrinsic ##vcore.close-stream)) ((bruijn ##.eqv?.4 137 0) (close _V10_Dlookup__intrinsic_D7_k316) (bruijn ##.x.2.13 134 0) '##vcore.tty-port?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 139-1, 0), runtime,
-      _V40_V10vcore_Dread__line);
+    V_CALL(VGetArg(upenv, 135-1, 0), runtime,
+      _V40_V10vcore_Dclose__stream);
 } else {
-    V_CALL(VGetArg(upenv, 141-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 137-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k316, env)}),
-      VGetArg(upenv, 138-1, 0),
-      _V10vcore_Dread);
+      VGetArg(upenv, 134-1, 0),
+      _V10vcore_Dtty__port_Q);
 }
  }
 }
@@ -6140,16 +6472,16 @@ static void _V10_Dlookup__intrinsic_D7_k314(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.327 0 0) ((bruijn ##.k.191 138 0) (##intrinsic ##vcore.read-char)) ((bruijn ##.eqv?.4 140 0) (close _V10_Dlookup__intrinsic_D7_k315) (bruijn ##.x.2.13 137 0) '##vcore.read-line))
+  // (if (bruijn ##.p.327 0 0) ((bruijn ##.k.195 134 0) (##intrinsic ##vcore.open-output-stream)) ((bruijn ##.eqv?.4 136 0) (close _V10_Dlookup__intrinsic_D7_k315) (bruijn ##.x.2.13 133 0) '##vcore.close-stream))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 138-1, 0), runtime,
-      _V40_V10vcore_Dread__char);
+    V_CALL(VGetArg(upenv, 134-1, 0), runtime,
+      _V40_V10vcore_Dopen__output__stream);
 } else {
-    V_CALL(VGetArg(upenv, 140-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 136-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k315, env)}),
-      VGetArg(upenv, 137-1, 0),
-      _V10vcore_Dread__line);
+      VGetArg(upenv, 133-1, 0),
+      _V10vcore_Dclose__stream);
 }
  }
 }
@@ -6166,16 +6498,16 @@ static void _V10_Dlookup__intrinsic_D7_k313(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.326 0 0) ((bruijn ##.k.191 137 0) (##intrinsic ##vcore.eof-object?)) ((bruijn ##.eqv?.4 139 0) (close _V10_Dlookup__intrinsic_D7_k314) (bruijn ##.x.2.13 136 0) '##vcore.read-char))
+  // (if (bruijn ##.p.326 0 0) ((bruijn ##.k.195 133 0) (##intrinsic ##vcore.open-input-stream)) ((bruijn ##.eqv?.4 135 0) (close _V10_Dlookup__intrinsic_D7_k314) (bruijn ##.x.2.13 132 0) '##vcore.open-output-stream))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 137-1, 0), runtime,
-      _V40_V10vcore_Deof__object_Q);
+    V_CALL(VGetArg(upenv, 133-1, 0), runtime,
+      _V40_V10vcore_Dopen__input__stream);
 } else {
-    V_CALL(VGetArg(upenv, 139-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 135-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k314, env)}),
-      VGetArg(upenv, 136-1, 0),
-      _V10vcore_Dread__char);
+      VGetArg(upenv, 132-1, 0),
+      _V10vcore_Dopen__output__stream);
 }
  }
 }
@@ -6192,16 +6524,16 @@ static void _V10_Dlookup__intrinsic_D7_k312(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.325 0 0) ((bruijn ##.k.191 136 0) (##intrinsic ##vcore.get-output-string)) ((bruijn ##.eqv?.4 138 0) (close _V10_Dlookup__intrinsic_D7_k313) (bruijn ##.x.2.13 135 0) '##vcore.eof-object?))
+  // (if (bruijn ##.p.325 0 0) ((bruijn ##.k.195 132 0) (##intrinsic ##vcore.dup-stderr)) ((bruijn ##.eqv?.4 134 0) (close _V10_Dlookup__intrinsic_D7_k313) (bruijn ##.x.2.13 131 0) '##vcore.open-input-stream))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 136-1, 0), runtime,
-      _V40_V10vcore_Dget__output__string);
+    V_CALL(VGetArg(upenv, 132-1, 0), runtime,
+      _V40_V10vcore_Ddup__stderr);
 } else {
-    V_CALL(VGetArg(upenv, 138-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 134-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k313, env)}),
-      VGetArg(upenv, 135-1, 0),
-      _V10vcore_Deof__object_Q);
+      VGetArg(upenv, 131-1, 0),
+      _V10vcore_Dopen__input__stream);
 }
  }
 }
@@ -6218,16 +6550,16 @@ static void _V10_Dlookup__intrinsic_D7_k311(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.324 0 0) ((bruijn ##.k.191 135 0) (##intrinsic ##vcore.open-output-string)) ((bruijn ##.eqv?.4 137 0) (close _V10_Dlookup__intrinsic_D7_k312) (bruijn ##.x.2.13 134 0) '##vcore.get-output-string))
+  // (if (bruijn ##.p.324 0 0) ((bruijn ##.k.195 131 0) (##intrinsic ##vcore.dup-stdout)) ((bruijn ##.eqv?.4 133 0) (close _V10_Dlookup__intrinsic_D7_k312) (bruijn ##.x.2.13 130 0) '##vcore.dup-stderr))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 135-1, 0), runtime,
-      _V40_V10vcore_Dopen__output__string);
+    V_CALL(VGetArg(upenv, 131-1, 0), runtime,
+      _V40_V10vcore_Ddup__stdout);
 } else {
-    V_CALL(VGetArg(upenv, 137-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 133-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k312, env)}),
-      VGetArg(upenv, 134-1, 0),
-      _V10vcore_Dget__output__string);
+      VGetArg(upenv, 130-1, 0),
+      _V10vcore_Ddup__stderr);
 }
  }
 }
@@ -6244,16 +6576,16 @@ static void _V10_Dlookup__intrinsic_D7_k310(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.323 0 0) ((bruijn ##.k.191 134 0) (##intrinsic ##vcore.tty-port?)) ((bruijn ##.eqv?.4 136 0) (close _V10_Dlookup__intrinsic_D7_k311) (bruijn ##.x.2.13 133 0) '##vcore.open-output-string))
+  // (if (bruijn ##.p.323 0 0) ((bruijn ##.k.195 130 0) (##intrinsic ##vcore.dup-stdin)) ((bruijn ##.eqv?.4 132 0) (close _V10_Dlookup__intrinsic_D7_k311) (bruijn ##.x.2.13 129 0) '##vcore.dup-stdout))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 134-1, 0), runtime,
-      _V40_V10vcore_Dtty__port_Q);
+    V_CALL(VGetArg(upenv, 130-1, 0), runtime,
+      _V40_V10vcore_Ddup__stdin);
 } else {
-    V_CALL(VGetArg(upenv, 136-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 132-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k311, env)}),
-      VGetArg(upenv, 133-1, 0),
-      _V10vcore_Dopen__output__string);
+      VGetArg(upenv, 129-1, 0),
+      _V10vcore_Ddup__stdout);
 }
  }
 }
@@ -6270,16 +6602,16 @@ static void _V10_Dlookup__intrinsic_D7_k309(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.322 0 0) ((bruijn ##.k.191 133 0) (##intrinsic ##vcore.close-stream)) ((bruijn ##.eqv?.4 135 0) (close _V10_Dlookup__intrinsic_D7_k310) (bruijn ##.x.2.13 132 0) '##vcore.tty-port?))
+  // (if (bruijn ##.p.322 0 0) ((bruijn ##.k.195 129 0) (##intrinsic ##vcore.stderr->port)) ((bruijn ##.eqv?.4 131 0) (close _V10_Dlookup__intrinsic_D7_k310) (bruijn ##.x.2.13 128 0) '##vcore.dup-stdin))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 133-1, 0), runtime,
-      _V40_V10vcore_Dclose__stream);
+    V_CALL(VGetArg(upenv, 129-1, 0), runtime,
+      _V40_V10vcore_Dstderr___Gport);
 } else {
-    V_CALL(VGetArg(upenv, 135-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 131-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k310, env)}),
-      VGetArg(upenv, 132-1, 0),
-      _V10vcore_Dtty__port_Q);
+      VGetArg(upenv, 128-1, 0),
+      _V10vcore_Ddup__stdin);
 }
  }
 }
@@ -6296,16 +6628,16 @@ static void _V10_Dlookup__intrinsic_D7_k308(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.321 0 0) ((bruijn ##.k.191 132 0) (##intrinsic ##vcore.open-output-stream)) ((bruijn ##.eqv?.4 134 0) (close _V10_Dlookup__intrinsic_D7_k309) (bruijn ##.x.2.13 131 0) '##vcore.close-stream))
+  // (if (bruijn ##.p.321 0 0) ((bruijn ##.k.195 128 0) (##intrinsic ##vcore.stdout->port)) ((bruijn ##.eqv?.4 130 0) (close _V10_Dlookup__intrinsic_D7_k309) (bruijn ##.x.2.13 127 0) '##vcore.stderr->port))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 132-1, 0), runtime,
-      _V40_V10vcore_Dopen__output__stream);
+    V_CALL(VGetArg(upenv, 128-1, 0), runtime,
+      _V40_V10vcore_Dstdout___Gport);
 } else {
-    V_CALL(VGetArg(upenv, 134-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 130-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k309, env)}),
-      VGetArg(upenv, 131-1, 0),
-      _V10vcore_Dclose__stream);
+      VGetArg(upenv, 127-1, 0),
+      _V10vcore_Dstderr___Gport);
 }
  }
 }
@@ -6322,16 +6654,16 @@ static void _V10_Dlookup__intrinsic_D7_k307(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.320 0 0) ((bruijn ##.k.191 131 0) (##intrinsic ##vcore.open-input-stream)) ((bruijn ##.eqv?.4 133 0) (close _V10_Dlookup__intrinsic_D7_k308) (bruijn ##.x.2.13 130 0) '##vcore.open-output-stream))
+  // (if (bruijn ##.p.320 0 0) ((bruijn ##.k.195 127 0) (##intrinsic ##vcore.stdin->port)) ((bruijn ##.eqv?.4 129 0) (close _V10_Dlookup__intrinsic_D7_k308) (bruijn ##.x.2.13 126 0) '##vcore.stdout->port))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 131-1, 0), runtime,
-      _V40_V10vcore_Dopen__input__stream);
+    V_CALL(VGetArg(upenv, 127-1, 0), runtime,
+      _V40_V10vcore_Dstdin___Gport);
 } else {
-    V_CALL(VGetArg(upenv, 133-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 129-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k308, env)}),
-      VGetArg(upenv, 130-1, 0),
-      _V10vcore_Dopen__output__stream);
+      VGetArg(upenv, 126-1, 0),
+      _V10vcore_Dstdout___Gport);
 }
  }
 }
@@ -6348,16 +6680,16 @@ static void _V10_Dlookup__intrinsic_D7_k306(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.319 0 0) ((bruijn ##.k.191 130 0) (##intrinsic ##vcore.dup-stderr)) ((bruijn ##.eqv?.4 132 0) (close _V10_Dlookup__intrinsic_D7_k307) (bruijn ##.x.2.13 129 0) '##vcore.open-input-stream))
+  // (if (bruijn ##.p.319 0 0) ((bruijn ##.k.195 126 0) (##intrinsic ##vcore.char-integer)) ((bruijn ##.eqv?.4 128 0) (close _V10_Dlookup__intrinsic_D7_k307) (bruijn ##.x.2.13 125 0) '##vcore.stdin->port))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 130-1, 0), runtime,
-      _V40_V10vcore_Ddup__stderr);
+    V_CALL(VGetArg(upenv, 126-1, 0), runtime,
+      _V40_V10vcore_Dchar__integer);
 } else {
-    V_CALL(VGetArg(upenv, 132-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 128-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k307, env)}),
-      VGetArg(upenv, 129-1, 0),
-      _V10vcore_Dopen__input__stream);
+      VGetArg(upenv, 125-1, 0),
+      _V10vcore_Dstdin___Gport);
 }
  }
 }
@@ -6374,16 +6706,16 @@ static void _V10_Dlookup__intrinsic_D7_k305(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.318 0 0) ((bruijn ##.k.191 129 0) (##intrinsic ##vcore.dup-stdout)) ((bruijn ##.eqv?.4 131 0) (close _V10_Dlookup__intrinsic_D7_k306) (bruijn ##.x.2.13 128 0) '##vcore.dup-stderr))
+  // (if (bruijn ##.p.318 0 0) ((bruijn ##.k.195 125 0) (##intrinsic ##vcore.gensym)) ((bruijn ##.eqv?.4 127 0) (close _V10_Dlookup__intrinsic_D7_k306) (bruijn ##.x.2.13 124 0) '##vcore.char-integer))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 129-1, 0), runtime,
-      _V40_V10vcore_Ddup__stdout);
+    V_CALL(VGetArg(upenv, 125-1, 0), runtime,
+      _V40_V10vcore_Dgensym);
 } else {
-    V_CALL(VGetArg(upenv, 131-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 127-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k306, env)}),
-      VGetArg(upenv, 128-1, 0),
-      _V10vcore_Ddup__stderr);
+      VGetArg(upenv, 124-1, 0),
+      _V10vcore_Dchar__integer);
 }
  }
 }
@@ -6400,16 +6732,16 @@ static void _V10_Dlookup__intrinsic_D7_k304(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.317 0 0) ((bruijn ##.k.191 128 0) (##intrinsic ##vcore.dup-stdin)) ((bruijn ##.eqv?.4 130 0) (close _V10_Dlookup__intrinsic_D7_k305) (bruijn ##.x.2.13 127 0) '##vcore.dup-stdout))
+  // (if (bruijn ##.p.317 0 0) ((bruijn ##.k.195 124 0) (##intrinsic ##vcore.symbol->string)) ((bruijn ##.eqv?.4 126 0) (close _V10_Dlookup__intrinsic_D7_k305) (bruijn ##.x.2.13 123 0) '##vcore.gensym))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 128-1, 0), runtime,
-      _V40_V10vcore_Ddup__stdin);
+    V_CALL(VGetArg(upenv, 124-1, 0), runtime,
+      _V40_V10vcore_Dsymbol___Gstring);
 } else {
-    V_CALL(VGetArg(upenv, 130-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 126-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k305, env)}),
-      VGetArg(upenv, 127-1, 0),
-      _V10vcore_Ddup__stdout);
+      VGetArg(upenv, 123-1, 0),
+      _V10vcore_Dgensym);
 }
  }
 }
@@ -6426,16 +6758,16 @@ static void _V10_Dlookup__intrinsic_D7_k303(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.316 0 0) ((bruijn ##.k.191 127 0) (##intrinsic ##vcore.stderr->port)) ((bruijn ##.eqv?.4 129 0) (close _V10_Dlookup__intrinsic_D7_k304) (bruijn ##.x.2.13 126 0) '##vcore.dup-stdin))
+  // (if (bruijn ##.p.316 0 0) ((bruijn ##.k.195 123 0) (##intrinsic ##vcore.string->number)) ((bruijn ##.eqv?.4 125 0) (close _V10_Dlookup__intrinsic_D7_k304) (bruijn ##.x.2.13 122 0) '##vcore.symbol->string))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 127-1, 0), runtime,
-      _V40_V10vcore_Dstderr___Gport);
+    V_CALL(VGetArg(upenv, 123-1, 0), runtime,
+      _V40_V10vcore_Dstring___Gnumber);
 } else {
-    V_CALL(VGetArg(upenv, 129-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 125-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k304, env)}),
-      VGetArg(upenv, 126-1, 0),
-      _V10vcore_Ddup__stdin);
+      VGetArg(upenv, 122-1, 0),
+      _V10vcore_Dsymbol___Gstring);
 }
  }
 }
@@ -6452,16 +6784,16 @@ static void _V10_Dlookup__intrinsic_D7_k302(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.315 0 0) ((bruijn ##.k.191 126 0) (##intrinsic ##vcore.stdout->port)) ((bruijn ##.eqv?.4 128 0) (close _V10_Dlookup__intrinsic_D7_k303) (bruijn ##.x.2.13 125 0) '##vcore.stderr->port))
+  // (if (bruijn ##.p.315 0 0) ((bruijn ##.k.195 122 0) (##intrinsic ##vcore.string->symbol)) ((bruijn ##.eqv?.4 124 0) (close _V10_Dlookup__intrinsic_D7_k303) (bruijn ##.x.2.13 121 0) '##vcore.string->number))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 126-1, 0), runtime,
-      _V40_V10vcore_Dstdout___Gport);
+    V_CALL(VGetArg(upenv, 122-1, 0), runtime,
+      _V40_V10vcore_Dstring___Gsymbol);
 } else {
-    V_CALL(VGetArg(upenv, 128-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 124-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k303, env)}),
-      VGetArg(upenv, 125-1, 0),
-      _V10vcore_Dstderr___Gport);
+      VGetArg(upenv, 121-1, 0),
+      _V10vcore_Dstring___Gnumber);
 }
  }
 }
@@ -6478,16 +6810,16 @@ static void _V10_Dlookup__intrinsic_D7_k301(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.314 0 0) ((bruijn ##.k.191 125 0) (##intrinsic ##vcore.stdin->port)) ((bruijn ##.eqv?.4 127 0) (close _V10_Dlookup__intrinsic_D7_k302) (bruijn ##.x.2.13 124 0) '##vcore.stdout->port))
+  // (if (bruijn ##.p.314 0 0) ((bruijn ##.k.195 121 0) (##intrinsic ##vcore.string-length)) ((bruijn ##.eqv?.4 123 0) (close _V10_Dlookup__intrinsic_D7_k302) (bruijn ##.x.2.13 120 0) '##vcore.string->symbol))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 125-1, 0), runtime,
-      _V40_V10vcore_Dstdin___Gport);
+    V_CALL(VGetArg(upenv, 121-1, 0), runtime,
+      _V40_V10vcore_Dstring__length);
 } else {
-    V_CALL(VGetArg(upenv, 127-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 123-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k302, env)}),
-      VGetArg(upenv, 124-1, 0),
-      _V10vcore_Dstdout___Gport);
+      VGetArg(upenv, 120-1, 0),
+      _V10vcore_Dstring___Gsymbol);
 }
  }
 }
@@ -6504,16 +6836,16 @@ static void _V10_Dlookup__intrinsic_D7_k300(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.313 0 0) ((bruijn ##.k.191 124 0) (##intrinsic ##vcore.char-integer)) ((bruijn ##.eqv?.4 126 0) (close _V10_Dlookup__intrinsic_D7_k301) (bruijn ##.x.2.13 123 0) '##vcore.stdin->port))
+  // (if (bruijn ##.p.313 0 0) ((bruijn ##.k.195 120 0) (##intrinsic ##vcore.string-set!)) ((bruijn ##.eqv?.4 122 0) (close _V10_Dlookup__intrinsic_D7_k301) (bruijn ##.x.2.13 119 0) '##vcore.string-length))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 124-1, 0), runtime,
-      _V40_V10vcore_Dchar__integer);
+    V_CALL(VGetArg(upenv, 120-1, 0), runtime,
+      _V40_V10vcore_Dstring__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 126-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 122-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k301, env)}),
-      VGetArg(upenv, 123-1, 0),
-      _V10vcore_Dstdin___Gport);
+      VGetArg(upenv, 119-1, 0),
+      _V10vcore_Dstring__length);
 }
  }
 }
@@ -6530,16 +6862,16 @@ static void _V10_Dlookup__intrinsic_D7_k299(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.312 0 0) ((bruijn ##.k.191 123 0) (##intrinsic ##vcore.gensym)) ((bruijn ##.eqv?.4 125 0) (close _V10_Dlookup__intrinsic_D7_k300) (bruijn ##.x.2.13 122 0) '##vcore.char-integer))
+  // (if (bruijn ##.p.312 0 0) ((bruijn ##.k.195 119 0) (##intrinsic ##vcore.string-ref)) ((bruijn ##.eqv?.4 121 0) (close _V10_Dlookup__intrinsic_D7_k300) (bruijn ##.x.2.13 118 0) '##vcore.string-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 123-1, 0), runtime,
-      _V40_V10vcore_Dgensym);
+    V_CALL(VGetArg(upenv, 119-1, 0), runtime,
+      _V40_V10vcore_Dstring__ref);
 } else {
-    V_CALL(VGetArg(upenv, 125-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 121-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k300, env)}),
-      VGetArg(upenv, 122-1, 0),
-      _V10vcore_Dchar__integer);
+      VGetArg(upenv, 118-1, 0),
+      _V10vcore_Dstring__set_B);
 }
  }
 }
@@ -6556,16 +6888,16 @@ static void _V10_Dlookup__intrinsic_D7_k298(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.311 0 0) ((bruijn ##.k.191 122 0) (##intrinsic ##vcore.symbol->string)) ((bruijn ##.eqv?.4 124 0) (close _V10_Dlookup__intrinsic_D7_k299) (bruijn ##.x.2.13 121 0) '##vcore.gensym))
+  // (if (bruijn ##.p.311 0 0) ((bruijn ##.k.195 118 0) (##intrinsic ##vcore.string-copy!)) ((bruijn ##.eqv?.4 120 0) (close _V10_Dlookup__intrinsic_D7_k299) (bruijn ##.x.2.13 117 0) '##vcore.string-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 122-1, 0), runtime,
-      _V40_V10vcore_Dsymbol___Gstring);
+    V_CALL(VGetArg(upenv, 118-1, 0), runtime,
+      _V40_V10vcore_Dstring__copy_B);
 } else {
-    V_CALL(VGetArg(upenv, 124-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 120-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k299, env)}),
-      VGetArg(upenv, 121-1, 0),
-      _V10vcore_Dgensym);
+      VGetArg(upenv, 117-1, 0),
+      _V10vcore_Dstring__ref);
 }
  }
 }
@@ -6582,16 +6914,16 @@ static void _V10_Dlookup__intrinsic_D7_k297(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.310 0 0) ((bruijn ##.k.191 121 0) (##intrinsic ##vcore.string->number)) ((bruijn ##.eqv?.4 123 0) (close _V10_Dlookup__intrinsic_D7_k298) (bruijn ##.x.2.13 120 0) '##vcore.symbol->string))
+  // (if (bruijn ##.p.310 0 0) ((bruijn ##.k.195 117 0) (##intrinsic ##vcore.substring)) ((bruijn ##.eqv?.4 119 0) (close _V10_Dlookup__intrinsic_D7_k298) (bruijn ##.x.2.13 116 0) '##vcore.string-copy!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 121-1, 0), runtime,
-      _V40_V10vcore_Dstring___Gnumber);
+    V_CALL(VGetArg(upenv, 117-1, 0), runtime,
+      _V40_V10vcore_Dsubstring);
 } else {
-    V_CALL(VGetArg(upenv, 123-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 119-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k298, env)}),
-      VGetArg(upenv, 120-1, 0),
-      _V10vcore_Dsymbol___Gstring);
+      VGetArg(upenv, 116-1, 0),
+      _V10vcore_Dstring__copy_B);
 }
  }
 }
@@ -6608,16 +6940,16 @@ static void _V10_Dlookup__intrinsic_D7_k296(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.309 0 0) ((bruijn ##.k.191 120 0) (##intrinsic ##vcore.string->symbol)) ((bruijn ##.eqv?.4 122 0) (close _V10_Dlookup__intrinsic_D7_k297) (bruijn ##.x.2.13 119 0) '##vcore.string->number))
+  // (if (bruijn ##.p.309 0 0) ((bruijn ##.k.195 116 0) (##intrinsic ##vcore.make-string)) ((bruijn ##.eqv?.4 118 0) (close _V10_Dlookup__intrinsic_D7_k297) (bruijn ##.x.2.13 115 0) '##vcore.substring))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 120-1, 0), runtime,
-      _V40_V10vcore_Dstring___Gsymbol);
+    V_CALL(VGetArg(upenv, 116-1, 0), runtime,
+      _V40_V10vcore_Dmake__string);
 } else {
-    V_CALL(VGetArg(upenv, 122-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 118-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k297, env)}),
-      VGetArg(upenv, 119-1, 0),
-      _V10vcore_Dstring___Gnumber);
+      VGetArg(upenv, 115-1, 0),
+      _V10vcore_Dsubstring);
 }
  }
 }
@@ -6634,16 +6966,16 @@ static void _V10_Dlookup__intrinsic_D7_k295(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.308 0 0) ((bruijn ##.k.191 119 0) (##intrinsic ##vcore.string-length)) ((bruijn ##.eqv?.4 121 0) (close _V10_Dlookup__intrinsic_D7_k296) (bruijn ##.x.2.13 118 0) '##vcore.string->symbol))
+  // (if (bruijn ##.p.308 0 0) ((bruijn ##.k.195 115 0) (##intrinsic ##vcore.hash-table-delete!)) ((bruijn ##.eqv?.4 117 0) (close _V10_Dlookup__intrinsic_D7_k296) (bruijn ##.x.2.13 114 0) '##vcore.make-string))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 119-1, 0), runtime,
-      _V40_V10vcore_Dstring__length);
+    V_CALL(VGetArg(upenv, 115-1, 0), runtime,
+      _V40_V10vcore_Dhash__table__delete_B);
 } else {
-    V_CALL(VGetArg(upenv, 121-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 117-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k296, env)}),
-      VGetArg(upenv, 118-1, 0),
-      _V10vcore_Dstring___Gsymbol);
+      VGetArg(upenv, 114-1, 0),
+      _V10vcore_Dmake__string);
 }
  }
 }
@@ -6660,16 +6992,16 @@ static void _V10_Dlookup__intrinsic_D7_k294(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.307 0 0) ((bruijn ##.k.191 118 0) (##intrinsic ##vcore.string-set!)) ((bruijn ##.eqv?.4 120 0) (close _V10_Dlookup__intrinsic_D7_k295) (bruijn ##.x.2.13 117 0) '##vcore.string-length))
+  // (if (bruijn ##.p.307 0 0) ((bruijn ##.k.195 114 0) (##intrinsic ##vcore.hash-table-set!)) ((bruijn ##.eqv?.4 116 0) (close _V10_Dlookup__intrinsic_D7_k295) (bruijn ##.x.2.13 113 0) '##vcore.hash-table-delete!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 118-1, 0), runtime,
-      _V40_V10vcore_Dstring__set_B);
+    V_CALL(VGetArg(upenv, 114-1, 0), runtime,
+      _V40_V10vcore_Dhash__table__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 120-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 116-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k295, env)}),
-      VGetArg(upenv, 117-1, 0),
-      _V10vcore_Dstring__length);
+      VGetArg(upenv, 113-1, 0),
+      _V10vcore_Dhash__table__delete_B);
 }
  }
 }
@@ -6686,16 +7018,16 @@ static void _V10_Dlookup__intrinsic_D7_k293(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.306 0 0) ((bruijn ##.k.191 117 0) (##intrinsic ##vcore.string-ref)) ((bruijn ##.eqv?.4 119 0) (close _V10_Dlookup__intrinsic_D7_k294) (bruijn ##.x.2.13 116 0) '##vcore.string-set!))
+  // (if (bruijn ##.p.306 0 0) ((bruijn ##.k.195 113 0) (##intrinsic ##vcore.hash-table-ref)) ((bruijn ##.eqv?.4 115 0) (close _V10_Dlookup__intrinsic_D7_k294) (bruijn ##.x.2.13 112 0) '##vcore.hash-table-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 117-1, 0), runtime,
-      _V40_V10vcore_Dstring__ref);
+    V_CALL(VGetArg(upenv, 113-1, 0), runtime,
+      _V40_V10vcore_Dhash__table__ref);
 } else {
-    V_CALL(VGetArg(upenv, 119-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 115-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k294, env)}),
-      VGetArg(upenv, 116-1, 0),
-      _V10vcore_Dstring__set_B);
+      VGetArg(upenv, 112-1, 0),
+      _V10vcore_Dhash__table__set_B);
 }
  }
 }
@@ -6712,16 +7044,16 @@ static void _V10_Dlookup__intrinsic_D7_k292(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.305 0 0) ((bruijn ##.k.191 116 0) (##intrinsic ##vcore.string-copy!)) ((bruijn ##.eqv?.4 118 0) (close _V10_Dlookup__intrinsic_D7_k293) (bruijn ##.x.2.13 115 0) '##vcore.string-ref))
+  // (if (bruijn ##.p.305 0 0) ((bruijn ##.k.195 112 0) (##intrinsic ##vcore.hash-table-hash-function)) ((bruijn ##.eqv?.4 114 0) (close _V10_Dlookup__intrinsic_D7_k293) (bruijn ##.x.2.13 111 0) '##vcore.hash-table-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 116-1, 0), runtime,
-      _V40_V10vcore_Dstring__copy_B);
+    V_CALL(VGetArg(upenv, 112-1, 0), runtime,
+      _V40_V10vcore_Dhash__table__hash__function);
 } else {
-    V_CALL(VGetArg(upenv, 118-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 114-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k293, env)}),
-      VGetArg(upenv, 115-1, 0),
-      _V10vcore_Dstring__ref);
+      VGetArg(upenv, 111-1, 0),
+      _V10vcore_Dhash__table__ref);
 }
  }
 }
@@ -6738,16 +7070,16 @@ static void _V10_Dlookup__intrinsic_D7_k291(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.304 0 0) ((bruijn ##.k.191 115 0) (##intrinsic ##vcore.substring)) ((bruijn ##.eqv?.4 117 0) (close _V10_Dlookup__intrinsic_D7_k292) (bruijn ##.x.2.13 114 0) '##vcore.string-copy!))
+  // (if (bruijn ##.p.304 0 0) ((bruijn ##.k.195 111 0) (##intrinsic ##vcore.hash-table-equivalence-function)) ((bruijn ##.eqv?.4 113 0) (close _V10_Dlookup__intrinsic_D7_k292) (bruijn ##.x.2.13 110 0) '##vcore.hash-table-hash-function))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 115-1, 0), runtime,
-      _V40_V10vcore_Dsubstring);
+    V_CALL(VGetArg(upenv, 111-1, 0), runtime,
+      _V40_V10vcore_Dhash__table__equivalence__function);
 } else {
-    V_CALL(VGetArg(upenv, 117-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 113-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k292, env)}),
-      VGetArg(upenv, 114-1, 0),
-      _V10vcore_Dstring__copy_B);
+      VGetArg(upenv, 110-1, 0),
+      _V10vcore_Dhash__table__hash__function);
 }
  }
 }
@@ -6764,16 +7096,16 @@ static void _V10_Dlookup__intrinsic_D7_k290(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.303 0 0) ((bruijn ##.k.191 114 0) (##intrinsic ##vcore.make-string)) ((bruijn ##.eqv?.4 116 0) (close _V10_Dlookup__intrinsic_D7_k291) (bruijn ##.x.2.13 113 0) '##vcore.substring))
+  // (if (bruijn ##.p.303 0 0) ((bruijn ##.k.195 110 0) (##intrinsic ##vcore.make-hash-table)) ((bruijn ##.eqv?.4 112 0) (close _V10_Dlookup__intrinsic_D7_k291) (bruijn ##.x.2.13 109 0) '##vcore.hash-table-equivalence-function))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 114-1, 0), runtime,
-      _V40_V10vcore_Dmake__string);
+    V_CALL(VGetArg(upenv, 110-1, 0), runtime,
+      _V40_V10vcore_Dmake__hash__table);
 } else {
-    V_CALL(VGetArg(upenv, 116-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 112-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k291, env)}),
-      VGetArg(upenv, 113-1, 0),
-      _V10vcore_Dsubstring);
+      VGetArg(upenv, 109-1, 0),
+      _V10vcore_Dhash__table__equivalence__function);
 }
  }
 }
@@ -6790,16 +7122,16 @@ static void _V10_Dlookup__intrinsic_D7_k289(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.302 0 0) ((bruijn ##.k.191 113 0) (##intrinsic ##vcore.hash-table-delete!)) ((bruijn ##.eqv?.4 115 0) (close _V10_Dlookup__intrinsic_D7_k290) (bruijn ##.x.2.13 112 0) '##vcore.make-string))
+  // (if (bruijn ##.p.302 0 0) ((bruijn ##.k.195 109 0) (##intrinsic ##vcore.record-length)) ((bruijn ##.eqv?.4 111 0) (close _V10_Dlookup__intrinsic_D7_k290) (bruijn ##.x.2.13 108 0) '##vcore.make-hash-table))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 113-1, 0), runtime,
-      _V40_V10vcore_Dhash__table__delete_B);
+    V_CALL(VGetArg(upenv, 109-1, 0), runtime,
+      _V40_V10vcore_Drecord__length);
 } else {
-    V_CALL(VGetArg(upenv, 115-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 111-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k290, env)}),
-      VGetArg(upenv, 112-1, 0),
-      _V10vcore_Dmake__string);
+      VGetArg(upenv, 108-1, 0),
+      _V10vcore_Dmake__hash__table);
 }
  }
 }
@@ -6816,16 +7148,16 @@ static void _V10_Dlookup__intrinsic_D7_k288(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.301 0 0) ((bruijn ##.k.191 112 0) (##intrinsic ##vcore.hash-table-set!)) ((bruijn ##.eqv?.4 114 0) (close _V10_Dlookup__intrinsic_D7_k289) (bruijn ##.x.2.13 111 0) '##vcore.hash-table-delete!))
+  // (if (bruijn ##.p.301 0 0) ((bruijn ##.k.195 108 0) (##intrinsic ##vcore.record-set!)) ((bruijn ##.eqv?.4 110 0) (close _V10_Dlookup__intrinsic_D7_k289) (bruijn ##.x.2.13 107 0) '##vcore.record-length))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 112-1, 0), runtime,
-      _V40_V10vcore_Dhash__table__set_B);
+    V_CALL(VGetArg(upenv, 108-1, 0), runtime,
+      _V40_V10vcore_Drecord__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 114-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 110-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k289, env)}),
-      VGetArg(upenv, 111-1, 0),
-      _V10vcore_Dhash__table__delete_B);
+      VGetArg(upenv, 107-1, 0),
+      _V10vcore_Drecord__length);
 }
  }
 }
@@ -6842,16 +7174,16 @@ static void _V10_Dlookup__intrinsic_D7_k287(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.300 0 0) ((bruijn ##.k.191 111 0) (##intrinsic ##vcore.hash-table-ref)) ((bruijn ##.eqv?.4 113 0) (close _V10_Dlookup__intrinsic_D7_k288) (bruijn ##.x.2.13 110 0) '##vcore.hash-table-set!))
+  // (if (bruijn ##.p.300 0 0) ((bruijn ##.k.195 107 0) (##intrinsic ##vcore.record-ref)) ((bruijn ##.eqv?.4 109 0) (close _V10_Dlookup__intrinsic_D7_k288) (bruijn ##.x.2.13 106 0) '##vcore.record-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 111-1, 0), runtime,
-      _V40_V10vcore_Dhash__table__ref);
+    V_CALL(VGetArg(upenv, 107-1, 0), runtime,
+      _V40_V10vcore_Drecord__ref);
 } else {
-    V_CALL(VGetArg(upenv, 113-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 109-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k288, env)}),
-      VGetArg(upenv, 110-1, 0),
-      _V10vcore_Dhash__table__set_B);
+      VGetArg(upenv, 106-1, 0),
+      _V10vcore_Drecord__set_B);
 }
  }
 }
@@ -6868,16 +7200,16 @@ static void _V10_Dlookup__intrinsic_D7_k286(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.299 0 0) ((bruijn ##.k.191 110 0) (##intrinsic ##vcore.hash-table-hash-function)) ((bruijn ##.eqv?.4 112 0) (close _V10_Dlookup__intrinsic_D7_k287) (bruijn ##.x.2.13 109 0) '##vcore.hash-table-ref))
+  // (if (bruijn ##.p.299 0 0) ((bruijn ##.k.195 106 0) (##intrinsic ##vcore.record)) ((bruijn ##.eqv?.4 108 0) (close _V10_Dlookup__intrinsic_D7_k287) (bruijn ##.x.2.13 105 0) '##vcore.record-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 110-1, 0), runtime,
-      _V40_V10vcore_Dhash__table__hash__function);
+    V_CALL(VGetArg(upenv, 106-1, 0), runtime,
+      _V40_V10vcore_Drecord);
 } else {
-    V_CALL(VGetArg(upenv, 112-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 108-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k287, env)}),
-      VGetArg(upenv, 109-1, 0),
-      _V10vcore_Dhash__table__ref);
+      VGetArg(upenv, 105-1, 0),
+      _V10vcore_Drecord__ref);
 }
  }
 }
@@ -6894,16 +7226,16 @@ static void _V10_Dlookup__intrinsic_D7_k285(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.298 0 0) ((bruijn ##.k.191 109 0) (##intrinsic ##vcore.hash-table-equivalence-function)) ((bruijn ##.eqv?.4 111 0) (close _V10_Dlookup__intrinsic_D7_k286) (bruijn ##.x.2.13 108 0) '##vcore.hash-table-hash-function))
+  // (if (bruijn ##.p.298 0 0) ((bruijn ##.k.195 105 0) (##intrinsic ##vcore.s8vector-length)) ((bruijn ##.eqv?.4 107 0) (close _V10_Dlookup__intrinsic_D7_k286) (bruijn ##.x.2.13 104 0) '##vcore.record))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 109-1, 0), runtime,
-      _V40_V10vcore_Dhash__table__equivalence__function);
+    V_CALL(VGetArg(upenv, 105-1, 0), runtime,
+      _V40_V10vcore_Ds8vector__length);
 } else {
-    V_CALL(VGetArg(upenv, 111-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 107-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k286, env)}),
-      VGetArg(upenv, 108-1, 0),
-      _V10vcore_Dhash__table__hash__function);
+      VGetArg(upenv, 104-1, 0),
+      _V10vcore_Drecord);
 }
  }
 }
@@ -6920,16 +7252,16 @@ static void _V10_Dlookup__intrinsic_D7_k284(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.297 0 0) ((bruijn ##.k.191 108 0) (##intrinsic ##vcore.make-hash-table)) ((bruijn ##.eqv?.4 110 0) (close _V10_Dlookup__intrinsic_D7_k285) (bruijn ##.x.2.13 107 0) '##vcore.hash-table-equivalence-function))
+  // (if (bruijn ##.p.297 0 0) ((bruijn ##.k.195 104 0) (##intrinsic ##vcore.s8vector-set!)) ((bruijn ##.eqv?.4 106 0) (close _V10_Dlookup__intrinsic_D7_k285) (bruijn ##.x.2.13 103 0) '##vcore.s8vector-length))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 108-1, 0), runtime,
-      _V40_V10vcore_Dmake__hash__table);
+    V_CALL(VGetArg(upenv, 104-1, 0), runtime,
+      _V40_V10vcore_Ds8vector__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 110-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 106-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k285, env)}),
-      VGetArg(upenv, 107-1, 0),
-      _V10vcore_Dhash__table__equivalence__function);
+      VGetArg(upenv, 103-1, 0),
+      _V10vcore_Ds8vector__length);
 }
  }
 }
@@ -6946,16 +7278,16 @@ static void _V10_Dlookup__intrinsic_D7_k283(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.296 0 0) ((bruijn ##.k.191 107 0) (##intrinsic ##vcore.record-length)) ((bruijn ##.eqv?.4 109 0) (close _V10_Dlookup__intrinsic_D7_k284) (bruijn ##.x.2.13 106 0) '##vcore.make-hash-table))
+  // (if (bruijn ##.p.296 0 0) ((bruijn ##.k.195 103 0) (##intrinsic ##vcore.s8vector-ref)) ((bruijn ##.eqv?.4 105 0) (close _V10_Dlookup__intrinsic_D7_k284) (bruijn ##.x.2.13 102 0) '##vcore.s8vector-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 107-1, 0), runtime,
-      _V40_V10vcore_Drecord__length);
+    V_CALL(VGetArg(upenv, 103-1, 0), runtime,
+      _V40_V10vcore_Ds8vector__ref);
 } else {
-    V_CALL(VGetArg(upenv, 109-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 105-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k284, env)}),
-      VGetArg(upenv, 106-1, 0),
-      _V10vcore_Dmake__hash__table);
+      VGetArg(upenv, 102-1, 0),
+      _V10vcore_Ds8vector__set_B);
 }
  }
 }
@@ -6972,16 +7304,16 @@ static void _V10_Dlookup__intrinsic_D7_k282(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.295 0 0) ((bruijn ##.k.191 106 0) (##intrinsic ##vcore.record-set!)) ((bruijn ##.eqv?.4 108 0) (close _V10_Dlookup__intrinsic_D7_k283) (bruijn ##.x.2.13 105 0) '##vcore.record-length))
+  // (if (bruijn ##.p.295 0 0) ((bruijn ##.k.195 102 0) (##intrinsic ##vcore.list->s8vector)) ((bruijn ##.eqv?.4 104 0) (close _V10_Dlookup__intrinsic_D7_k283) (bruijn ##.x.2.13 101 0) '##vcore.s8vector-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 106-1, 0), runtime,
-      _V40_V10vcore_Drecord__set_B);
+    V_CALL(VGetArg(upenv, 102-1, 0), runtime,
+      _V40_V10vcore_Dlist___Gs8vector);
 } else {
-    V_CALL(VGetArg(upenv, 108-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 104-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k283, env)}),
-      VGetArg(upenv, 105-1, 0),
-      _V10vcore_Drecord__length);
+      VGetArg(upenv, 101-1, 0),
+      _V10vcore_Ds8vector__ref);
 }
  }
 }
@@ -6998,16 +7330,16 @@ static void _V10_Dlookup__intrinsic_D7_k281(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.294 0 0) ((bruijn ##.k.191 105 0) (##intrinsic ##vcore.record-ref)) ((bruijn ##.eqv?.4 107 0) (close _V10_Dlookup__intrinsic_D7_k282) (bruijn ##.x.2.13 104 0) '##vcore.record-set!))
+  // (if (bruijn ##.p.294 0 0) ((bruijn ##.k.195 101 0) (##intrinsic ##vcore.make-s8vector)) ((bruijn ##.eqv?.4 103 0) (close _V10_Dlookup__intrinsic_D7_k282) (bruijn ##.x.2.13 100 0) '##vcore.list->s8vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 105-1, 0), runtime,
-      _V40_V10vcore_Drecord__ref);
+    V_CALL(VGetArg(upenv, 101-1, 0), runtime,
+      _V40_V10vcore_Dmake__s8vector);
 } else {
-    V_CALL(VGetArg(upenv, 107-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 103-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k282, env)}),
-      VGetArg(upenv, 104-1, 0),
-      _V10vcore_Drecord__set_B);
+      VGetArg(upenv, 100-1, 0),
+      _V10vcore_Dlist___Gs8vector);
 }
  }
 }
@@ -7024,16 +7356,16 @@ static void _V10_Dlookup__intrinsic_D7_k280(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.293 0 0) ((bruijn ##.k.191 104 0) (##intrinsic ##vcore.record)) ((bruijn ##.eqv?.4 106 0) (close _V10_Dlookup__intrinsic_D7_k281) (bruijn ##.x.2.13 103 0) '##vcore.record-ref))
+  // (if (bruijn ##.p.293 0 0) ((bruijn ##.k.195 100 0) (##intrinsic ##vcore.s8vector?)) ((bruijn ##.eqv?.4 102 0) (close _V10_Dlookup__intrinsic_D7_k281) (bruijn ##.x.2.13 99 0) '##vcore.make-s8vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 104-1, 0), runtime,
-      _V40_V10vcore_Drecord);
+    V_CALL(VGetArg(upenv, 100-1, 0), runtime,
+      _V40_V10vcore_Ds8vector_Q);
 } else {
-    V_CALL(VGetArg(upenv, 106-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 102-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k281, env)}),
-      VGetArg(upenv, 103-1, 0),
-      _V10vcore_Drecord__ref);
+      VGetArg(upenv, 99-1, 0),
+      _V10vcore_Dmake__s8vector);
 }
  }
 }
@@ -7050,16 +7382,16 @@ static void _V10_Dlookup__intrinsic_D7_k279(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.292 0 0) ((bruijn ##.k.191 103 0) (##intrinsic ##vcore.s8vector-length)) ((bruijn ##.eqv?.4 105 0) (close _V10_Dlookup__intrinsic_D7_k280) (bruijn ##.x.2.13 102 0) '##vcore.record))
+  // (if (bruijn ##.p.292 0 0) ((bruijn ##.k.195 99 0) (##intrinsic ##vcore.u8vector-length)) ((bruijn ##.eqv?.4 101 0) (close _V10_Dlookup__intrinsic_D7_k280) (bruijn ##.x.2.13 98 0) '##vcore.s8vector?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 103-1, 0), runtime,
-      _V40_V10vcore_Ds8vector__length);
+    V_CALL(VGetArg(upenv, 99-1, 0), runtime,
+      _V40_V10vcore_Du8vector__length);
 } else {
-    V_CALL(VGetArg(upenv, 105-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 101-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k280, env)}),
-      VGetArg(upenv, 102-1, 0),
-      _V10vcore_Drecord);
+      VGetArg(upenv, 98-1, 0),
+      _V10vcore_Ds8vector_Q);
 }
  }
 }
@@ -7076,16 +7408,16 @@ static void _V10_Dlookup__intrinsic_D7_k278(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.291 0 0) ((bruijn ##.k.191 102 0) (##intrinsic ##vcore.s8vector-set!)) ((bruijn ##.eqv?.4 104 0) (close _V10_Dlookup__intrinsic_D7_k279) (bruijn ##.x.2.13 101 0) '##vcore.s8vector-length))
+  // (if (bruijn ##.p.291 0 0) ((bruijn ##.k.195 98 0) (##intrinsic ##vcore.u8vector-set!)) ((bruijn ##.eqv?.4 100 0) (close _V10_Dlookup__intrinsic_D7_k279) (bruijn ##.x.2.13 97 0) '##vcore.u8vector-length))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 102-1, 0), runtime,
-      _V40_V10vcore_Ds8vector__set_B);
+    V_CALL(VGetArg(upenv, 98-1, 0), runtime,
+      _V40_V10vcore_Du8vector__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 104-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 100-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k279, env)}),
-      VGetArg(upenv, 101-1, 0),
-      _V10vcore_Ds8vector__length);
+      VGetArg(upenv, 97-1, 0),
+      _V10vcore_Du8vector__length);
 }
  }
 }
@@ -7102,16 +7434,16 @@ static void _V10_Dlookup__intrinsic_D7_k277(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.290 0 0) ((bruijn ##.k.191 101 0) (##intrinsic ##vcore.s8vector-ref)) ((bruijn ##.eqv?.4 103 0) (close _V10_Dlookup__intrinsic_D7_k278) (bruijn ##.x.2.13 100 0) '##vcore.s8vector-set!))
+  // (if (bruijn ##.p.290 0 0) ((bruijn ##.k.195 97 0) (##intrinsic ##vcore.u8vector-ref)) ((bruijn ##.eqv?.4 99 0) (close _V10_Dlookup__intrinsic_D7_k278) (bruijn ##.x.2.13 96 0) '##vcore.u8vector-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 101-1, 0), runtime,
-      _V40_V10vcore_Ds8vector__ref);
+    V_CALL(VGetArg(upenv, 97-1, 0), runtime,
+      _V40_V10vcore_Du8vector__ref);
 } else {
-    V_CALL(VGetArg(upenv, 103-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 99-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k278, env)}),
-      VGetArg(upenv, 100-1, 0),
-      _V10vcore_Ds8vector__set_B);
+      VGetArg(upenv, 96-1, 0),
+      _V10vcore_Du8vector__set_B);
 }
  }
 }
@@ -7128,16 +7460,16 @@ static void _V10_Dlookup__intrinsic_D7_k276(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.289 0 0) ((bruijn ##.k.191 100 0) (##intrinsic ##vcore.list->s8vector)) ((bruijn ##.eqv?.4 102 0) (close _V10_Dlookup__intrinsic_D7_k277) (bruijn ##.x.2.13 99 0) '##vcore.s8vector-ref))
+  // (if (bruijn ##.p.289 0 0) ((bruijn ##.k.195 96 0) (##intrinsic ##vcore.list->u8vector)) ((bruijn ##.eqv?.4 98 0) (close _V10_Dlookup__intrinsic_D7_k277) (bruijn ##.x.2.13 95 0) '##vcore.u8vector-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 100-1, 0), runtime,
-      _V40_V10vcore_Dlist___Gs8vector);
+    V_CALL(VGetArg(upenv, 96-1, 0), runtime,
+      _V40_V10vcore_Dlist___Gu8vector);
 } else {
-    V_CALL(VGetArg(upenv, 102-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 98-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k277, env)}),
-      VGetArg(upenv, 99-1, 0),
-      _V10vcore_Ds8vector__ref);
+      VGetArg(upenv, 95-1, 0),
+      _V10vcore_Du8vector__ref);
 }
  }
 }
@@ -7154,16 +7486,16 @@ static void _V10_Dlookup__intrinsic_D7_k275(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.288 0 0) ((bruijn ##.k.191 99 0) (##intrinsic ##vcore.make-s8vector)) ((bruijn ##.eqv?.4 101 0) (close _V10_Dlookup__intrinsic_D7_k276) (bruijn ##.x.2.13 98 0) '##vcore.list->s8vector))
+  // (if (bruijn ##.p.288 0 0) ((bruijn ##.k.195 95 0) (##intrinsic ##vcore.make-u8vector)) ((bruijn ##.eqv?.4 97 0) (close _V10_Dlookup__intrinsic_D7_k276) (bruijn ##.x.2.13 94 0) '##vcore.list->u8vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 99-1, 0), runtime,
-      _V40_V10vcore_Dmake__s8vector);
+    V_CALL(VGetArg(upenv, 95-1, 0), runtime,
+      _V40_V10vcore_Dmake__u8vector);
 } else {
-    V_CALL(VGetArg(upenv, 101-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 97-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k276, env)}),
-      VGetArg(upenv, 98-1, 0),
-      _V10vcore_Dlist___Gs8vector);
+      VGetArg(upenv, 94-1, 0),
+      _V10vcore_Dlist___Gu8vector);
 }
  }
 }
@@ -7180,16 +7512,16 @@ static void _V10_Dlookup__intrinsic_D7_k274(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.287 0 0) ((bruijn ##.k.191 98 0) (##intrinsic ##vcore.s8vector?)) ((bruijn ##.eqv?.4 100 0) (close _V10_Dlookup__intrinsic_D7_k275) (bruijn ##.x.2.13 97 0) '##vcore.make-s8vector))
+  // (if (bruijn ##.p.287 0 0) ((bruijn ##.k.195 94 0) (##intrinsic ##vcore.u8vector?)) ((bruijn ##.eqv?.4 96 0) (close _V10_Dlookup__intrinsic_D7_k275) (bruijn ##.x.2.13 93 0) '##vcore.make-u8vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 98-1, 0), runtime,
-      _V40_V10vcore_Ds8vector_Q);
+    V_CALL(VGetArg(upenv, 94-1, 0), runtime,
+      _V40_V10vcore_Du8vector_Q);
 } else {
-    V_CALL(VGetArg(upenv, 100-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 96-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k275, env)}),
-      VGetArg(upenv, 97-1, 0),
-      _V10vcore_Dmake__s8vector);
+      VGetArg(upenv, 93-1, 0),
+      _V10vcore_Dmake__u8vector);
 }
  }
 }
@@ -7206,16 +7538,16 @@ static void _V10_Dlookup__intrinsic_D7_k273(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.286 0 0) ((bruijn ##.k.191 97 0) (##intrinsic ##vcore.u8vector-length)) ((bruijn ##.eqv?.4 99 0) (close _V10_Dlookup__intrinsic_D7_k274) (bruijn ##.x.2.13 96 0) '##vcore.s8vector?))
+  // (if (bruijn ##.p.286 0 0) ((bruijn ##.k.195 93 0) (##intrinsic ##vcore.s16vector-length)) ((bruijn ##.eqv?.4 95 0) (close _V10_Dlookup__intrinsic_D7_k274) (bruijn ##.x.2.13 92 0) '##vcore.u8vector?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 97-1, 0), runtime,
-      _V40_V10vcore_Du8vector__length);
+    V_CALL(VGetArg(upenv, 93-1, 0), runtime,
+      _V40_V10vcore_Ds16vector__length);
 } else {
-    V_CALL(VGetArg(upenv, 99-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 95-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k274, env)}),
-      VGetArg(upenv, 96-1, 0),
-      _V10vcore_Ds8vector_Q);
+      VGetArg(upenv, 92-1, 0),
+      _V10vcore_Du8vector_Q);
 }
  }
 }
@@ -7232,16 +7564,16 @@ static void _V10_Dlookup__intrinsic_D7_k272(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.285 0 0) ((bruijn ##.k.191 96 0) (##intrinsic ##vcore.u8vector-set!)) ((bruijn ##.eqv?.4 98 0) (close _V10_Dlookup__intrinsic_D7_k273) (bruijn ##.x.2.13 95 0) '##vcore.u8vector-length))
+  // (if (bruijn ##.p.285 0 0) ((bruijn ##.k.195 92 0) (##intrinsic ##vcore.s16vector-set!)) ((bruijn ##.eqv?.4 94 0) (close _V10_Dlookup__intrinsic_D7_k273) (bruijn ##.x.2.13 91 0) '##vcore.s16vector-length))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 96-1, 0), runtime,
-      _V40_V10vcore_Du8vector__set_B);
+    V_CALL(VGetArg(upenv, 92-1, 0), runtime,
+      _V40_V10vcore_Ds16vector__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 98-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 94-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k273, env)}),
-      VGetArg(upenv, 95-1, 0),
-      _V10vcore_Du8vector__length);
+      VGetArg(upenv, 91-1, 0),
+      _V10vcore_Ds16vector__length);
 }
  }
 }
@@ -7258,16 +7590,16 @@ static void _V10_Dlookup__intrinsic_D7_k271(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.284 0 0) ((bruijn ##.k.191 95 0) (##intrinsic ##vcore.u8vector-ref)) ((bruijn ##.eqv?.4 97 0) (close _V10_Dlookup__intrinsic_D7_k272) (bruijn ##.x.2.13 94 0) '##vcore.u8vector-set!))
+  // (if (bruijn ##.p.284 0 0) ((bruijn ##.k.195 91 0) (##intrinsic ##vcore.s16vector-ref)) ((bruijn ##.eqv?.4 93 0) (close _V10_Dlookup__intrinsic_D7_k272) (bruijn ##.x.2.13 90 0) '##vcore.s16vector-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 95-1, 0), runtime,
-      _V40_V10vcore_Du8vector__ref);
+    V_CALL(VGetArg(upenv, 91-1, 0), runtime,
+      _V40_V10vcore_Ds16vector__ref);
 } else {
-    V_CALL(VGetArg(upenv, 97-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 93-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k272, env)}),
-      VGetArg(upenv, 94-1, 0),
-      _V10vcore_Du8vector__set_B);
+      VGetArg(upenv, 90-1, 0),
+      _V10vcore_Ds16vector__set_B);
 }
  }
 }
@@ -7284,16 +7616,16 @@ static void _V10_Dlookup__intrinsic_D7_k270(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.283 0 0) ((bruijn ##.k.191 94 0) (##intrinsic ##vcore.list->u8vector)) ((bruijn ##.eqv?.4 96 0) (close _V10_Dlookup__intrinsic_D7_k271) (bruijn ##.x.2.13 93 0) '##vcore.u8vector-ref))
+  // (if (bruijn ##.p.283 0 0) ((bruijn ##.k.195 90 0) (##intrinsic ##vcore.list->s16vector)) ((bruijn ##.eqv?.4 92 0) (close _V10_Dlookup__intrinsic_D7_k271) (bruijn ##.x.2.13 89 0) '##vcore.s16vector-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 94-1, 0), runtime,
-      _V40_V10vcore_Dlist___Gu8vector);
+    V_CALL(VGetArg(upenv, 90-1, 0), runtime,
+      _V40_V10vcore_Dlist___Gs16vector);
 } else {
-    V_CALL(VGetArg(upenv, 96-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 92-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k271, env)}),
-      VGetArg(upenv, 93-1, 0),
-      _V10vcore_Du8vector__ref);
+      VGetArg(upenv, 89-1, 0),
+      _V10vcore_Ds16vector__ref);
 }
  }
 }
@@ -7310,16 +7642,16 @@ static void _V10_Dlookup__intrinsic_D7_k269(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.282 0 0) ((bruijn ##.k.191 93 0) (##intrinsic ##vcore.make-u8vector)) ((bruijn ##.eqv?.4 95 0) (close _V10_Dlookup__intrinsic_D7_k270) (bruijn ##.x.2.13 92 0) '##vcore.list->u8vector))
+  // (if (bruijn ##.p.282 0 0) ((bruijn ##.k.195 89 0) (##intrinsic ##vcore.make-s16vector)) ((bruijn ##.eqv?.4 91 0) (close _V10_Dlookup__intrinsic_D7_k270) (bruijn ##.x.2.13 88 0) '##vcore.list->s16vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 93-1, 0), runtime,
-      _V40_V10vcore_Dmake__u8vector);
+    V_CALL(VGetArg(upenv, 89-1, 0), runtime,
+      _V40_V10vcore_Dmake__s16vector);
 } else {
-    V_CALL(VGetArg(upenv, 95-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 91-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k270, env)}),
-      VGetArg(upenv, 92-1, 0),
-      _V10vcore_Dlist___Gu8vector);
+      VGetArg(upenv, 88-1, 0),
+      _V10vcore_Dlist___Gs16vector);
 }
  }
 }
@@ -7336,16 +7668,16 @@ static void _V10_Dlookup__intrinsic_D7_k268(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.281 0 0) ((bruijn ##.k.191 92 0) (##intrinsic ##vcore.u8vector?)) ((bruijn ##.eqv?.4 94 0) (close _V10_Dlookup__intrinsic_D7_k269) (bruijn ##.x.2.13 91 0) '##vcore.make-u8vector))
+  // (if (bruijn ##.p.281 0 0) ((bruijn ##.k.195 88 0) (##intrinsic ##vcore.s16vector?)) ((bruijn ##.eqv?.4 90 0) (close _V10_Dlookup__intrinsic_D7_k269) (bruijn ##.x.2.13 87 0) '##vcore.make-s16vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 92-1, 0), runtime,
-      _V40_V10vcore_Du8vector_Q);
+    V_CALL(VGetArg(upenv, 88-1, 0), runtime,
+      _V40_V10vcore_Ds16vector_Q);
 } else {
-    V_CALL(VGetArg(upenv, 94-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 90-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k269, env)}),
-      VGetArg(upenv, 91-1, 0),
-      _V10vcore_Dmake__u8vector);
+      VGetArg(upenv, 87-1, 0),
+      _V10vcore_Dmake__s16vector);
 }
  }
 }
@@ -7362,16 +7694,16 @@ static void _V10_Dlookup__intrinsic_D7_k267(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.280 0 0) ((bruijn ##.k.191 91 0) (##intrinsic ##vcore.s16vector-length)) ((bruijn ##.eqv?.4 93 0) (close _V10_Dlookup__intrinsic_D7_k268) (bruijn ##.x.2.13 90 0) '##vcore.u8vector?))
+  // (if (bruijn ##.p.280 0 0) ((bruijn ##.k.195 87 0) (##intrinsic ##vcore.u16vector-length)) ((bruijn ##.eqv?.4 89 0) (close _V10_Dlookup__intrinsic_D7_k268) (bruijn ##.x.2.13 86 0) '##vcore.s16vector?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 91-1, 0), runtime,
-      _V40_V10vcore_Ds16vector__length);
+    V_CALL(VGetArg(upenv, 87-1, 0), runtime,
+      _V40_V10vcore_Du16vector__length);
 } else {
-    V_CALL(VGetArg(upenv, 93-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 89-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k268, env)}),
-      VGetArg(upenv, 90-1, 0),
-      _V10vcore_Du8vector_Q);
+      VGetArg(upenv, 86-1, 0),
+      _V10vcore_Ds16vector_Q);
 }
  }
 }
@@ -7388,16 +7720,16 @@ static void _V10_Dlookup__intrinsic_D7_k266(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.279 0 0) ((bruijn ##.k.191 90 0) (##intrinsic ##vcore.s16vector-set!)) ((bruijn ##.eqv?.4 92 0) (close _V10_Dlookup__intrinsic_D7_k267) (bruijn ##.x.2.13 89 0) '##vcore.s16vector-length))
+  // (if (bruijn ##.p.279 0 0) ((bruijn ##.k.195 86 0) (##intrinsic ##vcore.u16vector-set!)) ((bruijn ##.eqv?.4 88 0) (close _V10_Dlookup__intrinsic_D7_k267) (bruijn ##.x.2.13 85 0) '##vcore.u16vector-length))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 90-1, 0), runtime,
-      _V40_V10vcore_Ds16vector__set_B);
+    V_CALL(VGetArg(upenv, 86-1, 0), runtime,
+      _V40_V10vcore_Du16vector__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 92-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 88-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k267, env)}),
-      VGetArg(upenv, 89-1, 0),
-      _V10vcore_Ds16vector__length);
+      VGetArg(upenv, 85-1, 0),
+      _V10vcore_Du16vector__length);
 }
  }
 }
@@ -7414,16 +7746,16 @@ static void _V10_Dlookup__intrinsic_D7_k265(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.278 0 0) ((bruijn ##.k.191 89 0) (##intrinsic ##vcore.s16vector-ref)) ((bruijn ##.eqv?.4 91 0) (close _V10_Dlookup__intrinsic_D7_k266) (bruijn ##.x.2.13 88 0) '##vcore.s16vector-set!))
+  // (if (bruijn ##.p.278 0 0) ((bruijn ##.k.195 85 0) (##intrinsic ##vcore.u16vector-ref)) ((bruijn ##.eqv?.4 87 0) (close _V10_Dlookup__intrinsic_D7_k266) (bruijn ##.x.2.13 84 0) '##vcore.u16vector-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 89-1, 0), runtime,
-      _V40_V10vcore_Ds16vector__ref);
+    V_CALL(VGetArg(upenv, 85-1, 0), runtime,
+      _V40_V10vcore_Du16vector__ref);
 } else {
-    V_CALL(VGetArg(upenv, 91-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 87-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k266, env)}),
-      VGetArg(upenv, 88-1, 0),
-      _V10vcore_Ds16vector__set_B);
+      VGetArg(upenv, 84-1, 0),
+      _V10vcore_Du16vector__set_B);
 }
  }
 }
@@ -7440,16 +7772,16 @@ static void _V10_Dlookup__intrinsic_D7_k264(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.277 0 0) ((bruijn ##.k.191 88 0) (##intrinsic ##vcore.list->s16vector)) ((bruijn ##.eqv?.4 90 0) (close _V10_Dlookup__intrinsic_D7_k265) (bruijn ##.x.2.13 87 0) '##vcore.s16vector-ref))
+  // (if (bruijn ##.p.277 0 0) ((bruijn ##.k.195 84 0) (##intrinsic ##vcore.list->u16vector)) ((bruijn ##.eqv?.4 86 0) (close _V10_Dlookup__intrinsic_D7_k265) (bruijn ##.x.2.13 83 0) '##vcore.u16vector-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 88-1, 0), runtime,
-      _V40_V10vcore_Dlist___Gs16vector);
+    V_CALL(VGetArg(upenv, 84-1, 0), runtime,
+      _V40_V10vcore_Dlist___Gu16vector);
 } else {
-    V_CALL(VGetArg(upenv, 90-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 86-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k265, env)}),
-      VGetArg(upenv, 87-1, 0),
-      _V10vcore_Ds16vector__ref);
+      VGetArg(upenv, 83-1, 0),
+      _V10vcore_Du16vector__ref);
 }
  }
 }
@@ -7466,16 +7798,16 @@ static void _V10_Dlookup__intrinsic_D7_k263(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.276 0 0) ((bruijn ##.k.191 87 0) (##intrinsic ##vcore.make-s16vector)) ((bruijn ##.eqv?.4 89 0) (close _V10_Dlookup__intrinsic_D7_k264) (bruijn ##.x.2.13 86 0) '##vcore.list->s16vector))
+  // (if (bruijn ##.p.276 0 0) ((bruijn ##.k.195 83 0) (##intrinsic ##vcore.make-u16vector)) ((bruijn ##.eqv?.4 85 0) (close _V10_Dlookup__intrinsic_D7_k264) (bruijn ##.x.2.13 82 0) '##vcore.list->u16vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 87-1, 0), runtime,
-      _V40_V10vcore_Dmake__s16vector);
+    V_CALL(VGetArg(upenv, 83-1, 0), runtime,
+      _V40_V10vcore_Dmake__u16vector);
 } else {
-    V_CALL(VGetArg(upenv, 89-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 85-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k264, env)}),
-      VGetArg(upenv, 86-1, 0),
-      _V10vcore_Dlist___Gs16vector);
+      VGetArg(upenv, 82-1, 0),
+      _V10vcore_Dlist___Gu16vector);
 }
  }
 }
@@ -7492,16 +7824,16 @@ static void _V10_Dlookup__intrinsic_D7_k262(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.275 0 0) ((bruijn ##.k.191 86 0) (##intrinsic ##vcore.s16vector?)) ((bruijn ##.eqv?.4 88 0) (close _V10_Dlookup__intrinsic_D7_k263) (bruijn ##.x.2.13 85 0) '##vcore.make-s16vector))
+  // (if (bruijn ##.p.275 0 0) ((bruijn ##.k.195 82 0) (##intrinsic ##vcore.u16vector?)) ((bruijn ##.eqv?.4 84 0) (close _V10_Dlookup__intrinsic_D7_k263) (bruijn ##.x.2.13 81 0) '##vcore.make-u16vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 86-1, 0), runtime,
-      _V40_V10vcore_Ds16vector_Q);
+    V_CALL(VGetArg(upenv, 82-1, 0), runtime,
+      _V40_V10vcore_Du16vector_Q);
 } else {
-    V_CALL(VGetArg(upenv, 88-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 84-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k263, env)}),
-      VGetArg(upenv, 85-1, 0),
-      _V10vcore_Dmake__s16vector);
+      VGetArg(upenv, 81-1, 0),
+      _V10vcore_Dmake__u16vector);
 }
  }
 }
@@ -7518,16 +7850,16 @@ static void _V10_Dlookup__intrinsic_D7_k261(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.274 0 0) ((bruijn ##.k.191 85 0) (##intrinsic ##vcore.u16vector-length)) ((bruijn ##.eqv?.4 87 0) (close _V10_Dlookup__intrinsic_D7_k262) (bruijn ##.x.2.13 84 0) '##vcore.s16vector?))
+  // (if (bruijn ##.p.274 0 0) ((bruijn ##.k.195 81 0) (##intrinsic ##vcore.s32vector-length)) ((bruijn ##.eqv?.4 83 0) (close _V10_Dlookup__intrinsic_D7_k262) (bruijn ##.x.2.13 80 0) '##vcore.u16vector?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 85-1, 0), runtime,
-      _V40_V10vcore_Du16vector__length);
+    V_CALL(VGetArg(upenv, 81-1, 0), runtime,
+      _V40_V10vcore_Ds32vector__length);
 } else {
-    V_CALL(VGetArg(upenv, 87-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 83-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k262, env)}),
-      VGetArg(upenv, 84-1, 0),
-      _V10vcore_Ds16vector_Q);
+      VGetArg(upenv, 80-1, 0),
+      _V10vcore_Du16vector_Q);
 }
  }
 }
@@ -7544,16 +7876,16 @@ static void _V10_Dlookup__intrinsic_D7_k260(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.273 0 0) ((bruijn ##.k.191 84 0) (##intrinsic ##vcore.u16vector-set!)) ((bruijn ##.eqv?.4 86 0) (close _V10_Dlookup__intrinsic_D7_k261) (bruijn ##.x.2.13 83 0) '##vcore.u16vector-length))
+  // (if (bruijn ##.p.273 0 0) ((bruijn ##.k.195 80 0) (##intrinsic ##vcore.s32vector-set!)) ((bruijn ##.eqv?.4 82 0) (close _V10_Dlookup__intrinsic_D7_k261) (bruijn ##.x.2.13 79 0) '##vcore.s32vector-length))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 84-1, 0), runtime,
-      _V40_V10vcore_Du16vector__set_B);
+    V_CALL(VGetArg(upenv, 80-1, 0), runtime,
+      _V40_V10vcore_Ds32vector__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 86-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 82-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k261, env)}),
-      VGetArg(upenv, 83-1, 0),
-      _V10vcore_Du16vector__length);
+      VGetArg(upenv, 79-1, 0),
+      _V10vcore_Ds32vector__length);
 }
  }
 }
@@ -7570,16 +7902,16 @@ static void _V10_Dlookup__intrinsic_D7_k259(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.272 0 0) ((bruijn ##.k.191 83 0) (##intrinsic ##vcore.u16vector-ref)) ((bruijn ##.eqv?.4 85 0) (close _V10_Dlookup__intrinsic_D7_k260) (bruijn ##.x.2.13 82 0) '##vcore.u16vector-set!))
+  // (if (bruijn ##.p.272 0 0) ((bruijn ##.k.195 79 0) (##intrinsic ##vcore.s32vector-ref)) ((bruijn ##.eqv?.4 81 0) (close _V10_Dlookup__intrinsic_D7_k260) (bruijn ##.x.2.13 78 0) '##vcore.s32vector-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 83-1, 0), runtime,
-      _V40_V10vcore_Du16vector__ref);
+    V_CALL(VGetArg(upenv, 79-1, 0), runtime,
+      _V40_V10vcore_Ds32vector__ref);
 } else {
-    V_CALL(VGetArg(upenv, 85-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 81-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k260, env)}),
-      VGetArg(upenv, 82-1, 0),
-      _V10vcore_Du16vector__set_B);
+      VGetArg(upenv, 78-1, 0),
+      _V10vcore_Ds32vector__set_B);
 }
  }
 }
@@ -7596,16 +7928,16 @@ static void _V10_Dlookup__intrinsic_D7_k258(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.271 0 0) ((bruijn ##.k.191 82 0) (##intrinsic ##vcore.list->u16vector)) ((bruijn ##.eqv?.4 84 0) (close _V10_Dlookup__intrinsic_D7_k259) (bruijn ##.x.2.13 81 0) '##vcore.u16vector-ref))
+  // (if (bruijn ##.p.271 0 0) ((bruijn ##.k.195 78 0) (##intrinsic ##vcore.list->s32vector)) ((bruijn ##.eqv?.4 80 0) (close _V10_Dlookup__intrinsic_D7_k259) (bruijn ##.x.2.13 77 0) '##vcore.s32vector-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 82-1, 0), runtime,
-      _V40_V10vcore_Dlist___Gu16vector);
+    V_CALL(VGetArg(upenv, 78-1, 0), runtime,
+      _V40_V10vcore_Dlist___Gs32vector);
 } else {
-    V_CALL(VGetArg(upenv, 84-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 80-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k259, env)}),
-      VGetArg(upenv, 81-1, 0),
-      _V10vcore_Du16vector__ref);
+      VGetArg(upenv, 77-1, 0),
+      _V10vcore_Ds32vector__ref);
 }
  }
 }
@@ -7622,16 +7954,16 @@ static void _V10_Dlookup__intrinsic_D7_k257(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.270 0 0) ((bruijn ##.k.191 81 0) (##intrinsic ##vcore.make-u16vector)) ((bruijn ##.eqv?.4 83 0) (close _V10_Dlookup__intrinsic_D7_k258) (bruijn ##.x.2.13 80 0) '##vcore.list->u16vector))
+  // (if (bruijn ##.p.270 0 0) ((bruijn ##.k.195 77 0) (##intrinsic ##vcore.make-s32vector)) ((bruijn ##.eqv?.4 79 0) (close _V10_Dlookup__intrinsic_D7_k258) (bruijn ##.x.2.13 76 0) '##vcore.list->s32vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 81-1, 0), runtime,
-      _V40_V10vcore_Dmake__u16vector);
+    V_CALL(VGetArg(upenv, 77-1, 0), runtime,
+      _V40_V10vcore_Dmake__s32vector);
 } else {
-    V_CALL(VGetArg(upenv, 83-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 79-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k258, env)}),
-      VGetArg(upenv, 80-1, 0),
-      _V10vcore_Dlist___Gu16vector);
+      VGetArg(upenv, 76-1, 0),
+      _V10vcore_Dlist___Gs32vector);
 }
  }
 }
@@ -7648,16 +7980,16 @@ static void _V10_Dlookup__intrinsic_D7_k256(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.269 0 0) ((bruijn ##.k.191 80 0) (##intrinsic ##vcore.u16vector?)) ((bruijn ##.eqv?.4 82 0) (close _V10_Dlookup__intrinsic_D7_k257) (bruijn ##.x.2.13 79 0) '##vcore.make-u16vector))
+  // (if (bruijn ##.p.269 0 0) ((bruijn ##.k.195 76 0) (##intrinsic ##vcore.s32vector?)) ((bruijn ##.eqv?.4 78 0) (close _V10_Dlookup__intrinsic_D7_k257) (bruijn ##.x.2.13 75 0) '##vcore.make-s32vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 80-1, 0), runtime,
-      _V40_V10vcore_Du16vector_Q);
+    V_CALL(VGetArg(upenv, 76-1, 0), runtime,
+      _V40_V10vcore_Ds32vector_Q);
 } else {
-    V_CALL(VGetArg(upenv, 82-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 78-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k257, env)}),
-      VGetArg(upenv, 79-1, 0),
-      _V10vcore_Dmake__u16vector);
+      VGetArg(upenv, 75-1, 0),
+      _V10vcore_Dmake__s32vector);
 }
  }
 }
@@ -7674,16 +8006,16 @@ static void _V10_Dlookup__intrinsic_D7_k255(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.268 0 0) ((bruijn ##.k.191 79 0) (##intrinsic ##vcore.s32vector-length)) ((bruijn ##.eqv?.4 81 0) (close _V10_Dlookup__intrinsic_D7_k256) (bruijn ##.x.2.13 78 0) '##vcore.u16vector?))
+  // (if (bruijn ##.p.268 0 0) ((bruijn ##.k.195 75 0) (##intrinsic ##vcore.f32vector-length)) ((bruijn ##.eqv?.4 77 0) (close _V10_Dlookup__intrinsic_D7_k256) (bruijn ##.x.2.13 74 0) '##vcore.s32vector?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 79-1, 0), runtime,
-      _V40_V10vcore_Ds32vector__length);
+    V_CALL(VGetArg(upenv, 75-1, 0), runtime,
+      _V40_V10vcore_Df32vector__length);
 } else {
-    V_CALL(VGetArg(upenv, 81-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 77-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k256, env)}),
-      VGetArg(upenv, 78-1, 0),
-      _V10vcore_Du16vector_Q);
+      VGetArg(upenv, 74-1, 0),
+      _V10vcore_Ds32vector_Q);
 }
  }
 }
@@ -7700,16 +8032,16 @@ static void _V10_Dlookup__intrinsic_D7_k254(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.267 0 0) ((bruijn ##.k.191 78 0) (##intrinsic ##vcore.s32vector-set!)) ((bruijn ##.eqv?.4 80 0) (close _V10_Dlookup__intrinsic_D7_k255) (bruijn ##.x.2.13 77 0) '##vcore.s32vector-length))
+  // (if (bruijn ##.p.267 0 0) ((bruijn ##.k.195 74 0) (##intrinsic ##vcore.f32vector-set!)) ((bruijn ##.eqv?.4 76 0) (close _V10_Dlookup__intrinsic_D7_k255) (bruijn ##.x.2.13 73 0) '##vcore.f32vector-length))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 78-1, 0), runtime,
-      _V40_V10vcore_Ds32vector__set_B);
+    V_CALL(VGetArg(upenv, 74-1, 0), runtime,
+      _V40_V10vcore_Df32vector__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 80-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 76-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k255, env)}),
-      VGetArg(upenv, 77-1, 0),
-      _V10vcore_Ds32vector__length);
+      VGetArg(upenv, 73-1, 0),
+      _V10vcore_Df32vector__length);
 }
  }
 }
@@ -7726,16 +8058,16 @@ static void _V10_Dlookup__intrinsic_D7_k253(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.266 0 0) ((bruijn ##.k.191 77 0) (##intrinsic ##vcore.s32vector-ref)) ((bruijn ##.eqv?.4 79 0) (close _V10_Dlookup__intrinsic_D7_k254) (bruijn ##.x.2.13 76 0) '##vcore.s32vector-set!))
+  // (if (bruijn ##.p.266 0 0) ((bruijn ##.k.195 73 0) (##intrinsic ##vcore.f32vector-ref)) ((bruijn ##.eqv?.4 75 0) (close _V10_Dlookup__intrinsic_D7_k254) (bruijn ##.x.2.13 72 0) '##vcore.f32vector-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 77-1, 0), runtime,
-      _V40_V10vcore_Ds32vector__ref);
+    V_CALL(VGetArg(upenv, 73-1, 0), runtime,
+      _V40_V10vcore_Df32vector__ref);
 } else {
-    V_CALL(VGetArg(upenv, 79-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 75-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k254, env)}),
-      VGetArg(upenv, 76-1, 0),
-      _V10vcore_Ds32vector__set_B);
+      VGetArg(upenv, 72-1, 0),
+      _V10vcore_Df32vector__set_B);
 }
  }
 }
@@ -7752,16 +8084,16 @@ static void _V10_Dlookup__intrinsic_D7_k252(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.265 0 0) ((bruijn ##.k.191 76 0) (##intrinsic ##vcore.list->s32vector)) ((bruijn ##.eqv?.4 78 0) (close _V10_Dlookup__intrinsic_D7_k253) (bruijn ##.x.2.13 75 0) '##vcore.s32vector-ref))
+  // (if (bruijn ##.p.265 0 0) ((bruijn ##.k.195 72 0) (##intrinsic ##vcore.list->f32vector)) ((bruijn ##.eqv?.4 74 0) (close _V10_Dlookup__intrinsic_D7_k253) (bruijn ##.x.2.13 71 0) '##vcore.f32vector-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 76-1, 0), runtime,
-      _V40_V10vcore_Dlist___Gs32vector);
+    V_CALL(VGetArg(upenv, 72-1, 0), runtime,
+      _V40_V10vcore_Dlist___Gf32vector);
 } else {
-    V_CALL(VGetArg(upenv, 78-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 74-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k253, env)}),
-      VGetArg(upenv, 75-1, 0),
-      _V10vcore_Ds32vector__ref);
+      VGetArg(upenv, 71-1, 0),
+      _V10vcore_Df32vector__ref);
 }
  }
 }
@@ -7778,16 +8110,16 @@ static void _V10_Dlookup__intrinsic_D7_k251(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.264 0 0) ((bruijn ##.k.191 75 0) (##intrinsic ##vcore.make-s32vector)) ((bruijn ##.eqv?.4 77 0) (close _V10_Dlookup__intrinsic_D7_k252) (bruijn ##.x.2.13 74 0) '##vcore.list->s32vector))
+  // (if (bruijn ##.p.264 0 0) ((bruijn ##.k.195 71 0) (##intrinsic ##vcore.make-f32vector)) ((bruijn ##.eqv?.4 73 0) (close _V10_Dlookup__intrinsic_D7_k252) (bruijn ##.x.2.13 70 0) '##vcore.list->f32vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 75-1, 0), runtime,
-      _V40_V10vcore_Dmake__s32vector);
+    V_CALL(VGetArg(upenv, 71-1, 0), runtime,
+      _V40_V10vcore_Dmake__f32vector);
 } else {
-    V_CALL(VGetArg(upenv, 77-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 73-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k252, env)}),
-      VGetArg(upenv, 74-1, 0),
-      _V10vcore_Dlist___Gs32vector);
+      VGetArg(upenv, 70-1, 0),
+      _V10vcore_Dlist___Gf32vector);
 }
  }
 }
@@ -7804,16 +8136,16 @@ static void _V10_Dlookup__intrinsic_D7_k250(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.263 0 0) ((bruijn ##.k.191 74 0) (##intrinsic ##vcore.s32vector?)) ((bruijn ##.eqv?.4 76 0) (close _V10_Dlookup__intrinsic_D7_k251) (bruijn ##.x.2.13 73 0) '##vcore.make-s32vector))
+  // (if (bruijn ##.p.263 0 0) ((bruijn ##.k.195 70 0) (##intrinsic ##vcore.f32vector?)) ((bruijn ##.eqv?.4 72 0) (close _V10_Dlookup__intrinsic_D7_k251) (bruijn ##.x.2.13 69 0) '##vcore.make-f32vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 74-1, 0), runtime,
-      _V40_V10vcore_Ds32vector_Q);
+    V_CALL(VGetArg(upenv, 70-1, 0), runtime,
+      _V40_V10vcore_Df32vector_Q);
 } else {
-    V_CALL(VGetArg(upenv, 76-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 72-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k251, env)}),
-      VGetArg(upenv, 73-1, 0),
-      _V10vcore_Dmake__s32vector);
+      VGetArg(upenv, 69-1, 0),
+      _V10vcore_Dmake__f32vector);
 }
  }
 }
@@ -7830,16 +8162,16 @@ static void _V10_Dlookup__intrinsic_D7_k249(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.262 0 0) ((bruijn ##.k.191 73 0) (##intrinsic ##vcore.f32vector-length)) ((bruijn ##.eqv?.4 75 0) (close _V10_Dlookup__intrinsic_D7_k250) (bruijn ##.x.2.13 72 0) '##vcore.s32vector?))
+  // (if (bruijn ##.p.262 0 0) ((bruijn ##.k.195 69 0) (##intrinsic ##vcore.f64vector-length)) ((bruijn ##.eqv?.4 71 0) (close _V10_Dlookup__intrinsic_D7_k250) (bruijn ##.x.2.13 68 0) '##vcore.f32vector?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 73-1, 0), runtime,
-      _V40_V10vcore_Df32vector__length);
+    V_CALL(VGetArg(upenv, 69-1, 0), runtime,
+      _V40_V10vcore_Df64vector__length);
 } else {
-    V_CALL(VGetArg(upenv, 75-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 71-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k250, env)}),
-      VGetArg(upenv, 72-1, 0),
-      _V10vcore_Ds32vector_Q);
+      VGetArg(upenv, 68-1, 0),
+      _V10vcore_Df32vector_Q);
 }
  }
 }
@@ -7856,16 +8188,16 @@ static void _V10_Dlookup__intrinsic_D7_k248(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.261 0 0) ((bruijn ##.k.191 72 0) (##intrinsic ##vcore.f32vector-set!)) ((bruijn ##.eqv?.4 74 0) (close _V10_Dlookup__intrinsic_D7_k249) (bruijn ##.x.2.13 71 0) '##vcore.f32vector-length))
+  // (if (bruijn ##.p.261 0 0) ((bruijn ##.k.195 68 0) (##intrinsic ##vcore.f64vector-set!)) ((bruijn ##.eqv?.4 70 0) (close _V10_Dlookup__intrinsic_D7_k249) (bruijn ##.x.2.13 67 0) '##vcore.f64vector-length))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 72-1, 0), runtime,
-      _V40_V10vcore_Df32vector__set_B);
+    V_CALL(VGetArg(upenv, 68-1, 0), runtime,
+      _V40_V10vcore_Df64vector__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 74-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 70-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k249, env)}),
-      VGetArg(upenv, 71-1, 0),
-      _V10vcore_Df32vector__length);
+      VGetArg(upenv, 67-1, 0),
+      _V10vcore_Df64vector__length);
 }
  }
 }
@@ -7882,16 +8214,16 @@ static void _V10_Dlookup__intrinsic_D7_k247(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.260 0 0) ((bruijn ##.k.191 71 0) (##intrinsic ##vcore.f32vector-ref)) ((bruijn ##.eqv?.4 73 0) (close _V10_Dlookup__intrinsic_D7_k248) (bruijn ##.x.2.13 70 0) '##vcore.f32vector-set!))
+  // (if (bruijn ##.p.260 0 0) ((bruijn ##.k.195 67 0) (##intrinsic ##vcore.f64vector-ref)) ((bruijn ##.eqv?.4 69 0) (close _V10_Dlookup__intrinsic_D7_k248) (bruijn ##.x.2.13 66 0) '##vcore.f64vector-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 71-1, 0), runtime,
-      _V40_V10vcore_Df32vector__ref);
+    V_CALL(VGetArg(upenv, 67-1, 0), runtime,
+      _V40_V10vcore_Df64vector__ref);
 } else {
-    V_CALL(VGetArg(upenv, 73-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 69-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k248, env)}),
-      VGetArg(upenv, 70-1, 0),
-      _V10vcore_Df32vector__set_B);
+      VGetArg(upenv, 66-1, 0),
+      _V10vcore_Df64vector__set_B);
 }
  }
 }
@@ -7908,16 +8240,16 @@ static void _V10_Dlookup__intrinsic_D7_k246(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.259 0 0) ((bruijn ##.k.191 70 0) (##intrinsic ##vcore.list->f32vector)) ((bruijn ##.eqv?.4 72 0) (close _V10_Dlookup__intrinsic_D7_k247) (bruijn ##.x.2.13 69 0) '##vcore.f32vector-ref))
+  // (if (bruijn ##.p.259 0 0) ((bruijn ##.k.195 66 0) (##intrinsic ##vcore.list->f64vector)) ((bruijn ##.eqv?.4 68 0) (close _V10_Dlookup__intrinsic_D7_k247) (bruijn ##.x.2.13 65 0) '##vcore.f64vector-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 70-1, 0), runtime,
-      _V40_V10vcore_Dlist___Gf32vector);
+    V_CALL(VGetArg(upenv, 66-1, 0), runtime,
+      _V40_V10vcore_Dlist___Gf64vector);
 } else {
-    V_CALL(VGetArg(upenv, 72-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 68-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k247, env)}),
-      VGetArg(upenv, 69-1, 0),
-      _V10vcore_Df32vector__ref);
+      VGetArg(upenv, 65-1, 0),
+      _V10vcore_Df64vector__ref);
 }
  }
 }
@@ -7934,16 +8266,16 @@ static void _V10_Dlookup__intrinsic_D7_k245(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.258 0 0) ((bruijn ##.k.191 69 0) (##intrinsic ##vcore.make-f32vector)) ((bruijn ##.eqv?.4 71 0) (close _V10_Dlookup__intrinsic_D7_k246) (bruijn ##.x.2.13 68 0) '##vcore.list->f32vector))
+  // (if (bruijn ##.p.258 0 0) ((bruijn ##.k.195 65 0) (##intrinsic ##vcore.make-f64vector)) ((bruijn ##.eqv?.4 67 0) (close _V10_Dlookup__intrinsic_D7_k246) (bruijn ##.x.2.13 64 0) '##vcore.list->f64vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 69-1, 0), runtime,
-      _V40_V10vcore_Dmake__f32vector);
+    V_CALL(VGetArg(upenv, 65-1, 0), runtime,
+      _V40_V10vcore_Dmake__f64vector);
 } else {
-    V_CALL(VGetArg(upenv, 71-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 67-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k246, env)}),
-      VGetArg(upenv, 68-1, 0),
-      _V10vcore_Dlist___Gf32vector);
+      VGetArg(upenv, 64-1, 0),
+      _V10vcore_Dlist___Gf64vector);
 }
  }
 }
@@ -7960,16 +8292,16 @@ static void _V10_Dlookup__intrinsic_D7_k244(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.257 0 0) ((bruijn ##.k.191 68 0) (##intrinsic ##vcore.f32vector?)) ((bruijn ##.eqv?.4 70 0) (close _V10_Dlookup__intrinsic_D7_k245) (bruijn ##.x.2.13 67 0) '##vcore.make-f32vector))
+  // (if (bruijn ##.p.257 0 0) ((bruijn ##.k.195 64 0) (##intrinsic ##vcore.f64vector?)) ((bruijn ##.eqv?.4 66 0) (close _V10_Dlookup__intrinsic_D7_k245) (bruijn ##.x.2.13 63 0) '##vcore.make-f64vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 68-1, 0), runtime,
-      _V40_V10vcore_Df32vector_Q);
+    V_CALL(VGetArg(upenv, 64-1, 0), runtime,
+      _V40_V10vcore_Df64vector_Q);
 } else {
-    V_CALL(VGetArg(upenv, 70-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 66-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k245, env)}),
-      VGetArg(upenv, 67-1, 0),
-      _V10vcore_Dmake__f32vector);
+      VGetArg(upenv, 63-1, 0),
+      _V10vcore_Dmake__f64vector);
 }
  }
 }
@@ -7986,16 +8318,16 @@ static void _V10_Dlookup__intrinsic_D7_k243(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.256 0 0) ((bruijn ##.k.191 67 0) (##intrinsic ##vcore.f64vector-length)) ((bruijn ##.eqv?.4 69 0) (close _V10_Dlookup__intrinsic_D7_k244) (bruijn ##.x.2.13 66 0) '##vcore.f32vector?))
+  // (if (bruijn ##.p.256 0 0) ((bruijn ##.k.195 63 0) (##intrinsic ##vcore.vector-length)) ((bruijn ##.eqv?.4 65 0) (close _V10_Dlookup__intrinsic_D7_k244) (bruijn ##.x.2.13 62 0) '##vcore.f64vector?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 67-1, 0), runtime,
-      _V40_V10vcore_Df64vector__length);
+    V_CALL(VGetArg(upenv, 63-1, 0), runtime,
+      _V40_V10vcore_Dvector__length);
 } else {
-    V_CALL(VGetArg(upenv, 69-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 65-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k244, env)}),
-      VGetArg(upenv, 66-1, 0),
-      _V10vcore_Df32vector_Q);
+      VGetArg(upenv, 62-1, 0),
+      _V10vcore_Df64vector_Q);
 }
  }
 }
@@ -8012,16 +8344,16 @@ static void _V10_Dlookup__intrinsic_D7_k242(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.255 0 0) ((bruijn ##.k.191 66 0) (##intrinsic ##vcore.f64vector-set!)) ((bruijn ##.eqv?.4 68 0) (close _V10_Dlookup__intrinsic_D7_k243) (bruijn ##.x.2.13 65 0) '##vcore.f64vector-length))
+  // (if (bruijn ##.p.255 0 0) ((bruijn ##.k.195 62 0) (##intrinsic ##vcore.vector-set!)) ((bruijn ##.eqv?.4 64 0) (close _V10_Dlookup__intrinsic_D7_k243) (bruijn ##.x.2.13 61 0) '##vcore.vector-length))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 66-1, 0), runtime,
-      _V40_V10vcore_Df64vector__set_B);
+    V_CALL(VGetArg(upenv, 62-1, 0), runtime,
+      _V40_V10vcore_Dvector__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 68-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 64-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k243, env)}),
-      VGetArg(upenv, 65-1, 0),
-      _V10vcore_Df64vector__length);
+      VGetArg(upenv, 61-1, 0),
+      _V10vcore_Dvector__length);
 }
  }
 }
@@ -8038,16 +8370,16 @@ static void _V10_Dlookup__intrinsic_D7_k241(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.254 0 0) ((bruijn ##.k.191 65 0) (##intrinsic ##vcore.f64vector-ref)) ((bruijn ##.eqv?.4 67 0) (close _V10_Dlookup__intrinsic_D7_k242) (bruijn ##.x.2.13 64 0) '##vcore.f64vector-set!))
+  // (if (bruijn ##.p.254 0 0) ((bruijn ##.k.195 61 0) (##intrinsic ##vcore.vector-ref)) ((bruijn ##.eqv?.4 63 0) (close _V10_Dlookup__intrinsic_D7_k242) (bruijn ##.x.2.13 60 0) '##vcore.vector-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 65-1, 0), runtime,
-      _V40_V10vcore_Df64vector__ref);
+    V_CALL(VGetArg(upenv, 61-1, 0), runtime,
+      _V40_V10vcore_Dvector__ref);
 } else {
-    V_CALL(VGetArg(upenv, 67-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 63-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k242, env)}),
-      VGetArg(upenv, 64-1, 0),
-      _V10vcore_Df64vector__set_B);
+      VGetArg(upenv, 60-1, 0),
+      _V10vcore_Dvector__set_B);
 }
  }
 }
@@ -8064,16 +8396,16 @@ static void _V10_Dlookup__intrinsic_D7_k240(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.253 0 0) ((bruijn ##.k.191 64 0) (##intrinsic ##vcore.list->f64vector)) ((bruijn ##.eqv?.4 66 0) (close _V10_Dlookup__intrinsic_D7_k241) (bruijn ##.x.2.13 63 0) '##vcore.f64vector-ref))
+  // (if (bruijn ##.p.253 0 0) ((bruijn ##.k.195 60 0) (##intrinsic ##vcore.list->vector)) ((bruijn ##.eqv?.4 62 0) (close _V10_Dlookup__intrinsic_D7_k241) (bruijn ##.x.2.13 59 0) '##vcore.vector-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 64-1, 0), runtime,
-      _V40_V10vcore_Dlist___Gf64vector);
+    V_CALL(VGetArg(upenv, 60-1, 0), runtime,
+      _V40_V10vcore_Dlist___Gvector);
 } else {
-    V_CALL(VGetArg(upenv, 66-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 62-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k241, env)}),
-      VGetArg(upenv, 63-1, 0),
-      _V10vcore_Df64vector__ref);
+      VGetArg(upenv, 59-1, 0),
+      _V10vcore_Dvector__ref);
 }
  }
 }
@@ -8090,16 +8422,16 @@ static void _V10_Dlookup__intrinsic_D7_k239(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.252 0 0) ((bruijn ##.k.191 63 0) (##intrinsic ##vcore.make-f64vector)) ((bruijn ##.eqv?.4 65 0) (close _V10_Dlookup__intrinsic_D7_k240) (bruijn ##.x.2.13 62 0) '##vcore.list->f64vector))
+  // (if (bruijn ##.p.252 0 0) ((bruijn ##.k.195 59 0) (##intrinsic ##vcore.set-cdr!)) ((bruijn ##.eqv?.4 61 0) (close _V10_Dlookup__intrinsic_D7_k240) (bruijn ##.x.2.13 58 0) '##vcore.list->vector))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 63-1, 0), runtime,
-      _V40_V10vcore_Dmake__f64vector);
+    V_CALL(VGetArg(upenv, 59-1, 0), runtime,
+      _V40_V10vcore_Dset__cdr_B);
 } else {
-    V_CALL(VGetArg(upenv, 65-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 61-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k240, env)}),
-      VGetArg(upenv, 62-1, 0),
-      _V10vcore_Dlist___Gf64vector);
+      VGetArg(upenv, 58-1, 0),
+      _V10vcore_Dlist___Gvector);
 }
  }
 }
@@ -8116,16 +8448,16 @@ static void _V10_Dlookup__intrinsic_D7_k238(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.251 0 0) ((bruijn ##.k.191 62 0) (##intrinsic ##vcore.f64vector?)) ((bruijn ##.eqv?.4 64 0) (close _V10_Dlookup__intrinsic_D7_k239) (bruijn ##.x.2.13 61 0) '##vcore.make-f64vector))
+  // (if (bruijn ##.p.251 0 0) ((bruijn ##.k.195 58 0) (##intrinsic ##vcore.set-car!)) ((bruijn ##.eqv?.4 60 0) (close _V10_Dlookup__intrinsic_D7_k239) (bruijn ##.x.2.13 57 0) '##vcore.set-cdr!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 62-1, 0), runtime,
-      _V40_V10vcore_Df64vector_Q);
+    V_CALL(VGetArg(upenv, 58-1, 0), runtime,
+      _V40_V10vcore_Dset__car_B);
 } else {
-    V_CALL(VGetArg(upenv, 64-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 60-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k239, env)}),
-      VGetArg(upenv, 61-1, 0),
-      _V10vcore_Dmake__f64vector);
+      VGetArg(upenv, 57-1, 0),
+      _V10vcore_Dset__cdr_B);
 }
  }
 }
@@ -8142,16 +8474,16 @@ static void _V10_Dlookup__intrinsic_D7_k237(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.250 0 0) ((bruijn ##.k.191 61 0) (##intrinsic ##vcore.vector-length)) ((bruijn ##.eqv?.4 63 0) (close _V10_Dlookup__intrinsic_D7_k238) (bruijn ##.x.2.13 60 0) '##vcore.f64vector?))
+  // (if (bruijn ##.p.250 0 0) ((bruijn ##.k.195 57 0) (##intrinsic ##vcore.cdr)) ((bruijn ##.eqv?.4 59 0) (close _V10_Dlookup__intrinsic_D7_k238) (bruijn ##.x.2.13 56 0) '##vcore.set-car!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 61-1, 0), runtime,
-      _V40_V10vcore_Dvector__length);
+    V_CALL(VGetArg(upenv, 57-1, 0), runtime,
+      _V40_V10vcore_Dcdr);
 } else {
-    V_CALL(VGetArg(upenv, 63-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 59-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k238, env)}),
-      VGetArg(upenv, 60-1, 0),
-      _V10vcore_Df64vector_Q);
+      VGetArg(upenv, 56-1, 0),
+      _V10vcore_Dset__car_B);
 }
  }
 }
@@ -8168,16 +8500,16 @@ static void _V10_Dlookup__intrinsic_D7_k236(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.249 0 0) ((bruijn ##.k.191 60 0) (##intrinsic ##vcore.vector-set!)) ((bruijn ##.eqv?.4 62 0) (close _V10_Dlookup__intrinsic_D7_k237) (bruijn ##.x.2.13 59 0) '##vcore.vector-length))
+  // (if (bruijn ##.p.249 0 0) ((bruijn ##.k.195 56 0) (##intrinsic ##vcore.car)) ((bruijn ##.eqv?.4 58 0) (close _V10_Dlookup__intrinsic_D7_k237) (bruijn ##.x.2.13 55 0) '##vcore.cdr))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 60-1, 0), runtime,
-      _V40_V10vcore_Dvector__set_B);
+    V_CALL(VGetArg(upenv, 56-1, 0), runtime,
+      _V40_V10vcore_Dcar);
 } else {
-    V_CALL(VGetArg(upenv, 62-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 58-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k237, env)}),
-      VGetArg(upenv, 59-1, 0),
-      _V10vcore_Dvector__length);
+      VGetArg(upenv, 55-1, 0),
+      _V10vcore_Dcdr);
 }
  }
 }
@@ -8194,42 +8526,16 @@ static void _V10_Dlookup__intrinsic_D7_k235(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.248 0 0) ((bruijn ##.k.191 59 0) (##intrinsic ##vcore.vector-ref)) ((bruijn ##.eqv?.4 61 0) (close _V10_Dlookup__intrinsic_D7_k236) (bruijn ##.x.2.13 58 0) '##vcore.vector-set!))
+  // (if (bruijn ##.p.248 0 0) ((bruijn ##.k.195 55 0) (##intrinsic ##vcore.cons)) ((bruijn ##.eqv?.4 57 0) (close _V10_Dlookup__intrinsic_D7_k236) (bruijn ##.x.2.13 54 0) '##vcore.car))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 59-1, 0), runtime,
-      _V40_V10vcore_Dvector__ref);
+    V_CALL(VGetArg(upenv, 55-1, 0), runtime,
+      _V40_V10vcore_Dcons);
 } else {
-    V_CALL(VGetArg(upenv, 61-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 57-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k236, env)}),
-      VGetArg(upenv, 58-1, 0),
-      _V10vcore_Dvector__set_B);
-}
- }
-}
-static void _V10_Dlookup__intrinsic_D7_k234(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k234" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k234, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k234, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (if (bruijn ##.p.247 0 0) ((bruijn ##.k.191 58 0) (##intrinsic ##vcore.list->vector)) ((bruijn ##.eqv?.4 60 0) (close _V10_Dlookup__intrinsic_D7_k235) (bruijn ##.x.2.13 57 0) '##vcore.vector-ref))
-if(VDecodeBool(
-_var0)) {
-    V_CALL(VGetArg(upenv, 58-1, 0), runtime,
-      _V40_V10vcore_Dlist___Gvector);
-} else {
-    V_CALL(VGetArg(upenv, 60-1, 0), runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k235, env)}),
-      VGetArg(upenv, 57-1, 0),
-      _V10vcore_Dvector__ref);
+      VGetArg(upenv, 54-1, 0),
+      _V10vcore_Dcar);
 }
  }
 }
@@ -8246,17 +8552,9 @@ static void _V10_Dlookup__intrinsic_D7_k233(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.246 0 0) ((bruijn ##.k.191 57 0) (##intrinsic ##vcore.set-cdr!)) ((bruijn ##.eqv?.4 59 0) (close _V10_Dlookup__intrinsic_D7_k234) (bruijn ##.x.2.13 56 0) '##vcore.list->vector))
-if(VDecodeBool(
-_var0)) {
-    V_CALL(VGetArg(upenv, 57-1, 0), runtime,
-      _V40_V10vcore_Dset__cdr_B);
-} else {
-    V_CALL(VGetArg(upenv, 59-1, 0), runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k234, env)}),
-      VGetArg(upenv, 56-1, 0),
-      _V10vcore_Dlist___Gvector);
-}
+  // ((close _V10_Dlookup__intrinsic_D7_k234) (close _V10_Dlookup__intrinsic_D7_k235))
+    V_CALL_FUNC(_V10_Dlookup__intrinsic_D7_k234, env, runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k235, env)}));
  }
 }
 static void _V10_Dlookup__intrinsic_D7_k232(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -8272,16 +8570,16 @@ static void _V10_Dlookup__intrinsic_D7_k232(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.245 0 0) ((bruijn ##.k.191 56 0) (##intrinsic ##vcore.set-car!)) ((bruijn ##.eqv?.4 58 0) (close _V10_Dlookup__intrinsic_D7_k233) (bruijn ##.x.2.13 55 0) '##vcore.set-cdr!))
+  // (if (bruijn ##.p.247 0 0) ((bruijn ##.k.195 53 0) (##intrinsic ##vcore.load-library)) ((bruijn ##.eqv?.4 55 0) (close _V10_Dlookup__intrinsic_D7_k233) (bruijn ##.x.2.13 52 0) '##vcore.cons))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 56-1, 0), runtime,
-      _V40_V10vcore_Dset__car_B);
+    V_CALL(VGetArg(upenv, 53-1, 0), runtime,
+      _V40_V10vcore_Dload__library);
 } else {
-    V_CALL(VGetArg(upenv, 58-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 55-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k233, env)}),
-      VGetArg(upenv, 55-1, 0),
-      _V10vcore_Dset__cdr_B);
+      VGetArg(upenv, 52-1, 0),
+      _V10vcore_Dcons);
 }
  }
 }
@@ -8298,16 +8596,16 @@ static void _V10_Dlookup__intrinsic_D7_k231(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.244 0 0) ((bruijn ##.k.191 55 0) (##intrinsic ##vcore.cdr)) ((bruijn ##.eqv?.4 57 0) (close _V10_Dlookup__intrinsic_D7_k232) (bruijn ##.x.2.13 54 0) '##vcore.set-car!))
+  // (if (bruijn ##.p.246 0 0) ((bruijn ##.k.195 52 0) (##intrinsic ##vcore.make-import)) ((bruijn ##.eqv?.4 54 0) (close _V10_Dlookup__intrinsic_D7_k232) (bruijn ##.x.2.13 51 0) '##vcore.load-library))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 55-1, 0), runtime,
-      _V40_V10vcore_Dcdr);
+    V_CALL(VGetArg(upenv, 52-1, 0), runtime,
+      _V40_V10vcore_Dmake__import);
 } else {
-    V_CALL(VGetArg(upenv, 57-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 54-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k232, env)}),
-      VGetArg(upenv, 54-1, 0),
-      _V10vcore_Dset__car_B);
+      VGetArg(upenv, 51-1, 0),
+      _V10vcore_Dload__library);
 }
  }
 }
@@ -8324,16 +8622,16 @@ static void _V10_Dlookup__intrinsic_D7_k230(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.243 0 0) ((bruijn ##.k.191 54 0) (##intrinsic ##vcore.car)) ((bruijn ##.eqv?.4 56 0) (close _V10_Dlookup__intrinsic_D7_k231) (bruijn ##.x.2.13 53 0) '##vcore.cdr))
+  // (if (bruijn ##.p.245 0 0) ((bruijn ##.k.195 51 0) (##intrinsic ##vcore.lookup-library)) ((bruijn ##.eqv?.4 53 0) (close _V10_Dlookup__intrinsic_D7_k231) (bruijn ##.x.2.13 50 0) '##vcore.make-import))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 54-1, 0), runtime,
-      _V40_V10vcore_Dcar);
+    V_CALL(VGetArg(upenv, 51-1, 0), runtime,
+      _V40_V10vcore_Dlookup__library);
 } else {
-    V_CALL(VGetArg(upenv, 56-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 53-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k231, env)}),
-      VGetArg(upenv, 53-1, 0),
-      _V10vcore_Dcdr);
+      VGetArg(upenv, 50-1, 0),
+      _V10vcore_Dmake__import);
 }
  }
 }
@@ -8350,16 +8648,42 @@ static void _V10_Dlookup__intrinsic_D7_k229(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.242 0 0) ((bruijn ##.k.191 53 0) (##intrinsic ##vcore.cons)) ((bruijn ##.eqv?.4 55 0) (close _V10_Dlookup__intrinsic_D7_k230) (bruijn ##.x.2.13 52 0) '##vcore.car))
+  // (if (bruijn ##.p.244 0 0) ((bruijn ##.k.195 50 0) (##intrinsic ##vcore.multidefine)) ((bruijn ##.eqv?.4 52 0) (close _V10_Dlookup__intrinsic_D7_k230) (bruijn ##.x.2.13 49 0) '##vcore.lookup-library))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 53-1, 0), runtime,
-      _V40_V10vcore_Dcons);
+    V_CALL(VGetArg(upenv, 50-1, 0), runtime,
+      _V40_V10vcore_Dmultidefine);
 } else {
-    V_CALL(VGetArg(upenv, 55-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 52-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k230, env)}),
-      VGetArg(upenv, 52-1, 0),
-      _V10vcore_Dcar);
+      VGetArg(upenv, 49-1, 0),
+      _V10vcore_Dlookup__library);
+}
+ }
+}
+static void _V10_Dlookup__intrinsic_D7_k228(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k228" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k228, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+ V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k228, runtime, upenv, 1, argc, _var0) {
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (if (bruijn ##.p.243 0 0) ((bruijn ##.k.195 49 0) (##intrinsic ##vcore.define)) ((bruijn ##.eqv?.4 51 0) (close _V10_Dlookup__intrinsic_D7_k229) (bruijn ##.x.2.13 48 0) '##vcore.multidefine))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 49-1, 0), runtime,
+      _V40_V10vcore_Ddefine);
+} else {
+    V_CALL(VGetArg(upenv, 51-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k229, env)}),
+      VGetArg(upenv, 48-1, 0),
+      _V10vcore_Dmultidefine);
 }
  }
 }
@@ -8376,9 +8700,17 @@ static void _V10_Dlookup__intrinsic_D7_k227(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((close _V10_Dlookup__intrinsic_D7_k228) (close _V10_Dlookup__intrinsic_D7_k229))
-    V_CALL_FUNC(_V10_Dlookup__intrinsic_D7_k228, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k229, env)}));
+  // (if (bruijn ##.p.242 0 0) ((bruijn ##.k.195 48 0) (##intrinsic ##vcore.function)) ((bruijn ##.eqv?.4 50 0) (close _V10_Dlookup__intrinsic_D7_k228) (bruijn ##.x.2.13 47 0) '##vcore.define))
+if(VDecodeBool(
+_var0)) {
+    V_CALL(VGetArg(upenv, 48-1, 0), runtime,
+      _V40_V10vcore_Dfunction);
+} else {
+    V_CALL(VGetArg(upenv, 50-1, 0), runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k228, env)}),
+      VGetArg(upenv, 47-1, 0),
+      _V10vcore_Ddefine);
+}
  }
 }
 static void _V10_Dlookup__intrinsic_D7_k226(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -8394,16 +8726,16 @@ static void _V10_Dlookup__intrinsic_D7_k226(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.241 0 0) ((bruijn ##.k.191 51 0) (##intrinsic ##vcore.load-library)) ((bruijn ##.eqv?.4 53 0) (close _V10_Dlookup__intrinsic_D7_k227) (bruijn ##.x.2.13 50 0) '##vcore.cons))
+  // (if (bruijn ##.p.241 0 0) ((bruijn ##.k.195 47 0) (##intrinsic ##vcore.record-length)) ((bruijn ##.eqv?.4 49 0) (close _V10_Dlookup__intrinsic_D7_k227) (bruijn ##.x.2.13 46 0) '##vcore.function))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 51-1, 0), runtime,
-      _V40_V10vcore_Dload__library);
+    V_CALL(VGetArg(upenv, 47-1, 0), runtime,
+      _V40_V10vcore_Drecord__length);
 } else {
-    V_CALL(VGetArg(upenv, 53-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 49-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k227, env)}),
-      VGetArg(upenv, 50-1, 0),
-      _V10vcore_Dcons);
+      VGetArg(upenv, 46-1, 0),
+      _V10vcore_Dfunction);
 }
  }
 }
@@ -8420,16 +8752,16 @@ static void _V10_Dlookup__intrinsic_D7_k225(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.240 0 0) ((bruijn ##.k.191 50 0) (##intrinsic ##vcore.make-import)) ((bruijn ##.eqv?.4 52 0) (close _V10_Dlookup__intrinsic_D7_k226) (bruijn ##.x.2.13 49 0) '##vcore.load-library))
+  // (if (bruijn ##.p.240 0 0) ((bruijn ##.k.195 46 0) (##intrinsic ##vcore.record-set!)) ((bruijn ##.eqv?.4 48 0) (close _V10_Dlookup__intrinsic_D7_k226) (bruijn ##.x.2.13 45 0) '##vcore.record-length))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 50-1, 0), runtime,
-      _V40_V10vcore_Dmake__import);
+    V_CALL(VGetArg(upenv, 46-1, 0), runtime,
+      _V40_V10vcore_Drecord__set_B);
 } else {
-    V_CALL(VGetArg(upenv, 52-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 48-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k226, env)}),
-      VGetArg(upenv, 49-1, 0),
-      _V10vcore_Dload__library);
+      VGetArg(upenv, 45-1, 0),
+      _V10vcore_Drecord__length);
 }
  }
 }
@@ -8446,16 +8778,16 @@ static void _V10_Dlookup__intrinsic_D7_k224(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.239 0 0) ((bruijn ##.k.191 49 0) (##intrinsic ##vcore.lookup-library)) ((bruijn ##.eqv?.4 51 0) (close _V10_Dlookup__intrinsic_D7_k225) (bruijn ##.x.2.13 48 0) '##vcore.make-import))
+  // (if (bruijn ##.p.239 0 0) ((bruijn ##.k.195 45 0) (##intrinsic ##vcore.record-ref)) ((bruijn ##.eqv?.4 47 0) (close _V10_Dlookup__intrinsic_D7_k225) (bruijn ##.x.2.13 44 0) '##vcore.record-set!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 49-1, 0), runtime,
-      _V40_V10vcore_Dlookup__library);
+    V_CALL(VGetArg(upenv, 45-1, 0), runtime,
+      _V40_V10vcore_Drecord__ref);
 } else {
-    V_CALL(VGetArg(upenv, 51-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 47-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k225, env)}),
-      VGetArg(upenv, 48-1, 0),
-      _V10vcore_Dmake__import);
+      VGetArg(upenv, 44-1, 0),
+      _V10vcore_Drecord__set_B);
 }
  }
 }
@@ -8472,16 +8804,16 @@ static void _V10_Dlookup__intrinsic_D7_k223(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.238 0 0) ((bruijn ##.k.191 48 0) (##intrinsic ##vcore.multidefine)) ((bruijn ##.eqv?.4 50 0) (close _V10_Dlookup__intrinsic_D7_k224) (bruijn ##.x.2.13 47 0) '##vcore.lookup-library))
+  // (if (bruijn ##.p.238 0 0) ((bruijn ##.k.195 44 0) (##intrinsic ##vcore.record)) ((bruijn ##.eqv?.4 46 0) (close _V10_Dlookup__intrinsic_D7_k224) (bruijn ##.x.2.13 43 0) '##vcore.record-ref))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 48-1, 0), runtime,
-      _V40_V10vcore_Dmultidefine);
+    V_CALL(VGetArg(upenv, 44-1, 0), runtime,
+      _V40_V10vcore_Drecord);
 } else {
-    V_CALL(VGetArg(upenv, 50-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 46-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k224, env)}),
-      VGetArg(upenv, 47-1, 0),
-      _V10vcore_Dlookup__library);
+      VGetArg(upenv, 43-1, 0),
+      _V10vcore_Drecord__ref);
 }
  }
 }
@@ -8498,16 +8830,16 @@ static void _V10_Dlookup__intrinsic_D7_k222(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.237 0 0) ((bruijn ##.k.191 47 0) (##intrinsic ##vcore.define)) ((bruijn ##.eqv?.4 49 0) (close _V10_Dlookup__intrinsic_D7_k223) (bruijn ##.x.2.13 46 0) '##vcore.multidefine))
+  // (if (bruijn ##.p.237 0 0) ((bruijn ##.k.195 43 0) (##intrinsic ##vcore.set-global!)) ((bruijn ##.eqv?.4 45 0) (close _V10_Dlookup__intrinsic_D7_k223) (bruijn ##.x.2.13 42 0) '##vcore.record))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 47-1, 0), runtime,
-      _V40_V10vcore_Ddefine);
+    V_CALL(VGetArg(upenv, 43-1, 0), runtime,
+      _V40_V10vcore_Dset__global_B);
 } else {
-    V_CALL(VGetArg(upenv, 49-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 45-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k223, env)}),
-      VGetArg(upenv, 46-1, 0),
-      _V10vcore_Dmultidefine);
+      VGetArg(upenv, 42-1, 0),
+      _V10vcore_Drecord);
 }
  }
 }
@@ -8524,16 +8856,16 @@ static void _V10_Dlookup__intrinsic_D7_k221(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.236 0 0) ((bruijn ##.k.191 46 0) (##intrinsic ##vcore.function)) ((bruijn ##.eqv?.4 48 0) (close _V10_Dlookup__intrinsic_D7_k222) (bruijn ##.x.2.13 45 0) '##vcore.define))
+  // (if (bruijn ##.p.236 0 0) ((bruijn ##.k.195 42 0) (##intrinsic ##vcore.define-global)) ((bruijn ##.eqv?.4 44 0) (close _V10_Dlookup__intrinsic_D7_k222) (bruijn ##.x.2.13 41 0) '##vcore.set-global!))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 46-1, 0), runtime,
-      _V40_V10vcore_Dfunction);
+    V_CALL(VGetArg(upenv, 42-1, 0), runtime,
+      _V40_V10vcore_Ddefine__global);
 } else {
-    V_CALL(VGetArg(upenv, 48-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 44-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k222, env)}),
-      VGetArg(upenv, 45-1, 0),
-      _V10vcore_Ddefine);
+      VGetArg(upenv, 41-1, 0),
+      _V10vcore_Dset__global_B);
 }
  }
 }
@@ -8550,16 +8882,16 @@ static void _V10_Dlookup__intrinsic_D7_k220(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.235 0 0) ((bruijn ##.k.191 45 0) (##intrinsic ##vcore.record-length)) ((bruijn ##.eqv?.4 47 0) (close _V10_Dlookup__intrinsic_D7_k221) (bruijn ##.x.2.13 44 0) '##vcore.function))
+  // (if (bruijn ##.p.235 0 0) ((bruijn ##.k.195 41 0) (##intrinsic ##vcore.exit)) ((bruijn ##.eqv?.4 43 0) (close _V10_Dlookup__intrinsic_D7_k221) (bruijn ##.x.2.13 40 0) '##vcore.define-global))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 45-1, 0), runtime,
-      _V40_V10vcore_Drecord__length);
+    V_CALL(VGetArg(upenv, 41-1, 0), runtime,
+      _V40_V10vcore_Dexit);
 } else {
-    V_CALL(VGetArg(upenv, 47-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 43-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k221, env)}),
-      VGetArg(upenv, 44-1, 0),
-      _V10vcore_Dfunction);
+      VGetArg(upenv, 40-1, 0),
+      _V10vcore_Ddefine__global);
 }
  }
 }
@@ -8576,16 +8908,16 @@ static void _V10_Dlookup__intrinsic_D7_k219(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.234 0 0) ((bruijn ##.k.191 44 0) (##intrinsic ##vcore.record-set!)) ((bruijn ##.eqv?.4 46 0) (close _V10_Dlookup__intrinsic_D7_k220) (bruijn ##.x.2.13 43 0) '##vcore.record-length))
+  // (if (bruijn ##.p.234 0 0) ((bruijn ##.k.195 40 0) (##intrinsic ##vcore.abort)) ((bruijn ##.eqv?.4 42 0) (close _V10_Dlookup__intrinsic_D7_k220) (bruijn ##.x.2.13 39 0) '##vcore.exit))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 44-1, 0), runtime,
-      _V40_V10vcore_Drecord__set_B);
+    V_CALL(VGetArg(upenv, 40-1, 0), runtime,
+      _V40_V10vcore_Dabort);
 } else {
-    V_CALL(VGetArg(upenv, 46-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 42-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k220, env)}),
-      VGetArg(upenv, 43-1, 0),
-      _V10vcore_Drecord__length);
+      VGetArg(upenv, 39-1, 0),
+      _V10vcore_Dexit);
 }
  }
 }
@@ -8602,16 +8934,16 @@ static void _V10_Dlookup__intrinsic_D7_k218(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.233 0 0) ((bruijn ##.k.191 43 0) (##intrinsic ##vcore.record-ref)) ((bruijn ##.eqv?.4 45 0) (close _V10_Dlookup__intrinsic_D7_k219) (bruijn ##.x.2.13 42 0) '##vcore.record-set!))
+  // (if (bruijn ##.p.233 0 0) ((bruijn ##.k.195 39 0) (##intrinsic ##vcore.apply-cps)) ((bruijn ##.eqv?.4 41 0) (close _V10_Dlookup__intrinsic_D7_k219) (bruijn ##.x.2.13 38 0) '##vcore.abort))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 43-1, 0), runtime,
-      _V40_V10vcore_Drecord__ref);
+    V_CALL(VGetArg(upenv, 39-1, 0), runtime,
+      _V40_V10vcore_Dapply__cps);
 } else {
-    V_CALL(VGetArg(upenv, 45-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 41-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k219, env)}),
-      VGetArg(upenv, 42-1, 0),
-      _V10vcore_Drecord__set_B);
+      VGetArg(upenv, 38-1, 0),
+      _V10vcore_Dabort);
 }
  }
 }
@@ -8628,16 +8960,16 @@ static void _V10_Dlookup__intrinsic_D7_k217(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.232 0 0) ((bruijn ##.k.191 42 0) (##intrinsic ##vcore.record)) ((bruijn ##.eqv?.4 44 0) (close _V10_Dlookup__intrinsic_D7_k218) (bruijn ##.x.2.13 41 0) '##vcore.record-ref))
+  // (if (bruijn ##.p.232 0 0) ((bruijn ##.k.195 38 0) (##intrinsic ##vcore.apply)) ((bruijn ##.eqv?.4 40 0) (close _V10_Dlookup__intrinsic_D7_k218) (bruijn ##.x.2.13 37 0) '##vcore.apply-cps))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 42-1, 0), runtime,
-      _V40_V10vcore_Drecord);
+    V_CALL(VGetArg(upenv, 38-1, 0), runtime,
+      _V40_V10vcore_Dapply);
 } else {
-    V_CALL(VGetArg(upenv, 44-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 40-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k218, env)}),
-      VGetArg(upenv, 41-1, 0),
-      _V10vcore_Drecord__ref);
+      VGetArg(upenv, 37-1, 0),
+      _V10vcore_Dapply__cps);
 }
  }
 }
@@ -8654,16 +8986,16 @@ static void _V10_Dlookup__intrinsic_D7_k216(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.231 0 0) ((bruijn ##.k.191 41 0) (##intrinsic ##vcore.set-global!)) ((bruijn ##.eqv?.4 43 0) (close _V10_Dlookup__intrinsic_D7_k217) (bruijn ##.x.2.13 40 0) '##vcore.record))
+  // (if (bruijn ##.p.231 0 0) ((bruijn ##.k.195 37 0) (##intrinsic ##vcore.call-with-values)) ((bruijn ##.eqv?.4 39 0) (close _V10_Dlookup__intrinsic_D7_k217) (bruijn ##.x.2.13 36 0) '##vcore.apply))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 41-1, 0), runtime,
-      _V40_V10vcore_Dset__global_B);
+    V_CALL(VGetArg(upenv, 37-1, 0), runtime,
+      _V40_V10vcore_Dcall__with__values);
 } else {
-    V_CALL(VGetArg(upenv, 43-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 39-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k217, env)}),
-      VGetArg(upenv, 40-1, 0),
-      _V10vcore_Drecord);
+      VGetArg(upenv, 36-1, 0),
+      _V10vcore_Dapply);
 }
  }
 }
@@ -8680,16 +9012,16 @@ static void _V10_Dlookup__intrinsic_D7_k215(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.230 0 0) ((bruijn ##.k.191 40 0) (##intrinsic ##vcore.define-global)) ((bruijn ##.eqv?.4 42 0) (close _V10_Dlookup__intrinsic_D7_k216) (bruijn ##.x.2.13 39 0) '##vcore.set-global!))
+  // (if (bruijn ##.p.230 0 0) ((bruijn ##.k.195 36 0) (##intrinsic ##vcore.call/cc)) ((bruijn ##.eqv?.4 38 0) (close _V10_Dlookup__intrinsic_D7_k216) (bruijn ##.x.2.13 35 0) '##vcore.call-with-values))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 40-1, 0), runtime,
-      _V40_V10vcore_Ddefine__global);
+    V_CALL(VGetArg(upenv, 36-1, 0), runtime,
+      _V40_V10vcore_Dcall_Wcc);
 } else {
-    V_CALL(VGetArg(upenv, 42-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 38-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k216, env)}),
-      VGetArg(upenv, 39-1, 0),
-      _V10vcore_Dset__global_B);
+      VGetArg(upenv, 35-1, 0),
+      _V10vcore_Dcall__with__values);
 }
  }
 }
@@ -8706,16 +9038,16 @@ static void _V10_Dlookup__intrinsic_D7_k214(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.229 0 0) ((bruijn ##.k.191 39 0) (##intrinsic ##vcore.exit)) ((bruijn ##.eqv?.4 41 0) (close _V10_Dlookup__intrinsic_D7_k215) (bruijn ##.x.2.13 38 0) '##vcore.define-global))
+  // (if (bruijn ##.p.229 0 0) ((bruijn ##.k.195 35 0) (##intrinsic ##vcore.next)) ((bruijn ##.eqv?.4 37 0) (close _V10_Dlookup__intrinsic_D7_k215) (bruijn ##.x.2.13 34 0) '##vcore.call/cc))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 39-1, 0), runtime,
-      _V40_V10vcore_Dexit);
+    V_CALL(VGetArg(upenv, 35-1, 0), runtime,
+      _V40_V10vcore_Dnext);
 } else {
-    V_CALL(VGetArg(upenv, 41-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 37-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k215, env)}),
-      VGetArg(upenv, 38-1, 0),
-      _V10vcore_Ddefine__global);
+      VGetArg(upenv, 34-1, 0),
+      _V10vcore_Dcall_Wcc);
 }
  }
 }
@@ -8732,16 +9064,16 @@ static void _V10_Dlookup__intrinsic_D7_k213(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.228 0 0) ((bruijn ##.k.191 38 0) (##intrinsic ##vcore.abort)) ((bruijn ##.eqv?.4 40 0) (close _V10_Dlookup__intrinsic_D7_k214) (bruijn ##.x.2.13 37 0) '##vcore.exit))
+  // (if (bruijn ##.p.228 0 0) ((bruijn ##.k.195 34 0) (##intrinsic ##vcore.raise)) ((bruijn ##.eqv?.4 36 0) (close _V10_Dlookup__intrinsic_D7_k214) (bruijn ##.x.2.13 33 0) '##vcore.next))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 38-1, 0), runtime,
-      _V40_V10vcore_Dabort);
+    V_CALL(VGetArg(upenv, 34-1, 0), runtime,
+      _V40_V10vcore_Draise);
 } else {
-    V_CALL(VGetArg(upenv, 40-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 36-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k214, env)}),
-      VGetArg(upenv, 37-1, 0),
-      _V10vcore_Dexit);
+      VGetArg(upenv, 33-1, 0),
+      _V10vcore_Dnext);
 }
  }
 }
@@ -8758,16 +9090,16 @@ static void _V10_Dlookup__intrinsic_D7_k212(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.227 0 0) ((bruijn ##.k.191 37 0) (##intrinsic ##vcore.apply-cps)) ((bruijn ##.eqv?.4 39 0) (close _V10_Dlookup__intrinsic_D7_k213) (bruijn ##.x.2.13 36 0) '##vcore.abort))
+  // (if (bruijn ##.p.227 0 0) ((bruijn ##.k.195 33 0) (##intrinsic ##vcore.pop-exception-handler)) ((bruijn ##.eqv?.4 35 0) (close _V10_Dlookup__intrinsic_D7_k213) (bruijn ##.x.2.13 32 0) '##vcore.raise))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 37-1, 0), runtime,
-      _V40_V10vcore_Dapply__cps);
+    V_CALL(VGetArg(upenv, 33-1, 0), runtime,
+      _V40_V10vcore_Dpop__exception__handler);
 } else {
-    V_CALL(VGetArg(upenv, 39-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 35-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k213, env)}),
-      VGetArg(upenv, 36-1, 0),
-      _V10vcore_Dabort);
+      VGetArg(upenv, 32-1, 0),
+      _V10vcore_Draise);
 }
  }
 }
@@ -8784,16 +9116,16 @@ static void _V10_Dlookup__intrinsic_D7_k211(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.226 0 0) ((bruijn ##.k.191 36 0) (##intrinsic ##vcore.apply)) ((bruijn ##.eqv?.4 38 0) (close _V10_Dlookup__intrinsic_D7_k212) (bruijn ##.x.2.13 35 0) '##vcore.apply-cps))
+  // (if (bruijn ##.p.226 0 0) ((bruijn ##.k.195 32 0) (##intrinsic ##vcore.push-exception-handler)) ((bruijn ##.eqv?.4 34 0) (close _V10_Dlookup__intrinsic_D7_k212) (bruijn ##.x.2.13 31 0) '##vcore.pop-exception-handler))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 36-1, 0), runtime,
-      _V40_V10vcore_Dapply);
+    V_CALL(VGetArg(upenv, 32-1, 0), runtime,
+      _V40_V10vcore_Dpush__exception__handler);
 } else {
-    V_CALL(VGetArg(upenv, 38-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 34-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k212, env)}),
-      VGetArg(upenv, 35-1, 0),
-      _V10vcore_Dapply__cps);
+      VGetArg(upenv, 31-1, 0),
+      _V10vcore_Dpop__exception__handler);
 }
  }
 }
@@ -8810,16 +9142,16 @@ static void _V10_Dlookup__intrinsic_D7_k210(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.225 0 0) ((bruijn ##.k.191 35 0) (##intrinsic ##vcore.call-with-values)) ((bruijn ##.eqv?.4 37 0) (close _V10_Dlookup__intrinsic_D7_k211) (bruijn ##.x.2.13 34 0) '##vcore.apply))
+  // (if (bruijn ##.p.225 0 0) ((bruijn ##.k.195 31 0) (##intrinsic ##vcore.get-exception-handler)) ((bruijn ##.eqv?.4 33 0) (close _V10_Dlookup__intrinsic_D7_k211) (bruijn ##.x.2.13 30 0) '##vcore.push-exception-handler))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 35-1, 0), runtime,
-      _V40_V10vcore_Dcall__with__values);
+    V_CALL(VGetArg(upenv, 31-1, 0), runtime,
+      _V40_V10vcore_Dget__exception__handler);
 } else {
-    V_CALL(VGetArg(upenv, 37-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 33-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k211, env)}),
-      VGetArg(upenv, 34-1, 0),
-      _V10vcore_Dapply);
+      VGetArg(upenv, 30-1, 0),
+      _V10vcore_Dpush__exception__handler);
 }
  }
 }
@@ -8836,16 +9168,16 @@ static void _V10_Dlookup__intrinsic_D7_k209(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.224 0 0) ((bruijn ##.k.191 34 0) (##intrinsic ##vcore.call/cc)) ((bruijn ##.eqv?.4 36 0) (close _V10_Dlookup__intrinsic_D7_k210) (bruijn ##.x.2.13 33 0) '##vcore.call-with-values))
+  // (if (bruijn ##.p.224 0 0) ((bruijn ##.k.195 30 0) (##intrinsic ##vcore.pop-dynamic)) ((bruijn ##.eqv?.4 32 0) (close _V10_Dlookup__intrinsic_D7_k210) (bruijn ##.x.2.13 29 0) '##vcore.get-exception-handler))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 34-1, 0), runtime,
-      _V40_V10vcore_Dcall_Wcc);
+    V_CALL(VGetArg(upenv, 30-1, 0), runtime,
+      _V40_V10vcore_Dpop__dynamic);
 } else {
-    V_CALL(VGetArg(upenv, 36-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 32-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k210, env)}),
-      VGetArg(upenv, 33-1, 0),
-      _V10vcore_Dcall__with__values);
+      VGetArg(upenv, 29-1, 0),
+      _V10vcore_Dget__exception__handler);
 }
  }
 }
@@ -8862,16 +9194,16 @@ static void _V10_Dlookup__intrinsic_D7_k208(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.223 0 0) ((bruijn ##.k.191 33 0) (##intrinsic ##vcore.next)) ((bruijn ##.eqv?.4 35 0) (close _V10_Dlookup__intrinsic_D7_k209) (bruijn ##.x.2.13 32 0) '##vcore.call/cc))
+  // (if (bruijn ##.p.223 0 0) ((bruijn ##.k.195 29 0) (##intrinsic ##vcore.push-dynamic)) ((bruijn ##.eqv?.4 31 0) (close _V10_Dlookup__intrinsic_D7_k209) (bruijn ##.x.2.13 28 0) '##vcore.pop-dynamic))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 33-1, 0), runtime,
-      _V40_V10vcore_Dnext);
+    V_CALL(VGetArg(upenv, 29-1, 0), runtime,
+      _V40_V10vcore_Dpush__dynamic);
 } else {
-    V_CALL(VGetArg(upenv, 35-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 31-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k209, env)}),
-      VGetArg(upenv, 32-1, 0),
-      _V10vcore_Dcall_Wcc);
+      VGetArg(upenv, 28-1, 0),
+      _V10vcore_Dpop__dynamic);
 }
  }
 }
@@ -8888,16 +9220,16 @@ static void _V10_Dlookup__intrinsic_D7_k207(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.222 0 0) ((bruijn ##.k.191 32 0) (##intrinsic ##vcore.raise)) ((bruijn ##.eqv?.4 34 0) (close _V10_Dlookup__intrinsic_D7_k208) (bruijn ##.x.2.13 31 0) '##vcore.next))
+  // (if (bruijn ##.p.222 0 0) ((bruijn ##.k.195 28 0) (##intrinsic ##vcore.get-dynamics)) ((bruijn ##.eqv?.4 30 0) (close _V10_Dlookup__intrinsic_D7_k208) (bruijn ##.x.2.13 27 0) '##vcore.push-dynamic))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 32-1, 0), runtime,
-      _V40_V10vcore_Draise);
+    V_CALL(VGetArg(upenv, 28-1, 0), runtime,
+      _V40_V10vcore_Dget__dynamics);
 } else {
-    V_CALL(VGetArg(upenv, 34-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 30-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k208, env)}),
-      VGetArg(upenv, 31-1, 0),
-      _V10vcore_Dnext);
+      VGetArg(upenv, 27-1, 0),
+      _V10vcore_Dpush__dynamic);
 }
  }
 }
@@ -8914,16 +9246,16 @@ static void _V10_Dlookup__intrinsic_D7_k206(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.221 0 0) ((bruijn ##.k.191 31 0) (##intrinsic ##vcore.pop-exception-handler)) ((bruijn ##.eqv?.4 33 0) (close _V10_Dlookup__intrinsic_D7_k207) (bruijn ##.x.2.13 30 0) '##vcore.raise))
+  // (if (bruijn ##.p.221 0 0) ((bruijn ##.k.195 27 0) (##intrinsic ##vcore.not)) ((bruijn ##.eqv?.4 29 0) (close _V10_Dlookup__intrinsic_D7_k207) (bruijn ##.x.2.13 26 0) '##vcore.get-dynamics))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 31-1, 0), runtime,
-      _V40_V10vcore_Dpop__exception__handler);
+    V_CALL(VGetArg(upenv, 27-1, 0), runtime,
+      _V40_V10vcore_Dnot);
 } else {
-    V_CALL(VGetArg(upenv, 33-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 29-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k207, env)}),
-      VGetArg(upenv, 30-1, 0),
-      _V10vcore_Draise);
+      VGetArg(upenv, 26-1, 0),
+      _V10vcore_Dget__dynamics);
 }
  }
 }
@@ -8940,16 +9272,16 @@ static void _V10_Dlookup__intrinsic_D7_k205(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.220 0 0) ((bruijn ##.k.191 30 0) (##intrinsic ##vcore.push-exception-handler)) ((bruijn ##.eqv?.4 32 0) (close _V10_Dlookup__intrinsic_D7_k206) (bruijn ##.x.2.13 29 0) '##vcore.pop-exception-handler))
+  // (if (bruijn ##.p.220 0 0) ((bruijn ##.k.195 26 0) (##intrinsic ##vcore.eqv?)) ((bruijn ##.eqv?.4 28 0) (close _V10_Dlookup__intrinsic_D7_k206) (bruijn ##.x.2.13 25 0) '##vcore.not))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 30-1, 0), runtime,
-      _V40_V10vcore_Dpush__exception__handler);
+    V_CALL(VGetArg(upenv, 26-1, 0), runtime,
+      _V40_V10vcore_Deqv_Q);
 } else {
-    V_CALL(VGetArg(upenv, 32-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 28-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k206, env)}),
-      VGetArg(upenv, 29-1, 0),
-      _V10vcore_Dpop__exception__handler);
+      VGetArg(upenv, 25-1, 0),
+      _V10vcore_Dnot);
 }
  }
 }
@@ -8966,16 +9298,16 @@ static void _V10_Dlookup__intrinsic_D7_k204(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.219 0 0) ((bruijn ##.k.191 29 0) (##intrinsic ##vcore.get-exception-handler)) ((bruijn ##.eqv?.4 31 0) (close _V10_Dlookup__intrinsic_D7_k205) (bruijn ##.x.2.13 28 0) '##vcore.push-exception-handler))
+  // (if (bruijn ##.p.219 0 0) ((bruijn ##.k.195 25 0) (##intrinsic ##vcore.blob=?)) ((bruijn ##.eqv?.4 27 0) (close _V10_Dlookup__intrinsic_D7_k205) (bruijn ##.x.2.13 24 0) '##vcore.eqv?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 29-1, 0), runtime,
-      _V40_V10vcore_Dget__exception__handler);
+    V_CALL(VGetArg(upenv, 25-1, 0), runtime,
+      _V40_V10vcore_Dblob_E_Q);
 } else {
-    V_CALL(VGetArg(upenv, 31-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 27-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k205, env)}),
-      VGetArg(upenv, 28-1, 0),
-      _V10vcore_Dpush__exception__handler);
+      VGetArg(upenv, 24-1, 0),
+      _V10vcore_Deqv_Q);
 }
  }
 }
@@ -8992,16 +9324,16 @@ static void _V10_Dlookup__intrinsic_D7_k203(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.218 0 0) ((bruijn ##.k.191 28 0) (##intrinsic ##vcore.pop-dynamic)) ((bruijn ##.eqv?.4 30 0) (close _V10_Dlookup__intrinsic_D7_k204) (bruijn ##.x.2.13 27 0) '##vcore.get-exception-handler))
+  // (if (bruijn ##.p.218 0 0) ((bruijn ##.k.195 24 0) (##intrinsic ##vcore.symbol=?)) ((bruijn ##.eqv?.4 26 0) (close _V10_Dlookup__intrinsic_D7_k204) (bruijn ##.x.2.13 23 0) '##vcore.blob=?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 28-1, 0), runtime,
-      _V40_V10vcore_Dpop__dynamic);
+    V_CALL(VGetArg(upenv, 24-1, 0), runtime,
+      _V40_V10vcore_Dsymbol_E_Q);
 } else {
-    V_CALL(VGetArg(upenv, 30-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 26-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k204, env)}),
-      VGetArg(upenv, 27-1, 0),
-      _V10vcore_Dget__exception__handler);
+      VGetArg(upenv, 23-1, 0),
+      _V10vcore_Dblob_E_Q);
 }
  }
 }
@@ -9018,16 +9350,16 @@ static void _V10_Dlookup__intrinsic_D7_k202(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.217 0 0) ((bruijn ##.k.191 27 0) (##intrinsic ##vcore.push-dynamic)) ((bruijn ##.eqv?.4 29 0) (close _V10_Dlookup__intrinsic_D7_k203) (bruijn ##.x.2.13 26 0) '##vcore.pop-dynamic))
+  // (if (bruijn ##.p.217 0 0) ((bruijn ##.k.195 23 0) (##intrinsic ##vcore.eq?)) ((bruijn ##.eqv?.4 25 0) (close _V10_Dlookup__intrinsic_D7_k203) (bruijn ##.x.2.13 22 0) '##vcore.symbol=?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 27-1, 0), runtime,
-      _V40_V10vcore_Dpush__dynamic);
+    V_CALL(VGetArg(upenv, 23-1, 0), runtime,
+      _V40_V10vcore_Deq_Q);
 } else {
-    V_CALL(VGetArg(upenv, 29-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 25-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k203, env)}),
-      VGetArg(upenv, 26-1, 0),
-      _V10vcore_Dpop__dynamic);
+      VGetArg(upenv, 22-1, 0),
+      _V10vcore_Dsymbol_E_Q);
 }
  }
 }
@@ -9044,16 +9376,16 @@ static void _V10_Dlookup__intrinsic_D7_k201(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.216 0 0) ((bruijn ##.k.191 26 0) (##intrinsic ##vcore.get-dynamics)) ((bruijn ##.eqv?.4 28 0) (close _V10_Dlookup__intrinsic_D7_k202) (bruijn ##.x.2.13 25 0) '##vcore.push-dynamic))
+  // (if (bruijn ##.p.216 0 0) ((bruijn ##.k.195 22 0) (##intrinsic ##vcore.void?)) ((bruijn ##.eqv?.4 24 0) (close _V10_Dlookup__intrinsic_D7_k202) (bruijn ##.x.2.13 21 0) '##vcore.eq?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 26-1, 0), runtime,
-      _V40_V10vcore_Dget__dynamics);
+    V_CALL(VGetArg(upenv, 22-1, 0), runtime,
+      _V40_V10vcore_Dvoid_Q);
 } else {
-    V_CALL(VGetArg(upenv, 28-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 24-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k202, env)}),
-      VGetArg(upenv, 25-1, 0),
-      _V10vcore_Dpush__dynamic);
+      VGetArg(upenv, 21-1, 0),
+      _V10vcore_Deq_Q);
 }
  }
 }
@@ -9070,16 +9402,16 @@ static void _V10_Dlookup__intrinsic_D7_k200(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.215 0 0) ((bruijn ##.k.191 25 0) (##intrinsic ##vcore.not)) ((bruijn ##.eqv?.4 27 0) (close _V10_Dlookup__intrinsic_D7_k201) (bruijn ##.x.2.13 24 0) '##vcore.get-dynamics))
+  // (if (bruijn ##.p.215 0 0) ((bruijn ##.k.195 21 0) (##intrinsic ##vcore.char?)) ((bruijn ##.eqv?.4 23 0) (close _V10_Dlookup__intrinsic_D7_k201) (bruijn ##.x.2.13 20 0) '##vcore.void?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 25-1, 0), runtime,
-      _V40_V10vcore_Dnot);
+    V_CALL(VGetArg(upenv, 21-1, 0), runtime,
+      _V40_V10vcore_Dchar_Q);
 } else {
-    V_CALL(VGetArg(upenv, 27-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 23-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k201, env)}),
-      VGetArg(upenv, 24-1, 0),
-      _V10vcore_Dget__dynamics);
+      VGetArg(upenv, 20-1, 0),
+      _V10vcore_Dvoid_Q);
 }
  }
 }
@@ -9096,16 +9428,16 @@ static void _V10_Dlookup__intrinsic_D7_k199(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.214 0 0) ((bruijn ##.k.191 24 0) (##intrinsic ##vcore.eqv?)) ((bruijn ##.eqv?.4 26 0) (close _V10_Dlookup__intrinsic_D7_k200) (bruijn ##.x.2.13 23 0) '##vcore.not))
+  // (if (bruijn ##.p.214 0 0) ((bruijn ##.k.195 20 0) (##intrinsic ##vcore.double?)) ((bruijn ##.eqv?.4 22 0) (close _V10_Dlookup__intrinsic_D7_k200) (bruijn ##.x.2.13 19 0) '##vcore.char?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 24-1, 0), runtime,
-      _V40_V10vcore_Deqv_Q);
+    V_CALL(VGetArg(upenv, 20-1, 0), runtime,
+      _V40_V10vcore_Ddouble_Q);
 } else {
-    V_CALL(VGetArg(upenv, 26-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 22-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k200, env)}),
-      VGetArg(upenv, 23-1, 0),
-      _V10vcore_Dnot);
+      VGetArg(upenv, 19-1, 0),
+      _V10vcore_Dchar_Q);
 }
  }
 }
@@ -9122,16 +9454,16 @@ static void _V10_Dlookup__intrinsic_D7_k198(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.213 0 0) ((bruijn ##.k.191 23 0) (##intrinsic ##vcore.blob=?)) ((bruijn ##.eqv?.4 25 0) (close _V10_Dlookup__intrinsic_D7_k199) (bruijn ##.x.2.13 22 0) '##vcore.eqv?))
+  // (if (bruijn ##.p.213 0 0) ((bruijn ##.k.195 19 0) (##intrinsic ##vcore.int?)) ((bruijn ##.eqv?.4 21 0) (close _V10_Dlookup__intrinsic_D7_k199) (bruijn ##.x.2.13 18 0) '##vcore.double?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 23-1, 0), runtime,
-      _V40_V10vcore_Dblob_E_Q);
+    V_CALL(VGetArg(upenv, 19-1, 0), runtime,
+      _V40_V10vcore_Dint_Q);
 } else {
-    V_CALL(VGetArg(upenv, 25-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 21-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k199, env)}),
-      VGetArg(upenv, 22-1, 0),
-      _V10vcore_Deqv_Q);
+      VGetArg(upenv, 18-1, 0),
+      _V10vcore_Ddouble_Q);
 }
  }
 }
@@ -9148,16 +9480,16 @@ static void _V10_Dlookup__intrinsic_D7_k197(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.212 0 0) ((bruijn ##.k.191 22 0) (##intrinsic ##vcore.symbol=?)) ((bruijn ##.eqv?.4 24 0) (close _V10_Dlookup__intrinsic_D7_k198) (bruijn ##.x.2.13 21 0) '##vcore.blob=?))
+  // (if (bruijn ##.p.212 0 0) ((bruijn ##.k.195 18 0) (##intrinsic ##vcore.string?)) ((bruijn ##.eqv?.4 20 0) (close _V10_Dlookup__intrinsic_D7_k198) (bruijn ##.x.2.13 17 0) '##vcore.int?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 22-1, 0), runtime,
-      _V40_V10vcore_Dsymbol_E_Q);
+    V_CALL(VGetArg(upenv, 18-1, 0), runtime,
+      _V40_V10vcore_Dstring_Q);
 } else {
-    V_CALL(VGetArg(upenv, 24-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 20-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k198, env)}),
-      VGetArg(upenv, 21-1, 0),
-      _V10vcore_Dblob_E_Q);
+      VGetArg(upenv, 17-1, 0),
+      _V10vcore_Dint_Q);
 }
  }
 }
@@ -9174,16 +9506,16 @@ static void _V10_Dlookup__intrinsic_D7_k196(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.211 0 0) ((bruijn ##.k.191 21 0) (##intrinsic ##vcore.eq?)) ((bruijn ##.eqv?.4 23 0) (close _V10_Dlookup__intrinsic_D7_k197) (bruijn ##.x.2.13 20 0) '##vcore.symbol=?))
+  // (if (bruijn ##.p.211 0 0) ((bruijn ##.k.195 17 0) (##intrinsic ##vcore.symbol?)) ((bruijn ##.eqv?.4 19 0) (close _V10_Dlookup__intrinsic_D7_k197) (bruijn ##.x.2.13 16 0) '##vcore.string?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 21-1, 0), runtime,
-      _V40_V10vcore_Deq_Q);
+    V_CALL(VGetArg(upenv, 17-1, 0), runtime,
+      _V40_V10vcore_Dsymbol_Q);
 } else {
-    V_CALL(VGetArg(upenv, 23-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 19-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k197, env)}),
-      VGetArg(upenv, 20-1, 0),
-      _V10vcore_Dsymbol_E_Q);
+      VGetArg(upenv, 16-1, 0),
+      _V10vcore_Dstring_Q);
 }
  }
 }
@@ -9200,16 +9532,16 @@ static void _V10_Dlookup__intrinsic_D7_k195(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.210 0 0) ((bruijn ##.k.191 20 0) (##intrinsic ##vcore.void?)) ((bruijn ##.eqv?.4 22 0) (close _V10_Dlookup__intrinsic_D7_k196) (bruijn ##.x.2.13 19 0) '##vcore.eq?))
+  // (if (bruijn ##.p.210 0 0) ((bruijn ##.k.195 16 0) (##intrinsic ##vcore.blob?)) ((bruijn ##.eqv?.4 18 0) (close _V10_Dlookup__intrinsic_D7_k196) (bruijn ##.x.2.13 15 0) '##vcore.symbol?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 20-1, 0), runtime,
-      _V40_V10vcore_Dvoid_Q);
+    V_CALL(VGetArg(upenv, 16-1, 0), runtime,
+      _V40_V10vcore_Dblob_Q);
 } else {
-    V_CALL(VGetArg(upenv, 22-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 18-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k196, env)}),
-      VGetArg(upenv, 19-1, 0),
-      _V10vcore_Deq_Q);
+      VGetArg(upenv, 15-1, 0),
+      _V10vcore_Dsymbol_Q);
 }
  }
 }
@@ -9226,16 +9558,16 @@ static void _V10_Dlookup__intrinsic_D7_k194(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.209 0 0) ((bruijn ##.k.191 19 0) (##intrinsic ##vcore.char?)) ((bruijn ##.eqv?.4 21 0) (close _V10_Dlookup__intrinsic_D7_k195) (bruijn ##.x.2.13 18 0) '##vcore.void?))
+  // (if (bruijn ##.p.209 0 0) ((bruijn ##.k.195 15 0) (##intrinsic ##vcore.procedure?)) ((bruijn ##.eqv?.4 17 0) (close _V10_Dlookup__intrinsic_D7_k195) (bruijn ##.x.2.13 14 0) '##vcore.blob?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 19-1, 0), runtime,
-      _V40_V10vcore_Dchar_Q);
+    V_CALL(VGetArg(upenv, 15-1, 0), runtime,
+      _V40_V10vcore_Dprocedure_Q);
 } else {
-    V_CALL(VGetArg(upenv, 21-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 17-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k195, env)}),
-      VGetArg(upenv, 18-1, 0),
-      _V10vcore_Dvoid_Q);
+      VGetArg(upenv, 14-1, 0),
+      _V10vcore_Dblob_Q);
 }
  }
 }
@@ -9252,16 +9584,16 @@ static void _V10_Dlookup__intrinsic_D7_k193(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.208 0 0) ((bruijn ##.k.191 18 0) (##intrinsic ##vcore.double?)) ((bruijn ##.eqv?.4 20 0) (close _V10_Dlookup__intrinsic_D7_k194) (bruijn ##.x.2.13 17 0) '##vcore.char?))
+  // (if (bruijn ##.p.208 0 0) ((bruijn ##.k.195 14 0) (##intrinsic ##vcore.record?)) ((bruijn ##.eqv?.4 16 0) (close _V10_Dlookup__intrinsic_D7_k194) (bruijn ##.x.2.13 13 0) '##vcore.procedure?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 18-1, 0), runtime,
-      _V40_V10vcore_Ddouble_Q);
+    V_CALL(VGetArg(upenv, 14-1, 0), runtime,
+      _V40_V10vcore_Drecord_Q);
 } else {
-    V_CALL(VGetArg(upenv, 20-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 16-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k194, env)}),
-      VGetArg(upenv, 17-1, 0),
-      _V10vcore_Dchar_Q);
+      VGetArg(upenv, 13-1, 0),
+      _V10vcore_Dprocedure_Q);
 }
  }
 }
@@ -9278,16 +9610,16 @@ static void _V10_Dlookup__intrinsic_D7_k192(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.207 0 0) ((bruijn ##.k.191 17 0) (##intrinsic ##vcore.int?)) ((bruijn ##.eqv?.4 19 0) (close _V10_Dlookup__intrinsic_D7_k193) (bruijn ##.x.2.13 16 0) '##vcore.double?))
+  // (if (bruijn ##.p.207 0 0) ((bruijn ##.k.195 13 0) (##intrinsic ##vcore.vector?)) ((bruijn ##.eqv?.4 15 0) (close _V10_Dlookup__intrinsic_D7_k193) (bruijn ##.x.2.13 12 0) '##vcore.record?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 17-1, 0), runtime,
-      _V40_V10vcore_Dint_Q);
+    V_CALL(VGetArg(upenv, 13-1, 0), runtime,
+      _V40_V10vcore_Dvector_Q);
 } else {
-    V_CALL(VGetArg(upenv, 19-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 15-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k193, env)}),
-      VGetArg(upenv, 16-1, 0),
-      _V10vcore_Ddouble_Q);
+      VGetArg(upenv, 12-1, 0),
+      _V10vcore_Drecord_Q);
 }
  }
 }
@@ -9304,16 +9636,16 @@ static void _V10_Dlookup__intrinsic_D7_k191(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.206 0 0) ((bruijn ##.k.191 16 0) (##intrinsic ##vcore.string?)) ((bruijn ##.eqv?.4 18 0) (close _V10_Dlookup__intrinsic_D7_k192) (bruijn ##.x.2.13 15 0) '##vcore.int?))
+  // (if (bruijn ##.p.206 0 0) ((bruijn ##.k.195 12 0) (##intrinsic ##vcore.pair?)) ((bruijn ##.eqv?.4 14 0) (close _V10_Dlookup__intrinsic_D7_k192) (bruijn ##.x.2.13 11 0) '##vcore.vector?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 16-1, 0), runtime,
-      _V40_V10vcore_Dstring_Q);
+    V_CALL(VGetArg(upenv, 12-1, 0), runtime,
+      _V40_V10vcore_Dpair_Q);
 } else {
-    V_CALL(VGetArg(upenv, 18-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 14-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k192, env)}),
-      VGetArg(upenv, 15-1, 0),
-      _V10vcore_Dint_Q);
+      VGetArg(upenv, 11-1, 0),
+      _V10vcore_Dvector_Q);
 }
  }
 }
@@ -9330,16 +9662,16 @@ static void _V10_Dlookup__intrinsic_D7_k190(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.205 0 0) ((bruijn ##.k.191 15 0) (##intrinsic ##vcore.symbol?)) ((bruijn ##.eqv?.4 17 0) (close _V10_Dlookup__intrinsic_D7_k191) (bruijn ##.x.2.13 14 0) '##vcore.string?))
+  // (if (bruijn ##.p.205 0 0) ((bruijn ##.k.195 11 0) (##intrinsic ##vcore.null?)) ((bruijn ##.eqv?.4 13 0) (close _V10_Dlookup__intrinsic_D7_k191) (bruijn ##.x.2.13 10 0) '##vcore.pair?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 15-1, 0), runtime,
-      _V40_V10vcore_Dsymbol_Q);
+    V_CALL(VGetArg(upenv, 11-1, 0), runtime,
+      _V40_V10vcore_Dnull_Q);
 } else {
-    V_CALL(VGetArg(upenv, 17-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 13-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k191, env)}),
-      VGetArg(upenv, 14-1, 0),
-      _V10vcore_Dstring_Q);
+      VGetArg(upenv, 10-1, 0),
+      _V10vcore_Dpair_Q);
 }
  }
 }
@@ -9356,16 +9688,16 @@ static void _V10_Dlookup__intrinsic_D7_k189(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.204 0 0) ((bruijn ##.k.191 14 0) (##intrinsic ##vcore.blob?)) ((bruijn ##.eqv?.4 16 0) (close _V10_Dlookup__intrinsic_D7_k190) (bruijn ##.x.2.13 13 0) '##vcore.symbol?))
+  // (if (bruijn ##.p.204 0 0) ((bruijn ##.k.195 10 0) (##intrinsic ##vcore.remainder)) ((bruijn ##.eqv?.4 12 0) (close _V10_Dlookup__intrinsic_D7_k190) (bruijn ##.x.2.13 9 0) '##vcore.null?))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 14-1, 0), runtime,
-      _V40_V10vcore_Dblob_Q);
+    V_CALL(VGetArg(upenv, 10-1, 0), runtime,
+      _V40_V10vcore_Dremainder);
 } else {
-    V_CALL(VGetArg(upenv, 16-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 12-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k190, env)}),
-      VGetArg(upenv, 13-1, 0),
-      _V10vcore_Dsymbol_Q);
+      VGetArg(upenv, 9-1, 0),
+      _V10vcore_Dnull_Q);
 }
  }
 }
@@ -9382,16 +9714,16 @@ static void _V10_Dlookup__intrinsic_D7_k188(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.203 0 0) ((bruijn ##.k.191 13 0) (##intrinsic ##vcore.procedure?)) ((bruijn ##.eqv?.4 15 0) (close _V10_Dlookup__intrinsic_D7_k189) (bruijn ##.x.2.13 12 0) '##vcore.blob?))
+  // (if (bruijn ##.p.203 0 0) ((bruijn ##.k.195 9 0) (##intrinsic ##vcore.quotient)) ((bruijn ##.eqv?.4 11 0) (close _V10_Dlookup__intrinsic_D7_k189) (bruijn ##.x.2.13 8 0) '##vcore.remainder))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 13-1, 0), runtime,
-      _V40_V10vcore_Dprocedure_Q);
+    V_CALL(VGetArg(upenv, 9-1, 0), runtime,
+      _V40_V10vcore_Dquotient);
 } else {
-    V_CALL(VGetArg(upenv, 15-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 11-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k189, env)}),
-      VGetArg(upenv, 12-1, 0),
-      _V10vcore_Dblob_Q);
+      VGetArg(upenv, 8-1, 0),
+      _V10vcore_Dremainder);
 }
  }
 }
@@ -9408,16 +9740,16 @@ static void _V10_Dlookup__intrinsic_D7_k187(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.202 0 0) ((bruijn ##.k.191 12 0) (##intrinsic ##vcore.record?)) ((bruijn ##.eqv?.4 14 0) (close _V10_Dlookup__intrinsic_D7_k188) (bruijn ##.x.2.13 11 0) '##vcore.procedure?))
+  // (if (bruijn ##.p.202 0 0) ((bruijn ##.k.195 8 0) (##intrinsic ##vcore.cmp)) ((bruijn ##.eqv?.4 10 0) (close _V10_Dlookup__intrinsic_D7_k188) (bruijn ##.x.2.13 7 0) '##vcore.quotient))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 12-1, 0), runtime,
-      _V40_V10vcore_Drecord_Q);
+    V_CALL(VGetArg(upenv, 8-1, 0), runtime,
+      _V40_V10vcore_Dcmp);
 } else {
-    V_CALL(VGetArg(upenv, 14-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 10-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k188, env)}),
-      VGetArg(upenv, 11-1, 0),
-      _V10vcore_Dprocedure_Q);
+      VGetArg(upenv, 7-1, 0),
+      _V10vcore_Dquotient);
 }
  }
 }
@@ -9434,16 +9766,16 @@ static void _V10_Dlookup__intrinsic_D7_k186(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.201 0 0) ((bruijn ##.k.191 11 0) (##intrinsic ##vcore.vector?)) ((bruijn ##.eqv?.4 13 0) (close _V10_Dlookup__intrinsic_D7_k187) (bruijn ##.x.2.13 10 0) '##vcore.record?))
+  // (if (bruijn ##.p.201 0 0) ((bruijn ##.k.195 7 0) (##intrinsic ##vcore./)) ((bruijn ##.eqv?.4 9 0) (close _V10_Dlookup__intrinsic_D7_k187) (bruijn ##.x.2.13 6 0) '##vcore.cmp))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 11-1, 0), runtime,
-      _V40_V10vcore_Dvector_Q);
+    V_CALL(VGetArg(upenv, 7-1, 0), runtime,
+      _V40_V10vcore_D_W);
 } else {
-    V_CALL(VGetArg(upenv, 13-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 9-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k187, env)}),
-      VGetArg(upenv, 10-1, 0),
-      _V10vcore_Drecord_Q);
+      VGetArg(upenv, 6-1, 0),
+      _V10vcore_Dcmp);
 }
  }
 }
@@ -9460,16 +9792,16 @@ static void _V10_Dlookup__intrinsic_D7_k185(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.200 0 0) ((bruijn ##.k.191 10 0) (##intrinsic ##vcore.pair?)) ((bruijn ##.eqv?.4 12 0) (close _V10_Dlookup__intrinsic_D7_k186) (bruijn ##.x.2.13 9 0) '##vcore.vector?))
+  // (if (bruijn ##.p.200 0 0) ((bruijn ##.k.195 6 0) (##intrinsic ##vcore.*)) ((bruijn ##.eqv?.4 8 0) (close _V10_Dlookup__intrinsic_D7_k186) (bruijn ##.x.2.13 5 0) '##vcore./))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 10-1, 0), runtime,
-      _V40_V10vcore_Dpair_Q);
+    V_CALL(VGetArg(upenv, 6-1, 0), runtime,
+      _V40_V10vcore_D_S);
 } else {
-    V_CALL(VGetArg(upenv, 12-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 8-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k186, env)}),
-      VGetArg(upenv, 9-1, 0),
-      _V10vcore_Dvector_Q);
+      VGetArg(upenv, 5-1, 0),
+      _V10vcore_D_W);
 }
  }
 }
@@ -9486,16 +9818,16 @@ static void _V10_Dlookup__intrinsic_D7_k184(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.199 0 0) ((bruijn ##.k.191 9 0) (##intrinsic ##vcore.null?)) ((bruijn ##.eqv?.4 11 0) (close _V10_Dlookup__intrinsic_D7_k185) (bruijn ##.x.2.13 8 0) '##vcore.pair?))
+  // (if (bruijn ##.p.199 0 0) ((bruijn ##.k.195 5 0) (##intrinsic ##vcore.-)) ((bruijn ##.eqv?.4 7 0) (close _V10_Dlookup__intrinsic_D7_k185) (bruijn ##.x.2.13 4 0) '##vcore.*))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 9-1, 0), runtime,
-      _V40_V10vcore_Dnull_Q);
+    V_CALL(VGetArg(upenv, 5-1, 0), runtime,
+      _V40_V10vcore_D__);
 } else {
-    V_CALL(VGetArg(upenv, 11-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 7-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k185, env)}),
-      VGetArg(upenv, 8-1, 0),
-      _V10vcore_Dpair_Q);
+      upenv->up->up->up->vars[0],
+      _V10vcore_D_S);
 }
  }
 }
@@ -9512,16 +9844,16 @@ static void _V10_Dlookup__intrinsic_D7_k183(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.198 0 0) ((bruijn ##.k.191 8 0) (##intrinsic ##vcore.remainder)) ((bruijn ##.eqv?.4 10 0) (close _V10_Dlookup__intrinsic_D7_k184) (bruijn ##.x.2.13 7 0) '##vcore.null?))
+  // (if (bruijn ##.p.198 0 0) ((bruijn ##.k.195 4 0) (##intrinsic ##vcore.+)) ((bruijn ##.eqv?.4 6 0) (close _V10_Dlookup__intrinsic_D7_k184) (bruijn ##.x.2.13 3 0) '##vcore.-))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 8-1, 0), runtime,
-      _V40_V10vcore_Dremainder);
+    V_CALL(upenv->up->up->up->vars[0], runtime,
+      _V40_V10vcore_D_P);
 } else {
-    V_CALL(VGetArg(upenv, 10-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 6-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k184, env)}),
-      VGetArg(upenv, 7-1, 0),
-      _V10vcore_Dnull_Q);
+      upenv->up->up->vars[0],
+      _V10vcore_D__);
 }
  }
 }
@@ -9538,16 +9870,16 @@ static void _V10_Dlookup__intrinsic_D7_k182(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.197 0 0) ((bruijn ##.k.191 7 0) (##intrinsic ##vcore.quotient)) ((bruijn ##.eqv?.4 9 0) (close _V10_Dlookup__intrinsic_D7_k183) (bruijn ##.x.2.13 6 0) '##vcore.remainder))
+  // (if (bruijn ##.p.197 0 0) ((bruijn ##.k.195 3 0) (##intrinsic ##vcore.exact)) ((bruijn ##.eqv?.4 5 0) (close _V10_Dlookup__intrinsic_D7_k183) (bruijn ##.x.2.13 2 0) '##vcore.+))
 if(VDecodeBool(
 _var0)) {
-    V_CALL(VGetArg(upenv, 7-1, 0), runtime,
-      _V40_V10vcore_Dquotient);
+    V_CALL(upenv->up->up->vars[0], runtime,
+      _V40_V10vcore_Dexact);
 } else {
-    V_CALL(VGetArg(upenv, 9-1, 0), runtime,
+    V_CALL(VGetArg(upenv, 5-1, 0), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k183, env)}),
-      VGetArg(upenv, 6-1, 0),
-      _V10vcore_Dremainder);
+      upenv->up->vars[0],
+      _V10vcore_D_P);
 }
  }
 }
@@ -9564,120 +9896,16 @@ static void _V10_Dlookup__intrinsic_D7_k181(VRuntime * runtime, VEnv * upenv, in
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.196 0 0) ((bruijn ##.k.191 6 0) (##intrinsic ##vcore.cmp)) ((bruijn ##.eqv?.4 8 0) (close _V10_Dlookup__intrinsic_D7_k182) (bruijn ##.x.2.13 5 0) '##vcore.quotient))
-if(VDecodeBool(
-_var0)) {
-    V_CALL(VGetArg(upenv, 6-1, 0), runtime,
-      _V40_V10vcore_Dcmp);
-} else {
-    V_CALL(VGetArg(upenv, 8-1, 0), runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k182, env)}),
-      VGetArg(upenv, 5-1, 0),
-      _V10vcore_Dquotient);
-}
- }
-}
-static void _V10_Dlookup__intrinsic_D7_k180(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k180" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k180, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k180, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (if (bruijn ##.p.195 0 0) ((bruijn ##.k.191 5 0) (##intrinsic ##vcore./)) ((bruijn ##.eqv?.4 7 0) (close _V10_Dlookup__intrinsic_D7_k181) (bruijn ##.x.2.13 4 0) '##vcore.cmp))
-if(VDecodeBool(
-_var0)) {
-    V_CALL(VGetArg(upenv, 5-1, 0), runtime,
-      _V40_V10vcore_D_W);
-} else {
-    V_CALL(VGetArg(upenv, 7-1, 0), runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k181, env)}),
-      upenv->up->up->up->vars[0],
-      _V10vcore_Dcmp);
-}
- }
-}
-static void _V10_Dlookup__intrinsic_D7_k179(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k179" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k179, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k179, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (if (bruijn ##.p.194 0 0) ((bruijn ##.k.191 4 0) (##intrinsic ##vcore.*)) ((bruijn ##.eqv?.4 6 0) (close _V10_Dlookup__intrinsic_D7_k180) (bruijn ##.x.2.13 3 0) '##vcore./))
-if(VDecodeBool(
-_var0)) {
-    V_CALL(upenv->up->up->up->vars[0], runtime,
-      _V40_V10vcore_D_S);
-} else {
-    V_CALL(VGetArg(upenv, 6-1, 0), runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k180, env)}),
-      upenv->up->up->vars[0],
-      _V10vcore_D_W);
-}
- }
-}
-static void _V10_Dlookup__intrinsic_D7_k178(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k178" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k178, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k178, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (if (bruijn ##.p.193 0 0) ((bruijn ##.k.191 3 0) (##intrinsic ##vcore.-)) ((bruijn ##.eqv?.4 5 0) (close _V10_Dlookup__intrinsic_D7_k179) (bruijn ##.x.2.13 2 0) '##vcore.*))
-if(VDecodeBool(
-_var0)) {
-    V_CALL(upenv->up->up->vars[0], runtime,
-      _V40_V10vcore_D__);
-} else {
-    V_CALL(VGetArg(upenv, 5-1, 0), runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k179, env)}),
-      upenv->up->vars[0],
-      _V10vcore_D_S);
-}
- }
-}
-static void _V10_Dlookup__intrinsic_D7_k177(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V10_Dlookup__intrinsic_D7_k177" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D7_k177, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V10_Dlookup__intrinsic_D7_k177, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (if (bruijn ##.p.192 0 0) ((bruijn ##.k.191 2 0) (##intrinsic ##vcore.+)) ((bruijn ##.eqv?.4 4 0) (close _V10_Dlookup__intrinsic_D7_k178) (bruijn ##.x.2.13 1 0) '##vcore.-))
+  // (if (bruijn ##.p.196 0 0) ((bruijn ##.k.195 2 0) (##intrinsic ##vcore.inexact)) ((bruijn ##.eqv?.4 4 0) (close _V10_Dlookup__intrinsic_D7_k182) (bruijn ##.x.2.13 1 0) '##vcore.exact))
 if(VDecodeBool(
 _var0)) {
     V_CALL(upenv->up->vars[0], runtime,
-      _V40_V10vcore_D_P);
+      _V40_V10vcore_Dinexact);
 } else {
     V_CALL(upenv->up->up->up->vars[0], runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k178, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k182, env)}),
       upenv->vars[0],
-      _V10vcore_D__);
+      _V10vcore_Dexact);
 }
  }
 }
@@ -9689,11 +9917,11 @@ static void _V10_Dlookup__intrinsic_D7_lambda7(VRuntime * runtime, VEnv * upenv,
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((bruijn ##.eqv?.4 3 0) (close _V10_Dlookup__intrinsic_D7_k177) (bruijn ##.x.2.13 0 0) '##vcore.+)
+  // ((bruijn ##.eqv?.4 3 0) (close _V10_Dlookup__intrinsic_D7_k181) (bruijn ##.x.2.13 0 0) '##vcore.inexact)
     V_CALL(upenv->up->up->vars[0], runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k177, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D7_k181, env)}),
       _var0,
-      _V10vcore_D_P);
+      _V10vcore_Dinexact);
  }
 }
 static void _V10_Dlookup__intrinsic_D7_lambda6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -9787,10 +10015,10 @@ static void _V0vanity_V0intrinsics_V20_k1(VRuntime * runtime, VEnv * upenv, int 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.make-import (close _V0vanity_V0intrinsics_V20_k2) (##string ##.string.532) (bruijn ##.x.363 0 0))
+  // (##vcore.make-import (close _V0vanity_V0intrinsics_V20_k2) (##string ##.string.544) (bruijn ##.x.371 0 0))
     V_CALL_FUNC(VMakeImport2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0intrinsics_V20_k2, env)}),
-      VEncodePointer(&_V10_Dstring_D532.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D544.sym, VPOINTER_OTHER),
       _var0);
  }
 }
@@ -9807,10 +10035,10 @@ static void _V0vanity_V0intrinsics_V20_lambda1(VRuntime * runtime, VEnv * upenv,
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0intrinsics_V20_k1) (##string ##.string.533))
+  // (##vcore.load-library (close _V0vanity_V0intrinsics_V20_k1) (##string ##.string.545))
     V_CALL_FUNC(VLoadLibrary2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0intrinsics_V20_k1, env)}),
-      VEncodePointer(&_V10_Dstring_D533.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D545.sym, VPOINTER_OTHER));
  }
 }
 VFunc _V0vanity_V0intrinsics_V20 = (VFunc)_V0vanity_V0intrinsics_V20_lambda1;

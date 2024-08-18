@@ -94,58 +94,13 @@ void draw_rect(struct Window * win, float x, float y, float w, float h) {
 void present_window(struct Window * win) {
   SDL_RenderPresent(win->renderer);
 }
-
 #ifdef __linux__
 #include <time.h>
-struct FrameTimer {
-  struct timespec last;
-};
 #endif
 #ifdef _WIN64
-#include <profileapi.h>
 #include <synchapi.h>
-struct FrameTimer {
-  LARGE_INTEGER last;
-  double freq;
-};
 #endif
 
-struct FrameTimer * make_frametimer_impl() {
-  struct FrameTimer * ret = malloc(sizeof(struct FrameTimer));
-#ifdef __linux__
-  clock_gettime(CLOCK_MONOTONIC, &ret->last);
-#endif
-#ifdef _WIN64
-  LARGE_INTEGER freq;
-  QueryPerformanceFrequency(&freq);
-  QueryPerformanceCounter(&ret->last);
-  ret->freq = freq.QuadPart;
-#endif
-  return ret;
-}
-double frametimer_lap(struct FrameTimer * ft) {
-#ifdef __linux__
-  struct timespec begin = ft->last;
-  clock_gettime(CLOCK_MONOTONIC, &ft->last);
-  struct timespec end = ft->last;
-
-  long secs = end.tv_sec - begin.tv_sec;
-  long nsecs = end.tv_nsec - begin.tv_nsec;
-  return secs + nsecs / (1000.0 * 1000 * 1000);
-#endif
-#ifdef _WIN64
-  LARGE_INTEGER begin = ft->last;
-  QueryPerformanceCounter(&ft->last);
-  LARGE_INTEGER end = ft->last;
-
-  return (double)(end.QuadPart - begin.QuadPart) / ft->freq;
-
-
-#endif
-}
-void close_frametimer_impl(struct FrameTimer * ft) {
-  free(ft);
-}
 void floatsleep(double seconds) {
 #ifdef __linux__
   struct timespec req;

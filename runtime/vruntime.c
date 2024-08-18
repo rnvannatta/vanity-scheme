@@ -2477,6 +2477,8 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
 
   r->declare_list = VNULL;
   r->library_list = VNULL;
+
+  (void)VCurrentJiffyImpl(r);
 }
 
 static VClosure next_closure = { .base = { .tag = VCLOSURE }, .func = (VFunc)VNext2, .env = NULL };

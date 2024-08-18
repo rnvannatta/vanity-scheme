@@ -101,21 +101,31 @@
 ; to prevent leaks and accident double frees
 ; you should never expose the raw creation and finalization methods
 ; Here's a little util function to do it, not sure about putting it in base library
-(define (wrap-finalizer creator finalizer)
+#;(define (wrap-finalizer creator finalizer)
   (lambda args
     (let ((ret (apply creator args)))
       (##vcore.set-finalizer! ret finalizer)
       ret)))
-(define make_frametimer
+#;(define make_window
   (wrap-finalizer
-    make_frametimer_impl
-    (lambda (e) (displayln "closing timer") (close_frametimer_impl e))))
-(define close_frametimer ##vcore.finalize!)
-(define frametimer (make_frametimer))
+    make_window
+    (lambda (win) (close_window win) (displayln "Thank you for playing!"))))
 
 ; Eventually the boilerplate will be eliminated by adding annotations
 ; that function X is the finalizer of the return value from function Y
 ; and the interface generator will generate good double-free proof wrappers
+
+; Little object to get accurate time deltas. Uses CLOCK_MONOTONIC on linux and
+; QueryPerformanceCounter on windows. The jiffy epoch is set no earlier than
+; when the vanity runtime initializes.
+(define frametimer
+  (let ((per-second (jiffies-per-second))
+        (last-sample (current-jiffy)))
+    (lambda ()
+      (let* ((sample (current-jiffy))
+             (ret (- sample last-sample)))
+        (set! last-sample sample)
+        (/ ret per-second)))))
 
 ; And using the C objects
 (define (draw-paddle x y)
@@ -129,7 +139,7 @@
   (poll_events win)
   (set_draw_color win 1 1 1 1)
   (let ((paddle-y (clamp-paddle (get_mouse_y win)))
-        (time (frametimer_lap frametimer)))
+        (time (frametimer)))
     ; a simple framelimiter to avoid melting graphics cards if vsync doesn't work
     ; you need more complicated code than this for accurate framelimiting
     ; because floatsleep will overshoot
@@ -153,7 +163,7 @@
             (loop ball ball-vel nbounces)
             (printf "You lasted ~A bounces before dying\n" nbounces))))))
 
-(##vcore.finalize! frametimer)
+;(##vcore.finalize! frametimer)
 ; It's better performancewise to close your finalizers
 ; but whoops, we forgot to close the window
 ; luckily finalizers got our back
