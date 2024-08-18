@@ -5,7 +5,7 @@ include Makefile.sources
 CC = gcc
 # for when I fuck up the bootstrap
 #PATCH := LD_PRELOAD=~/vscheme/libpatch.so
-PATCH =
+PATCH :=
 
 windows_runtime windows_interpreter : CC = /usr/bin/x86_64-w64-mingw32-gcc
 windows_runtime windows_interpreter : CFLAGS += -Wa,--no-warn -lshlwapi

@@ -45,6 +45,9 @@
   (define (lookup-intrinsic-name sym)
     (case sym
          ; Math
+         ((##vcore.inexact) "VInexact")
+         ((##vcore.exact) "VExact")
+
          ((##vcore.+) "VAdd2")
          ((##vcore.-) "VSub2")
          ((##vcore.*) "VMul2")
@@ -265,10 +268,17 @@
          ((##vcore.make-temporary-file) "VMakeTemporaryFile2")
          ((##vcore.access) "VAccess")
 
+         ; Time
+         ((##vcore.current-jiffy) "VCurrentJiffy")
+         ((##vcore.jiffies-per-second) "VJiffiesPerSecond")
+
          (else #f)))
   (define (lookup-intrinsic sym)
     (case sym
          ; Math
+         ((##vcore.inexact) ##vcore.inexact)
+         ((##vcore.exact) ##vcore.exact)
+
          ((##vcore.+) ##vcore.+)
          ((##vcore.-) ##vcore.-)
          ((##vcore.*) ##vcore.*)
@@ -492,5 +502,9 @@
          ((##vcore.realpath) ##vcore.realpath)
          ((##vcore.make-temporary-file) ##vcore.make-temporary-file)
          ((##vcore.access) ##vcore.access)
+
+         ; Time
+         ((##vcore.current-jiffy) ##vcore.current-jiffy)
+         ((##vcore.jiffies-per-second) ##vcore.jiffies-per-second)
 
          (else #f))))

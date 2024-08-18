@@ -27,6 +27,9 @@
 
 #pragma once
 // math
+SYSV_CALL void VExact(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VInexact(V_CORE_ARGS, VWORD k, VWORD x);
+
 SYSV_CALL void VAdd2(V_CORE_ARGS, VWORD k, ...);
 SYSV_CALL void VSub2(V_CORE_ARGS, VWORD k, VWORD x, ...);
 SYSV_CALL void VMul2(V_CORE_ARGS, VWORD k, ...);
@@ -179,3 +182,7 @@ SYSV_CALL void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD step);
 SYSV_CALL void VRealpath(V_CORE_ARGS, VWORD k, VWORD relpath);
 SYSV_CALL void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD prefix, ...);
 SYSV_CALL void VAccess(V_CORE_ARGS, VWORD k, VWORD path, VWORD mode);
+
+// time
+SYSV_CALL void VCurrentJiffy(V_CORE_ARGS, VWORD k);
+SYSV_CALL void VJiffiesPerSecond(V_CORE_ARGS, VWORD k);

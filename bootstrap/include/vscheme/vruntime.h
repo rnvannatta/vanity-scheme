@@ -1081,3 +1081,6 @@ SYSV_CALL void VSetDeclare(V_CORE_ARGS, VWORD k, VWORD string, VWORD proc);
 SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst);
 SYSV_CALL void VAsync(V_CORE_ARGS, VWORD k, VWORD future_thunk);
 SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD future);
+
+// Misc
+uint64_t VCurrentJiffyImpl(VRuntime * runtime);

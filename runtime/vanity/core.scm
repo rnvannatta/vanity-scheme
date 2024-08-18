@@ -35,7 +35,7 @@
     ; math equality
     < = > <= >=
     ; math constructors
-    inexact exact->inexact
+    exact inexact->exact inexact exact->inexact
     ; math predicates
     number? complex? rational? positive? negative? zero?
     ; math functions
@@ -93,6 +93,9 @@
     make-temporary-file
     file-exists?
     exit
+    ; time
+    current-jiffy
+    jiffies-per-second
     ; fibers
     fiber-fork fiber-fork-list fiber-map async await
     ; not r5rs
@@ -258,7 +261,9 @@
             (else (loop (cdr xs))))))
 
   ; math constructors
-  (define (inexact x) (##vcore.+ x 0.0))
+  (define exact ##vcore.exact)
+  (define inexact->exact exact)
+  (define inexact ##vcore.inexact)
   (define exact->inexact inexact)
 
   ; math predicates
@@ -929,6 +934,9 @@
       ((path mode)
        (##vcore.access path mode))))
   (define exit ##vcore.exit)
+
+  (define current-jiffy ##vcore.current-jiffy)
+  (define jiffies-per-second ##vcore.jiffies-per-second)
 
   ; (: exact (procedure number? -> exact?))
   ; (: list (procedure X ... -> (listof? X)))

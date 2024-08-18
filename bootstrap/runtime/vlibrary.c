@@ -35,14 +35,39 @@
 #include <stdint.h>
 #include <limits.h>
 
+#ifdef __linux__
+#include <time.h>
+#endif
 #ifdef _WIN64
 #include "fileapi.h"
 #include "errhandlingapi.h"
+#include "profileapi.h"
 #endif
 
 // only used by call/cc. maybe we should move call/cc to runtime.c
 // it's a pretty goofy function that's kind of fundamental
 #include "vruntime_private.h"
+
+SYSV_CALL void VExact(V_CORE_ARGS, VWORD k, VWORD x) {
+  uint64_t type = VWordType(x);
+  if(type == VIMM_INT) {
+    V_CALL(k, runtime, x);
+  } else if(type == VIMM_NUMBER) {
+    V_CALL(k, runtime, VEncodeInt((int)VDecodeNumber(x)));
+  } else {
+    VErrorC(runtime, "exact: not a number: ~S", x);
+  }
+}
+SYSV_CALL void VInexact(V_CORE_ARGS, VWORD k, VWORD x) {
+  uint64_t type = VWordType(x);
+  if(type == VIMM_INT) {
+    V_CALL(k, runtime, VEncodeNumber((double)VDecodeInt(x)));
+  } else if(type == VIMM_NUMBER) {
+    V_CALL(k, runtime, x);
+  } else {
+    VErrorC(runtime, "exact: not a number: ~S", x);
+  }
+}
 
 SYSV_CALL __attribute__((used)) static void VAdd2CaseVarargs(V_CORE_ARGS, VWORD k, ...) {
     V_ARG_MIN3(runtime, "+", 1, argc);
@@ -1785,3 +1810,45 @@ IMPLEMENT_BUFFER(s32, S32, 4)
 
 IMPLEMENT_BUFFER(f32, F32, 4)
 IMPLEMENT_BUFFER(f64, F64, 8)
+
+static bool jiffy_epoch_set;
+static uint64_t jiffy_epoch;
+static uint64_t one_billion = 1000ull * 1000 * 1000;
+uint64_t VCurrentJiffyImpl(VRuntime * runtime) {
+  (void)one_billion;
+#ifdef __linux__
+  struct timespec nanotime;
+  // using clock monotonic to avoid skew? the adjustments are allegedly gentle
+  clock_gettime(CLOCK_MONOTONIC, &nanotime);
+  uint64_t ret = nanotime.tv_nsec + one_billion * nanotime.tv_sec;
+#elif defined(_WIN64)
+  LARGE_INTEGER ticks;
+  QueryPerformanceCounter(&ticks);
+  uint64_t ret = ticks.QuadPart;
+#else
+  uint64_t ret = 0;
+  VErrorC(runtime, "current-jiffy: unsupported platform");
+#endif
+  if(!jiffy_epoch_set) {
+    jiffy_epoch = ret;
+    jiffy_epoch_set = true;
+  }
+  return ret;
+}
+
+void VCurrentJiffy(V_CORE_ARGS, VWORD k) {
+  uint64_t ret = VCurrentJiffyImpl(runtime);
+  V_CALL(k, runtime, VEncodeNumber(ret - jiffy_epoch));
+}
+
+void VJiffiesPerSecond(V_CORE_ARGS, VWORD k) {
+#ifdef __linux__
+  V_CALL(k, runtime, VEncodeNumber(one_billion));
+#endif
+#ifdef _WIN64
+  LARGE_INTEGER ticks_per_second;
+  QueryPerformanceFrequency(&ticks_per_second);
+  V_CALL(k, runtime, VEncodeNumber(ticks_per_second.QuadPart));
+#endif
+  VErrorC(runtime, "jiffies-per-second: unsupported platform");
+}

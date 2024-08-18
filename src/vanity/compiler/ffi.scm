@@ -23,6 +23,14 @@
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
+; BUGS:
+;  typedef uint16_t mytype; => infinite loop
+;  int func(mytype arr[]) => parsed incorrectly as int func(unsigned short arr)
+; GRIVIANCES:
+;  typedef a b: a can't be a typedef
+;  enum { X = Y }: y cant be an integer constant expression
+;  int func(mytype arr[static X]): unsupported
+
 (define-library (vanity compiler ffi)
   (export mangle-foreign-function validate-foreign-function print-foreign-function resolve-foreign-import get-foreign-encoder get-foreign-decoder)
   (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler config))
