@@ -28,6 +28,7 @@
   (export
     ; predicates
     null? eof-object? boolean? pair? vector? record? procedure? symbol? string? exact? exact-integer? inexact? real? integer? char?
+    nullptr? foreign-pointer?
     ; equality
     eq? symbol=? eqv? equal?
     ; logic
@@ -96,6 +97,9 @@
     ; time
     current-jiffy
     jiffies-per-second
+    ; bit banging
+    bitwise-not bitwise-and bitwise-or bitwise-ior bitwise-xor bitwise-xnor bitwise-eqv
+    bitwise-nand bitwise-nor bitwise-andc1 bitwise-andc2 bitwise-orc1 bitwise-orc2 arithmetic-shift bit-count
     ; fibers
     fiber-fork fiber-fork-list fiber-map async await
     ; not r5rs
@@ -112,6 +116,8 @@
   (define symbol? ##vcore.symbol?)
   (define string? ##vcore.string?)
   (define char? ##vcore.char?)
+  (define nullptr? ##vcore.nullptr?)
+  (define foreign-pointer? ##vcore.foreign-pointer?)
   (define exact? ##vcore.int?)
   (define exact-integer? ##vcore.int?)
   (define integer? ##vcore.int?)
@@ -937,6 +943,64 @@
 
   (define current-jiffy ##vcore.current-jiffy)
   (define jiffies-per-second ##vcore.jiffies-per-second)
+
+  (define bitwise-and
+    (case-lambda
+      (() -1)
+      ((a) a)
+      ((a b) (##vcore.bitwise-and a b))
+      ((a b c) (##vcore.bitwise-and (##vcore.bitwise-and a b) c))
+      ((a b c d) (##vcore.bitwise-and (##vcore.bitwise-and (##vcore.bitwise-and a b) c) d))
+      ((a . bs)
+       (let loop ((ret a) (rem bs))
+        (if (null? bs) ret
+            (loop (##vcore.bitwise-and a (car bs)) (cdr bs)))))))
+  (define bitwise-ior
+    (case-lambda
+      (() 0)
+      ((a) a)
+      ((a b) (##vcore.bitwise-ior a b))
+      ((a b c) (##vcore.bitwise-ior (##vcore.bitwise-ior a b) c))
+      ((a b c d) (##vcore.bitwise-ior (##vcore.bitwise-ior (##vcore.bitwise-ior a b) c) d))
+      ((a . bs)
+       (let loop ((ret a) (rem bs))
+        (if (null? bs) ret
+            (loop (##vcore.bitwise-ior a (car bs)) (cdr bs)))))))
+  (define bitwise-xor
+    (case-lambda
+      (() 0)
+      ((a) a)
+      ((a b) (##vcore.bitwise-xor a b))
+      ((a b c) (##vcore.bitwise-xor (##vcore.bitwise-xor a b) c))
+      ((a b c d) (##vcore.bitwise-xor (##vcore.bitwise-xor (##vcore.bitwise-xor a b) c) d))
+      ((a . bs)
+       (let loop ((ret a) (rem bs))
+        (if (null? bs) ret
+            (loop (##vcore.bitwise-xor a (car bs)) (cdr bs)))))))
+  (define bitwise-xnor
+    (case-lambda
+      (() -1)
+      ((a) a)
+      ((a b) (##vcore.bitwise-xnor a b))
+      ((a b c) (##vcore.bitwise-xnor (##vcore.bitwise-xnor a b) c))
+      ((a b c d) (##vcore.bitwise-xnor (##vcore.bitwise-xnor (##vcore.bitwise-xnor a b) c) d))
+      ((a . bs)
+       (let loop ((ret a) (rem bs))
+        (if (null? bs) ret
+            (loop (##vcore.bitwise-xnor a (car bs)) (cdr bs)))))))
+  (define bitwise-eqv bitwise-xnor)
+  (define bitwise-or bitwise-ior)
+
+  (define bitwise-not ##vcore.bitwise-not)
+
+  (define bitwise-nand ##vcore.bitwise-nand)
+  (define bitwise-nor ##vcore.bitwise-nor)
+  (define bitwise-andc1 ##vcore.bitwise-andc1)
+  (define bitwise-andc2 ##vcore.bitwise-andc2)
+  (define bitwise-orc1 ##vcore.bitwise-orc1)
+  (define bitwise-orc2 ##vcore.bitwise-orc2)
+  (define arithmetic-shift ##vcore.arithmetic-shift)
+  (define bit-count ##vcore.bit-count)
 
   ; (: exact (procedure number? -> exact?))
   ; (: list (procedure X ... -> (listof? X)))

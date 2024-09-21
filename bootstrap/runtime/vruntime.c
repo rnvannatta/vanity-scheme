@@ -2218,7 +2218,10 @@ static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
     }
     case VPOINTER_FOREIGN:
     {
-      fprintf(f, "#foreign-pointer");
+      if(VIsEq(v, VNULLPTR))
+        fprintf(f, "#nullptr");
+      else
+        fprintf(f, "#foreign-pointer");
       break;
     }
     case VPOINTER_OTHER:
@@ -2478,7 +2481,7 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   r->declare_list = VNULL;
   r->library_list = VNULL;
 
-  (void)VCurrentJiffyImpl(r);
+  (void)VCurrentJiffyImpl();
 }
 
 static VClosure next_closure = { .base = { .tag = VCLOSURE }, .func = (VFunc)VNext2, .env = NULL };

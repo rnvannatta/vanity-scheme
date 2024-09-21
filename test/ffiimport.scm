@@ -2,6 +2,8 @@
 (##foreign.import "C" "ffiimport.h")
 
 (free (malloc 8))
+(free #nullptr)
+(free #nullptr)
 (exit (and (= A 0) (= B 1) (= C 2) (= D 255) (= E 256)
            (= (memcmp "hello" "hello" (string-length "hello")) 0)
            (< (memcmp "hella" "hello" (string-length "hello")) 0)

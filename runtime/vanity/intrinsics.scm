@@ -70,6 +70,8 @@
          ((##vcore.double?) "VDoubleP2")
          ((##vcore.char?) "VCharP2")
          ((##vcore.void?) "VVoidP2")
+         ((##vcore.nullptr?) "VNullptrP2")
+         ((##vcore.foreign-pointer?) "VForeignPointerP2")
 
          ; Equality
          ((##vcore.eq?) "VEq2")
@@ -272,6 +274,21 @@
          ((##vcore.current-jiffy) "VCurrentJiffy")
          ((##vcore.jiffies-per-second) "VJiffiesPerSecond")
 
+         ; Bit Banging
+         ((##vcore.bitwise-not) "VBitwiseNot")
+         ((##vcore.bitwise-ior) "VBitwiseIor")
+         ((##vcore.bitwise-xor) "VBitwiseXor")
+         ((##vcore.bitwise-and) "VBitwiseAnd")
+         ((##vcore.bitwise-xnor) "VBitwiseXnor")
+         ((##vcore.bitwise-nand) "VBitwiseNand")
+         ((##vcore.bitwise-nor) "VBitwiseNor")
+         ((##vcore.bitwise-andc1) "VBitwiseAndC1")
+         ((##vcore.bitwise-andc2) "VBitwiseAndC2")
+         ((##vcore.bitwise-orc1) "VBitwiseOrC1")
+         ((##vcore.bitwise-orc2) "VBitwiseOrC2")
+         ((##vcore.arithmetic-shift) "VArithmeticShift")
+         ((##vcore.bit-count) "VBitCount")
+
          (else #f)))
   (define (lookup-intrinsic sym)
     (case sym
@@ -301,6 +318,8 @@
          ((##vcore.double?) ##vcore.double?)
          ((##vcore.char?) ##vcore.char?)
          ((##vcore.void?) ##vcore.void?)
+         ((##vcore.nullptr?) ##vcore.nullptr?)
+         ((##vcore.foreign-pointer?) ##vcore.foreign-pointer?)
 
          ; Equality
          ((##vcore.eq?) ##vcore.eq?)
@@ -506,5 +525,20 @@
          ; Time
          ((##vcore.current-jiffy) ##vcore.current-jiffy)
          ((##vcore.jiffies-per-second) ##vcore.jiffies-per-second)
+
+         ; Bit Banging
+         ((##vcore.bitwise-not) ##vcore.bitwise-not)
+         ((##vcore.bitwise-ior) ##vcore.bitwise-ior)
+         ((##vcore.bitwise-xor) ##vcore.bitwise-xor)
+         ((##vcore.bitwise-and) ##vcore.bitwise-and)
+         ((##vcore.bitwise-xnor) ##vcore.bitwise-xnor)
+         ((##vcore.bitwise-nand) ##vcore.bitwise-nand)
+         ((##vcore.bitwise-nor) ##vcore.bitwise-nor)
+         ((##vcore.bitwise-andc1) ##vcore.bitwise-andc1)
+         ((##vcore.bitwise-andc2) ##vcore.bitwise-andc2)
+         ((##vcore.bitwise-orc1) ##vcore.bitwise-orc1)
+         ((##vcore.bitwise-orc2) ##vcore.bitwise-orc2)
+         ((##vcore.arithmetic-shift) ##vcore.arithmetic-shift)
+         ((##vcore.bit-count) ##vcore.bit-count)
 
          (else #f))))

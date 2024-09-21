@@ -293,16 +293,24 @@
     (if (> num-mains 1) (compiler-error "program has toplevel expressions in multiple files, and so it generated multiple mains"))
 
     ; 2. compile
-    (for-each
-      (lambda (scm-file cc-file obj-file)
-        (let ((path (realbasepath scm-file)))
-          (if (and (not header?) (not bytecode?) (not transpile?) (not expand?))
-              (begin
-                (if verbose? (displayln (sprintf "~A -I~A ~A -c -o ~A ~A" cc path cc-command obj-file cc-file)))
-                (system (sprintf "~A -I~A ~A -c -o ~A ~A" cc path cc-command obj-file cc-file))))))
-      scm-files
-      cc-files
-      cc-obj-files)
+    (let ()
+      (define cc-paths
+        ; skipping over the install root, don't want that
+        (let loop ((acc "") (paths (cdr paths)))
+          (if (null? paths)
+              acc
+              (loop (string-append acc (sprintf " -I~A" (car paths))) (cdr paths)))))
+      (for-each
+        (lambda (scm-file cc-file obj-file)
+          (let ((path (realbasepath scm-file)))
+            (define cc-cmd (sprintf "~A -I~A ~A ~A -c -o ~A ~A" cc path cc-paths cc-command obj-file cc-file))
+            (if (and (not header?) (not bytecode?) (not transpile?) (not expand?))
+                (begin
+                  (if verbose? (displayln cc-cmd))
+                  (system cc-cmd)))))
+        scm-files
+        cc-files
+        cc-obj-files))
 
     ; 3. link
     (if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not object?))

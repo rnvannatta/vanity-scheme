@@ -90,6 +90,7 @@
       (cond ((integer? x) (printf "VEncodeInt(~Al)" x))
             ((number? x) (printf "VEncodeNumber(~A)" x))
             ((##vcore.void? x) (printf "VVOID"))
+            ((##vcore.nullptr? x) (printf "VNULLPTR"))
             ((char? x) (printf "VEncodeChar('~A')" (escape-char x)))
             ((eq? x #t) (printf "VEncodeBool(true)"))
             ((eq? x #f) (printf "VEncodeBool(false)"))

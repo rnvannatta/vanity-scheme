@@ -50,6 +50,7 @@
     (cond ((or (integer? x)
                (number? x)
                (##vcore.void? x)
+               (##vcore.foreign-pointer? x)
                (char? x)
                (string? x)
                (eq? x #t)
