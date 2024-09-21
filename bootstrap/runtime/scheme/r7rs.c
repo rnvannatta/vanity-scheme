@@ -282,8 +282,6 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0null_Q = VEncodePointer(VLookupConstant("_V0null_Q", &_VW_V0null_Q), VPOINTER_OTHER);
 }
 static void _V0scheme_V0r7rs_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6, VWORD _var7, VWORD _var8, VWORD _var9, VWORD _var10, VWORD _var11, VWORD _var12, VWORD _var13, VWORD _var14, VWORD _var15, VWORD _var16, VWORD _var17, VWORD _var18, VWORD _var19, VWORD _var20, VWORD _var21, VWORD _var22, VWORD _var23, VWORD _var24, VWORD _var25, VWORD _var26, VWORD _var27, VWORD _var28, VWORD _var29, VWORD _var30, VWORD _var31, VWORD _var32, VWORD _var33, VWORD _var34, VWORD _var35, VWORD _var36, VWORD _var37, VWORD _var38, VWORD _var39, VWORD _var40, VWORD _var41, VWORD _var42, VWORD _var43, VWORD _var44, VWORD _var45, VWORD _var46, VWORD _var47, VWORD _var48, VWORD _var49, VWORD _var50, VWORD _var51, VWORD _var52, VWORD _var53, VWORD _var54, VWORD _var55, VWORD _var56, VWORD _var57, VWORD _var58, VWORD _var59, VWORD _var60, VWORD _var61, VWORD _var62, VWORD _var63, VWORD _var64, VWORD _var65, VWORD _var66, VWORD _var67, VWORD _var68, VWORD _var69, VWORD _var70, VWORD _var71, VWORD _var72, VWORD _var73, VWORD _var74, VWORD _var75, VWORD _var76, VWORD _var77, VWORD _var78, VWORD _var79, VWORD _var80, VWORD _var81, VWORD _var82, VWORD _var83, VWORD _var84, VWORD _var85, VWORD _var86, VWORD _var87, VWORD _var88, VWORD _var89, VWORD _var90, VWORD _var91, VWORD _var92, VWORD _var93, VWORD _var94, VWORD _var95, VWORD _var96, VWORD _var97, VWORD _var98, VWORD _var99, VWORD _var100, VWORD _var101, VWORD _var102, VWORD _var103, VWORD _var104, VWORD _var105, VWORD _var106, VWORD _var107, VWORD _var108, VWORD _var109, VWORD _var110, VWORD _var111, VWORD _var112, VWORD _var113, VWORD _var114, VWORD _var115, VWORD _var116, VWORD _var117, VWORD _var118, VWORD _var119, VWORD _var120, VWORD _var121, VWORD _var122, VWORD _var123, VWORD _var124) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_lambda2" };
- VRecordCall2(runtime, &dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V0scheme_V0r7rs_V20_lambda2, runtime, upenv, 125, argc, _var0, _var1, _var2, _var3, _var4, _var5, _var6, _var7, _var8, _var9, _var10, _var11, _var12, _var13, _var14, _var15, _var16, _var17, _var18, _var19, _var20, _var21, _var22, _var23, _var24, _var25, _var26, _var27, _var28, _var29, _var30, _var31, _var32, _var33, _var34, _var35, _var36, _var37, _var38, _var39, _var40, _var41, _var42, _var43, _var44, _var45, _var46, _var47, _var48, _var49, _var50, _var51, _var52, _var53, _var54, _var55, _var56, _var57, _var58, _var59, _var60, _var61, _var62, _var63, _var64, _var65, _var66, _var67, _var68, _var69, _var70, _var71, _var72, _var73, _var74, _var75, _var76, _var77, _var78, _var79, _var80, _var81, _var82, _var83, _var84, _var85, _var86, _var87, _var88, _var89, _var90, _var91, _var92, _var93, _var94, _var95, _var96, _var97, _var98, _var99, _var100, _var101, _var102, _var103, _var104, _var105, _var106, _var107, _var108, _var109, _var110, _var111, _var112, _var113, _var114, _var115, _var116, _var117, _var118, _var119, _var120, _var121, _var122, _var123, _var124) {
   // ((bruijn ##.k.127 128 0) (##inline ##vcore.cons (##inline ##vcore.cons 'null? (bruijn ##.null?.125 0 124)) (##inline ##vcore.cons (##inline ##vcore.cons 'eof-object? (bruijn ##.eof-object?.1 0 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'boolean? (bruijn ##.boolean?.124 0 123)) (##inline ##vcore.cons (##inline ##vcore.cons 'pair? (bruijn ##.pair?.2 0 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector? (bruijn ##.vector?.123 0 122)) (##inline ##vcore.cons (##inline ##vcore.cons 'procedure? (bruijn ##.procedure?.3 0 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol? (bruijn ##.symbol?.122 0 121)) (##inline ##vcore.cons (##inline ##vcore.cons 'string? (bruijn ##.string?.4 0 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact? (bruijn ##.exact?.121 0 120)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact? (bruijn ##.inexact?.5 0 4)) (##inline ##vcore.cons (##inline ##vcore.cons 'real? (bruijn ##.real?.120 0 119)) (##inline ##vcore.cons (##inline ##vcore.cons 'integer? (bruijn ##.integer?.6 0 5)) (##inline ##vcore.cons (##inline ##vcore.cons 'char? (bruijn ##.char?.119 0 118)) (##inline ##vcore.cons (##inline ##vcore.cons 'eq? (bruijn ##.eq?.7 0 6)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol=? (bruijn ##.symbol=?.118 0 117)) (##inline ##vcore.cons (##inline ##vcore.cons 'eqv? (bruijn ##.eqv?.8 0 7)) (##inline ##vcore.cons (##inline ##vcore.cons 'equal? (bruijn ##.equal?.117 0 116)) (##inline ##vcore.cons (##inline ##vcore.cons 'not (bruijn ##.not.9 0 8)) (##inline ##vcore.cons (##inline ##vcore.cons '< (bruijn ##.<.116 0 115)) (##inline ##vcore.cons (##inline ##vcore.cons '= (bruijn ##.=.10 0 9)) (##inline ##vcore.cons (##inline ##vcore.cons '> (bruijn ##.>.115 0 114)) (##inline ##vcore.cons (##inline ##vcore.cons '<= (bruijn ##.<=.11 0 10)) (##inline ##vcore.cons (##inline ##vcore.cons '>= (bruijn ##.>=.114 0 113)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact (bruijn ##.inexact.12 0 11)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact->inexact (bruijn ##.exact->inexact.113 0 112)) (##inline ##vcore.cons (##inline ##vcore.cons 'number? (bruijn ##.number?.13 0 12)) (##inline ##vcore.cons (##inline ##vcore.cons 'complex? (bruijn ##.complex?.112 0 111)) (##inline ##vcore.cons (##inline ##vcore.cons '+ (bruijn ##.+.14 0 13)) (##inline ##vcore.cons (##inline ##vcore.cons '- (bruijn ##.-.111 0 110)) (##inline ##vcore.cons (##inline ##vcore.cons '* (bruijn ##.*.15 0 14)) (##inline ##vcore.cons (##inline ##vcore.cons '/ (bruijn ##./.110 0 109)) (##inline ##vcore.cons (##inline ##vcore.cons 'quotient (bruijn ##.quotient.16 0 15)) (##inline ##vcore.cons (##inline ##vcore.cons 'remainder (bruijn ##.remainder.109 0 108)) (##inline ##vcore.cons (##inline ##vcore.cons 'max (bruijn ##.max.17 0 16)) (##inline ##vcore.cons (##inline ##vcore.cons 'min (bruijn ##.min.108 0 107)) (##inline ##vcore.cons (##inline ##vcore.cons 'cons (bruijn ##.cons.18 0 17)) (##inline ##vcore.cons (##inline ##vcore.cons 'car (bruijn ##.car.107 0 106)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdr (bruijn ##.cdr.19 0 18)) (##inline ##vcore.cons (##inline ##vcore.cons 'set-car! (bruijn ##.set-car!.106 0 105)) (##inline ##vcore.cons (##inline ##vcore.cons 'set-cdr! (bruijn ##.set-cdr!.20 0 19)) (##inline ##vcore.cons (##inline ##vcore.cons 'caar (bruijn ##.caar.105 0 104)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadr (bruijn ##.cadr.21 0 20)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdar (bruijn ##.cdar.104 0 103)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddr (bruijn ##.cddr.22 0 21)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaar (bruijn ##.caaar.103 0 102)) (##inline ##vcore.cons (##inline ##vcore.cons 'caadr (bruijn ##.caadr.23 0 22)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadar (bruijn ##.cadar.102 0 101)) (##inline ##vcore.cons (##inline ##vcore.cons 'caddr (bruijn ##.caddr.24 0 23)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaar (bruijn ##.cdaar.101 0 100)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdadr (bruijn ##.cdadr.25 0 24)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddar (bruijn ##.cddar.100 0 99)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdddr (bruijn ##.cdddr.26 0 25)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaaar (bruijn ##.caaaar.99 0 98)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaadr (bruijn ##.caaadr.27 0 26)) (##inline ##vcore.cons (##inline ##vcore.cons 'caadar (bruijn ##.caadar.98 0 97)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaddr (bruijn ##.caaddr.28 0 27)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadaar (bruijn ##.cadaar.97 0 96)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadadr (bruijn ##.cadadr.29 0 28)) (##inline ##vcore.cons (##inline ##vcore.cons 'caddar (bruijn ##.caddar.96 0 95)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadddr (bruijn ##.cadddr.30 0 29)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaaar (bruijn ##.cdaaar.95 0 94)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaadr (bruijn ##.cdaadr.31 0 30)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdadar (bruijn ##.cdadar.94 0 93)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaddr (bruijn ##.cdaddr.32 0 31)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddaar (bruijn ##.cddaar.93 0 92)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddadr (bruijn ##.cddadr.33 0 32)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdddar (bruijn ##.cdddar.92 0 91)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddddr (bruijn ##.cddddr.34 0 33)) (##inline ##vcore.cons (##inline ##vcore.cons 'list (bruijn ##.list.91 0 90)) (##inline ##vcore.cons (##inline ##vcore.cons 'length (bruijn ##.length.35 0 34)) (##inline ##vcore.cons (##inline ##vcore.cons 'list-ref (bruijn ##.list-ref.90 0 89)) (##inline ##vcore.cons (##inline ##vcore.cons 'map (bruijn ##.map.36 0 35)) (##inline ##vcore.cons (##inline ##vcore.cons 'for-each (bruijn ##.for-each.89 0 88)) (##inline ##vcore.cons (##inline ##vcore.cons 'append (bruijn ##.append.37 0 36)) (##inline ##vcore.cons (##inline ##vcore.cons 'reverse (bruijn ##.reverse.88 0 87)) (##inline ##vcore.cons (##inline ##vcore.cons 'memq (bruijn ##.memq.38 0 37)) (##inline ##vcore.cons (##inline ##vcore.cons 'memv (bruijn ##.memv.87 0 86)) (##inline ##vcore.cons (##inline ##vcore.cons 'member (bruijn ##.member.39 0 38)) (##inline ##vcore.cons (##inline ##vcore.cons 'assq (bruijn ##.assq.86 0 85)) (##inline ##vcore.cons (##inline ##vcore.cons 'assv (bruijn ##.assv.40 0 39)) (##inline ##vcore.cons (##inline ##vcore.cons 'assoc (bruijn ##.assoc.85 0 84)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->list (bruijn ##.string->list.79 0 78)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->string (bruijn ##.list->string.84 0 83)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-string (bruijn ##.make-string.41 0 40)) (##inline ##vcore.cons (##inline ##vcore.cons 'substring (bruijn ##.substring.83 0 82)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-copy (bruijn ##.string-copy.42 0 41)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-copy! (bruijn ##.string-copy!.82 0 81)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-ref (bruijn ##.string-ref.43 0 42)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-set! (bruijn ##.string-set!.81 0 80)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-length (bruijn ##.string-length.44 0 43)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->symbol (bruijn ##.string->symbol.80 0 79)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->number (bruijn ##.string->number.45 0 44)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->list (bruijn ##.string->list.79 0 78)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-append (bruijn ##.string-append.46 0 45)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol->string (bruijn ##.symbol->string.78 0 77)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->vector (bruijn ##.list->vector.47 0 46)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector (bruijn ##.vector.77 0 76)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-ref (bruijn ##.vector-ref.48 0 47)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-set! (bruijn ##.vector-set!.76 0 75)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-length (bruijn ##.vector-length.49 0 48)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-for-each (bruijn ##.vector-for-each.75 0 74)) (##inline ##vcore.cons (##inline ##vcore.cons 'char->integer (bruijn ##.char->integer.50 0 49)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-output-port (bruijn ##.current-output-port.74 0 73)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-error-port (bruijn ##.current-error-port.51 0 50)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-input-port (bruijn ##.current-input-port.73 0 72)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-input-file (bruijn ##.open-input-file.52 0 51)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-file (bruijn ##.open-output-file.72 0 71)) (##inline ##vcore.cons (##inline ##vcore.cons 'close-port (bruijn ##.close-port.53 0 52)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-string (bruijn ##.open-output-string.71 0 70)) (##inline ##vcore.cons (##inline ##vcore.cons 'get-output-string (bruijn ##.get-output-string.54 0 53)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-output-to-file (bruijn ##.with-output-to-file.70 0 69)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-input-from-file (bruijn ##.with-input-from-file.55 0 54)) (##inline ##vcore.cons (##inline ##vcore.cons 'read-char (bruijn ##.read-char.69 0 68)) (##inline ##vcore.cons (##inline ##vcore.cons 'read-line (bruijn ##.read-line.56 0 55)) (##inline ##vcore.cons (##inline ##vcore.cons 'read (bruijn ##.read.68 0 67)) (##inline ##vcore.cons (##inline ##vcore.cons 'newline (bruijn ##.newline.57 0 56)) (##inline ##vcore.cons (##inline ##vcore.cons 'display (bruijn ##.display.67 0 66)) (##inline ##vcore.cons (##inline ##vcore.cons 'write (bruijn ##.write.58 0 57)) (##inline ##vcore.cons (##inline ##vcore.cons 'call/cc (bruijn ##.call/cc.66 0 65)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-current-continuation (bruijn ##.call-with-current-continuation.59 0 58)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-values (bruijn ##.call-with-values.65 0 64)) (##inline ##vcore.cons (##inline ##vcore.cons 'apply (bruijn ##.apply.60 0 59)) (##inline ##vcore.cons (##inline ##vcore.cons 'values (bruijn ##.values.64 0 63)) (##inline ##vcore.cons (##inline ##vcore.cons 'command-line (bruijn ##.command-line.61 0 60)) (##inline ##vcore.cons (##inline ##vcore.cons 'exit (bruijn ##.exit.63 0 62)) (##inline ##vcore.cons (##inline ##vcore.cons 'error (bruijn ##.error.62 0 61)) '())))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
     V_CALL(VGetArg(upenv, 128-1, 0), runtime,
@@ -795,8 +793,6 @@ static void _V0scheme_V0r7rs_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
  }
 }
 static void _V0scheme_V0r7rs_V20_k127(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k127" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k127, got ~D~N"
   "-- expected 1~N"
@@ -937,8 +933,6 @@ static void _V0scheme_V0r7rs_V20_k127(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k126(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k126" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k126, got ~D~N"
   "-- expected 1~N"
@@ -956,8 +950,6 @@ static void _V0scheme_V0r7rs_V20_k126(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k125(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k125" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k125, got ~D~N"
   "-- expected 1~N"
@@ -975,8 +967,6 @@ static void _V0scheme_V0r7rs_V20_k125(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k124(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k124" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k124, got ~D~N"
   "-- expected 1~N"
@@ -994,8 +984,6 @@ static void _V0scheme_V0r7rs_V20_k124(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k123(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k123" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k123, got ~D~N"
   "-- expected 1~N"
@@ -1013,8 +1001,6 @@ static void _V0scheme_V0r7rs_V20_k123(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k122(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k122" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k122, got ~D~N"
   "-- expected 1~N"
@@ -1032,8 +1018,6 @@ static void _V0scheme_V0r7rs_V20_k122(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k121(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k121" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k121, got ~D~N"
   "-- expected 1~N"
@@ -1051,8 +1035,6 @@ static void _V0scheme_V0r7rs_V20_k121(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k120(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k120" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k120, got ~D~N"
   "-- expected 1~N"
@@ -1070,8 +1052,6 @@ static void _V0scheme_V0r7rs_V20_k120(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k119(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k119" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k119, got ~D~N"
   "-- expected 1~N"
@@ -1089,8 +1069,6 @@ static void _V0scheme_V0r7rs_V20_k119(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k118(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k118" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k118, got ~D~N"
   "-- expected 1~N"
@@ -1108,8 +1086,6 @@ static void _V0scheme_V0r7rs_V20_k118(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k117(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k117" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k117, got ~D~N"
   "-- expected 1~N"
@@ -1127,8 +1103,6 @@ static void _V0scheme_V0r7rs_V20_k117(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k116(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k116" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k116, got ~D~N"
   "-- expected 1~N"
@@ -1146,8 +1120,6 @@ static void _V0scheme_V0r7rs_V20_k116(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k115(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k115" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k115, got ~D~N"
   "-- expected 1~N"
@@ -1165,8 +1137,6 @@ static void _V0scheme_V0r7rs_V20_k115(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k114(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k114" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k114, got ~D~N"
   "-- expected 1~N"
@@ -1184,8 +1154,6 @@ static void _V0scheme_V0r7rs_V20_k114(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k113(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k113" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k113, got ~D~N"
   "-- expected 1~N"
@@ -1203,8 +1171,6 @@ static void _V0scheme_V0r7rs_V20_k113(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k112(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k112" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k112, got ~D~N"
   "-- expected 1~N"
@@ -1222,8 +1188,6 @@ static void _V0scheme_V0r7rs_V20_k112(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k111(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k111" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k111, got ~D~N"
   "-- expected 1~N"
@@ -1241,8 +1205,6 @@ static void _V0scheme_V0r7rs_V20_k111(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k110(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k110" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k110, got ~D~N"
   "-- expected 1~N"
@@ -1260,8 +1222,6 @@ static void _V0scheme_V0r7rs_V20_k110(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k109(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k109" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k109, got ~D~N"
   "-- expected 1~N"
@@ -1279,8 +1239,6 @@ static void _V0scheme_V0r7rs_V20_k109(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k108(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k108" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k108, got ~D~N"
   "-- expected 1~N"
@@ -1298,8 +1256,6 @@ static void _V0scheme_V0r7rs_V20_k108(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k107(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k107" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k107, got ~D~N"
   "-- expected 1~N"
@@ -1317,8 +1273,6 @@ static void _V0scheme_V0r7rs_V20_k107(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k106(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k106" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k106, got ~D~N"
   "-- expected 1~N"
@@ -1336,8 +1290,6 @@ static void _V0scheme_V0r7rs_V20_k106(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k105(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k105" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k105, got ~D~N"
   "-- expected 1~N"
@@ -1355,8 +1307,6 @@ static void _V0scheme_V0r7rs_V20_k105(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k104(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k104" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k104, got ~D~N"
   "-- expected 1~N"
@@ -1374,8 +1324,6 @@ static void _V0scheme_V0r7rs_V20_k104(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k103(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k103" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k103, got ~D~N"
   "-- expected 1~N"
@@ -1393,8 +1341,6 @@ static void _V0scheme_V0r7rs_V20_k103(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k102(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k102" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k102, got ~D~N"
   "-- expected 1~N"
@@ -1412,8 +1358,6 @@ static void _V0scheme_V0r7rs_V20_k102(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k101(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k101" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k101, got ~D~N"
   "-- expected 1~N"
@@ -1431,8 +1375,6 @@ static void _V0scheme_V0r7rs_V20_k101(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k100(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k100" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k100, got ~D~N"
   "-- expected 1~N"
@@ -1450,8 +1392,6 @@ static void _V0scheme_V0r7rs_V20_k100(VRuntime * runtime, VEnv * upenv, int argc
  }
 }
 static void _V0scheme_V0r7rs_V20_k99(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k99" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k99, got ~D~N"
   "-- expected 1~N"
@@ -1469,8 +1409,6 @@ static void _V0scheme_V0r7rs_V20_k99(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k98(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k98" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k98, got ~D~N"
   "-- expected 1~N"
@@ -1488,8 +1426,6 @@ static void _V0scheme_V0r7rs_V20_k98(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k97(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k97" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k97, got ~D~N"
   "-- expected 1~N"
@@ -1507,8 +1443,6 @@ static void _V0scheme_V0r7rs_V20_k97(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k96(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k96" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k96, got ~D~N"
   "-- expected 1~N"
@@ -1526,8 +1460,6 @@ static void _V0scheme_V0r7rs_V20_k96(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k95(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k95" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k95, got ~D~N"
   "-- expected 1~N"
@@ -1545,8 +1477,6 @@ static void _V0scheme_V0r7rs_V20_k95(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k94(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k94" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k94, got ~D~N"
   "-- expected 1~N"
@@ -1564,8 +1494,6 @@ static void _V0scheme_V0r7rs_V20_k94(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k93(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k93" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k93, got ~D~N"
   "-- expected 1~N"
@@ -1583,8 +1511,6 @@ static void _V0scheme_V0r7rs_V20_k93(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k92(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k92" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k92, got ~D~N"
   "-- expected 1~N"
@@ -1602,8 +1528,6 @@ static void _V0scheme_V0r7rs_V20_k92(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k91(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k91" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k91, got ~D~N"
   "-- expected 1~N"
@@ -1621,8 +1545,6 @@ static void _V0scheme_V0r7rs_V20_k91(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k90(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k90" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k90, got ~D~N"
   "-- expected 1~N"
@@ -1640,8 +1562,6 @@ static void _V0scheme_V0r7rs_V20_k90(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k89(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k89" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k89, got ~D~N"
   "-- expected 1~N"
@@ -1659,8 +1579,6 @@ static void _V0scheme_V0r7rs_V20_k89(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k88(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k88" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k88, got ~D~N"
   "-- expected 1~N"
@@ -1678,8 +1596,6 @@ static void _V0scheme_V0r7rs_V20_k88(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k87(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k87" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k87, got ~D~N"
   "-- expected 1~N"
@@ -1697,8 +1613,6 @@ static void _V0scheme_V0r7rs_V20_k87(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k86(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k86" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k86, got ~D~N"
   "-- expected 1~N"
@@ -1716,8 +1630,6 @@ static void _V0scheme_V0r7rs_V20_k86(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k85(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k85" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k85, got ~D~N"
   "-- expected 1~N"
@@ -1735,8 +1647,6 @@ static void _V0scheme_V0r7rs_V20_k85(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k84(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k84" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k84, got ~D~N"
   "-- expected 1~N"
@@ -1754,8 +1664,6 @@ static void _V0scheme_V0r7rs_V20_k84(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k83(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k83" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k83, got ~D~N"
   "-- expected 1~N"
@@ -1773,8 +1681,6 @@ static void _V0scheme_V0r7rs_V20_k83(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k82(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k82" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k82, got ~D~N"
   "-- expected 1~N"
@@ -1792,8 +1698,6 @@ static void _V0scheme_V0r7rs_V20_k82(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k81(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k81" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k81, got ~D~N"
   "-- expected 1~N"
@@ -1811,8 +1715,6 @@ static void _V0scheme_V0r7rs_V20_k81(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k80(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k80" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k80, got ~D~N"
   "-- expected 1~N"
@@ -1830,8 +1732,6 @@ static void _V0scheme_V0r7rs_V20_k80(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k79(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k79" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k79, got ~D~N"
   "-- expected 1~N"
@@ -1849,8 +1749,6 @@ static void _V0scheme_V0r7rs_V20_k79(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k78(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k78" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k78, got ~D~N"
   "-- expected 1~N"
@@ -1868,8 +1766,6 @@ static void _V0scheme_V0r7rs_V20_k78(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k77(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k77" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k77, got ~D~N"
   "-- expected 1~N"
@@ -1887,8 +1783,6 @@ static void _V0scheme_V0r7rs_V20_k77(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k76(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k76" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k76, got ~D~N"
   "-- expected 1~N"
@@ -1906,8 +1800,6 @@ static void _V0scheme_V0r7rs_V20_k76(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k75(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k75" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k75, got ~D~N"
   "-- expected 1~N"
@@ -1925,8 +1817,6 @@ static void _V0scheme_V0r7rs_V20_k75(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k74(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k74" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k74, got ~D~N"
   "-- expected 1~N"
@@ -1944,8 +1834,6 @@ static void _V0scheme_V0r7rs_V20_k74(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k73(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k73" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k73, got ~D~N"
   "-- expected 1~N"
@@ -1963,8 +1851,6 @@ static void _V0scheme_V0r7rs_V20_k73(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k72(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k72" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k72, got ~D~N"
   "-- expected 1~N"
@@ -1982,8 +1868,6 @@ static void _V0scheme_V0r7rs_V20_k72(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k71(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k71" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k71, got ~D~N"
   "-- expected 1~N"
@@ -2001,8 +1885,6 @@ static void _V0scheme_V0r7rs_V20_k71(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k70(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k70" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k70, got ~D~N"
   "-- expected 1~N"
@@ -2020,8 +1902,6 @@ static void _V0scheme_V0r7rs_V20_k70(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k69(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k69" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k69, got ~D~N"
   "-- expected 1~N"
@@ -2039,8 +1919,6 @@ static void _V0scheme_V0r7rs_V20_k69(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k68(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k68" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k68, got ~D~N"
   "-- expected 1~N"
@@ -2058,8 +1936,6 @@ static void _V0scheme_V0r7rs_V20_k68(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k67(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k67" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k67, got ~D~N"
   "-- expected 1~N"
@@ -2077,8 +1953,6 @@ static void _V0scheme_V0r7rs_V20_k67(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k66(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k66" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k66, got ~D~N"
   "-- expected 1~N"
@@ -2096,8 +1970,6 @@ static void _V0scheme_V0r7rs_V20_k66(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k65(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k65" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k65, got ~D~N"
   "-- expected 1~N"
@@ -2115,8 +1987,6 @@ static void _V0scheme_V0r7rs_V20_k65(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k64(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k64" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k64, got ~D~N"
   "-- expected 1~N"
@@ -2134,8 +2004,6 @@ static void _V0scheme_V0r7rs_V20_k64(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k63(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k63" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k63, got ~D~N"
   "-- expected 1~N"
@@ -2153,8 +2021,6 @@ static void _V0scheme_V0r7rs_V20_k63(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k62(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k62" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k62, got ~D~N"
   "-- expected 1~N"
@@ -2172,8 +2038,6 @@ static void _V0scheme_V0r7rs_V20_k62(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k61(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k61" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k61, got ~D~N"
   "-- expected 1~N"
@@ -2191,8 +2055,6 @@ static void _V0scheme_V0r7rs_V20_k61(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k60(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k60" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k60, got ~D~N"
   "-- expected 1~N"
@@ -2210,8 +2072,6 @@ static void _V0scheme_V0r7rs_V20_k60(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k59(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k59" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k59, got ~D~N"
   "-- expected 1~N"
@@ -2229,8 +2089,6 @@ static void _V0scheme_V0r7rs_V20_k59(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k58(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k58" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k58, got ~D~N"
   "-- expected 1~N"
@@ -2248,8 +2106,6 @@ static void _V0scheme_V0r7rs_V20_k58(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k57(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k57" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k57, got ~D~N"
   "-- expected 1~N"
@@ -2267,8 +2123,6 @@ static void _V0scheme_V0r7rs_V20_k57(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k56(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k56" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k56, got ~D~N"
   "-- expected 1~N"
@@ -2286,8 +2140,6 @@ static void _V0scheme_V0r7rs_V20_k56(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k55(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k55" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k55, got ~D~N"
   "-- expected 1~N"
@@ -2305,8 +2157,6 @@ static void _V0scheme_V0r7rs_V20_k55(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k54(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k54" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k54, got ~D~N"
   "-- expected 1~N"
@@ -2324,8 +2174,6 @@ static void _V0scheme_V0r7rs_V20_k54(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k53(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k53" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k53, got ~D~N"
   "-- expected 1~N"
@@ -2343,8 +2191,6 @@ static void _V0scheme_V0r7rs_V20_k53(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k52(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k52" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k52, got ~D~N"
   "-- expected 1~N"
@@ -2362,8 +2208,6 @@ static void _V0scheme_V0r7rs_V20_k52(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k51(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k51" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k51, got ~D~N"
   "-- expected 1~N"
@@ -2381,8 +2225,6 @@ static void _V0scheme_V0r7rs_V20_k51(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k50(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k50" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k50, got ~D~N"
   "-- expected 1~N"
@@ -2400,8 +2242,6 @@ static void _V0scheme_V0r7rs_V20_k50(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k49(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k49" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k49, got ~D~N"
   "-- expected 1~N"
@@ -2419,8 +2259,6 @@ static void _V0scheme_V0r7rs_V20_k49(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k48(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k48" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k48, got ~D~N"
   "-- expected 1~N"
@@ -2438,8 +2276,6 @@ static void _V0scheme_V0r7rs_V20_k48(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k47(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k47" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k47, got ~D~N"
   "-- expected 1~N"
@@ -2457,8 +2293,6 @@ static void _V0scheme_V0r7rs_V20_k47(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k46(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k46" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k46, got ~D~N"
   "-- expected 1~N"
@@ -2476,8 +2310,6 @@ static void _V0scheme_V0r7rs_V20_k46(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k45(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k45" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k45, got ~D~N"
   "-- expected 1~N"
@@ -2495,8 +2327,6 @@ static void _V0scheme_V0r7rs_V20_k45(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k44(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k44" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k44, got ~D~N"
   "-- expected 1~N"
@@ -2514,8 +2344,6 @@ static void _V0scheme_V0r7rs_V20_k44(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k43(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k43" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k43, got ~D~N"
   "-- expected 1~N"
@@ -2533,8 +2361,6 @@ static void _V0scheme_V0r7rs_V20_k43(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k42(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k42" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k42, got ~D~N"
   "-- expected 1~N"
@@ -2552,8 +2378,6 @@ static void _V0scheme_V0r7rs_V20_k42(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k41(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k41" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k41, got ~D~N"
   "-- expected 1~N"
@@ -2571,8 +2395,6 @@ static void _V0scheme_V0r7rs_V20_k41(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k40(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k40" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k40, got ~D~N"
   "-- expected 1~N"
@@ -2590,8 +2412,6 @@ static void _V0scheme_V0r7rs_V20_k40(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k39(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k39" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k39, got ~D~N"
   "-- expected 1~N"
@@ -2609,8 +2429,6 @@ static void _V0scheme_V0r7rs_V20_k39(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k38(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k38" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k38, got ~D~N"
   "-- expected 1~N"
@@ -2628,8 +2446,6 @@ static void _V0scheme_V0r7rs_V20_k38(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k37(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k37" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k37, got ~D~N"
   "-- expected 1~N"
@@ -2647,8 +2463,6 @@ static void _V0scheme_V0r7rs_V20_k37(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k36(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k36" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k36, got ~D~N"
   "-- expected 1~N"
@@ -2666,8 +2480,6 @@ static void _V0scheme_V0r7rs_V20_k36(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k35(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k35" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k35, got ~D~N"
   "-- expected 1~N"
@@ -2685,8 +2497,6 @@ static void _V0scheme_V0r7rs_V20_k35(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k34(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k34" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k34, got ~D~N"
   "-- expected 1~N"
@@ -2704,8 +2514,6 @@ static void _V0scheme_V0r7rs_V20_k34(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k33(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k33" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k33, got ~D~N"
   "-- expected 1~N"
@@ -2723,8 +2531,6 @@ static void _V0scheme_V0r7rs_V20_k33(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k32(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k32" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k32, got ~D~N"
   "-- expected 1~N"
@@ -2742,8 +2548,6 @@ static void _V0scheme_V0r7rs_V20_k32(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k31(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k31" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k31, got ~D~N"
   "-- expected 1~N"
@@ -2761,8 +2565,6 @@ static void _V0scheme_V0r7rs_V20_k31(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k30(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k30" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k30, got ~D~N"
   "-- expected 1~N"
@@ -2780,8 +2582,6 @@ static void _V0scheme_V0r7rs_V20_k30(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k29(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k29" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k29, got ~D~N"
   "-- expected 1~N"
@@ -2799,8 +2599,6 @@ static void _V0scheme_V0r7rs_V20_k29(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k28(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k28" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k28, got ~D~N"
   "-- expected 1~N"
@@ -2818,8 +2616,6 @@ static void _V0scheme_V0r7rs_V20_k28(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k27(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k27" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k27, got ~D~N"
   "-- expected 1~N"
@@ -2837,8 +2633,6 @@ static void _V0scheme_V0r7rs_V20_k27(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k26(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k26" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k26, got ~D~N"
   "-- expected 1~N"
@@ -2856,8 +2650,6 @@ static void _V0scheme_V0r7rs_V20_k26(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k25(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k25" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k25, got ~D~N"
   "-- expected 1~N"
@@ -2875,8 +2667,6 @@ static void _V0scheme_V0r7rs_V20_k25(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k24(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k24" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k24, got ~D~N"
   "-- expected 1~N"
@@ -2894,8 +2684,6 @@ static void _V0scheme_V0r7rs_V20_k24(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k23(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k23" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k23, got ~D~N"
   "-- expected 1~N"
@@ -2913,8 +2701,6 @@ static void _V0scheme_V0r7rs_V20_k23(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k22(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k22" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k22, got ~D~N"
   "-- expected 1~N"
@@ -2932,8 +2718,6 @@ static void _V0scheme_V0r7rs_V20_k22(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k21(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k21" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k21, got ~D~N"
   "-- expected 1~N"
@@ -2951,8 +2735,6 @@ static void _V0scheme_V0r7rs_V20_k21(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k20(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k20" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k20, got ~D~N"
   "-- expected 1~N"
@@ -2970,8 +2752,6 @@ static void _V0scheme_V0r7rs_V20_k20(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k19(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k19" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k19, got ~D~N"
   "-- expected 1~N"
@@ -2989,8 +2769,6 @@ static void _V0scheme_V0r7rs_V20_k19(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k18(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k18" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k18, got ~D~N"
   "-- expected 1~N"
@@ -3008,8 +2786,6 @@ static void _V0scheme_V0r7rs_V20_k18(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k17(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k17" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k17, got ~D~N"
   "-- expected 1~N"
@@ -3027,8 +2803,6 @@ static void _V0scheme_V0r7rs_V20_k17(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k16(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k16" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k16, got ~D~N"
   "-- expected 1~N"
@@ -3046,8 +2820,6 @@ static void _V0scheme_V0r7rs_V20_k16(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k15(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k15" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k15, got ~D~N"
   "-- expected 1~N"
@@ -3065,8 +2837,6 @@ static void _V0scheme_V0r7rs_V20_k15(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k14(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k14" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k14, got ~D~N"
   "-- expected 1~N"
@@ -3084,8 +2854,6 @@ static void _V0scheme_V0r7rs_V20_k14(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k13(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k13" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k13, got ~D~N"
   "-- expected 1~N"
@@ -3103,8 +2871,6 @@ static void _V0scheme_V0r7rs_V20_k13(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k12(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k12" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k12, got ~D~N"
   "-- expected 1~N"
@@ -3122,8 +2888,6 @@ static void _V0scheme_V0r7rs_V20_k12(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k11(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k11" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k11, got ~D~N"
   "-- expected 1~N"
@@ -3141,8 +2905,6 @@ static void _V0scheme_V0r7rs_V20_k11(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k10" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k10, got ~D~N"
   "-- expected 1~N"
@@ -3160,8 +2922,6 @@ static void _V0scheme_V0r7rs_V20_k10(VRuntime * runtime, VEnv * upenv, int argc,
  }
 }
 static void _V0scheme_V0r7rs_V20_k9(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k9" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k9, got ~D~N"
   "-- expected 1~N"
@@ -3179,8 +2939,6 @@ static void _V0scheme_V0r7rs_V20_k9(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0scheme_V0r7rs_V20_k8(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k8" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k8, got ~D~N"
   "-- expected 1~N"
@@ -3198,8 +2956,6 @@ static void _V0scheme_V0r7rs_V20_k8(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0scheme_V0r7rs_V20_k7(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k7" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k7, got ~D~N"
   "-- expected 1~N"
@@ -3217,8 +2973,6 @@ static void _V0scheme_V0r7rs_V20_k7(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0scheme_V0r7rs_V20_k6(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k6" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k6, got ~D~N"
   "-- expected 1~N"
@@ -3236,8 +2990,6 @@ static void _V0scheme_V0r7rs_V20_k6(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0scheme_V0r7rs_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k5" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k5, got ~D~N"
   "-- expected 1~N"
@@ -3255,8 +3007,6 @@ static void _V0scheme_V0r7rs_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0scheme_V0r7rs_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k4" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k4, got ~D~N"
   "-- expected 1~N"
@@ -3274,8 +3024,6 @@ static void _V0scheme_V0r7rs_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0scheme_V0r7rs_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k3" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k3, got ~D~N"
   "-- expected 1~N"
@@ -3293,8 +3041,6 @@ static void _V0scheme_V0r7rs_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0scheme_V0r7rs_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k2" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k2, got ~D~N"
   "-- expected 1~N"
@@ -3312,8 +3058,6 @@ static void _V0scheme_V0r7rs_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0scheme_V0r7rs_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_k1" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k1, got ~D~N"
   "-- expected 1~N"
@@ -3332,8 +3076,6 @@ static void _V0scheme_V0r7rs_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0scheme_V0r7rs_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0scheme_V0r7rs_V20_lambda1" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_lambda1, got ~D~N"
   "-- expected 1~N"

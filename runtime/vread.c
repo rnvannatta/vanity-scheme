@@ -913,9 +913,19 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
           elem = VFALSE;
         else if(!strcmp(runtime->lex_buf, "#void"))
           elem = VVOID;
+        else if(!strcmp(runtime->lex_buf, "#nullptr"))
+          elem = VNULLPTR;
+        else if(!strcmp(runtime->lex_buf, "#f("))  {
+          opens_list = true;
+          elem = VFALSE;
+        }
         else if(!strcmp(runtime->lex_buf, "#void(")) {
           opens_list = true;
           elem = VVOID;
+        }
+        else if(!strcmp(runtime->lex_buf, "#nullptr(")) {
+          opens_list = true;
+          elem = VNULLPTR;
         }
         else if(!strcmp(runtime->lex_buf, "#u8(")) {
           is_vector = true;
@@ -944,6 +954,15 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
         else if(!strcmp(runtime->lex_buf, "#f64(")) {
           is_vector = true;
           elem = VEncodeToken(VTOK_LEX_F64VECTOR);
+        }
+
+        else if(!strcmp(runtime->lex_buf, "#s64(") ||
+                !strcmp(runtime->lex_buf, "#u64(") ||
+                !strcmp(runtime->lex_buf, "#u32(")) {
+          VErrorC(runtime, "read: unsupported buffer type: ~z\n", runtime->lex_buf);
+        }
+        else {
+          VErrorC(runtime, "read: invalid sharpsign syntax: ~z\n", runtime->lex_buf);
         }
 
         if(!is_vector) {

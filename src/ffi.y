@@ -319,7 +319,9 @@ postfix_declarator : identifier
                    | postfix_declarator '(' ')'
                    { $$ = LIST("function", $1); }
                    | postfix_declarator '[' ']'
-                   { $$ = LIST("array", $1); }
+                   { $$ = LIST("array", $1, VFALSE); }
+                   | postfix_declarator '[' expr ']'
+                   { $$ = LIST("array", $1, $3); }
                    | postfix_declarator '(' parameter_list ')'
                    { $$ = LIST("function", $1, detangle_params($3)); }
                    | '(' prefix_declarator ')'
@@ -329,13 +331,21 @@ postfix_declarator : identifier
 abstract_postfix_declarator : abstract_postfix_declarator '(' ')'
                             { $$ = LIST("function", $1); }
                             | abstract_postfix_declarator '[' ']'
-                            { $$ = LIST("array", $1); }
+                            { $$ = LIST("array", $1, VFALSE); }
+                            | abstract_postfix_declarator '[' expr ']'
+                            { $$ = LIST("array", $1, $3); }
+                            | abstract_postfix_declarator '[' T_STORAGE expr ']'
+                            { if($3 != T_STATIC) YYERROR; $$ = LIST("static-array", $1, $4); }
                             | abstract_postfix_declarator '(' parameter_list ')'
                             { $$ = LIST("function", $1, detangle_params($3)); }
                             | '(' ')'
                             { $$ = LIST("function", VFALSE); }
                             | '[' ']'
-                            { $$ = LIST("array", VFALSE); }
+                            { $$ = LIST("array", VFALSE, VFALSE); }
+                            | '[' expr ']'
+                            { $$ = LIST("array", VFALSE, $2); }
+                            | '[' T_STORAGE expr ']'
+                            { if($2 != T_STATIC) YYERROR; $$ = LIST("static-array", VFALSE, $3); }
                             | '(' parameter_list ')'
                             { $$ = LIST("function", VFALSE, detangle_params($2)); }
                             | '(' abstract_prefix_declarator ')'
@@ -367,7 +377,11 @@ param_postfix_declarator : T_VARIABLE
                          | param_postfix_declarator '(' ')'
                          { $$ = LIST("function", $1); }
                          | param_postfix_declarator '[' ']'
-                         { $$ = LIST("array", $1); }
+                         { $$ = LIST("array", $1, VFALSE); }
+                         | param_postfix_declarator '[' expr ']'
+                         { $$ = LIST("array", $1, $3); }
+                         | param_postfix_declarator '[' T_STORAGE expr ']'
+                         { if($3 != T_STATIC) YYERROR; $$ = LIST("static-array", $1, $4); }
                          | param_postfix_declarator '(' parameter_list ')'
                          { $$ = LIST("function", $1, detangle_params($3)); }
                          | '(' param_prefix_declarator ')'

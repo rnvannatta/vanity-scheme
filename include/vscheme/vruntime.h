@@ -209,7 +209,8 @@ enum V_TYPE_T { VIMM_TOK = 1*TAG_BIAS, VIMM_INT = 2*TAG_BIAS, VIMM_CHAR = 3*TAG_
 #define VVOID VWord(LITERAL_HEADER | VIMM_TOK | VTOK_VOID)
 #define VEOF VWord(LITERAL_HEADER | VIMM_TOK | VTOK_EOF)
 #define VTOMBSTONE VWord(LITERAL_HEADER | VIMM_TOK | VTOK_TOMBSTONE)
-#define VERROR VWord(LITERAL_HEADER| VIMM_TOK | VTOK_ERROR);
+#define VERROR VWord(LITERAL_HEADER| VIMM_TOK | VTOK_ERROR)
+#define VNULLPTR VWord(LITERAL_HEADER | VPOINTER_FOREIGN)
 
 typedef struct VWORD {
   uint64_t integer;
@@ -688,6 +689,28 @@ SYSV_CALL static inline VFuture * VCheckedDecodeFuture2(VRuntime * runtime, VWOR
 
 /* ======================== C FFI Decoding ======================= */
 
+static inline int VBufferByteWidth(VRuntime * runtime, enum VBUFFER_TYPE type) {
+  switch(type) {
+    case BUF_S8:
+    case BUF_U8:
+      return 1;
+    case BUF_S16:
+    case BUF_U16:
+      return 2;
+    case BUF_S32:
+    case BUF_U32:
+    case BUF_F32:
+      return 4;
+    case BUF_S64:
+    case BUF_U64:
+    case BUF_F64:
+      return 8;
+    default:
+      VErrorC(runtime, "invalid typebuffer has tag %d.", type);
+      return 0;
+  };
+}
+
 SYSV_CALL static inline bool VCheckedDecodeBool2(VRuntime * runtime, VWORD v, char const * proc) {
   return VDecodeBool(v);
 }
@@ -739,6 +762,10 @@ SYSV_CALL static inline void * VCheckedDecodeVoidPtr2(VRuntime * runtime, VWORD 
   // any non-const buffers, so any buffer except symbols
   if(VIsForeignPointer(v)) {
     return (void*)VDecodePointer(v);
+  } else if(VIsPointerTo(v, VBUFFER)) {
+    VBlob * b = VDecodeBlob(v);
+    int w = VBufferByteWidth(runtime, b->buf[0]);
+    return (void*)(b->buf + w);
   } else if(VIsMutableBlob(v)) {
     return VDecodeBlob(v)->buf;
   }
@@ -750,6 +777,10 @@ SYSV_CALL static inline void const * VCheckedDecodeConstVoidPtr2(VRuntime * runt
   // any buffers, including constant buffers
   if(VIsForeignPointer(v)) {
     return VCheckedDecodeForeignPointer2(runtime, v, proc);
+  } else if(VIsPointerTo(v, VBUFFER)) {
+    VBlob * b = VDecodeBlob(v);
+    int w = VBufferByteWidth(runtime, b->buf[0]);
+    return (void*)(b->buf + w);
   } else if(VIsBlob(v)) {
     return VDecodeBlob(v)->buf;
   }
@@ -1083,4 +1114,4 @@ SYSV_CALL void VAsync(V_CORE_ARGS, VWORD k, VWORD future_thunk);
 SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD future);
 
 // Misc
-uint64_t VCurrentJiffyImpl(VRuntime * runtime);
+uint64_t VCurrentJiffyImpl();

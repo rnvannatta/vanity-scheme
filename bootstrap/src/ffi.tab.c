@@ -687,16 +687,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  22
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   154
+#define YYLAST   178
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  23
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  20
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  72
+#define YYNRULES  79
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  110
+#define YYNSTATES  127
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   267
@@ -748,12 +748,12 @@ static const yytype_int16 yyrline[] =
 {
        0,   278,   278,   280,   282,   285,   285,   287,   289,   291,
      294,   296,   300,   303,   309,   311,   313,   317,   319,   321,
-     323,   325,   329,   331,   333,   335,   337,   339,   341,   345,
-     347,   349,   351,   353,   357,   359,   361,   365,   367,   369,
-     371,   373,   376,   378,   380,   382,   384,   386,   390,   392,
-     394,   396,   398,   400,   402,   404,   408,   410,   412,   416,
-     418,   422,   424,   426,   430,   432,   434,   436,   440,   442,
-     444,   446,   450
+     323,   325,   327,   331,   333,   335,   337,   339,   341,   343,
+     345,   347,   349,   351,   355,   357,   359,   361,   363,   367,
+     369,   371,   375,   377,   379,   381,   383,   385,   387,   390,
+     392,   394,   396,   398,   400,   404,   406,   408,   410,   412,
+     414,   416,   418,   422,   424,   426,   430,   432,   436,   438,
+     440,   444,   446,   448,   450,   454,   456,   458,   460,   464
 };
 #endif
 
@@ -799,17 +799,19 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      66,   -74,    71,    78,   -74,    90,    90,   -74,     4,    52,
-     -74,   131,   -74,   109,   127,   -74,   -74,   -74,    -3,    19,
-     -74,   -74,   -74,   -74,   -74,   109,   -74,   115,   -74,    69,
-     115,   -74,    48,   119,   -74,   -74,   -74,    42,    93,    -3,
-     -74,   -74,   115,   -74,    83,    25,    85,   108,   -10,   -74,
-      94,   -74,   -74,    99,   -74,    -7,   -74,   140,   101,   -74,
-     -74,   -74,    89,   -74,     2,   -74,   -74,    99,   -74,   -74,
-     -74,   -74,    50,     9,   104,   122,   -74,   -74,   125,   108,
-     -74,   101,   101,   -74,   -74,   -74,   133,   134,    16,   -74,
-      34,   120,    43,   135,   -74,   -74,   -74,   -74,   -74,   -74,
-     -74,   -74,   -74,    57,   -74,   -74,    95,   -74,   -74,   -74
+      98,   -74,   104,    15,   -74,   123,   123,   -74,    41,    75,
+     -74,   154,   -74,   137,   155,   -74,   -74,   -74,    -7,    31,
+     -74,   -74,   -74,   -74,   -74,   137,   -74,   143,   -74,   106,
+     143,   -74,    46,    90,   -74,   -74,   -74,    35,    -4,    -7,
+     -74,   -74,   143,   -74,    63,     5,    28,    79,    33,   -74,
+      -1,   -74,   -74,   132,   -74,    45,   -74,   163,   129,   -74,
+     -74,    77,   -74,   118,   -74,    37,   -74,   -74,   132,   -74,
+     -74,   -74,   -74,    24,    49,    81,    96,   -74,   -74,   115,
+     -74,    79,   -74,   129,   129,   -74,   -74,   -74,    68,   120,
+      57,    79,   -74,   127,    26,    84,    66,   101,   -74,   -74,
+     -74,   -74,   -74,   -74,   -74,   -74,   146,   -74,   -74,    78,
+      79,   -74,   156,   -74,   149,    79,   -74,   157,   -74,   -74,
+     158,   -74,   -74,   159,   -74,   -74,   -74
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -817,31 +819,33 @@ static const yytype_int16 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     4,     0,     0,    48,     0,     0,    49,     0,     0,
-       7,     0,    64,     0,    61,     6,     5,    50,     0,    51,
-      62,    63,     1,     9,     8,     0,    10,     0,    11,     0,
-       0,    17,    12,    14,    66,    65,    67,    68,     0,     0,
-      12,    13,     0,    15,     0,     0,     0,     0,     0,    52,
-       0,    16,    21,     0,    18,     0,    56,    59,    42,    19,
-      72,    69,    70,    54,     0,    53,    60,     0,    20,    58,
-      57,    37,    30,     0,     0,    29,    43,    44,    34,     0,
-      55,    45,    31,    32,    35,    25,     0,     0,     0,    26,
-       0,     0,     0,     0,    71,    46,    47,    33,    36,    28,
-      41,    27,    22,     0,    23,    38,     0,    39,    24,    40
+       0,     4,     0,     0,    55,     0,     0,    56,     0,     0,
+       7,     0,    71,     0,    68,     6,     5,    57,     0,    58,
+      69,    70,     1,     9,     8,     0,    10,     0,    11,     0,
+       0,    17,    12,    14,    73,    72,    74,    75,     0,     0,
+      12,    13,     0,    15,     0,     0,     0,     0,     0,    59,
+       0,    16,    22,     0,    18,     0,    63,    66,    49,    79,
+      19,     0,    76,    77,    61,     0,    60,    67,     0,    21,
+      65,    64,    42,    35,     0,     0,    34,    50,    51,    39,
+      20,     0,    62,    52,    36,    37,    40,    28,     0,     0,
+       0,     0,    29,     0,     0,     0,     0,     0,    78,    53,
+      54,    38,    41,    33,    48,    32,     0,    30,    23,     0,
+       0,    24,     0,    43,     0,     0,    44,     0,    31,    27,
+       0,    25,    47,     0,    45,    26,    46
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-     -74,   -74,   146,   -74,   143,   -74,   -24,   -74,   -74,   -38,
-       6,   -74,   -73,    86,   -74,   -45,   123,   -74,   103,    74
+     -74,   -74,   169,   -74,   114,   -74,   -23,   -74,   -74,   -59,
+      14,   -74,   -73,   119,   -74,   -50,   151,   -74,   103,   -47
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     8,    31,     9,    10,    11,    32,    33,    75,    76,
-      77,    78,    55,    56,    57,    58,    13,    14,    38,    61
+       0,     8,    31,     9,    10,    11,    32,    33,    76,    77,
+      78,    79,    55,    56,    57,    58,    13,    14,    38,    61
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -849,42 +853,46 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      88,    40,    62,    41,    22,    43,    44,    67,    66,    37,
-      68,    63,     2,     3,    62,     4,    53,   103,    51,   106,
-       7,    71,    81,    80,    72,    73,    85,    74,     2,     3,
-      67,     4,    53,   101,    83,    86,     7,     2,     3,    39,
-       4,    53,    54,    95,    97,     7,     2,     3,    -3,     4,
-      53,   102,    -2,    23,     7,     2,     3,    82,     4,     5,
-     105,     6,    71,     7,    47,    72,    73,     1,    74,     2,
-       3,    67,     4,     5,   108,     6,    42,     7,    84,    87,
-      15,    16,    15,    16,    29,    30,    12,    96,    98,    15,
-      16,    12,    12,     2,     3,    12,     4,     5,    18,     6,
-      52,     7,     2,     3,    59,     4,    53,    48,    64,    67,
-       7,    79,   109,    71,    49,    65,    72,    73,    60,    74,
-      15,    16,    28,    89,    29,    30,    15,    16,    20,    21,
-      29,    30,    25,    34,    35,    45,    36,    46,    90,   104,
-      91,    92,    50,    93,    26,    27,    69,    70,    17,    19,
-      99,   100,    24,    94,   107
+      62,    90,    40,    67,    41,    37,    43,    44,     2,     3,
+      48,     4,    53,    65,    85,    88,     7,    49,    83,    51,
+      66,   109,    54,   114,    99,   101,    15,    16,    93,     2,
+       3,    84,     4,    53,    98,    18,    72,     7,    59,    73,
+      74,    22,    75,   108,   106,    63,    -3,    60,   112,    63,
+     117,    39,     2,     3,    64,     4,    53,    47,    82,    68,
+       7,    72,    69,   120,    73,    74,    87,    75,   123,     2,
+       3,    68,     4,    53,   105,    -2,    23,     7,     2,     3,
+      52,     4,     5,   113,     6,   103,     7,    86,    89,    59,
+      91,    59,    68,   110,    59,   119,    80,   100,   102,     1,
+      92,     2,     3,   111,     4,     5,    45,     6,    46,     7,
+     115,    59,    94,    42,    95,    15,    16,    15,    16,    12,
+     116,    29,    30,    24,    12,    12,     2,     3,    12,     4,
+       5,    96,     6,    97,     7,     2,     3,   104,     4,    53,
+      81,    72,    50,     7,    73,    74,   107,    75,    15,    16,
+      28,     0,    29,    30,    15,    16,    20,    21,    29,    30,
+      25,    34,    35,    68,    36,   118,   122,    26,    27,    70,
+      71,    17,    19,     0,     0,   121,   124,   125,   126
 };
 
 static const yytype_int8 yycheck[] =
 {
-      73,    25,    12,    27,     0,    29,    30,    14,    53,    12,
-      17,    21,     3,     4,    12,     6,     7,    90,    42,    92,
-      11,    12,    67,    21,    15,    16,    17,    18,     3,     4,
-      14,     6,     7,    17,    72,    73,    11,     3,     4,    20,
-       6,     7,    17,    81,    82,    11,     3,     4,     0,     6,
-       7,    17,     0,     1,    11,     3,     4,     7,     6,     7,
-      17,     9,    12,    11,    22,    15,    16,     1,    18,     3,
-       4,    14,     6,     7,    17,     9,     7,    11,    72,    73,
-      11,    12,    11,    12,    15,    16,     0,    81,    82,    11,
-      12,     5,     6,     3,     4,     9,     6,     7,    20,     9,
-      17,    11,     3,     4,    19,     6,     7,    14,    14,    14,
-      11,    22,    17,    12,    21,    21,    15,    16,    10,    18,
-      11,    12,    13,    19,    15,    16,    11,    12,     5,     6,
-      15,    16,     9,     6,     7,    16,     9,    18,    16,    19,
-      18,    16,    39,    18,    13,    14,     6,     7,     2,     3,
-      17,    17,     9,    79,    19
+      47,    74,    25,    53,    27,    12,    29,    30,     3,     4,
+      14,     6,     7,    14,    73,    74,    11,    21,    68,    42,
+      21,    94,    17,    96,    83,    84,    11,    12,    75,     3,
+       4,     7,     6,     7,    81,    20,    12,    11,    10,    15,
+      16,     0,    18,    17,    91,    12,     0,    19,    95,    12,
+      97,    20,     3,     4,    21,     6,     7,    22,    21,    14,
+      11,    12,    17,   110,    15,    16,    17,    18,   115,     3,
+       4,    14,     6,     7,    17,     0,     1,    11,     3,     4,
+      17,     6,     7,    17,     9,    17,    11,    73,    74,    10,
+       9,    10,    14,     9,    10,    17,    19,    83,    84,     1,
+      19,     3,     4,    19,     6,     7,    16,     9,    18,    11,
+       9,    10,    16,     7,    18,    11,    12,    11,    12,     0,
+      19,    15,    16,     9,     5,     6,     3,     4,     9,     6,
+       7,    16,     9,    18,    11,     3,     4,    17,     6,     7,
+      22,    12,    39,    11,    15,    16,    19,    18,    11,    12,
+      13,    -1,    15,    16,    11,    12,     5,     6,    15,    16,
+       9,     6,     7,    14,     9,    19,    17,    13,    14,     6,
+       7,     2,     3,    -1,    -1,    19,    19,    19,    19
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -896,12 +904,14 @@ static const yytype_int8 yystos[] =
       39,    39,     0,     1,    27,    39,    13,    14,    13,    15,
       16,    25,    29,    30,     6,     7,     9,    12,    41,    20,
       29,    29,     7,    29,    29,    16,    18,    22,    14,    21,
-      41,    29,    17,     7,    17,    35,    36,    37,    38,    19,
-      10,    42,    12,    21,    14,    21,    38,    14,    17,     6,
-       7,    12,    15,    16,    18,    31,    32,    33,    34,    22,
-      21,    38,     7,    32,    33,    17,    32,    33,    35,    19,
-      16,    18,    16,    18,    42,    32,    33,    32,    33,    17,
-      17,    17,    17,    35,    19,    17,    35,    19,    17,    17
+      41,    29,    17,     7,    17,    35,    36,    37,    38,    10,
+      19,    42,    42,    12,    21,    14,    21,    38,    14,    17,
+       6,     7,    12,    15,    16,    18,    31,    32,    33,    34,
+      19,    22,    21,    38,     7,    32,    33,    17,    32,    33,
+      35,     9,    19,    42,    16,    18,    16,    18,    42,    32,
+      33,    32,    33,    17,    17,    17,    42,    19,    17,    35,
+       9,    19,    42,    17,    35,     9,    19,    42,    19,    17,
+      42,    19,    17,    42,    19,    19,    19
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -909,12 +919,12 @@ static const yytype_int8 yyr1[] =
 {
        0,    23,    24,    24,    24,    25,    25,    26,    26,    26,
       27,    27,    28,    28,    29,    29,    29,    30,    30,    30,
-      30,    30,    31,    31,    31,    31,    31,    31,    31,    32,
-      32,    32,    32,    32,    33,    33,    33,    34,    34,    34,
-      34,    34,    35,    35,    35,    35,    35,    35,    36,    36,
-      36,    36,    36,    36,    36,    36,    37,    37,    37,    38,
-      38,    39,    39,    39,    40,    40,    40,    40,    41,    41,
-      41,    41,    42
+      30,    30,    30,    31,    31,    31,    31,    31,    31,    31,
+      31,    31,    31,    31,    32,    32,    32,    32,    32,    33,
+      33,    33,    34,    34,    34,    34,    34,    34,    34,    35,
+      35,    35,    35,    35,    35,    36,    36,    36,    36,    36,
+      36,    36,    36,    37,    37,    37,    38,    38,    39,    39,
+      39,    40,    40,    40,    40,    41,    41,    41,    41,    42
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -922,12 +932,12 @@ static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     2,     1,     1,     1,     1,     2,     2,
        2,     2,     2,     3,     1,     2,     3,     1,     3,     3,
-       4,     3,     3,     3,     4,     2,     2,     3,     3,     1,
-       1,     2,     2,     3,     1,     2,     3,     1,     3,     3,
-       4,     3,     1,     2,     2,     3,     4,     4,     1,     1,
-       2,     2,     4,     5,     5,     6,     1,     2,     2,     1,
-       2,     1,     2,     2,     1,     2,     2,     2,     1,     3,
-       3,     5,     1
+       4,     4,     3,     3,     3,     4,     5,     4,     2,     2,
+       3,     4,     3,     3,     1,     1,     2,     2,     3,     1,
+       2,     3,     1,     3,     3,     4,     5,     4,     3,     1,
+       2,     2,     3,     4,     4,     1,     1,     2,     2,     4,
+       5,     5,     6,     1,     2,     2,     1,     2,     1,     2,
+       2,     1,     2,     2,     2,     1,     3,     3,     5,     1
 };
 
 
@@ -1614,56 +1624,56 @@ yyreduce:
   case 2: /* start: toplevel  */
 #line 279 "src/ffi.y"
       { parse_ret = CONS("toplevel", reverse((yyvsp[0].vword_val))); }
-#line 1618 "ffi.tab.c"
+#line 1628 "ffi.tab.c"
     break;
 
   case 3: /* start: specified_type prefix_declarator  */
 #line 281 "src/ffi.y"
       { parse_ret = LIST("naked_declaration", (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1624 "ffi.tab.c"
+#line 1634 "ffi.tab.c"
     break;
 
   case 4: /* start: error  */
 #line 282 "src/ffi.y"
               { yyerrok; yyclearin; parse_error = true; YYACCEPT; }
-#line 1630 "ffi.tab.c"
+#line 1640 "ffi.tab.c"
     break;
 
   case 7: /* toplevel: declaration  */
 #line 288 "src/ffi.y"
          { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 1636 "ffi.tab.c"
+#line 1646 "ffi.tab.c"
     break;
 
   case 8: /* toplevel: toplevel declaration  */
 #line 290 "src/ffi.y"
          { (yyval.vword_val) = CONS((yyvsp[0].vword_val), (yyvsp[-1].vword_val)); }
-#line 1642 "ffi.tab.c"
+#line 1652 "ffi.tab.c"
     break;
 
   case 9: /* toplevel: toplevel error  */
 #line 291 "src/ffi.y"
                           { yyerrok; parse_error = true; }
-#line 1648 "ffi.tab.c"
+#line 1658 "ffi.tab.c"
     break;
 
   case 10: /* declaration: declarator_list ';'  */
 #line 295 "src/ffi.y"
             { VWORD v = (yyvsp[-1].vword_val); (yyval.vword_val) = CONS("declaration", CONS(CAR(v), reverse(CDR(v)))); }
-#line 1654 "ffi.tab.c"
+#line 1664 "ffi.tab.c"
     break;
 
   case 11: /* declaration: specified_type ';'  */
 #line 297 "src/ffi.y"
             { (yyval.vword_val) = LIST("declaration", (yyvsp[-1].vword_val)); }
-#line 1660 "ffi.tab.c"
+#line 1670 "ffi.tab.c"
     break;
 
   case 12: /* declarator_list: specified_type prefix_declarator  */
 #line 301 "src/ffi.y"
                 { register_typedef((yyvsp[-1].vword_val), (yyvsp[0].vword_val));
                   (yyval.vword_val) = CONS((yyvsp[-1].vword_val), LIST((yyvsp[0].vword_val))); }
-#line 1667 "ffi.tab.c"
+#line 1677 "ffi.tab.c"
     break;
 
   case 13: /* declarator_list: declarator_list ',' prefix_declarator  */
@@ -1671,365 +1681,407 @@ yyreduce:
                 { VWORD v = (yyvsp[-2].vword_val);
                   register_typedef(CAR(v), (yyvsp[0].vword_val));
                   (yyval.vword_val) = CONS(CAR(v), CONS((yyvsp[0].vword_val), CDR(v))); }
-#line 1675 "ffi.tab.c"
+#line 1685 "ffi.tab.c"
     break;
 
   case 14: /* prefix_declarator: postfix_declarator  */
 #line 310 "src/ffi.y"
                   { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1681 "ffi.tab.c"
+#line 1691 "ffi.tab.c"
     break;
 
   case 15: /* prefix_declarator: '*' prefix_declarator  */
 #line 312 "src/ffi.y"
                   { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1687 "ffi.tab.c"
+#line 1697 "ffi.tab.c"
     break;
 
   case 16: /* prefix_declarator: '*' T_QUALIFIER prefix_declarator  */
 #line 314 "src/ffi.y"
                   { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1693 "ffi.tab.c"
+#line 1703 "ffi.tab.c"
     break;
 
   case 17: /* postfix_declarator: identifier  */
 #line 318 "src/ffi.y"
                    { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1699 "ffi.tab.c"
+#line 1709 "ffi.tab.c"
     break;
 
   case 18: /* postfix_declarator: postfix_declarator '(' ')'  */
 #line 320 "src/ffi.y"
                    { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1705 "ffi.tab.c"
+#line 1715 "ffi.tab.c"
     break;
 
   case 19: /* postfix_declarator: postfix_declarator '[' ']'  */
 #line 322 "src/ffi.y"
-                   { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
-#line 1711 "ffi.tab.c"
+                   { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val), VFALSE); }
+#line 1721 "ffi.tab.c"
     break;
 
-  case 20: /* postfix_declarator: postfix_declarator '(' parameter_list ')'  */
+  case 20: /* postfix_declarator: postfix_declarator '[' expr ']'  */
 #line 324 "src/ffi.y"
-                   { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1717 "ffi.tab.c"
+                   { (yyval.vword_val) = LIST("array", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val)); }
+#line 1727 "ffi.tab.c"
     break;
 
-  case 21: /* postfix_declarator: '(' prefix_declarator ')'  */
+  case 21: /* postfix_declarator: postfix_declarator '(' parameter_list ')'  */
 #line 326 "src/ffi.y"
+                   { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
+#line 1733 "ffi.tab.c"
+    break;
+
+  case 22: /* postfix_declarator: '(' prefix_declarator ')'  */
+#line 328 "src/ffi.y"
                    { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1723 "ffi.tab.c"
+#line 1739 "ffi.tab.c"
     break;
 
-  case 22: /* abstract_postfix_declarator: abstract_postfix_declarator '(' ')'  */
-#line 330 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1729 "ffi.tab.c"
-    break;
-
-  case 23: /* abstract_postfix_declarator: abstract_postfix_declarator '[' ']'  */
+  case 23: /* abstract_postfix_declarator: abstract_postfix_declarator '(' ')'  */
 #line 332 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
-#line 1735 "ffi.tab.c"
+                            { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
+#line 1745 "ffi.tab.c"
     break;
 
-  case 24: /* abstract_postfix_declarator: abstract_postfix_declarator '(' parameter_list ')'  */
+  case 24: /* abstract_postfix_declarator: abstract_postfix_declarator '[' ']'  */
 #line 334 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1741 "ffi.tab.c"
+                            { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val), VFALSE); }
+#line 1751 "ffi.tab.c"
     break;
 
-  case 25: /* abstract_postfix_declarator: '(' ')'  */
+  case 25: /* abstract_postfix_declarator: abstract_postfix_declarator '[' expr ']'  */
 #line 336 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", VFALSE); }
-#line 1747 "ffi.tab.c"
+                            { (yyval.vword_val) = LIST("array", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val)); }
+#line 1757 "ffi.tab.c"
     break;
 
-  case 26: /* abstract_postfix_declarator: '[' ']'  */
+  case 26: /* abstract_postfix_declarator: abstract_postfix_declarator '[' T_STORAGE expr ']'  */
 #line 338 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("array", VFALSE); }
-#line 1753 "ffi.tab.c"
+                            { if((yyvsp[-2].keyword_val) != T_STATIC) YYERROR; (yyval.vword_val) = LIST("static-array", (yyvsp[-4].vword_val), (yyvsp[-1].vword_val)); }
+#line 1763 "ffi.tab.c"
     break;
 
-  case 27: /* abstract_postfix_declarator: '(' parameter_list ')'  */
+  case 27: /* abstract_postfix_declarator: abstract_postfix_declarator '(' parameter_list ')'  */
 #line 340 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", VFALSE, detangle_params((yyvsp[-1].vword_val))); }
-#line 1759 "ffi.tab.c"
+                            { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
+#line 1769 "ffi.tab.c"
     break;
 
-  case 28: /* abstract_postfix_declarator: '(' abstract_prefix_declarator ')'  */
+  case 28: /* abstract_postfix_declarator: '(' ')'  */
 #line 342 "src/ffi.y"
-                            { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1765 "ffi.tab.c"
+                            { (yyval.vword_val) = LIST("function", VFALSE); }
+#line 1775 "ffi.tab.c"
     break;
 
-  case 29: /* abstract_prefix_declarator: abstract_postfix_declarator  */
+  case 29: /* abstract_postfix_declarator: '[' ']'  */
+#line 344 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("array", VFALSE, VFALSE); }
+#line 1781 "ffi.tab.c"
+    break;
+
+  case 30: /* abstract_postfix_declarator: '[' expr ']'  */
 #line 346 "src/ffi.y"
-                           { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1771 "ffi.tab.c"
+                            { (yyval.vword_val) = LIST("array", VFALSE, (yyvsp[-1].vword_val)); }
+#line 1787 "ffi.tab.c"
     break;
 
-  case 30: /* abstract_prefix_declarator: '*'  */
+  case 31: /* abstract_postfix_declarator: '[' T_STORAGE expr ']'  */
 #line 348 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", VFALSE); }
-#line 1777 "ffi.tab.c"
+                            { if((yyvsp[-2].keyword_val) != T_STATIC) YYERROR; (yyval.vword_val) = LIST("static-array", VFALSE, (yyvsp[-1].vword_val)); }
+#line 1793 "ffi.tab.c"
     break;
 
-  case 31: /* abstract_prefix_declarator: '*' T_QUALIFIER  */
+  case 32: /* abstract_postfix_declarator: '(' parameter_list ')'  */
 #line 350 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[0].keyword_val)), VFALSE)); }
-#line 1783 "ffi.tab.c"
+                            { (yyval.vword_val) = LIST("function", VFALSE, detangle_params((yyvsp[-1].vword_val))); }
+#line 1799 "ffi.tab.c"
     break;
 
-  case 32: /* abstract_prefix_declarator: '*' abstract_prefix_declarator  */
+  case 33: /* abstract_postfix_declarator: '(' abstract_prefix_declarator ')'  */
 #line 352 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1789 "ffi.tab.c"
+                            { (yyval.vword_val) = (yyvsp[-1].vword_val); }
+#line 1805 "ffi.tab.c"
     break;
 
-  case 33: /* abstract_prefix_declarator: '*' T_QUALIFIER abstract_prefix_declarator  */
-#line 354 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1795 "ffi.tab.c"
+  case 34: /* abstract_prefix_declarator: abstract_postfix_declarator  */
+#line 356 "src/ffi.y"
+                           { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1811 "ffi.tab.c"
     break;
 
-  case 34: /* param_prefix_declarator: param_postfix_declarator  */
+  case 35: /* abstract_prefix_declarator: '*'  */
 #line 358 "src/ffi.y"
-                        { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1801 "ffi.tab.c"
+                           { (yyval.vword_val) = LIST("pointer", VFALSE); }
+#line 1817 "ffi.tab.c"
     break;
 
-  case 35: /* param_prefix_declarator: '*' param_prefix_declarator  */
+  case 36: /* abstract_prefix_declarator: '*' T_QUALIFIER  */
 #line 360 "src/ffi.y"
-                        { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1807 "ffi.tab.c"
+                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[0].keyword_val)), VFALSE)); }
+#line 1823 "ffi.tab.c"
     break;
 
-  case 36: /* param_prefix_declarator: '*' T_QUALIFIER param_prefix_declarator  */
+  case 37: /* abstract_prefix_declarator: '*' abstract_prefix_declarator  */
 #line 362 "src/ffi.y"
-                        { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1813 "ffi.tab.c"
+                           { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
+#line 1829 "ffi.tab.c"
     break;
 
-  case 37: /* param_postfix_declarator: T_VARIABLE  */
-#line 366 "src/ffi.y"
-                         { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1819 "ffi.tab.c"
+  case 38: /* abstract_prefix_declarator: '*' T_QUALIFIER abstract_prefix_declarator  */
+#line 364 "src/ffi.y"
+                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
+#line 1835 "ffi.tab.c"
     break;
 
-  case 38: /* param_postfix_declarator: param_postfix_declarator '(' ')'  */
+  case 39: /* param_prefix_declarator: param_postfix_declarator  */
 #line 368 "src/ffi.y"
-                         { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1825 "ffi.tab.c"
+                        { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1841 "ffi.tab.c"
     break;
 
-  case 39: /* param_postfix_declarator: param_postfix_declarator '[' ']'  */
+  case 40: /* param_prefix_declarator: '*' param_prefix_declarator  */
 #line 370 "src/ffi.y"
-                         { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val)); }
-#line 1831 "ffi.tab.c"
+                        { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
+#line 1847 "ffi.tab.c"
     break;
 
-  case 40: /* param_postfix_declarator: param_postfix_declarator '(' parameter_list ')'  */
+  case 41: /* param_prefix_declarator: '*' T_QUALIFIER param_prefix_declarator  */
 #line 372 "src/ffi.y"
+                        { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
+#line 1853 "ffi.tab.c"
+    break;
+
+  case 42: /* param_postfix_declarator: T_VARIABLE  */
+#line 376 "src/ffi.y"
+                         { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1859 "ffi.tab.c"
+    break;
+
+  case 43: /* param_postfix_declarator: param_postfix_declarator '(' ')'  */
+#line 378 "src/ffi.y"
+                         { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
+#line 1865 "ffi.tab.c"
+    break;
+
+  case 44: /* param_postfix_declarator: param_postfix_declarator '[' ']'  */
+#line 380 "src/ffi.y"
+                         { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val), VFALSE); }
+#line 1871 "ffi.tab.c"
+    break;
+
+  case 45: /* param_postfix_declarator: param_postfix_declarator '[' expr ']'  */
+#line 382 "src/ffi.y"
+                         { (yyval.vword_val) = LIST("array", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val)); }
+#line 1877 "ffi.tab.c"
+    break;
+
+  case 46: /* param_postfix_declarator: param_postfix_declarator '[' T_STORAGE expr ']'  */
+#line 384 "src/ffi.y"
+                         { if((yyvsp[-2].keyword_val) != T_STATIC) YYERROR; (yyval.vword_val) = LIST("static-array", (yyvsp[-4].vword_val), (yyvsp[-1].vword_val)); }
+#line 1883 "ffi.tab.c"
+    break;
+
+  case 47: /* param_postfix_declarator: param_postfix_declarator '(' parameter_list ')'  */
+#line 386 "src/ffi.y"
                          { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1837 "ffi.tab.c"
+#line 1889 "ffi.tab.c"
     break;
 
-  case 41: /* param_postfix_declarator: '(' param_prefix_declarator ')'  */
-#line 374 "src/ffi.y"
+  case 48: /* param_postfix_declarator: '(' param_prefix_declarator ')'  */
+#line 388 "src/ffi.y"
                          { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1843 "ffi.tab.c"
+#line 1895 "ffi.tab.c"
     break;
 
-  case 42: /* parameter_list: qualified_type  */
-#line 377 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[0].vword_val), VFALSE); }
-#line 1849 "ffi.tab.c"
-    break;
-
-  case 43: /* parameter_list: qualified_type abstract_prefix_declarator  */
-#line 379 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1855 "ffi.tab.c"
-    break;
-
-  case 44: /* parameter_list: qualified_type param_prefix_declarator  */
-#line 381 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1861 "ffi.tab.c"
-    break;
-
-  case 45: /* parameter_list: parameter_list ',' qualified_type  */
-#line 383 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", (yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
-#line 1867 "ffi.tab.c"
-    break;
-
-  case 46: /* parameter_list: parameter_list ',' qualified_type abstract_prefix_declarator  */
-#line 385 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1873 "ffi.tab.c"
-    break;
-
-  case 47: /* parameter_list: parameter_list ',' qualified_type param_prefix_declarator  */
-#line 387 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1879 "ffi.tab.c"
-    break;
-
-  case 48: /* plain_type: T_TYPE  */
+  case 49: /* parameter_list: qualified_type  */
 #line 391 "src/ffi.y"
-           { (yyval.vword_val) = keyword_to_vword((yyvsp[0].keyword_val)); }
-#line 1885 "ffi.tab.c"
+               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[0].vword_val), VFALSE); }
+#line 1901 "ffi.tab.c"
     break;
 
-  case 49: /* plain_type: T_TYPENAME  */
+  case 50: /* parameter_list: qualified_type abstract_prefix_declarator  */
 #line 393 "src/ffi.y"
-           { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1891 "ffi.tab.c"
+               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 1907 "ffi.tab.c"
     break;
 
-  case 50: /* plain_type: T_STRUCT identifier  */
+  case 51: /* parameter_list: qualified_type param_prefix_declarator  */
 #line 395 "src/ffi.y"
-           { (yyval.vword_val) = LIST("struct", (yyvsp[0].vword_val)); }
-#line 1897 "ffi.tab.c"
+               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 1913 "ffi.tab.c"
     break;
 
-  case 51: /* plain_type: T_ENUM identifier  */
+  case 52: /* parameter_list: parameter_list ',' qualified_type  */
 #line 397 "src/ffi.y"
-           { (yyval.vword_val) = LIST("enum", (yyvsp[0].vword_val), VFALSE); }
-#line 1903 "ffi.tab.c"
+               { (yyval.vword_val) = LIST("param", (yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
+#line 1919 "ffi.tab.c"
     break;
 
-  case 52: /* plain_type: T_ENUM '{' enum_list '}'  */
+  case 53: /* parameter_list: parameter_list ',' qualified_type abstract_prefix_declarator  */
 #line 399 "src/ffi.y"
-           { (yyval.vword_val) = LIST("enum", VFALSE, detangle_enums((yyvsp[-1].vword_val))); }
-#line 1909 "ffi.tab.c"
+               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 1925 "ffi.tab.c"
     break;
 
-  case 53: /* plain_type: T_ENUM identifier '{' enum_list '}'  */
+  case 54: /* parameter_list: parameter_list ',' qualified_type param_prefix_declarator  */
 #line 401 "src/ffi.y"
-           { (yyval.vword_val) = LIST("enum", (yyvsp[-3].vword_val), detangle_enums((yyvsp[-1].vword_val))); }
-#line 1915 "ffi.tab.c"
+               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 1931 "ffi.tab.c"
     break;
 
-  case 54: /* plain_type: T_ENUM '{' enum_list ',' '}'  */
-#line 403 "src/ffi.y"
-           { (yyval.vword_val) = LIST("enum", VFALSE, detangle_enums((yyvsp[-2].vword_val))); }
-#line 1921 "ffi.tab.c"
-    break;
-
-  case 55: /* plain_type: T_ENUM identifier '{' enum_list ',' '}'  */
+  case 55: /* plain_type: T_TYPE  */
 #line 405 "src/ffi.y"
-           { (yyval.vword_val) = LIST("enum", (yyvsp[-4].vword_val), detangle_enums((yyvsp[-2].vword_val))); }
-#line 1927 "ffi.tab.c"
+           { (yyval.vword_val) = keyword_to_vword((yyvsp[0].keyword_val)); }
+#line 1937 "ffi.tab.c"
     break;
 
-  case 56: /* post_qualified_type: plain_type  */
+  case 56: /* plain_type: T_TYPENAME  */
+#line 407 "src/ffi.y"
+           { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1943 "ffi.tab.c"
+    break;
+
+  case 57: /* plain_type: T_STRUCT identifier  */
 #line 409 "src/ffi.y"
-               { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 1933 "ffi.tab.c"
+           { (yyval.vword_val) = LIST("struct", (yyvsp[0].vword_val)); }
+#line 1949 "ffi.tab.c"
     break;
 
-  case 57: /* post_qualified_type: post_qualified_type T_QUALIFIER  */
+  case 58: /* plain_type: T_ENUM identifier  */
 #line 411 "src/ffi.y"
-               { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1939 "ffi.tab.c"
+           { (yyval.vword_val) = LIST("enum", (yyvsp[0].vword_val), VFALSE); }
+#line 1955 "ffi.tab.c"
     break;
 
-  case 58: /* post_qualified_type: post_qualified_type T_TYPE  */
+  case 59: /* plain_type: T_ENUM '{' enum_list '}'  */
 #line 413 "src/ffi.y"
-               { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1945 "ffi.tab.c"
+           { (yyval.vword_val) = LIST("enum", VFALSE, detangle_enums((yyvsp[-1].vword_val))); }
+#line 1961 "ffi.tab.c"
     break;
 
-  case 59: /* qualified_type: post_qualified_type  */
+  case 60: /* plain_type: T_ENUM identifier '{' enum_list '}'  */
+#line 415 "src/ffi.y"
+           { (yyval.vword_val) = LIST("enum", (yyvsp[-3].vword_val), detangle_enums((yyvsp[-1].vword_val))); }
+#line 1967 "ffi.tab.c"
+    break;
+
+  case 61: /* plain_type: T_ENUM '{' enum_list ',' '}'  */
 #line 417 "src/ffi.y"
-               { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1951 "ffi.tab.c"
+           { (yyval.vword_val) = LIST("enum", VFALSE, detangle_enums((yyvsp[-2].vword_val))); }
+#line 1973 "ffi.tab.c"
     break;
 
-  case 60: /* qualified_type: T_QUALIFIER qualified_type  */
+  case 62: /* plain_type: T_ENUM identifier '{' enum_list ',' '}'  */
 #line 419 "src/ffi.y"
-               { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 1957 "ffi.tab.c"
+           { (yyval.vword_val) = LIST("enum", (yyvsp[-4].vword_val), detangle_enums((yyvsp[-2].vword_val))); }
+#line 1979 "ffi.tab.c"
     break;
 
-  case 61: /* specified_type: post_specified_type  */
+  case 63: /* post_qualified_type: plain_type  */
 #line 423 "src/ffi.y"
-               { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1963 "ffi.tab.c"
+               { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
+#line 1985 "ffi.tab.c"
     break;
 
-  case 62: /* specified_type: T_QUALIFIER specified_type  */
+  case 64: /* post_qualified_type: post_qualified_type T_QUALIFIER  */
 #line 425 "src/ffi.y"
-               { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 1969 "ffi.tab.c"
+               { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
+#line 1991 "ffi.tab.c"
     break;
 
-  case 63: /* specified_type: T_STORAGE specified_type  */
+  case 65: /* post_qualified_type: post_qualified_type T_TYPE  */
 #line 427 "src/ffi.y"
-               { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 1975 "ffi.tab.c"
+               { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
+#line 1997 "ffi.tab.c"
     break;
 
-  case 64: /* post_specified_type: plain_type  */
+  case 66: /* qualified_type: post_qualified_type  */
 #line 431 "src/ffi.y"
-                    { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 1981 "ffi.tab.c"
+               { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 2003 "ffi.tab.c"
     break;
 
-  case 65: /* post_specified_type: post_specified_type T_QUALIFIER  */
+  case 67: /* qualified_type: T_QUALIFIER qualified_type  */
 #line 433 "src/ffi.y"
-                    { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1987 "ffi.tab.c"
+               { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
+#line 2009 "ffi.tab.c"
     break;
 
-  case 66: /* post_specified_type: post_specified_type T_TYPE  */
-#line 435 "src/ffi.y"
-                    { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1993 "ffi.tab.c"
-    break;
-
-  case 67: /* post_specified_type: post_specified_type T_STORAGE  */
+  case 68: /* specified_type: post_specified_type  */
 #line 437 "src/ffi.y"
-                    { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1999 "ffi.tab.c"
+               { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 2015 "ffi.tab.c"
     break;
 
-  case 68: /* enum_list: T_VARIABLE  */
+  case 69: /* specified_type: T_QUALIFIER specified_type  */
+#line 439 "src/ffi.y"
+               { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
+#line 2021 "ffi.tab.c"
+    break;
+
+  case 70: /* specified_type: T_STORAGE specified_type  */
 #line 441 "src/ffi.y"
-          { (yyval.vword_val) = LIST(VNULL, (yyvsp[0].vword_val), VFALSE); }
-#line 2005 "ffi.tab.c"
+               { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
+#line 2027 "ffi.tab.c"
     break;
 
-  case 69: /* enum_list: T_VARIABLE '=' expr  */
-#line 443 "src/ffi.y"
-          { (yyval.vword_val) = LIST(VNULL, (yyvsp[-2].vword_val), (yyvsp[0].vword_val)); }
-#line 2011 "ffi.tab.c"
-    break;
-
-  case 70: /* enum_list: enum_list ',' T_VARIABLE  */
+  case 71: /* post_specified_type: plain_type  */
 #line 445 "src/ffi.y"
-          { (yyval.vword_val) = LIST((yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
-#line 2017 "ffi.tab.c"
-    break;
-
-  case 71: /* enum_list: enum_list ',' T_VARIABLE '=' expr  */
-#line 447 "src/ffi.y"
-          { (yyval.vword_val) = LIST((yyvsp[-4].vword_val), (yyvsp[-2].vword_val), (yyvsp[0].vword_val)); }
-#line 2023 "ffi.tab.c"
-    break;
-
-  case 72: /* expr: T_INTEGER  */
-#line 451 "src/ffi.y"
-     { if((yyvsp[0].int_val) > INT_MAX) VErrorC(global_runtime, "foreign-prase-header-c: failed to parse, integer exceeds 31 bit limit %llu", (yyvsp[0].int_val)); (yyval.vword_val) = VEncodeInt((yyvsp[0].int_val)); }
-#line 2029 "ffi.tab.c"
-    break;
-
-
+                    { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
 #line 2033 "ffi.tab.c"
+    break;
+
+  case 72: /* post_specified_type: post_specified_type T_QUALIFIER  */
+#line 447 "src/ffi.y"
+                    { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
+#line 2039 "ffi.tab.c"
+    break;
+
+  case 73: /* post_specified_type: post_specified_type T_TYPE  */
+#line 449 "src/ffi.y"
+                    { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
+#line 2045 "ffi.tab.c"
+    break;
+
+  case 74: /* post_specified_type: post_specified_type T_STORAGE  */
+#line 451 "src/ffi.y"
+                    { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
+#line 2051 "ffi.tab.c"
+    break;
+
+  case 75: /* enum_list: T_VARIABLE  */
+#line 455 "src/ffi.y"
+          { (yyval.vword_val) = LIST(VNULL, (yyvsp[0].vword_val), VFALSE); }
+#line 2057 "ffi.tab.c"
+    break;
+
+  case 76: /* enum_list: T_VARIABLE '=' expr  */
+#line 457 "src/ffi.y"
+          { (yyval.vword_val) = LIST(VNULL, (yyvsp[-2].vword_val), (yyvsp[0].vword_val)); }
+#line 2063 "ffi.tab.c"
+    break;
+
+  case 77: /* enum_list: enum_list ',' T_VARIABLE  */
+#line 459 "src/ffi.y"
+          { (yyval.vword_val) = LIST((yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
+#line 2069 "ffi.tab.c"
+    break;
+
+  case 78: /* enum_list: enum_list ',' T_VARIABLE '=' expr  */
+#line 461 "src/ffi.y"
+          { (yyval.vword_val) = LIST((yyvsp[-4].vword_val), (yyvsp[-2].vword_val), (yyvsp[0].vword_val)); }
+#line 2075 "ffi.tab.c"
+    break;
+
+  case 79: /* expr: T_INTEGER  */
+#line 465 "src/ffi.y"
+     { if((yyvsp[0].int_val) > INT_MAX) VErrorC(global_runtime, "foreign-prase-header-c: failed to parse, integer exceeds 31 bit limit %llu", (yyvsp[0].int_val)); (yyval.vword_val) = VEncodeInt((yyvsp[0].int_val)); }
+#line 2081 "ffi.tab.c"
+    break;
+
+
+#line 2085 "ffi.tab.c"
 
       default: break;
     }
@@ -2253,7 +2305,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 493 "src/ffi.y"
+#line 507 "src/ffi.y"
 
 
 bool parse_error = false;

@@ -53,6 +53,8 @@ SYSV_CALL void VDoubleP2(V_CORE_ARGS, VWORD k, VWORD x);
 SYSV_CALL void VIntP2(V_CORE_ARGS, VWORD k, VWORD x);
 SYSV_CALL void VCharP2(V_CORE_ARGS, VWORD k, VWORD x);
 SYSV_CALL void VVoidP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VNullptrP2(V_CORE_ARGS, VWORD k, VWORD x);
+SYSV_CALL void VForeignPointerP2(V_CORE_ARGS, VWORD k, VWORD x);
 
 // equality
 SYSV_CALL void VEq2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
@@ -186,3 +188,18 @@ SYSV_CALL void VAccess(V_CORE_ARGS, VWORD k, VWORD path, VWORD mode);
 // time
 SYSV_CALL void VCurrentJiffy(V_CORE_ARGS, VWORD k);
 SYSV_CALL void VJiffiesPerSecond(V_CORE_ARGS, VWORD k);
+
+// bit banging
+void VBitwiseNot(V_CORE_ARGS, VWORD k, VWORD x);
+void VBitwiseIor(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+void VBitwiseXor(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+void VBitwiseAnd(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+void VBitwiseXnor(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+void VBitwiseNand(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+void VBitwiseNor(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+void VBitwiseAndC1(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+void VBitwiseAndC2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+void VBitwiseOrC1(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+void VBitwiseOrC2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+void VArithmeticShift(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+void VBitCount(V_CORE_ARGS, VWORD k, VWORD a);

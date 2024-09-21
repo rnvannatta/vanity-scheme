@@ -83,7 +83,12 @@
     (define (reduce-args args)
       (if (null? args) '()
           (cons
-            (cadr (reduce-declare (reduce-type (caar args) table #f) (cadar args) table))
+            ; dropping the name from the arg: dont care lmao
+            (let ((arg (cadr (reduce-declare (reduce-type (caar args) table #f) (cadar args) table))))
+              (match arg
+                ; outermost array decays to a pointer in funargs
+                (('array len rest) (list 'pointer rest))
+                (else arg)))
             (reduce-args (cdr args)))))
     (define (reduce-declare-loop ret decl)
       ; assumes ret has already been preprocessed
@@ -94,6 +99,10 @@
          `(function ,expr ,(drop-const ret) . ,(map drop-const (reduce-args args))))
         (("pointer" expr)
          (reduce-declare-loop (list 'pointer ret) expr))
+        (("array" expr len)
+         (reduce-declare-loop (list 'array len ret) expr))
+        (("static-array" expr len)
+         (reduce-declare-loop (list 'array len ret) expr))
         (expr `(variable ,ret ,expr))))
     (reduce-declare-loop ret decl))
   ; simplifies a raw c type token stream into a more organized type
@@ -367,6 +376,12 @@
           (('const 'float) '(f32-pointer . "VCheckedDecodeF32Ptr"))
           (('const 'double) '(f64-pointer . "VCheckedDecodeF64Ptr"))
 
+          (('const 'int) '(s32-pointer . "VCheckedDecodeS32Ptr"))
+          (('const 'unsigned-short) '(u16-pointer . "VCheckedDecodeU16Ptr"))
+          (('const 'short) '(s16-pointer . "VCheckedDecodeS16Ptr"))
+          (('const 'unsigned-char) '(u8-pointer . "VCheckedDecodeU8Ptr"))
+          (('const 'signed-char) '(s8-pointer . "VCheckedDecodeS8Ptr"))
+
           (else '(void-pointer . "VCheckedDecodeForeignPointer2")))
         (assv type '((_Bool . "VCheckedDecodeBool2")
                      (char . "VCheckedDecodeChar2")
@@ -395,7 +410,7 @@
          (define (print-arg arg argname)
            (printf "~A(runtime, _arg~A, \"~A\")" (cdr (get-foreign-decoder arg)) argname name))
          (printf "~A;~N" decl)
-         (printf "void _V30~A_shim(V_CORE_ARGS, VWORD _k" name)
+         (printf "static void _V30~A_shim(V_CORE_ARGS, VWORD _k" name)
          (for-each (lambda (e) (printf ", VWORD _arg~A" e)) names)
          (printf ") {~N")
          (printf "  V_ARG_CHECK3(runtime, \"~A\", ~A, argc);~N" mangled (+ 1 (length args)))

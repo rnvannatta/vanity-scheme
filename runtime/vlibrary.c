@@ -433,6 +433,14 @@ SYSV_CALL void VVoidP2(V_CORE_ARGS, VWORD k, VWORD x) {
   V_ARG_CHECK3(runtime, "##vcore.void?", 2, argc);
   V_CALL(k, runtime, VEncodeBool(VBits(x) == VBits(VVOID)));
 }
+SYSV_CALL void VNullptrP2(V_CORE_ARGS, VWORD k, VWORD x) {
+  V_ARG_CHECK3(runtime, "##vcore.nullptr?", 2, argc);
+  V_CALL(k, runtime, VEncodeBool(VBits(x) == VBits(VNULLPTR)));
+}
+SYSV_CALL void VForeignPointerP2(V_CORE_ARGS, VWORD k, VWORD x) {
+  V_ARG_CHECK3(runtime, "##vcore.foreign-pointer?", 2, argc);
+  V_CALL(k, runtime, VEncodeBool(VWordType(x) == VPOINTER_FOREIGN));
+}
 
 // equality
 SYSV_CALL void VEq2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y) {
@@ -1814,7 +1822,7 @@ IMPLEMENT_BUFFER(f64, F64, 8)
 static bool jiffy_epoch_set;
 static uint64_t jiffy_epoch;
 static uint64_t one_billion = 1000ull * 1000 * 1000;
-uint64_t VCurrentJiffyImpl(VRuntime * runtime) {
+uint64_t VCurrentJiffyImpl() {
   (void)one_billion;
 #ifdef __linux__
   struct timespec nanotime;
@@ -1827,28 +1835,151 @@ uint64_t VCurrentJiffyImpl(VRuntime * runtime) {
   uint64_t ret = ticks.QuadPart;
 #else
   uint64_t ret = 0;
-  VErrorC(runtime, "current-jiffy: unsupported platform");
 #endif
-  if(!jiffy_epoch_set) {
-    jiffy_epoch = ret;
+  if(!jiffy_epoch_set)
+  {
     jiffy_epoch_set = true;
+    jiffy_epoch = ret;
   }
-  return ret;
+  return ret - jiffy_epoch;
 }
-
-void VCurrentJiffy(V_CORE_ARGS, VWORD k) {
-  uint64_t ret = VCurrentJiffyImpl(runtime);
-  V_CALL(k, runtime, VEncodeNumber(ret - jiffy_epoch));
-}
-
-void VJiffiesPerSecond(V_CORE_ARGS, VWORD k) {
+uint64_t VJiffiesPerSecondImpl() {
 #ifdef __linux__
-  V_CALL(k, runtime, VEncodeNumber(one_billion));
+  return one_billion;
 #endif
 #ifdef _WIN64
   LARGE_INTEGER ticks_per_second;
   QueryPerformanceFrequency(&ticks_per_second);
-  V_CALL(k, runtime, VEncodeNumber(ticks_per_second.QuadPart));
+  return ticks_per_second.QuadPart;
+#endif
+  return 0;
+}
+
+void VCurrentJiffy(V_CORE_ARGS, VWORD k) {
+#if defined(__linux) || defined(_WIN64)
+  uint64_t ret = VCurrentJiffyImpl();
+  V_CALL(k, runtime, VEncodeNumber(ret));
+#endif
+  VErrorC(runtime, "current-jiffy: unsupported platform");
+}
+
+void VJiffiesPerSecond(V_CORE_ARGS, VWORD k) {
+#if defined(__linux) || defined(_WIN64)
+  V_CALL(k, runtime, VEncodeNumber(VJiffiesPerSecondImpl()));
 #endif
   VErrorC(runtime, "jiffies-per-second: unsupported platform");
+}
+
+// bit banging
+
+void VBitwiseNot(V_CORE_ARGS, VWORD k, VWORD _x) {
+#define NAME "bitwise-not"
+  int x = VCheckedDecodeInt2(runtime, _x, NAME);
+  int ret = ~x;
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VBitwiseIor(V_CORE_ARGS, VWORD k, VWORD _a, VWORD _b) {
+#define NAME "bitwise-ior"
+  int a = VCheckedDecodeInt2(runtime, _a, NAME);
+  int b = VCheckedDecodeInt2(runtime, _b, NAME);
+  int ret = a | b;
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VBitwiseXor(V_CORE_ARGS, VWORD k, VWORD _a, VWORD _b) {
+#define NAME "bitwise-xor"
+  int a = VCheckedDecodeInt2(runtime, _a, NAME);
+  int b = VCheckedDecodeInt2(runtime, _b, NAME);
+  int ret = a ^ b;
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VBitwiseAnd(V_CORE_ARGS, VWORD k, VWORD _a, VWORD _b) {
+#define NAME "bitwise-and"
+  int a = VCheckedDecodeInt2(runtime, _a, NAME);
+  int b = VCheckedDecodeInt2(runtime, _b, NAME);
+  int ret = a & b;
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VBitwiseXnor(V_CORE_ARGS, VWORD k, VWORD _a, VWORD _b) {
+#define NAME "bitwise-xnor"
+  int a = VCheckedDecodeInt2(runtime, _a, NAME);
+  int b = VCheckedDecodeInt2(runtime, _b, NAME);
+  int ret = ~(a ^ b);
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VBitwiseNand(V_CORE_ARGS, VWORD k, VWORD _a, VWORD _b) {
+#define NAME "bitwise-nand"
+  int a = VCheckedDecodeInt2(runtime, _a, NAME);
+  int b = VCheckedDecodeInt2(runtime, _b, NAME);
+  int ret = ~(a & b);
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VBitwiseNor(V_CORE_ARGS, VWORD k, VWORD _a, VWORD _b) {
+#define NAME "bitwise-nor"
+  int a = VCheckedDecodeInt2(runtime, _a, NAME);
+  int b = VCheckedDecodeInt2(runtime, _b, NAME);
+  int ret = ~(a | b);
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VBitwiseAndC1(V_CORE_ARGS, VWORD k, VWORD _a, VWORD _b) {
+#define NAME "bitwise-andc1"
+  int a = VCheckedDecodeInt2(runtime, _a, NAME);
+  int b = VCheckedDecodeInt2(runtime, _b, NAME);
+  int ret = (~a & b);
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VBitwiseAndC2(V_CORE_ARGS, VWORD k, VWORD _a, VWORD _b) {
+#define NAME "bitwise-andc1"
+  int a = VCheckedDecodeInt2(runtime, _a, NAME);
+  int b = VCheckedDecodeInt2(runtime, _b, NAME);
+  int ret = (a & ~b);
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VBitwiseOrC1(V_CORE_ARGS, VWORD k, VWORD _a, VWORD _b) {
+#define NAME "bitwise-orc1"
+  int a = VCheckedDecodeInt2(runtime, _a, NAME);
+  int b = VCheckedDecodeInt2(runtime, _b, NAME);
+  int ret = (~a & b);
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VBitwiseOrC2(V_CORE_ARGS, VWORD k, VWORD _a, VWORD _b) {
+#define NAME "bitwise-orc2"
+  int a = VCheckedDecodeInt2(runtime, _a, NAME);
+  int b = VCheckedDecodeInt2(runtime, _b, NAME);
+  int ret = (a & ~b);
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VArithmeticShift(V_CORE_ARGS, VWORD k, VWORD _a, VWORD _b) {
+#define NAME "arithmetic-shift"
+  int a = VCheckedDecodeInt2(runtime, _a, NAME);
+  int b = VCheckedDecodeInt2(runtime, _b, NAME);
+  int ret;
+  if(b > 0)
+    ret = a << b;
+  else
+    ret = a >> -b;
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
+}
+void VBitCount(V_CORE_ARGS, VWORD k, VWORD _a) {
+#define NAME "bit-count"
+  unsigned a = VCheckedDecodeInt2(runtime, _a, NAME);
+  // lib concerns; probs need to turn on BMI
+  // int ret = __builtin_popcount(a);
+  unsigned int ret;
+  for (ret = 0; a; ret++)
+    a &= a - 1;
+
+  V_CALL(k, runtime, VEncodeInt(ret));
+#undef NAME
 }
