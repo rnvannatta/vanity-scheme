@@ -57,7 +57,7 @@
     string->list list->string make-string substring string-copy string-copy! string-ref string-set! string-length string->symbol string->number string-append
     symbol->string
     ; vectors
-    list->vector vector->list vector vector-ref vector-set! vector-length vector-for-each 
+    list->vector vector->list make-vector vector vector-ref vector-set! vector-length vector-for-each 
     ; typevectors
     f64vector? list->f64vector f64vector->list make-f64vector f64vector f64vector-ref f64vector-set! f64vector-length
     f32vector? list->f32vector f32vector->list make-f32vector f32vector f32vector-ref f32vector-set! f32vector-length
@@ -428,15 +428,15 @@
              (##vcore.cons (f (##vcore.car xs)) (loop (##vcore.cdr xs))))))
       ((f xs ys)
        (let loop ((xs xs) (ys ys))
-         (if (##vcore.null? xs) '()
+         (if (or (##vcore.null? xs) (##vcore.null? ys)) '()
              (##vcore.cons (f (##vcore.car xs) (##vcore.car ys)) (loop (##vcore.cdr xs) (##vcore.cdr ys))))))
       ((f xs ys zs)
        (let loop ((xs xs) (ys ys) (zs zs))
-         (if (##vcore.null? xs) '()
+         (if (or (##vcore.null? xs) (##vcore.null? ys) (##vcore.null? zs)) '()
              (##vcore.cons (f (##vcore.car xs) (##vcore.car ys) (##vcore.car zs)) (loop (##vcore.cdr xs) (##vcore.cdr ys) (##vcore.cdr zs))))))
       ((f . lsts)
        (let loop ((lsts lsts))
-         (if (##vcore.null? (##vcore.car lsts)) '()
+         (if (memq #t (map ##vcore.null? lsts)) '()
              (##vcore.cons (apply f (map ##vcore.car lsts)) (loop (map ##vcore.cdr lsts))))))))
   (define for-each
     (case-lambda
@@ -446,15 +446,15 @@
              (begin (f (##vcore.car xs)) (loop (##vcore.cdr xs))))))
       ((f xs ys)
        (let loop ((xs xs) (ys ys))
-         (if (##vcore.not (##vcore.null? xs))
+         (if (##vcore.not (or (##vcore.null? xs) (##vcore.null? ys)))
              (begin (f (##vcore.car xs) (##vcore.car ys)) (loop (##vcore.cdr xs) (##vcore.cdr ys))))))
       ((f xs ys zs)
        (let loop ((xs xs) (ys ys) (zs zs))
-         (if (##vcore.not (##vcore.null? xs))
+         (if (##vcore.not (or (##vcore.null? xs) (##vcore.null? ys) (##vcore.null? zs)))
              (begin (f (##vcore.car xs) (##vcore.car ys) (##vcore.car zs)) (loop (##vcore.cdr xs) (##vcore.cdr ys) (##vcore.cdr zs))))))
       ((f . lsts)
        (let loop ((lsts lsts))
-         (if (##vcore.not (##vcore.null? (##vcore.car lsts)))
+         (if (##vcore.not (memq #t (map ##vcore.null? lsts)))
              (begin (apply f (map ##vcore.car lsts)) (loop (map ##vcore.cdr lsts))))))))
 
   (define fold-right
@@ -719,6 +719,12 @@
             acc
             (loop (cons (vector-ref vec i) acc) (- i 1))))))
 
+  ; Hideous
+  (define make-vector
+    (case-lambda
+      ((n) (list->vector (make-list n)))
+      ((n fill) (list->vector (make-list n fill)))))
+
   (define vector-for-each
     (case-lambda
       ((f xs)
@@ -727,17 +733,40 @@
           (if (< i len)
               (begin (f (vector-ref xs i)) (loop (+ i 1)))))))
       ((f xs ys)
-       (let ((len (vector-length xs)))
+       (let ((len (min (vector-length xs) (vector-length ys))))
         (let loop ((i 0))
           (if (< i len)
               (begin (f (vector-ref xs i) (vector-ref ys i)) (loop (+ i 1)))))))
       ((f xs ys zs)
-       (let ((len (vector-length xs)))
+       (let ((len (min (vector-length xs) (vector-length ys) (vector-length zs))))
         (let loop ((i 0))
           (if (< i len)
               (begin (f (vector-ref xs i) (vector-ref ys i) (vector-ref zs i)) (loop (+ i 1)))))))
       ((f . vecs)
-       (let ((len (vector-length (car vecs))))
+       (let ((len (apply min (map vector-length vecs))))
+        (let loop ((i 0))
+          (if (< i len)
+              (begin (apply f (map (lambda (vec) (vector-ref vec i)) vecs)) (loop (+ i 1)))))))))
+  #;(define vector-map
+    (case-lambda
+      ((f xs)
+       (let* ((len (vector-length xs))
+              (vec (make-vector len))
+        (let loop ((i 0))
+          (if (< i len)
+              (begin (f (vector-ref xs i)) (loop (+ i 1)))))))
+      ((f xs ys)
+       (let ((len (min (vector-length xs) (vector-length ys))))
+        (let loop ((i 0))
+          (if (< i len)
+              (begin (f (vector-ref xs i) (vector-ref ys i)) (loop (+ i 1)))))))
+      ((f xs ys zs)
+       (let ((len (min (vector-length xs) (vector-length ys) (vector-length zs))))
+        (let loop ((i 0))
+          (if (< i len)
+              (begin (f (vector-ref xs i) (vector-ref ys i) (vector-ref zs i)) (loop (+ i 1)))))))
+      ((f . vecs)
+       (let ((len (apply min (map vector-length vecs))))
         (let loop ((i 0))
           (if (< i len)
               (begin (apply f (map (lambda (vec) (vector-ref vec i)) vecs)) (loop (+ i 1)))))))))

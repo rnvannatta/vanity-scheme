@@ -14,6 +14,9 @@ include config.mk
 .PHONY : hatch
 
 hatch :
+	mkdir -p bin
+	mkdir -p build
+	mkdir -p lib
 	ln -sf "$(INSTALL_DIR)/lib/$(VSCHEME)" $(INSTALL_DIR)/lib/libvscheme.so
 	ln -sf "$(INSTALL_DIR)/bin/vsc-$(MAJOR)" $(INSTALL_DIR)/bin/vsc
 	cp -ar bootstrap/include/* $(INSTALL_DIR)/include/
