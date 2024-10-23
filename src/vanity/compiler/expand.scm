@@ -88,6 +88,12 @@
             ((_ . _) (advanced-letrec-one val))
             (x (not (and (symbol? x) (memv x xs))))))))
 
+  (define (undot lst)
+    (cond ((null? lst) '())
+          ((symbol? lst) (list lst))
+          (else (cons (car lst) (undot (cdr lst))))))
+
+
   (define (expand-letrec* orig-xs vals body)
     (let loop ((body `((let () . ,body)))
                (done-vals '())
@@ -141,6 +147,25 @@
          (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
          (loop (cons `(define ,x ,body) defines) rest))
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
+        ((('define-values formals body) . rest)
+         (let* ((names (undot formals))
+                (mangles (map gensym names)))
+           (loop
+             (append
+               `((define ,(gensym 'dummy)
+                   (##vcore.call-with-values
+                     (lambda () ,body)
+                     (lambda
+                       ,(let loop ((formals formals) (mangles mangles))
+                          (cond
+                            ((pair? formals) (cons (car mangles) (loop (cdr formals) (cdr mangles))))
+                            ((null? formals) '())  
+                            (else (car mangles))))
+                       #void
+                       ,@(map (lambda (name mangle) `(set! ,name ,mangle)) names mangles)))))
+               (reverse (map (lambda (name) `(define ,name #f)) names))
+               defines)
+             rest)))
         ((('begin x) . rest)
          (loop defines `(,x . ,rest)))
         ((('begin x . ys) . rest)
@@ -361,6 +386,7 @@
        (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
        (list `(define ,x ,(expand-syntax body))))
       (else (compiler-error "malformed define" expr))))
+
   (define (expand-toplevel expr paths architecture)
     (match expr
       (('begin . ys)
@@ -375,12 +401,34 @@
       (('import lib . rest)
        (cons `(##vcore.multidefine (##vcore.load-library ,(mangle-library lib)))
              (expand-toplevel `(import . ,rest) paths architecture)))
+      (('unload-library lib)
+       (list `(##vcore.unload-library ,(mangle-library lib))))
 
       (('define (f . xs) . body) (expand-define `(define ,f (lambda ,xs . ,body))))
       (('define x body)
        (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
        (list `(define ,x ,(expand-syntax body))))
       (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
+
+      (('define-values formals body)
+       (let* ((names (undot formals))
+              (mangles (map gensym names)))
+         (expand-toplevel
+           (append
+             '(begin)
+             (map (lambda (name) `(define ,name #f)) names)
+             `((##vcore.call-with-values
+                 (lambda () ,body)
+                 (lambda
+                   ,(let loop ((formals formals) (mangles mangles))
+                      (cond
+                        ((pair? formals) (cons (car mangles) (loop (cdr formals) (cdr mangles))))
+                        ((null? formals) '())  
+                        (else (car mangles))))
+                   #void
+                   ,@(map (lambda (name mangle) `(set! ,name ,mangle)) names mangles)))))
+           paths
+           architecture)))
 
       (('##vcore.declare f l)
        (if (not (string? f)) (compiler-error "##vcore.declare's first argument is not a string" f))

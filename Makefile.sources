@@ -12,7 +12,7 @@ INLINE_SRC := $(addprefix include/vscheme/, vinlines.h vruntime.h)
 
 DAYS := 01 02 03 04 05 06 07 08
 AOC := $(addprefix aoc-2022/, $(addsuffix /main.ss, $(DAYS)))
-TEST_SRC := fact.scm ack.scm core.scm weak.scm multilib.scm list.scm listfunc.scm match.scm io.scm callcc.scm callvalues.scm ffitest.scm ffiimport.scm finalize.scm hashtable.scm set.scm vector.scm typevector.scm record.scm param.scm exception.scm $(AOC)
+TEST_SRC := fact.scm ack.scm core.scm weak.scm multilib.scm list.scm listfunc.scm match.scm io.scm callcc.scm callvalues.scm ffitest.scm ffiimport.scm finalize.scm hashtable.scm set.scm vector.scm typevector.scm record.scm param.scm exception.scm define-values.scm $(AOC)
 
 HOME_DIR := $(shell echo ~)
 INSTALL_DIR := $(HOME_DIR)/.local

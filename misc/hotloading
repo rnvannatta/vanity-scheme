@@ -1,0 +1,31 @@
+hot (re)loading
+
+so reloading shared libraries is a bit sticky. Chasing down every address that's being unloaded from the shared library is absurd
+
+so we can only do it for scripting, but this is fine because we only want it for scripting, as it is for development
+
+so anyway here's the issue. we should only run library init code once, for a variety of reasons:
+* memory, only create one set of let bindings
+* sanity, every user uses the same set of mutable variables
+* its da rules
+
+we want libraries to reload when we overdeclare a library.
+
+So if we have version A:
+(define-library (foo) (export bar) (define x 0) (define (bar) (set! x (+ x 1))))
+and fix the bug with version B
+(define-library (foo) (export bar) (define x 0) (define (bar) (set! x (+ x 1)) x))
+
+we ideally want every library depending on foo to to reload.
+
+so we have to:
+* keep a dependency graph of libraries
+* when a library is reloaded, reload every library that depends on it
+-- specifically, unload that library, recursively unload the libraries that depend on it, repeat until nothing to reload
+-- reload all the libraries we unloaded
+
+also, when compiling for scripting we need to special case define-library to insert the reload logic
+
+how about just special casing import?
+
+On that topic, import grabs header files, can/should we make it seek dlls and script files?

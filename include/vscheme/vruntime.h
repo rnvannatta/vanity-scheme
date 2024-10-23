@@ -1086,6 +1086,7 @@ SYSV_CALL void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name);
 
 SYSV_CALL void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...);
 SYSV_CALL void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD lib);
+SYSV_CALL void VUnloadLibrary2(V_CORE_ARGS, VWORD k, VWORD lib);
 
 SYSV_CALL int VStart(int nargs, void(* const * toplevels)());
 
