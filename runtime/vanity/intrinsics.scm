@@ -102,6 +102,7 @@
          ((##vcore.define-global) "VDefineGlobalVar2")
          ((##vcore.set-global!) "VSetGlobalVar2")
 
+         ; Libraries
          ((##vcore.function) "VFunction2")
          ((##vcore.set-declare!) "VSetDeclare")
          ((##vcore.define) "VDefineGlobalVar2")
@@ -109,6 +110,7 @@
          ((##vcore.lookup-library) "VLookupLibrary2")
          ((##vcore.make-import) "VMakeImport2")
          ((##vcore.load-library) "VLoadLibrary2")
+         ((##vcore.unload-library) "VUnloadLibrary2")
 
          ; Lists
          ((##vcore.cons ##vcore.qcons) "VCons2")
@@ -356,12 +358,14 @@
          ((##vcore.record-set!) ##vcore.record-set!)
          ((##vcore.record-length) ##vcore.record-length)
 
+         ; Libraries
          ((##vcore.function) ##vcore.function)
          ((##vcore.define) ##vcore.define)
          ((##vcore.multidefine) ##vcore.multidefine)
          ((##vcore.lookup-library) ##vcore.lookup-library)
          ((##vcore.make-import) ##vcore.make-import)
          ((##vcore.load-library) ##vcore.load-library)
+         ((##vcore.unload-library) ##vcore.unload-library)
 
          ; Lists
          ((##vcore.cons ##vcore.qcons) ##vcore.cons)

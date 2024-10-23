@@ -2052,6 +2052,23 @@ static SYSV_CALL void VLoadForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD name)
 
 VFunc VLoadForeignFunction = (VFunc)VLoadForeignFunctionImpl;
 
+// How library loading works:
+//
+// 1. A library (foo bar) is declared to a loader thunk with a mangled name for (foo bar), eg _V20_V0foo_V0bar. Something searchable with dlsym()
+// -- the loader thunk runs the body of the library, creating the library's internal environment and returns an importer function
+// -- the importer function
+//
+// 2. import statements compile to a multidefine with a load-library call to provide the definitions
+// -- (##vcore.multidefine (##vcore.load-library "_V20_V0foo_V0bar"))
+
+// 3. load-library first looks at the list of loaded libraries, if it finds it it runs its importer function
+
+// 4. if it doesn't find it, it searches for the declare for the loader via dlsym(), the loader is run to get the importer
+// -- in interpreted mode compiled libraries have priority over interpreted libraries
+
+// 5. the importer function is then run to fetch the definitions for multidefine
+
+
 SYSV_CALL static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
   V_ARG_CHECK3(runtime, "load-library-k", 1, argc);
   if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
@@ -2117,6 +2134,52 @@ SYSV_CALL void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   } else {
     V_CALL(k, runtime, lib);
   }
+}
+
+SYSV_CALL void VUnloadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
+  V_ARG_CHECK3(runtime, "unload-library", 2, argc);
+  if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
+    VGarbageCollect2Args((VFunc)VUnloadLibrary2, runtime, statics, 2, argc, k, name);
+
+#define sym_str "##vcore.libraries"
+  VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
+  sym->base = VMakeSmallObject(VSYMBOL);
+  sym->len = sizeof sym_str;
+  memcpy(sym->buf, sym_str, sym->len);
+#undef sym_str
+
+  VWORD sym_word = VEncodePointer(sym, VPOINTER_OTHER);
+  VGlobalEntry * lookup = VLookupGlobalEntry(runtime, sym_word);
+  VWORD libs = VNULL;
+  if(!lookup) {
+    VDefineImpl(runtime, sym_word, libs, false);
+  } else {
+    libs = lookup->value;
+  }
+
+  VPair * parent = NULL;
+  VPair * lib_entry = NULL;
+  while(!VIsEq(libs, VNULL)) {
+    VPair * libs_dec = VDecodePair(libs);
+    VPair * pair = VDecodePair(libs_dec->first);
+    VBlob * str = VDecodeBlob(pair->first);
+    VBlob * nm = VDecodeBlob(name);
+    if(str && nm && !strcmp(nm->buf, str->buf)) {
+      lib_entry = pair;
+      break;
+    }
+    parent = pair;
+
+    libs = libs_dec->rest;
+  }
+
+  if(lib_entry && parent) {
+    parent->rest = lib_entry->rest;
+  }
+  else if(lib_entry && !parent) {
+    VDefineImpl(runtime, sym_word, lib_entry->rest, true);
+  }
+  V_CALL(k, runtime, VVOID);
 }
 
 #define IMPLEMENT_PRINT_VECTOR(Prefix, prefix, stride, ctype, format) \

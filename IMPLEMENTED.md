@@ -61,9 +61,9 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |caddr                          | Yes         |             |            |
 |cadr                           | Yes         |             |            |
 |call-with-current-continuation | Yes         |             |            |
-|call-with-input-file           |             |             |            |
-|call-with-output-file          |             |             |            |
-|call-with-port                 |             |             |            |
+|call-with-input-file           | Yes         |             |            |
+|call-with-output-file          | Yes         |             |            |
+|call-with-port                 | Yes         |             |            |
 |call-with-values               | Yes         |             |            |
 |call/cc                        | Yes         |             |            |
 |car                            | Yes         |             |            |
@@ -125,7 +125,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |define-library                 | Yes         |             |            |
 |define-record-type             | Yes         |             |            |
 |define-syntax                  | Low Prio    |             |            |
-|define-values                  |             |             |            |
+|define-values                  | Yes         |             |            |
 |delay                          |             |             |            |
 |delay-force                    |             |             |            |
 |delete-file                    |             |             |            |
@@ -188,7 +188,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |infinite?                      |             |             |            |
 |input-port-open?               |             |             |            |
 |input-port?                    |             |             |            |
-|integer->char                  |             |             |            |
+|integer-\>char                 |             |             |            |
 |integer?                       | Yes         |             |            |
 |interaction-environment        | Low Prio    |             |            |
 |jiffies-per-second             | Yes         |             |            |
@@ -197,15 +197,15 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |length                         | Yes         |             |            |
 |let                            | Yes         |             |            |
 |let*                           | Yes         |             |            |
-|let*-values                    | Yes         |             |            |
-|let-syntax                     |             |             |            |
+|let\*-values                   | Yes         |             |            |
+|let-syntax                     | Low Prio    |             |            |
 |let-values                     |             |             |            |
 |letrec                         | Yes         |             |            |
-|letrec*                        | Yes         |             |            |
-|letrec-syntax                  |             |             |            |
+|letrec\*                       | Yes         |             |            |
+|letrec-syntax                  | Low Prio    |             |            |
 |list                           | Yes         |             |            |
-|list->string                   | Yes         |             |            |
-|list->vector                   | Yes         |             |            |
+|list-\>string                  | Yes         |             |            |
+|list-\>vector                  | Yes         |             |            |
 |list-copy                      | Yes         |             |            |
 |list-ref                       | Yes         |             |            |
 |list-set!                      | Yes         |             |            |
@@ -340,13 +340,13 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |vector                         | Yes         |             |            |
 |vector->list                   | Yes         |             |            |
 |vector->string                 |             |             |            |
-|vector-append                  |             |             |            |
-|vector-copy                    |             |             |            |
-|vector-copy!                   |             |             |            |
-|vector-fill!                   |             |             |            |
+|vector-append                  | Yes         |             |            |
+|vector-copy                    | Yes         |             |            |
+|vector-copy!                   | Yes         |             |            |
+|vector-fill!                   | Yes         |             |            |
 |vector-for-each                | Yes         |             |            |
 |vector-length                  | Yes         |             |            |
-|vector-map                     |             |             |            |
+|vector-map                     | Yes         |             |            |
 |vector-ref                     | Yes         |             |            |
 |vector-set!                    | Yes         |             |            |
 |vector?                        | Yes         |             |            |
@@ -366,7 +366,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 
 ## Notes on R7RS
 
-Vanity Scheme will never ever offer dynamic-wind, as it is contrary to Vanity's parallelism model.
+Vanity Scheme will never ever offer dynamic-wind, as it is contrary to Vanity's parallelism model. It is easily implemented in a library if you so care.
 
 Vanity Scheme will not offer bignums nor rationals. Vanity Scheme also does not offer gradual overflow, instead exceptions are generated. Exacts are signed 32 bit ints. Inexacts are double-precision floats.
 

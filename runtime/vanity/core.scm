@@ -57,7 +57,7 @@
     string->list list->string make-string substring string-copy string-copy! string-ref string-set! string-length string->symbol string->number string-append
     symbol->string
     ; vectors
-    list->vector vector->list make-vector vector vector-ref vector-set! vector-length vector-for-each 
+    list->vector vector->list make-vector vector-copy vector-copy! vector vector-ref vector-set! vector-length vector-map vector-for-each vector-append vector-fill!
     ; typevectors
     f64vector? list->f64vector f64vector->list make-f64vector f64vector f64vector-ref f64vector-set! f64vector-length
     f32vector? list->f32vector f32vector->list make-f32vector f32vector f32vector-ref f32vector-set! f32vector-length
@@ -79,6 +79,7 @@
     ; io
     current-output-port current-error-port current-input-port open-input-file open-output-file close-port
     open-output-string get-output-string with-output-to-file with-input-from-file 
+    call-with-port call-with-input-file call-with-output-file
     read-char read-line read newline display write
     ; misc
     call/cc call-with-current-continuation call-with-values apply values
@@ -747,29 +748,110 @@
         (let loop ((i 0))
           (if (< i len)
               (begin (apply f (map (lambda (vec) (vector-ref vec i)) vecs)) (loop (+ i 1)))))))))
-  #;(define vector-map
+  (define vector-map
     (case-lambda
       ((f xs)
        (let* ((len (vector-length xs))
-              (vec (make-vector len))
+              (vec (make-vector len)))
         (let loop ((i 0))
           (if (< i len)
-              (begin (f (vector-ref xs i)) (loop (+ i 1)))))))
+              (begin
+                (vector-set! vec i (f (vector-ref xs i)))
+                (loop (+ i 1)))
+              vec))))
       ((f xs ys)
-       (let ((len (min (vector-length xs) (vector-length ys))))
+       (let* ((len (min (vector-length xs) (vector-length ys)))
+              (vec (make-vector len)))
         (let loop ((i 0))
           (if (< i len)
-              (begin (f (vector-ref xs i) (vector-ref ys i)) (loop (+ i 1)))))))
+              (begin
+                (vector-set! vec i (f (vector-ref xs i) (vector-ref ys i)))
+                (loop (+ i 1)))
+              vec))))
       ((f xs ys zs)
-       (let ((len (min (vector-length xs) (vector-length ys) (vector-length zs))))
+       (let* ((len (min (vector-length xs) (vector-length ys) (vector-length zs)))
+              (vec (make-vector len)))
         (let loop ((i 0))
           (if (< i len)
-              (begin (f (vector-ref xs i) (vector-ref ys i) (vector-ref zs i)) (loop (+ i 1)))))))
+              (begin
+                (vector-set! vec i (f (vector-ref xs i) (vector-ref ys i) (vector-ref zs i)))
+                (loop (+ i 1)))
+              vec))))
       ((f . vecs)
-       (let ((len (apply min (map vector-length vecs))))
+       (let* ((len (apply min (map vector-length vecs)))
+              (vec (make-vector len)))
         (let loop ((i 0))
           (if (< i len)
-              (begin (apply f (map (lambda (vec) (vector-ref vec i)) vecs)) (loop (+ i 1)))))))))
+              (begin
+                (vector-set! vec i (apply f (map (lambda (vec) (vector-ref vec i)) vecs)))
+                (loop (+ i 1)))
+              vec))))))
+
+  (define vector-copy
+    (case-lambda
+      ((v)
+       (vector-copy v 0 (vector-length v)))
+      ((v start)
+       (vector-copy v start (vector-length v)))
+      ((v start end)
+       (vector-copy! (make-vector (- end start)) 0 v start end))))
+  (define vector-copy!
+    (case-lambda
+      ((dst at src)
+       (vector-copy! dst at src 0 (vector-length src)))
+      ((dst at src start)
+       (vector-copy! dst at src start (vector-length src)))
+      ((dst at src start end)
+       (let loop ((i start))
+         (if (< i end)
+             (begin
+               (vector-set! dst (+ i (- start) at) (vector-ref src i))
+               (loop (+ i 1)))
+             dst)))))
+  (define vector-append
+    (case-lambda
+      (() (vector))
+      ((a) a)
+      ((a b)
+       (let ((v (make-vector (+ (vector-length a) (vector-length b)))))
+         (vector-copy! v 0 a)
+         (vector-copy! v (vector-length a) b)
+         v))
+      ((a b c)
+       (let ((v (make-vector (+ (vector-length a) (vector-length b) (vector-length c)))))
+         (vector-copy! v 0 a)
+         (vector-copy! v (vector-length a) b)
+         (vector-copy! v (+ (vector-length a) (vector-length b)) c)
+         v))
+      ((a b c d)
+       (let ((v (make-vector (+ (vector-length a) (vector-length b) (vector-length c) (vector-length d)))))
+         (vector-copy! v 0 a)
+         (vector-copy! v (vector-length a) b)
+         (vector-copy! v (+ (vector-length a) (vector-length b)) c)
+         (vector-copy! v (+ (vector-length a) (vector-length b) (vector-length c)) d)
+         v))
+      (vecs
+       (let ((v (make-vector (apply + (map vector-length vecs))))
+             (at 0))
+         (for-each
+          (lambda (vec)
+            (vector-copy! v at vec)
+            (set! at (+ at (vector-length vec))))
+          vecs)
+         v))))
+  (define vector-fill!
+    (case-lambda
+      ((v fill)
+       (vector-fill! v fill 0 (vector-length v)))
+      ((v fill start)
+       (vector-fill! v fill start (vector-length v)))
+      ((v fill start end)
+       (let loop ((i start))
+         (if (< i end)
+             (begin
+               (vector-set! v i fill)
+               (loop (+ i 1))))))))
+
 
   ; records
   (define record ##vcore.record)
@@ -851,6 +933,15 @@
   (define (open-output-string)
     (try-or-gc open-output-string-impl "open-output-string: failed"))
   (define get-output-string ##vcore.get-output-string)
+
+  (define (call-with-port port proc)
+    (let ((ret (proc port)))
+      (close-port port)
+      ret))
+  (define (call-with-input-file path proc)
+    (call-with-port (open-input-file path) proc))
+  (define (call-with-output-file path proc)
+    (call-with-port (open-output-file path) proc))
 
   (define (with-output-to-file str thunk)
     (let ((port (open-output-file str)))

@@ -38,7 +38,17 @@ expr : LIT
      | 'cdr' VAR
      | VAR '[' expr ']
 
+     | VAR expr
+     | '(' expr ')'
+
      ;
 
 begin_list : define_list statement_list expr ';'
            ;
+
+define pi = 3.14;
+define sq(x) = x * x;
+define displayln(x) = {
+  display(x);
+  newline();
+};
