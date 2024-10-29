@@ -40,6 +40,8 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0install__root = VEncodePointer(VLookupConstant("_V0install__root", &_VW_V0install__root), VPOINTER_OTHER);
 }
 static void _V0vanity_V0compiler_V0config_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_k4" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_k4, got ~D~N"
   "-- expected 1~N"
@@ -64,6 +66,8 @@ static void _V0vanity_V0compiler_V0config_V20_k4(VRuntime * runtime, VEnv * upen
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_k3" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_k3, got ~D~N"
   "-- expected 1~N"
@@ -83,6 +87,8 @@ static void _V0vanity_V0compiler_V0config_V20_k3(VRuntime * runtime, VEnv * upen
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_k2" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_k2, got ~D~N"
   "-- expected 1~N"
@@ -102,6 +108,8 @@ static void _V0vanity_V0compiler_V0config_V20_k2(VRuntime * runtime, VEnv * upen
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_k1" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_k1, got ~D~N"
   "-- expected 1~N"
@@ -135,6 +143,8 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upen
  }
 }
 static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0compiler_V0config_V20_lambda1" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_lambda1, got ~D~N"
   "-- expected 1~N"
