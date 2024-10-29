@@ -577,11 +577,26 @@ SYSV_CALL void VRecordLength2(V_CORE_ARGS, VWORD k, VWORD record) {
   V_CALL(k, runtime, VEncodeInt(rec->len));
 }
 
+// hashing
+
+static uint64_t VEqHashImpl(VWORD x) {
+  return vhash64_quick(VBits(x));
+}
+
+static uint64_t VEqvHashImpl(VWORD x) {
+  if(VIsSymbol(x)) {
+    VBlob * b = VDecodeBlob(x);
+    return vhash(b->buf, b->len, 0);
+  }
+  return vhash64_quick(VBits(x));
+}
+
 // hash tables
-SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VVector * vec, VWORD key, VWORD val) {
+SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VVector * vec, VWORD key, VWORD val, unsigned flags) {
   uint64_t capacity = vec->len / 3;
   uint64_t tries = 0;
-  uint64_t index = vhash64_quick(VBits(key)) & (capacity-1);
+  uint64_t hash = (flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
+  uint64_t index = hash & (capacity-1);
 
   uint64_t poverty = 0;
   bool found = false;
@@ -590,6 +605,10 @@ SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VVector * vec, VWORD
     VWORD test = vec->arr[3*index+0];
 
     if(VBits(key) == VBits(test)) {
+      found = true;
+      break;
+    }
+    if((flags & HFLAG_EQV) && VDecodeBool(VInlineEqv2(runtime, key, test))) {
       found = true;
       break;
     }
@@ -657,14 +676,14 @@ SYSV_CALL static void VGrowHashTable(VRuntime * runtime, VHashTable * table, int
       continue;
     VWORD key = oldvec->arr[3*i+0];
     VWORD val = oldvec->arr[3*i+2];
-    assert(!VHashTableSetImpl(runtime, vec, key, val));
+    assert(!VHashTableSetImpl(runtime, vec, key, val, table->flags));
   }
 }
 
 SYSV_CALL void VMakeHashTable(V_CORE_ARGS, VWORD k, VWORD eq, VWORD hash, VWORD _len) {
   VClosure * closure = VCheckedDecodeClosure2(runtime, eq, "make-hash-table");
-  if(closure->func != (void*)VEq2)
-    VErrorC(runtime, "hash tables currently only support `eq?` as the comparator\n");
+  if(closure->func != (void*)VEq2 && closure->func != (void*)VEqv)
+    VErrorC(runtime, "hash tables currently only support `eq?` and `eqv?` as the comparator\n");
 
   int len = VCheckedDecodeInt2(runtime, _len, "make-hash-table");
   if(len <= 0) VErrorC(runtime, "hash tables need length > 0");
@@ -680,7 +699,7 @@ SYSV_CALL void VMakeHashTable(V_CORE_ARGS, VWORD k, VWORD eq, VWORD hash, VWORD 
   }
   VHashTable table = {
     .base = VMakeSmallObject(VHASH_TABLE),
-    .flags = HFLAG_EQ,
+    .flags = closure->func == (void*)VEq2 ? HFLAG_EQ : HFLAG_EQV,
     .occupancy = 0,
     .load_factor = 0.8f,
     .vec = VEncodePointer(vec, VPOINTER_OTHER),
@@ -702,18 +721,23 @@ SYSV_CALL void VHashTableRef(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key, VWOR
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-ref");
   VVector * vec = VCheckedDecodeVector2(runtime, table->vec, "hash-table-ref");
 
-  assert(table->flags & HFLAG_EQ);
+  assert((table->flags & HFLAG_EQ) || (table->flags & HFLAG_EQV));
 
 try_again: ;
   uint64_t capacity = vec->len / 3;
   uint64_t tries = 0;
-  uint64_t index = vhash64_quick(VBits(key)) & (capacity-1);
+  uint64_t hash = (table->flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
+  uint64_t index = hash & (capacity-1);
 
   bool found = false;
   while(tries <= capacity) {
     VWORD test = vec->arr[3*index+0];
 
     if(VBits(key) == VBits(test)) {
+      found = true;
+      break;
+    }
+    if((table->flags & HFLAG_EQV) && VDecodeBool(VInlineEqv2(runtime, key, test))) {
       found = true;
       break;
     }
@@ -744,7 +768,7 @@ SYSV_CALL void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key, VWOR
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-set!");
   VVector * vec = VCheckedDecodeVector2(runtime, table->vec, "hash-table-set!");
 
-  assert(table->flags & HFLAG_EQ);
+  assert((table->flags & HFLAG_EQ) || (table->flags & HFLAG_EQV));
   uint64_t capacity = vec->len / 3;
 
   if(table->occupancy+1 >= table->load_factor * capacity) {
@@ -757,7 +781,8 @@ SYSV_CALL void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key, VWOR
 
 try_again: ;
   uint64_t tries = 0;
-  uint64_t index = vhash64_quick(VBits(key)) & (capacity-1);
+  uint64_t hash = (table->flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
+  uint64_t index = hash & (capacity-1);
 
   uint64_t poverty = 0;
 
@@ -767,6 +792,10 @@ try_again: ;
     VWORD test = vec->arr[3*index+0];
 
     if(VBits(key) == VBits(test)) {
+      found = true;
+      break;
+    }
+    if((table->flags & HFLAG_EQV) && VDecodeBool(VInlineEqv2(runtime, key, test))) {
       found = true;
       break;
     }
@@ -822,10 +851,11 @@ SYSV_CALL void VHashTableDelete(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key) {
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-delete!");
   VVector * vec = VCheckedDecodeVector2(runtime, table->vec, "hash-table-delete!");
 
-  assert(table->flags == HFLAG_EQ);
+  assert((table->flags & HFLAG_EQ) || (table->flags & HFLAG_EQV));
   uint64_t capacity = vec->len / 3;
   uint64_t tries = 0;
-  uint64_t index = vhash64_quick(VBits(key)) & (capacity-1);
+  uint64_t hash = (table->flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
+  uint64_t index = hash & (capacity-1);
 
   bool found = false;
 
@@ -833,6 +863,10 @@ SYSV_CALL void VHashTableDelete(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key) {
     VWORD test = vec->arr[3*index+0];
 
     if(VBits(key) == VBits(test)) {
+      found = true;
+      break;
+    }
+    if((table->flags & HFLAG_EQV) && VDecodeBool(VInlineEqv2(runtime, key, test))) {
       found = true;
       break;
     }

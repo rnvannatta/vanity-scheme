@@ -56,6 +56,8 @@ __attribute__((used)) static void _V20CaseError__V10_Drandom__sample_B_D3_lambda
  , argc);
 }
 __attribute__((used)) static void _V20Case0__V10_Drandom__sample_B_D3_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V20Case0__V10_Drandom__sample_B_D3_lambda2" };
+ VRecordCall2(runtime, &dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V20Case0__V10_Drandom__sample_B_D3_lambda2, runtime, upenv, 2, argc, _var0, _var1) {
   // (##vcore.random-sample! (bruijn ##.k.11 0 0) (bruijn ##.rng.6 0 1))
     V_CALL_FUNC(VRandomSample, NULL, runtime,
@@ -64,6 +66,8 @@ __attribute__((used)) static void _V20Case0__V10_Drandom__sample_B_D3_lambda2(VR
  }
 }
 __attribute__((used)) static void _V20Case1__V10_Drandom__sample_B_D3_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ static VDebugInfo dbg = { "_V20Case1__V10_Drandom__sample_B_D3_lambda2" };
+ VRecordCall2(runtime, &dbg);
  V_GC_CHECK2_VARARGS((VFunc)_V20Case1__V10_Drandom__sample_B_D3_lambda2, runtime, upenv, 3, argc, _var0, _var1, _var2) {
   // (##vcore.random-sample-bounded! (bruijn ##.k.12 0 0) (bruijn ##.rng.7 0 1) (bruijn ##.end.8 0 2))
     V_CALL_FUNC(VRandomSampleBounded, NULL, runtime,
@@ -86,6 +90,8 @@ asm(
 "    jmp _V20CaseError__V10_Drandom__sample_B_D3_lambda2\n"
 );
 static void _V0vanity_V0hash_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k5" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0hash_V20_k5, got ~D~N"
   "-- expected 1~N"
@@ -118,6 +124,8 @@ static void _V0vanity_V0hash_V20_k5(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0vanity_V0hash_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k4" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0hash_V20_k4, got ~D~N"
   "-- expected 1~N"
@@ -137,6 +145,8 @@ static void _V0vanity_V0hash_V20_k4(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0vanity_V0hash_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k3" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0hash_V20_k3, got ~D~N"
   "-- expected 1~N"
@@ -156,6 +166,8 @@ static void _V0vanity_V0hash_V20_k3(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0vanity_V0hash_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k2" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0hash_V20_k2, got ~D~N"
   "-- expected 1~N"
@@ -175,6 +187,8 @@ static void _V0vanity_V0hash_V20_k2(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_k1" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0hash_V20_k1, got ~D~N"
   "-- expected 1~N"
@@ -206,6 +220,8 @@ static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
  }
 }
 static void _V0vanity_V0hash_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_lambda1" };
+ VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0hash_V20_lambda1, got ~D~N"
   "-- expected 1~N"

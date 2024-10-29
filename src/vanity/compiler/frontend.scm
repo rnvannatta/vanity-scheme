@@ -50,6 +50,17 @@
 
 (define benchmark? #f)
 
+(define stdout (current-output-port))
+(define (benchmark label thunk)
+  (let ((start (current-jiffy)))
+    (call-with-values
+      thunk
+      (lambda args
+        (let ((end (current-jiffy)))
+          (if benchmark?
+              (format stdout "~A: ~A seconds~N" label (/ (- end start) (jiffies-per-second))))
+          (apply values args))))))
+
 (define (extension file)
   (let loop ((i (- (string-length file) 1)))
     (cond ((<= i 0) #f)
@@ -271,20 +282,21 @@
                 cc-file
                 (lambda ()
                   (let* ((fd (open-input-file scm-file))
-                         (file (if fd (append (read-all fd)) (compiler-error "file does not exist" scm-file)))
-                         (expanded  (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths) architecture))) file)))
+                         (file (benchmark "read" (lambda () (if fd (append (read-all fd)) (compiler-error "file does not exist" scm-file)))))
+                         (expanded (benchmark "expand" (lambda () (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths) architecture))) file)))))
                     (if (eq? expand? 0) (for-each pretty-print expanded)
-                        (let ((cps (map (lambda (expr) (to-cps expr)) (apply append expanded))))
+                        (let ((cps (benchmark "cps" (lambda () (map (lambda (expr) (to-cps expr)) (apply append expanded))))))
                          (if (eq? expand? 1) (for-each pretty-print cps)
-                             (let ((opt (map (lambda (expr) (optimize expr (not bytecode?))) cps)))
+                             (let ((opt (benchmark "optimize" (lambda () (map (lambda (expr) (optimize expr (not bytecode?))) cps)))))
                               (if (eq? expand? 2) (for-each pretty-print opt)
-                                  (let* ((bruijn (map bruijn-ify opt))
-                                         (funs (to-functions bruijn (not bytecode?))))
-                                    (if bytecode?
-                                        (begin
-                                          (write-bytecode (apply to-bytecode (cons debug? (cons shared? funs))))
-                                          (not (null? (take-right funs 1))))
-                                        (apply printout2 (cons debug? (cons shared? funs)))))))))))))))
+                                  (let* ((funs (benchmark "extract" (lambda () (to-functions (map bruijn-ify opt) (not bytecode?))))))
+                                    (benchmark "transpile"
+                                      (lambda ()
+                                        (if bytecode?
+                                            (begin
+                                              (write-bytecode (apply to-bytecode (cons debug? (cons shared? funs))))
+                                              (not (null? (take-right funs 1))))
+                                            (apply printout2 (cons debug? (cons shared? funs)))))))))))))))))
           scm-files
           cc-files
           cc-obj-files)))
@@ -300,17 +312,19 @@
           (if (null? paths)
               acc
               (loop (string-append acc (sprintf " -I~A" (car paths))) (cdr paths)))))
-      (for-each
-        (lambda (scm-file cc-file obj-file)
-          (let ((path (realbasepath scm-file)))
-            (define cc-cmd (sprintf "~A -I~A ~A ~A -c -o ~A ~A" cc path cc-paths cc-command obj-file cc-file))
-            (if (and (not header?) (not bytecode?) (not transpile?) (not expand?))
-                (begin
-                  (if verbose? (displayln cc-cmd))
-                  (system cc-cmd)))))
-        scm-files
-        cc-files
-        cc-obj-files))
+      (benchmark "compile"
+        (lambda ()
+          (for-each
+            (lambda (scm-file cc-file obj-file)
+              (let ((path (realbasepath scm-file)))
+                (define cc-cmd (sprintf "~A -I~A ~A ~A -c -o ~A ~A" cc path cc-paths cc-command obj-file cc-file))
+                (if (and (not header?) (not bytecode?) (not transpile?) (not expand?))
+                    (begin
+                      (if verbose? (displayln cc-cmd))
+                      (system cc-cmd)))))
+            scm-files
+            cc-files
+            cc-obj-files))))
 
     ; 3. link
     (if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not object?))
