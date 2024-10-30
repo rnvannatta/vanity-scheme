@@ -592,7 +592,7 @@ static uint64_t VEqvHashImpl(VWORD x) {
 }
 
 // hash tables
-SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VVector * vec, VWORD key, VWORD val, unsigned flags) {
+SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VHashTable * table, VVector * vec, VWORD key, VWORD val, unsigned flags) {
   uint64_t capacity = vec->len / 3;
   uint64_t tries = 0;
   uint64_t hash = (flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
@@ -641,6 +641,8 @@ SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VVector * vec, VWORD
     poverty++;
   }
 
+  VTrackHashTable(runtime, table, key);
+
   vec->arr[3*index+0] = key;
   vec->arr[3*index+1] = VEncodeInt(poverty);
   vec->arr[3*index+2] = val;
@@ -676,7 +678,7 @@ SYSV_CALL static void VGrowHashTable(VRuntime * runtime, VHashTable * table, int
       continue;
     VWORD key = oldvec->arr[3*i+0];
     VWORD val = oldvec->arr[3*i+2];
-    assert(!VHashTableSetImpl(runtime, vec, key, val, table->flags));
+    assert(!VHashTableSetImpl(runtime, table, vec, key, val, table->flags));
   }
 }
 
@@ -716,6 +718,10 @@ SYSV_CALL void VHashTableEqvFunc(V_CORE_ARGS, VWORD k, VWORD _table) {
 SYSV_CALL void VHashTableHashFunc(V_CORE_ARGS, VWORD k, VWORD _table) {
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-hash-function");
   V_CALL(k, runtime, table->hash);
+}
+SYSV_CALL void VHashTableVector(V_CORE_ARGS, VWORD k, VWORD _table) {
+  VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-vector");
+  V_CALL(k, runtime, table->vec);
 }
 SYSV_CALL void VHashTableRef(V_CORE_ARGS, VWORD k, VWORD _table, VWORD key, VWORD thunk) {
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-ref");
@@ -836,6 +842,8 @@ try_again: ;
   }
   if(!found)
     table->occupancy++;
+
+  VTrackHashTable(runtime, table, key);
 
   vec->arr[3*index+0] = key;
   vec->arr[3*index+1] = VEncodeInt(poverty);

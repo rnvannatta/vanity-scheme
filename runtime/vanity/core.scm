@@ -27,7 +27,7 @@
   (import (vanity seed))
   (export
     ; predicates
-    null? eof-object? boolean? pair? vector? record? procedure? symbol? string? exact? exact-integer? inexact? real? integer? char?
+    null? eof-object? boolean? pair? vector? hash-table? record? procedure? symbol? string? exact? exact-integer? inexact? real? integer? char?
     nullptr? foreign-pointer?
     ; equality
     eq? symbol=? eqv? equal?
@@ -73,7 +73,7 @@
     ; records
     record record-ref record-set! record-length
     ; hash table
-    make-hash-table hash-table-ref hash-table-set! hash-table-delete!
+    make-hash-table hash-table-ref hash-table-set! hash-table-delete! hash-table->alist
     ; chars
     char->integer
     ; io
@@ -112,6 +112,7 @@
   (define eof-object? ##vcore.eof-object?)
   (define pair? ##vcore.pair?)
   (define vector? ##vcore.vector?)
+  (define hash-table? ##vcore.hash-table?)
   (define record? ##vcore.record?)
   (define procedure? ##vcore.procedure?)
   (define symbol? ##vcore.symbol?)
@@ -876,6 +877,16 @@
   (define (hash-table-set! table key val)
     (##vcore.hash-table-set! table key val))
   (define hash-table-delete! ##vcore.hash-table-delete!)
+  (define (hash-table->alist table)
+    (let ((vec (##vcore.hash-table-vector table)))
+      (let loop ((i 0))
+        (if (< i (vector-length vec))
+            (if (##vcore.void? (vector-ref vec i))
+                (loop (+ i 3))
+                (cons
+                  (cons (vector-ref vec i) (vector-ref vec (+ i 2)))
+                  (loop (+ i 3))))
+            '()))))
 
   ; chars
 
@@ -1009,6 +1020,12 @@
               (printout (vector-ref x i) write? port)
               (loop (+ i 1)))))
         (##vcore.display-word ")" port)))
+      ((hash-table? x)
+       (let ((eq (hash-table-equivalence-function x)))
+         (cond ((eq? eq eq?) (##vcore.display-word "#hasheq" port))
+               ((eq? eq eqv?) (##vcore.display-word "#hasheqv" port))
+               (else (##vcore.display-word "#hash" port))))
+       (printout (hash-table->alist x) write? port))
       (else (if write? (##vcore.write x port) (##vcore.display-word x port)))))
   (define display
     (case-lambda
