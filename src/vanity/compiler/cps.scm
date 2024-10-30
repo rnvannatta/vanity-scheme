@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler cps)
-  (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity intrinsics))
+  (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity intrinsics) (vanity pretty-print))
   (export to-cps optimize)
   (define (to-cps expr)
     (define (application? x)
@@ -220,6 +220,52 @@
       (if (pair? lst)
           (loop (cdr lst) (+ len 1))
           len)))
+
+  (define (count-refs expr)
+    (define count-table (make-hash-table eqv?))
+    (define impure-table (make-hash-table eqv?))
+    (define (count-refs-atom expr)
+      (match expr
+        (('quote . _) #f)
+        (('##foreign.function . _) #f)
+        (('##inline . _) (error "inline expression in unoptimized code???"))
+
+        (('lambda _ body) (count-refs-apply body))
+        (('continuation _ body) (count-refs-apply body))
+        (('case-lambda (_ body) ...)
+         (map (lambda (body) (count-refs-apply body)) body))
+        (else expr
+          (if (symbol? expr)
+              (hash-table-set! count-table expr (+ 1 (hash-table-ref count-table expr (lambda () 0))))))))
+    (define (count-refs-apply expr)
+      (match expr
+        ; Simplifying ((continuation (x) (x args ...)) y) to (y args)
+        (('letrec ((_ vals) ...) body)
+         (map count-refs-atom vals)
+         (count-refs-apply body))
+
+        (('if p a b)
+         (count-refs-atom p)
+         (count-refs-apply a)
+         (count-refs-apply b))
+        (('set! k y val)
+         (count-refs-atom k)
+         (count-refs-atom y)
+         (count-refs-atom val)
+
+         (hash-table-set! impure-table y #t)
+         ; defensive koding, please kill later
+         (if (not (symbol? y)) (error "not a symbol in set argument???")))
+        ; defensive koding, please kill later
+        (('set! . jank) (error "malformed set"))
+
+        ((f . xs)
+         (count-refs-atom f)
+         (map count-refs-atom xs))
+        (else (compiler-error "count-refs: malformed application" expr))))
+    (count-refs-atom expr)
+    (values count-table impure-table))
+
   ; need to rewrite the optimize-impl to be more like an evaluator
   ; it's a crappy normal order evaluator rn
   ; so the expression ((if p f g) x) doesn't fully simplify without 2 invocations

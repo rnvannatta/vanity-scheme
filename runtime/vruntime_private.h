@@ -79,6 +79,9 @@ typedef struct VRuntime {
     VWORD * container;
     VWORD * slot;
   } * VTrackedMutations;
+  unsigned num_tracked_hash_tables;
+  unsigned tracked_hash_tables_size;
+  VHashTable ** tracked_hash_tables;
   // global vars info
   VGlobalEntry * VGlobalTable;
   unsigned VNumGlobals;
@@ -121,3 +124,4 @@ typedef struct VRuntime {
 } VRuntime;
 
 SYSV_CALL void VGetStackInfo(char ** start, size_t * size);
+void VTrackHashTable(VRuntime * runtime, VHashTable * table, VWORD key);
