@@ -1007,6 +1007,13 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
         *slot = VMoveDispatch(runtime, *slot);
       }
     }
+    // for the same reason, we can ignore hash table tracking during major gcs
+    if(runtime->num_tracked_hash_tables) {
+      for(unsigned i = 0; i < runtime->num_tracked_hash_tables; i++) {
+        runtime->tracked_hash_tables[i]->flags |= HFLAG_DIRTY;
+      }
+    }
+
     // Finalizers are only processed during major gcs, so we need
     // to manually copy them over during minor gcs
     VFinalizerTable * table = &runtime->VHeapFinalizers[runtime->VActiveHeap];
@@ -1040,6 +1047,7 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     table->new_finalizers_start = table->num_finalizers;
   }
   runtime->VNumTrackedMutations = 0;
+  runtime->num_tracked_hash_tables = 0;
 
   if(runtime->VGrowSymtable || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
   {
@@ -1337,6 +1345,7 @@ static inline void VShiftRuntime(VObject * o, void const * old, void const * old
 
 static inline void VShiftHashTable(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
   VHashTable * table = (VHashTable*)o;
+  table->flags |= HFLAG_DIRTY;
   VShiftWord(&table->vec, old, oldend, shift);
   VShiftWord(&table->eq, old, oldend, shift);
   VShiftWord(&table->hash, old, oldend, shift);
@@ -1638,6 +1647,7 @@ static SYSV_CALL void VFPrintfC(VRuntime * runtime, FILE * f, char const * str, 
   va_end(args);
 }
 
+
 // Its impossible for a var in the old set to point to the new set
 // except through mutation, track all such events to avoid dropping them
 // during GC
@@ -1666,6 +1676,22 @@ SYSV_CALL void VTrackMutation(VRuntime * runtime, void * container, VWORD * slot
       runtime->VNumUntrackedMutations++;
     }
   } 
+}
+
+// We need to do a similar thing for hash tables to mark when rehashing is necessary.
+void VTrackHashTable(VRuntime * runtime, VHashTable * table, VWORD key) {
+  if(runtime->num_tracked_hash_tables >= runtime->tracked_hash_tables_size) {
+    if(!runtime->tracked_hash_tables_size)
+      runtime->tracked_hash_tables_size = 8;
+    runtime->tracked_hash_tables_size *= 2;
+    runtime->tracked_hash_tables = realloc(runtime->tracked_hash_tables, sizeof(VHashTable*)*runtime->tracked_hash_tables_size);
+  }
+  if(VIsPointer(key)) {
+    void *keyptr = VDecodePointer(key);
+    // also check for correct hash table type
+    if(VMemLocation(runtime, keyptr) == STACK_MEM)
+      runtime->tracked_hash_tables[runtime->num_tracked_hash_tables++] = table;
+  }
 }
 
 SYSV_CALL static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val) {
@@ -2497,6 +2523,10 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   r->VTrackedMutationsSize = 0;
   r->VTrackedMutations = NULL;
 
+  r->num_tracked_hash_tables = 0;
+  r->tracked_hash_tables_size = 0;
+  r->tracked_hash_tables = NULL;
+
   r->VGlobalTable = NULL;
   r->VNumGlobals = 0;
   r->VNumGlobalSlots = 0;
@@ -2794,6 +2824,10 @@ static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * f
   r->VNumUntrackedMutations = 0;
   r->VTrackedMutationsSize = 0;
   r->VTrackedMutations = NULL;
+
+  r->num_tracked_hash_tables = 0;
+  r->tracked_hash_tables_size = 0;
+  r->tracked_hash_tables = NULL;
 
   r->VGlobalTable = runtime->VGlobalTable;
   r->VNumGlobals = runtime->VNumGlobals;

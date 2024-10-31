@@ -26,11 +26,11 @@
 (define-library (vanity compiler cps)
   (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity intrinsics) (vanity pretty-print))
   (export to-cps optimize)
+  (define (application? x)
+    (and (pair? x) (not (memv (car x) '(quote lambda continuation case-lambda ##foreign.function ##inline)))))
+  (define (combination? x)
+    (and (pair? x) (not (memv (car x) '(quote lambda continuation case-lambda ##foreign.function ##inline begin if or letrec)))))
   (define (to-cps expr)
-    (define (application? x)
-      (and (pair? x) (not (memv (car x) '(quote lambda case-lambda ##foreign.function)))))
-    (define (combination? x)
-      (and (pair? x) (not (memv (car x) '(quote lambda case-lambda ##foreign.function begin if or letrec)))))
     (define (iter-atom x)
       (define (iter-lambda args body)
         (let ((k (gensym "k")))
@@ -134,79 +134,30 @@
        `(##vcore.declare ,f ,(cadr (caddr (to-cps-impl l)))))
       (else (to-cps-impl expr))))
 
-  ; like member but checks dotted lists. not semipredicate safe
-  ; but doesn't matter for checking lambda dotted lists
-
-  ; Not general purpose: for manipulating lists of symbols
-  ; uses eqv operation
-  (define (memtail x lst)
-      (if (pair? lst)
-          (if (equal? x (car lst)) lst
-              (memtail x (cdr lst)))
-          (if (equal? x lst) lst #f)))
-
-  (define (ref-count-lambda x args body)
-    (if (memtail x args)
-        0
-        (ref-count x body)))
-  (define (ref-count x expr)
-    (match expr
-      (('lambda args body)
-       (ref-count-lambda x args body))
-      (('continuation args body)
-       (ref-count-lambda x args body))
-      (('case-lambda (args body) ...)
-       (apply + (map (lambda (args body) (ref-count-lambda x args body)) args body)))
-      (('##foreign.function . _) 0)
-      (('quote x) 0)
-      (('letrec ((args vals) ...) body)
-       (if (memtail x args)
-           0
-           (fold + (ref-count x body) (map (lambda (val) (ref-count x val)) vals))))
-      ((f . xs) (+ (ref-count x f) (ref-count x xs)))
-      (y (if (eqv? x y) 1 0))))
-  (define (pure-in-lambda? x args body)
-    (if (memtail x args) #t
-        (pure-in? x body)))
-  (define (pure-in? x expr)
-    (match expr
-      (('lambda args body)
-       (pure-in-lambda? x args body))
-      (('continuation args body)
-       (pure-in-lambda? x args body))
-      (('case-lambda (args body) ...)
-       (fold (lambda (a b) (and a b)) #t (map (lambda (args body) (pure-in-lambda? x args body)) args body)))
-      (('##foreign.function . _) #t)
-      (('quote x) #t)
-      (('set! k y . body)
-       (if (eqv? x y) #f
-           (and (pure-in? x k) (pure-in? x body))))
-      (('letrec ((args vals) ...) body)
-       (if (memtail x args)
-           #t
-           (fold (lambda (a b) (and a b)) (pure-in? x body) (map (lambda (val) (pure-in? x val)) vals))))
-      ((f . xs) (and (pure-in? x f) (pure-in? x xs)))
-      (else #t)))
-  (define (substitute-lambda x atom args body)
-    (if (memtail x args) `(,args ,body)
-        `(,args ,(substitute x atom body))))
-  (define (substitute x atom expr)
-    (match expr
-      (('lambda args body)
-       (cons 'lambda (substitute-lambda x atom args body)))
-      (('continuation args body)
-       (cons 'continuation (substitute-lambda x atom args body)))
-      (('case-lambda (args body) ...)
-       (cons 'case-lambda (map (lambda (args body) (substitute-lambda x atom args body)) args body)))
-      (('##foreign.function . _) expr)
-      (('quote x) expr)
-      (('letrec ((args vals) ...) body)
-       (if (memtail x args)
-           expr
-           `(letrec ,(map list args (map (lambda (val) (substitute x atom val)) vals))
-              ,(substitute x atom body))))
-      ((f . xs) (cons (substitute x atom f) (substitute x atom xs)))
-      (y (if (eqv? x y) atom y))))
+  (define (substitute x atom expr n)
+    (define (iter expr)
+      (if (= n 0)
+          expr
+          (match expr
+            (('lambda args body)
+             `(lambda ,args ,(iter body)))
+            (('continuation args body)
+             `(continuation ,args ,(iter body)))
+            (('case-lambda (args body) ...)
+             (cons 'case-lambda (map (lambda (args body) `(,args ,(iter body))) args body)))
+            (('##foreign.function . _) expr)
+            (('quote x) expr)
+            (('letrec ((args vals) ...) body)
+             `(letrec ,(map list args (map (lambda (val) (iter val)) vals))
+                      ,(iter body)))
+            ((f . xs) (cons (iter f) (iter xs)))
+            (y
+             (if (eqv? x y)
+                 (begin
+                   (set! n (- n 1))
+                   atom)
+                 y)))))
+    (iter expr))
 
   ; things that are still considered 'applications' for the purposes of CPS
   ; `if` is considered an application because it's of the form (if p (f args) (g args))
@@ -221,6 +172,25 @@
           (loop (cdr lst) (+ len 1))
           len)))
 
+  (define (add-ref! refs x n)
+    (let ((n0 (hash-table-ref refs x (lambda () 0))))
+      (hash-table-set! refs x (+ n0 n))))
+  (define (sub-ref! refs x n)
+    (let ((n0 (hash-table-ref refs x (lambda () 0))))
+      (if (> n n0) (error "internal compiler error: negative variable refcount" x n0 n))
+      (hash-table-set! refs x (- n0 n))))
+  (define add-refs!
+    (case-lambda
+      ((arefs brefs)
+       (add-refs! arefs brefs 1))
+      ((arefs brefs n)
+       (for-each
+        (lambda (keyval) (add-ref! arefs (car keyval) (* n (cdr keyval))))
+        (hash-table->alist brefs)))))
+  (define (sub-refs! arefs brefs)
+    (for-each
+      (lambda (keyval) (sub-ref! arefs (car keyval) (cdr keyval)))
+      (hash-table->alist brefs)))
   (define (count-refs expr)
     (define count-table (make-hash-table eqv?))
     (define impure-table (make-hash-table eqv?))
@@ -228,12 +198,13 @@
       (match expr
         (('quote . _) #f)
         (('##foreign.function . _) #f)
-        (('##inline . _) (error "inline expression in unoptimized code???"))
+        (('##inline . xs)
+         (for-each count-refs-atom xs))
 
         (('lambda _ body) (count-refs-apply body))
         (('continuation _ body) (count-refs-apply body))
         (('case-lambda (_ body) ...)
-         (map (lambda (body) (count-refs-apply body)) body))
+         (for-each (lambda (body) (count-refs-apply body)) body))
         (else expr
           (if (symbol? expr)
               (hash-table-set! count-table expr (+ 1 (hash-table-ref count-table expr (lambda () 0))))))))
@@ -241,7 +212,7 @@
       (match expr
         ; Simplifying ((continuation (x) (x args ...)) y) to (y args)
         (('letrec ((_ vals) ...) body)
-         (map count-refs-atom vals)
+         (for-each count-refs-atom vals)
          (count-refs-apply body))
 
         (('if p a b)
@@ -261,9 +232,11 @@
 
         ((f . xs)
          (count-refs-atom f)
-         (map count-refs-atom xs))
+         (for-each count-refs-atom xs))
         (else (compiler-error "count-refs: malformed application" expr))))
-    (count-refs-atom expr)
+    (if (application? expr)
+        (count-refs-apply expr)
+        (count-refs-atom expr))
     (values count-table impure-table))
 
   ; need to rewrite the optimize-impl to be more like an evaluator
@@ -294,7 +267,7 @@
         (else (compiler-error "optimize-lambda: malformed lambda" expr))))
 
     ; There is a bug somewhere in here...
-    (define (inline-let expr done-ys done-xs ys xs)
+    #;(define (inline-let expr done-ys done-xs ys xs)
       (if (null? ys)
           (if (null? done-ys)
               (optimize-apply expr)
@@ -319,22 +292,27 @@
     (define (optimize-let let-expr)
       (match let-expr
         ((('continuation (y) expr) x)
-         (let ((refs (ref-count y expr)))
-           
-           (cond ((= refs 0) (optimize-apply expr))
-                 ; we don't care whether the data the variable addresses is pure, just whether
-                 ; the variable is pure, which can be determined statically.
-                 ; ... and now that I think about it, any variable which is impure is used twice
-                 ; or can be eliminated, but eliminating that variable requires eliminating the
-                 ; set! expressions
-                 ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1))
-                       ; there's a bug with doing this with lambdas:
-                       ; (let ((f (lambda (y) x))) (let ((x 0)) (f 2)))
-                       ; we need complete alpha conversion to avoid this bug
-                       (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
-                       (pure-in? y expr))
-                  (optimize-apply (substitute y x expr)))
-                 (else `(,(optimize-atom `(continuation (,y) ,expr)) ,(optimize-atom x))))))
+         (let ((refs (hash-table-ref ref-table y (lambda () 0)))
+               (pure (not (hash-table-ref impure-table y (lambda () #f)))))
+          (cond ((= refs 0) (optimize-apply expr))
+                ; we don't care whether the data the variable addresses is pure, just whether
+                ; the variable is pure, which can be determined statically.
+                ; ... and now that I think about it, any variable which is impure is used twice
+                ; or can be eliminated, but eliminating that variable requires eliminating the
+                ; set! expressions
+                ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1))
+                      ; there's a bug with doing this with lambdas:
+                      ; (let ((f (lambda (y) x))) (let ((x 0)) (f 2)))
+                      ; we need complete alpha conversion to avoid this bug
+                      (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
+                      pure)
+                 (if (not (= refs 1))
+                     (let ()
+                       (define-values (xrefs xpure) (count-refs x))
+                       (add-refs! ref-table xrefs (- refs 1))))
+                 (hash-table-set! ref-table y 0)
+                 (optimize-apply (substitute y x expr refs)))
+                (else `(,(optimize-atom `(continuation (,y) ,expr)) ,(optimize-atom x))))))
         ((('lambda () expr))
          (optimize-apply expr))
         ((('lambda (ys ...) expr) xs ...)
@@ -364,8 +342,16 @@
 
         (('letrec . _) (optimize-letrec expr))
 
-        (('if #t a b) (optimize-apply a))
-        (('if #f a b) (optimize-apply b))
+        (('if #t a b)
+         (let ()
+           (define-values (bcount bpure) (count-refs b))
+           (sub-refs! ref-table bcount)
+           (optimize-apply a)))
+        (('if #f a b)
+         (let ()
+           (define-values (acount apure) (count-refs a))
+           (sub-refs! ref-table acount)
+           (optimize-apply b)))
         (('if p a b)
          `(if ,p ,(optimize-apply a) ,(optimize-apply b)))
 
@@ -391,6 +377,8 @@
         (('case-lambda (args body) ...)
          `(case-lambda . ,(map (lambda (args body) `(,args ,(optimize-apply body))) args body)))
         (else expr)))
+    (define-values (ref-table impure-table) (count-refs expr))
+    ;(displayln ref-table (current-error-port))
     ; In order to maintain CPS, atoms have to map to atoms, and applications have to map to applications
     ; applications consist of applying a set of atoms together, applications do not apply applications
     (match expr
