@@ -27,115 +27,8 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D2901 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0seed_V20" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D2900 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
-VWEAK VWORD _V40_V10vcore_Deof__object_Q;VWEAK VClosure _VW_V40_V10vcore_Deof__object_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VEofP2, NULL };
-VWEAK VWORD _V40_V10vcore_Dpair_Q;VWEAK VClosure _VW_V40_V10vcore_Dpair_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VPairP2, NULL };
-VWEAK VWORD _V40_V10vcore_Dvector_Q;VWEAK VClosure _VW_V40_V10vcore_Dvector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VVectorP2, NULL };
-VWEAK VWORD _V40_V10vcore_Dhash__table_Q;VWEAK VClosure _VW_V40_V10vcore_Dhash__table_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VHashTableP, NULL };
-VWEAK VWORD _V40_V10vcore_Drecord_Q;VWEAK VClosure _VW_V40_V10vcore_Drecord_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRecordP2, NULL };
-VWEAK VWORD _V40_V10vcore_Dprocedure_Q;VWEAK VClosure _VW_V40_V10vcore_Dprocedure_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VProcedureP2, NULL };
-VWEAK VWORD _V40_V10vcore_Dsymbol_Q;VWEAK VClosure _VW_V40_V10vcore_Dsymbol_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSymbolP2, NULL };
-VWEAK VWORD _V40_V10vcore_Dstring_Q;VWEAK VClosure _VW_V40_V10vcore_Dstring_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringP2, NULL };
-VWEAK VWORD _V40_V10vcore_Dchar_Q;VWEAK VClosure _VW_V40_V10vcore_Dchar_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCharP2, NULL };
-VWEAK VWORD _V40_V10vcore_Dnullptr_Q;VWEAK VClosure _VW_V40_V10vcore_Dnullptr_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VNullptrP2, NULL };
-VWEAK VWORD _V40_V10vcore_Dforeign__pointer_Q;VWEAK VClosure _VW_V40_V10vcore_Dforeign__pointer_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VForeignPointerP2, NULL };
-VWEAK VWORD _V40_V10vcore_Dint_Q;VWEAK VClosure _VW_V40_V10vcore_Dint_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VIntP2, NULL };
-VWEAK VWORD _V40_V10vcore_Ddouble_Q;VWEAK VClosure _VW_V40_V10vcore_Ddouble_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VDoubleP2, NULL };
-VWEAK VWORD _V40_V10vcore_Deqv_Q;VWEAK VClosure _VW_V40_V10vcore_Deqv_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VEqv, NULL };
-VWEAK VWORD _V40_V10vcore_Dnot;VWEAK VClosure _VW_V40_V10vcore_Dnot = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VNot2, NULL };
-VWEAK VWORD _V40_V10vcore_Dexact;VWEAK VClosure _VW_V40_V10vcore_Dexact = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VExact, NULL };
-VWEAK VWORD _V40_V10vcore_Dinexact;VWEAK VClosure _VW_V40_V10vcore_Dinexact = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VInexact, NULL };
-VWEAK VWORD _V40_V10vcore_D_P;VWEAK VClosure _VW_V40_V10vcore_D_P = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VAdd2, NULL };
-VWEAK VWORD _V40_V10vcore_D__;VWEAK VClosure _VW_V40_V10vcore_D__ = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSub2, NULL };
-VWEAK VWORD _V40_V10vcore_D_S;VWEAK VClosure _VW_V40_V10vcore_D_S = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMul2, NULL };
-VWEAK VWORD _V40_V10vcore_D_W;VWEAK VClosure _VW_V40_V10vcore_D_W = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VDiv2, NULL };
-VWEAK VWORD _V40_V10vcore_Dquotient;VWEAK VClosure _VW_V40_V10vcore_Dquotient = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VQuot2, NULL };
-VWEAK VWORD _V40_V10vcore_Dremainder;VWEAK VClosure _VW_V40_V10vcore_Dremainder = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRem2, NULL };
-VWEAK VWORD _V40_V10vcore_Dcons;VWEAK VClosure _VW_V40_V10vcore_Dcons = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCons2, NULL };
-VWEAK VWORD _V40_V10vcore_Dset__car_B;VWEAK VClosure _VW_V40_V10vcore_Dset__car_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSetCar2, NULL };
-VWEAK VWORD _V40_V10vcore_Dset__cdr_B;VWEAK VClosure _VW_V40_V10vcore_Dset__cdr_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSetCdr2, NULL };
-VWEAK VWORD _V40_V10vcore_Dmake__string;VWEAK VClosure _VW_V40_V10vcore_Dmake__string = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMakeString2, NULL };
-VWEAK VWORD _V40_V10vcore_Dsubstring;VWEAK VClosure _VW_V40_V10vcore_Dsubstring = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSubstring2, NULL };
-VWEAK VWORD _V40_V10vcore_Dstring__copy_B;VWEAK VClosure _VW_V40_V10vcore_Dstring__copy_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringCopy2, NULL };
-VWEAK VWORD _V40_V10vcore_Dstring__ref;VWEAK VClosure _VW_V40_V10vcore_Dstring__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringRef2, NULL };
-VWEAK VWORD _V40_V10vcore_Dstring__set_B;VWEAK VClosure _VW_V40_V10vcore_Dstring__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringSet2, NULL };
-VWEAK VWORD _V40_V10vcore_Dstring__length;VWEAK VClosure _VW_V40_V10vcore_Dstring__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringLength2, NULL };
-VWEAK VWORD _V40_V10vcore_Dstring___Gsymbol;VWEAK VClosure _VW_V40_V10vcore_Dstring___Gsymbol = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringSymbol2, NULL };
-VWEAK VWORD _V40_V10vcore_Dstring___Gnumber;VWEAK VClosure _VW_V40_V10vcore_Dstring___Gnumber = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringNumber2, NULL };
-VWEAK VWORD _V40_V10vcore_Dsymbol___Gstring;VWEAK VClosure _VW_V40_V10vcore_Dsymbol___Gstring = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSymbolString2, NULL };
-VWEAK VWORD _V40_V10vcore_Dlist___Gvector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gvector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListVector2, NULL };
-VWEAK VWORD _V40_V10vcore_Dvector__ref;VWEAK VClosure _VW_V40_V10vcore_Dvector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VVectorRef2, NULL };
-VWEAK VWORD _V40_V10vcore_Dvector__set_B;VWEAK VClosure _VW_V40_V10vcore_Dvector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VVectorSet2, NULL };
-VWEAK VWORD _V40_V10vcore_Dvector__length;VWEAK VClosure _VW_V40_V10vcore_Dvector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VVectorLength2, NULL };
-VWEAK VWORD _V40_V10vcore_Df32vector_Q;VWEAK VClosure _VW_V40_V10vcore_Df32vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF32VectorP, NULL };
-VWEAK VWORD _V40_V10vcore_Dlist___Gf32vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gf32vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListF32Vector, NULL };
-VWEAK VWORD _V40_V10vcore_Df32vector__ref;VWEAK VClosure _VW_V40_V10vcore_Df32vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF32VectorRef, NULL };
-VWEAK VWORD _V40_V10vcore_Df32vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Df32vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF32VectorSet, NULL };
-VWEAK VWORD _V40_V10vcore_Df32vector__length;VWEAK VClosure _VW_V40_V10vcore_Df32vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF32VectorLength, NULL };
-VWEAK VWORD _V40_V10vcore_Df64vector_Q;VWEAK VClosure _VW_V40_V10vcore_Df64vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF64VectorP, NULL };
-VWEAK VWORD _V40_V10vcore_Dlist___Gf64vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gf64vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListF64Vector, NULL };
-VWEAK VWORD _V40_V10vcore_Df64vector__ref;VWEAK VClosure _VW_V40_V10vcore_Df64vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF64VectorRef, NULL };
-VWEAK VWORD _V40_V10vcore_Df64vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Df64vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF64VectorSet, NULL };
-VWEAK VWORD _V40_V10vcore_Df64vector__length;VWEAK VClosure _VW_V40_V10vcore_Df64vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF64VectorLength, NULL };
-VWEAK VWORD _V40_V10vcore_Ds32vector_Q;VWEAK VClosure _VW_V40_V10vcore_Ds32vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS32VectorP, NULL };
-VWEAK VWORD _V40_V10vcore_Dlist___Gs32vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gs32vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListS32Vector, NULL };
-VWEAK VWORD _V40_V10vcore_Ds32vector__ref;VWEAK VClosure _VW_V40_V10vcore_Ds32vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS32VectorRef, NULL };
-VWEAK VWORD _V40_V10vcore_Ds32vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Ds32vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS32VectorSet, NULL };
-VWEAK VWORD _V40_V10vcore_Ds32vector__length;VWEAK VClosure _VW_V40_V10vcore_Ds32vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS32VectorLength, NULL };
-VWEAK VWORD _V40_V10vcore_Du16vector_Q;VWEAK VClosure _VW_V40_V10vcore_Du16vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU16VectorP, NULL };
-VWEAK VWORD _V40_V10vcore_Dlist___Gu16vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gu16vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListU16Vector, NULL };
-VWEAK VWORD _V40_V10vcore_Du16vector__ref;VWEAK VClosure _VW_V40_V10vcore_Du16vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU16VectorRef, NULL };
-VWEAK VWORD _V40_V10vcore_Du16vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Du16vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU16VectorSet, NULL };
-VWEAK VWORD _V40_V10vcore_Du16vector__length;VWEAK VClosure _VW_V40_V10vcore_Du16vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU16VectorLength, NULL };
-VWEAK VWORD _V40_V10vcore_Ds16vector_Q;VWEAK VClosure _VW_V40_V10vcore_Ds16vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS16VectorP, NULL };
-VWEAK VWORD _V40_V10vcore_Dlist___Gs16vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gs16vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListS16Vector, NULL };
-VWEAK VWORD _V40_V10vcore_Ds16vector__ref;VWEAK VClosure _VW_V40_V10vcore_Ds16vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS16VectorRef, NULL };
-VWEAK VWORD _V40_V10vcore_Ds16vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Ds16vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS16VectorSet, NULL };
-VWEAK VWORD _V40_V10vcore_Ds16vector__length;VWEAK VClosure _VW_V40_V10vcore_Ds16vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS16VectorLength, NULL };
-VWEAK VWORD _V40_V10vcore_Du8vector_Q;VWEAK VClosure _VW_V40_V10vcore_Du8vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU8VectorP, NULL };
-VWEAK VWORD _V40_V10vcore_Dlist___Gu8vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gu8vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListU8Vector, NULL };
-VWEAK VWORD _V40_V10vcore_Du8vector__ref;VWEAK VClosure _VW_V40_V10vcore_Du8vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU8VectorRef, NULL };
-VWEAK VWORD _V40_V10vcore_Du8vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Du8vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU8VectorSet, NULL };
-VWEAK VWORD _V40_V10vcore_Du8vector__length;VWEAK VClosure _VW_V40_V10vcore_Du8vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU8VectorLength, NULL };
-VWEAK VWORD _V40_V10vcore_Ds8vector_Q;VWEAK VClosure _VW_V40_V10vcore_Ds8vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS8VectorP, NULL };
-VWEAK VWORD _V40_V10vcore_Dlist___Gs8vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gs8vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListS8Vector, NULL };
-VWEAK VWORD _V40_V10vcore_Ds8vector__ref;VWEAK VClosure _VW_V40_V10vcore_Ds8vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS8VectorRef, NULL };
-VWEAK VWORD _V40_V10vcore_Ds8vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Ds8vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS8VectorSet, NULL };
-VWEAK VWORD _V40_V10vcore_Ds8vector__length;VWEAK VClosure _VW_V40_V10vcore_Ds8vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS8VectorLength, NULL };
-VWEAK VWORD _V40_V10vcore_Drecord;VWEAK VClosure _VW_V40_V10vcore_Drecord = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCreateRecord2, NULL };
-VWEAK VWORD _V40_V10vcore_Drecord__ref;VWEAK VClosure _VW_V40_V10vcore_Drecord__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRecordRef2, NULL };
-VWEAK VWORD _V40_V10vcore_Drecord__set_B;VWEAK VClosure _VW_V40_V10vcore_Drecord__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRecordSet2, NULL };
-VWEAK VWORD _V40_V10vcore_Drecord__length;VWEAK VClosure _VW_V40_V10vcore_Drecord__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRecordLength2, NULL };
-VWEAK VWORD _V40_V10vcore_Dhash__table__equivalence__function;VWEAK VClosure _VW_V40_V10vcore_Dhash__table__equivalence__function = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VHashTableEqvFunc, NULL };
-VWEAK VWORD _V40_V10vcore_Dhash__table__hash__function;VWEAK VClosure _VW_V40_V10vcore_Dhash__table__hash__function = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VHashTableHashFunc, NULL };
-VWEAK VWORD _V40_V10vcore_Dhash__table__delete_B;VWEAK VClosure _VW_V40_V10vcore_Dhash__table__delete_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VHashTableDelete, NULL };
-VWEAK VWORD _V40_V10vcore_Dchar__integer;VWEAK VClosure _VW_V40_V10vcore_Dchar__integer = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCharInt2, NULL };
-VWEAK VWORD _V40_V10vcore_Dget__output__string;VWEAK VClosure _VW_V40_V10vcore_Dget__output__string = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VGetOutputString2, NULL };
-VWEAK VWORD _V40_V10vcore_Dcall_Wcc;VWEAK VClosure _VW_V40_V10vcore_Dcall_Wcc = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCallCC2, NULL };
-VWEAK VWORD _V40_V10vcore_Dcall__with__values;VWEAK VClosure _VW_V40_V10vcore_Dcall__with__values = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCallValues2, NULL };
-VWEAK VWORD _V40_V10vcore_Dapply;VWEAK VClosure _VW_V40_V10vcore_Dapply = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VApply2, NULL };
-VWEAK VWORD _V40_V10vcore_Dcommand__line;VWEAK VClosure _VW_V40_V10vcore_Dcommand__line = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCommandLine2, NULL };
-VWEAK VWORD _V40_V10vcore_Dsystem;VWEAK VClosure _VW_V40_V10vcore_Dsystem = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSystem2, NULL };
-VWEAK VWORD _V40_V10vcore_Dopen__input__process;VWEAK VClosure _VW_V40_V10vcore_Dopen__input__process = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VOpenInputProcess2, NULL };
-VWEAK VWORD _V40_V10vcore_Dopen__output__process;VWEAK VClosure _VW_V40_V10vcore_Dopen__output__process = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VOpenOutputProcess2, NULL };
-VWEAK VWORD _V40_V10vcore_Dmake__temporary__file;VWEAK VClosure _VW_V40_V10vcore_Dmake__temporary__file = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMakeTemporaryFile2, NULL };
-VWEAK VWORD _V40_V10vcore_Dexit;VWEAK VClosure _VW_V40_V10vcore_Dexit = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VExit2, NULL };
-VWEAK VWORD _V40_V10vcore_Dcurrent__jiffy;VWEAK VClosure _VW_V40_V10vcore_Dcurrent__jiffy = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCurrentJiffy, NULL };
-VWEAK VWORD _V40_V10vcore_Djiffies__per__second;VWEAK VClosure _VW_V40_V10vcore_Djiffies__per__second = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VJiffiesPerSecond, NULL };
-VWEAK VWORD _V40_V10vcore_Dbitwise__not;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__not = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseNot, NULL };
-VWEAK VWORD _V40_V10vcore_Dbitwise__nand;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__nand = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseNand, NULL };
-VWEAK VWORD _V40_V10vcore_Dbitwise__nor;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__nor = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseNor, NULL };
-VWEAK VWORD _V40_V10vcore_Dbitwise__andc1;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__andc1 = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseAndC1, NULL };
-VWEAK VWORD _V40_V10vcore_Dbitwise__andc2;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__andc2 = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseAndC2, NULL };
-VWEAK VWORD _V40_V10vcore_Dbitwise__orc1;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__orc1 = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseOrC1, NULL };
-VWEAK VWORD _V40_V10vcore_Dbitwise__orc2;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__orc2 = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseOrC2, NULL };
-VWEAK VWORD _V40_V10vcore_Darithmetic__shift;VWEAK VClosure _VW_V40_V10vcore_Darithmetic__shift = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VArithmeticShift, NULL };
-VWEAK VWORD _V40_V10vcore_Dbit__count;VWEAK VClosure _VW_V40_V10vcore_Dbit__count = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitCount, NULL };
-VWEAK VWORD _V40_V10vcore_Draise;VWEAK VClosure _VW_V40_V10vcore_Draise = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRaise, NULL };
-VWEAK VWORD _V40_V10vcore_Dfiber__fork__list;VWEAK VClosure _VW_V40_V10vcore_Dfiber__fork__list = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VFiberForkList, NULL };
-VWEAK VWORD _V40_V10vcore_Dasync;VWEAK VClosure _VW_V40_V10vcore_Dasync = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VAsync, NULL };
-VWEAK VWORD _V40_V10vcore_Dawait;VWEAK VClosure _VW_V40_V10vcore_Dawait = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VAwait, NULL };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D2769 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0seed_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D2768 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
 VWEAK VWORD _V0sprintf;VWEAK struct { VBlob sym; char bytes[8]; } _VW_V0sprintf = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 8 }, "sprintf" };
 VWEAK VWORD _V0printf;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0printf = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "printf" };
 VWEAK VWORD _V0format;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0format = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "format" };
@@ -417,150 +310,150 @@ VWEAK VWORD _V0pair_Q;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0pair_Q = 
 VWEAK VWORD _V0boolean_Q;VWEAK struct { VBlob sym; char bytes[9]; } _VW_V0boolean_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 9 }, "boolean\?" };
 VWEAK VWORD _V0eof__object_Q;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0eof__object_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "eof-object\?" };
 VWEAK VWORD _V0null_Q;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0null_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "null\?" };
+VWEAK VWORD _V40_V10vcore_Dawait;VWEAK VClosure _VW_V40_V10vcore_Dawait = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VAwait, NULL };
+VWEAK VWORD _V40_V10vcore_Dasync;VWEAK VClosure _VW_V40_V10vcore_Dasync = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VAsync, NULL };
+VWEAK VWORD _V40_V10vcore_Dfiber__fork__list;VWEAK VClosure _VW_V40_V10vcore_Dfiber__fork__list = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VFiberForkList, NULL };
 VWEAK VWORD _V0error;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0error = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "error" };
-static struct { VBlob sym; char bytes[23]; } _V10_Dstring_D2899 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 23 }, "printf: unknown format" };
-static struct { VBlob sym; char bytes[42]; } _V10_Dstring_D2898 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 42 }, "printf: not enough args for format string" };
-static struct { VBlob sym; char bytes[41]; } _V10_Dstring_D2897 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 41 }, "printf: format string has trailing tilde" };
-static struct { VBlob sym; char bytes[40]; } _V10_Dstring_D2896 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 40 }, "parameter object expects zero arguments" };
+VWEAK VWORD _V40_V10vcore_Draise;VWEAK VClosure _VW_V40_V10vcore_Draise = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRaise, NULL };
+static struct { VBlob sym; char bytes[23]; } _V10_Dstring_D2767 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 23 }, "printf: unknown format" };
+static struct { VBlob sym; char bytes[42]; } _V10_Dstring_D2766 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 42 }, "printf: not enough args for format string" };
+static struct { VBlob sym; char bytes[41]; } _V10_Dstring_D2765 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 41 }, "printf: format string has trailing tilde" };
+VWEAK VWORD _V40_V10vcore_Dbit__count;VWEAK VClosure _VW_V40_V10vcore_Dbit__count = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitCount, NULL };
+VWEAK VWORD _V40_V10vcore_Darithmetic__shift;VWEAK VClosure _VW_V40_V10vcore_Darithmetic__shift = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VArithmeticShift, NULL };
+VWEAK VWORD _V40_V10vcore_Dbitwise__orc2;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__orc2 = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseOrC2, NULL };
+VWEAK VWORD _V40_V10vcore_Dbitwise__orc1;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__orc1 = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseOrC1, NULL };
+VWEAK VWORD _V40_V10vcore_Dbitwise__andc2;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__andc2 = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseAndC2, NULL };
+VWEAK VWORD _V40_V10vcore_Dbitwise__andc1;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__andc1 = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseAndC1, NULL };
+VWEAK VWORD _V40_V10vcore_Dbitwise__nor;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__nor = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseNor, NULL };
+VWEAK VWORD _V40_V10vcore_Dbitwise__nand;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__nand = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseNand, NULL };
+VWEAK VWORD _V40_V10vcore_Dbitwise__not;VWEAK VClosure _VW_V40_V10vcore_Dbitwise__not = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitwiseNot, NULL };
+VWEAK VWORD _V40_V10vcore_Djiffies__per__second;VWEAK VClosure _VW_V40_V10vcore_Djiffies__per__second = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VJiffiesPerSecond, NULL };
+VWEAK VWORD _V40_V10vcore_Dcurrent__jiffy;VWEAK VClosure _VW_V40_V10vcore_Dcurrent__jiffy = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCurrentJiffy, NULL };
+VWEAK VWORD _V40_V10vcore_Dexit;VWEAK VClosure _VW_V40_V10vcore_Dexit = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VExit2, NULL };
+VWEAK VWORD _V40_V10vcore_Dmake__temporary__file;VWEAK VClosure _VW_V40_V10vcore_Dmake__temporary__file = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMakeTemporaryFile2, NULL };
+VWEAK VWORD _V40_V10vcore_Dopen__output__process;VWEAK VClosure _VW_V40_V10vcore_Dopen__output__process = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VOpenOutputProcess2, NULL };
+VWEAK VWORD _V40_V10vcore_Dopen__input__process;VWEAK VClosure _VW_V40_V10vcore_Dopen__input__process = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VOpenInputProcess2, NULL };
+VWEAK VWORD _V40_V10vcore_Dsystem;VWEAK VClosure _VW_V40_V10vcore_Dsystem = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSystem2, NULL };
+VWEAK VWORD _V40_V10vcore_Dcommand__line;VWEAK VClosure _VW_V40_V10vcore_Dcommand__line = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCommandLine2, NULL };
+static struct { VBlob sym; char bytes[40]; } _V10_Dstring_D2764 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 40 }, "parameter object expects zero arguments" };
 VWEAK VWORD _V0parameter;VWEAK struct { VBlob sym; char bytes[10]; } _VW_V0parameter = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 10 }, "parameter" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D2895 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "#hash" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D2894 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "#hasheqv" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D2893 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "#hasheq" };
-static struct { VBlob sym; char bytes[3]; } _V10_Dstring_D2892 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 3 }, "#(" };
-static struct { VBlob sym; char bytes[3]; } _V10_Dstring_D2891 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 3 }, ",@" };
+VWEAK VWORD _V40_V10vcore_Dapply;VWEAK VClosure _VW_V40_V10vcore_Dapply = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VApply2, NULL };
+VWEAK VWORD _V40_V10vcore_Dcall__with__values;VWEAK VClosure _VW_V40_V10vcore_Dcall__with__values = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCallValues2, NULL };
+VWEAK VWORD _V40_V10vcore_Dcall_Wcc;VWEAK VClosure _VW_V40_V10vcore_Dcall_Wcc = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCallCC2, NULL };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D2763 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "#hash" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D2762 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "#hasheqv" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D2761 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "#hasheq" };
+static struct { VBlob sym; char bytes[3]; } _V10_Dstring_D2760 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 3 }, "#(" };
+static struct { VBlob sym; char bytes[3]; } _V10_Dstring_D2759 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 3 }, ",@" };
 VWEAK VWORD _V0unquote__splicing;VWEAK struct { VBlob sym; char bytes[17]; } _VW_V0unquote__splicing = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 17 }, "unquote-splicing" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2890 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "," };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2758 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "," };
 VWEAK VWORD _V0unquote;VWEAK struct { VBlob sym; char bytes[8]; } _VW_V0unquote = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 8 }, "unquote" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2889 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "`" };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2757 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "`" };
 VWEAK VWORD _V0quasiquote;VWEAK struct { VBlob sym; char bytes[11]; } _VW_V0quasiquote = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 11 }, "quasiquote" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2888 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "'" };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2756 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "'" };
 VWEAK VWORD _V0quote;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0quote = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "quote" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2887 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "(" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2886 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, ")" };
-static struct { VBlob sym; char bytes[4]; } _V10_Dstring_D2885 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 4 }, " . " };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2755 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "(" };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2754 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, ")" };
+static struct { VBlob sym; char bytes[4]; } _V10_Dstring_D2753 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 4 }, " . " };
 VWEAK VWORD _V0ok;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0ok = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "ok" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2884 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, " " };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2752 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, " " };
 VWEAK VWORD _V10vcore_Dpush__value;VWEAK struct { VBlob sym; char bytes[19]; } _VW_V10vcore_Dpush__value = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 19 }, "##vcore.push-value" };
 VWEAK VWORD _V10vcore_Dpop__value;VWEAK struct { VBlob sym; char bytes[18]; } _VW_V10vcore_Dpop__value = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 18 }, "##vcore.pop-value" };
-static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D2883 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "open-output-string: failed" };
-static struct { VBlob sym; char bytes[25]; } _V10_Dstring_D2882 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 25 }, "open-output-file: failed" };
-static struct { VBlob sym; char bytes[24]; } _V10_Dstring_D2881 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 24 }, "open-input-file: failed" };
+VWEAK VWORD _V40_V10vcore_Dget__output__string;VWEAK VClosure _VW_V40_V10vcore_Dget__output__string = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VGetOutputString2, NULL };
+static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D2751 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "open-output-string: failed" };
+static struct { VBlob sym; char bytes[25]; } _V10_Dstring_D2750 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 25 }, "open-output-file: failed" };
+static struct { VBlob sym; char bytes[24]; } _V10_Dstring_D2749 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 24 }, "open-input-file: failed" };
 VWEAK VWORD _V40_V10vcore_Dclose__stream;VWEAK VClosure _VW_V40_V10vcore_Dclose__stream = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCloseStream2, NULL };
-static struct { VBlob sym; char bytes[26]; } _V10_Dstring_D2880 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 26 }, "No such key in hash table" };
-VWEAK VWORD _V40_V10vcore_Deq_Q;VWEAK VClosure _VW_V40_V10vcore_Deq_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VEq2, NULL };
-static struct { VBlob sym; char bytes[1]; } _V10_Dstring_D2879 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 1 }, "" };
-VWEAK VWORD _V40_V10vcore_Dnull_Q;VWEAK VClosure _VW_V40_V10vcore_Dnull_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VNullP2, NULL };
-VWEAK VWORD _V40_V10vcore_Dcar;VWEAK VClosure _VW_V40_V10vcore_Dcar = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCar2, NULL };
+VWEAK VWORD _V40_V10vcore_Dchar__integer;VWEAK VClosure _VW_V40_V10vcore_Dchar__integer = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCharInt2, NULL };
+VWEAK VWORD _V40_V10vcore_Dhash__table__delete_B;VWEAK VClosure _VW_V40_V10vcore_Dhash__table__delete_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VHashTableDelete, NULL };
+static struct { VBlob sym; char bytes[26]; } _V10_Dstring_D2748 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 26 }, "No such key in hash table" };
+VWEAK VWORD _V40_V10vcore_Dhash__table__hash__function;VWEAK VClosure _VW_V40_V10vcore_Dhash__table__hash__function = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VHashTableHashFunc, NULL };
+VWEAK VWORD _V40_V10vcore_Dhash__table__equivalence__function;VWEAK VClosure _VW_V40_V10vcore_Dhash__table__equivalence__function = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VHashTableEqvFunc, NULL };
+VWEAK VWORD _V40_V10vcore_Drecord__length;VWEAK VClosure _VW_V40_V10vcore_Drecord__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRecordLength2, NULL };
+VWEAK VWORD _V40_V10vcore_Drecord__set_B;VWEAK VClosure _VW_V40_V10vcore_Drecord__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRecordSet2, NULL };
+VWEAK VWORD _V40_V10vcore_Drecord__ref;VWEAK VClosure _VW_V40_V10vcore_Drecord__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRecordRef2, NULL };
+VWEAK VWORD _V40_V10vcore_Drecord;VWEAK VClosure _VW_V40_V10vcore_Drecord = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCreateRecord2, NULL };
+VWEAK VWORD _V40_V10vcore_Ds8vector__length;VWEAK VClosure _VW_V40_V10vcore_Ds8vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS8VectorLength, NULL };
+VWEAK VWORD _V40_V10vcore_Ds8vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Ds8vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS8VectorSet, NULL };
+VWEAK VWORD _V40_V10vcore_Ds8vector__ref;VWEAK VClosure _VW_V40_V10vcore_Ds8vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS8VectorRef, NULL };
+VWEAK VWORD _V40_V10vcore_Dlist___Gs8vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gs8vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListS8Vector, NULL };
+VWEAK VWORD _V40_V10vcore_Ds8vector_Q;VWEAK VClosure _VW_V40_V10vcore_Ds8vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS8VectorP, NULL };
+VWEAK VWORD _V40_V10vcore_Du8vector__length;VWEAK VClosure _VW_V40_V10vcore_Du8vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU8VectorLength, NULL };
+VWEAK VWORD _V40_V10vcore_Du8vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Du8vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU8VectorSet, NULL };
+VWEAK VWORD _V40_V10vcore_Du8vector__ref;VWEAK VClosure _VW_V40_V10vcore_Du8vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU8VectorRef, NULL };
+VWEAK VWORD _V40_V10vcore_Dlist___Gu8vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gu8vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListU8Vector, NULL };
+VWEAK VWORD _V40_V10vcore_Du8vector_Q;VWEAK VClosure _VW_V40_V10vcore_Du8vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU8VectorP, NULL };
+VWEAK VWORD _V40_V10vcore_Ds16vector__length;VWEAK VClosure _VW_V40_V10vcore_Ds16vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS16VectorLength, NULL };
+VWEAK VWORD _V40_V10vcore_Ds16vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Ds16vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS16VectorSet, NULL };
+VWEAK VWORD _V40_V10vcore_Ds16vector__ref;VWEAK VClosure _VW_V40_V10vcore_Ds16vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS16VectorRef, NULL };
+VWEAK VWORD _V40_V10vcore_Dlist___Gs16vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gs16vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListS16Vector, NULL };
+VWEAK VWORD _V40_V10vcore_Ds16vector_Q;VWEAK VClosure _VW_V40_V10vcore_Ds16vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS16VectorP, NULL };
+VWEAK VWORD _V40_V10vcore_Du16vector__length;VWEAK VClosure _VW_V40_V10vcore_Du16vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU16VectorLength, NULL };
+VWEAK VWORD _V40_V10vcore_Du16vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Du16vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU16VectorSet, NULL };
+VWEAK VWORD _V40_V10vcore_Du16vector__ref;VWEAK VClosure _VW_V40_V10vcore_Du16vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU16VectorRef, NULL };
+VWEAK VWORD _V40_V10vcore_Dlist___Gu16vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gu16vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListU16Vector, NULL };
+VWEAK VWORD _V40_V10vcore_Du16vector_Q;VWEAK VClosure _VW_V40_V10vcore_Du16vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VU16VectorP, NULL };
+VWEAK VWORD _V40_V10vcore_Ds32vector__length;VWEAK VClosure _VW_V40_V10vcore_Ds32vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS32VectorLength, NULL };
+VWEAK VWORD _V40_V10vcore_Ds32vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Ds32vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS32VectorSet, NULL };
+VWEAK VWORD _V40_V10vcore_Ds32vector__ref;VWEAK VClosure _VW_V40_V10vcore_Ds32vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS32VectorRef, NULL };
+VWEAK VWORD _V40_V10vcore_Dlist___Gs32vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gs32vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListS32Vector, NULL };
+VWEAK VWORD _V40_V10vcore_Ds32vector_Q;VWEAK VClosure _VW_V40_V10vcore_Ds32vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VS32VectorP, NULL };
+VWEAK VWORD _V40_V10vcore_Df64vector__length;VWEAK VClosure _VW_V40_V10vcore_Df64vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF64VectorLength, NULL };
+VWEAK VWORD _V40_V10vcore_Df64vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Df64vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF64VectorSet, NULL };
+VWEAK VWORD _V40_V10vcore_Df64vector__ref;VWEAK VClosure _VW_V40_V10vcore_Df64vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF64VectorRef, NULL };
+VWEAK VWORD _V40_V10vcore_Dlist___Gf64vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gf64vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListF64Vector, NULL };
+VWEAK VWORD _V40_V10vcore_Df64vector_Q;VWEAK VClosure _VW_V40_V10vcore_Df64vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF64VectorP, NULL };
+VWEAK VWORD _V40_V10vcore_Df32vector__length;VWEAK VClosure _VW_V40_V10vcore_Df32vector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF32VectorLength, NULL };
+VWEAK VWORD _V40_V10vcore_Df32vector__set_B;VWEAK VClosure _VW_V40_V10vcore_Df32vector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF32VectorSet, NULL };
+VWEAK VWORD _V40_V10vcore_Df32vector__ref;VWEAK VClosure _VW_V40_V10vcore_Df32vector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF32VectorRef, NULL };
+VWEAK VWORD _V40_V10vcore_Dlist___Gf32vector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gf32vector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListF32Vector, NULL };
+VWEAK VWORD _V40_V10vcore_Df32vector_Q;VWEAK VClosure _VW_V40_V10vcore_Df32vector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VF32VectorP, NULL };
+VWEAK VWORD _V40_V10vcore_Dvector__length;VWEAK VClosure _VW_V40_V10vcore_Dvector__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VVectorLength2, NULL };
+VWEAK VWORD _V40_V10vcore_Dvector__set_B;VWEAK VClosure _VW_V40_V10vcore_Dvector__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VVectorSet2, NULL };
+VWEAK VWORD _V40_V10vcore_Dvector__ref;VWEAK VClosure _VW_V40_V10vcore_Dvector__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VVectorRef2, NULL };
+VWEAK VWORD _V40_V10vcore_Dlist___Gvector;VWEAK VClosure _VW_V40_V10vcore_Dlist___Gvector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VListVector2, NULL };
+static struct { VBlob sym; char bytes[1]; } _V10_Dstring_D2747 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 1 }, "" };
+VWEAK VWORD _V40_V10vcore_Dsymbol___Gstring;VWEAK VClosure _VW_V40_V10vcore_Dsymbol___Gstring = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSymbolString2, NULL };
+VWEAK VWORD _V40_V10vcore_Dstring___Gnumber;VWEAK VClosure _VW_V40_V10vcore_Dstring___Gnumber = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringNumber2, NULL };
+VWEAK VWORD _V40_V10vcore_Dstring___Gsymbol;VWEAK VClosure _VW_V40_V10vcore_Dstring___Gsymbol = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringSymbol2, NULL };
+VWEAK VWORD _V40_V10vcore_Dstring__length;VWEAK VClosure _VW_V40_V10vcore_Dstring__length = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringLength2, NULL };
+VWEAK VWORD _V40_V10vcore_Dstring__set_B;VWEAK VClosure _VW_V40_V10vcore_Dstring__set_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringSet2, NULL };
+VWEAK VWORD _V40_V10vcore_Dstring__ref;VWEAK VClosure _VW_V40_V10vcore_Dstring__ref = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringRef2, NULL };
+VWEAK VWORD _V40_V10vcore_Dstring__copy_B;VWEAK VClosure _VW_V40_V10vcore_Dstring__copy_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringCopy2, NULL };
+VWEAK VWORD _V40_V10vcore_Dsubstring;VWEAK VClosure _VW_V40_V10vcore_Dsubstring = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSubstring2, NULL };
+VWEAK VWORD _V40_V10vcore_Dmake__string;VWEAK VClosure _VW_V40_V10vcore_Dmake__string = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMakeString2, NULL };
+VWEAK VWORD _V40_V10vcore_Dset__cdr_B;VWEAK VClosure _VW_V40_V10vcore_Dset__cdr_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSetCdr2, NULL };
+VWEAK VWORD _V40_V10vcore_Dset__car_B;VWEAK VClosure _VW_V40_V10vcore_Dset__car_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSetCar2, NULL };
 VWEAK VWORD _V40_V10vcore_Dcdr;VWEAK VClosure _VW_V40_V10vcore_Dcdr = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCdr2, NULL };
+VWEAK VWORD _V40_V10vcore_Dcar;VWEAK VClosure _VW_V40_V10vcore_Dcar = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCar2, NULL };
+VWEAK VWORD _V40_V10vcore_Dcons;VWEAK VClosure _VW_V40_V10vcore_Dcons = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCons2, NULL };
+VWEAK VWORD _V40_V10vcore_Dremainder;VWEAK VClosure _VW_V40_V10vcore_Dremainder = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRem2, NULL };
+VWEAK VWORD _V40_V10vcore_Dquotient;VWEAK VClosure _VW_V40_V10vcore_Dquotient = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VQuot2, NULL };
+VWEAK VWORD _V40_V10vcore_D_W;VWEAK VClosure _VW_V40_V10vcore_D_W = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VDiv2, NULL };
+VWEAK VWORD _V40_V10vcore_D_S;VWEAK VClosure _VW_V40_V10vcore_D_S = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMul2, NULL };
+VWEAK VWORD _V40_V10vcore_D__;VWEAK VClosure _VW_V40_V10vcore_D__ = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSub2, NULL };
+VWEAK VWORD _V40_V10vcore_D_P;VWEAK VClosure _VW_V40_V10vcore_D_P = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VAdd2, NULL };
+VWEAK VWORD _V40_V10vcore_Dinexact;VWEAK VClosure _VW_V40_V10vcore_Dinexact = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VInexact, NULL };
+VWEAK VWORD _V40_V10vcore_Dexact;VWEAK VClosure _VW_V40_V10vcore_Dexact = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VExact, NULL };
+VWEAK VWORD _V40_V10vcore_Dnot;VWEAK VClosure _VW_V40_V10vcore_Dnot = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VNot2, NULL };
+VWEAK VWORD _V40_V10vcore_Deqv_Q;VWEAK VClosure _VW_V40_V10vcore_Deqv_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VEqv, NULL };
 VWEAK VWORD _V40_V10vcore_Dsymbol_E_Q;VWEAK VClosure _VW_V40_V10vcore_Dsymbol_E_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSymbolEqv2, NULL };
+VWEAK VWORD _V40_V10vcore_Deq_Q;VWEAK VClosure _VW_V40_V10vcore_Deq_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VEq2, NULL };
+VWEAK VWORD _V40_V10vcore_Ddouble_Q;VWEAK VClosure _VW_V40_V10vcore_Ddouble_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VDoubleP2, NULL };
+VWEAK VWORD _V40_V10vcore_Dint_Q;VWEAK VClosure _VW_V40_V10vcore_Dint_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VIntP2, NULL };
+VWEAK VWORD _V40_V10vcore_Dforeign__pointer_Q;VWEAK VClosure _VW_V40_V10vcore_Dforeign__pointer_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VForeignPointerP2, NULL };
+VWEAK VWORD _V40_V10vcore_Dnullptr_Q;VWEAK VClosure _VW_V40_V10vcore_Dnullptr_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VNullptrP2, NULL };
+VWEAK VWORD _V40_V10vcore_Dchar_Q;VWEAK VClosure _VW_V40_V10vcore_Dchar_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCharP2, NULL };
+VWEAK VWORD _V40_V10vcore_Dstring_Q;VWEAK VClosure _VW_V40_V10vcore_Dstring_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VStringP2, NULL };
+VWEAK VWORD _V40_V10vcore_Dsymbol_Q;VWEAK VClosure _VW_V40_V10vcore_Dsymbol_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSymbolP2, NULL };
+VWEAK VWORD _V40_V10vcore_Dprocedure_Q;VWEAK VClosure _VW_V40_V10vcore_Dprocedure_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VProcedureP2, NULL };
+VWEAK VWORD _V40_V10vcore_Drecord_Q;VWEAK VClosure _VW_V40_V10vcore_Drecord_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRecordP2, NULL };
+VWEAK VWORD _V40_V10vcore_Dhash__table_Q;VWEAK VClosure _VW_V40_V10vcore_Dhash__table_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VHashTableP, NULL };
+VWEAK VWORD _V40_V10vcore_Dvector_Q;VWEAK VClosure _VW_V40_V10vcore_Dvector_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VVectorP2, NULL };
+VWEAK VWORD _V40_V10vcore_Dpair_Q;VWEAK VClosure _VW_V40_V10vcore_Dpair_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VPairP2, NULL };
+VWEAK VWORD _V40_V10vcore_Deof__object_Q;VWEAK VClosure _VW_V40_V10vcore_Deof__object_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VEofP2, NULL };
+VWEAK VWORD _V40_V10vcore_Dnull_Q;VWEAK VClosure _VW_V40_V10vcore_Dnull_Q = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VNullP2, NULL };
 static __attribute__((constructor)) void VDllMain1() {
-  _V40_V10vcore_Deof__object_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Deof__object_Q", &_VW_V40_V10vcore_Deof__object_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dpair_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpair_Q", &_VW_V40_V10vcore_Dpair_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dvector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector_Q", &_VW_V40_V10vcore_Dvector_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dhash__table_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table_Q", &_VW_V40_V10vcore_Dhash__table_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Drecord_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord_Q", &_VW_V40_V10vcore_Drecord_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dprocedure_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dprocedure_Q", &_VW_V40_V10vcore_Dprocedure_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dsymbol_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsymbol_Q", &_VW_V40_V10vcore_Dsymbol_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dstring_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring_Q", &_VW_V40_V10vcore_Dstring_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dchar_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dchar_Q", &_VW_V40_V10vcore_Dchar_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dnullptr_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnullptr_Q", &_VW_V40_V10vcore_Dnullptr_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dforeign__pointer_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dforeign__pointer_Q", &_VW_V40_V10vcore_Dforeign__pointer_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dint_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dint_Q", &_VW_V40_V10vcore_Dint_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ddouble_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddouble_Q", &_VW_V40_V10vcore_Ddouble_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Deqv_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Deqv_Q", &_VW_V40_V10vcore_Deqv_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dnot = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnot", &_VW_V40_V10vcore_Dnot), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dexact", &_VW_V40_V10vcore_Dexact), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dinexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dinexact", &_VW_V40_V10vcore_Dinexact), VPOINTER_CLOSURE);
-  _V40_V10vcore_D_P = VEncodePointer(VLookupConstant("_V40_V10vcore_D_P", &_VW_V40_V10vcore_D_P), VPOINTER_CLOSURE);
-  _V40_V10vcore_D__ = VEncodePointer(VLookupConstant("_V40_V10vcore_D__", &_VW_V40_V10vcore_D__), VPOINTER_CLOSURE);
-  _V40_V10vcore_D_S = VEncodePointer(VLookupConstant("_V40_V10vcore_D_S", &_VW_V40_V10vcore_D_S), VPOINTER_CLOSURE);
-  _V40_V10vcore_D_W = VEncodePointer(VLookupConstant("_V40_V10vcore_D_W", &_VW_V40_V10vcore_D_W), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dquotient = VEncodePointer(VLookupConstant("_V40_V10vcore_Dquotient", &_VW_V40_V10vcore_Dquotient), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dremainder = VEncodePointer(VLookupConstant("_V40_V10vcore_Dremainder", &_VW_V40_V10vcore_Dremainder), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dcons = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcons", &_VW_V40_V10vcore_Dcons), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dset__car_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__car_B", &_VW_V40_V10vcore_Dset__car_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dset__cdr_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__cdr_B", &_VW_V40_V10vcore_Dset__cdr_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dmake__string = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__string", &_VW_V40_V10vcore_Dmake__string), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dsubstring = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsubstring", &_VW_V40_V10vcore_Dsubstring), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dstring__copy_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__copy_B", &_VW_V40_V10vcore_Dstring__copy_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dstring__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__ref", &_VW_V40_V10vcore_Dstring__ref), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dstring__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__set_B", &_VW_V40_V10vcore_Dstring__set_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dstring__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__length", &_VW_V40_V10vcore_Dstring__length), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dstring___Gsymbol = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring___Gsymbol", &_VW_V40_V10vcore_Dstring___Gsymbol), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dstring___Gnumber = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring___Gnumber", &_VW_V40_V10vcore_Dstring___Gnumber), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dsymbol___Gstring = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsymbol___Gstring", &_VW_V40_V10vcore_Dsymbol___Gstring), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dlist___Gvector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gvector", &_VW_V40_V10vcore_Dlist___Gvector), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dvector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__ref", &_VW_V40_V10vcore_Dvector__ref), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dvector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__set_B", &_VW_V40_V10vcore_Dvector__set_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dvector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__length", &_VW_V40_V10vcore_Dvector__length), VPOINTER_CLOSURE);
-  _V40_V10vcore_Df32vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector_Q", &_VW_V40_V10vcore_Df32vector_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dlist___Gf32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gf32vector", &_VW_V40_V10vcore_Dlist___Gf32vector), VPOINTER_CLOSURE);
-  _V40_V10vcore_Df32vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__ref", &_VW_V40_V10vcore_Df32vector__ref), VPOINTER_CLOSURE);
-  _V40_V10vcore_Df32vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__set_B", &_VW_V40_V10vcore_Df32vector__set_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Df32vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__length", &_VW_V40_V10vcore_Df32vector__length), VPOINTER_CLOSURE);
-  _V40_V10vcore_Df64vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector_Q", &_VW_V40_V10vcore_Df64vector_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dlist___Gf64vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gf64vector", &_VW_V40_V10vcore_Dlist___Gf64vector), VPOINTER_CLOSURE);
-  _V40_V10vcore_Df64vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__ref", &_VW_V40_V10vcore_Df64vector__ref), VPOINTER_CLOSURE);
-  _V40_V10vcore_Df64vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__set_B", &_VW_V40_V10vcore_Df64vector__set_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Df64vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__length", &_VW_V40_V10vcore_Df64vector__length), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds32vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector_Q", &_VW_V40_V10vcore_Ds32vector_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dlist___Gs32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs32vector", &_VW_V40_V10vcore_Dlist___Gs32vector), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds32vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__ref", &_VW_V40_V10vcore_Ds32vector__ref), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds32vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__set_B", &_VW_V40_V10vcore_Ds32vector__set_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds32vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__length", &_VW_V40_V10vcore_Ds32vector__length), VPOINTER_CLOSURE);
-  _V40_V10vcore_Du16vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector_Q", &_VW_V40_V10vcore_Du16vector_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dlist___Gu16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gu16vector", &_VW_V40_V10vcore_Dlist___Gu16vector), VPOINTER_CLOSURE);
-  _V40_V10vcore_Du16vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__ref", &_VW_V40_V10vcore_Du16vector__ref), VPOINTER_CLOSURE);
-  _V40_V10vcore_Du16vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__set_B", &_VW_V40_V10vcore_Du16vector__set_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Du16vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__length", &_VW_V40_V10vcore_Du16vector__length), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds16vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector_Q", &_VW_V40_V10vcore_Ds16vector_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dlist___Gs16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs16vector", &_VW_V40_V10vcore_Dlist___Gs16vector), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds16vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__ref", &_VW_V40_V10vcore_Ds16vector__ref), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds16vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__set_B", &_VW_V40_V10vcore_Ds16vector__set_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds16vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__length", &_VW_V40_V10vcore_Ds16vector__length), VPOINTER_CLOSURE);
-  _V40_V10vcore_Du8vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector_Q", &_VW_V40_V10vcore_Du8vector_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dlist___Gu8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gu8vector", &_VW_V40_V10vcore_Dlist___Gu8vector), VPOINTER_CLOSURE);
-  _V40_V10vcore_Du8vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__ref", &_VW_V40_V10vcore_Du8vector__ref), VPOINTER_CLOSURE);
-  _V40_V10vcore_Du8vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__set_B", &_VW_V40_V10vcore_Du8vector__set_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Du8vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__length", &_VW_V40_V10vcore_Du8vector__length), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds8vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector_Q", &_VW_V40_V10vcore_Ds8vector_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dlist___Gs8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs8vector", &_VW_V40_V10vcore_Dlist___Gs8vector), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds8vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__ref", &_VW_V40_V10vcore_Ds8vector__ref), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds8vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__set_B", &_VW_V40_V10vcore_Ds8vector__set_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Ds8vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__length", &_VW_V40_V10vcore_Ds8vector__length), VPOINTER_CLOSURE);
-  _V40_V10vcore_Drecord = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord", &_VW_V40_V10vcore_Drecord), VPOINTER_CLOSURE);
-  _V40_V10vcore_Drecord__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__ref", &_VW_V40_V10vcore_Drecord__ref), VPOINTER_CLOSURE);
-  _V40_V10vcore_Drecord__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__set_B", &_VW_V40_V10vcore_Drecord__set_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Drecord__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__length", &_VW_V40_V10vcore_Drecord__length), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dhash__table__equivalence__function = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__equivalence__function", &_VW_V40_V10vcore_Dhash__table__equivalence__function), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dhash__table__hash__function = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__hash__function", &_VW_V40_V10vcore_Dhash__table__hash__function), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dhash__table__delete_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__delete_B", &_VW_V40_V10vcore_Dhash__table__delete_B), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dchar__integer = VEncodePointer(VLookupConstant("_V40_V10vcore_Dchar__integer", &_VW_V40_V10vcore_Dchar__integer), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dget__output__string = VEncodePointer(VLookupConstant("_V40_V10vcore_Dget__output__string", &_VW_V40_V10vcore_Dget__output__string), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dcall_Wcc = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcall_Wcc", &_VW_V40_V10vcore_Dcall_Wcc), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dcall__with__values = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcall__with__values", &_VW_V40_V10vcore_Dcall__with__values), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dapply = VEncodePointer(VLookupConstant("_V40_V10vcore_Dapply", &_VW_V40_V10vcore_Dapply), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dcommand__line = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcommand__line", &_VW_V40_V10vcore_Dcommand__line), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dsystem = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsystem", &_VW_V40_V10vcore_Dsystem), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dopen__input__process = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__input__process", &_VW_V40_V10vcore_Dopen__input__process), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dopen__output__process = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__output__process", &_VW_V40_V10vcore_Dopen__output__process), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dmake__temporary__file = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__temporary__file", &_VW_V40_V10vcore_Dmake__temporary__file), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dexit = VEncodePointer(VLookupConstant("_V40_V10vcore_Dexit", &_VW_V40_V10vcore_Dexit), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dcurrent__jiffy = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcurrent__jiffy", &_VW_V40_V10vcore_Dcurrent__jiffy), VPOINTER_CLOSURE);
-  _V40_V10vcore_Djiffies__per__second = VEncodePointer(VLookupConstant("_V40_V10vcore_Djiffies__per__second", &_VW_V40_V10vcore_Djiffies__per__second), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dbitwise__not = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__not", &_VW_V40_V10vcore_Dbitwise__not), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dbitwise__nand = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__nand", &_VW_V40_V10vcore_Dbitwise__nand), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dbitwise__nor = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__nor", &_VW_V40_V10vcore_Dbitwise__nor), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dbitwise__andc1 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__andc1", &_VW_V40_V10vcore_Dbitwise__andc1), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dbitwise__andc2 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__andc2", &_VW_V40_V10vcore_Dbitwise__andc2), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dbitwise__orc1 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__orc1", &_VW_V40_V10vcore_Dbitwise__orc1), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dbitwise__orc2 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__orc2", &_VW_V40_V10vcore_Dbitwise__orc2), VPOINTER_CLOSURE);
-  _V40_V10vcore_Darithmetic__shift = VEncodePointer(VLookupConstant("_V40_V10vcore_Darithmetic__shift", &_VW_V40_V10vcore_Darithmetic__shift), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dbit__count = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbit__count", &_VW_V40_V10vcore_Dbit__count), VPOINTER_CLOSURE);
-  _V40_V10vcore_Draise = VEncodePointer(VLookupConstant("_V40_V10vcore_Draise", &_VW_V40_V10vcore_Draise), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dfiber__fork__list = VEncodePointer(VLookupConstant("_V40_V10vcore_Dfiber__fork__list", &_VW_V40_V10vcore_Dfiber__fork__list), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dasync = VEncodePointer(VLookupConstant("_V40_V10vcore_Dasync", &_VW_V40_V10vcore_Dasync), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dawait = VEncodePointer(VLookupConstant("_V40_V10vcore_Dawait", &_VW_V40_V10vcore_Dawait), VPOINTER_CLOSURE);
   _V0sprintf = VEncodePointer(VLookupConstant("_V0sprintf", &_VW_V0sprintf), VPOINTER_OTHER);
   _V0printf = VEncodePointer(VLookupConstant("_V0printf", &_VW_V0printf), VPOINTER_OTHER);
   _V0format = VEncodePointer(VLookupConstant("_V0format", &_VW_V0format), VPOINTER_OTHER);
@@ -842,8 +735,32 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0boolean_Q = VEncodePointer(VLookupConstant("_V0boolean_Q", &_VW_V0boolean_Q), VPOINTER_OTHER);
   _V0eof__object_Q = VEncodePointer(VLookupConstant("_V0eof__object_Q", &_VW_V0eof__object_Q), VPOINTER_OTHER);
   _V0null_Q = VEncodePointer(VLookupConstant("_V0null_Q", &_VW_V0null_Q), VPOINTER_OTHER);
+  _V40_V10vcore_Dawait = VEncodePointer(VLookupConstant("_V40_V10vcore_Dawait", &_VW_V40_V10vcore_Dawait), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dasync = VEncodePointer(VLookupConstant("_V40_V10vcore_Dasync", &_VW_V40_V10vcore_Dasync), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dfiber__fork__list = VEncodePointer(VLookupConstant("_V40_V10vcore_Dfiber__fork__list", &_VW_V40_V10vcore_Dfiber__fork__list), VPOINTER_CLOSURE);
   _V0error = VEncodePointer(VLookupConstant("_V0error", &_VW_V0error), VPOINTER_OTHER);
+  _V40_V10vcore_Draise = VEncodePointer(VLookupConstant("_V40_V10vcore_Draise", &_VW_V40_V10vcore_Draise), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbit__count = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbit__count", &_VW_V40_V10vcore_Dbit__count), VPOINTER_CLOSURE);
+  _V40_V10vcore_Darithmetic__shift = VEncodePointer(VLookupConstant("_V40_V10vcore_Darithmetic__shift", &_VW_V40_V10vcore_Darithmetic__shift), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__orc2 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__orc2", &_VW_V40_V10vcore_Dbitwise__orc2), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__orc1 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__orc1", &_VW_V40_V10vcore_Dbitwise__orc1), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__andc2 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__andc2", &_VW_V40_V10vcore_Dbitwise__andc2), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__andc1 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__andc1", &_VW_V40_V10vcore_Dbitwise__andc1), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__nor = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__nor", &_VW_V40_V10vcore_Dbitwise__nor), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__nand = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__nand", &_VW_V40_V10vcore_Dbitwise__nand), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__not = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__not", &_VW_V40_V10vcore_Dbitwise__not), VPOINTER_CLOSURE);
+  _V40_V10vcore_Djiffies__per__second = VEncodePointer(VLookupConstant("_V40_V10vcore_Djiffies__per__second", &_VW_V40_V10vcore_Djiffies__per__second), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcurrent__jiffy = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcurrent__jiffy", &_VW_V40_V10vcore_Dcurrent__jiffy), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dexit = VEncodePointer(VLookupConstant("_V40_V10vcore_Dexit", &_VW_V40_V10vcore_Dexit), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__temporary__file = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__temporary__file", &_VW_V40_V10vcore_Dmake__temporary__file), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dopen__output__process = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__output__process", &_VW_V40_V10vcore_Dopen__output__process), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dopen__input__process = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__input__process", &_VW_V40_V10vcore_Dopen__input__process), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dsystem = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsystem", &_VW_V40_V10vcore_Dsystem), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcommand__line = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcommand__line", &_VW_V40_V10vcore_Dcommand__line), VPOINTER_CLOSURE);
   _V0parameter = VEncodePointer(VLookupConstant("_V0parameter", &_VW_V0parameter), VPOINTER_OTHER);
+  _V40_V10vcore_Dapply = VEncodePointer(VLookupConstant("_V40_V10vcore_Dapply", &_VW_V40_V10vcore_Dapply), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcall__with__values = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcall__with__values", &_VW_V40_V10vcore_Dcall__with__values), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcall_Wcc = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcall_Wcc", &_VW_V40_V10vcore_Dcall_Wcc), VPOINTER_CLOSURE);
   _V0unquote__splicing = VEncodePointer(VLookupConstant("_V0unquote__splicing", &_VW_V0unquote__splicing), VPOINTER_OTHER);
   _V0unquote = VEncodePointer(VLookupConstant("_V0unquote", &_VW_V0unquote), VPOINTER_OTHER);
   _V0quasiquote = VEncodePointer(VLookupConstant("_V0quasiquote", &_VW_V0quasiquote), VPOINTER_OTHER);
@@ -851,106 +768,101 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0ok = VEncodePointer(VLookupConstant("_V0ok", &_VW_V0ok), VPOINTER_OTHER);
   _V10vcore_Dpush__value = VEncodePointer(VLookupConstant("_V10vcore_Dpush__value", &_VW_V10vcore_Dpush__value), VPOINTER_OTHER);
   _V10vcore_Dpop__value = VEncodePointer(VLookupConstant("_V10vcore_Dpop__value", &_VW_V10vcore_Dpop__value), VPOINTER_OTHER);
+  _V40_V10vcore_Dget__output__string = VEncodePointer(VLookupConstant("_V40_V10vcore_Dget__output__string", &_VW_V40_V10vcore_Dget__output__string), VPOINTER_CLOSURE);
   _V40_V10vcore_Dclose__stream = VEncodePointer(VLookupConstant("_V40_V10vcore_Dclose__stream", &_VW_V40_V10vcore_Dclose__stream), VPOINTER_CLOSURE);
-  _V40_V10vcore_Deq_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Deq_Q", &_VW_V40_V10vcore_Deq_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dnull_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnull_Q", &_VW_V40_V10vcore_Dnull_Q), VPOINTER_CLOSURE);
-  _V40_V10vcore_Dcar = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcar", &_VW_V40_V10vcore_Dcar), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dchar__integer = VEncodePointer(VLookupConstant("_V40_V10vcore_Dchar__integer", &_VW_V40_V10vcore_Dchar__integer), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhash__table__delete_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__delete_B", &_VW_V40_V10vcore_Dhash__table__delete_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhash__table__hash__function = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__hash__function", &_VW_V40_V10vcore_Dhash__table__hash__function), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhash__table__equivalence__function = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__equivalence__function", &_VW_V40_V10vcore_Dhash__table__equivalence__function), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drecord__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__length", &_VW_V40_V10vcore_Drecord__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drecord__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__set_B", &_VW_V40_V10vcore_Drecord__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drecord__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__ref", &_VW_V40_V10vcore_Drecord__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drecord = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord", &_VW_V40_V10vcore_Drecord), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds8vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__length", &_VW_V40_V10vcore_Ds8vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds8vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__set_B", &_VW_V40_V10vcore_Ds8vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds8vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__ref", &_VW_V40_V10vcore_Ds8vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gs8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs8vector", &_VW_V40_V10vcore_Dlist___Gs8vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds8vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector_Q", &_VW_V40_V10vcore_Ds8vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du8vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__length", &_VW_V40_V10vcore_Du8vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du8vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__set_B", &_VW_V40_V10vcore_Du8vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du8vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__ref", &_VW_V40_V10vcore_Du8vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gu8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gu8vector", &_VW_V40_V10vcore_Dlist___Gu8vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du8vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector_Q", &_VW_V40_V10vcore_Du8vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds16vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__length", &_VW_V40_V10vcore_Ds16vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds16vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__set_B", &_VW_V40_V10vcore_Ds16vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds16vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__ref", &_VW_V40_V10vcore_Ds16vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gs16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs16vector", &_VW_V40_V10vcore_Dlist___Gs16vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds16vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector_Q", &_VW_V40_V10vcore_Ds16vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du16vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__length", &_VW_V40_V10vcore_Du16vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du16vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__set_B", &_VW_V40_V10vcore_Du16vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du16vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__ref", &_VW_V40_V10vcore_Du16vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gu16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gu16vector", &_VW_V40_V10vcore_Dlist___Gu16vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du16vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector_Q", &_VW_V40_V10vcore_Du16vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds32vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__length", &_VW_V40_V10vcore_Ds32vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds32vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__set_B", &_VW_V40_V10vcore_Ds32vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds32vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__ref", &_VW_V40_V10vcore_Ds32vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gs32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs32vector", &_VW_V40_V10vcore_Dlist___Gs32vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds32vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector_Q", &_VW_V40_V10vcore_Ds32vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df64vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__length", &_VW_V40_V10vcore_Df64vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df64vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__set_B", &_VW_V40_V10vcore_Df64vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df64vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__ref", &_VW_V40_V10vcore_Df64vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gf64vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gf64vector", &_VW_V40_V10vcore_Dlist___Gf64vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df64vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector_Q", &_VW_V40_V10vcore_Df64vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df32vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__length", &_VW_V40_V10vcore_Df32vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df32vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__set_B", &_VW_V40_V10vcore_Df32vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df32vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__ref", &_VW_V40_V10vcore_Df32vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gf32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gf32vector", &_VW_V40_V10vcore_Dlist___Gf32vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df32vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector_Q", &_VW_V40_V10vcore_Df32vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dvector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__length", &_VW_V40_V10vcore_Dvector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dvector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__set_B", &_VW_V40_V10vcore_Dvector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dvector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__ref", &_VW_V40_V10vcore_Dvector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gvector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gvector", &_VW_V40_V10vcore_Dlist___Gvector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dsymbol___Gstring = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsymbol___Gstring", &_VW_V40_V10vcore_Dsymbol___Gstring), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring___Gnumber = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring___Gnumber", &_VW_V40_V10vcore_Dstring___Gnumber), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring___Gsymbol = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring___Gsymbol", &_VW_V40_V10vcore_Dstring___Gsymbol), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__length", &_VW_V40_V10vcore_Dstring__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__set_B", &_VW_V40_V10vcore_Dstring__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__ref", &_VW_V40_V10vcore_Dstring__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring__copy_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__copy_B", &_VW_V40_V10vcore_Dstring__copy_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dsubstring = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsubstring", &_VW_V40_V10vcore_Dsubstring), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__string = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__string", &_VW_V40_V10vcore_Dmake__string), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dset__cdr_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__cdr_B", &_VW_V40_V10vcore_Dset__cdr_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dset__car_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__car_B", &_VW_V40_V10vcore_Dset__car_B), VPOINTER_CLOSURE);
   _V40_V10vcore_Dcdr = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcdr", &_VW_V40_V10vcore_Dcdr), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcar = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcar", &_VW_V40_V10vcore_Dcar), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcons = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcons", &_VW_V40_V10vcore_Dcons), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dremainder = VEncodePointer(VLookupConstant("_V40_V10vcore_Dremainder", &_VW_V40_V10vcore_Dremainder), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dquotient = VEncodePointer(VLookupConstant("_V40_V10vcore_Dquotient", &_VW_V40_V10vcore_Dquotient), VPOINTER_CLOSURE);
+  _V40_V10vcore_D_W = VEncodePointer(VLookupConstant("_V40_V10vcore_D_W", &_VW_V40_V10vcore_D_W), VPOINTER_CLOSURE);
+  _V40_V10vcore_D_S = VEncodePointer(VLookupConstant("_V40_V10vcore_D_S", &_VW_V40_V10vcore_D_S), VPOINTER_CLOSURE);
+  _V40_V10vcore_D__ = VEncodePointer(VLookupConstant("_V40_V10vcore_D__", &_VW_V40_V10vcore_D__), VPOINTER_CLOSURE);
+  _V40_V10vcore_D_P = VEncodePointer(VLookupConstant("_V40_V10vcore_D_P", &_VW_V40_V10vcore_D_P), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dinexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dinexact", &_VW_V40_V10vcore_Dinexact), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dexact", &_VW_V40_V10vcore_Dexact), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dnot = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnot", &_VW_V40_V10vcore_Dnot), VPOINTER_CLOSURE);
+  _V40_V10vcore_Deqv_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Deqv_Q", &_VW_V40_V10vcore_Deqv_Q), VPOINTER_CLOSURE);
   _V40_V10vcore_Dsymbol_E_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsymbol_E_Q", &_VW_V40_V10vcore_Dsymbol_E_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Deq_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Deq_Q", &_VW_V40_V10vcore_Deq_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ddouble_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddouble_Q", &_VW_V40_V10vcore_Ddouble_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dint_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dint_Q", &_VW_V40_V10vcore_Dint_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dforeign__pointer_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dforeign__pointer_Q", &_VW_V40_V10vcore_Dforeign__pointer_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dnullptr_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnullptr_Q", &_VW_V40_V10vcore_Dnullptr_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dchar_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dchar_Q", &_VW_V40_V10vcore_Dchar_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring_Q", &_VW_V40_V10vcore_Dstring_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dsymbol_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsymbol_Q", &_VW_V40_V10vcore_Dsymbol_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dprocedure_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dprocedure_Q", &_VW_V40_V10vcore_Dprocedure_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drecord_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord_Q", &_VW_V40_V10vcore_Drecord_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhash__table_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table_Q", &_VW_V40_V10vcore_Dhash__table_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dvector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector_Q", &_VW_V40_V10vcore_Dvector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dpair_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpair_Q", &_VW_V40_V10vcore_Dpair_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Deof__object_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Deof__object_Q", &_VW_V40_V10vcore_Deof__object_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dnull_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnull_Q", &_VW_V40_V10vcore_Dnull_Q), VPOINTER_CLOSURE);
 }
-double ceil(double);;
-static void _V30ceil_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
-  V_ARG_CHECK3(runtime, "_V30ceil_shim", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30ceil_shim, runtime, statics, 2, 2, _k, _arg0) {
-    VWORD _ret = VEncodeDouble(ceil(VCheckedDecodeNumber2(runtime, _arg0, "ceil")));
-  V_CALL(_k, runtime, _ret);
-  }
-}
-double floor(double);;
-static void _V30floor_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
-  V_ARG_CHECK3(runtime, "_V30floor_shim", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30floor_shim, runtime, statics, 2, 2, _k, _arg0) {
-    VWORD _ret = VEncodeDouble(floor(VCheckedDecodeNumber2(runtime, _arg0, "floor")));
-  V_CALL(_k, runtime, _ret);
-  }
-}
-double round(double);;
-static void _V30round_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
-  V_ARG_CHECK3(runtime, "_V30round_shim", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30round_shim, runtime, statics, 2, 2, _k, _arg0) {
-    VWORD _ret = VEncodeDouble(round(VCheckedDecodeNumber2(runtime, _arg0, "round")));
-  V_CALL(_k, runtime, _ret);
-  }
-}
-double sqrt(double);;
-static void _V30sqrt_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
-  V_ARG_CHECK3(runtime, "_V30sqrt_shim", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30sqrt_shim, runtime, statics, 2, 2, _k, _arg0) {
-    VWORD _ret = VEncodeDouble(sqrt(VCheckedDecodeNumber2(runtime, _arg0, "sqrt")));
-  V_CALL(_k, runtime, _ret);
-  }
-}
-double sin(double);;
-static void _V30sin_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
-  V_ARG_CHECK3(runtime, "_V30sin_shim", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30sin_shim, runtime, statics, 2, 2, _k, _arg0) {
-    VWORD _ret = VEncodeDouble(sin(VCheckedDecodeNumber2(runtime, _arg0, "sin")));
-  V_CALL(_k, runtime, _ret);
-  }
-}
-double cos(double);;
-static void _V30cos_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
-  V_ARG_CHECK3(runtime, "_V30cos_shim", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30cos_shim, runtime, statics, 2, 2, _k, _arg0) {
-    VWORD _ret = VEncodeDouble(cos(VCheckedDecodeNumber2(runtime, _arg0, "cos")));
-  V_CALL(_k, runtime, _ret);
-  }
-}
-double tan(double);;
-static void _V30tan_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
-  V_ARG_CHECK3(runtime, "_V30tan_shim", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30tan_shim, runtime, statics, 2, 2, _k, _arg0) {
-    VWORD _ret = VEncodeDouble(tan(VCheckedDecodeNumber2(runtime, _arg0, "tan")));
-  V_CALL(_k, runtime, _ret);
-  }
-}
-double asin(double);;
-static void _V30asin_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
-  V_ARG_CHECK3(runtime, "_V30asin_shim", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30asin_shim, runtime, statics, 2, 2, _k, _arg0) {
-    VWORD _ret = VEncodeDouble(asin(VCheckedDecodeNumber2(runtime, _arg0, "asin")));
-  V_CALL(_k, runtime, _ret);
-  }
-}
-double acos(double);;
-static void _V30acos_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
-  V_ARG_CHECK3(runtime, "_V30acos_shim", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30acos_shim, runtime, statics, 2, 2, _k, _arg0) {
-    VWORD _ret = VEncodeDouble(acos(VCheckedDecodeNumber2(runtime, _arg0, "acos")));
-  V_CALL(_k, runtime, _ret);
-  }
-}
-double atan(double);;
-static void _V30atan_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
-  V_ARG_CHECK3(runtime, "_V30atan_shim", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30atan_shim, runtime, statics, 2, 2, _k, _arg0) {
-    VWORD _ret = VEncodeDouble(atan(VCheckedDecodeNumber2(runtime, _arg0, "atan")));
-  V_CALL(_k, runtime, _ret);
-  }
-}
-double atan2(double, double);;
-static void _V30atan2_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0, VWORD _arg1) {
-  V_ARG_CHECK3(runtime, "_V30atan2_shim", 3, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30atan2_shim, runtime, statics, 3, 3, _k, _arg0, _arg1) {
-    VWORD _ret = VEncodeDouble(atan2(VCheckedDecodeNumber2(runtime, _arg0, "atan2"), VCheckedDecodeNumber2(runtime, _arg1, "atan2")));
-  V_CALL(_k, runtime, _ret);
-  }
-}
-double exp(double);;
-static void _V30exp_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
-  V_ARG_CHECK3(runtime, "_V30exp_shim", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30exp_shim, runtime, statics, 2, 2, _k, _arg0) {
-    VWORD _ret = VEncodeDouble(exp(VCheckedDecodeNumber2(runtime, _arg0, "exp")));
+double pow(double, double);;
+static void _V30pow_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0, VWORD _arg1) {
+  V_ARG_CHECK3(runtime, "_V30pow_shim", 3, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30pow_shim, runtime, statics, 3, 3, _k, _arg0, _arg1) {
+    VWORD _ret = VEncodeDouble(pow(VCheckedDecodeNumber2(runtime, _arg0, "pow"), VCheckedDecodeNumber2(runtime, _arg1, "pow")));
   V_CALL(_k, runtime, _ret);
   }
 }
@@ -962,11 +874,99 @@ static void _V30log_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
   V_CALL(_k, runtime, _ret);
   }
 }
-double pow(double, double);;
-static void _V30pow_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0, VWORD _arg1) {
-  V_ARG_CHECK3(runtime, "_V30pow_shim", 3, argc);
-  V_GC_CHECK2_VARARGS((VFunc)_V30pow_shim, runtime, statics, 3, 3, _k, _arg0, _arg1) {
-    VWORD _ret = VEncodeDouble(pow(VCheckedDecodeNumber2(runtime, _arg0, "pow"), VCheckedDecodeNumber2(runtime, _arg1, "pow")));
+double exp(double);;
+static void _V30exp_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
+  V_ARG_CHECK3(runtime, "_V30exp_shim", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30exp_shim, runtime, statics, 2, 2, _k, _arg0) {
+    VWORD _ret = VEncodeDouble(exp(VCheckedDecodeNumber2(runtime, _arg0, "exp")));
+  V_CALL(_k, runtime, _ret);
+  }
+}
+double atan2(double, double);;
+static void _V30atan2_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0, VWORD _arg1) {
+  V_ARG_CHECK3(runtime, "_V30atan2_shim", 3, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30atan2_shim, runtime, statics, 3, 3, _k, _arg0, _arg1) {
+    VWORD _ret = VEncodeDouble(atan2(VCheckedDecodeNumber2(runtime, _arg0, "atan2"), VCheckedDecodeNumber2(runtime, _arg1, "atan2")));
+  V_CALL(_k, runtime, _ret);
+  }
+}
+double atan(double);;
+static void _V30atan_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
+  V_ARG_CHECK3(runtime, "_V30atan_shim", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30atan_shim, runtime, statics, 2, 2, _k, _arg0) {
+    VWORD _ret = VEncodeDouble(atan(VCheckedDecodeNumber2(runtime, _arg0, "atan")));
+  V_CALL(_k, runtime, _ret);
+  }
+}
+double acos(double);;
+static void _V30acos_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
+  V_ARG_CHECK3(runtime, "_V30acos_shim", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30acos_shim, runtime, statics, 2, 2, _k, _arg0) {
+    VWORD _ret = VEncodeDouble(acos(VCheckedDecodeNumber2(runtime, _arg0, "acos")));
+  V_CALL(_k, runtime, _ret);
+  }
+}
+double asin(double);;
+static void _V30asin_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
+  V_ARG_CHECK3(runtime, "_V30asin_shim", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30asin_shim, runtime, statics, 2, 2, _k, _arg0) {
+    VWORD _ret = VEncodeDouble(asin(VCheckedDecodeNumber2(runtime, _arg0, "asin")));
+  V_CALL(_k, runtime, _ret);
+  }
+}
+double tan(double);;
+static void _V30tan_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
+  V_ARG_CHECK3(runtime, "_V30tan_shim", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30tan_shim, runtime, statics, 2, 2, _k, _arg0) {
+    VWORD _ret = VEncodeDouble(tan(VCheckedDecodeNumber2(runtime, _arg0, "tan")));
+  V_CALL(_k, runtime, _ret);
+  }
+}
+double cos(double);;
+static void _V30cos_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
+  V_ARG_CHECK3(runtime, "_V30cos_shim", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30cos_shim, runtime, statics, 2, 2, _k, _arg0) {
+    VWORD _ret = VEncodeDouble(cos(VCheckedDecodeNumber2(runtime, _arg0, "cos")));
+  V_CALL(_k, runtime, _ret);
+  }
+}
+double sin(double);;
+static void _V30sin_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
+  V_ARG_CHECK3(runtime, "_V30sin_shim", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30sin_shim, runtime, statics, 2, 2, _k, _arg0) {
+    VWORD _ret = VEncodeDouble(sin(VCheckedDecodeNumber2(runtime, _arg0, "sin")));
+  V_CALL(_k, runtime, _ret);
+  }
+}
+double sqrt(double);;
+static void _V30sqrt_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
+  V_ARG_CHECK3(runtime, "_V30sqrt_shim", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30sqrt_shim, runtime, statics, 2, 2, _k, _arg0) {
+    VWORD _ret = VEncodeDouble(sqrt(VCheckedDecodeNumber2(runtime, _arg0, "sqrt")));
+  V_CALL(_k, runtime, _ret);
+  }
+}
+double round(double);;
+static void _V30round_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
+  V_ARG_CHECK3(runtime, "_V30round_shim", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30round_shim, runtime, statics, 2, 2, _k, _arg0) {
+    VWORD _ret = VEncodeDouble(round(VCheckedDecodeNumber2(runtime, _arg0, "round")));
+  V_CALL(_k, runtime, _ret);
+  }
+}
+double floor(double);;
+static void _V30floor_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
+  V_ARG_CHECK3(runtime, "_V30floor_shim", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30floor_shim, runtime, statics, 2, 2, _k, _arg0) {
+    VWORD _ret = VEncodeDouble(floor(VCheckedDecodeNumber2(runtime, _arg0, "floor")));
+  V_CALL(_k, runtime, _ret);
+  }
+}
+double ceil(double);;
+static void _V30ceil_shim(V_CORE_ARGS, VWORD _k, VWORD _arg0) {
+  V_ARG_CHECK3(runtime, "_V30ceil_shim", 2, argc);
+  V_GC_CHECK2_VARARGS((VFunc)_V30ceil_shim, runtime, statics, 2, 2, _k, _arg0) {
+    VWORD _ret = VEncodeDouble(ceil(VCheckedDecodeNumber2(runtime, _arg0, "ceil")));
   V_CALL(_k, runtime, _ret);
   }
 }
@@ -10630,7 +10630,7 @@ static void _V10_Dstring__append_D150_k349(VRuntime * runtime, VEnv * upenv, int
  }
 }
 __attribute__((used)) static void _V20CaseError__V10_Dstring__append_D150_lambda113(VRuntime * runtime, VEnv * upenv, int argc, ...) {
- // (_V10_Dstring__append_D150_lambda113 #t (1 ((bruijn ##.string-copy.140 1 129) (bruijn ##.k.1588 0 0) (##string ##.string.2879))) (2 ((bruijn ##.string-copy.140 1 129) (bruijn ##.k.1589 0 0) (bruijn ##.a.600 0 1))) (3 ((bruijn ##.string-length.144 1 133) (close _V10_Dstring__append_D150_k330) (bruijn ##.a.601 0 1))) (4 ((bruijn ##.string-length.144 1 133) (close _V10_Dstring__append_D150_k337) (bruijn ##.a.605 0 1))) (5 ((bruijn ##.string-length.144 1 133) (close _V10_Dstring__append_D150_k349) (bruijn ##.a.610 0 1))) (1 + ((bruijn ##.fold-right.129 1 118) (bruijn ##.k.1624 0 0) (bruijn ##.string-append.150 1 139) (##string ##.string.2879) (bruijn ##.strs.616 0 1))))
+ // (_V10_Dstring__append_D150_lambda113 #t (1 ((bruijn ##.string-copy.140 1 129) (bruijn ##.k.1588 0 0) (##string ##.string.2747))) (2 ((bruijn ##.string-copy.140 1 129) (bruijn ##.k.1589 0 0) (bruijn ##.a.600 0 1))) (3 ((bruijn ##.string-length.144 1 133) (close _V10_Dstring__append_D150_k330) (bruijn ##.a.601 0 1))) (4 ((bruijn ##.string-length.144 1 133) (close _V10_Dstring__append_D150_k337) (bruijn ##.a.605 0 1))) (5 ((bruijn ##.string-length.144 1 133) (close _V10_Dstring__append_D150_k349) (bruijn ##.a.610 0 1))) (1 + ((bruijn ##.fold-right.129 1 118) (bruijn ##.k.1624 0 0) (bruijn ##.string-append.150 1 139) (##string ##.string.2747) (bruijn ##.strs.616 0 1))))
  VErrorC(runtime, "Not enough arguments to _V10_Dstring__append_D150_lambda113, got ~D~N"
  "-- expected 1~N"
  "-- expected 2~N"
@@ -10642,10 +10642,10 @@ __attribute__((used)) static void _V20CaseError__V10_Dstring__append_D150_lambda
 }
 __attribute__((used)) static void _V20Case0__V10_Dstring__append_D150_lambda113(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  V_GC_CHECK2_VARARGS((VFunc)_V20Case0__V10_Dstring__append_D150_lambda113, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn ##.string-copy.140 1 129) (bruijn ##.k.1588 0 0) (##string ##.string.2879))
+  // ((bruijn ##.string-copy.140 1 129) (bruijn ##.k.1588 0 0) (##string ##.string.2747))
     V_CALL(upenv->vars[129], runtime,
       _var0,
-      VEncodePointer(&_V10_Dstring_D2879.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2747.sym, VPOINTER_OTHER));
  }
 }
 __attribute__((used)) static void _V20Case1__V10_Dstring__append_D150_lambda113(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
@@ -10705,11 +10705,11 @@ __attribute__((used)) static void _V20Case5__V10_Dstring__append_D150_lambda113(
  VWORD _varargs = VNULL;
  V_GATHER_VARARGS_VARIADIC(&_varargs, 1, argc, _var0);
  V_GC_CHECK2_VARARGS((VFunc)_V20Case5__V10_Dstring__append_D150_lambda113, runtime, upenv, 1, argc, _var0, _varargs) {
-  // ((bruijn ##.fold-right.129 1 118) (bruijn ##.k.1624 0 0) (bruijn ##.string-append.150 1 139) (##string ##.string.2879) (bruijn ##.strs.616 0 1))
+  // ((bruijn ##.fold-right.129 1 118) (bruijn ##.k.1624 0 0) (bruijn ##.string-append.150 1 139) (##string ##.string.2747) (bruijn ##.strs.616 0 1))
     V_CALL(upenv->vars[118], runtime,
       _var0,
       upenv->vars[139],
-      VEncodePointer(&_V10_Dstring_D2879.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2747.sym, VPOINTER_OTHER),
       _varargs);
  }
 }
@@ -15695,10 +15695,10 @@ static void _V10_Dhash__table__ref_D236_lambda169(VRuntime * runtime, VEnv * upe
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dhash__table__ref_D236_lambda169, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn ##.error.310 2 299) (bruijn ##.k.1867 0 0) (##string ##.string.2880) (bruijn ##.key.797 1 2))
+  // ((bruijn ##.error.310 2 299) (bruijn ##.k.1867 0 0) (##string ##.string.2748) (bruijn ##.key.797 1 2))
     V_CALL(upenv->up->vars[299], runtime,
       _var0,
-      VEncodePointer(&_V10_Dstring_D2880.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2748.sym, VPOINTER_OTHER),
       upenv->vars[2]);
  }
 }
@@ -16420,11 +16420,11 @@ static void _V10_Dopen__input__file_D249_lambda186(VRuntime * runtime, VEnv * up
   VInitEnv(env, 2, 2, upenv);
   env->vars[0] = _var0;
   env->vars[1] = _var1;
-  // ((bruijn ##.try-or-gc.244 1 233) (bruijn ##.k.1904 0 0) (close _V10_Dopen__input__file_D249_lambda187) (##string ##.string.2881))
+  // ((bruijn ##.try-or-gc.244 1 233) (bruijn ##.k.1904 0 0) (close _V10_Dopen__input__file_D249_lambda187) (##string ##.string.2749))
     V_CALL(upenv->vars[233], runtime,
       _var0,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dopen__input__file_D249_lambda187, env)}),
-      VEncodePointer(&_V10_Dstring_D2881.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2749.sym, VPOINTER_OTHER));
  }
 }
 static void _V10_Dopen__output__file_D250_lambda189(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -16452,11 +16452,11 @@ static void _V10_Dopen__output__file_D250_lambda188(VRuntime * runtime, VEnv * u
   VInitEnv(env, 2, 2, upenv);
   env->vars[0] = _var0;
   env->vars[1] = _var1;
-  // ((bruijn ##.try-or-gc.244 1 233) (bruijn ##.k.1906 0 0) (close _V10_Dopen__output__file_D250_lambda189) (##string ##.string.2882))
+  // ((bruijn ##.try-or-gc.244 1 233) (bruijn ##.k.1906 0 0) (close _V10_Dopen__output__file_D250_lambda189) (##string ##.string.2750))
     V_CALL(upenv->vars[233], runtime,
       _var0,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dopen__output__file_D250_lambda189, env)}),
-      VEncodePointer(&_V10_Dstring_D2882.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2750.sym, VPOINTER_OTHER));
  }
 }
 static void _V10_Dopen__output__string_D251_lambda190(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -16466,11 +16466,11 @@ static void _V10_Dopen__output__string_D251_lambda190(VRuntime * runtime, VEnv *
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dopen__output__string_D251_lambda190, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn ##.try-or-gc.244 1 233) (bruijn ##.k.1908 0 0) (bruijn ##.open-output-string-impl.248 1 237) (##string ##.string.2883))
+  // ((bruijn ##.try-or-gc.244 1 233) (bruijn ##.k.1908 0 0) (bruijn ##.open-output-string-impl.248 1 237) (##string ##.string.2751))
     V_CALL(upenv->vars[233], runtime,
       _var0,
       upenv->vars[237],
-      VEncodePointer(&_V10_Dstring_D2883.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2751.sym, VPOINTER_OTHER));
  }
 }
 static void _V10_Dcall__with__port_D253_k571(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -17109,7 +17109,7 @@ static void _V10_Dloop_D853_k596(VRuntime * runtime, VEnv * upenv, int argc, VWO
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.1943 0 0) ((bruijn ##.k.1937 2 0) 'ok) (##vcore.display-word (close _V10_Dloop_D853_k597) (##string ##.string.2885) (bruijn ##.port.852 7 3)))
+  // (if (bruijn ##.p.1943 0 0) ((bruijn ##.k.1937 2 0) 'ok) (##vcore.display-word (close _V10_Dloop_D853_k597) (##string ##.string.2753) (bruijn ##.port.852 7 3)))
 if(VDecodeBool(
 _var0)) {
     V_CALL(upenv->up->vars[0], runtime,
@@ -17117,7 +17117,7 @@ _var0)) {
 } else {
     V_CALL_FUNC(VDisplay2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D853_k597, env)}),
-      VEncodePointer(&_V10_Dstring_D2885.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2753.sym, VPOINTER_OTHER),
       VGetArg(upenv, 7-1, 3));
 }
  }
@@ -17133,12 +17133,12 @@ static void _V10_Dloop_D853_k591(VRuntime * runtime, VEnv * upenv, int argc, VWO
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.1938 0 0) (##vcore.display-word (close _V10_Dloop_D853_k592) (##string ##.string.2884) (bruijn ##.port.852 6 3)) ((bruijn ##.null?.11 7 0) (close _V10_Dloop_D853_k596) (bruijn ##.xs.854 1 1)))
+  // (if (bruijn ##.p.1938 0 0) (##vcore.display-word (close _V10_Dloop_D853_k592) (##string ##.string.2752) (bruijn ##.port.852 6 3)) ((bruijn ##.null?.11 7 0) (close _V10_Dloop_D853_k596) (bruijn ##.xs.854 1 1)))
 if(VDecodeBool(
 _var0)) {
     V_CALL_FUNC(VDisplay2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D853_k592, env)}),
-      VEncodePointer(&_V10_Dstring_D2884.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2752.sym, VPOINTER_OTHER),
       VGetArg(upenv, 6-1, 3));
 } else {
     V_CALL(VGetArg(upenv, 7-1, 0), runtime,
@@ -17172,10 +17172,10 @@ static void _V10_Dprintout__list_D262_k599(VRuntime * runtime, VEnv * upenv, int
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dprintout__list_D262_k599, runtime, upenv, 1, argc, _var0) {
-  // (##vcore.display-word (bruijn ##.k.1933 6 0) (##string ##.string.2886) (bruijn ##.port.852 6 3))
+  // (##vcore.display-word (bruijn ##.k.1933 6 0) (##string ##.string.2754) (bruijn ##.port.852 6 3))
     V_CALL_FUNC(VDisplay2, NULL, runtime,
       VGetArg(upenv, 6-1, 0),
-      VEncodePointer(&_V10_Dstring_D2886.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2754.sym, VPOINTER_OTHER),
       VGetArg(upenv, 6-1, 3));
  }
 }
@@ -17271,10 +17271,10 @@ static void _V10_Dprintout__list_D262_lambda202(VRuntime * runtime, VEnv * upenv
   env->vars[1] = _var1;
   env->vars[2] = _var2;
   env->vars[3] = _var3;
-  // (##vcore.display-word (close _V10_Dprintout__list_D262_k588) (##string ##.string.2887) (bruijn ##.port.852 0 3))
+  // (##vcore.display-word (close _V10_Dprintout__list_D262_k588) (##string ##.string.2755) (bruijn ##.port.852 0 3))
     V_CALL_FUNC(VDisplay2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dprintout__list_D262_k588, env)}),
-      VEncodePointer(&_V10_Dstring_D2887.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2755.sym, VPOINTER_OTHER),
       _var3);
  }
 }
@@ -17356,26 +17356,26 @@ static void _V10_Dprintout__quotation_D263_k600(VRuntime * runtime, VEnv * upenv
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((bruijn ##.assv.136 2 125) (close _V10_Dprintout__quotation_D263_k601) (bruijn ##.x.1952 0 0) (##inline ##vcore.qcons (##inline ##vcore.qcons 'quote '(##string ##.string.2888)) (##inline ##vcore.qcons (##inline ##vcore.qcons 'quasiquote '(##string ##.string.2889)) (##inline ##vcore.qcons (##inline ##vcore.qcons 'unquote '(##string ##.string.2890)) (##inline ##vcore.qcons (##inline ##vcore.qcons 'unquote-splicing '(##string ##.string.2891)) '())))))
+  // ((bruijn ##.assv.136 2 125) (close _V10_Dprintout__quotation_D263_k601) (bruijn ##.x.1952 0 0) (##inline ##vcore.qcons (##inline ##vcore.qcons 'quote '(##string ##.string.2756)) (##inline ##vcore.qcons (##inline ##vcore.qcons 'quasiquote '(##string ##.string.2757)) (##inline ##vcore.qcons (##inline ##vcore.qcons 'unquote '(##string ##.string.2758)) (##inline ##vcore.qcons (##inline ##vcore.qcons 'unquote-splicing '(##string ##.string.2759)) '())))))
     V_CALL(upenv->up->vars[125], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dprintout__quotation_D263_k601, env)}),
       _var0,
       VInlineCons2(runtime,
         VInlineCons2(runtime,
         _V0quote,
-        VEncodePointer(&_V10_Dstring_D2888.sym, VPOINTER_OTHER)),
+        VEncodePointer(&_V10_Dstring_D2756.sym, VPOINTER_OTHER)),
         VInlineCons2(runtime,
         VInlineCons2(runtime,
         _V0quasiquote,
-        VEncodePointer(&_V10_Dstring_D2889.sym, VPOINTER_OTHER)),
+        VEncodePointer(&_V10_Dstring_D2757.sym, VPOINTER_OTHER)),
         VInlineCons2(runtime,
         VInlineCons2(runtime,
         _V0unquote,
-        VEncodePointer(&_V10_Dstring_D2890.sym, VPOINTER_OTHER)),
+        VEncodePointer(&_V10_Dstring_D2758.sym, VPOINTER_OTHER)),
         VInlineCons2(runtime,
         VInlineCons2(runtime,
         _V0unquote__splicing,
-        VEncodePointer(&_V10_Dstring_D2891.sym, VPOINTER_OTHER)),
+        VEncodePointer(&_V10_Dstring_D2759.sym, VPOINTER_OTHER)),
         VNULL)))));
  }
 }
@@ -17456,7 +17456,7 @@ static void _V10_Dloop_D862_k613(VRuntime * runtime, VEnv * upenv, int argc, VWO
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dloop_D862_k613, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.1978 1 0) ((bruijn ##.k.1979 0 0) #f) (##vcore.display-word (bruijn ##.k.1979 0 0) (##string ##.string.2884) (bruijn ##.port.860 9 3)))
+  // (if (bruijn ##.p.1978 1 0) ((bruijn ##.k.1979 0 0) #f) (##vcore.display-word (bruijn ##.k.1979 0 0) (##string ##.string.2752) (bruijn ##.port.860 9 3)))
 if(VDecodeBool(
 upenv->vars[0])) {
     V_CALL(_var0, runtime,
@@ -17464,7 +17464,7 @@ upenv->vars[0])) {
 } else {
     V_CALL_FUNC(VDisplay2, NULL, runtime,
       _var0,
-      VEncodePointer(&_V10_Dstring_D2884.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2752.sym, VPOINTER_OTHER),
       VGetArg(upenv, 9-1, 3));
 }
  }
@@ -17603,10 +17603,10 @@ static void _V10_Dprintout_D264_k618(VRuntime * runtime, VEnv * upenv, int argc,
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dprintout_D264_k618, runtime, upenv, 1, argc, _var0) {
-  // (##vcore.display-word (bruijn ##.k.1961 6 0) (##string ##.string.2886) (bruijn ##.port.860 6 3))
+  // (##vcore.display-word (bruijn ##.k.1961 6 0) (##string ##.string.2754) (bruijn ##.port.860 6 3))
     V_CALL_FUNC(VDisplay2, NULL, runtime,
       VGetArg(upenv, 6-1, 0),
-      VEncodePointer(&_V10_Dstring_D2886.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2754.sym, VPOINTER_OTHER),
       VGetArg(upenv, 6-1, 3));
  }
 }
@@ -17646,10 +17646,10 @@ static void _V10_Dprintout_D264_k609(VRuntime * runtime, VEnv * upenv, int argc,
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.display-word (close _V10_Dprintout_D264_k610) (##string ##.string.2892) (bruijn ##.port.860 3 3))
+  // (##vcore.display-word (close _V10_Dprintout_D264_k610) (##string ##.string.2760) (bruijn ##.port.860 3 3))
     V_CALL_FUNC(VDisplay2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dprintout_D264_k610, env)}),
-      VEncodePointer(&_V10_Dstring_D2892.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2760.sym, VPOINTER_OTHER),
       upenv->up->up->vars[3]);
  }
 }
@@ -17660,17 +17660,17 @@ static void _V10_Dprintout_D264_k623(VRuntime * runtime, VEnv * upenv, int argc,
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dprintout_D264_k623, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.1985 0 0) (##vcore.display-word (bruijn ##.k.1984 1 0) (##string ##.string.2894) (bruijn ##.port.860 7 3)) (##vcore.display-word (bruijn ##.k.1984 1 0) (##string ##.string.2895) (bruijn ##.port.860 7 3)))
+  // (if (bruijn ##.p.1985 0 0) (##vcore.display-word (bruijn ##.k.1984 1 0) (##string ##.string.2762) (bruijn ##.port.860 7 3)) (##vcore.display-word (bruijn ##.k.1984 1 0) (##string ##.string.2763) (bruijn ##.port.860 7 3)))
 if(VDecodeBool(
 _var0)) {
     V_CALL_FUNC(VDisplay2, NULL, runtime,
       upenv->vars[0],
-      VEncodePointer(&_V10_Dstring_D2894.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2762.sym, VPOINTER_OTHER),
       VGetArg(upenv, 7-1, 3));
 } else {
     V_CALL_FUNC(VDisplay2, NULL, runtime,
       upenv->vars[0],
-      VEncodePointer(&_V10_Dstring_D2895.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2763.sym, VPOINTER_OTHER),
       VGetArg(upenv, 7-1, 3));
 }
  }
@@ -17686,12 +17686,12 @@ static void _V10_Dprintout_D264_k622(VRuntime * runtime, VEnv * upenv, int argc,
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.1983 1 0) (##vcore.display-word (bruijn ##.k.1984 0 0) (##string ##.string.2893) (bruijn ##.port.860 6 3)) ((bruijn ##.eq?.29 7 18) (close _V10_Dprintout_D264_k623) (bruijn ##.eq.864 2 0) (bruijn ##.eqv?.32 7 21)))
+  // (if (bruijn ##.p.1983 1 0) (##vcore.display-word (bruijn ##.k.1984 0 0) (##string ##.string.2761) (bruijn ##.port.860 6 3)) ((bruijn ##.eq?.29 7 18) (close _V10_Dprintout_D264_k623) (bruijn ##.eq.864 2 0) (bruijn ##.eqv?.32 7 21)))
 if(VDecodeBool(
 upenv->vars[0])) {
     V_CALL_FUNC(VDisplay2, NULL, runtime,
       _var0,
-      VEncodePointer(&_V10_Dstring_D2893.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2761.sym, VPOINTER_OTHER),
       VGetArg(upenv, 6-1, 3));
 } else {
     V_CALL(VGetArg(upenv, 7-1, 18), runtime,
@@ -18086,7 +18086,7 @@ static void _V10_Dmake__parameter_D274_k634(VRuntime * runtime, VEnv * upenv, in
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dmake__parameter_D274_k634, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.2005 0 0) (##vcore.pop-dynamic (bruijn ##.k.2002 3 0) (bruijn ##.x.884 3 2)) ((bruijn ##.error.310 8 299) (bruijn ##.k.2002 3 0) (##string ##.string.2896)))
+  // (if (bruijn ##.p.2005 0 0) (##vcore.pop-dynamic (bruijn ##.k.2002 3 0) (bruijn ##.x.884 3 2)) ((bruijn ##.error.310 8 299) (bruijn ##.k.2002 3 0) (##string ##.string.2764)))
 if(VDecodeBool(
 _var0)) {
     V_CALL_FUNC(VPopDynamic, NULL, runtime,
@@ -18095,7 +18095,7 @@ _var0)) {
 } else {
     V_CALL(VGetArg(upenv, 8-1, 299), runtime,
       upenv->up->up->vars[0],
-      VEncodePointer(&_V10_Dstring_D2896.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2764.sym, VPOINTER_OTHER));
 }
  }
 }
@@ -19515,12 +19515,12 @@ static void _V10_Dloop_D960_k674(VRuntime * runtime, VEnv * upenv, int argc, VWO
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dloop_D960_k674, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.2110 1 0) ((bruijn ##.error.310 10 299) (bruijn ##.k.2111 0 0) (##string ##.string.2897) (bruijn ##.fmt.957 9 2)) ((bruijn ##.k.2111 0 0) #f))
+  // (if (bruijn ##.p.2110 1 0) ((bruijn ##.error.310 10 299) (bruijn ##.k.2111 0 0) (##string ##.string.2765) (bruijn ##.fmt.957 9 2)) ((bruijn ##.k.2111 0 0) #f))
 if(VDecodeBool(
 upenv->vars[0])) {
     V_CALL(VGetArg(upenv, 10-1, 299), runtime,
       _var0,
-      VEncodePointer(&_V10_Dstring_D2897.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2765.sym, VPOINTER_OTHER),
       VGetArg(upenv, 9-1, 2));
 } else {
     V_CALL(_var0, runtime,
@@ -19639,12 +19639,12 @@ static void _V10_Dloop_D960_k690(VRuntime * runtime, VEnv * upenv, int argc, VWO
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dloop_D960_k690, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.2091 1 0) ((bruijn ##.error.310 19 299) (bruijn ##.k.2092 0 0) (##string ##.string.2898) (bruijn ##.fmt.957 18 2)) ((bruijn ##.k.2092 0 0) #f))
+  // (if (bruijn ##.p.2091 1 0) ((bruijn ##.error.310 19 299) (bruijn ##.k.2092 0 0) (##string ##.string.2766) (bruijn ##.fmt.957 18 2)) ((bruijn ##.k.2092 0 0) #f))
 if(VDecodeBool(
 upenv->vars[0])) {
     V_CALL(VGetArg(upenv, 19-1, 299), runtime,
       _var0,
-      VEncodePointer(&_V10_Dstring_D2898.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2766.sym, VPOINTER_OTHER),
       VGetArg(upenv, 18-1, 2));
 } else {
     V_CALL(_var0, runtime,
@@ -19779,12 +19779,12 @@ static void _V10_Dloop_D960_k700(VRuntime * runtime, VEnv * upenv, int argc, VWO
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dloop_D960_k700, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.2099 1 0) ((bruijn ##.error.310 21 299) (bruijn ##.k.2100 0 0) (##string ##.string.2898) (bruijn ##.fmt.957 20 2)) ((bruijn ##.k.2100 0 0) #f))
+  // (if (bruijn ##.p.2099 1 0) ((bruijn ##.error.310 21 299) (bruijn ##.k.2100 0 0) (##string ##.string.2766) (bruijn ##.fmt.957 20 2)) ((bruijn ##.k.2100 0 0) #f))
 if(VDecodeBool(
 upenv->vars[0])) {
     V_CALL(VGetArg(upenv, 21-1, 299), runtime,
       _var0,
-      VEncodePointer(&_V10_Dstring_D2898.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2766.sym, VPOINTER_OTHER),
       VGetArg(upenv, 20-1, 2));
 } else {
     V_CALL(_var0, runtime,
@@ -19899,10 +19899,10 @@ static void _V10_Dloop_D960_k707(VRuntime * runtime, VEnv * upenv, int argc, VWO
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dloop_D960_k707, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn ##.error.310 21 299) (bruijn ##.k.2075 17 0) (##string ##.string.2899) (bruijn ##.x.2101 0 0))
+  // ((bruijn ##.error.310 21 299) (bruijn ##.k.2075 17 0) (##string ##.string.2767) (bruijn ##.x.2101 0 0))
     V_CALL(VGetArg(upenv, 21-1, 299), runtime,
       VGetArg(upenv, 17-1, 0),
-      VEncodePointer(&_V10_Dstring_D2899.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2767.sym, VPOINTER_OTHER),
       _var0);
  }
 }
@@ -21230,3620 +21230,6 @@ asm(
 "    jge _V20Case3__V10_Dfiber__map_D313_lambda239\n"
 "    jmp _V20CaseError__V10_Dfiber__map_D313_lambda239\n"
 );
-static void _V0vanity_V0core_V20_k892(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k892, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k892, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn ##.k.1010 162 0) (##inline ##vcore.cons (##inline ##vcore.cons 'null? (bruijn ##.null?.11 156 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'eof-object? (bruijn ##.eof-object?.13 156 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'boolean? (bruijn ##.boolean?.12 156 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'pair? (bruijn ##.pair?.14 156 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector? (bruijn ##.vector?.15 156 4)) (##inline ##vcore.cons (##inline ##vcore.cons 'hash-table? (bruijn ##.hash-table?.16 156 5)) (##inline ##vcore.cons (##inline ##vcore.cons 'record? (bruijn ##.record?.17 156 6)) (##inline ##vcore.cons (##inline ##vcore.cons 'procedure? (bruijn ##.procedure?.18 156 7)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol? (bruijn ##.symbol?.19 156 8)) (##inline ##vcore.cons (##inline ##vcore.cons 'string? (bruijn ##.string?.20 156 9)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact? (bruijn ##.exact?.24 156 13)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact-integer? (bruijn ##.exact-integer?.25 156 14)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact? (bruijn ##.inexact?.27 156 16)) (##inline ##vcore.cons (##inline ##vcore.cons 'real? (bruijn ##.real?.28 156 17)) (##inline ##vcore.cons (##inline ##vcore.cons 'integer? (bruijn ##.integer?.26 156 15)) (##inline ##vcore.cons (##inline ##vcore.cons 'char? (bruijn ##.char?.21 156 10)) (##inline ##vcore.cons (##inline ##vcore.cons 'nullptr? (bruijn ##.nullptr?.22 156 11)) (##inline ##vcore.cons (##inline ##vcore.cons 'foreign-pointer? (bruijn ##.foreign-pointer?.23 156 12)) (##inline ##vcore.cons (##inline ##vcore.cons 'eq? (bruijn ##.eq?.29 156 18)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol=? (bruijn ##.symbol=?.30 156 19)) (##inline ##vcore.cons (##inline ##vcore.cons 'eqv? (bruijn ##.eqv?.32 156 21)) (##inline ##vcore.cons (##inline ##vcore.cons 'equal? (bruijn ##.equal?.42 156 31)) (##inline ##vcore.cons (##inline ##vcore.cons 'not (bruijn ##.not.43 156 32)) (##inline ##vcore.cons (##inline ##vcore.cons '< (bruijn ##.<.44 156 33)) (##inline ##vcore.cons (##inline ##vcore.cons '= (bruijn ##.=.45 156 34)) (##inline ##vcore.cons (##inline ##vcore.cons '> (bruijn ##.>.46 156 35)) (##inline ##vcore.cons (##inline ##vcore.cons '<= (bruijn ##.<=.47 156 36)) (##inline ##vcore.cons (##inline ##vcore.cons '>= (bruijn ##.>=.48 156 37)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact (bruijn ##.exact.49 156 38)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact->exact (bruijn ##.inexact->exact.50 156 39)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact (bruijn ##.inexact.51 156 40)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact->inexact (bruijn ##.exact->inexact.52 156 41)) (##inline ##vcore.cons (##inline ##vcore.cons 'number? (bruijn ##.number?.53 156 42)) (##inline ##vcore.cons (##inline ##vcore.cons 'complex? (bruijn ##.complex?.54 156 43)) (##inline ##vcore.cons (##inline ##vcore.cons 'rational? (bruijn ##.rational?.55 156 44)) (##inline ##vcore.cons (##inline ##vcore.cons 'positive? (bruijn ##.positive?.56 156 45)) (##inline ##vcore.cons (##inline ##vcore.cons 'negative? (bruijn ##.negative?.58 156 47)) (##inline ##vcore.cons (##inline ##vcore.cons 'zero? (bruijn ##.zero?.57 156 46)) (##inline ##vcore.cons (##inline ##vcore.cons '+ (bruijn ##.+.59 156 48)) (##inline ##vcore.cons (##inline ##vcore.cons '- (bruijn ##.-.60 156 49)) (##inline ##vcore.cons (##inline ##vcore.cons '* (bruijn ##.*.61 156 50)) (##inline ##vcore.cons (##inline ##vcore.cons '/ (bruijn ##./.62 156 51)) (##inline ##vcore.cons (##inline ##vcore.cons 'quotient (bruijn ##.quotient.63 156 52)) (##inline ##vcore.cons (##inline ##vcore.cons 'remainder (bruijn ##.remainder.64 156 53)) (##inline ##vcore.cons (##inline ##vcore.cons 'max (bruijn ##.max.84 156 73)) (##inline ##vcore.cons (##inline ##vcore.cons 'min (bruijn ##.min.85 156 74)) (##inline ##vcore.cons (##inline ##vcore.cons 'abs (bruijn ##.abs.65 156 54)) (##inline ##vcore.cons (##inline ##vcore.cons 'square (bruijn ##.square.69 156 58)) (##inline ##vcore.cons (##inline ##vcore.cons 'sqrt (bruijn ##.sqrt.70 156 59)) (##inline ##vcore.cons (##inline ##vcore.cons 'ceiling (bruijn ##.ceiling.66 156 55)) (##inline ##vcore.cons (##inline ##vcore.cons 'floor (bruijn ##.floor.67 156 56)) (##inline ##vcore.cons (##inline ##vcore.cons 'round (bruijn ##.round.68 156 57)) (##inline ##vcore.cons (##inline ##vcore.cons 'sin (bruijn ##.sin.71 156 60)) (##inline ##vcore.cons (##inline ##vcore.cons 'cos (bruijn ##.cos.72 156 61)) (##inline ##vcore.cons (##inline ##vcore.cons 'tan (bruijn ##.tan.73 156 62)) (##inline ##vcore.cons (##inline ##vcore.cons 'asin (bruijn ##.asin.74 156 63)) (##inline ##vcore.cons (##inline ##vcore.cons 'acos (bruijn ##.acos.75 156 64)) (##inline ##vcore.cons (##inline ##vcore.cons 'atan (bruijn ##.atan.78 156 67)) (##inline ##vcore.cons (##inline ##vcore.cons 'exp (bruijn ##.exp.79 156 68)) (##inline ##vcore.cons (##inline ##vcore.cons 'log (bruijn ##.log.81 156 70)) (##inline ##vcore.cons (##inline ##vcore.cons 'expt (bruijn ##.expt.83 156 72)) (##inline ##vcore.cons (##inline ##vcore.cons 'pow (bruijn ##.pow.82 156 71)) (##inline ##vcore.cons (##inline ##vcore.cons 'cons (bruijn ##.cons.86 156 75)) (##inline ##vcore.cons (##inline ##vcore.cons 'car (bruijn ##.car.87 156 76)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdr (bruijn ##.cdr.88 156 77)) (##inline ##vcore.cons (##inline ##vcore.cons 'set-car! (bruijn ##.set-car!.89 156 78)) (##inline ##vcore.cons (##inline ##vcore.cons 'set-cdr! (bruijn ##.set-cdr!.90 156 79)) (##inline ##vcore.cons (##inline ##vcore.cons 'caar (bruijn ##.caar.91 156 80)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadr (bruijn ##.cadr.92 156 81)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdar (bruijn ##.cdar.93 156 82)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddr (bruijn ##.cddr.94 156 83)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaar (bruijn ##.caaar.95 156 84)) (##inline ##vcore.cons (##inline ##vcore.cons 'caadr (bruijn ##.caadr.96 156 85)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadar (bruijn ##.cadar.97 156 86)) (##inline ##vcore.cons (##inline ##vcore.cons 'caddr (bruijn ##.caddr.98 156 87)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaar (bruijn ##.cdaar.99 156 88)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdadr (bruijn ##.cdadr.100 156 89)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddar (bruijn ##.cddar.101 156 90)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdddr (bruijn ##.cdddr.102 156 91)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaaar (bruijn ##.caaaar.103 156 92)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaadr (bruijn ##.caaadr.104 156 93)) (##inline ##vcore.cons (##inline ##vcore.cons 'caadar (bruijn ##.caadar.105 156 94)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaddr (bruijn ##.caaddr.106 156 95)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadaar (bruijn ##.cadaar.107 156 96)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadadr (bruijn ##.cadadr.108 156 97)) (##inline ##vcore.cons (##inline ##vcore.cons 'caddar (bruijn ##.caddar.109 156 98)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadddr (bruijn ##.cadddr.110 156 99)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaaar (bruijn ##.cdaaar.111 156 100)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaadr (bruijn ##.cdaadr.112 156 101)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdadar (bruijn ##.cdadar.113 156 102)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaddr (bruijn ##.cdaddr.114 156 103)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddaar (bruijn ##.cddaar.115 156 104)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddadr (bruijn ##.cddadr.116 156 105)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdddar (bruijn ##.cdddar.117 156 106)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddddr (bruijn ##.cddddr.118 156 107)) (##inline ##vcore.cons (##inline ##vcore.cons 'list (bruijn ##.list.119 156 108)) (##inline ##vcore.cons (##inline ##vcore.cons 'list? (bruijn ##.list?.120 156 109)) (##inline ##vcore.cons (##inline ##vcore.cons 'length (bruijn ##.length.121 156 110)) (##inline ##vcore.cons (##inline ##vcore.cons 'list-tail (bruijn ##.list-tail.122 156 111)) (##inline ##vcore.cons (##inline ##vcore.cons 'list-ref (bruijn ##.list-ref.123 156 112)) (##inline ##vcore.cons (##inline ##vcore.cons 'list-set! (bruijn ##.list-set!.124 156 113)) (##inline ##vcore.cons (##inline ##vcore.cons 'list-copy (bruijn ##.list-copy.125 156 114)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-list (bruijn ##.make-list.126 156 115)) (##inline ##vcore.cons (##inline ##vcore.cons 'map (bruijn ##.map.127 156 116)) (##inline ##vcore.cons (##inline ##vcore.cons 'for-each (bruijn ##.for-each.128 156 117)) (##inline ##vcore.cons (##inline ##vcore.cons 'append (bruijn ##.append.130 156 119)) (##inline ##vcore.cons (##inline ##vcore.cons 'reverse (bruijn ##.reverse.131 156 120)) (##inline ##vcore.cons (##inline ##vcore.cons 'memq (bruijn ##.memq.132 156 121)) (##inline ##vcore.cons (##inline ##vcore.cons 'memv (bruijn ##.memv.133 156 122)) (##inline ##vcore.cons (##inline ##vcore.cons 'member (bruijn ##.member.134 156 123)) (##inline ##vcore.cons (##inline ##vcore.cons 'assq (bruijn ##.assq.135 156 124)) (##inline ##vcore.cons (##inline ##vcore.cons 'assv (bruijn ##.assv.136 156 125)) (##inline ##vcore.cons (##inline ##vcore.cons 'assoc (bruijn ##.assoc.137 156 126)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->list (bruijn ##.string->list.149 156 138)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->string (bruijn ##.list->string.148 156 137)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-string (bruijn ##.make-string.138 156 127)) (##inline ##vcore.cons (##inline ##vcore.cons 'substring (bruijn ##.substring.139 156 128)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-copy (bruijn ##.string-copy.140 156 129)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-copy! (bruijn ##.string-copy!.141 156 130)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-ref (bruijn ##.string-ref.142 156 131)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-set! (bruijn ##.string-set!.143 156 132)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-length (bruijn ##.string-length.144 156 133)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->symbol (bruijn ##.string->symbol.145 156 134)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->number (bruijn ##.string->number.146 156 135)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-append (bruijn ##.string-append.150 156 139)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol->string (bruijn ##.symbol->string.147 156 136)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->vector (bruijn ##.list->vector.151 156 140)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector->list (bruijn ##.vector->list.221 156 210)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-vector (bruijn ##.make-vector.222 156 211)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-copy (bruijn ##.vector-copy.225 156 214)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-copy! (bruijn ##.vector-copy!.226 156 215)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector (bruijn ##.vector.152 156 141)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-ref (bruijn ##.vector-ref.153 156 142)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-set! (bruijn ##.vector-set!.154 156 143)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-length (bruijn ##.vector-length.155 156 144)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-map (bruijn ##.vector-map.224 156 213)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-for-each (bruijn ##.vector-for-each.223 156 212)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-append (bruijn ##.vector-append.227 156 216)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-fill! (bruijn ##.vector-fill!.228 156 217)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector? (bruijn ##.f64vector?.164 156 153)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->f64vector (bruijn ##.list->f64vector.166 156 155)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector->list (bruijn ##.f64vector->list.171 156 160)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-f64vector (bruijn ##.make-f64vector.165 156 154)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector (bruijn ##.f64vector.167 156 156)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector-ref (bruijn ##.f64vector-ref.168 156 157)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector-set! (bruijn ##.f64vector-set!.169 156 158)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector-length (bruijn ##.f64vector-length.170 156 159)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector? (bruijn ##.f32vector?.156 156 145)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->f32vector (bruijn ##.list->f32vector.158 156 147)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector->list (bruijn ##.f32vector->list.163 156 152)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-f32vector (bruijn ##.make-f32vector.157 156 146)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector (bruijn ##.f32vector.159 156 148)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector-ref (bruijn ##.f32vector-ref.160 156 149)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector-set! (bruijn ##.f32vector-set!.161 156 150)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector-length (bruijn ##.f32vector-length.162 156 151)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector? (bruijn ##.s32vector?.172 156 161)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->s32vector (bruijn ##.list->s32vector.174 156 163)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector->list (bruijn ##.s32vector->list.179 156 168)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-s32vector (bruijn ##.make-s32vector.173 156 162)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector (bruijn ##.s32vector.175 156 164)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector-ref (bruijn ##.s32vector-ref.176 156 165)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector-set! (bruijn ##.s32vector-set!.177 156 166)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector-length (bruijn ##.s32vector-length.178 156 167)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector? (bruijn ##.u16vector?.180 156 169)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->u16vector (bruijn ##.list->u16vector.182 156 171)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector->list (bruijn ##.u16vector->list.187 156 176)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-u16vector (bruijn ##.make-u16vector.181 156 170)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector (bruijn ##.u16vector.183 156 172)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector-ref (bruijn ##.u16vector-ref.184 156 173)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector-set! (bruijn ##.u16vector-set!.185 156 174)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector-length (bruijn ##.u16vector-length.186 156 175)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector? (bruijn ##.s16vector?.188 156 177)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->s16vector (bruijn ##.list->s16vector.190 156 179)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector->list (bruijn ##.s16vector->list.195 156 184)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-s16vector (bruijn ##.make-s16vector.189 156 178)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector (bruijn ##.s16vector.191 156 180)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector-ref (bruijn ##.s16vector-ref.192 156 181)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector-set! (bruijn ##.s16vector-set!.193 156 182)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector-length (bruijn ##.s16vector-length.194 156 183)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector? (bruijn ##.u8vector?.196 156 185)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->u8vector (bruijn ##.list->u8vector.198 156 187)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector->list (bruijn ##.u8vector->list.203 156 192)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-u8vector (bruijn ##.make-u8vector.197 156 186)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector (bruijn ##.u8vector.199 156 188)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector-ref (bruijn ##.u8vector-ref.200 156 189)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector-set! (bruijn ##.u8vector-set!.201 156 190)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector-length (bruijn ##.u8vector-length.202 156 191)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector? (bruijn ##.s8vector?.212 156 201)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->s8vector (bruijn ##.list->s8vector.214 156 203)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector->list (bruijn ##.s8vector->list.219 156 208)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-s8vector (bruijn ##.make-s8vector.213 156 202)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector (bruijn ##.s8vector.215 156 204)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector-ref (bruijn ##.s8vector-ref.216 156 205)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector-set! (bruijn ##.s8vector-set!.217 156 206)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector-length (bruijn ##.s8vector-length.218 156 207)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector? (bruijn ##.bytevector?.204 156 193)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->bytevector (bruijn ##.list->bytevector.206 156 195)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector->list (bruijn ##.bytevector->list.207 156 196)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-bytevector (bruijn ##.make-bytevector.205 156 194)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector (bruijn ##.bytevector.208 156 197)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector-u8-ref (bruijn ##.bytevector-u8-ref.209 156 198)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector-u8-set! (bruijn ##.bytevector-u8-set!.210 156 199)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector-length (bruijn ##.bytevector-length.211 156 200)) (##inline ##vcore.cons (##inline ##vcore.cons 'typevector? (bruijn ##.typevector?.220 156 209)) (##inline ##vcore.cons (##inline ##vcore.cons 'record (bruijn ##.record.229 156 218)) (##inline ##vcore.cons (##inline ##vcore.cons 'record-ref (bruijn ##.record-ref.230 156 219)) (##inline ##vcore.cons (##inline ##vcore.cons 'record-set! (bruijn ##.record-set!.231 156 220)) (##inline ##vcore.cons (##inline ##vcore.cons 'record-length (bruijn ##.record-length.232 156 221)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-hash-table (bruijn ##.make-hash-table.233 156 222)) (##inline ##vcore.cons (##inline ##vcore.cons 'hash-table-ref (bruijn ##.hash-table-ref.236 156 225)) (##inline ##vcore.cons (##inline ##vcore.cons 'hash-table-set! (bruijn ##.hash-table-set!.237 156 226)) (##inline ##vcore.cons (##inline ##vcore.cons 'hash-table-delete! (bruijn ##.hash-table-delete!.238 156 227)) (##inline ##vcore.cons (##inline ##vcore.cons 'hash-table->alist (bruijn ##.hash-table->alist.239 156 228)) (##inline ##vcore.cons (##inline ##vcore.cons 'char->integer (bruijn ##.char->integer.240 156 229)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-output-port (bruijn ##.current-output-port.241 156 230)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-error-port (bruijn ##.current-error-port.242 156 231)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-input-port (bruijn ##.current-input-port.243 156 232)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-input-file (bruijn ##.open-input-file.249 156 238)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-file (bruijn ##.open-output-file.250 156 239)) (##inline ##vcore.cons (##inline ##vcore.cons 'close-port (bruijn ##.close-port.245 156 234)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-string (bruijn ##.open-output-string.251 156 240)) (##inline ##vcore.cons (##inline ##vcore.cons 'get-output-string (bruijn ##.get-output-string.252 156 241)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-output-to-file (bruijn ##.with-output-to-file.256 156 245)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-input-from-file (bruijn ##.with-input-from-file.257 156 246)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-port (bruijn ##.call-with-port.253 156 242)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-input-file (bruijn ##.call-with-input-file.254 156 243)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-output-file (bruijn ##.call-with-output-file.255 156 244)) (##inline ##vcore.cons (##inline ##vcore.cons 'read-char (bruijn ##.read-char.258 156 247)) (##inline ##vcore.cons (##inline ##vcore.cons 'read-line (bruijn ##.read-line.259 156 248)) (##inline ##vcore.cons (##inline ##vcore.cons 'read (bruijn ##.read.260 156 249)) (##inline ##vcore.cons (##inline ##vcore.cons 'newline (bruijn ##.newline.261 156 250)) (##inline ##vcore.cons (##inline ##vcore.cons 'display (bruijn ##.display.265 156 254)) (##inline ##vcore.cons (##inline ##vcore.cons 'write (bruijn ##.write.266 156 255)) (##inline ##vcore.cons (##inline ##vcore.cons 'call/cc (bruijn ##.call/cc.267 156 256)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-current-continuation (bruijn ##.call-with-current-continuation.268 156 257)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-values (bruijn ##.call-with-values.269 156 258)) (##inline ##vcore.cons (##inline ##vcore.cons 'apply (bruijn ##.apply.270 156 259)) (##inline ##vcore.cons (##inline ##vcore.cons 'values (bruijn ##.values.271 156 260)) (##inline ##vcore.cons (##inline ##vcore.cons 'setter (bruijn ##.setter.272 156 261)) (##inline ##vcore.cons (##inline ##vcore.cons 'mutator (bruijn ##.mutator.273 156 262)) (##inline ##vcore.cons (##inline ##vcore.cons '##vcore.setter (bruijn ##..vcore.setter.10 157 1)) (##inline ##vcore.cons (##inline ##vcore.cons '##vcore.mutator (bruijn ##..vcore.mutator.9 157 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-parameter (bruijn ##.make-parameter.274 156 263)) (##inline ##vcore.cons (##inline ##vcore.cons 'raise (bruijn ##.raise.307 156 296)) (##inline ##vcore.cons (##inline ##vcore.cons 'raise-continuable (bruijn ##.raise-continuable.308 156 297)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-exception-handler (bruijn ##.with-exception-handler.309 156 298)) (##inline ##vcore.cons (##inline ##vcore.cons 'command-line (bruijn ##.command-line.275 156 264)) (##inline ##vcore.cons (##inline ##vcore.cons 'system (bruijn ##.system.276 156 265)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-input-process (bruijn ##.open-input-process.277 156 266)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-process (bruijn ##.open-output-process.278 156 267)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-temporary-file (bruijn ##.make-temporary-file.279 156 268)) (##inline ##vcore.cons (##inline ##vcore.cons 'file-exists? (bruijn ##.file-exists?.280 156 269)) (##inline ##vcore.cons (##inline ##vcore.cons 'exit (bruijn ##.exit.281 156 270)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-jiffy (bruijn ##.current-jiffy.282 156 271)) (##inline ##vcore.cons (##inline ##vcore.cons 'jiffies-per-second (bruijn ##.jiffies-per-second.283 156 272)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-not (bruijn ##.bitwise-not.290 156 279)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-and (bruijn ##.bitwise-and.284 156 273)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-or (bruijn ##.bitwise-or.289 156 278)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-ior (bruijn ##.bitwise-ior.285 156 274)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-xor (bruijn ##.bitwise-xor.286 156 275)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-xnor (bruijn ##.bitwise-xnor.287 156 276)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-eqv (bruijn ##.bitwise-eqv.288 156 277)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-nand (bruijn ##.bitwise-nand.291 156 280)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-nor (bruijn ##.bitwise-nor.292 156 281)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-andc1 (bruijn ##.bitwise-andc1.293 156 282)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-andc2 (bruijn ##.bitwise-andc2.294 156 283)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-orc1 (bruijn ##.bitwise-orc1.295 156 284)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-orc2 (bruijn ##.bitwise-orc2.296 156 285)) (##inline ##vcore.cons (##inline ##vcore.cons 'arithmetic-shift (bruijn ##.arithmetic-shift.297 156 286)) (##inline ##vcore.cons (##inline ##vcore.cons 'bit-count (bruijn ##.bit-count.298 156 287)) (##inline ##vcore.cons (##inline ##vcore.cons 'fiber-fork (bruijn ##.fiber-fork.312 156 301)) (##inline ##vcore.cons (##inline ##vcore.cons 'fiber-fork-list (bruijn ##.fiber-fork-list.311 156 300)) (##inline ##vcore.cons (##inline ##vcore.cons 'fiber-map (bruijn ##.fiber-map.313 156 302)) (##inline ##vcore.cons (##inline ##vcore.cons 'async (bruijn ##.async.314 156 303)) (##inline ##vcore.cons (##inline ##vcore.cons 'await (bruijn ##.await.315 156 304)) (##inline ##vcore.cons (##inline ##vcore.cons 'atom? (bruijn ##.atom?.299 156 288)) (##inline ##vcore.cons (##inline ##vcore.cons 'displayln (bruijn ##.displayln.300 156 289)) (##inline ##vcore.cons (##inline ##vcore.cons 'writeln (bruijn ##.writeln.301 156 290)) (##inline ##vcore.cons (##inline ##vcore.cons 'format (bruijn ##.format.306 156 295)) (##inline ##vcore.cons (##inline ##vcore.cons 'printf (bruijn ##.printf.304 156 293)) (##inline ##vcore.cons (##inline ##vcore.cons 'sprintf (bruijn ##.sprintf.305 156 294)) (##inline ##vcore.cons (##inline ##vcore.cons 'error (bruijn ##.error.310 156 299)) '())))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
-    V_CALL(VGetArg(upenv, 162-1, 0), runtime,
-      VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0null_Q,
-        VGetArg(upenv, 156-1, 0)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0eof__object_Q,
-        VGetArg(upenv, 156-1, 2)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0boolean_Q,
-        VGetArg(upenv, 156-1, 1)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0pair_Q,
-        VGetArg(upenv, 156-1, 3)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector_Q,
-        VGetArg(upenv, 156-1, 4)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0hash__table_Q,
-        VGetArg(upenv, 156-1, 5)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0record_Q,
-        VGetArg(upenv, 156-1, 6)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0procedure_Q,
-        VGetArg(upenv, 156-1, 7)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0symbol_Q,
-        VGetArg(upenv, 156-1, 8)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0string_Q,
-        VGetArg(upenv, 156-1, 9)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0exact_Q,
-        VGetArg(upenv, 156-1, 13)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0exact__integer_Q,
-        VGetArg(upenv, 156-1, 14)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0inexact_Q,
-        VGetArg(upenv, 156-1, 16)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0real_Q,
-        VGetArg(upenv, 156-1, 17)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0integer_Q,
-        VGetArg(upenv, 156-1, 15)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0char_Q,
-        VGetArg(upenv, 156-1, 10)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0nullptr_Q,
-        VGetArg(upenv, 156-1, 11)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0foreign__pointer_Q,
-        VGetArg(upenv, 156-1, 12)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0eq_Q,
-        VGetArg(upenv, 156-1, 18)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0symbol_E_Q,
-        VGetArg(upenv, 156-1, 19)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0eqv_Q,
-        VGetArg(upenv, 156-1, 21)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0equal_Q,
-        VGetArg(upenv, 156-1, 31)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0not,
-        VGetArg(upenv, 156-1, 32)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0_L,
-        VGetArg(upenv, 156-1, 33)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0_E,
-        VGetArg(upenv, 156-1, 34)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0_G,
-        VGetArg(upenv, 156-1, 35)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0_L_E,
-        VGetArg(upenv, 156-1, 36)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0_G_E,
-        VGetArg(upenv, 156-1, 37)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0exact,
-        VGetArg(upenv, 156-1, 38)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0inexact___Gexact,
-        VGetArg(upenv, 156-1, 39)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0inexact,
-        VGetArg(upenv, 156-1, 40)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0exact___Ginexact,
-        VGetArg(upenv, 156-1, 41)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0number_Q,
-        VGetArg(upenv, 156-1, 42)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0complex_Q,
-        VGetArg(upenv, 156-1, 43)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0rational_Q,
-        VGetArg(upenv, 156-1, 44)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0positive_Q,
-        VGetArg(upenv, 156-1, 45)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0negative_Q,
-        VGetArg(upenv, 156-1, 47)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0zero_Q,
-        VGetArg(upenv, 156-1, 46)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0_P,
-        VGetArg(upenv, 156-1, 48)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0__,
-        VGetArg(upenv, 156-1, 49)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0_S,
-        VGetArg(upenv, 156-1, 50)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0_W,
-        VGetArg(upenv, 156-1, 51)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0quotient,
-        VGetArg(upenv, 156-1, 52)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0remainder,
-        VGetArg(upenv, 156-1, 53)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0max,
-        VGetArg(upenv, 156-1, 73)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0min,
-        VGetArg(upenv, 156-1, 74)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0abs,
-        VGetArg(upenv, 156-1, 54)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0square,
-        VGetArg(upenv, 156-1, 58)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0sqrt,
-        VGetArg(upenv, 156-1, 59)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0ceiling,
-        VGetArg(upenv, 156-1, 55)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0floor,
-        VGetArg(upenv, 156-1, 56)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0round,
-        VGetArg(upenv, 156-1, 57)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0sin,
-        VGetArg(upenv, 156-1, 60)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cos,
-        VGetArg(upenv, 156-1, 61)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0tan,
-        VGetArg(upenv, 156-1, 62)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0asin,
-        VGetArg(upenv, 156-1, 63)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0acos,
-        VGetArg(upenv, 156-1, 64)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0atan,
-        VGetArg(upenv, 156-1, 67)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0exp,
-        VGetArg(upenv, 156-1, 68)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0log,
-        VGetArg(upenv, 156-1, 70)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0expt,
-        VGetArg(upenv, 156-1, 72)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0pow,
-        VGetArg(upenv, 156-1, 71)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cons,
-        VGetArg(upenv, 156-1, 75)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0car,
-        VGetArg(upenv, 156-1, 76)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cdr,
-        VGetArg(upenv, 156-1, 77)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0set__car_B,
-        VGetArg(upenv, 156-1, 78)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0set__cdr_B,
-        VGetArg(upenv, 156-1, 79)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0caar,
-        VGetArg(upenv, 156-1, 80)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cadr,
-        VGetArg(upenv, 156-1, 81)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cdar,
-        VGetArg(upenv, 156-1, 82)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cddr,
-        VGetArg(upenv, 156-1, 83)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0caaar,
-        VGetArg(upenv, 156-1, 84)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0caadr,
-        VGetArg(upenv, 156-1, 85)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cadar,
-        VGetArg(upenv, 156-1, 86)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0caddr,
-        VGetArg(upenv, 156-1, 87)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cdaar,
-        VGetArg(upenv, 156-1, 88)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cdadr,
-        VGetArg(upenv, 156-1, 89)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cddar,
-        VGetArg(upenv, 156-1, 90)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cdddr,
-        VGetArg(upenv, 156-1, 91)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0caaaar,
-        VGetArg(upenv, 156-1, 92)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0caaadr,
-        VGetArg(upenv, 156-1, 93)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0caadar,
-        VGetArg(upenv, 156-1, 94)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0caaddr,
-        VGetArg(upenv, 156-1, 95)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cadaar,
-        VGetArg(upenv, 156-1, 96)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cadadr,
-        VGetArg(upenv, 156-1, 97)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0caddar,
-        VGetArg(upenv, 156-1, 98)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cadddr,
-        VGetArg(upenv, 156-1, 99)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cdaaar,
-        VGetArg(upenv, 156-1, 100)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cdaadr,
-        VGetArg(upenv, 156-1, 101)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cdadar,
-        VGetArg(upenv, 156-1, 102)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cdaddr,
-        VGetArg(upenv, 156-1, 103)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cddaar,
-        VGetArg(upenv, 156-1, 104)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cddadr,
-        VGetArg(upenv, 156-1, 105)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cdddar,
-        VGetArg(upenv, 156-1, 106)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0cddddr,
-        VGetArg(upenv, 156-1, 107)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list,
-        VGetArg(upenv, 156-1, 108)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list_Q,
-        VGetArg(upenv, 156-1, 109)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0length,
-        VGetArg(upenv, 156-1, 110)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list__tail,
-        VGetArg(upenv, 156-1, 111)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list__ref,
-        VGetArg(upenv, 156-1, 112)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list__set_B,
-        VGetArg(upenv, 156-1, 113)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list__copy,
-        VGetArg(upenv, 156-1, 114)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__list,
-        VGetArg(upenv, 156-1, 115)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0map,
-        VGetArg(upenv, 156-1, 116)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0for__each,
-        VGetArg(upenv, 156-1, 117)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0append,
-        VGetArg(upenv, 156-1, 119)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0reverse,
-        VGetArg(upenv, 156-1, 120)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0memq,
-        VGetArg(upenv, 156-1, 121)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0memv,
-        VGetArg(upenv, 156-1, 122)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0member,
-        VGetArg(upenv, 156-1, 123)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0assq,
-        VGetArg(upenv, 156-1, 124)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0assv,
-        VGetArg(upenv, 156-1, 125)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0assoc,
-        VGetArg(upenv, 156-1, 126)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0string___Glist,
-        VGetArg(upenv, 156-1, 138)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list___Gstring,
-        VGetArg(upenv, 156-1, 137)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__string,
-        VGetArg(upenv, 156-1, 127)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0substring,
-        VGetArg(upenv, 156-1, 128)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0string__copy,
-        VGetArg(upenv, 156-1, 129)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0string__copy_B,
-        VGetArg(upenv, 156-1, 130)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0string__ref,
-        VGetArg(upenv, 156-1, 131)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0string__set_B,
-        VGetArg(upenv, 156-1, 132)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0string__length,
-        VGetArg(upenv, 156-1, 133)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0string___Gsymbol,
-        VGetArg(upenv, 156-1, 134)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0string___Gnumber,
-        VGetArg(upenv, 156-1, 135)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0string__append,
-        VGetArg(upenv, 156-1, 139)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0symbol___Gstring,
-        VGetArg(upenv, 156-1, 136)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list___Gvector,
-        VGetArg(upenv, 156-1, 140)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector___Glist,
-        VGetArg(upenv, 156-1, 210)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__vector,
-        VGetArg(upenv, 156-1, 211)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector__copy,
-        VGetArg(upenv, 156-1, 214)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector__copy_B,
-        VGetArg(upenv, 156-1, 215)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector,
-        VGetArg(upenv, 156-1, 141)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector__ref,
-        VGetArg(upenv, 156-1, 142)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector__set_B,
-        VGetArg(upenv, 156-1, 143)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector__length,
-        VGetArg(upenv, 156-1, 144)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector__map,
-        VGetArg(upenv, 156-1, 213)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector__for__each,
-        VGetArg(upenv, 156-1, 212)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector__append,
-        VGetArg(upenv, 156-1, 216)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0vector__fill_B,
-        VGetArg(upenv, 156-1, 217)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f64vector_Q,
-        VGetArg(upenv, 156-1, 153)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list___Gf64vector,
-        VGetArg(upenv, 156-1, 155)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f64vector___Glist,
-        VGetArg(upenv, 156-1, 160)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__f64vector,
-        VGetArg(upenv, 156-1, 154)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f64vector,
-        VGetArg(upenv, 156-1, 156)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f64vector__ref,
-        VGetArg(upenv, 156-1, 157)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f64vector__set_B,
-        VGetArg(upenv, 156-1, 158)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f64vector__length,
-        VGetArg(upenv, 156-1, 159)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f32vector_Q,
-        VGetArg(upenv, 156-1, 145)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list___Gf32vector,
-        VGetArg(upenv, 156-1, 147)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f32vector___Glist,
-        VGetArg(upenv, 156-1, 152)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__f32vector,
-        VGetArg(upenv, 156-1, 146)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f32vector,
-        VGetArg(upenv, 156-1, 148)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f32vector__ref,
-        VGetArg(upenv, 156-1, 149)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f32vector__set_B,
-        VGetArg(upenv, 156-1, 150)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0f32vector__length,
-        VGetArg(upenv, 156-1, 151)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s32vector_Q,
-        VGetArg(upenv, 156-1, 161)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list___Gs32vector,
-        VGetArg(upenv, 156-1, 163)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s32vector___Glist,
-        VGetArg(upenv, 156-1, 168)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__s32vector,
-        VGetArg(upenv, 156-1, 162)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s32vector,
-        VGetArg(upenv, 156-1, 164)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s32vector__ref,
-        VGetArg(upenv, 156-1, 165)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s32vector__set_B,
-        VGetArg(upenv, 156-1, 166)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s32vector__length,
-        VGetArg(upenv, 156-1, 167)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u16vector_Q,
-        VGetArg(upenv, 156-1, 169)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list___Gu16vector,
-        VGetArg(upenv, 156-1, 171)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u16vector___Glist,
-        VGetArg(upenv, 156-1, 176)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__u16vector,
-        VGetArg(upenv, 156-1, 170)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u16vector,
-        VGetArg(upenv, 156-1, 172)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u16vector__ref,
-        VGetArg(upenv, 156-1, 173)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u16vector__set_B,
-        VGetArg(upenv, 156-1, 174)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u16vector__length,
-        VGetArg(upenv, 156-1, 175)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s16vector_Q,
-        VGetArg(upenv, 156-1, 177)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list___Gs16vector,
-        VGetArg(upenv, 156-1, 179)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s16vector___Glist,
-        VGetArg(upenv, 156-1, 184)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__s16vector,
-        VGetArg(upenv, 156-1, 178)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s16vector,
-        VGetArg(upenv, 156-1, 180)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s16vector__ref,
-        VGetArg(upenv, 156-1, 181)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s16vector__set_B,
-        VGetArg(upenv, 156-1, 182)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s16vector__length,
-        VGetArg(upenv, 156-1, 183)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u8vector_Q,
-        VGetArg(upenv, 156-1, 185)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list___Gu8vector,
-        VGetArg(upenv, 156-1, 187)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u8vector___Glist,
-        VGetArg(upenv, 156-1, 192)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__u8vector,
-        VGetArg(upenv, 156-1, 186)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u8vector,
-        VGetArg(upenv, 156-1, 188)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u8vector__ref,
-        VGetArg(upenv, 156-1, 189)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u8vector__set_B,
-        VGetArg(upenv, 156-1, 190)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0u8vector__length,
-        VGetArg(upenv, 156-1, 191)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s8vector_Q,
-        VGetArg(upenv, 156-1, 201)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list___Gs8vector,
-        VGetArg(upenv, 156-1, 203)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s8vector___Glist,
-        VGetArg(upenv, 156-1, 208)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__s8vector,
-        VGetArg(upenv, 156-1, 202)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s8vector,
-        VGetArg(upenv, 156-1, 204)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s8vector__ref,
-        VGetArg(upenv, 156-1, 205)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s8vector__set_B,
-        VGetArg(upenv, 156-1, 206)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0s8vector__length,
-        VGetArg(upenv, 156-1, 207)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bytevector_Q,
-        VGetArg(upenv, 156-1, 193)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0list___Gbytevector,
-        VGetArg(upenv, 156-1, 195)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bytevector___Glist,
-        VGetArg(upenv, 156-1, 196)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__bytevector,
-        VGetArg(upenv, 156-1, 194)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bytevector,
-        VGetArg(upenv, 156-1, 197)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bytevector__u8__ref,
-        VGetArg(upenv, 156-1, 198)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bytevector__u8__set_B,
-        VGetArg(upenv, 156-1, 199)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bytevector__length,
-        VGetArg(upenv, 156-1, 200)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0typevector_Q,
-        VGetArg(upenv, 156-1, 209)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0record,
-        VGetArg(upenv, 156-1, 218)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0record__ref,
-        VGetArg(upenv, 156-1, 219)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0record__set_B,
-        VGetArg(upenv, 156-1, 220)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0record__length,
-        VGetArg(upenv, 156-1, 221)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__hash__table,
-        VGetArg(upenv, 156-1, 222)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0hash__table__ref,
-        VGetArg(upenv, 156-1, 225)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0hash__table__set_B,
-        VGetArg(upenv, 156-1, 226)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0hash__table__delete_B,
-        VGetArg(upenv, 156-1, 227)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0hash__table___Galist,
-        VGetArg(upenv, 156-1, 228)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0char___Ginteger,
-        VGetArg(upenv, 156-1, 229)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0current__output__port,
-        VGetArg(upenv, 156-1, 230)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0current__error__port,
-        VGetArg(upenv, 156-1, 231)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0current__input__port,
-        VGetArg(upenv, 156-1, 232)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0open__input__file,
-        VGetArg(upenv, 156-1, 238)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0open__output__file,
-        VGetArg(upenv, 156-1, 239)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0close__port,
-        VGetArg(upenv, 156-1, 234)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0open__output__string,
-        VGetArg(upenv, 156-1, 240)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0get__output__string,
-        VGetArg(upenv, 156-1, 241)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0with__output__to__file,
-        VGetArg(upenv, 156-1, 245)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0with__input__from__file,
-        VGetArg(upenv, 156-1, 246)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0call__with__port,
-        VGetArg(upenv, 156-1, 242)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0call__with__input__file,
-        VGetArg(upenv, 156-1, 243)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0call__with__output__file,
-        VGetArg(upenv, 156-1, 244)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0read__char,
-        VGetArg(upenv, 156-1, 247)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0read__line,
-        VGetArg(upenv, 156-1, 248)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0read,
-        VGetArg(upenv, 156-1, 249)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0newline,
-        VGetArg(upenv, 156-1, 250)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0display,
-        VGetArg(upenv, 156-1, 254)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0write,
-        VGetArg(upenv, 156-1, 255)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0call_Wcc,
-        VGetArg(upenv, 156-1, 256)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0call__with__current__continuation,
-        VGetArg(upenv, 156-1, 257)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0call__with__values,
-        VGetArg(upenv, 156-1, 258)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0apply,
-        VGetArg(upenv, 156-1, 259)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0values,
-        VGetArg(upenv, 156-1, 260)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0setter,
-        VGetArg(upenv, 156-1, 261)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0mutator,
-        VGetArg(upenv, 156-1, 262)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V10vcore_Dsetter,
-        VGetArg(upenv, 157-1, 1)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V10vcore_Dmutator,
-        VGetArg(upenv, 157-1, 0)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__parameter,
-        VGetArg(upenv, 156-1, 263)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0raise,
-        VGetArg(upenv, 156-1, 296)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0raise__continuable,
-        VGetArg(upenv, 156-1, 297)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0with__exception__handler,
-        VGetArg(upenv, 156-1, 298)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0command__line,
-        VGetArg(upenv, 156-1, 264)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0system,
-        VGetArg(upenv, 156-1, 265)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0open__input__process,
-        VGetArg(upenv, 156-1, 266)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0open__output__process,
-        VGetArg(upenv, 156-1, 267)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0make__temporary__file,
-        VGetArg(upenv, 156-1, 268)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0file__exists_Q,
-        VGetArg(upenv, 156-1, 269)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0exit,
-        VGetArg(upenv, 156-1, 270)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0current__jiffy,
-        VGetArg(upenv, 156-1, 271)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0jiffies__per__second,
-        VGetArg(upenv, 156-1, 272)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__not,
-        VGetArg(upenv, 156-1, 279)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__and,
-        VGetArg(upenv, 156-1, 273)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__or,
-        VGetArg(upenv, 156-1, 278)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__ior,
-        VGetArg(upenv, 156-1, 274)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__xor,
-        VGetArg(upenv, 156-1, 275)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__xnor,
-        VGetArg(upenv, 156-1, 276)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__eqv,
-        VGetArg(upenv, 156-1, 277)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__nand,
-        VGetArg(upenv, 156-1, 280)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__nor,
-        VGetArg(upenv, 156-1, 281)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__andc1,
-        VGetArg(upenv, 156-1, 282)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__andc2,
-        VGetArg(upenv, 156-1, 283)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__orc1,
-        VGetArg(upenv, 156-1, 284)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bitwise__orc2,
-        VGetArg(upenv, 156-1, 285)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0arithmetic__shift,
-        VGetArg(upenv, 156-1, 286)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0bit__count,
-        VGetArg(upenv, 156-1, 287)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0fiber__fork,
-        VGetArg(upenv, 156-1, 301)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0fiber__fork__list,
-        VGetArg(upenv, 156-1, 300)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0fiber__map,
-        VGetArg(upenv, 156-1, 302)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0async,
-        VGetArg(upenv, 156-1, 303)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0await,
-        VGetArg(upenv, 156-1, 304)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0atom_Q,
-        VGetArg(upenv, 156-1, 288)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0displayln,
-        VGetArg(upenv, 156-1, 289)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0writeln,
-        VGetArg(upenv, 156-1, 290)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0format,
-        VGetArg(upenv, 156-1, 295)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0printf,
-        VGetArg(upenv, 156-1, 293)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0sprintf,
-        VGetArg(upenv, 156-1, 294)),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0error,
-        VGetArg(upenv, 156-1, 299)),
-        VNULL)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
- }
-}
-static void _V0vanity_V0core_V20_k891(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k891, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k891, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k892) (bruijn ##.await.315 155 304) (##intrinsic ##vcore.await))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k892, env)}),
-      VEncodeInt(155l), VEncodeInt(304l),
-      _V40_V10vcore_Dawait
-    );
- }
-}
-static void _V0vanity_V0core_V20_k890(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k890, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k890, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k891) (bruijn ##.async.314 154 303) (##intrinsic ##vcore.async))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k891, env)}),
-      VEncodeInt(154l), VEncodeInt(303l),
-      _V40_V10vcore_Dasync
-    );
- }
-}
-static void _V0vanity_V0core_V20_k889(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k889, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k889, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k890) (bruijn ##.fiber-fork-list.311 153 300) (##intrinsic ##vcore.fiber-fork-list))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k890, env)}),
-      VEncodeInt(153l), VEncodeInt(300l),
-      _V40_V10vcore_Dfiber__fork__list
-    );
- }
-}
-static void _V0vanity_V0core_V20_k888(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k888, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k888, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k889) (bruijn ##.raise.307 152 296) (##intrinsic ##vcore.raise))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k889, env)}),
-      VEncodeInt(152l), VEncodeInt(296l),
-      _V40_V10vcore_Draise
-    );
- }
-}
-static void _V0vanity_V0core_V20_k887(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k887, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k887, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k888) (bruijn ##.bit-count.298 151 287) (##intrinsic ##vcore.bit-count))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k888, env)}),
-      VEncodeInt(151l), VEncodeInt(287l),
-      _V40_V10vcore_Dbit__count
-    );
- }
-}
-static void _V0vanity_V0core_V20_k886(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k886, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k886, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k887) (bruijn ##.arithmetic-shift.297 150 286) (##intrinsic ##vcore.arithmetic-shift))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k887, env)}),
-      VEncodeInt(150l), VEncodeInt(286l),
-      _V40_V10vcore_Darithmetic__shift
-    );
- }
-}
-static void _V0vanity_V0core_V20_k885(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k885, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k885, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k886) (bruijn ##.bitwise-orc2.296 149 285) (##intrinsic ##vcore.bitwise-orc2))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k886, env)}),
-      VEncodeInt(149l), VEncodeInt(285l),
-      _V40_V10vcore_Dbitwise__orc2
-    );
- }
-}
-static void _V0vanity_V0core_V20_k884(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k884, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k884, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k885) (bruijn ##.bitwise-orc1.295 148 284) (##intrinsic ##vcore.bitwise-orc1))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k885, env)}),
-      VEncodeInt(148l), VEncodeInt(284l),
-      _V40_V10vcore_Dbitwise__orc1
-    );
- }
-}
-static void _V0vanity_V0core_V20_k883(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k883, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k883, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k884) (bruijn ##.bitwise-andc2.294 147 283) (##intrinsic ##vcore.bitwise-andc2))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k884, env)}),
-      VEncodeInt(147l), VEncodeInt(283l),
-      _V40_V10vcore_Dbitwise__andc2
-    );
- }
-}
-static void _V0vanity_V0core_V20_k882(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k882, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k882, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k883) (bruijn ##.bitwise-andc1.293 146 282) (##intrinsic ##vcore.bitwise-andc1))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k883, env)}),
-      VEncodeInt(146l), VEncodeInt(282l),
-      _V40_V10vcore_Dbitwise__andc1
-    );
- }
-}
-static void _V0vanity_V0core_V20_k881(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k881, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k881, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k882) (bruijn ##.bitwise-nor.292 145 281) (##intrinsic ##vcore.bitwise-nor))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k882, env)}),
-      VEncodeInt(145l), VEncodeInt(281l),
-      _V40_V10vcore_Dbitwise__nor
-    );
- }
-}
-static void _V0vanity_V0core_V20_k880(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k880, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k880, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k881) (bruijn ##.bitwise-nand.291 144 280) (##intrinsic ##vcore.bitwise-nand))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k881, env)}),
-      VEncodeInt(144l), VEncodeInt(280l),
-      _V40_V10vcore_Dbitwise__nand
-    );
- }
-}
-static void _V0vanity_V0core_V20_k879(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k879, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k879, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k880) (bruijn ##.bitwise-not.290 143 279) (##intrinsic ##vcore.bitwise-not))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k880, env)}),
-      VEncodeInt(143l), VEncodeInt(279l),
-      _V40_V10vcore_Dbitwise__not
-    );
- }
-}
-static void _V0vanity_V0core_V20_k878(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k878, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k878, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k879) (bruijn ##.bitwise-or.289 142 278) (bruijn ##.bitwise-ior.285 142 274))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k879, env)}),
-      VEncodeInt(142l), VEncodeInt(278l),
-      VGetArg(upenv, 142-1, 274)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k877(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k877, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k877, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k878) (bruijn ##.bitwise-eqv.288 141 277) (bruijn ##.bitwise-xnor.287 141 276))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k878, env)}),
-      VEncodeInt(141l), VEncodeInt(277l),
-      VGetArg(upenv, 141-1, 276)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k876(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k876, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k876, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k877) (bruijn ##.jiffies-per-second.283 140 272) (##intrinsic ##vcore.jiffies-per-second))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k877, env)}),
-      VEncodeInt(140l), VEncodeInt(272l),
-      _V40_V10vcore_Djiffies__per__second
-    );
- }
-}
-static void _V0vanity_V0core_V20_k875(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k875, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k875, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k876) (bruijn ##.current-jiffy.282 139 271) (##intrinsic ##vcore.current-jiffy))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k876, env)}),
-      VEncodeInt(139l), VEncodeInt(271l),
-      _V40_V10vcore_Dcurrent__jiffy
-    );
- }
-}
-static void _V0vanity_V0core_V20_k874(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k874, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k874, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k875) (bruijn ##.exit.281 138 270) (##intrinsic ##vcore.exit))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k875, env)}),
-      VEncodeInt(138l), VEncodeInt(270l),
-      _V40_V10vcore_Dexit
-    );
- }
-}
-static void _V0vanity_V0core_V20_k873(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k873, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k873, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k874) (bruijn ##.make-temporary-file.279 137 268) (##intrinsic ##vcore.make-temporary-file))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k874, env)}),
-      VEncodeInt(137l), VEncodeInt(268l),
-      _V40_V10vcore_Dmake__temporary__file
-    );
- }
-}
-static void _V0vanity_V0core_V20_k872(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k872, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k872, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k873) (bruijn ##.open-output-process.278 136 267) (##intrinsic ##vcore.open-output-process))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k873, env)}),
-      VEncodeInt(136l), VEncodeInt(267l),
-      _V40_V10vcore_Dopen__output__process
-    );
- }
-}
-static void _V0vanity_V0core_V20_k871(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k871, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k871, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k872) (bruijn ##.open-input-process.277 135 266) (##intrinsic ##vcore.open-input-process))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k872, env)}),
-      VEncodeInt(135l), VEncodeInt(266l),
-      _V40_V10vcore_Dopen__input__process
-    );
- }
-}
-static void _V0vanity_V0core_V20_k870(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k870, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k870, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k871) (bruijn ##.system.276 134 265) (##intrinsic ##vcore.system))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k871, env)}),
-      VEncodeInt(134l), VEncodeInt(265l),
-      _V40_V10vcore_Dsystem
-    );
- }
-}
-static void _V0vanity_V0core_V20_k869(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k869, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k869, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k870) (bruijn ##.command-line.275 133 264) (##intrinsic ##vcore.command-line))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k870, env)}),
-      VEncodeInt(133l), VEncodeInt(264l),
-      _V40_V10vcore_Dcommand__line
-    );
- }
-}
-static void _V0vanity_V0core_V20_k868(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k868, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k868, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k869) (bruijn ##.mutator.273 132 262) (bruijn ##..vcore.mutator.9 133 0))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k869, env)}),
-      VEncodeInt(132l), VEncodeInt(262l),
-      VGetArg(upenv, 133-1, 0)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k867(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k867, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k867, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k868) (bruijn ##.setter.272 131 261) (bruijn ##..vcore.setter.10 132 1))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k868, env)}),
-      VEncodeInt(131l), VEncodeInt(261l),
-      VGetArg(upenv, 132-1, 1)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k866(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k866, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k866, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k867) (bruijn ##.apply.270 130 259) (##intrinsic ##vcore.apply))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k867, env)}),
-      VEncodeInt(130l), VEncodeInt(259l),
-      _V40_V10vcore_Dapply
-    );
- }
-}
-static void _V0vanity_V0core_V20_k865(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k865, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k865, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k866) (bruijn ##.call-with-values.269 129 258) (##intrinsic ##vcore.call-with-values))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k866, env)}),
-      VEncodeInt(129l), VEncodeInt(258l),
-      _V40_V10vcore_Dcall__with__values
-    );
- }
-}
-static void _V0vanity_V0core_V20_k864(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k864, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k864, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k865) (bruijn ##.call-with-current-continuation.268 128 257) (##intrinsic ##vcore.call/cc))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k865, env)}),
-      VEncodeInt(128l), VEncodeInt(257l),
-      _V40_V10vcore_Dcall_Wcc
-    );
- }
-}
-static void _V0vanity_V0core_V20_k863(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k863, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k863, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k864) (bruijn ##.call/cc.267 127 256) (##intrinsic ##vcore.call/cc))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k864, env)}),
-      VEncodeInt(127l), VEncodeInt(256l),
-      _V40_V10vcore_Dcall_Wcc
-    );
- }
-}
-static void _V0vanity_V0core_V20_k862(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k862, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k862, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k863) (bruijn ##.get-output-string.252 126 241) (##intrinsic ##vcore.get-output-string))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k863, env)}),
-      VEncodeInt(126l), VEncodeInt(241l),
-      _V40_V10vcore_Dget__output__string
-    );
- }
-}
-static void _V0vanity_V0core_V20_k861(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k861, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k861, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k862) (bruijn ##.current-input-port.243 125 232) (bruijn ##.x.2872 0 0))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k862, env)}),
-      VEncodeInt(125l), VEncodeInt(232l),
-      _var0
-    );
- }
-}
-static void _V0vanity_V0core_V20_k860(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k860, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k860, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // ((bruijn ##.make-parameter.274 124 263) (close _V0vanity_V0core_V20_k861) (bruijn ##.x.2873 0 0))
-    V_CALL(VGetArg(upenv, 124-1, 263), runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k861, env)}),
-      _var0);
- }
-}
-static void _V0vanity_V0core_V20_k859(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k859, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k859, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (##vcore.stdin->port (close _V0vanity_V0core_V20_k860))
-    V_CALL_FUNC(VStdinPort, NULL, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k860, env)}));
- }
-}
-static void _V0vanity_V0core_V20_k858(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k858, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k858, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k859) (bruijn ##.current-error-port.242 122 231) (bruijn ##.x.2874 0 0))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k859, env)}),
-      VEncodeInt(122l), VEncodeInt(231l),
-      _var0
-    );
- }
-}
-static void _V0vanity_V0core_V20_k857(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k857, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k857, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // ((bruijn ##.make-parameter.274 121 263) (close _V0vanity_V0core_V20_k858) (bruijn ##.x.2875 0 0))
-    V_CALL(VGetArg(upenv, 121-1, 263), runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k858, env)}),
-      _var0);
- }
-}
-static void _V0vanity_V0core_V20_k856(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k856, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k856, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (##vcore.stderr->port (close _V0vanity_V0core_V20_k857))
-    V_CALL_FUNC(VStderrPort, NULL, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k857, env)}));
- }
-}
-static void _V0vanity_V0core_V20_k855(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k855, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k855, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k856) (bruijn ##.current-output-port.241 119 230) (bruijn ##.x.2876 0 0))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k856, env)}),
-      VEncodeInt(119l), VEncodeInt(230l),
-      _var0
-    );
- }
-}
-static void _V0vanity_V0core_V20_k854(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k854, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k854, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // ((bruijn ##.make-parameter.274 118 263) (close _V0vanity_V0core_V20_k855) (bruijn ##.x.2877 0 0))
-    V_CALL(VGetArg(upenv, 118-1, 263), runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k855, env)}),
-      _var0);
- }
-}
-static void _V0vanity_V0core_V20_k853(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k853, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k853, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (##vcore.stdout->port (close _V0vanity_V0core_V20_k854))
-    V_CALL_FUNC(VStdoutPort, NULL, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k854, env)}));
- }
-}
-static void _V0vanity_V0core_V20_k852(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k852, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k852, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k853) (bruijn ##.char->integer.240 116 229) (##intrinsic ##vcore.char-integer))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k853, env)}),
-      VEncodeInt(116l), VEncodeInt(229l),
-      _V40_V10vcore_Dchar__integer
-    );
- }
-}
-static void _V0vanity_V0core_V20_k851(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k851, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k851, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k852) (bruijn ##.hash-table-delete!.238 115 227) (##intrinsic ##vcore.hash-table-delete!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k852, env)}),
-      VEncodeInt(115l), VEncodeInt(227l),
-      _V40_V10vcore_Dhash__table__delete_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k850(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k850, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k850, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k851) (bruijn ##.hash-table-hash-function.235 114 224) (##intrinsic ##vcore.hash-table-hash-function))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k851, env)}),
-      VEncodeInt(114l), VEncodeInt(224l),
-      _V40_V10vcore_Dhash__table__hash__function
-    );
- }
-}
-static void _V0vanity_V0core_V20_k849(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k849, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k849, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k850) (bruijn ##.hash-table-equivalence-function.234 113 223) (##intrinsic ##vcore.hash-table-equivalence-function))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k850, env)}),
-      VEncodeInt(113l), VEncodeInt(223l),
-      _V40_V10vcore_Dhash__table__equivalence__function
-    );
- }
-}
-static void _V0vanity_V0core_V20_k848(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k848, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k848, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k849) (bruijn ##.record-length.232 112 221) (##intrinsic ##vcore.record-length))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k849, env)}),
-      VEncodeInt(112l), VEncodeInt(221l),
-      _V40_V10vcore_Drecord__length
-    );
- }
-}
-static void _V0vanity_V0core_V20_k847(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k847, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k847, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k848) (bruijn ##.record-set!.231 111 220) (##intrinsic ##vcore.record-set!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k848, env)}),
-      VEncodeInt(111l), VEncodeInt(220l),
-      _V40_V10vcore_Drecord__set_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k846(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k846, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k846, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k847) (bruijn ##.record-ref.230 110 219) (##intrinsic ##vcore.record-ref))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k847, env)}),
-      VEncodeInt(110l), VEncodeInt(219l),
-      _V40_V10vcore_Drecord__ref
-    );
- }
-}
-static void _V0vanity_V0core_V20_k845(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k845, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k845, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k846) (bruijn ##.record.229 109 218) (##intrinsic ##vcore.record))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k846, env)}),
-      VEncodeInt(109l), VEncodeInt(218l),
-      _V40_V10vcore_Drecord
-    );
- }
-}
-static void _V0vanity_V0core_V20_k844(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k844, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k844, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k845) (bruijn ##.s8vector-length.218 108 207) (##intrinsic ##vcore.s8vector-length))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k845, env)}),
-      VEncodeInt(108l), VEncodeInt(207l),
-      _V40_V10vcore_Ds8vector__length
-    );
- }
-}
-static void _V0vanity_V0core_V20_k843(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k843, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k843, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k844) (bruijn ##.s8vector-set!.217 107 206) (##intrinsic ##vcore.s8vector-set!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k844, env)}),
-      VEncodeInt(107l), VEncodeInt(206l),
-      _V40_V10vcore_Ds8vector__set_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k842(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k842, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k842, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k843) (bruijn ##.s8vector-ref.216 106 205) (##intrinsic ##vcore.s8vector-ref))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k843, env)}),
-      VEncodeInt(106l), VEncodeInt(205l),
-      _V40_V10vcore_Ds8vector__ref
-    );
- }
-}
-static void _V0vanity_V0core_V20_k841(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k841, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k841, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k842) (bruijn ##.list->s8vector.214 105 203) (##intrinsic ##vcore.list->s8vector))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k842, env)}),
-      VEncodeInt(105l), VEncodeInt(203l),
-      _V40_V10vcore_Dlist___Gs8vector
-    );
- }
-}
-static void _V0vanity_V0core_V20_k840(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k840, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k840, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k841) (bruijn ##.s8vector?.212 104 201) (##intrinsic ##vcore.s8vector?))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k841, env)}),
-      VEncodeInt(104l), VEncodeInt(201l),
-      _V40_V10vcore_Ds8vector_Q
-    );
- }
-}
-static void _V0vanity_V0core_V20_k839(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k839, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k839, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k840) (bruijn ##.bytevector-length.211 103 200) (bruijn ##.u8vector-length.202 103 191))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k840, env)}),
-      VEncodeInt(103l), VEncodeInt(200l),
-      VGetArg(upenv, 103-1, 191)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k838(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k838, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k838, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k839) (bruijn ##.bytevector-u8-set!.210 102 199) (bruijn ##.u8vector-set!.201 102 190))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k839, env)}),
-      VEncodeInt(102l), VEncodeInt(199l),
-      VGetArg(upenv, 102-1, 190)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k837(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k837, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k837, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k838) (bruijn ##.bytevector-u8-ref.209 101 198) (bruijn ##.u8vector-ref.200 101 189))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k838, env)}),
-      VEncodeInt(101l), VEncodeInt(198l),
-      VGetArg(upenv, 101-1, 189)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k836(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k836, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k836, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k837) (bruijn ##.bytevector.208 100 197) (bruijn ##.u8vector.199 100 188))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k837, env)}),
-      VEncodeInt(100l), VEncodeInt(197l),
-      VGetArg(upenv, 100-1, 188)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k835(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k835, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k835, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k836) (bruijn ##.bytevector->list.207 99 196) (bruijn ##.u8vector->list.203 99 192))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k836, env)}),
-      VEncodeInt(99l), VEncodeInt(196l),
-      VGetArg(upenv, 99-1, 192)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k834(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k834, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k834, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k835) (bruijn ##.list->bytevector.206 98 195) (bruijn ##.list->u8vector.198 98 187))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k835, env)}),
-      VEncodeInt(98l), VEncodeInt(195l),
-      VGetArg(upenv, 98-1, 187)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k833(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k833, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k833, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k834) (bruijn ##.make-bytevector.205 97 194) (bruijn ##.make-u8vector.197 97 186))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k834, env)}),
-      VEncodeInt(97l), VEncodeInt(194l),
-      VGetArg(upenv, 97-1, 186)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k832(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k832, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k832, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k833) (bruijn ##.bytevector?.204 96 193) (bruijn ##.u8vector?.196 96 185))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k833, env)}),
-      VEncodeInt(96l), VEncodeInt(193l),
-      VGetArg(upenv, 96-1, 185)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k831(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k831, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k831, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k832) (bruijn ##.u8vector-length.202 95 191) (##intrinsic ##vcore.u8vector-length))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k832, env)}),
-      VEncodeInt(95l), VEncodeInt(191l),
-      _V40_V10vcore_Du8vector__length
-    );
- }
-}
-static void _V0vanity_V0core_V20_k830(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k830, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k830, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k831) (bruijn ##.u8vector-set!.201 94 190) (##intrinsic ##vcore.u8vector-set!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k831, env)}),
-      VEncodeInt(94l), VEncodeInt(190l),
-      _V40_V10vcore_Du8vector__set_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k829(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k829, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k829, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k830) (bruijn ##.u8vector-ref.200 93 189) (##intrinsic ##vcore.u8vector-ref))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k830, env)}),
-      VEncodeInt(93l), VEncodeInt(189l),
-      _V40_V10vcore_Du8vector__ref
-    );
- }
-}
-static void _V0vanity_V0core_V20_k828(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k828, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k828, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k829) (bruijn ##.list->u8vector.198 92 187) (##intrinsic ##vcore.list->u8vector))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k829, env)}),
-      VEncodeInt(92l), VEncodeInt(187l),
-      _V40_V10vcore_Dlist___Gu8vector
-    );
- }
-}
-static void _V0vanity_V0core_V20_k827(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k827, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k827, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k828) (bruijn ##.u8vector?.196 91 185) (##intrinsic ##vcore.u8vector?))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k828, env)}),
-      VEncodeInt(91l), VEncodeInt(185l),
-      _V40_V10vcore_Du8vector_Q
-    );
- }
-}
-static void _V0vanity_V0core_V20_k826(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k826, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k826, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k827) (bruijn ##.s16vector-length.194 90 183) (##intrinsic ##vcore.s16vector-length))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k827, env)}),
-      VEncodeInt(90l), VEncodeInt(183l),
-      _V40_V10vcore_Ds16vector__length
-    );
- }
-}
-static void _V0vanity_V0core_V20_k825(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k825, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k825, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k826) (bruijn ##.s16vector-set!.193 89 182) (##intrinsic ##vcore.s16vector-set!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k826, env)}),
-      VEncodeInt(89l), VEncodeInt(182l),
-      _V40_V10vcore_Ds16vector__set_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k824(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k824, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k824, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k825) (bruijn ##.s16vector-ref.192 88 181) (##intrinsic ##vcore.s16vector-ref))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k825, env)}),
-      VEncodeInt(88l), VEncodeInt(181l),
-      _V40_V10vcore_Ds16vector__ref
-    );
- }
-}
-static void _V0vanity_V0core_V20_k823(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k823, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k823, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k824) (bruijn ##.list->s16vector.190 87 179) (##intrinsic ##vcore.list->s16vector))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k824, env)}),
-      VEncodeInt(87l), VEncodeInt(179l),
-      _V40_V10vcore_Dlist___Gs16vector
-    );
- }
-}
-static void _V0vanity_V0core_V20_k822(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k822, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k822, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k823) (bruijn ##.s16vector?.188 86 177) (##intrinsic ##vcore.s16vector?))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k823, env)}),
-      VEncodeInt(86l), VEncodeInt(177l),
-      _V40_V10vcore_Ds16vector_Q
-    );
- }
-}
-static void _V0vanity_V0core_V20_k821(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k821, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k821, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k822) (bruijn ##.u16vector-length.186 85 175) (##intrinsic ##vcore.u16vector-length))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k822, env)}),
-      VEncodeInt(85l), VEncodeInt(175l),
-      _V40_V10vcore_Du16vector__length
-    );
- }
-}
-static void _V0vanity_V0core_V20_k820(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k820, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k820, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k821) (bruijn ##.u16vector-set!.185 84 174) (##intrinsic ##vcore.u16vector-set!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k821, env)}),
-      VEncodeInt(84l), VEncodeInt(174l),
-      _V40_V10vcore_Du16vector__set_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k819(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k819, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k819, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k820) (bruijn ##.u16vector-ref.184 83 173) (##intrinsic ##vcore.u16vector-ref))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k820, env)}),
-      VEncodeInt(83l), VEncodeInt(173l),
-      _V40_V10vcore_Du16vector__ref
-    );
- }
-}
-static void _V0vanity_V0core_V20_k818(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k818, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k818, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k819) (bruijn ##.list->u16vector.182 82 171) (##intrinsic ##vcore.list->u16vector))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k819, env)}),
-      VEncodeInt(82l), VEncodeInt(171l),
-      _V40_V10vcore_Dlist___Gu16vector
-    );
- }
-}
-static void _V0vanity_V0core_V20_k817(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k817, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k817, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k818) (bruijn ##.u16vector?.180 81 169) (##intrinsic ##vcore.u16vector?))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k818, env)}),
-      VEncodeInt(81l), VEncodeInt(169l),
-      _V40_V10vcore_Du16vector_Q
-    );
- }
-}
-static void _V0vanity_V0core_V20_k816(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k816, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k816, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k817) (bruijn ##.s32vector-length.178 80 167) (##intrinsic ##vcore.s32vector-length))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k817, env)}),
-      VEncodeInt(80l), VEncodeInt(167l),
-      _V40_V10vcore_Ds32vector__length
-    );
- }
-}
-static void _V0vanity_V0core_V20_k815(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k815, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k815, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k816) (bruijn ##.s32vector-set!.177 79 166) (##intrinsic ##vcore.s32vector-set!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k816, env)}),
-      VEncodeInt(79l), VEncodeInt(166l),
-      _V40_V10vcore_Ds32vector__set_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k814(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k814, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k814, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k815) (bruijn ##.s32vector-ref.176 78 165) (##intrinsic ##vcore.s32vector-ref))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k815, env)}),
-      VEncodeInt(78l), VEncodeInt(165l),
-      _V40_V10vcore_Ds32vector__ref
-    );
- }
-}
-static void _V0vanity_V0core_V20_k813(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k813, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k813, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k814) (bruijn ##.list->s32vector.174 77 163) (##intrinsic ##vcore.list->s32vector))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k814, env)}),
-      VEncodeInt(77l), VEncodeInt(163l),
-      _V40_V10vcore_Dlist___Gs32vector
-    );
- }
-}
-static void _V0vanity_V0core_V20_k812(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k812, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k812, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k813) (bruijn ##.s32vector?.172 76 161) (##intrinsic ##vcore.s32vector?))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k813, env)}),
-      VEncodeInt(76l), VEncodeInt(161l),
-      _V40_V10vcore_Ds32vector_Q
-    );
- }
-}
-static void _V0vanity_V0core_V20_k811(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k811, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k811, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k812) (bruijn ##.f64vector-length.170 75 159) (##intrinsic ##vcore.f64vector-length))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k812, env)}),
-      VEncodeInt(75l), VEncodeInt(159l),
-      _V40_V10vcore_Df64vector__length
-    );
- }
-}
-static void _V0vanity_V0core_V20_k810(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k810, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k810, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k811) (bruijn ##.f64vector-set!.169 74 158) (##intrinsic ##vcore.f64vector-set!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k811, env)}),
-      VEncodeInt(74l), VEncodeInt(158l),
-      _V40_V10vcore_Df64vector__set_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k809(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k809, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k809, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k810) (bruijn ##.f64vector-ref.168 73 157) (##intrinsic ##vcore.f64vector-ref))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k810, env)}),
-      VEncodeInt(73l), VEncodeInt(157l),
-      _V40_V10vcore_Df64vector__ref
-    );
- }
-}
-static void _V0vanity_V0core_V20_k808(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k808, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k808, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k809) (bruijn ##.list->f64vector.166 72 155) (##intrinsic ##vcore.list->f64vector))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k809, env)}),
-      VEncodeInt(72l), VEncodeInt(155l),
-      _V40_V10vcore_Dlist___Gf64vector
-    );
- }
-}
-static void _V0vanity_V0core_V20_k807(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k807, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k807, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k808) (bruijn ##.f64vector?.164 71 153) (##intrinsic ##vcore.f64vector?))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k808, env)}),
-      VEncodeInt(71l), VEncodeInt(153l),
-      _V40_V10vcore_Df64vector_Q
-    );
- }
-}
-static void _V0vanity_V0core_V20_k806(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k806, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k806, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k807) (bruijn ##.f32vector-length.162 70 151) (##intrinsic ##vcore.f32vector-length))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k807, env)}),
-      VEncodeInt(70l), VEncodeInt(151l),
-      _V40_V10vcore_Df32vector__length
-    );
- }
-}
-static void _V0vanity_V0core_V20_k805(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k805, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k805, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k806) (bruijn ##.f32vector-set!.161 69 150) (##intrinsic ##vcore.f32vector-set!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k806, env)}),
-      VEncodeInt(69l), VEncodeInt(150l),
-      _V40_V10vcore_Df32vector__set_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k804(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k804, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k804, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k805) (bruijn ##.f32vector-ref.160 68 149) (##intrinsic ##vcore.f32vector-ref))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k805, env)}),
-      VEncodeInt(68l), VEncodeInt(149l),
-      _V40_V10vcore_Df32vector__ref
-    );
- }
-}
-static void _V0vanity_V0core_V20_k803(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k803, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k803, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k804) (bruijn ##.list->f32vector.158 67 147) (##intrinsic ##vcore.list->f32vector))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k804, env)}),
-      VEncodeInt(67l), VEncodeInt(147l),
-      _V40_V10vcore_Dlist___Gf32vector
-    );
- }
-}
-static void _V0vanity_V0core_V20_k802(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k802, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k802, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k803) (bruijn ##.f32vector?.156 66 145) (##intrinsic ##vcore.f32vector?))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k803, env)}),
-      VEncodeInt(66l), VEncodeInt(145l),
-      _V40_V10vcore_Df32vector_Q
-    );
- }
-}
-static void _V0vanity_V0core_V20_k801(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k801, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k801, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k802) (bruijn ##.vector-length.155 65 144) (##intrinsic ##vcore.vector-length))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k802, env)}),
-      VEncodeInt(65l), VEncodeInt(144l),
-      _V40_V10vcore_Dvector__length
-    );
- }
-}
-static void _V0vanity_V0core_V20_k800(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k800, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k800, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k801) (bruijn ##.vector-set!.154 64 143) (##intrinsic ##vcore.vector-set!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k801, env)}),
-      VEncodeInt(64l), VEncodeInt(143l),
-      _V40_V10vcore_Dvector__set_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k799(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k799, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k799, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k800) (bruijn ##.vector-ref.153 63 142) (##intrinsic ##vcore.vector-ref))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k800, env)}),
-      VEncodeInt(63l), VEncodeInt(142l),
-      _V40_V10vcore_Dvector__ref
-    );
- }
-}
-static void _V0vanity_V0core_V20_k798(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k798, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k798, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k799) (bruijn ##.list->vector.151 62 140) (##intrinsic ##vcore.list->vector))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k799, env)}),
-      VEncodeInt(62l), VEncodeInt(140l),
-      _V40_V10vcore_Dlist___Gvector
-    );
- }
-}
-static void _V0vanity_V0core_V20_k797(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k797, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k797, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k798) (bruijn ##.symbol->string.147 61 136) (##intrinsic ##vcore.symbol->string))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k798, env)}),
-      VEncodeInt(61l), VEncodeInt(136l),
-      _V40_V10vcore_Dsymbol___Gstring
-    );
- }
-}
-static void _V0vanity_V0core_V20_k796(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k796, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k796, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k797) (bruijn ##.string->number.146 60 135) (##intrinsic ##vcore.string->number))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k797, env)}),
-      VEncodeInt(60l), VEncodeInt(135l),
-      _V40_V10vcore_Dstring___Gnumber
-    );
- }
-}
-static void _V0vanity_V0core_V20_k795(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k795, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k795, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k796) (bruijn ##.string->symbol.145 59 134) (##intrinsic ##vcore.string->symbol))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k796, env)}),
-      VEncodeInt(59l), VEncodeInt(134l),
-      _V40_V10vcore_Dstring___Gsymbol
-    );
- }
-}
-static void _V0vanity_V0core_V20_k794(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k794, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k794, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k795) (bruijn ##.string-length.144 58 133) (##intrinsic ##vcore.string-length))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k795, env)}),
-      VEncodeInt(58l), VEncodeInt(133l),
-      _V40_V10vcore_Dstring__length
-    );
- }
-}
-static void _V0vanity_V0core_V20_k793(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k793, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k793, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k794) (bruijn ##.string-set!.143 57 132) (##intrinsic ##vcore.string-set!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k794, env)}),
-      VEncodeInt(57l), VEncodeInt(132l),
-      _V40_V10vcore_Dstring__set_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k792(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k792, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k792, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k793) (bruijn ##.string-ref.142 56 131) (##intrinsic ##vcore.string-ref))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k793, env)}),
-      VEncodeInt(56l), VEncodeInt(131l),
-      _V40_V10vcore_Dstring__ref
-    );
- }
-}
-static void _V0vanity_V0core_V20_k791(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k791, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k791, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k792) (bruijn ##.string-copy!.141 55 130) (##intrinsic ##vcore.string-copy!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k792, env)}),
-      VEncodeInt(55l), VEncodeInt(130l),
-      _V40_V10vcore_Dstring__copy_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k790(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k790, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k790, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k791) (bruijn ##.string-copy.140 54 129) (##intrinsic ##vcore.substring))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k791, env)}),
-      VEncodeInt(54l), VEncodeInt(129l),
-      _V40_V10vcore_Dsubstring
-    );
- }
-}
-static void _V0vanity_V0core_V20_k789(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k789, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k789, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k790) (bruijn ##.substring.139 53 128) (##intrinsic ##vcore.substring))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k790, env)}),
-      VEncodeInt(53l), VEncodeInt(128l),
-      _V40_V10vcore_Dsubstring
-    );
- }
-}
-static void _V0vanity_V0core_V20_k788(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k788, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k788, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k789) (bruijn ##.make-string.138 52 127) (##intrinsic ##vcore.make-string))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k789, env)}),
-      VEncodeInt(52l), VEncodeInt(127l),
-      _V40_V10vcore_Dmake__string
-    );
- }
-}
-static void _V0vanity_V0core_V20_k787(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k787, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k787, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k788) (bruijn ##.set-cdr!.90 51 79) (##intrinsic ##vcore.set-cdr!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k788, env)}),
-      VEncodeInt(51l), VEncodeInt(79l),
-      _V40_V10vcore_Dset__cdr_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k786(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k786, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k786, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k787) (bruijn ##.set-car!.89 50 78) (##intrinsic ##vcore.set-car!))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k787, env)}),
-      VEncodeInt(50l), VEncodeInt(78l),
-      _V40_V10vcore_Dset__car_B
-    );
- }
-}
-static void _V0vanity_V0core_V20_k785(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k785, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k785, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k786) (bruijn ##.cdr.88 49 77) (##intrinsic ##vcore.cdr))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k786, env)}),
-      VEncodeInt(49l), VEncodeInt(77l),
-      _V40_V10vcore_Dcdr
-    );
- }
-}
-static void _V0vanity_V0core_V20_k784(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k784, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k784, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k785) (bruijn ##.car.87 48 76) (##intrinsic ##vcore.car))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k785, env)}),
-      VEncodeInt(48l), VEncodeInt(76l),
-      _V40_V10vcore_Dcar
-    );
- }
-}
-static void _V0vanity_V0core_V20_k783(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k783, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k783, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k784) (bruijn ##.cons.86 47 75) (##intrinsic ##vcore.cons))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k784, env)}),
-      VEncodeInt(47l), VEncodeInt(75l),
-      _V40_V10vcore_Dcons
-    );
- }
-}
-static void _V0vanity_V0core_V20_k782(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k782, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k782, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k783) (bruijn ##.expt.83 46 72) (bruijn ##.pow.82 46 71))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k783, env)}),
-      VEncodeInt(46l), VEncodeInt(72l),
-      VGetArg(upenv, 46-1, 71)
-    );
- }
-}
-static void _V0vanity_V0core_V20_k781(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k781, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k781, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k782) (bruijn ##.pow.82 45 71) (##foreign.function "_V30pow_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k782, env)}),
-      VEncodeInt(45l), VEncodeInt(71l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30pow_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k780(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k780, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k780, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k781) (bruijn ##.log-impl.80 44 69) (##foreign.function "_V30log_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k781, env)}),
-      VEncodeInt(44l), VEncodeInt(69l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30log_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k779(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k779, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k779, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k780) (bruijn ##.exp.79 43 68) (##foreign.function "_V30exp_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k780, env)}),
-      VEncodeInt(43l), VEncodeInt(68l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30exp_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k778(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k778, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k778, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k779) (bruijn ##.atan2-impl.77 42 66) (##foreign.function "_V30atan2_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k779, env)}),
-      VEncodeInt(42l), VEncodeInt(66l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30atan2_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k777(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k777, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k777, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k778) (bruijn ##.atan-impl.76 41 65) (##foreign.function "_V30atan_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k778, env)}),
-      VEncodeInt(41l), VEncodeInt(65l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30atan_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k776(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k776, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k776, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k777) (bruijn ##.acos.75 40 64) (##foreign.function "_V30acos_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k777, env)}),
-      VEncodeInt(40l), VEncodeInt(64l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30acos_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k775(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k775, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k775, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k776) (bruijn ##.asin.74 39 63) (##foreign.function "_V30asin_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k776, env)}),
-      VEncodeInt(39l), VEncodeInt(63l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30asin_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k774(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k774, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k774, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k775) (bruijn ##.tan.73 38 62) (##foreign.function "_V30tan_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k775, env)}),
-      VEncodeInt(38l), VEncodeInt(62l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30tan_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k773(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k773, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k773, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k774) (bruijn ##.cos.72 37 61) (##foreign.function "_V30cos_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k774, env)}),
-      VEncodeInt(37l), VEncodeInt(61l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30cos_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k772(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k772, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k772, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k773) (bruijn ##.sin.71 36 60) (##foreign.function "_V30sin_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k773, env)}),
-      VEncodeInt(36l), VEncodeInt(60l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30sin_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k771(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k771, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k771, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k772) (bruijn ##.sqrt.70 35 59) (##foreign.function "_V30sqrt_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k772, env)}),
-      VEncodeInt(35l), VEncodeInt(59l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30sqrt_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k770(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k770, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k770, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k771) (bruijn ##.round.68 34 57) (##foreign.function "_V30round_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k771, env)}),
-      VEncodeInt(34l), VEncodeInt(57l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30round_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k769(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k769, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k769, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k770) (bruijn ##.floor.67 33 56) (##foreign.function "_V30floor_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k770, env)}),
-      VEncodeInt(33l), VEncodeInt(56l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30floor_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k768(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k768, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k768, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k769) (bruijn ##.ceiling.66 32 55) (##foreign.function "_V30ceil_shim"))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k769, env)}),
-      VEncodeInt(32l), VEncodeInt(55l),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30ceil_shim, NULL)})
-    );
- }
-}
-static void _V0vanity_V0core_V20_k767(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k767, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k767, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k768) (bruijn ##.remainder.64 31 53) (##intrinsic ##vcore.remainder))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k768, env)}),
-      VEncodeInt(31l), VEncodeInt(53l),
-      _V40_V10vcore_Dremainder
-    );
- }
-}
-static void _V0vanity_V0core_V20_k766(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k766, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k766, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k767) (bruijn ##.quotient.63 30 52) (##intrinsic ##vcore.quotient))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k767, env)}),
-      VEncodeInt(30l), VEncodeInt(52l),
-      _V40_V10vcore_Dquotient
-    );
- }
-}
-static void _V0vanity_V0core_V20_k765(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k765, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k765, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k766) (bruijn ##./.62 29 51) (##intrinsic ##vcore./))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k766, env)}),
-      VEncodeInt(29l), VEncodeInt(51l),
-      _V40_V10vcore_D_W
-    );
- }
-}
-static void _V0vanity_V0core_V20_k764(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k764, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k764, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k765) (bruijn ##.*.61 28 50) (##intrinsic ##vcore.*))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k765, env)}),
-      VEncodeInt(28l), VEncodeInt(50l),
-      _V40_V10vcore_D_S
-    );
- }
-}
-static void _V0vanity_V0core_V20_k763(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k763, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k763, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k764) (bruijn ##.-.60 27 49) (##intrinsic ##vcore.-))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k764, env)}),
-      VEncodeInt(27l), VEncodeInt(49l),
-      _V40_V10vcore_D__
-    );
- }
-}
-static void _V0vanity_V0core_V20_k762(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k762, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k762, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k763) (bruijn ##.+.59 26 48) (##intrinsic ##vcore.+))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k763, env)}),
-      VEncodeInt(26l), VEncodeInt(48l),
-      _V40_V10vcore_D_P
-    );
- }
-}
-static void _V0vanity_V0core_V20_k761(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k761, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k761, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k762) (bruijn ##.rational?.55 25 44) (bruijn ##.integer?.26 25 15))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k762, env)}),
-      VEncodeInt(25l), VEncodeInt(44l),
-      VGetArg(upenv, 25-1, 15)
-    );
- }
-}
 static void _V0vanity_V0core_V20_k760(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0core_V20_k760, got ~D~N"
@@ -24851,16 +21237,1137 @@ static void _V0vanity_V0core_V20_k760(VRuntime * runtime, VEnv * upenv, int argc
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0core_V20_k760, runtime, upenv, 1, argc, _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k761) (bruijn ##.complex?.54 24 43) (bruijn ##.number?.53 24 42))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k761, env)}),
-      VEncodeInt(24l), VEncodeInt(43l),
-      VGetArg(upenv, 24-1, 42)
-    );
+  // ((bruijn ##.k.1010 30 0) (##inline ##vcore.cons (##inline ##vcore.cons 'null? (bruijn ##.null?.11 24 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'eof-object? (bruijn ##.eof-object?.13 24 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'boolean? (bruijn ##.boolean?.12 24 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'pair? (bruijn ##.pair?.14 24 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector? (bruijn ##.vector?.15 24 4)) (##inline ##vcore.cons (##inline ##vcore.cons 'hash-table? (bruijn ##.hash-table?.16 24 5)) (##inline ##vcore.cons (##inline ##vcore.cons 'record? (bruijn ##.record?.17 24 6)) (##inline ##vcore.cons (##inline ##vcore.cons 'procedure? (bruijn ##.procedure?.18 24 7)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol? (bruijn ##.symbol?.19 24 8)) (##inline ##vcore.cons (##inline ##vcore.cons 'string? (bruijn ##.string?.20 24 9)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact? (bruijn ##.exact?.24 24 13)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact-integer? (bruijn ##.exact-integer?.25 24 14)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact? (bruijn ##.inexact?.27 24 16)) (##inline ##vcore.cons (##inline ##vcore.cons 'real? (bruijn ##.real?.28 24 17)) (##inline ##vcore.cons (##inline ##vcore.cons 'integer? (bruijn ##.integer?.26 24 15)) (##inline ##vcore.cons (##inline ##vcore.cons 'char? (bruijn ##.char?.21 24 10)) (##inline ##vcore.cons (##inline ##vcore.cons 'nullptr? (bruijn ##.nullptr?.22 24 11)) (##inline ##vcore.cons (##inline ##vcore.cons 'foreign-pointer? (bruijn ##.foreign-pointer?.23 24 12)) (##inline ##vcore.cons (##inline ##vcore.cons 'eq? (bruijn ##.eq?.29 24 18)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol=? (bruijn ##.symbol=?.30 24 19)) (##inline ##vcore.cons (##inline ##vcore.cons 'eqv? (bruijn ##.eqv?.32 24 21)) (##inline ##vcore.cons (##inline ##vcore.cons 'equal? (bruijn ##.equal?.42 24 31)) (##inline ##vcore.cons (##inline ##vcore.cons 'not (bruijn ##.not.43 24 32)) (##inline ##vcore.cons (##inline ##vcore.cons '< (bruijn ##.<.44 24 33)) (##inline ##vcore.cons (##inline ##vcore.cons '= (bruijn ##.=.45 24 34)) (##inline ##vcore.cons (##inline ##vcore.cons '> (bruijn ##.>.46 24 35)) (##inline ##vcore.cons (##inline ##vcore.cons '<= (bruijn ##.<=.47 24 36)) (##inline ##vcore.cons (##inline ##vcore.cons '>= (bruijn ##.>=.48 24 37)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact (bruijn ##.exact.49 24 38)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact->exact (bruijn ##.inexact->exact.50 24 39)) (##inline ##vcore.cons (##inline ##vcore.cons 'inexact (bruijn ##.inexact.51 24 40)) (##inline ##vcore.cons (##inline ##vcore.cons 'exact->inexact (bruijn ##.exact->inexact.52 24 41)) (##inline ##vcore.cons (##inline ##vcore.cons 'number? (bruijn ##.number?.53 24 42)) (##inline ##vcore.cons (##inline ##vcore.cons 'complex? (bruijn ##.complex?.54 24 43)) (##inline ##vcore.cons (##inline ##vcore.cons 'rational? (bruijn ##.rational?.55 24 44)) (##inline ##vcore.cons (##inline ##vcore.cons 'positive? (bruijn ##.positive?.56 24 45)) (##inline ##vcore.cons (##inline ##vcore.cons 'negative? (bruijn ##.negative?.58 24 47)) (##inline ##vcore.cons (##inline ##vcore.cons 'zero? (bruijn ##.zero?.57 24 46)) (##inline ##vcore.cons (##inline ##vcore.cons '+ (bruijn ##.+.59 24 48)) (##inline ##vcore.cons (##inline ##vcore.cons '- (bruijn ##.-.60 24 49)) (##inline ##vcore.cons (##inline ##vcore.cons '* (bruijn ##.*.61 24 50)) (##inline ##vcore.cons (##inline ##vcore.cons '/ (bruijn ##./.62 24 51)) (##inline ##vcore.cons (##inline ##vcore.cons 'quotient (bruijn ##.quotient.63 24 52)) (##inline ##vcore.cons (##inline ##vcore.cons 'remainder (bruijn ##.remainder.64 24 53)) (##inline ##vcore.cons (##inline ##vcore.cons 'max (bruijn ##.max.84 24 73)) (##inline ##vcore.cons (##inline ##vcore.cons 'min (bruijn ##.min.85 24 74)) (##inline ##vcore.cons (##inline ##vcore.cons 'abs (bruijn ##.abs.65 24 54)) (##inline ##vcore.cons (##inline ##vcore.cons 'square (bruijn ##.square.69 24 58)) (##inline ##vcore.cons (##inline ##vcore.cons 'sqrt (bruijn ##.sqrt.70 24 59)) (##inline ##vcore.cons (##inline ##vcore.cons 'ceiling (bruijn ##.ceiling.66 24 55)) (##inline ##vcore.cons (##inline ##vcore.cons 'floor (bruijn ##.floor.67 24 56)) (##inline ##vcore.cons (##inline ##vcore.cons 'round (bruijn ##.round.68 24 57)) (##inline ##vcore.cons (##inline ##vcore.cons 'sin (bruijn ##.sin.71 24 60)) (##inline ##vcore.cons (##inline ##vcore.cons 'cos (bruijn ##.cos.72 24 61)) (##inline ##vcore.cons (##inline ##vcore.cons 'tan (bruijn ##.tan.73 24 62)) (##inline ##vcore.cons (##inline ##vcore.cons 'asin (bruijn ##.asin.74 24 63)) (##inline ##vcore.cons (##inline ##vcore.cons 'acos (bruijn ##.acos.75 24 64)) (##inline ##vcore.cons (##inline ##vcore.cons 'atan (bruijn ##.atan.78 24 67)) (##inline ##vcore.cons (##inline ##vcore.cons 'exp (bruijn ##.exp.79 24 68)) (##inline ##vcore.cons (##inline ##vcore.cons 'log (bruijn ##.log.81 24 70)) (##inline ##vcore.cons (##inline ##vcore.cons 'expt (bruijn ##.expt.83 24 72)) (##inline ##vcore.cons (##inline ##vcore.cons 'pow (bruijn ##.pow.82 24 71)) (##inline ##vcore.cons (##inline ##vcore.cons 'cons (bruijn ##.cons.86 24 75)) (##inline ##vcore.cons (##inline ##vcore.cons 'car (bruijn ##.car.87 24 76)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdr (bruijn ##.cdr.88 24 77)) (##inline ##vcore.cons (##inline ##vcore.cons 'set-car! (bruijn ##.set-car!.89 24 78)) (##inline ##vcore.cons (##inline ##vcore.cons 'set-cdr! (bruijn ##.set-cdr!.90 24 79)) (##inline ##vcore.cons (##inline ##vcore.cons 'caar (bruijn ##.caar.91 24 80)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadr (bruijn ##.cadr.92 24 81)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdar (bruijn ##.cdar.93 24 82)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddr (bruijn ##.cddr.94 24 83)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaar (bruijn ##.caaar.95 24 84)) (##inline ##vcore.cons (##inline ##vcore.cons 'caadr (bruijn ##.caadr.96 24 85)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadar (bruijn ##.cadar.97 24 86)) (##inline ##vcore.cons (##inline ##vcore.cons 'caddr (bruijn ##.caddr.98 24 87)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaar (bruijn ##.cdaar.99 24 88)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdadr (bruijn ##.cdadr.100 24 89)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddar (bruijn ##.cddar.101 24 90)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdddr (bruijn ##.cdddr.102 24 91)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaaar (bruijn ##.caaaar.103 24 92)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaadr (bruijn ##.caaadr.104 24 93)) (##inline ##vcore.cons (##inline ##vcore.cons 'caadar (bruijn ##.caadar.105 24 94)) (##inline ##vcore.cons (##inline ##vcore.cons 'caaddr (bruijn ##.caaddr.106 24 95)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadaar (bruijn ##.cadaar.107 24 96)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadadr (bruijn ##.cadadr.108 24 97)) (##inline ##vcore.cons (##inline ##vcore.cons 'caddar (bruijn ##.caddar.109 24 98)) (##inline ##vcore.cons (##inline ##vcore.cons 'cadddr (bruijn ##.cadddr.110 24 99)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaaar (bruijn ##.cdaaar.111 24 100)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaadr (bruijn ##.cdaadr.112 24 101)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdadar (bruijn ##.cdadar.113 24 102)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdaddr (bruijn ##.cdaddr.114 24 103)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddaar (bruijn ##.cddaar.115 24 104)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddadr (bruijn ##.cddadr.116 24 105)) (##inline ##vcore.cons (##inline ##vcore.cons 'cdddar (bruijn ##.cdddar.117 24 106)) (##inline ##vcore.cons (##inline ##vcore.cons 'cddddr (bruijn ##.cddddr.118 24 107)) (##inline ##vcore.cons (##inline ##vcore.cons 'list (bruijn ##.list.119 24 108)) (##inline ##vcore.cons (##inline ##vcore.cons 'list? (bruijn ##.list?.120 24 109)) (##inline ##vcore.cons (##inline ##vcore.cons 'length (bruijn ##.length.121 24 110)) (##inline ##vcore.cons (##inline ##vcore.cons 'list-tail (bruijn ##.list-tail.122 24 111)) (##inline ##vcore.cons (##inline ##vcore.cons 'list-ref (bruijn ##.list-ref.123 24 112)) (##inline ##vcore.cons (##inline ##vcore.cons 'list-set! (bruijn ##.list-set!.124 24 113)) (##inline ##vcore.cons (##inline ##vcore.cons 'list-copy (bruijn ##.list-copy.125 24 114)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-list (bruijn ##.make-list.126 24 115)) (##inline ##vcore.cons (##inline ##vcore.cons 'map (bruijn ##.map.127 24 116)) (##inline ##vcore.cons (##inline ##vcore.cons 'for-each (bruijn ##.for-each.128 24 117)) (##inline ##vcore.cons (##inline ##vcore.cons 'append (bruijn ##.append.130 24 119)) (##inline ##vcore.cons (##inline ##vcore.cons 'reverse (bruijn ##.reverse.131 24 120)) (##inline ##vcore.cons (##inline ##vcore.cons 'memq (bruijn ##.memq.132 24 121)) (##inline ##vcore.cons (##inline ##vcore.cons 'memv (bruijn ##.memv.133 24 122)) (##inline ##vcore.cons (##inline ##vcore.cons 'member (bruijn ##.member.134 24 123)) (##inline ##vcore.cons (##inline ##vcore.cons 'assq (bruijn ##.assq.135 24 124)) (##inline ##vcore.cons (##inline ##vcore.cons 'assv (bruijn ##.assv.136 24 125)) (##inline ##vcore.cons (##inline ##vcore.cons 'assoc (bruijn ##.assoc.137 24 126)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->list (bruijn ##.string->list.149 24 138)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->string (bruijn ##.list->string.148 24 137)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-string (bruijn ##.make-string.138 24 127)) (##inline ##vcore.cons (##inline ##vcore.cons 'substring (bruijn ##.substring.139 24 128)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-copy (bruijn ##.string-copy.140 24 129)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-copy! (bruijn ##.string-copy!.141 24 130)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-ref (bruijn ##.string-ref.142 24 131)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-set! (bruijn ##.string-set!.143 24 132)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-length (bruijn ##.string-length.144 24 133)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->symbol (bruijn ##.string->symbol.145 24 134)) (##inline ##vcore.cons (##inline ##vcore.cons 'string->number (bruijn ##.string->number.146 24 135)) (##inline ##vcore.cons (##inline ##vcore.cons 'string-append (bruijn ##.string-append.150 24 139)) (##inline ##vcore.cons (##inline ##vcore.cons 'symbol->string (bruijn ##.symbol->string.147 24 136)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->vector (bruijn ##.list->vector.151 24 140)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector->list (bruijn ##.vector->list.221 24 210)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-vector (bruijn ##.make-vector.222 24 211)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-copy (bruijn ##.vector-copy.225 24 214)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-copy! (bruijn ##.vector-copy!.226 24 215)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector (bruijn ##.vector.152 24 141)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-ref (bruijn ##.vector-ref.153 24 142)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-set! (bruijn ##.vector-set!.154 24 143)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-length (bruijn ##.vector-length.155 24 144)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-map (bruijn ##.vector-map.224 24 213)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-for-each (bruijn ##.vector-for-each.223 24 212)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-append (bruijn ##.vector-append.227 24 216)) (##inline ##vcore.cons (##inline ##vcore.cons 'vector-fill! (bruijn ##.vector-fill!.228 24 217)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector? (bruijn ##.f64vector?.164 24 153)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->f64vector (bruijn ##.list->f64vector.166 24 155)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector->list (bruijn ##.f64vector->list.171 24 160)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-f64vector (bruijn ##.make-f64vector.165 24 154)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector (bruijn ##.f64vector.167 24 156)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector-ref (bruijn ##.f64vector-ref.168 24 157)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector-set! (bruijn ##.f64vector-set!.169 24 158)) (##inline ##vcore.cons (##inline ##vcore.cons 'f64vector-length (bruijn ##.f64vector-length.170 24 159)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector? (bruijn ##.f32vector?.156 24 145)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->f32vector (bruijn ##.list->f32vector.158 24 147)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector->list (bruijn ##.f32vector->list.163 24 152)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-f32vector (bruijn ##.make-f32vector.157 24 146)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector (bruijn ##.f32vector.159 24 148)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector-ref (bruijn ##.f32vector-ref.160 24 149)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector-set! (bruijn ##.f32vector-set!.161 24 150)) (##inline ##vcore.cons (##inline ##vcore.cons 'f32vector-length (bruijn ##.f32vector-length.162 24 151)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector? (bruijn ##.s32vector?.172 24 161)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->s32vector (bruijn ##.list->s32vector.174 24 163)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector->list (bruijn ##.s32vector->list.179 24 168)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-s32vector (bruijn ##.make-s32vector.173 24 162)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector (bruijn ##.s32vector.175 24 164)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector-ref (bruijn ##.s32vector-ref.176 24 165)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector-set! (bruijn ##.s32vector-set!.177 24 166)) (##inline ##vcore.cons (##inline ##vcore.cons 's32vector-length (bruijn ##.s32vector-length.178 24 167)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector? (bruijn ##.u16vector?.180 24 169)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->u16vector (bruijn ##.list->u16vector.182 24 171)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector->list (bruijn ##.u16vector->list.187 24 176)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-u16vector (bruijn ##.make-u16vector.181 24 170)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector (bruijn ##.u16vector.183 24 172)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector-ref (bruijn ##.u16vector-ref.184 24 173)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector-set! (bruijn ##.u16vector-set!.185 24 174)) (##inline ##vcore.cons (##inline ##vcore.cons 'u16vector-length (bruijn ##.u16vector-length.186 24 175)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector? (bruijn ##.s16vector?.188 24 177)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->s16vector (bruijn ##.list->s16vector.190 24 179)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector->list (bruijn ##.s16vector->list.195 24 184)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-s16vector (bruijn ##.make-s16vector.189 24 178)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector (bruijn ##.s16vector.191 24 180)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector-ref (bruijn ##.s16vector-ref.192 24 181)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector-set! (bruijn ##.s16vector-set!.193 24 182)) (##inline ##vcore.cons (##inline ##vcore.cons 's16vector-length (bruijn ##.s16vector-length.194 24 183)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector? (bruijn ##.u8vector?.196 24 185)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->u8vector (bruijn ##.list->u8vector.198 24 187)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector->list (bruijn ##.u8vector->list.203 24 192)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-u8vector (bruijn ##.make-u8vector.197 24 186)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector (bruijn ##.u8vector.199 24 188)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector-ref (bruijn ##.u8vector-ref.200 24 189)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector-set! (bruijn ##.u8vector-set!.201 24 190)) (##inline ##vcore.cons (##inline ##vcore.cons 'u8vector-length (bruijn ##.u8vector-length.202 24 191)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector? (bruijn ##.s8vector?.212 24 201)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->s8vector (bruijn ##.list->s8vector.214 24 203)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector->list (bruijn ##.s8vector->list.219 24 208)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-s8vector (bruijn ##.make-s8vector.213 24 202)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector (bruijn ##.s8vector.215 24 204)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector-ref (bruijn ##.s8vector-ref.216 24 205)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector-set! (bruijn ##.s8vector-set!.217 24 206)) (##inline ##vcore.cons (##inline ##vcore.cons 's8vector-length (bruijn ##.s8vector-length.218 24 207)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector? (bruijn ##.bytevector?.204 24 193)) (##inline ##vcore.cons (##inline ##vcore.cons 'list->bytevector (bruijn ##.list->bytevector.206 24 195)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector->list (bruijn ##.bytevector->list.207 24 196)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-bytevector (bruijn ##.make-bytevector.205 24 194)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector (bruijn ##.bytevector.208 24 197)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector-u8-ref (bruijn ##.bytevector-u8-ref.209 24 198)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector-u8-set! (bruijn ##.bytevector-u8-set!.210 24 199)) (##inline ##vcore.cons (##inline ##vcore.cons 'bytevector-length (bruijn ##.bytevector-length.211 24 200)) (##inline ##vcore.cons (##inline ##vcore.cons 'typevector? (bruijn ##.typevector?.220 24 209)) (##inline ##vcore.cons (##inline ##vcore.cons 'record (bruijn ##.record.229 24 218)) (##inline ##vcore.cons (##inline ##vcore.cons 'record-ref (bruijn ##.record-ref.230 24 219)) (##inline ##vcore.cons (##inline ##vcore.cons 'record-set! (bruijn ##.record-set!.231 24 220)) (##inline ##vcore.cons (##inline ##vcore.cons 'record-length (bruijn ##.record-length.232 24 221)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-hash-table (bruijn ##.make-hash-table.233 24 222)) (##inline ##vcore.cons (##inline ##vcore.cons 'hash-table-ref (bruijn ##.hash-table-ref.236 24 225)) (##inline ##vcore.cons (##inline ##vcore.cons 'hash-table-set! (bruijn ##.hash-table-set!.237 24 226)) (##inline ##vcore.cons (##inline ##vcore.cons 'hash-table-delete! (bruijn ##.hash-table-delete!.238 24 227)) (##inline ##vcore.cons (##inline ##vcore.cons 'hash-table->alist (bruijn ##.hash-table->alist.239 24 228)) (##inline ##vcore.cons (##inline ##vcore.cons 'char->integer (bruijn ##.char->integer.240 24 229)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-output-port (bruijn ##.current-output-port.241 24 230)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-error-port (bruijn ##.current-error-port.242 24 231)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-input-port (bruijn ##.current-input-port.243 24 232)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-input-file (bruijn ##.open-input-file.249 24 238)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-file (bruijn ##.open-output-file.250 24 239)) (##inline ##vcore.cons (##inline ##vcore.cons 'close-port (bruijn ##.close-port.245 24 234)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-string (bruijn ##.open-output-string.251 24 240)) (##inline ##vcore.cons (##inline ##vcore.cons 'get-output-string (bruijn ##.get-output-string.252 24 241)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-output-to-file (bruijn ##.with-output-to-file.256 24 245)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-input-from-file (bruijn ##.with-input-from-file.257 24 246)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-port (bruijn ##.call-with-port.253 24 242)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-input-file (bruijn ##.call-with-input-file.254 24 243)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-output-file (bruijn ##.call-with-output-file.255 24 244)) (##inline ##vcore.cons (##inline ##vcore.cons 'read-char (bruijn ##.read-char.258 24 247)) (##inline ##vcore.cons (##inline ##vcore.cons 'read-line (bruijn ##.read-line.259 24 248)) (##inline ##vcore.cons (##inline ##vcore.cons 'read (bruijn ##.read.260 24 249)) (##inline ##vcore.cons (##inline ##vcore.cons 'newline (bruijn ##.newline.261 24 250)) (##inline ##vcore.cons (##inline ##vcore.cons 'display (bruijn ##.display.265 24 254)) (##inline ##vcore.cons (##inline ##vcore.cons 'write (bruijn ##.write.266 24 255)) (##inline ##vcore.cons (##inline ##vcore.cons 'call/cc (bruijn ##.call/cc.267 24 256)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-current-continuation (bruijn ##.call-with-current-continuation.268 24 257)) (##inline ##vcore.cons (##inline ##vcore.cons 'call-with-values (bruijn ##.call-with-values.269 24 258)) (##inline ##vcore.cons (##inline ##vcore.cons 'apply (bruijn ##.apply.270 24 259)) (##inline ##vcore.cons (##inline ##vcore.cons 'values (bruijn ##.values.271 24 260)) (##inline ##vcore.cons (##inline ##vcore.cons 'setter (bruijn ##.setter.272 24 261)) (##inline ##vcore.cons (##inline ##vcore.cons 'mutator (bruijn ##.mutator.273 24 262)) (##inline ##vcore.cons (##inline ##vcore.cons '##vcore.setter (bruijn ##..vcore.setter.10 25 1)) (##inline ##vcore.cons (##inline ##vcore.cons '##vcore.mutator (bruijn ##..vcore.mutator.9 25 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-parameter (bruijn ##.make-parameter.274 24 263)) (##inline ##vcore.cons (##inline ##vcore.cons 'raise (bruijn ##.raise.307 24 296)) (##inline ##vcore.cons (##inline ##vcore.cons 'raise-continuable (bruijn ##.raise-continuable.308 24 297)) (##inline ##vcore.cons (##inline ##vcore.cons 'with-exception-handler (bruijn ##.with-exception-handler.309 24 298)) (##inline ##vcore.cons (##inline ##vcore.cons 'command-line (bruijn ##.command-line.275 24 264)) (##inline ##vcore.cons (##inline ##vcore.cons 'system (bruijn ##.system.276 24 265)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-input-process (bruijn ##.open-input-process.277 24 266)) (##inline ##vcore.cons (##inline ##vcore.cons 'open-output-process (bruijn ##.open-output-process.278 24 267)) (##inline ##vcore.cons (##inline ##vcore.cons 'make-temporary-file (bruijn ##.make-temporary-file.279 24 268)) (##inline ##vcore.cons (##inline ##vcore.cons 'file-exists? (bruijn ##.file-exists?.280 24 269)) (##inline ##vcore.cons (##inline ##vcore.cons 'exit (bruijn ##.exit.281 24 270)) (##inline ##vcore.cons (##inline ##vcore.cons 'current-jiffy (bruijn ##.current-jiffy.282 24 271)) (##inline ##vcore.cons (##inline ##vcore.cons 'jiffies-per-second (bruijn ##.jiffies-per-second.283 24 272)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-not (bruijn ##.bitwise-not.290 24 279)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-and (bruijn ##.bitwise-and.284 24 273)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-or (bruijn ##.bitwise-or.289 24 278)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-ior (bruijn ##.bitwise-ior.285 24 274)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-xor (bruijn ##.bitwise-xor.286 24 275)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-xnor (bruijn ##.bitwise-xnor.287 24 276)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-eqv (bruijn ##.bitwise-eqv.288 24 277)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-nand (bruijn ##.bitwise-nand.291 24 280)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-nor (bruijn ##.bitwise-nor.292 24 281)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-andc1 (bruijn ##.bitwise-andc1.293 24 282)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-andc2 (bruijn ##.bitwise-andc2.294 24 283)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-orc1 (bruijn ##.bitwise-orc1.295 24 284)) (##inline ##vcore.cons (##inline ##vcore.cons 'bitwise-orc2 (bruijn ##.bitwise-orc2.296 24 285)) (##inline ##vcore.cons (##inline ##vcore.cons 'arithmetic-shift (bruijn ##.arithmetic-shift.297 24 286)) (##inline ##vcore.cons (##inline ##vcore.cons 'bit-count (bruijn ##.bit-count.298 24 287)) (##inline ##vcore.cons (##inline ##vcore.cons 'fiber-fork (bruijn ##.fiber-fork.312 24 301)) (##inline ##vcore.cons (##inline ##vcore.cons 'fiber-fork-list (bruijn ##.fiber-fork-list.311 24 300)) (##inline ##vcore.cons (##inline ##vcore.cons 'fiber-map (bruijn ##.fiber-map.313 24 302)) (##inline ##vcore.cons (##inline ##vcore.cons 'async (bruijn ##.async.314 24 303)) (##inline ##vcore.cons (##inline ##vcore.cons 'await (bruijn ##.await.315 24 304)) (##inline ##vcore.cons (##inline ##vcore.cons 'atom? (bruijn ##.atom?.299 24 288)) (##inline ##vcore.cons (##inline ##vcore.cons 'displayln (bruijn ##.displayln.300 24 289)) (##inline ##vcore.cons (##inline ##vcore.cons 'writeln (bruijn ##.writeln.301 24 290)) (##inline ##vcore.cons (##inline ##vcore.cons 'format (bruijn ##.format.306 24 295)) (##inline ##vcore.cons (##inline ##vcore.cons 'printf (bruijn ##.printf.304 24 293)) (##inline ##vcore.cons (##inline ##vcore.cons 'sprintf (bruijn ##.sprintf.305 24 294)) (##inline ##vcore.cons (##inline ##vcore.cons 'error (bruijn ##.error.310 24 299)) '())))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+    V_CALL(VGetArg(upenv, 30-1, 0), runtime,
+      VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0null_Q,
+        VGetArg(upenv, 24-1, 0)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0eof__object_Q,
+        VGetArg(upenv, 24-1, 2)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0boolean_Q,
+        VGetArg(upenv, 24-1, 1)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0pair_Q,
+        VGetArg(upenv, 24-1, 3)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector_Q,
+        VGetArg(upenv, 24-1, 4)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0hash__table_Q,
+        VGetArg(upenv, 24-1, 5)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0record_Q,
+        VGetArg(upenv, 24-1, 6)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0procedure_Q,
+        VGetArg(upenv, 24-1, 7)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0symbol_Q,
+        VGetArg(upenv, 24-1, 8)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0string_Q,
+        VGetArg(upenv, 24-1, 9)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0exact_Q,
+        VGetArg(upenv, 24-1, 13)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0exact__integer_Q,
+        VGetArg(upenv, 24-1, 14)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0inexact_Q,
+        VGetArg(upenv, 24-1, 16)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0real_Q,
+        VGetArg(upenv, 24-1, 17)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0integer_Q,
+        VGetArg(upenv, 24-1, 15)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0char_Q,
+        VGetArg(upenv, 24-1, 10)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0nullptr_Q,
+        VGetArg(upenv, 24-1, 11)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0foreign__pointer_Q,
+        VGetArg(upenv, 24-1, 12)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0eq_Q,
+        VGetArg(upenv, 24-1, 18)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0symbol_E_Q,
+        VGetArg(upenv, 24-1, 19)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0eqv_Q,
+        VGetArg(upenv, 24-1, 21)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0equal_Q,
+        VGetArg(upenv, 24-1, 31)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0not,
+        VGetArg(upenv, 24-1, 32)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0_L,
+        VGetArg(upenv, 24-1, 33)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0_E,
+        VGetArg(upenv, 24-1, 34)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0_G,
+        VGetArg(upenv, 24-1, 35)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0_L_E,
+        VGetArg(upenv, 24-1, 36)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0_G_E,
+        VGetArg(upenv, 24-1, 37)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0exact,
+        VGetArg(upenv, 24-1, 38)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0inexact___Gexact,
+        VGetArg(upenv, 24-1, 39)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0inexact,
+        VGetArg(upenv, 24-1, 40)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0exact___Ginexact,
+        VGetArg(upenv, 24-1, 41)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0number_Q,
+        VGetArg(upenv, 24-1, 42)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0complex_Q,
+        VGetArg(upenv, 24-1, 43)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0rational_Q,
+        VGetArg(upenv, 24-1, 44)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0positive_Q,
+        VGetArg(upenv, 24-1, 45)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0negative_Q,
+        VGetArg(upenv, 24-1, 47)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0zero_Q,
+        VGetArg(upenv, 24-1, 46)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0_P,
+        VGetArg(upenv, 24-1, 48)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0__,
+        VGetArg(upenv, 24-1, 49)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0_S,
+        VGetArg(upenv, 24-1, 50)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0_W,
+        VGetArg(upenv, 24-1, 51)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0quotient,
+        VGetArg(upenv, 24-1, 52)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0remainder,
+        VGetArg(upenv, 24-1, 53)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0max,
+        VGetArg(upenv, 24-1, 73)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0min,
+        VGetArg(upenv, 24-1, 74)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0abs,
+        VGetArg(upenv, 24-1, 54)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0square,
+        VGetArg(upenv, 24-1, 58)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0sqrt,
+        VGetArg(upenv, 24-1, 59)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0ceiling,
+        VGetArg(upenv, 24-1, 55)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0floor,
+        VGetArg(upenv, 24-1, 56)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0round,
+        VGetArg(upenv, 24-1, 57)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0sin,
+        VGetArg(upenv, 24-1, 60)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cos,
+        VGetArg(upenv, 24-1, 61)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0tan,
+        VGetArg(upenv, 24-1, 62)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0asin,
+        VGetArg(upenv, 24-1, 63)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0acos,
+        VGetArg(upenv, 24-1, 64)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0atan,
+        VGetArg(upenv, 24-1, 67)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0exp,
+        VGetArg(upenv, 24-1, 68)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0log,
+        VGetArg(upenv, 24-1, 70)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0expt,
+        VGetArg(upenv, 24-1, 72)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0pow,
+        VGetArg(upenv, 24-1, 71)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cons,
+        VGetArg(upenv, 24-1, 75)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0car,
+        VGetArg(upenv, 24-1, 76)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cdr,
+        VGetArg(upenv, 24-1, 77)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0set__car_B,
+        VGetArg(upenv, 24-1, 78)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0set__cdr_B,
+        VGetArg(upenv, 24-1, 79)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0caar,
+        VGetArg(upenv, 24-1, 80)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cadr,
+        VGetArg(upenv, 24-1, 81)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cdar,
+        VGetArg(upenv, 24-1, 82)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cddr,
+        VGetArg(upenv, 24-1, 83)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0caaar,
+        VGetArg(upenv, 24-1, 84)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0caadr,
+        VGetArg(upenv, 24-1, 85)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cadar,
+        VGetArg(upenv, 24-1, 86)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0caddr,
+        VGetArg(upenv, 24-1, 87)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cdaar,
+        VGetArg(upenv, 24-1, 88)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cdadr,
+        VGetArg(upenv, 24-1, 89)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cddar,
+        VGetArg(upenv, 24-1, 90)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cdddr,
+        VGetArg(upenv, 24-1, 91)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0caaaar,
+        VGetArg(upenv, 24-1, 92)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0caaadr,
+        VGetArg(upenv, 24-1, 93)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0caadar,
+        VGetArg(upenv, 24-1, 94)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0caaddr,
+        VGetArg(upenv, 24-1, 95)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cadaar,
+        VGetArg(upenv, 24-1, 96)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cadadr,
+        VGetArg(upenv, 24-1, 97)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0caddar,
+        VGetArg(upenv, 24-1, 98)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cadddr,
+        VGetArg(upenv, 24-1, 99)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cdaaar,
+        VGetArg(upenv, 24-1, 100)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cdaadr,
+        VGetArg(upenv, 24-1, 101)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cdadar,
+        VGetArg(upenv, 24-1, 102)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cdaddr,
+        VGetArg(upenv, 24-1, 103)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cddaar,
+        VGetArg(upenv, 24-1, 104)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cddadr,
+        VGetArg(upenv, 24-1, 105)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cdddar,
+        VGetArg(upenv, 24-1, 106)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0cddddr,
+        VGetArg(upenv, 24-1, 107)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list,
+        VGetArg(upenv, 24-1, 108)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list_Q,
+        VGetArg(upenv, 24-1, 109)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0length,
+        VGetArg(upenv, 24-1, 110)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list__tail,
+        VGetArg(upenv, 24-1, 111)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list__ref,
+        VGetArg(upenv, 24-1, 112)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list__set_B,
+        VGetArg(upenv, 24-1, 113)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list__copy,
+        VGetArg(upenv, 24-1, 114)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__list,
+        VGetArg(upenv, 24-1, 115)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0map,
+        VGetArg(upenv, 24-1, 116)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0for__each,
+        VGetArg(upenv, 24-1, 117)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0append,
+        VGetArg(upenv, 24-1, 119)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0reverse,
+        VGetArg(upenv, 24-1, 120)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0memq,
+        VGetArg(upenv, 24-1, 121)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0memv,
+        VGetArg(upenv, 24-1, 122)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0member,
+        VGetArg(upenv, 24-1, 123)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0assq,
+        VGetArg(upenv, 24-1, 124)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0assv,
+        VGetArg(upenv, 24-1, 125)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0assoc,
+        VGetArg(upenv, 24-1, 126)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0string___Glist,
+        VGetArg(upenv, 24-1, 138)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list___Gstring,
+        VGetArg(upenv, 24-1, 137)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__string,
+        VGetArg(upenv, 24-1, 127)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0substring,
+        VGetArg(upenv, 24-1, 128)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0string__copy,
+        VGetArg(upenv, 24-1, 129)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0string__copy_B,
+        VGetArg(upenv, 24-1, 130)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0string__ref,
+        VGetArg(upenv, 24-1, 131)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0string__set_B,
+        VGetArg(upenv, 24-1, 132)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0string__length,
+        VGetArg(upenv, 24-1, 133)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0string___Gsymbol,
+        VGetArg(upenv, 24-1, 134)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0string___Gnumber,
+        VGetArg(upenv, 24-1, 135)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0string__append,
+        VGetArg(upenv, 24-1, 139)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0symbol___Gstring,
+        VGetArg(upenv, 24-1, 136)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list___Gvector,
+        VGetArg(upenv, 24-1, 140)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector___Glist,
+        VGetArg(upenv, 24-1, 210)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__vector,
+        VGetArg(upenv, 24-1, 211)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector__copy,
+        VGetArg(upenv, 24-1, 214)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector__copy_B,
+        VGetArg(upenv, 24-1, 215)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector,
+        VGetArg(upenv, 24-1, 141)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector__ref,
+        VGetArg(upenv, 24-1, 142)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector__set_B,
+        VGetArg(upenv, 24-1, 143)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector__length,
+        VGetArg(upenv, 24-1, 144)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector__map,
+        VGetArg(upenv, 24-1, 213)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector__for__each,
+        VGetArg(upenv, 24-1, 212)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector__append,
+        VGetArg(upenv, 24-1, 216)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0vector__fill_B,
+        VGetArg(upenv, 24-1, 217)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f64vector_Q,
+        VGetArg(upenv, 24-1, 153)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list___Gf64vector,
+        VGetArg(upenv, 24-1, 155)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f64vector___Glist,
+        VGetArg(upenv, 24-1, 160)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__f64vector,
+        VGetArg(upenv, 24-1, 154)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f64vector,
+        VGetArg(upenv, 24-1, 156)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f64vector__ref,
+        VGetArg(upenv, 24-1, 157)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f64vector__set_B,
+        VGetArg(upenv, 24-1, 158)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f64vector__length,
+        VGetArg(upenv, 24-1, 159)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f32vector_Q,
+        VGetArg(upenv, 24-1, 145)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list___Gf32vector,
+        VGetArg(upenv, 24-1, 147)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f32vector___Glist,
+        VGetArg(upenv, 24-1, 152)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__f32vector,
+        VGetArg(upenv, 24-1, 146)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f32vector,
+        VGetArg(upenv, 24-1, 148)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f32vector__ref,
+        VGetArg(upenv, 24-1, 149)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f32vector__set_B,
+        VGetArg(upenv, 24-1, 150)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0f32vector__length,
+        VGetArg(upenv, 24-1, 151)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s32vector_Q,
+        VGetArg(upenv, 24-1, 161)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list___Gs32vector,
+        VGetArg(upenv, 24-1, 163)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s32vector___Glist,
+        VGetArg(upenv, 24-1, 168)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__s32vector,
+        VGetArg(upenv, 24-1, 162)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s32vector,
+        VGetArg(upenv, 24-1, 164)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s32vector__ref,
+        VGetArg(upenv, 24-1, 165)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s32vector__set_B,
+        VGetArg(upenv, 24-1, 166)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s32vector__length,
+        VGetArg(upenv, 24-1, 167)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u16vector_Q,
+        VGetArg(upenv, 24-1, 169)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list___Gu16vector,
+        VGetArg(upenv, 24-1, 171)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u16vector___Glist,
+        VGetArg(upenv, 24-1, 176)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__u16vector,
+        VGetArg(upenv, 24-1, 170)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u16vector,
+        VGetArg(upenv, 24-1, 172)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u16vector__ref,
+        VGetArg(upenv, 24-1, 173)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u16vector__set_B,
+        VGetArg(upenv, 24-1, 174)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u16vector__length,
+        VGetArg(upenv, 24-1, 175)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s16vector_Q,
+        VGetArg(upenv, 24-1, 177)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list___Gs16vector,
+        VGetArg(upenv, 24-1, 179)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s16vector___Glist,
+        VGetArg(upenv, 24-1, 184)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__s16vector,
+        VGetArg(upenv, 24-1, 178)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s16vector,
+        VGetArg(upenv, 24-1, 180)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s16vector__ref,
+        VGetArg(upenv, 24-1, 181)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s16vector__set_B,
+        VGetArg(upenv, 24-1, 182)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s16vector__length,
+        VGetArg(upenv, 24-1, 183)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u8vector_Q,
+        VGetArg(upenv, 24-1, 185)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list___Gu8vector,
+        VGetArg(upenv, 24-1, 187)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u8vector___Glist,
+        VGetArg(upenv, 24-1, 192)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__u8vector,
+        VGetArg(upenv, 24-1, 186)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u8vector,
+        VGetArg(upenv, 24-1, 188)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u8vector__ref,
+        VGetArg(upenv, 24-1, 189)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u8vector__set_B,
+        VGetArg(upenv, 24-1, 190)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0u8vector__length,
+        VGetArg(upenv, 24-1, 191)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s8vector_Q,
+        VGetArg(upenv, 24-1, 201)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list___Gs8vector,
+        VGetArg(upenv, 24-1, 203)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s8vector___Glist,
+        VGetArg(upenv, 24-1, 208)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__s8vector,
+        VGetArg(upenv, 24-1, 202)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s8vector,
+        VGetArg(upenv, 24-1, 204)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s8vector__ref,
+        VGetArg(upenv, 24-1, 205)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s8vector__set_B,
+        VGetArg(upenv, 24-1, 206)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0s8vector__length,
+        VGetArg(upenv, 24-1, 207)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bytevector_Q,
+        VGetArg(upenv, 24-1, 193)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0list___Gbytevector,
+        VGetArg(upenv, 24-1, 195)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bytevector___Glist,
+        VGetArg(upenv, 24-1, 196)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__bytevector,
+        VGetArg(upenv, 24-1, 194)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bytevector,
+        VGetArg(upenv, 24-1, 197)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bytevector__u8__ref,
+        VGetArg(upenv, 24-1, 198)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bytevector__u8__set_B,
+        VGetArg(upenv, 24-1, 199)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bytevector__length,
+        VGetArg(upenv, 24-1, 200)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0typevector_Q,
+        VGetArg(upenv, 24-1, 209)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0record,
+        VGetArg(upenv, 24-1, 218)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0record__ref,
+        VGetArg(upenv, 24-1, 219)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0record__set_B,
+        VGetArg(upenv, 24-1, 220)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0record__length,
+        VGetArg(upenv, 24-1, 221)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__hash__table,
+        VGetArg(upenv, 24-1, 222)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0hash__table__ref,
+        VGetArg(upenv, 24-1, 225)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0hash__table__set_B,
+        VGetArg(upenv, 24-1, 226)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0hash__table__delete_B,
+        VGetArg(upenv, 24-1, 227)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0hash__table___Galist,
+        VGetArg(upenv, 24-1, 228)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0char___Ginteger,
+        VGetArg(upenv, 24-1, 229)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0current__output__port,
+        VGetArg(upenv, 24-1, 230)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0current__error__port,
+        VGetArg(upenv, 24-1, 231)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0current__input__port,
+        VGetArg(upenv, 24-1, 232)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0open__input__file,
+        VGetArg(upenv, 24-1, 238)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0open__output__file,
+        VGetArg(upenv, 24-1, 239)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0close__port,
+        VGetArg(upenv, 24-1, 234)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0open__output__string,
+        VGetArg(upenv, 24-1, 240)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0get__output__string,
+        VGetArg(upenv, 24-1, 241)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0with__output__to__file,
+        VGetArg(upenv, 24-1, 245)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0with__input__from__file,
+        VGetArg(upenv, 24-1, 246)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0call__with__port,
+        VGetArg(upenv, 24-1, 242)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0call__with__input__file,
+        VGetArg(upenv, 24-1, 243)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0call__with__output__file,
+        VGetArg(upenv, 24-1, 244)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0read__char,
+        VGetArg(upenv, 24-1, 247)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0read__line,
+        VGetArg(upenv, 24-1, 248)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0read,
+        VGetArg(upenv, 24-1, 249)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0newline,
+        VGetArg(upenv, 24-1, 250)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0display,
+        VGetArg(upenv, 24-1, 254)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0write,
+        VGetArg(upenv, 24-1, 255)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0call_Wcc,
+        VGetArg(upenv, 24-1, 256)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0call__with__current__continuation,
+        VGetArg(upenv, 24-1, 257)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0call__with__values,
+        VGetArg(upenv, 24-1, 258)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0apply,
+        VGetArg(upenv, 24-1, 259)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0values,
+        VGetArg(upenv, 24-1, 260)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0setter,
+        VGetArg(upenv, 24-1, 261)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0mutator,
+        VGetArg(upenv, 24-1, 262)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V10vcore_Dsetter,
+        VGetArg(upenv, 25-1, 1)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V10vcore_Dmutator,
+        VGetArg(upenv, 25-1, 0)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__parameter,
+        VGetArg(upenv, 24-1, 263)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0raise,
+        VGetArg(upenv, 24-1, 296)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0raise__continuable,
+        VGetArg(upenv, 24-1, 297)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0with__exception__handler,
+        VGetArg(upenv, 24-1, 298)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0command__line,
+        VGetArg(upenv, 24-1, 264)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0system,
+        VGetArg(upenv, 24-1, 265)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0open__input__process,
+        VGetArg(upenv, 24-1, 266)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0open__output__process,
+        VGetArg(upenv, 24-1, 267)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0make__temporary__file,
+        VGetArg(upenv, 24-1, 268)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0file__exists_Q,
+        VGetArg(upenv, 24-1, 269)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0exit,
+        VGetArg(upenv, 24-1, 270)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0current__jiffy,
+        VGetArg(upenv, 24-1, 271)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0jiffies__per__second,
+        VGetArg(upenv, 24-1, 272)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__not,
+        VGetArg(upenv, 24-1, 279)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__and,
+        VGetArg(upenv, 24-1, 273)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__or,
+        VGetArg(upenv, 24-1, 278)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__ior,
+        VGetArg(upenv, 24-1, 274)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__xor,
+        VGetArg(upenv, 24-1, 275)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__xnor,
+        VGetArg(upenv, 24-1, 276)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__eqv,
+        VGetArg(upenv, 24-1, 277)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__nand,
+        VGetArg(upenv, 24-1, 280)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__nor,
+        VGetArg(upenv, 24-1, 281)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__andc1,
+        VGetArg(upenv, 24-1, 282)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__andc2,
+        VGetArg(upenv, 24-1, 283)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__orc1,
+        VGetArg(upenv, 24-1, 284)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bitwise__orc2,
+        VGetArg(upenv, 24-1, 285)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0arithmetic__shift,
+        VGetArg(upenv, 24-1, 286)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0bit__count,
+        VGetArg(upenv, 24-1, 287)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0fiber__fork,
+        VGetArg(upenv, 24-1, 301)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0fiber__fork__list,
+        VGetArg(upenv, 24-1, 300)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0fiber__map,
+        VGetArg(upenv, 24-1, 302)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0async,
+        VGetArg(upenv, 24-1, 303)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0await,
+        VGetArg(upenv, 24-1, 304)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0atom_Q,
+        VGetArg(upenv, 24-1, 288)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0displayln,
+        VGetArg(upenv, 24-1, 289)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0writeln,
+        VGetArg(upenv, 24-1, 290)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0format,
+        VGetArg(upenv, 24-1, 295)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0printf,
+        VGetArg(upenv, 24-1, 293)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0sprintf,
+        VGetArg(upenv, 24-1, 294)),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0error,
+        VGetArg(upenv, 24-1, 299)),
+        VNULL)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
  }
 }
 static void _V0vanity_V0core_V20_k759(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -24874,11 +22381,11 @@ static void _V0vanity_V0core_V20_k759(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k760) (bruijn ##.exact->inexact.52 23 41) (bruijn ##.inexact.51 23 40))
+  // (set! (close _V0vanity_V0core_V20_k760) (bruijn ##.bitwise-or.289 23 278) (bruijn ##.bitwise-ior.285 23 274))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k760, env)}),
-      VEncodeInt(23l), VEncodeInt(41l),
-      VGetArg(upenv, 23-1, 40)
+      VEncodeInt(23l), VEncodeInt(278l),
+      VGetArg(upenv, 23-1, 274)
     );
  }
 }
@@ -24893,11 +22400,11 @@ static void _V0vanity_V0core_V20_k758(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k759) (bruijn ##.inexact.51 22 40) (##intrinsic ##vcore.inexact))
+  // (set! (close _V0vanity_V0core_V20_k759) (bruijn ##.bitwise-eqv.288 22 277) (bruijn ##.bitwise-xnor.287 22 276))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k759, env)}),
-      VEncodeInt(22l), VEncodeInt(40l),
-      _V40_V10vcore_Dinexact
+      VEncodeInt(22l), VEncodeInt(277l),
+      VGetArg(upenv, 22-1, 276)
     );
  }
 }
@@ -24912,11 +22419,11 @@ static void _V0vanity_V0core_V20_k757(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k758) (bruijn ##.inexact->exact.50 21 39) (bruijn ##.exact.49 21 38))
+  // (set! (close _V0vanity_V0core_V20_k758) (bruijn ##.current-input-port.243 21 232) (bruijn ##.x.2740 0 0))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k758, env)}),
-      VEncodeInt(21l), VEncodeInt(39l),
-      VGetArg(upenv, 21-1, 38)
+      VEncodeInt(21l), VEncodeInt(232l),
+      _var0
     );
  }
 }
@@ -24931,12 +22438,10 @@ static void _V0vanity_V0core_V20_k756(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k757) (bruijn ##.exact.49 20 38) (##intrinsic ##vcore.exact))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
+  // ((bruijn ##.make-parameter.274 20 263) (close _V0vanity_V0core_V20_k757) (bruijn ##.x.2741 0 0))
+    V_CALL(VGetArg(upenv, 20-1, 263), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k757, env)}),
-      VEncodeInt(20l), VEncodeInt(38l),
-      _V40_V10vcore_Dexact
-    );
+      _var0);
  }
 }
 static void _V0vanity_V0core_V20_k755(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -24950,12 +22455,9 @@ static void _V0vanity_V0core_V20_k755(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k756) (bruijn ##.not.43 19 32) (##intrinsic ##vcore.not))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k756, env)}),
-      VEncodeInt(19l), VEncodeInt(32l),
-      _V40_V10vcore_Dnot
-    );
+  // (##vcore.stdin->port (close _V0vanity_V0core_V20_k756))
+    V_CALL_FUNC(VStdinPort, NULL, runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k756, env)}));
  }
 }
 static void _V0vanity_V0core_V20_k754(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -24969,11 +22471,11 @@ static void _V0vanity_V0core_V20_k754(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k755) (bruijn ##.eqv?.32 18 21) (##intrinsic ##vcore.eqv?))
+  // (set! (close _V0vanity_V0core_V20_k755) (bruijn ##.current-error-port.242 18 231) (bruijn ##.x.2742 0 0))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k755, env)}),
-      VEncodeInt(18l), VEncodeInt(21l),
-      _V40_V10vcore_Deqv_Q
+      VEncodeInt(18l), VEncodeInt(231l),
+      _var0
     );
  }
 }
@@ -24988,12 +22490,10 @@ static void _V0vanity_V0core_V20_k753(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k754) (bruijn ##.eq?.29 17 18) (##intrinsic ##vcore.eq?))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
+  // ((bruijn ##.make-parameter.274 17 263) (close _V0vanity_V0core_V20_k754) (bruijn ##.x.2743 0 0))
+    V_CALL(VGetArg(upenv, 17-1, 263), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k754, env)}),
-      VEncodeInt(17l), VEncodeInt(18l),
-      _V40_V10vcore_Deq_Q
-    );
+      _var0);
  }
 }
 static void _V0vanity_V0core_V20_k752(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -25007,12 +22507,9 @@ static void _V0vanity_V0core_V20_k752(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k753) (bruijn ##.real?.28 16 17) (##intrinsic ##vcore.double?))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k753, env)}),
-      VEncodeInt(16l), VEncodeInt(17l),
-      _V40_V10vcore_Ddouble_Q
-    );
+  // (##vcore.stderr->port (close _V0vanity_V0core_V20_k753))
+    V_CALL_FUNC(VStderrPort, NULL, runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k753, env)}));
  }
 }
 static void _V0vanity_V0core_V20_k751(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -25026,11 +22523,11 @@ static void _V0vanity_V0core_V20_k751(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k752) (bruijn ##.inexact?.27 15 16) (##intrinsic ##vcore.double?))
+  // (set! (close _V0vanity_V0core_V20_k752) (bruijn ##.current-output-port.241 15 230) (bruijn ##.x.2744 0 0))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k752, env)}),
-      VEncodeInt(15l), VEncodeInt(16l),
-      _V40_V10vcore_Ddouble_Q
+      VEncodeInt(15l), VEncodeInt(230l),
+      _var0
     );
  }
 }
@@ -25045,12 +22542,10 @@ static void _V0vanity_V0core_V20_k750(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k751) (bruijn ##.integer?.26 14 15) (##intrinsic ##vcore.int?))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
+  // ((bruijn ##.make-parameter.274 14 263) (close _V0vanity_V0core_V20_k751) (bruijn ##.x.2745 0 0))
+    V_CALL(VGetArg(upenv, 14-1, 263), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k751, env)}),
-      VEncodeInt(14l), VEncodeInt(15l),
-      _V40_V10vcore_Dint_Q
-    );
+      _var0);
  }
 }
 static void _V0vanity_V0core_V20_k749(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -25064,12 +22559,9 @@ static void _V0vanity_V0core_V20_k749(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k750) (bruijn ##.exact-integer?.25 13 14) (##intrinsic ##vcore.int?))
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k750, env)}),
-      VEncodeInt(13l), VEncodeInt(14l),
-      _V40_V10vcore_Dint_Q
-    );
+  // (##vcore.stdout->port (close _V0vanity_V0core_V20_k750))
+    V_CALL_FUNC(VStdoutPort, NULL, runtime,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k750, env)}));
  }
 }
 static void _V0vanity_V0core_V20_k748(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -25083,11 +22575,11 @@ static void _V0vanity_V0core_V20_k748(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k749) (bruijn ##.exact?.24 12 13) (##intrinsic ##vcore.int?))
+  // (set! (close _V0vanity_V0core_V20_k749) (bruijn ##.bytevector-length.211 12 200) (bruijn ##.u8vector-length.202 12 191))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k749, env)}),
-      VEncodeInt(12l), VEncodeInt(13l),
-      _V40_V10vcore_Dint_Q
+      VEncodeInt(12l), VEncodeInt(200l),
+      VGetArg(upenv, 12-1, 191)
     );
  }
 }
@@ -25102,11 +22594,11 @@ static void _V0vanity_V0core_V20_k747(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k748) (bruijn ##.foreign-pointer?.23 11 12) (##intrinsic ##vcore.foreign-pointer?))
+  // (set! (close _V0vanity_V0core_V20_k748) (bruijn ##.bytevector-u8-set!.210 11 199) (bruijn ##.u8vector-set!.201 11 190))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k748, env)}),
-      VEncodeInt(11l), VEncodeInt(12l),
-      _V40_V10vcore_Dforeign__pointer_Q
+      VEncodeInt(11l), VEncodeInt(199l),
+      VGetArg(upenv, 11-1, 190)
     );
  }
 }
@@ -25121,11 +22613,11 @@ static void _V0vanity_V0core_V20_k746(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k747) (bruijn ##.nullptr?.22 10 11) (##intrinsic ##vcore.nullptr?))
+  // (set! (close _V0vanity_V0core_V20_k747) (bruijn ##.bytevector-u8-ref.209 10 198) (bruijn ##.u8vector-ref.200 10 189))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k747, env)}),
-      VEncodeInt(10l), VEncodeInt(11l),
-      _V40_V10vcore_Dnullptr_Q
+      VEncodeInt(10l), VEncodeInt(198l),
+      VGetArg(upenv, 10-1, 189)
     );
  }
 }
@@ -25140,11 +22632,11 @@ static void _V0vanity_V0core_V20_k745(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k746) (bruijn ##.char?.21 9 10) (##intrinsic ##vcore.char?))
+  // (set! (close _V0vanity_V0core_V20_k746) (bruijn ##.bytevector.208 9 197) (bruijn ##.u8vector.199 9 188))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k746, env)}),
-      VEncodeInt(9l), VEncodeInt(10l),
-      _V40_V10vcore_Dchar_Q
+      VEncodeInt(9l), VEncodeInt(197l),
+      VGetArg(upenv, 9-1, 188)
     );
  }
 }
@@ -25159,11 +22651,11 @@ static void _V0vanity_V0core_V20_k744(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k745) (bruijn ##.string?.20 8 9) (##intrinsic ##vcore.string?))
+  // (set! (close _V0vanity_V0core_V20_k745) (bruijn ##.bytevector->list.207 8 196) (bruijn ##.u8vector->list.203 8 192))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k745, env)}),
-      VEncodeInt(8l), VEncodeInt(9l),
-      _V40_V10vcore_Dstring_Q
+      VEncodeInt(8l), VEncodeInt(196l),
+      VGetArg(upenv, 8-1, 192)
     );
  }
 }
@@ -25178,11 +22670,11 @@ static void _V0vanity_V0core_V20_k743(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k744) (bruijn ##.symbol?.19 7 8) (##intrinsic ##vcore.symbol?))
+  // (set! (close _V0vanity_V0core_V20_k744) (bruijn ##.list->bytevector.206 7 195) (bruijn ##.list->u8vector.198 7 187))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k744, env)}),
-      VEncodeInt(7l), VEncodeInt(8l),
-      _V40_V10vcore_Dsymbol_Q
+      VEncodeInt(7l), VEncodeInt(195l),
+      VGetArg(upenv, 7-1, 187)
     );
  }
 }
@@ -25197,11 +22689,11 @@ static void _V0vanity_V0core_V20_k742(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k743) (bruijn ##.procedure?.18 6 7) (##intrinsic ##vcore.procedure?))
+  // (set! (close _V0vanity_V0core_V20_k743) (bruijn ##.make-bytevector.205 6 194) (bruijn ##.make-u8vector.197 6 186))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k743, env)}),
-      VEncodeInt(6l), VEncodeInt(7l),
-      _V40_V10vcore_Dprocedure_Q
+      VEncodeInt(6l), VEncodeInt(194l),
+      VGetArg(upenv, 6-1, 186)
     );
  }
 }
@@ -25216,11 +22708,11 @@ static void _V0vanity_V0core_V20_k741(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k742) (bruijn ##.record?.17 5 6) (##intrinsic ##vcore.record?))
+  // (set! (close _V0vanity_V0core_V20_k742) (bruijn ##.bytevector?.204 5 193) (bruijn ##.u8vector?.196 5 185))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k742, env)}),
-      VEncodeInt(5l), VEncodeInt(6l),
-      _V40_V10vcore_Drecord_Q
+      VEncodeInt(5l), VEncodeInt(193l),
+      VGetArg(upenv, 5-1, 185)
     );
  }
 }
@@ -25235,11 +22727,11 @@ static void _V0vanity_V0core_V20_k740(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k741) (bruijn ##.hash-table?.16 4 5) (##intrinsic ##vcore.hash-table?))
+  // (set! (close _V0vanity_V0core_V20_k741) (bruijn ##.expt.83 4 72) (bruijn ##.pow.82 4 71))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k741, env)}),
-      VEncodeInt(4l), VEncodeInt(5l),
-      _V40_V10vcore_Dhash__table_Q
+      VEncodeInt(4l), VEncodeInt(72l),
+      upenv->up->up->up->vars[71]
     );
  }
 }
@@ -25254,11 +22746,11 @@ static void _V0vanity_V0core_V20_k739(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k740) (bruijn ##.vector?.15 3 4) (##intrinsic ##vcore.vector?))
+  // (set! (close _V0vanity_V0core_V20_k740) (bruijn ##.rational?.55 3 44) (bruijn ##.integer?.26 3 15))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k740, env)}),
-      VEncodeInt(3l), VEncodeInt(4l),
-      _V40_V10vcore_Dvector_Q
+      VEncodeInt(3l), VEncodeInt(44l),
+      upenv->up->up->vars[15]
     );
  }
 }
@@ -25273,11 +22765,11 @@ static void _V0vanity_V0core_V20_k738(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k739) (bruijn ##.pair?.14 2 3) (##intrinsic ##vcore.pair?))
+  // (set! (close _V0vanity_V0core_V20_k739) (bruijn ##.complex?.54 2 43) (bruijn ##.number?.53 2 42))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k739, env)}),
-      VEncodeInt(2l), VEncodeInt(3l),
-      _V40_V10vcore_Dpair_Q
+      VEncodeInt(2l), VEncodeInt(43l),
+      upenv->up->vars[42]
     );
  }
 }
@@ -25292,11 +22784,11 @@ static void _V0vanity_V0core_V20_k737(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (set! (close _V0vanity_V0core_V20_k738) (bruijn ##.eof-object?.13 1 2) (##intrinsic ##vcore.eof-object?))
+  // (set! (close _V0vanity_V0core_V20_k738) (bruijn ##.exact->inexact.52 1 41) (bruijn ##.inexact.51 1 40))
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k738, env)}),
-      VEncodeInt(1l), VEncodeInt(2l),
-      _V40_V10vcore_Deof__object_Q
+      VEncodeInt(1l), VEncodeInt(41l),
+      upenv->vars[40]
     );
  }
 }
@@ -25307,35 +22799,35 @@ static void _V0vanity_V0core_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
   VInitEnv(env, 2, 2, upenv);
   env->vars[0] = _var0;
   env->vars[1] = _var1;
-  // (letrec 305 (#f (close _V10_Dboolean_Q_D12_lambda3) #f #f #f #f #f #f #f #f #f #f #f #f #f #f #f #f #f (close _V10_Dsymbol_E_Q_D30_lambda4) (close _V10_Dboolean_E_Q_D31_lambda6) #f (close _V10_Dvector_E_Q_D33_lambda8) (close _V10_Df32vector_E_Q_D34_lambda10) (close _V10_Df64vector_E_Q_D35_lambda12) (close _V10_Ds32vector_E_Q_D36_lambda14) (close _V10_Du16vector_E_Q_D37_lambda16) (close _V10_Ds16vector_E_Q_D38_lambda18) (close _V10_Du8vector_E_Q_D39_lambda20) (close _V10_Ds8vector_E_Q_D40_lambda22) (close _V10_Drecord_E_Q_D41_lambda24) (close _V10_Dequal_Q_D42_lambda26) #f (close _V10_D_L_D44_lambda27) (close _V10_D_E_D45_lambda29) (close _V10_D_G_D46_lambda31) (close _V10_D_L_E_D47_lambda33) (close _V10_D_G_E_D48_lambda35) #f #f #f #f (close _V10_Dnumber_Q_D53_lambda37) #f #f (close _V10_Dpositive_Q_D56_lambda38) (close _V10_Dzero_Q_D57_lambda39) (close _V10_Dnegative_Q_D58_lambda40) #f #f #f #f #f #f (close _V10_Dabs_D65_lambda41) #f #f #f (close _V10_Dsquare_D69_lambda42) #f #f #f #f #f #f #f #f (close _V10_Datan_D78_lambda43) #f #f (close _V10_Dlog_D81_lambda44) #f #f (close _V10_Dmax_D84_lambda45) (close _V10_Dmin_D85_lambda47) #f #f #f #f #f (close _V10_Dcaar_D91_lambda49) (close _V10_Dcadr_D92_lambda50) (close _V10_Dcdar_D93_lambda51) (close _V10_Dcddr_D94_lambda52) (close _V10_Dcaaar_D95_lambda53) (close _V10_Dcaadr_D96_lambda54) (close _V10_Dcadar_D97_lambda55) (close _V10_Dcaddr_D98_lambda56) (close _V10_Dcdaar_D99_lambda57) (close _V10_Dcdadr_D100_lambda58) (close _V10_Dcddar_D101_lambda59) (close _V10_Dcdddr_D102_lambda60) (close _V10_Dcaaaar_D103_lambda61) (close _V10_Dcaaadr_D104_lambda62) (close _V10_Dcaadar_D105_lambda63) (close _V10_Dcaaddr_D106_lambda64) (close _V10_Dcadaar_D107_lambda65) (close _V10_Dcadadr_D108_lambda66) (close _V10_Dcaddar_D109_lambda67) (close _V10_Dcadddr_D110_lambda68) (close _V10_Dcdaaar_D111_lambda69) (close _V10_Dcdaadr_D112_lambda70) (close _V10_Dcdadar_D113_lambda71) (close _V10_Dcdaddr_D114_lambda72) (close _V10_Dcddaar_D115_lambda73) (close _V10_Dcddadr_D116_lambda74) (close _V10_Dcdddar_D117_lambda75) (close _V10_Dcddddr_D118_lambda76) (close _V10_Dlist_D119_lambda77) (close _V10_Dlist_Q_D120_lambda78) (close _V10_Dlength_D121_lambda79) (close _V10_Dlist__tail_D122_lambda81) (close _V10_Dlist__ref_D123_lambda82) (close _V10_Dlist__set_B_D124_lambda83) (close _V10_Dlist__copy_D125_lambda84) (close _V10_Dmake__list_D126_lambda85) (close _V10_Dmap_D127_lambda87) (close _V10_Dfor__each_D128_lambda92) (close _V10_Dfold__right_D129_lambda97) (close _V10_Dappend_D130_lambda99) (close _V10_Dreverse_D131_lambda101) (close _V10_Dmemq_D132_lambda103) (close _V10_Dmemv_D133_lambda104) (close _V10_Dmember_D134_lambda105) (close _V10_Dassq_D135_lambda106) (close _V10_Dassv_D136_lambda107) (close _V10_Dassoc_D137_lambda108) #f #f #f #f #f #f #f #f #f #f (close _V10_Dlist___Gstring_D148_lambda109) (close _V10_Dstring___Glist_D149_lambda111) (close _V10_Dstring__append_D150_lambda113) #f (close _V10_Dvector_D152_lambda114) #f #f #f #f (close _V10_Dmake__f32vector_D157_lambda115) #f (close _V10_Df32vector_D159_lambda116) #f #f #f (close _V10_Df32vector___Glist_D163_lambda117) #f (close _V10_Dmake__f64vector_D165_lambda119) #f (close _V10_Df64vector_D167_lambda120) #f #f #f (close _V10_Df64vector___Glist_D171_lambda121) #f (close _V10_Dmake__s32vector_D173_lambda123) #f (close _V10_Ds32vector_D175_lambda124) #f #f #f (close _V10_Ds32vector___Glist_D179_lambda125) #f (close _V10_Dmake__u16vector_D181_lambda127) #f (close _V10_Du16vector_D183_lambda128) #f #f #f (close _V10_Du16vector___Glist_D187_lambda129) #f (close _V10_Dmake__s16vector_D189_lambda131) #f (close _V10_Ds16vector_D191_lambda132) #f #f #f (close _V10_Ds16vector___Glist_D195_lambda133) #f (close _V10_Dmake__u8vector_D197_lambda135) #f (close _V10_Du8vector_D199_lambda136) #f #f #f (close _V10_Du8vector___Glist_D203_lambda137) #f #f #f #f #f #f #f #f #f (close _V10_Dmake__s8vector_D213_lambda139) #f (close _V10_Ds8vector_D215_lambda140) #f #f #f (close _V10_Ds8vector___Glist_D219_lambda141) (close _V10_Dtypevector_Q_D220_lambda143) (close _V10_Dvector___Glist_D221_lambda144) (close _V10_Dmake__vector_D222_lambda146) (close _V10_Dvector__for__each_D223_lambda147) (close _V10_Dvector__map_D224_lambda153) (close _V10_Dvector__copy_D225_lambda159) (close _V10_Dvector__copy_B_D226_lambda160) (close _V10_Dvector__append_D227_lambda162) (close _V10_Dvector__fill_B_D228_lambda165) #f #f #f #f (close _V10_Dmake__hash__table_D233_lambda167) #f #f (close _V10_Dhash__table__ref_D236_lambda168) (close _V10_Dhash__table__set_B_D237_lambda170) #f (close _V10_Dhash__table___Galist_D239_lambda171) #f #f #f #f (close _V10_Dtry__or__gc_D244_lambda173) (close _V10_Dclose__port_D245_lambda176) (close _V10_Dopen__input__file__impl_D246_lambda177) (close _V10_Dopen__output__file__impl_D247_lambda180) (close _V10_Dopen__output__string__impl_D248_lambda183) (close _V10_Dopen__input__file_D249_lambda186) (close _V10_Dopen__output__file_D250_lambda188) (close _V10_Dopen__output__string_D251_lambda190) #f (close _V10_Dcall__with__port_D253_lambda191) (close _V10_Dcall__with__input__file_D254_lambda192) (close _V10_Dcall__with__output__file_D255_lambda193) (close _V10_Dwith__output__to__file_D256_lambda194) (close _V10_Dwith__input__from__file_D257_lambda196) (close _V10_Dread__char_D258_lambda198) (close _V10_Dread__line_D259_lambda199) (close _V10_Dread_D260_lambda200) (close _V10_Dnewline_D261_lambda201) (close _V10_Dprintout__list_D262_lambda202) (close _V10_Dprintout__quotation_D263_lambda204) (close _V10_Dprintout_D264_lambda205) (close _V10_Ddisplay_D265_lambda207) (close _V10_Dwrite_D266_lambda208) #f #f #f #f (close _V10_Dvalues_D271_lambda209) #f #f (close _V10_Dmake__parameter_D274_lambda211) #f #f #f #f #f (close _V10_Dfile__exists_Q_D280_lambda216) #f #f #f (close _V10_Dbitwise__and_D284_lambda217) (close _V10_Dbitwise__ior_D285_lambda219) (close _V10_Dbitwise__xor_D286_lambda221) (close _V10_Dbitwise__xnor_D287_lambda223) #f #f #f #f #f #f #f #f #f #f #f (close _V10_Datom_Q_D299_lambda225) (close _V10_Ddisplayln_D300_lambda226) (close _V10_Dwriteln_D301_lambda227) (close _V10_Dformat__printf_D302_lambda228) (close _V10_Dformat__sprintf_D303_lambda230) (close _V10_Dprintf_D304_lambda231) (close _V10_Dsprintf_D305_lambda232) (close _V10_Dformat_D306_lambda233) #f (close _V10_Draise__continuable_D308_lambda234) (close _V10_Dwith__exception__handler_D309_lambda235) (close _V10_Derror_D310_lambda237) #f (close _V10_Dfiber__fork_D312_lambda238) (close _V10_Dfiber__map_D313_lambda239) #f #f) (set! (close _V0vanity_V0core_V20_k737) (bruijn ##.null?.11 0 0) (##intrinsic ##vcore.null?)))
+  // (letrec 305 ((##intrinsic ##vcore.null?) (close _V10_Dboolean_Q_D12_lambda3) (##intrinsic ##vcore.eof-object?) (##intrinsic ##vcore.pair?) (##intrinsic ##vcore.vector?) (##intrinsic ##vcore.hash-table?) (##intrinsic ##vcore.record?) (##intrinsic ##vcore.procedure?) (##intrinsic ##vcore.symbol?) (##intrinsic ##vcore.string?) (##intrinsic ##vcore.char?) (##intrinsic ##vcore.nullptr?) (##intrinsic ##vcore.foreign-pointer?) (##intrinsic ##vcore.int?) (##intrinsic ##vcore.int?) (##intrinsic ##vcore.int?) (##intrinsic ##vcore.double?) (##intrinsic ##vcore.double?) (##intrinsic ##vcore.eq?) (close _V10_Dsymbol_E_Q_D30_lambda4) (close _V10_Dboolean_E_Q_D31_lambda6) (##intrinsic ##vcore.eqv?) (close _V10_Dvector_E_Q_D33_lambda8) (close _V10_Df32vector_E_Q_D34_lambda10) (close _V10_Df64vector_E_Q_D35_lambda12) (close _V10_Ds32vector_E_Q_D36_lambda14) (close _V10_Du16vector_E_Q_D37_lambda16) (close _V10_Ds16vector_E_Q_D38_lambda18) (close _V10_Du8vector_E_Q_D39_lambda20) (close _V10_Ds8vector_E_Q_D40_lambda22) (close _V10_Drecord_E_Q_D41_lambda24) (close _V10_Dequal_Q_D42_lambda26) (##intrinsic ##vcore.not) (close _V10_D_L_D44_lambda27) (close _V10_D_E_D45_lambda29) (close _V10_D_G_D46_lambda31) (close _V10_D_L_E_D47_lambda33) (close _V10_D_G_E_D48_lambda35) (##intrinsic ##vcore.exact) #f (##intrinsic ##vcore.inexact) #f (close _V10_Dnumber_Q_D53_lambda37) #f #f (close _V10_Dpositive_Q_D56_lambda38) (close _V10_Dzero_Q_D57_lambda39) (close _V10_Dnegative_Q_D58_lambda40) (##intrinsic ##vcore.+) (##intrinsic ##vcore.-) (##intrinsic ##vcore.*) (##intrinsic ##vcore./) (##intrinsic ##vcore.quotient) (##intrinsic ##vcore.remainder) (close _V10_Dabs_D65_lambda41) (##foreign.function "_V30ceil_shim") (##foreign.function "_V30floor_shim") (##foreign.function "_V30round_shim") (close _V10_Dsquare_D69_lambda42) (##foreign.function "_V30sqrt_shim") (##foreign.function "_V30sin_shim") (##foreign.function "_V30cos_shim") (##foreign.function "_V30tan_shim") (##foreign.function "_V30asin_shim") (##foreign.function "_V30acos_shim") (##foreign.function "_V30atan_shim") (##foreign.function "_V30atan2_shim") (close _V10_Datan_D78_lambda43) (##foreign.function "_V30exp_shim") (##foreign.function "_V30log_shim") (close _V10_Dlog_D81_lambda44) (##foreign.function "_V30pow_shim") #f (close _V10_Dmax_D84_lambda45) (close _V10_Dmin_D85_lambda47) (##intrinsic ##vcore.cons) (##intrinsic ##vcore.car) (##intrinsic ##vcore.cdr) (##intrinsic ##vcore.set-car!) (##intrinsic ##vcore.set-cdr!) (close _V10_Dcaar_D91_lambda49) (close _V10_Dcadr_D92_lambda50) (close _V10_Dcdar_D93_lambda51) (close _V10_Dcddr_D94_lambda52) (close _V10_Dcaaar_D95_lambda53) (close _V10_Dcaadr_D96_lambda54) (close _V10_Dcadar_D97_lambda55) (close _V10_Dcaddr_D98_lambda56) (close _V10_Dcdaar_D99_lambda57) (close _V10_Dcdadr_D100_lambda58) (close _V10_Dcddar_D101_lambda59) (close _V10_Dcdddr_D102_lambda60) (close _V10_Dcaaaar_D103_lambda61) (close _V10_Dcaaadr_D104_lambda62) (close _V10_Dcaadar_D105_lambda63) (close _V10_Dcaaddr_D106_lambda64) (close _V10_Dcadaar_D107_lambda65) (close _V10_Dcadadr_D108_lambda66) (close _V10_Dcaddar_D109_lambda67) (close _V10_Dcadddr_D110_lambda68) (close _V10_Dcdaaar_D111_lambda69) (close _V10_Dcdaadr_D112_lambda70) (close _V10_Dcdadar_D113_lambda71) (close _V10_Dcdaddr_D114_lambda72) (close _V10_Dcddaar_D115_lambda73) (close _V10_Dcddadr_D116_lambda74) (close _V10_Dcdddar_D117_lambda75) (close _V10_Dcddddr_D118_lambda76) (close _V10_Dlist_D119_lambda77) (close _V10_Dlist_Q_D120_lambda78) (close _V10_Dlength_D121_lambda79) (close _V10_Dlist__tail_D122_lambda81) (close _V10_Dlist__ref_D123_lambda82) (close _V10_Dlist__set_B_D124_lambda83) (close _V10_Dlist__copy_D125_lambda84) (close _V10_Dmake__list_D126_lambda85) (close _V10_Dmap_D127_lambda87) (close _V10_Dfor__each_D128_lambda92) (close _V10_Dfold__right_D129_lambda97) (close _V10_Dappend_D130_lambda99) (close _V10_Dreverse_D131_lambda101) (close _V10_Dmemq_D132_lambda103) (close _V10_Dmemv_D133_lambda104) (close _V10_Dmember_D134_lambda105) (close _V10_Dassq_D135_lambda106) (close _V10_Dassv_D136_lambda107) (close _V10_Dassoc_D137_lambda108) (##intrinsic ##vcore.make-string) (##intrinsic ##vcore.substring) (##intrinsic ##vcore.substring) (##intrinsic ##vcore.string-copy!) (##intrinsic ##vcore.string-ref) (##intrinsic ##vcore.string-set!) (##intrinsic ##vcore.string-length) (##intrinsic ##vcore.string->symbol) (##intrinsic ##vcore.string->number) (##intrinsic ##vcore.symbol->string) (close _V10_Dlist___Gstring_D148_lambda109) (close _V10_Dstring___Glist_D149_lambda111) (close _V10_Dstring__append_D150_lambda113) (##intrinsic ##vcore.list->vector) (close _V10_Dvector_D152_lambda114) (##intrinsic ##vcore.vector-ref) (##intrinsic ##vcore.vector-set!) (##intrinsic ##vcore.vector-length) (##intrinsic ##vcore.f32vector?) (close _V10_Dmake__f32vector_D157_lambda115) (##intrinsic ##vcore.list->f32vector) (close _V10_Df32vector_D159_lambda116) (##intrinsic ##vcore.f32vector-ref) (##intrinsic ##vcore.f32vector-set!) (##intrinsic ##vcore.f32vector-length) (close _V10_Df32vector___Glist_D163_lambda117) (##intrinsic ##vcore.f64vector?) (close _V10_Dmake__f64vector_D165_lambda119) (##intrinsic ##vcore.list->f64vector) (close _V10_Df64vector_D167_lambda120) (##intrinsic ##vcore.f64vector-ref) (##intrinsic ##vcore.f64vector-set!) (##intrinsic ##vcore.f64vector-length) (close _V10_Df64vector___Glist_D171_lambda121) (##intrinsic ##vcore.s32vector?) (close _V10_Dmake__s32vector_D173_lambda123) (##intrinsic ##vcore.list->s32vector) (close _V10_Ds32vector_D175_lambda124) (##intrinsic ##vcore.s32vector-ref) (##intrinsic ##vcore.s32vector-set!) (##intrinsic ##vcore.s32vector-length) (close _V10_Ds32vector___Glist_D179_lambda125) (##intrinsic ##vcore.u16vector?) (close _V10_Dmake__u16vector_D181_lambda127) (##intrinsic ##vcore.list->u16vector) (close _V10_Du16vector_D183_lambda128) (##intrinsic ##vcore.u16vector-ref) (##intrinsic ##vcore.u16vector-set!) (##intrinsic ##vcore.u16vector-length) (close _V10_Du16vector___Glist_D187_lambda129) (##intrinsic ##vcore.s16vector?) (close _V10_Dmake__s16vector_D189_lambda131) (##intrinsic ##vcore.list->s16vector) (close _V10_Ds16vector_D191_lambda132) (##intrinsic ##vcore.s16vector-ref) (##intrinsic ##vcore.s16vector-set!) (##intrinsic ##vcore.s16vector-length) (close _V10_Ds16vector___Glist_D195_lambda133) (##intrinsic ##vcore.u8vector?) (close _V10_Dmake__u8vector_D197_lambda135) (##intrinsic ##vcore.list->u8vector) (close _V10_Du8vector_D199_lambda136) (##intrinsic ##vcore.u8vector-ref) (##intrinsic ##vcore.u8vector-set!) (##intrinsic ##vcore.u8vector-length) (close _V10_Du8vector___Glist_D203_lambda137) #f #f #f #f #f #f #f #f (##intrinsic ##vcore.s8vector?) (close _V10_Dmake__s8vector_D213_lambda139) (##intrinsic ##vcore.list->s8vector) (close _V10_Ds8vector_D215_lambda140) (##intrinsic ##vcore.s8vector-ref) (##intrinsic ##vcore.s8vector-set!) (##intrinsic ##vcore.s8vector-length) (close _V10_Ds8vector___Glist_D219_lambda141) (close _V10_Dtypevector_Q_D220_lambda143) (close _V10_Dvector___Glist_D221_lambda144) (close _V10_Dmake__vector_D222_lambda146) (close _V10_Dvector__for__each_D223_lambda147) (close _V10_Dvector__map_D224_lambda153) (close _V10_Dvector__copy_D225_lambda159) (close _V10_Dvector__copy_B_D226_lambda160) (close _V10_Dvector__append_D227_lambda162) (close _V10_Dvector__fill_B_D228_lambda165) (##intrinsic ##vcore.record) (##intrinsic ##vcore.record-ref) (##intrinsic ##vcore.record-set!) (##intrinsic ##vcore.record-length) (close _V10_Dmake__hash__table_D233_lambda167) (##intrinsic ##vcore.hash-table-equivalence-function) (##intrinsic ##vcore.hash-table-hash-function) (close _V10_Dhash__table__ref_D236_lambda168) (close _V10_Dhash__table__set_B_D237_lambda170) (##intrinsic ##vcore.hash-table-delete!) (close _V10_Dhash__table___Galist_D239_lambda171) (##intrinsic ##vcore.char-integer) #f #f #f (close _V10_Dtry__or__gc_D244_lambda173) (close _V10_Dclose__port_D245_lambda176) (close _V10_Dopen__input__file__impl_D246_lambda177) (close _V10_Dopen__output__file__impl_D247_lambda180) (close _V10_Dopen__output__string__impl_D248_lambda183) (close _V10_Dopen__input__file_D249_lambda186) (close _V10_Dopen__output__file_D250_lambda188) (close _V10_Dopen__output__string_D251_lambda190) (##intrinsic ##vcore.get-output-string) (close _V10_Dcall__with__port_D253_lambda191) (close _V10_Dcall__with__input__file_D254_lambda192) (close _V10_Dcall__with__output__file_D255_lambda193) (close _V10_Dwith__output__to__file_D256_lambda194) (close _V10_Dwith__input__from__file_D257_lambda196) (close _V10_Dread__char_D258_lambda198) (close _V10_Dread__line_D259_lambda199) (close _V10_Dread_D260_lambda200) (close _V10_Dnewline_D261_lambda201) (close _V10_Dprintout__list_D262_lambda202) (close _V10_Dprintout__quotation_D263_lambda204) (close _V10_Dprintout_D264_lambda205) (close _V10_Ddisplay_D265_lambda207) (close _V10_Dwrite_D266_lambda208) (##intrinsic ##vcore.call/cc) (##intrinsic ##vcore.call/cc) (##intrinsic ##vcore.call-with-values) (##intrinsic ##vcore.apply) (close _V10_Dvalues_D271_lambda209) (bruijn ##..vcore.setter.10 1 1) (bruijn ##..vcore.mutator.9 1 0) (close _V10_Dmake__parameter_D274_lambda211) (##intrinsic ##vcore.command-line) (##intrinsic ##vcore.system) (##intrinsic ##vcore.open-input-process) (##intrinsic ##vcore.open-output-process) (##intrinsic ##vcore.make-temporary-file) (close _V10_Dfile__exists_Q_D280_lambda216) (##intrinsic ##vcore.exit) (##intrinsic ##vcore.current-jiffy) (##intrinsic ##vcore.jiffies-per-second) (close _V10_Dbitwise__and_D284_lambda217) (close _V10_Dbitwise__ior_D285_lambda219) (close _V10_Dbitwise__xor_D286_lambda221) (close _V10_Dbitwise__xnor_D287_lambda223) #f #f (##intrinsic ##vcore.bitwise-not) (##intrinsic ##vcore.bitwise-nand) (##intrinsic ##vcore.bitwise-nor) (##intrinsic ##vcore.bitwise-andc1) (##intrinsic ##vcore.bitwise-andc2) (##intrinsic ##vcore.bitwise-orc1) (##intrinsic ##vcore.bitwise-orc2) (##intrinsic ##vcore.arithmetic-shift) (##intrinsic ##vcore.bit-count) (close _V10_Datom_Q_D299_lambda225) (close _V10_Ddisplayln_D300_lambda226) (close _V10_Dwriteln_D301_lambda227) (close _V10_Dformat__printf_D302_lambda228) (close _V10_Dformat__sprintf_D303_lambda230) (close _V10_Dprintf_D304_lambda231) (close _V10_Dsprintf_D305_lambda232) (close _V10_Dformat_D306_lambda233) (##intrinsic ##vcore.raise) (close _V10_Draise__continuable_D308_lambda234) (close _V10_Dwith__exception__handler_D309_lambda235) (close _V10_Derror_D310_lambda237) (##intrinsic ##vcore.fiber-fork-list) (close _V10_Dfiber__fork_D312_lambda238) (close _V10_Dfiber__map_D313_lambda239) (##intrinsic ##vcore.async) (##intrinsic ##vcore.await)) (set! (close _V0vanity_V0core_V20_k737) (bruijn ##.inexact->exact.50 0 39) (bruijn ##.exact.49 0 38)))
     // OH NO A LETREC!
     {
     VEnv * upenv = env;
     struct { VEnv env; VWORD argv[305]; } container;
     VEnv * env = &container.env;
     VInitEnv(env, 305, 305, upenv);
-    env->vars[0] = VEncodeBool(false);
+    env->vars[0] = _V40_V10vcore_Dnull_Q;
     env->vars[1] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dboolean_Q_D12_lambda3, env)});
-    env->vars[2] = VEncodeBool(false);
-    env->vars[3] = VEncodeBool(false);
-    env->vars[4] = VEncodeBool(false);
-    env->vars[5] = VEncodeBool(false);
-    env->vars[6] = VEncodeBool(false);
-    env->vars[7] = VEncodeBool(false);
-    env->vars[8] = VEncodeBool(false);
-    env->vars[9] = VEncodeBool(false);
-    env->vars[10] = VEncodeBool(false);
-    env->vars[11] = VEncodeBool(false);
-    env->vars[12] = VEncodeBool(false);
-    env->vars[13] = VEncodeBool(false);
-    env->vars[14] = VEncodeBool(false);
-    env->vars[15] = VEncodeBool(false);
-    env->vars[16] = VEncodeBool(false);
-    env->vars[17] = VEncodeBool(false);
-    env->vars[18] = VEncodeBool(false);
+    env->vars[2] = _V40_V10vcore_Deof__object_Q;
+    env->vars[3] = _V40_V10vcore_Dpair_Q;
+    env->vars[4] = _V40_V10vcore_Dvector_Q;
+    env->vars[5] = _V40_V10vcore_Dhash__table_Q;
+    env->vars[6] = _V40_V10vcore_Drecord_Q;
+    env->vars[7] = _V40_V10vcore_Dprocedure_Q;
+    env->vars[8] = _V40_V10vcore_Dsymbol_Q;
+    env->vars[9] = _V40_V10vcore_Dstring_Q;
+    env->vars[10] = _V40_V10vcore_Dchar_Q;
+    env->vars[11] = _V40_V10vcore_Dnullptr_Q;
+    env->vars[12] = _V40_V10vcore_Dforeign__pointer_Q;
+    env->vars[13] = _V40_V10vcore_Dint_Q;
+    env->vars[14] = _V40_V10vcore_Dint_Q;
+    env->vars[15] = _V40_V10vcore_Dint_Q;
+    env->vars[16] = _V40_V10vcore_Ddouble_Q;
+    env->vars[17] = _V40_V10vcore_Ddouble_Q;
+    env->vars[18] = _V40_V10vcore_Deq_Q;
     env->vars[19] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dsymbol_E_Q_D30_lambda4, env)});
     env->vars[20] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dboolean_E_Q_D31_lambda6, env)});
-    env->vars[21] = VEncodeBool(false);
+    env->vars[21] = _V40_V10vcore_Deqv_Q;
     env->vars[22] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dvector_E_Q_D33_lambda8, env)});
     env->vars[23] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Df32vector_E_Q_D34_lambda10, env)});
     env->vars[24] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Df64vector_E_Q_D35_lambda12, env)});
@@ -25346,15 +22838,15 @@ static void _V0vanity_V0core_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
     env->vars[29] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Ds8vector_E_Q_D40_lambda22, env)});
     env->vars[30] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Drecord_E_Q_D41_lambda24, env)});
     env->vars[31] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dequal_Q_D42_lambda26, env)});
-    env->vars[32] = VEncodeBool(false);
+    env->vars[32] = _V40_V10vcore_Dnot;
     env->vars[33] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_D_L_D44_lambda27, env)});
     env->vars[34] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_D_E_D45_lambda29, env)});
     env->vars[35] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_D_G_D46_lambda31, env)});
     env->vars[36] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_D_L_E_D47_lambda33, env)});
     env->vars[37] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_D_G_E_D48_lambda35, env)});
-    env->vars[38] = VEncodeBool(false);
+    env->vars[38] = _V40_V10vcore_Dexact;
     env->vars[39] = VEncodeBool(false);
-    env->vars[40] = VEncodeBool(false);
+    env->vars[40] = _V40_V10vcore_Dinexact;
     env->vars[41] = VEncodeBool(false);
     env->vars[42] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dnumber_Q_D53_lambda37, env)});
     env->vars[43] = VEncodeBool(false);
@@ -25362,38 +22854,38 @@ static void _V0vanity_V0core_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
     env->vars[45] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dpositive_Q_D56_lambda38, env)});
     env->vars[46] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dzero_Q_D57_lambda39, env)});
     env->vars[47] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dnegative_Q_D58_lambda40, env)});
-    env->vars[48] = VEncodeBool(false);
-    env->vars[49] = VEncodeBool(false);
-    env->vars[50] = VEncodeBool(false);
-    env->vars[51] = VEncodeBool(false);
-    env->vars[52] = VEncodeBool(false);
-    env->vars[53] = VEncodeBool(false);
+    env->vars[48] = _V40_V10vcore_D_P;
+    env->vars[49] = _V40_V10vcore_D__;
+    env->vars[50] = _V40_V10vcore_D_S;
+    env->vars[51] = _V40_V10vcore_D_W;
+    env->vars[52] = _V40_V10vcore_Dquotient;
+    env->vars[53] = _V40_V10vcore_Dremainder;
     env->vars[54] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dabs_D65_lambda41, env)});
-    env->vars[55] = VEncodeBool(false);
-    env->vars[56] = VEncodeBool(false);
-    env->vars[57] = VEncodeBool(false);
+    env->vars[55] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30ceil_shim, NULL)});
+    env->vars[56] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30floor_shim, NULL)});
+    env->vars[57] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30round_shim, NULL)});
     env->vars[58] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dsquare_D69_lambda42, env)});
-    env->vars[59] = VEncodeBool(false);
-    env->vars[60] = VEncodeBool(false);
-    env->vars[61] = VEncodeBool(false);
-    env->vars[62] = VEncodeBool(false);
-    env->vars[63] = VEncodeBool(false);
-    env->vars[64] = VEncodeBool(false);
-    env->vars[65] = VEncodeBool(false);
-    env->vars[66] = VEncodeBool(false);
+    env->vars[59] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30sqrt_shim, NULL)});
+    env->vars[60] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30sin_shim, NULL)});
+    env->vars[61] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30cos_shim, NULL)});
+    env->vars[62] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30tan_shim, NULL)});
+    env->vars[63] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30asin_shim, NULL)});
+    env->vars[64] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30acos_shim, NULL)});
+    env->vars[65] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30atan_shim, NULL)});
+    env->vars[66] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30atan2_shim, NULL)});
     env->vars[67] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Datan_D78_lambda43, env)});
-    env->vars[68] = VEncodeBool(false);
-    env->vars[69] = VEncodeBool(false);
+    env->vars[68] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30exp_shim, NULL)});
+    env->vars[69] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30log_shim, NULL)});
     env->vars[70] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlog_D81_lambda44, env)});
-    env->vars[71] = VEncodeBool(false);
+    env->vars[71] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V30pow_shim, NULL)});
     env->vars[72] = VEncodeBool(false);
     env->vars[73] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dmax_D84_lambda45, env)});
     env->vars[74] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dmin_D85_lambda47, env)});
-    env->vars[75] = VEncodeBool(false);
-    env->vars[76] = VEncodeBool(false);
-    env->vars[77] = VEncodeBool(false);
-    env->vars[78] = VEncodeBool(false);
-    env->vars[79] = VEncodeBool(false);
+    env->vars[75] = _V40_V10vcore_Dcons;
+    env->vars[76] = _V40_V10vcore_Dcar;
+    env->vars[77] = _V40_V10vcore_Dcdr;
+    env->vars[78] = _V40_V10vcore_Dset__car_B;
+    env->vars[79] = _V40_V10vcore_Dset__cdr_B;
     env->vars[80] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcaar_D91_lambda49, env)});
     env->vars[81] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcadr_D92_lambda50, env)});
     env->vars[82] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcdar_D93_lambda51, env)});
@@ -25441,71 +22933,71 @@ static void _V0vanity_V0core_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
     env->vars[124] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassq_D135_lambda106, env)});
     env->vars[125] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassv_D136_lambda107, env)});
     env->vars[126] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassoc_D137_lambda108, env)});
-    env->vars[127] = VEncodeBool(false);
-    env->vars[128] = VEncodeBool(false);
-    env->vars[129] = VEncodeBool(false);
-    env->vars[130] = VEncodeBool(false);
-    env->vars[131] = VEncodeBool(false);
-    env->vars[132] = VEncodeBool(false);
-    env->vars[133] = VEncodeBool(false);
-    env->vars[134] = VEncodeBool(false);
-    env->vars[135] = VEncodeBool(false);
-    env->vars[136] = VEncodeBool(false);
+    env->vars[127] = _V40_V10vcore_Dmake__string;
+    env->vars[128] = _V40_V10vcore_Dsubstring;
+    env->vars[129] = _V40_V10vcore_Dsubstring;
+    env->vars[130] = _V40_V10vcore_Dstring__copy_B;
+    env->vars[131] = _V40_V10vcore_Dstring__ref;
+    env->vars[132] = _V40_V10vcore_Dstring__set_B;
+    env->vars[133] = _V40_V10vcore_Dstring__length;
+    env->vars[134] = _V40_V10vcore_Dstring___Gsymbol;
+    env->vars[135] = _V40_V10vcore_Dstring___Gnumber;
+    env->vars[136] = _V40_V10vcore_Dsymbol___Gstring;
     env->vars[137] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlist___Gstring_D148_lambda109, env)});
     env->vars[138] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dstring___Glist_D149_lambda111, env)});
     env->vars[139] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dstring__append_D150_lambda113, env)});
-    env->vars[140] = VEncodeBool(false);
+    env->vars[140] = _V40_V10vcore_Dlist___Gvector;
     env->vars[141] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dvector_D152_lambda114, env)});
-    env->vars[142] = VEncodeBool(false);
-    env->vars[143] = VEncodeBool(false);
-    env->vars[144] = VEncodeBool(false);
-    env->vars[145] = VEncodeBool(false);
+    env->vars[142] = _V40_V10vcore_Dvector__ref;
+    env->vars[143] = _V40_V10vcore_Dvector__set_B;
+    env->vars[144] = _V40_V10vcore_Dvector__length;
+    env->vars[145] = _V40_V10vcore_Df32vector_Q;
     env->vars[146] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dmake__f32vector_D157_lambda115, env)});
-    env->vars[147] = VEncodeBool(false);
+    env->vars[147] = _V40_V10vcore_Dlist___Gf32vector;
     env->vars[148] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Df32vector_D159_lambda116, env)});
-    env->vars[149] = VEncodeBool(false);
-    env->vars[150] = VEncodeBool(false);
-    env->vars[151] = VEncodeBool(false);
+    env->vars[149] = _V40_V10vcore_Df32vector__ref;
+    env->vars[150] = _V40_V10vcore_Df32vector__set_B;
+    env->vars[151] = _V40_V10vcore_Df32vector__length;
     env->vars[152] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Df32vector___Glist_D163_lambda117, env)});
-    env->vars[153] = VEncodeBool(false);
+    env->vars[153] = _V40_V10vcore_Df64vector_Q;
     env->vars[154] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dmake__f64vector_D165_lambda119, env)});
-    env->vars[155] = VEncodeBool(false);
+    env->vars[155] = _V40_V10vcore_Dlist___Gf64vector;
     env->vars[156] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Df64vector_D167_lambda120, env)});
-    env->vars[157] = VEncodeBool(false);
-    env->vars[158] = VEncodeBool(false);
-    env->vars[159] = VEncodeBool(false);
+    env->vars[157] = _V40_V10vcore_Df64vector__ref;
+    env->vars[158] = _V40_V10vcore_Df64vector__set_B;
+    env->vars[159] = _V40_V10vcore_Df64vector__length;
     env->vars[160] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Df64vector___Glist_D171_lambda121, env)});
-    env->vars[161] = VEncodeBool(false);
+    env->vars[161] = _V40_V10vcore_Ds32vector_Q;
     env->vars[162] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dmake__s32vector_D173_lambda123, env)});
-    env->vars[163] = VEncodeBool(false);
+    env->vars[163] = _V40_V10vcore_Dlist___Gs32vector;
     env->vars[164] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Ds32vector_D175_lambda124, env)});
-    env->vars[165] = VEncodeBool(false);
-    env->vars[166] = VEncodeBool(false);
-    env->vars[167] = VEncodeBool(false);
+    env->vars[165] = _V40_V10vcore_Ds32vector__ref;
+    env->vars[166] = _V40_V10vcore_Ds32vector__set_B;
+    env->vars[167] = _V40_V10vcore_Ds32vector__length;
     env->vars[168] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Ds32vector___Glist_D179_lambda125, env)});
-    env->vars[169] = VEncodeBool(false);
+    env->vars[169] = _V40_V10vcore_Du16vector_Q;
     env->vars[170] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dmake__u16vector_D181_lambda127, env)});
-    env->vars[171] = VEncodeBool(false);
+    env->vars[171] = _V40_V10vcore_Dlist___Gu16vector;
     env->vars[172] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Du16vector_D183_lambda128, env)});
-    env->vars[173] = VEncodeBool(false);
-    env->vars[174] = VEncodeBool(false);
-    env->vars[175] = VEncodeBool(false);
+    env->vars[173] = _V40_V10vcore_Du16vector__ref;
+    env->vars[174] = _V40_V10vcore_Du16vector__set_B;
+    env->vars[175] = _V40_V10vcore_Du16vector__length;
     env->vars[176] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Du16vector___Glist_D187_lambda129, env)});
-    env->vars[177] = VEncodeBool(false);
+    env->vars[177] = _V40_V10vcore_Ds16vector_Q;
     env->vars[178] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dmake__s16vector_D189_lambda131, env)});
-    env->vars[179] = VEncodeBool(false);
+    env->vars[179] = _V40_V10vcore_Dlist___Gs16vector;
     env->vars[180] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Ds16vector_D191_lambda132, env)});
-    env->vars[181] = VEncodeBool(false);
-    env->vars[182] = VEncodeBool(false);
-    env->vars[183] = VEncodeBool(false);
+    env->vars[181] = _V40_V10vcore_Ds16vector__ref;
+    env->vars[182] = _V40_V10vcore_Ds16vector__set_B;
+    env->vars[183] = _V40_V10vcore_Ds16vector__length;
     env->vars[184] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Ds16vector___Glist_D195_lambda133, env)});
-    env->vars[185] = VEncodeBool(false);
+    env->vars[185] = _V40_V10vcore_Du8vector_Q;
     env->vars[186] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dmake__u8vector_D197_lambda135, env)});
-    env->vars[187] = VEncodeBool(false);
+    env->vars[187] = _V40_V10vcore_Dlist___Gu8vector;
     env->vars[188] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Du8vector_D199_lambda136, env)});
-    env->vars[189] = VEncodeBool(false);
-    env->vars[190] = VEncodeBool(false);
-    env->vars[191] = VEncodeBool(false);
+    env->vars[189] = _V40_V10vcore_Du8vector__ref;
+    env->vars[190] = _V40_V10vcore_Du8vector__set_B;
+    env->vars[191] = _V40_V10vcore_Du8vector__length;
     env->vars[192] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Du8vector___Glist_D203_lambda137, env)});
     env->vars[193] = VEncodeBool(false);
     env->vars[194] = VEncodeBool(false);
@@ -25515,13 +23007,13 @@ static void _V0vanity_V0core_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
     env->vars[198] = VEncodeBool(false);
     env->vars[199] = VEncodeBool(false);
     env->vars[200] = VEncodeBool(false);
-    env->vars[201] = VEncodeBool(false);
+    env->vars[201] = _V40_V10vcore_Ds8vector_Q;
     env->vars[202] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dmake__s8vector_D213_lambda139, env)});
-    env->vars[203] = VEncodeBool(false);
+    env->vars[203] = _V40_V10vcore_Dlist___Gs8vector;
     env->vars[204] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Ds8vector_D215_lambda140, env)});
-    env->vars[205] = VEncodeBool(false);
-    env->vars[206] = VEncodeBool(false);
-    env->vars[207] = VEncodeBool(false);
+    env->vars[205] = _V40_V10vcore_Ds8vector__ref;
+    env->vars[206] = _V40_V10vcore_Ds8vector__set_B;
+    env->vars[207] = _V40_V10vcore_Ds8vector__length;
     env->vars[208] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Ds8vector___Glist_D219_lambda141, env)});
     env->vars[209] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dtypevector_Q_D220_lambda143, env)});
     env->vars[210] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dvector___Glist_D221_lambda144, env)});
@@ -25532,18 +23024,18 @@ static void _V0vanity_V0core_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
     env->vars[215] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dvector__copy_B_D226_lambda160, env)});
     env->vars[216] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dvector__append_D227_lambda162, env)});
     env->vars[217] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dvector__fill_B_D228_lambda165, env)});
-    env->vars[218] = VEncodeBool(false);
-    env->vars[219] = VEncodeBool(false);
-    env->vars[220] = VEncodeBool(false);
-    env->vars[221] = VEncodeBool(false);
+    env->vars[218] = _V40_V10vcore_Drecord;
+    env->vars[219] = _V40_V10vcore_Drecord__ref;
+    env->vars[220] = _V40_V10vcore_Drecord__set_B;
+    env->vars[221] = _V40_V10vcore_Drecord__length;
     env->vars[222] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dmake__hash__table_D233_lambda167, env)});
-    env->vars[223] = VEncodeBool(false);
-    env->vars[224] = VEncodeBool(false);
+    env->vars[223] = _V40_V10vcore_Dhash__table__equivalence__function;
+    env->vars[224] = _V40_V10vcore_Dhash__table__hash__function;
     env->vars[225] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dhash__table__ref_D236_lambda168, env)});
     env->vars[226] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dhash__table__set_B_D237_lambda170, env)});
-    env->vars[227] = VEncodeBool(false);
+    env->vars[227] = _V40_V10vcore_Dhash__table__delete_B;
     env->vars[228] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dhash__table___Galist_D239_lambda171, env)});
-    env->vars[229] = VEncodeBool(false);
+    env->vars[229] = _V40_V10vcore_Dchar__integer;
     env->vars[230] = VEncodeBool(false);
     env->vars[231] = VEncodeBool(false);
     env->vars[232] = VEncodeBool(false);
@@ -25555,7 +23047,7 @@ static void _V0vanity_V0core_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
     env->vars[238] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dopen__input__file_D249_lambda186, env)});
     env->vars[239] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dopen__output__file_D250_lambda188, env)});
     env->vars[240] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dopen__output__string_D251_lambda190, env)});
-    env->vars[241] = VEncodeBool(false);
+    env->vars[241] = _V40_V10vcore_Dget__output__string;
     env->vars[242] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcall__with__port_D253_lambda191, env)});
     env->vars[243] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcall__with__input__file_D254_lambda192, env)});
     env->vars[244] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcall__with__output__file_D255_lambda193, env)});
@@ -25570,38 +23062,38 @@ static void _V0vanity_V0core_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
     env->vars[253] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dprintout_D264_lambda205, env)});
     env->vars[254] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Ddisplay_D265_lambda207, env)});
     env->vars[255] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dwrite_D266_lambda208, env)});
-    env->vars[256] = VEncodeBool(false);
-    env->vars[257] = VEncodeBool(false);
-    env->vars[258] = VEncodeBool(false);
-    env->vars[259] = VEncodeBool(false);
+    env->vars[256] = _V40_V10vcore_Dcall_Wcc;
+    env->vars[257] = _V40_V10vcore_Dcall_Wcc;
+    env->vars[258] = _V40_V10vcore_Dcall__with__values;
+    env->vars[259] = _V40_V10vcore_Dapply;
     env->vars[260] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dvalues_D271_lambda209, env)});
-    env->vars[261] = VEncodeBool(false);
-    env->vars[262] = VEncodeBool(false);
+    env->vars[261] = upenv->vars[1];
+    env->vars[262] = upenv->vars[0];
     env->vars[263] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dmake__parameter_D274_lambda211, env)});
-    env->vars[264] = VEncodeBool(false);
-    env->vars[265] = VEncodeBool(false);
-    env->vars[266] = VEncodeBool(false);
-    env->vars[267] = VEncodeBool(false);
-    env->vars[268] = VEncodeBool(false);
+    env->vars[264] = _V40_V10vcore_Dcommand__line;
+    env->vars[265] = _V40_V10vcore_Dsystem;
+    env->vars[266] = _V40_V10vcore_Dopen__input__process;
+    env->vars[267] = _V40_V10vcore_Dopen__output__process;
+    env->vars[268] = _V40_V10vcore_Dmake__temporary__file;
     env->vars[269] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dfile__exists_Q_D280_lambda216, env)});
-    env->vars[270] = VEncodeBool(false);
-    env->vars[271] = VEncodeBool(false);
-    env->vars[272] = VEncodeBool(false);
+    env->vars[270] = _V40_V10vcore_Dexit;
+    env->vars[271] = _V40_V10vcore_Dcurrent__jiffy;
+    env->vars[272] = _V40_V10vcore_Djiffies__per__second;
     env->vars[273] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dbitwise__and_D284_lambda217, env)});
     env->vars[274] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dbitwise__ior_D285_lambda219, env)});
     env->vars[275] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dbitwise__xor_D286_lambda221, env)});
     env->vars[276] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dbitwise__xnor_D287_lambda223, env)});
     env->vars[277] = VEncodeBool(false);
     env->vars[278] = VEncodeBool(false);
-    env->vars[279] = VEncodeBool(false);
-    env->vars[280] = VEncodeBool(false);
-    env->vars[281] = VEncodeBool(false);
-    env->vars[282] = VEncodeBool(false);
-    env->vars[283] = VEncodeBool(false);
-    env->vars[284] = VEncodeBool(false);
-    env->vars[285] = VEncodeBool(false);
-    env->vars[286] = VEncodeBool(false);
-    env->vars[287] = VEncodeBool(false);
+    env->vars[279] = _V40_V10vcore_Dbitwise__not;
+    env->vars[280] = _V40_V10vcore_Dbitwise__nand;
+    env->vars[281] = _V40_V10vcore_Dbitwise__nor;
+    env->vars[282] = _V40_V10vcore_Dbitwise__andc1;
+    env->vars[283] = _V40_V10vcore_Dbitwise__andc2;
+    env->vars[284] = _V40_V10vcore_Dbitwise__orc1;
+    env->vars[285] = _V40_V10vcore_Dbitwise__orc2;
+    env->vars[286] = _V40_V10vcore_Darithmetic__shift;
+    env->vars[287] = _V40_V10vcore_Dbit__count;
     env->vars[288] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Datom_Q_D299_lambda225, env)});
     env->vars[289] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Ddisplayln_D300_lambda226, env)});
     env->vars[290] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dwriteln_D301_lambda227, env)});
@@ -25610,19 +23102,19 @@ static void _V0vanity_V0core_V20_lambda2(VRuntime * runtime, VEnv * upenv, int a
     env->vars[293] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dprintf_D304_lambda231, env)});
     env->vars[294] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dsprintf_D305_lambda232, env)});
     env->vars[295] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dformat_D306_lambda233, env)});
-    env->vars[296] = VEncodeBool(false);
+    env->vars[296] = _V40_V10vcore_Draise;
     env->vars[297] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Draise__continuable_D308_lambda234, env)});
     env->vars[298] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dwith__exception__handler_D309_lambda235, env)});
     env->vars[299] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Derror_D310_lambda237, env)});
-    env->vars[300] = VEncodeBool(false);
+    env->vars[300] = _V40_V10vcore_Dfiber__fork__list;
     env->vars[301] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dfiber__fork_D312_lambda238, env)});
     env->vars[302] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dfiber__map_D313_lambda239, env)});
-    env->vars[303] = VEncodeBool(false);
-    env->vars[304] = VEncodeBool(false);
+    env->vars[303] = _V40_V10vcore_Dasync;
+    env->vars[304] = _V40_V10vcore_Dawait;
     V_CALL_FUNC(VSetEnvVar2, env, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k737, env)}),
-      VEncodeInt(0l), VEncodeInt(0l),
-      _V40_V10vcore_Dnull_Q
+      VEncodeInt(0l), VEncodeInt(39l),
+      env->vars[38]
     );
     }
  }
@@ -25689,10 +23181,10 @@ static void _V0vanity_V0core_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.make-import (close _V0vanity_V0core_V20_k2) (##string ##.string.2900) (bruijn ##.x.2878 0 0))
+  // (##vcore.make-import (close _V0vanity_V0core_V20_k2) (##string ##.string.2768) (bruijn ##.x.2746 0 0))
     V_CALL_FUNC(VMakeImport2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k2, env)}),
-      VEncodePointer(&_V10_Dstring_D2900.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2768.sym, VPOINTER_OTHER),
       _var0);
  }
 }
@@ -25707,10 +23199,10 @@ static void _V0vanity_V0core_V20_lambda1(VRuntime * runtime, VEnv * upenv, int a
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0core_V20_k1) (##string ##.string.2901))
+  // (##vcore.load-library (close _V0vanity_V0core_V20_k1) (##string ##.string.2769))
     V_CALL_FUNC(VLoadLibrary2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0core_V20_k1, env)}),
-      VEncodePointer(&_V10_Dstring_D2901.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2769.sym, VPOINTER_OTHER));
  }
 }
 VFunc _V0vanity_V0core_V20 = (VFunc)_V0vanity_V0core_V20_lambda1;
