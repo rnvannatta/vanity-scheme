@@ -225,6 +225,7 @@
 
     (define declares '())
     (define defines '())
+    (define just-defines #t)
 
     (define (expand-library-expr expr)
       (match expr
@@ -250,8 +251,13 @@
          (list))
         (('define x y)
          (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
-         (set! defines (cons `(define ,x #f) defines))
-         (list `(set! ,x ,(expand-syntax y))))
+         (if just-defines
+             (begin
+               (set! defines (cons `(define ,x ,(expand-syntax y)) defines))
+               (list))
+             (begin
+               (set! defines (cons `(define ,x #f) defines))
+               (list `(set! ,x ,(expand-syntax y))))))
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
         (('begin x) (expand-library-expr x))
         (('begin . xs) (apply append (map expand-library-expr xs)))
@@ -264,7 +270,9 @@
          (let ((decl-defines (resolve-foreign-import expr paths "sysv_amd64")))
           (set! declares (cons (car decl-defines) declares))
           (apply append (map expand-library-expr (cdr decl-defines)))))
-        (else (list expr))))
+        (else
+          (set! just-defines #f)
+          (list expr))))
     ; still has free variables
     (define basic-library
       (let ((expanded (map expand-library-expr (cddr lib))))

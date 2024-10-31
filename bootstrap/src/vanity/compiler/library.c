@@ -27,10 +27,10 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D289 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D288 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0list_V20" };
-static struct { VBlob sym; char bytes[33]; } _V10_Dstring_D287 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 33 }, "_V0vanity_V0compiler_V0utils_V20" };
-static struct { VBlob sym; char bytes[35]; } _V10_Dstring_D286 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 35 }, "_V0vanity_V0compiler_V0library_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D288 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D287 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0list_V20" };
+static struct { VBlob sym; char bytes[33]; } _V10_Dstring_D286 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 33 }, "_V0vanity_V0compiler_V0utils_V20" };
+static struct { VBlob sym; char bytes[35]; } _V10_Dstring_D285 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 35 }, "_V0vanity_V0compiler_V0library_V20" };
 VWEAK VWORD _V0close__port;VWEAK struct { VBlob sym; char bytes[11]; } _VW_V0close__port = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 11 }, "close-port" };
 VWEAK VWORD _V0read__all;VWEAK struct { VBlob sym; char bytes[9]; } _VW_V0read__all = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 9 }, "read-all" };
 VWEAK VWORD _V0search__open__input__file;VWEAK struct { VBlob sym; char bytes[23]; } _VW_V0search__open__input__file = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 23 }, "search-open-input-file" };
@@ -66,18 +66,18 @@ VWEAK VWORD _V0valid__import_Q;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V
 VWEAK VWORD _V0header__from__library;VWEAK struct { VBlob sym; char bytes[20]; } _VW_V0header__from__library = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 20 }, "header-from-library" };
 VWEAK VWORD _V0register__library__interface_B;VWEAK struct { VBlob sym; char bytes[28]; } _VW_V0register__library__interface_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 28 }, "register-library-interface!" };
 VWEAK VWORD _V0find__library__interface_B;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V0find__library__interface_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "find-library-interface!" };
-static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D285 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "not a valid library" };
+static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D284 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "not a valid library" };
 VWEAK VWORD _V0define__library;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V0define__library = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "define-library" };
 VWEAK VWORD _V0inline__export;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V0inline__export = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 14 }, "inline-export" };
 VWEAK VWORD _V0inline__import;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V0inline__import = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 14 }, "inline-import" };
 VWEAK VWORD _V0export;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0export = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "export" };
 VWEAK VWORD _V0import;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0import = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "import" };
 VWEAK VWORD _V0define__library__interface;VWEAK struct { VBlob sym; char bytes[25]; } _VW_V0define__library__interface = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 25 }, "define-library-interface" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D284 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "." };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D283 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "~A/~A" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D282 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "~A.scmh" };
-static struct { VBlob sym; char bytes[44]; } _V10_Dstring_D281 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 44 }, "library header must only have one statement" };
-static struct { VBlob sym; char bytes[23]; } _V10_Dstring_D280 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 23 }, "unable to find library" };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D283 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "." };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D282 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "~A/~A" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D281 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "~A.scmh" };
+static struct { VBlob sym; char bytes[44]; } _V10_Dstring_D280 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 44 }, "library header must only have one statement" };
+static struct { VBlob sym; char bytes[23]; } _V10_Dstring_D279 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 23 }, "unable to find library" };
 static __attribute__((constructor)) void VDllMain1() {
   _V0close__port = VEncodePointer(VLookupConstant("_V0close__port", &_VW_V0close__port), VPOINTER_OTHER);
   _V0read__all = VEncodePointer(VLookupConstant("_V0read__all", &_VW_V0read__all), VPOINTER_OTHER);
@@ -128,7 +128,7 @@ static void _V10_Dload__library__interface_D44_k35(VRuntime * runtime, VEnv * up
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dload__library__interface_D44_k35, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.fd.58 1 0) ((bruijn ##.read-all.16 5 1) (bruijn ##.k.142 0 0) (bruijn ##.fd.58 1 0)) ((bruijn ##.compiler-error.36 5 21) (bruijn ##.k.142 0 0) (##string ##.string.280) (bruijn ##.import.56 3 1)))
+  // (if (bruijn ##.fd.58 1 0) ((bruijn ##.read-all.16 5 1) (bruijn ##.k.142 0 0) (bruijn ##.fd.58 1 0)) ((bruijn ##.compiler-error.36 5 21) (bruijn ##.k.142 0 0) (##string ##.string.279) (bruijn ##.import.56 3 1)))
 if(VDecodeBool(
 upenv->vars[0])) {
     V_CALL(VGetArg(upenv, 5-1, 1), runtime,
@@ -137,7 +137,7 @@ upenv->vars[0])) {
 } else {
     V_CALL(VGetArg(upenv, 5-1, 21), runtime,
       _var0,
-      VEncodePointer(&_V10_Dstring_D280.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D279.sym, VPOINTER_OTHER),
       upenv->up->up->vars[1]);
 }
  }
@@ -185,7 +185,7 @@ static void _V10_Dload__library__interface_D44_k41(VRuntime * runtime, VEnv * up
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dload__library__interface_D44_k41, runtime, upenv, 1, argc, _var0) {
-  // (if (bruijn ##.p.137 1 0) ((bruijn ##.car.42 8 27) (bruijn ##.k.138 0 0) (bruijn ##.parse.59 3 0)) ((bruijn ##.compiler-error.36 8 21) (bruijn ##.k.138 0 0) (##string ##.string.281)))
+  // (if (bruijn ##.p.137 1 0) ((bruijn ##.car.42 8 27) (bruijn ##.k.138 0 0) (bruijn ##.parse.59 3 0)) ((bruijn ##.compiler-error.36 8 21) (bruijn ##.k.138 0 0) (##string ##.string.280)))
 if(VDecodeBool(
 upenv->vars[0])) {
     V_CALL(VGetArg(upenv, 8-1, 27), runtime,
@@ -194,7 +194,7 @@ upenv->vars[0])) {
 } else {
     V_CALL(VGetArg(upenv, 8-1, 21), runtime,
       _var0,
-      VEncodePointer(&_V10_Dstring_D281.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D280.sym, VPOINTER_OTHER));
 }
  }
 }
@@ -1081,10 +1081,10 @@ static void _V10_Dimport___Gpath_D52_k77(VRuntime * runtime, VEnv * upenv, int a
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dimport___Gpath_D52_k77, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn ##.sprintf.34 5 19) (bruijn ##.k.181 3 0) (##string ##.string.282) (bruijn ##.x.183 0 0))
+  // ((bruijn ##.sprintf.34 5 19) (bruijn ##.k.181 3 0) (##string ##.string.281) (bruijn ##.x.183 0 0))
     V_CALL(VGetArg(upenv, 5-1, 19), runtime,
       upenv->up->up->vars[0],
-      VEncodePointer(&_V10_Dstring_D282.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D281.sym, VPOINTER_OTHER),
       _var0);
  }
 }
@@ -1095,10 +1095,10 @@ static void _V10_Dimport___Gpath_D52_k80(VRuntime * runtime, VEnv * upenv, int a
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dimport___Gpath_D52_k80, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn ##.sprintf.34 7 19) (bruijn ##.k.181 5 0) (##string ##.string.283) (bruijn ##.x.184 2 0) (bruijn ##.x.185 0 0))
+  // ((bruijn ##.sprintf.34 7 19) (bruijn ##.k.181 5 0) (##string ##.string.282) (bruijn ##.x.184 2 0) (bruijn ##.x.185 0 0))
     V_CALL(VGetArg(upenv, 7-1, 19), runtime,
       VGetArg(upenv, 5-1, 0),
-      VEncodePointer(&_V10_Dstring_D283.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D282.sym, VPOINTER_OTHER),
       upenv->up->vars[0],
       _var0);
  }
@@ -1203,10 +1203,10 @@ static void _V10_Dimport__basepath_D53_k85(VRuntime * runtime, VEnv * upenv, int
   , argc);
  }
  V_GC_CHECK2_VARARGS((VFunc)_V10_Dimport__basepath_D53_k85, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn ##.sprintf.34 7 19) (bruijn ##.k.188 5 0) (##string ##.string.283) (bruijn ##.x.190 2 0) (bruijn ##.x.191 0 0))
+  // ((bruijn ##.sprintf.34 7 19) (bruijn ##.k.188 5 0) (##string ##.string.282) (bruijn ##.x.190 2 0) (bruijn ##.x.191 0 0))
     V_CALL(VGetArg(upenv, 7-1, 19), runtime,
       VGetArg(upenv, 5-1, 0),
-      VEncodePointer(&_V10_Dstring_D283.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D282.sym, VPOINTER_OTHER),
       upenv->up->vars[0],
       _var0);
  }
@@ -1256,11 +1256,11 @@ static void _V10_Dimport__basepath_D53_k82(VRuntime * runtime, VEnv * upenv, int
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.189 0 0) ((bruijn ##.k.188 2 0) (##string ##.string.284)) ((bruijn ##.car.42 4 27) (close _V10_Dimport__basepath_D53_k83) (bruijn ##.import.76 2 1)))
+  // (if (bruijn ##.p.189 0 0) ((bruijn ##.k.188 2 0) (##string ##.string.283)) ((bruijn ##.car.42 4 27) (close _V10_Dimport__basepath_D53_k83) (bruijn ##.import.76 2 1)))
 if(VDecodeBool(
 _var0)) {
     V_CALL(upenv->up->vars[0], runtime,
-      VEncodePointer(&_V10_Dstring_D284.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D283.sym, VPOINTER_OTHER));
 } else {
     V_CALL(upenv->up->up->up->vars[27], runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dimport__basepath_D53_k83, env)}),
@@ -1813,12 +1813,12 @@ static void _V10_Dheader__from__library_D54_k109(VRuntime * runtime, VEnv * upen
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.231 0 0) ((bruijn ##.compiler-error.36 10 21) (close _V10_Dheader__from__library_D54_k110) (##string ##.string.285) (bruijn ##.lib.77 8 1)) ((bruijn ##.k.230 1 0) #f))
+  // (if (bruijn ##.p.231 0 0) ((bruijn ##.compiler-error.36 10 21) (close _V10_Dheader__from__library_D54_k110) (##string ##.string.284) (bruijn ##.lib.77 8 1)) ((bruijn ##.k.230 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     V_CALL(VGetArg(upenv, 10-1, 21), runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dheader__from__library_D54_k110, env)}),
-      VEncodePointer(&_V10_Dstring_D285.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D284.sym, VPOINTER_OTHER),
       VGetArg(upenv, 8-1, 1));
 } else {
     V_CALL(upenv->vars[0], runtime,
@@ -2354,46 +2354,6 @@ static void _V10_Dgather__dependencies_D55_lambda23(VRuntime * runtime, VEnv * u
       _var1);
  }
 }
-static void _V0vanity_V0compiler_V0library_V20_k130(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0library_V20_k130, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0compiler_V0library_V20_k130, runtime, upenv, 1, argc, _var0) {
-  // ((bruijn ##.k.105 35 0) (##inline ##vcore.cons (##inline ##vcore.cons 'find-library-interface! (bruijn ##.find-library-interface!.46 1 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'register-library-interface! (bruijn ##.register-library-interface!.45 1 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'header-from-library (bruijn ##.header-from-library.54 1 11)) (##inline ##vcore.cons (##inline ##vcore.cons 'valid-import? (bruijn ##.valid-import?.51 1 8)) (##inline ##vcore.cons (##inline ##vcore.cons 'import-basepath (bruijn ##.import-basepath.53 1 10)) (##inline ##vcore.cons (##inline ##vcore.cons 'import->path (bruijn ##.import->path.52 1 9)) (##inline ##vcore.cons (##inline ##vcore.cons 'gather-dependencies (bruijn ##.gather-dependencies.55 1 12)) '()))))))))
-    V_CALL(VGetArg(upenv, 35-1, 0), runtime,
-      VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0find__library__interface_B,
-        upenv->vars[3]),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0register__library__interface_B,
-        upenv->vars[2]),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0header__from__library,
-        upenv->vars[11]),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0valid__import_Q,
-        upenv->vars[8]),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0import__basepath,
-        upenv->vars[10]),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0import___Gpath,
-        upenv->vars[9]),
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0gather__dependencies,
-        upenv->vars[12]),
-        VNULL))))))));
- }
-}
 static void _V0vanity_V0compiler_V0library_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6, VWORD _var7, VWORD _var8, VWORD _var9, VWORD _var10, VWORD _var11, VWORD _var12, VWORD _var13, VWORD _var14, VWORD _var15, VWORD _var16, VWORD _var17, VWORD _var18, VWORD _var19, VWORD _var20, VWORD _var21, VWORD _var22, VWORD _var23, VWORD _var24, VWORD _var25, VWORD _var26, VWORD _var27) {
  V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0compiler_V0library_V20_lambda2, runtime, upenv, 28, argc, _var0, _var1, _var2, _var3, _var4, _var5, _var6, _var7, _var8, _var9, _var10, _var11, _var12, _var13, _var14, _var15, _var16, _var17, _var18, _var19, _var20, _var21, _var22, _var23, _var24, _var25, _var26, _var27) {
   struct { VEnv env; VWORD argv[28]; } container;
@@ -2427,14 +2387,14 @@ static void _V0vanity_V0compiler_V0library_V20_lambda2(VRuntime * runtime, VEnv 
   env->vars[25] = _var25;
   env->vars[26] = _var26;
   env->vars[27] = _var27;
-  // (letrec 13 (#f (close _V10_Dload__library__interface_D44_lambda3) (close _V10_Dregister__library__interface_B_D45_lambda4) (close _V10_Dfind__library__interface_B_D46_lambda5) (close _V10_Dacceptable__char_Q_D47_lambda6) (close _V10_Dacceptable__characters_Q_D48_lambda7) (close _V10_Dandf_D49_lambda9) (close _V10_Dvalid__import__element_Q_D50_lambda10) (close _V10_Dvalid__import_Q_D51_lambda11) (close _V10_Dimport___Gpath_D52_lambda12) (close _V10_Dimport__basepath_D53_lambda13) (close _V10_Dheader__from__library_D54_lambda14) (close _V10_Dgather__dependencies_D55_lambda23)) (set! (close _V0vanity_V0compiler_V0library_V20_k130) (bruijn ##.library-interfaces.43 0 0) '()))
+  // (letrec 13 ('() (close _V10_Dload__library__interface_D44_lambda3) (close _V10_Dregister__library__interface_B_D45_lambda4) (close _V10_Dfind__library__interface_B_D46_lambda5) (close _V10_Dacceptable__char_Q_D47_lambda6) (close _V10_Dacceptable__characters_Q_D48_lambda7) (close _V10_Dandf_D49_lambda9) (close _V10_Dvalid__import__element_Q_D50_lambda10) (close _V10_Dvalid__import_Q_D51_lambda11) (close _V10_Dimport___Gpath_D52_lambda12) (close _V10_Dimport__basepath_D53_lambda13) (close _V10_Dheader__from__library_D54_lambda14) (close _V10_Dgather__dependencies_D55_lambda23)) ((bruijn ##.k.105 34 0) (##inline ##vcore.cons (##inline ##vcore.cons 'find-library-interface! (bruijn ##.find-library-interface!.46 0 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'register-library-interface! (bruijn ##.register-library-interface!.45 0 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'header-from-library (bruijn ##.header-from-library.54 0 11)) (##inline ##vcore.cons (##inline ##vcore.cons 'valid-import? (bruijn ##.valid-import?.51 0 8)) (##inline ##vcore.cons (##inline ##vcore.cons 'import-basepath (bruijn ##.import-basepath.53 0 10)) (##inline ##vcore.cons (##inline ##vcore.cons 'import->path (bruijn ##.import->path.52 0 9)) (##inline ##vcore.cons (##inline ##vcore.cons 'gather-dependencies (bruijn ##.gather-dependencies.55 0 12)) '())))))))))
     // OH NO A LETREC!
     {
     VEnv * upenv = env;
     struct { VEnv env; VWORD argv[13]; } container;
     VEnv * env = &container.env;
     VInitEnv(env, 13, 13, upenv);
-    env->vars[0] = VEncodeBool(false);
+    env->vars[0] = VNULL;
     env->vars[1] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dload__library__interface_D44_lambda3, env)});
     env->vars[2] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dregister__library__interface_B_D45_lambda4, env)});
     env->vars[3] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dfind__library__interface_B_D46_lambda5, env)});
@@ -2447,11 +2407,36 @@ static void _V0vanity_V0compiler_V0library_V20_lambda2(VRuntime * runtime, VEnv 
     env->vars[10] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dimport__basepath_D53_lambda13, env)});
     env->vars[11] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dheader__from__library_D54_lambda14, env)});
     env->vars[12] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dgather__dependencies_D55_lambda23, env)});
-    V_CALL_FUNC(VSetEnvVar2, env, runtime,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k130, env)}),
-      VEncodeInt(0l), VEncodeInt(0l),
-      VNULL
-    );
+    V_CALL(VGetArg(upenv, 34-1, 0), runtime,
+      VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0find__library__interface_B,
+        env->vars[3]),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0register__library__interface_B,
+        env->vars[2]),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0header__from__library,
+        env->vars[11]),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0valid__import_Q,
+        env->vars[8]),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0import__basepath,
+        env->vars[10]),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0import___Gpath,
+        env->vars[9]),
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0gather__dependencies,
+        env->vars[12]),
+        VNULL))))))));
     }
  }
 }
@@ -2985,10 +2970,10 @@ static void _V0vanity_V0compiler_V0library_V20_k3(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.make-import (close _V0vanity_V0compiler_V0library_V20_k4) (##string ##.string.286) (bruijn ##.x.277 2 0) (bruijn ##.x.278 1 0) (bruijn ##.x.279 0 0))
+  // (##vcore.make-import (close _V0vanity_V0compiler_V0library_V20_k4) (##string ##.string.285) (bruijn ##.x.276 2 0) (bruijn ##.x.277 1 0) (bruijn ##.x.278 0 0))
     V_CALL_FUNC(VMakeImport2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k4, env)}),
-      VEncodePointer(&_V10_Dstring_D286.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D285.sym, VPOINTER_OTHER),
       upenv->up->vars[0],
       upenv->vars[0],
       _var0);
@@ -3005,10 +2990,10 @@ static void _V0vanity_V0compiler_V0library_V20_k2(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0library_V20_k3) (##string ##.string.287))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0library_V20_k3) (##string ##.string.286))
     V_CALL_FUNC(VLoadLibrary2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k3, env)}),
-      VEncodePointer(&_V10_Dstring_D287.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D286.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3022,10 +3007,10 @@ static void _V0vanity_V0compiler_V0library_V20_k1(VRuntime * runtime, VEnv * upe
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0library_V20_k2) (##string ##.string.288))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0library_V20_k2) (##string ##.string.287))
     V_CALL_FUNC(VLoadLibrary2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k2, env)}),
-      VEncodePointer(&_V10_Dstring_D288.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D287.sym, VPOINTER_OTHER));
  }
 }
 static void _V0vanity_V0compiler_V0library_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3039,10 +3024,10 @@ static void _V0vanity_V0compiler_V0library_V20_lambda1(VRuntime * runtime, VEnv 
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0library_V20_k1) (##string ##.string.289))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0library_V20_k1) (##string ##.string.288))
     V_CALL_FUNC(VLoadLibrary2, NULL, runtime,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0library_V20_k1, env)}),
-      VEncodePointer(&_V10_Dstring_D289.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D288.sym, VPOINTER_OTHER));
  }
 }
 VFunc _V0vanity_V0compiler_V0library_V20 = (VFunc)_V0vanity_V0compiler_V0library_V20_lambda1;
