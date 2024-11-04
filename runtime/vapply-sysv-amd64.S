@@ -107,5 +107,34 @@ tailcall:
   xor eax, eax
 	jmp r11
 
+.globl VCallDecodedWithGC
+.type VCallDecodedWithGC, @function
+// Signature: void VCallDecodedWithGC(VRuntime*, VClosure* closure, int ct, VWORD...);
+VCallDecodedWithGC:
+	mov r10, [rdi+8] // VStackStart
+	sub r10, rsp // currently used stack
+	mov r11, [rdi+16] // VStackLen
+	cmp r10, r11
+	jg VGarbageCollect2Closure@plt
+
+	mov r10, [rsi+8]
+	mov rsi, [rsi+16]
+	jmp r10
+	call abort@plt
+
+.globl VCallFuncWithGC
+.type VCallFuncWithGC, @function
+// Signature: void VCallFuncWithGC(VRuntime*, void (*fp)(), int ct, VWORD...);
+VCallFuncWithGC:
+	mov r10, [rdi+8]
+	sub r10, rsp
+	mov r11, [rdi+16]
+	cmp r10, r11
+	jg VGarbageCollect2Func@plt
+
+	mov r10, rsi
+	xor esi, esi
+	jmp r10
+	call abort@plt
 
 .section .note.GNU-stack,"",@progbits

@@ -72,7 +72,7 @@ tests_linux : compiler runtime
     ( EXE=`mktemp` ; \
 		echo "bin/vsc $$test && ./a.out" ; \
     OVERRIDE=`realpath lib/` ; \
-		if ! ($(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
+		if ! ($(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Llib -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
 			echo "COMPILE FAILURE: $$test"; \
       \rm -f $$EXE ; \
 			exit 1; \
@@ -91,7 +91,7 @@ tests_windows : compiler runtime windows_runtime
     ( EXE=`mktemp` ; \
 		echo "bin/vsc $$test && wine ./a.exe" ; \
     OVERRIDE=`realpath lib/` ; \
-		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Iinclude -Iinclude --platform=windows) ; then \
+		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Llib/x86_64-w64-mingw32 -Wc,-Iinclude -Iinclude --platform=windows) ; then \
 			echo "COMPILE FAILURE: $$test"; \
       \rm -f $$EXE ; \
 			exit 1; \

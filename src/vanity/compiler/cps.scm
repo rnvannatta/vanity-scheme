@@ -224,12 +224,7 @@
          (count-refs-atom y)
          (count-refs-atom val)
 
-         (hash-table-set! impure-table y #t)
-         ; defensive koding, please kill later
-         (if (not (symbol? y)) (error "not a symbol in set argument???")))
-        ; defensive koding, please kill later
-        (('set! . jank) (error "malformed set"))
-
+         (hash-table-set! impure-table y #t))
         ((f . xs)
          (count-refs-atom f)
          (for-each count-refs-atom xs))
@@ -238,6 +233,69 @@
         (count-refs-apply expr)
         (count-refs-atom expr))
     (values count-table impure-table))
+
+  #;(define (add-frees expr)
+    (define (copy-and-remove frees xs)
+      (let ((copy (hash-table-copy frees)))
+        (let loop ((xs xs))
+          (cond ((pair? xs)
+                 (hash-table-delete! copy (car xs))
+                 (loop (cdr xs)))
+                ((null? xs)
+                 copy)
+                (else
+                 (hash-table-delete! copy xs)
+                 copy)))))
+    (define (add-frees-atom frees expr)
+      (match expr
+        (('quote . _) #f)
+        (('##foreign.function . _) #f)
+        (('##inline . xs)
+         (map (lambda (x) (add-frees-atom frees x)) xs))
+
+        (('lambda xs body)
+         ; TODO
+         (let ((body (add-frees-apply frees body)))
+           `(lambda ,xs ,(copy-and-remove frees xs) ,body)))
+        (('continuation xs body)
+         (let ((body (add-frees-apply frees body)))
+           `(lambda ,xs ,(copy-and-remove frees xs) ,body)))
+        (('case-lambda (xs body) ...)
+         (map
+           (lambda (xs body)
+             (let ((body (add-frees-apply frees body)))
+               `(,xs ,(copy-and-remove frees xs) ,body)))
+           xs
+           body))
+        (else expr
+          (if (symbol? expr)
+              (begin
+                (hash-table-set! frees expr #t)
+                expr)))))
+    (define (add-frees-apply frees expr)
+      (match expr
+        ; Simplifying ((continuation (x) (x args ...)) y) to (y args)
+        (('letrec ((_ vals) ...) body)
+         ; TODO
+         (map (lambda (x) (add-frees-atom frees x)) vals)
+         (add-frees-apply frees body))
+
+        (('if p a b)
+         `(if
+           ,(add-frees-atom frees p)
+           ,(add-frees-apply frees a)
+           ,(add-frees-apply frees b)))
+        (('set! k y val)
+         `(set
+            ,(add-frees-atom frees k)
+            ,(add-frees-atom frees y)
+            ,(add-frees-atom frees val)))
+        ((f . xs)
+         (cons (add-frees-atom frees f) (map (lambda (x) (add-frees-atom frees x)) xs)))
+        (else (compiler-error "add-frees: malformed application" expr))))
+    (if (application? expr)
+        (add-frees-apply (make-hash-table eqv?) expr)
+        (add-frees-atom (make-hash-table eqv?) expr)))
 
   ; need to rewrite the optimize-impl to be more like an evaluator
   ; it's a crappy normal order evaluator rn
@@ -266,14 +324,14 @@
            (opt-body `(,lamb ,xs ,opt-body))))
         (else (compiler-error "optimize-lambda: malformed lambda" expr))))
 
-    ; There is a bug somewhere in here...
     #;(define (inline-let expr done-ys done-xs ys xs)
       (if (null? ys)
           (if (null? done-ys)
               (optimize-apply expr)
               `(,(optimize-atom `(lambda ,(reverse done-ys) ,expr)) . ,(reverse done-xs)))
           (let* ((y (car ys)) (x (car xs)) (ys (cdr ys)) (xs (cdr xs)))
-            (let ((refs (ref-count y expr)))
+            (let ((refs (hash-table-ref ref-table y (lambda () 0)))
+                  (pure (not (hash-table-ref impure-table y (lambda () #f)))))
               (cond ((= refs 0) (inline-let expr done-ys done-xs ys xs))
                     ; we don't care whether the data the variable addresses is pure, just whether
                     ; the variable is pure, which can be determined statically.
@@ -286,13 +344,20 @@
                           ; we need complete alpha conversion to avoid this bug
                           ; was probs the bug I had...
                           (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
-                          (pure-in? y expr))
-                     (inline-let (substitute y x expr) done-ys done-xs ys xs))
+                          pure)
+                     
+                     (if (not (= refs 1))
+                         (let ()
+                           (define-values (xrefs xpure) (count-refs x))
+                           (add-refs! ref-table xrefs (- refs 1))))
+                     (hash-table-set! ref-table y 0)
+                     (inline-let (substitute y x expr refs) done-ys done-xs ys xs))
                     (else (inline-let expr (cons y done-ys) (cons x done-xs) ys xs)))))))
     (define (optimize-let let-expr)
       (match let-expr
         ((('continuation (y) expr) x)
-         (let ((refs (hash-table-ref ref-table y (lambda () 0)))
+         (let ((x (optimize-atom x))
+               (refs (hash-table-ref ref-table y (lambda () 0)))
                (pure (not (hash-table-ref impure-table y (lambda () #f)))))
           (cond ((= refs 0) (optimize-apply expr))
                 ; we don't care whether the data the variable addresses is pure, just whether
@@ -301,9 +366,6 @@
                 ; or can be eliminated, but eliminating that variable requires eliminating the
                 ; set! expressions
                 ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1))
-                      ; there's a bug with doing this with lambdas:
-                      ; (let ((f (lambda (y) x))) (let ((x 0)) (f 2)))
-                      ; we need complete alpha conversion to avoid this bug
                       (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
                       pure)
                  (if (not (= refs 1))
@@ -312,7 +374,7 @@
                        (add-refs! ref-table xrefs (- refs 1))))
                  (hash-table-set! ref-table y 0)
                  (optimize-apply (substitute y x expr refs)))
-                (else `(,(optimize-atom `(continuation (,y) ,expr)) ,(optimize-atom x))))))
+                (else `(,(optimize-atom `(continuation (,y) ,expr)) ,x)))))
         ((('lambda () expr))
          (optimize-apply expr))
         ((('lambda (ys ...) expr) xs ...)

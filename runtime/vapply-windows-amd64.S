@@ -159,3 +159,31 @@ VLongJmp:
 
   mov rax, rdx
   ret
+
+.globl VCallDecodedWithGC
+// Signature: void VCallDecodedWithGC(VRuntime*, VClosure* closure, int ct, VWORD...);
+VCallDecodedWithGC:
+	mov r10, [rcx+8] // VStackStart
+	sub r10, rsp // currently used stack
+	mov r11, [rcx+16] // VStackLen
+	cmp r10, r11
+	jg VGarbageCollect2Closure@plt
+
+	mov r10, [rdx+8]
+	mov rdx, [rdx+16]
+	jmp r10
+	call abort@plt
+
+.globl VCallFuncWithGC
+// Signature: void VCallFuncWithGC(VRuntime*, void (*fp)(), int ct, VWORD...);
+VCallFuncWithGC:
+	mov r10, [rcx+8]
+	sub r10, rsp
+	mov r11, [rcx+16]
+	cmp r10, r11
+	jg VGarbageCollect2Func@plt
+
+	mov r10, rdx
+	xor edx, edx
+	jmp r10
+	call abort@plt
