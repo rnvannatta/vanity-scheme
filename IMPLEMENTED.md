@@ -174,7 +174,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |get-environment-variable       |             |             |            |
 |get-environment-variables      |             |             |            |
 |get-output-bytevector          |             |             |            |
-|get-output-string              | Yes         |             |            |
+|get-output-string              | Yes         | ?           |            |
 |guard                          |             |             |            |
 |#i                             |             |             |            |
 |if                             | Yes         |             |            |
@@ -220,7 +220,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |make-polar                     | Low Prio    |             |            |
 |make-promise                   |             |             |            |
 |make-rectangular               | Low Prio    |             |            |
-|make-string                    | Yes         |             |            |
+|make-string                    | Yes         | ?           |            |
 |make-vector                    |             |             |            |
 |map                            | Yes         |             |            |
 |max                            | Yes         |             |            |
@@ -318,7 +318,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |string>=?                      |             |             |            |
 |string>?                       |             |             |            |
 |string?                        | Yes         |             |            |
-|substring                      | Yes         |             |            |
+|substring                      | Yes         | ?           |            |
 |symbol->string                 | Yes         |             |            |
 |symbol=?                       | Yes         |             |            |
 |symbol?                        | Yes         |             |            |
@@ -523,13 +523,13 @@ Vanity Scheme is UTF-ignorant ASCII: string refrencing is constant time and stri
 | Name                          | Implemented | Well Tested | Documented |
 |-------------------------------|-------------|-------------|------------|
 |TAGvector?                     | Yes         |             |            |
-|make-TAGvector                 | Yes         |             |            |
+|make-TAGvector                 | Yes         | ?           |            |
 |TAGvector                      | Yes         |             |            |
 |TAGvector-length               | Yes         |             |            |
 |TAGvector-ref                  | Yes         |             |            |
 |TAGvector-set!                 | Yes         |             |            |
 |TAGvector->list                | Yes         |             |            |
-|list->TAGvector                | Yes         |             |            |
+|list->TAGvector                | Yes         | ?           |            |
 
 ## SRFI-17
 

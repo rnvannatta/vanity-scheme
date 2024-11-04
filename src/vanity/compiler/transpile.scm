@@ -156,7 +156,8 @@
         (else (compiler-error "closes?: unknown form" expr))))
     (define (print-expr expr args)
       (define (print-builtin-apply f xs tail-call?)
-        (printf "    V_CALL_FUNC(~A, NULL, runtime" (lookup-intrinsic-name f))
+        ;(printf "    (~A)(runtime, NULL, ~A" (lookup-intrinsic-name f) (length xs))
+        (printf "    VCallFuncWithGC(runtime, (VFunc)~A, ~A" (lookup-intrinsic-name f) (length xs))
         (for-each
           (lambda (x)
            (printf ",~N      ")
@@ -165,11 +166,18 @@
         (printf ");~N"))
       (define (print-closure-apply f xs tail-call?)
         (match f
-          (('close fun) (printf "    V_CALL_FUNC(~A, env" fun))
+          (('close fun)
+           ;(printf "    (~A)(runtime, env, ~A" fun (length xs))
+           (printf "    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)~A, .env = env }, }, ~A" fun (length xs))
+           )
           (else
-            (display "    V_CALL(")
-            (print-expr f args)))
-        (printf ", runtime")
+            ;(display "    V_CALL(")
+            ;(print-expr f args)
+            ;(printf ", runtime")
+            (display "    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, ")
+            (print-expr f args)
+            (printf "), ~A" (length xs))
+            ))
         (for-each
           (lambda (x)
            (printf ",~N      ")
@@ -196,7 +204,8 @@
       
       ; should always be a tail call eh
       (define (print-define-global k y x tail-call?)
-        (printf "    V_CALL_FUNC(VDefineGlobalVar2, env, runtime,~N      ")
+        (printf "    VCallFuncWithGC(runtime, (VFunc)VDefineGlobalVar2, 3,~N      ")
+        ;(printf "    VDefineGlobalVar2(runtime, env, 3,~N      ")
         (print-expr k args)
         (printf ",~N      ")
         (print-literal y)
@@ -206,7 +215,8 @@
       (define (print-set k y x tail-call?)
         (match y
           (('bruijn name up right)
-           (printf "    V_CALL_FUNC(VSetEnvVar2, env, runtime,~N      ")
+           (printf "    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = env }, }, 4,~N      ")
+           ;(printf "    VSetEnvVar2(runtime, env, 4,~N      ")
            (print-expr k args)
            (printf ",~N      VEncodeInt(~Al), VEncodeInt(~Al),~N      " up right)
            (print-expr x args)
@@ -214,7 +224,8 @@
           (sym
            (if (symbol? sym)
                (begin
-                 (printf "    V_CALL_FUNC(VSetGlobalVar2, env, runtime,~N      ")
+                 (printf "    VCallFuncWithGC(runtime, (VFunc)VSetGlobalVar2, 3,~N      ")
+                 ;(printf "    VSetGlobalVar2(runtime, env, 3,~N      ")
                  (print-expr k args)
                  (printf ",~N      ")
                  (print-literal sym)
@@ -308,11 +319,12 @@
             (begin
               (printf " VWORD _varargs = VNULL;~N")
               (printf " V_GATHER_VARARGS_VARIADIC(&_varargs, ~A, argc, ~A);~N" num (if (= num 0) "argc" (list-ref args (- num 1))))))
-        (printf " V_GC_CHECK2_VARARGS((VFunc)~A, runtime, upenv, ~A, argc" name num)
-        (for-each (lambda (arg) (printf ", ~A" arg)) args)
-        (if variadic?
-            (printf ", _varargs) {~N")
-            (printf ") {~N"))
+        ;(printf " V_GC_CHECK2_VARARGS((VFunc)~A, runtime, upenv, ~A, argc" name num)
+        ;(for-each (lambda (arg) (printf ", ~A" arg)) args)
+        ;(if variadic?
+            ;(printf ", _varargs) {~N")
+            ;(printf ") {~N")
+            ;)
         (if (closes? body)
             (begin
               (printf "  struct { VEnv env; VWORD argv[~A]; } container;~N" (if variadic? (+ num 1) num))
@@ -328,7 +340,7 @@
 
        (printf "  // ~S~N" body)
        (print-expr body (if variadic? (append args '("_varargs")) args))
-       (printf " }~N")
+       ;(printf " }~N")
        (printf "}~N")))
     (define (print-fun-case fun)
       (let* ((name (car fun))

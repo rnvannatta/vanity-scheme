@@ -131,8 +131,8 @@
   (define symbol=?
     (case-lambda
       ((x y) (##vcore.symbol=? x y))
-      ((x y z) (and ##vcore.symbol=? x y) (##vcore.symbol=? y z))
-      ((x y z w) (and ##vcore.symbol=? x y) (##vcore.symbol=? y z) (##vcore.symbol=? z w))
+      ((x y z) (and (##vcore.symbol=? x y) (##vcore.symbol=? y z)))
+      ((x y z w) (and (##vcore.symbol=? x y) (##vcore.symbol=? y z) (##vcore.symbol=? z w)))
       ((x y . xs)
        (let loop ((xs (cons y xs)))
          (cond ((null? xs) #t)
@@ -141,8 +141,8 @@
   (define boolean=?
     (case-lambda
       ((x y) (and (eq? x y) (boolean? x) (boolean? y)))
-      ((x y z) (and boolean=? x y) (boolean=? y z))
-      ((x y z w) (and boolean=? x y) (boolean=? y z) (boolean=? z w))
+      ((x y z) (and (boolean=? x y) (boolean=? y z)))
+      ((x y z w) (and (boolean=? x y) (boolean=? y z) (boolean=? z w)))
       ((x y . xs)
        (let loop ((xs (cons y xs)))
          (cond ((null? xs) #t)

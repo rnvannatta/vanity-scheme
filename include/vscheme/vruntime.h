@@ -872,6 +872,9 @@ SYSV_CALL static inline VPair * VFillPair(VPair * pair, VWORD a, VWORD b) {
   return pair;
 }
 
+enum { V_HUGE_ALLOC_THRESHOLD = 128 * 1024 };
+void * VHugeAlloc(VRuntime * runtime, size_t size, bool plain_old_data);
+
 #define V_ALLOCA_BLOB(len) alloca(sizeof(VBlob) + len);
 SYSV_CALL static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned len, char const * dat) {
   blob->base = VMakeSmallObject(tag);
@@ -884,9 +887,13 @@ SYSV_CALL static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned le
     VBlob * _ret = NULL; \
     if(len > INT32_MAX) \
       VErrorC(runtime, "cannot allocate blob with more than ~D elements, asked to allocate one with ~D\n", INT32_MAX, len); \
-    size_t _size = sizeof(VVector) + len; \
+    size_t _size = sizeof(VBlob) + len; \
+    if(_size >= V_HUGE_ALLOC_THRESHOLD) { \
+      _ret = VHugeAlloc(runtime, _size, true); \
+    } else { \
     if(!VStackOverflowNoInline2(runtime, ((char*)last_alloced) - _size)) \
       _ret = alloca(_size); \
+    } \
     _ret;\
   })
 
@@ -966,13 +973,18 @@ SYSV_CALL static inline void VRecordCall2(VRuntime * _runtime, VDebugInfo * debu
   *_varargs = _root_pair.rest; \
 } while(0)
 
-#define V_CALL_FUNC(func, env, runtime, ...) \
+void VCallFuncWithGC(VRuntime* runtime, VFunc func, int argc, ...);
+void VCallDecodedWithGC(VRuntime* runtime, VClosure * closure, int argc, ...);
+
+#define V_CALL_FUNC(fnc, nv, runtime, ...) \
  do { \
-   (func)(runtime, env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
+   /*VCallDecodedWithGC(runtime, (VClosure[]){{ .func = (VFunc)fnc, .env = nv }}, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__);*/ \
+   (fnc)(runtime, nv, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
  } while(0)
 
 #define V_CALL(closure, runtime, ...) \
   do { \
+    /*VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, closure), sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__);*/ \
     VClosure * _closure = VDecodeClosureApply2(runtime, closure); \
     (_closure->func)(runtime, _closure->env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
   } while(0)
@@ -1014,6 +1026,8 @@ SYSV_CALL bool VStackOverflowNoInline(VRuntime * runtime);
 SYSV_CALL bool VStackOverflowNoInline2(VRuntime * runtime, char * VStackStop);
 
 SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv);
+SYSV_CALL void VGarbageCollect2Closure(VRuntime * runtime, VClosure * closure, int argc, ...);
+SYSV_CALL void VGarbageCollect2Func(VRuntime * runtime, VFunc f, int argc, ...);
 SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...);
 
 #define V_GC_CHECK2(func, runtime, statics, argc, argv) \

@@ -557,6 +557,32 @@ SYSV_CALL void VErrorC(VRuntime * runtime, const char * str, ...) {
 //                   GARBAGE COLLECTOR                     //
 /////////////////////////////////////////////////////////////
 
+static void VHugeFree(V_CORE_ARGS, VWORD k, VWORD mem) {
+  V_ARG_CHECK3(runtime, "huge-free", 2, argc);
+  if(!VIsPointer(mem))
+    VErrorC(runtime, "huge-free: not huge memory");
+  void * ptr = VDecodePointer(mem);
+  if(VMemLocation(runtime, ptr) != STATIC_MEM)
+    VErrorC(runtime, "huge-free: not huge memory");
+  free(ptr);
+  V_CALL(k, runtime, VVOID);
+}
+static VClosure VHugeFreeClosure = {
+  .base = {
+    .tag = VCLOSURE,
+  },
+  .func = (VFunc)VHugeFree,
+  .env = NULL,
+};
+
+void * VHugeAlloc(VRuntime * runtime, size_t size, bool plain_old_data) {
+  if(!plain_old_data)
+    VErrorC(runtime, "huge allocs must be plain old data such as bytevectors, f32vectors, or strings");
+  void * ret = malloc(size);
+  VSetFinalizerImpl(runtime, &runtime->VHeapFinalizers[runtime->VActiveHeap], VEncodePointer(ret, VPOINTER_OTHER), VEncodePointer(&VHugeFreeClosure, VPOINTER_CLOSURE));
+  return ret;
+}
+
 SYSV_CALL static void VForward(void * old, void const * forward) {
   *(uint64_t*)old = FORWARDED;
   *(void const**)(old + sizeof(VWORD)) = forward;
@@ -683,9 +709,26 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
     uint64_t type = VWordType(word);
     return VEncodePointer(forward, type);
   }
+
+  uint64_t type = VWordType(word);
+  if(type == VPOINTER_OTHER) {
+    VNEWTAG tag = *(VNEWTAG*)ptr;
+    switch(tag) {
+      case VSTRING:
+      case VBUFFER:
+      {
+        VBlob * b = ptr;
+        size_t size = sizeof(VBlob) + (b->len + sizeof(VWORD) - 1)/sizeof(VWORD) * sizeof(VWORD);
+        if(size >= V_HUGE_ALLOC_THRESHOLD) {
+          printf("marked\n");
+          VMarkForeignFinalizer(runtime, word, false);
+        }
+      }
+    }
+  }
+
   if(!VNeedsMove(runtime, ptr))
     return word;
-  uint64_t type = VWordType(word);
 
   VNEWTAG tag = *(VNEWTAG*)ptr;
   if(!(VTAG_START <= tag && tag < VTAG_END)) {
@@ -706,12 +749,13 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
       switch(tag)
       {
         case VSTRING:
-        case VSYMBOL:
         case VBUFFER:
+        case VSYMBOL:
         case VRNG_STATE:
         {
           VBlob * b = ptr;
-          return VEncodePointer(VMoveObject(runtime, b, sizeof(VBlob) + (b->len + sizeof(VWORD) - 1)/sizeof(VWORD) * sizeof(VWORD)), VPOINTER_OTHER);
+          size_t size = sizeof(VBlob) + (b->len + sizeof(VWORD) - 1)/sizeof(VWORD) * sizeof(VWORD);
+          return VEncodePointer(VMoveObject(runtime, b, size), VPOINTER_OTHER);
           break;
         }
         case VVECTOR:
@@ -899,6 +943,29 @@ SYSV_CALL static void VSwapHeap(VRuntime * runtime) {
   runtime->VHeap = runtime->VHeaps[runtime->VActiveHeap].begin;
   runtime->VHeapPos = runtime->VHeap;
   runtime->VHeapEnd = runtime->VHeaps[runtime->VActiveHeap].end;
+}
+
+SYSV_CALL void VGarbageCollect2Closure(VRuntime * runtime, VClosure * closure, int argc, ...) {
+  VFunc f = closure->func;
+  VEnv * statics = closure->env;
+  VWORD argv[argc];
+  va_list list;
+  va_start(list, argc);
+  for(int i = 0; i < argc; i++)
+    argv[i] = va_arg(list, VWORD);
+  va_end(list);
+  VGarbageCollect2(f, runtime, statics, argc, argv);
+}
+
+SYSV_CALL void VGarbageCollect2Func(VRuntime * runtime, VFunc f, int argc, ...) {
+  VEnv * statics = NULL;
+  VWORD argv[argc];
+  va_list list;
+  va_start(list, argc);
+  for(int i = 0; i < argc; i++)
+    argv[i] = va_arg(list, VWORD);
+  va_end(list);
+  VGarbageCollect2(f, runtime, statics, argc, argv);
 }
 
 SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics, int fixed_args, int argc, ...) {

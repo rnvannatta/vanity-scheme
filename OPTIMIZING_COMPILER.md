@@ -16,6 +16,26 @@ compile: 11.232s
 
 I haven't put my compiler to work hard enough for its programs to need the speed, though the compiler itself is starting to feel sluggish and its speed to compile itself is getting on my nerves. Particularly as I add to the standard library and make it more complete.
 
+# Hash Tables are Great
+
+The optimize pass just needed a couple hash table to keep track of variable usage counts and variable purity. Previously for inlining let expressions it was doing:
+
+```
+(match expr
+  ...
+  ((('lambda (x) body) v)
+   (let ((uses (count-usage x body))
+         (pure (pure-in? x body)))
+     (if (and pure (or (< uses 2) (trivial? v)))
+         (optimize (substitute v x body))
+         (map optimize expr))))
+  ...)
+```
+
+In my defense, the optimize code predated my compiler supporting hash tables.
+
+Which resulted in O(n^2) performance. Counting all the uses and checking for purity in advance and storing them in a hash table slashed the optimize time to just 0.5s. There's further work that could be done to speed it up, such as keeping track of all the free variables in a lambda expression, but its no longer the big problem, and I want to move to SSA form anyway which will be replacing the current optimize code completely.
+
 # Low Hanging Fruit: Trivial inlining
 
 One of the lowest fruits hanging is trivial inlining that's always a win, for which there's no need for heruistics. And there's an embarrassingly easy one to do.
@@ -42,7 +62,7 @@ Vanity implements `+` as an intrinsic, named `##vcore.+`, which compiles down to
 
 Furthermore, a scarce few intrinsics like ##vcore.cons and ##vcore.car and ##vcore.eq? have inline implementations that are performed in-situ rather than calling out to a function and supplying a continuation if they are directly applied, reducing the strain on the poor C compiler which hates so many functions.
 
-However, despite their trivial implementation, there is no inlining in Vanity yet. The foo library's use of cons above will not inline to ##vcore.cons, and it will not inline to the `VInlineCons()` macro when it compiles to C. Instead the `cons` closure will be looked up from the lexical environment of the foo library and called. And furthermore, the first `cons` above because it will compile to a full function call will also supply a continuation to call the second, straining the poor c compiler.
+However, despite their trivial implementation, there is no cross-library inlining in Vanity yet. The foo library's use of cons above will not inline to ##vcore.cons, and it will not inline to the `VInlineCons()` macro when it compiles to C. Instead the `cons` closure will be looked up from the lexical environment of the foo library and called. And furthermore, the first `cons` above because it will compile to a full function call will also supply a continuation to call the second, straining the poor c compiler.
 
 ```
 ; pseudocode for cps-ified foo library
