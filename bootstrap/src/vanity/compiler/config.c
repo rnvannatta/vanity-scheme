@@ -45,7 +45,6 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upen
   "-- expected 1~N"
   , argc);
  }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0compiler_V0config_V20_k1, runtime, upenv, 1, argc, _var0) {
   struct { VEnv env; VWORD argv[1]; } container;
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
@@ -64,7 +63,7 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upen
         VNULL));
     env->vars[1] = VEncodePointer(&_V10_Dstring_D13.sym, VPOINTER_OTHER);
     env->vars[2] = _V0linux;
-    V_CALL(upenv->up->vars[0], runtime,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, upenv->up->vars[0]), 1,
       VInlineCons2(runtime,
         VInlineCons2(runtime,
         _V0install__root,
@@ -79,7 +78,6 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upen
         env->vars[2]),
         VNULL))));
     }
- }
 }
 static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -87,15 +85,13 @@ static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv *
   "-- expected 1~N"
   , argc);
  }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0compiler_V0config_V20_lambda1, runtime, upenv, 1, argc, _var0) {
   struct { VEnv env; VWORD argv[1]; } container;
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // (##vcore.make-import (close _V0vanity_V0compiler_V0config_V20_k1) (##string ##.string.14))
-    V_CALL_FUNC(VMakeImport2, NULL, runtime,
+    VCallFuncWithGC(runtime, (VFunc)VMakeImport2, 2,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0config_V20_k1, env)}),
       VEncodePointer(&_V10_Dstring_D14.sym, VPOINTER_OTHER));
- }
 }
 VFunc _V0vanity_V0compiler_V0config_V20 = (VFunc)_V0vanity_V0compiler_V0config_V20_lambda1;
