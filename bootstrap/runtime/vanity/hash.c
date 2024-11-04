@@ -56,21 +56,17 @@ __attribute__((used)) static void _V20CaseError__V10_Drandom__sample_B_D3_lambda
  , argc);
 }
 __attribute__((used)) static void _V20Case0__V10_Drandom__sample_B_D3_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
- V_GC_CHECK2_VARARGS((VFunc)_V20Case0__V10_Drandom__sample_B_D3_lambda2, runtime, upenv, 2, argc, _var0, _var1) {
   // (##vcore.random-sample! (bruijn ##.k.11 0 0) (bruijn ##.rng.6 0 1))
-    V_CALL_FUNC(VRandomSample, NULL, runtime,
+    VCallFuncWithGC(runtime, (VFunc)VRandomSample, 2,
       _var0,
       _var1);
- }
 }
 __attribute__((used)) static void _V20Case1__V10_Drandom__sample_B_D3_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
- V_GC_CHECK2_VARARGS((VFunc)_V20Case1__V10_Drandom__sample_B_D3_lambda2, runtime, upenv, 3, argc, _var0, _var1, _var2) {
   // (##vcore.random-sample-bounded! (bruijn ##.k.12 0 0) (bruijn ##.rng.7 0 1) (bruijn ##.end.8 0 2))
-    V_CALL_FUNC(VRandomSampleBounded, NULL, runtime,
+    VCallFuncWithGC(runtime, (VFunc)VRandomSampleBounded, 3,
       _var0,
       _var1,
       _var2);
- }
 }
 void _V10_Drandom__sample_B_D3_lambda2(VRuntime * runtime, VEnv * upenv, int argc, ...);
 asm(
@@ -91,7 +87,6 @@ static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
   "-- expected 1~N"
   , argc);
  }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0hash_V20_k1, runtime, upenv, 1, argc, _var0) {
   struct { VEnv env; VWORD argv[1]; } container;
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
@@ -108,7 +103,7 @@ static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
     env->vars[2] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Drandom__sample_B_D3_lambda2, env)});
     env->vars[3] = _V40_V10vcore_Drandom__sample__float_B;
     env->vars[4] = _V40_V10vcore_Drandom__advance_B;
-    V_CALL(upenv->up->vars[0], runtime,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, upenv->up->vars[0]), 1,
       VInlineCons2(runtime,
         VInlineCons2(runtime,
         _V0make__random,
@@ -131,7 +126,6 @@ static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, 
         env->vars[4]),
         VNULL))))));
     }
- }
 }
 static void _V0vanity_V0hash_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -139,15 +133,13 @@ static void _V0vanity_V0hash_V20_lambda1(VRuntime * runtime, VEnv * upenv, int a
   "-- expected 1~N"
   , argc);
  }
- V_GC_CHECK2_VARARGS((VFunc)_V0vanity_V0hash_V20_lambda1, runtime, upenv, 1, argc, _var0) {
   struct { VEnv env; VWORD argv[1]; } container;
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
   // (##vcore.make-import (close _V0vanity_V0hash_V20_k1) (##string ##.string.22))
-    V_CALL_FUNC(VMakeImport2, NULL, runtime,
+    VCallFuncWithGC(runtime, (VFunc)VMakeImport2, 2,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0hash_V20_k1, env)}),
       VEncodePointer(&_V10_Dstring_D22.sym, VPOINTER_OTHER));
- }
 }
 VFunc _V0vanity_V0hash_V20 = (VFunc)_V0vanity_V0hash_V20_lambda1;

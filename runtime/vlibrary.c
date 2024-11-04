@@ -919,7 +919,7 @@ SYSV_CALL void VMakeString2(V_CORE_ARGS, VWORD k, VWORD len, ...) {
 
   if(VWordType(len) != VIMM_INT) VErrorC(runtime, "make-string: not an int");
   int i = VDecodeInt(len);
-  //if(!(0 <= i && i < 1024 * 1024)) VErrorC(runtime, "make-string: out of bounds");
+  if(!(0 <= i && i < 1024 * 1024)) VErrorC(runtime, "make-string: out of bounds");
 
   char c = 'X';
   if(argc == 3) {
@@ -932,11 +932,7 @@ SYSV_CALL void VMakeString2(V_CORE_ARGS, VWORD k, VWORD len, ...) {
     c = VDecodeChar(fill);
   }
 
-  VBlob * str = V_ALLOCA_BLOB2((void*)&runtime, runtime, i + 1);
-  if(!str) {
-    VGarbageCollect2Func(runtime, (VFunc)VMakeString2, 3, k, len, VEncodeChar(c));
-  }
-
+  VBlob * str = alloca(sizeof(VBlob) + i + 1);
   str->base = VMakeSmallObject(VSTRING);
   str->len = i + 1;
   str->buf[i] = '\0';
@@ -974,10 +970,7 @@ SYSV_CALL void VSubstring2(V_CORE_ARGS, VWORD k, VWORD string, ...) {
   if(!(0 <= end && end < str->len)) VErrorC(runtime, "substring: end out of bounds");
   if(start > end) VErrorC(runtime, "substring: start greater than end");
   int len = end - start;
-  VBlob * copy = V_ALLOCA_BLOB2((void*)&runtime, runtime, len + 1);
-  if(!copy) {
-    VGarbageCollect2Func(runtime, (VFunc)VSubstring2, 4, k, string, VEncodeInt(start), VEncodeInt(end));
-  }
+  VBlob * copy = alloca(sizeof(VBlob) + len + 1);
   copy->base = VMakeSmallObject(VSTRING);
   copy->len = len + 1;
   copy->buf[len] = '\0';
@@ -1279,10 +1272,7 @@ SYSV_CALL void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD _port) {
   FILE * f = port->stream;
   int len = ftell(f);
   rewind(f);
-  VBlob * str = V_ALLOCA_BLOB2((void*)&runtime, runtime, len + 1);
-  if(!str) {
-    VGarbageCollect2Func(runtime, (VFunc)VGetOutputString2, 2, k, _port);
-  }
+  VBlob * str = alloca(sizeof(VBlob) + len + 1);
   str->base = VMakeSmallObject(VSTRING);
   str->len = len+1;
   fread(str->buf, len, 1, f);
@@ -1795,8 +1785,7 @@ void VMake ## Prefix ## Vector(V_CORE_ARGS, VWORD k, VWORD _len, VWORD fill) { \
     if(len > INT_MAX) \
       VErrorC(runtime, "make-" #prefix "vector: tried to make a vector of length ~D, maximum vector length is ~D", len, INT_MAX); \
     unsigned size = elem_width * (len+1); \
-    VBlob * ret = V_ALLOCA_BLOB2((void*)&runtime, runtime, size); \
-    if(!ret) VGarbageCollect2Func(runtime, (VFunc)VMake ## Prefix ## Vector, argc, k, _len, fill); \
+    VBlob * ret = V_ALLOCA_BLOB(size); \
     ret->base = VMakeSmallObject(VBUFFER); \
     ret->len = size; \
     ret->buf[0] = BUF_ ## Prefix; \
@@ -1821,8 +1810,7 @@ void VList ## Prefix ## Vector (V_CORE_ARGS, VWORD k, VWORD lst) { \
     } \
     if(VBits(v) != VBits(VNULL)) VErrorC(runtime, "list->" #prefix "vector: not a null-terminated list\n"); \
     unsigned size = elem_width * (len+1); \
-    VBlob * vec = V_ALLOCA_BLOB2((void*)&runtime, runtime, size); \
-    if(!vec) VGarbageCollect2Func(runtime, (VFunc)VList ## Prefix ## Vector, argc, k, lst); \
+    VBlob * vec = V_ALLOCA_BLOB(size); \
     vec->base = VMakeSmallObject(VBUFFER); \
     vec->len = size; \
     vec->buf[0] = BUF_ ## Prefix; \
