@@ -176,6 +176,8 @@
          ((##vcore.s8vector-set!) "VS8VectorSet")
          ((##vcore.s8vector-length) "VS8VectorLength")
 
+         ((##vcore.read-u8vector) "VReadU8Vector")
+
          ; Records
          ((##vcore.record) "VCreateRecord2")
          ((##vcore.record-ref) "VRecordRef2")
@@ -433,6 +435,8 @@
          ((##vcore.s8vector-ref) ##vcore.s8vector-ref)
          ((##vcore.s8vector-set!) ##vcore.s8vector-set!)
          ((##vcore.s8vector-length) ##vcore.s8vector-length)
+
+         ((##vcore.read-u8vector) ##vcore.read-u8vector)
 
          ; Records
          ((##vcore.record) ##vcore.record)

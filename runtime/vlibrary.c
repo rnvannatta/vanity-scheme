@@ -1283,7 +1283,7 @@ SYSV_CALL void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD _port) {
   str->base = VMakeSmallObject(VSTRING);
   str->len = len+1;
   rewind(f);
-  fread(str->buf, len, 1, f);
+  fread(str->buf, 1, len, f);
   str->buf[len] = '\0';
   fseek(f, 0, SEEK_END);
 
@@ -1889,6 +1889,48 @@ IMPLEMENT_BUFFER(s32, S32, 4)
 
 IMPLEMENT_BUFFER(f32, F32, 4)
 IMPLEMENT_BUFFER(f64, F64, 8)
+
+void VReadU8Vector(V_CORE_ARGS, VWORD k, VWORD _n, VWORD _port) {
+  V_ARG_CHECK3(runtime, "read-u8vector", 3, argc);
+  VPort * port = VCheckedDecodePointer2(runtime, _port, VPORT, "read-u8vector");
+  int n = VCheckedDecodeInt2(runtime, _n, "read-u8vector");
+  if(n < -1) VErrorC(runtime, "read-u8vector: invalid amount of bytes to read ~D", n);
+
+  FILE * f = port->stream;
+  if(n == -1) {
+    errno = 0;
+    int start = ftell(f);
+    if(fseek(f, 0, SEEK_END)) {
+      if(errno == ESPIPE) {
+        VErrorC(runtime, "read-u8vector: -1 for size cannot be passed to non-seekable ports");
+      }
+      VErrorC(runtime, "read-u8vector: io error during read");
+    }
+    int end = ftell(f);
+    fseek(f, start, SEEK_SET);
+    n = end-start;
+    if(n == 0)
+      V_CALL(k, runtime, VEOF);
+  }
+  VBlob * ret = V_ALLOCA_BLOB2((void*)&runtime, runtime, n+1);
+  if(!ret) VGarbageCollect2Func(runtime, (VFunc)VReadU8Vector, argc, k, _n, _port);
+  ret->base = VMakeSmallObject(VBUFFER);
+  ret->len = n+1;
+  ret->buf[0] = BUF_U8;
+
+  if(n) {
+    errno = 0;
+    n = fread(ret->buf+1, 1, n, f);
+    ret->len = n+1;
+    if(n <= 0) {
+      if(feof(f))
+        V_CALL(k, runtime, VEOF);
+      if(ferror(f))
+        VErrorC(runtime, "read-u8vector: io error during read");
+    }
+  }
+  V_CALL(k, runtime, VEncodePointer(ret, VPOINTER_OTHER));
+}
 
 static bool jiffy_epoch_set;
 static uint64_t jiffy_epoch;
