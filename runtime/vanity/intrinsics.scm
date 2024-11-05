@@ -233,6 +233,7 @@
 
          ((##vcore.read-char) "VReadChar2")
          ((##vcore.read-line) "VReadLine2")
+         ((##vcore.read-line2) "VReadLine3")
          ((##vcore.read) "VRead2")
 
          ((##vcore.display-word) "VDisplay2")
@@ -490,6 +491,7 @@
 
          ((##vcore.read-char) ##vcore.read-char)
          ((##vcore.read-line) ##vcore.read-line)
+         ((##vcore.read-line2) ##vcore.read-line2)
          ((##vcore.read) ##vcore.read)
 
          ((##vcore.display-word) ##vcore.display-word)

@@ -978,15 +978,15 @@ void VCallDecodedWithGC(VRuntime* runtime, VClosure * closure, int argc, ...);
 
 #define V_CALL_FUNC(fnc, nv, runtime, ...) \
  do { \
-   /*VCallDecodedWithGC(runtime, (VClosure[]){{ .func = (VFunc)fnc, .env = nv }}, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__);*/ \
-   (fnc)(runtime, nv, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
+   VCallDecodedWithGC(runtime, (VClosure[]){{ .func = (VFunc)fnc, .env = nv }}, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
+   /*(fnc)(runtime, nv, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__);*/ \
  } while(0)
 
 #define V_CALL(closure, runtime, ...) \
   do { \
-    /*VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, closure), sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__);*/ \
-    VClosure * _closure = VDecodeClosureApply2(runtime, closure); \
-    (_closure->func)(runtime, _closure->env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, closure), sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
+    /*VClosure * _closure = VDecodeClosureApply2(runtime, closure);*/ \
+    /*(_closure->func)(runtime, _closure->env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__);*/ \
   } while(0)
 
 #define V_ARG_CHECK3(runtime, func, nargs, num_vars) \

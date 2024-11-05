@@ -152,6 +152,7 @@ SYSV_CALL void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD port);
 // input
 SYSV_CALL void VReadChar2(V_CORE_ARGS, VWORD k, VWORD port);
 SYSV_CALL void VReadLine2(V_CORE_ARGS, VWORD k, VWORD port);
+SYSV_CALL void VReadLine3(V_CORE_ARGS, VWORD k, VWORD port);
 SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
 
 // output
