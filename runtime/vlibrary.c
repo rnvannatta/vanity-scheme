@@ -496,28 +496,26 @@ SYSV_CALL void VCdr2(V_CORE_ARGS, VWORD k, VWORD x) {
 SYSV_CALL void VListVector2(V_CORE_ARGS, VWORD k, VWORD lst) {
   V_ARG_CHECK3(runtime, "list->vector", 2, argc);
 
-  V_GC_CHECK2_VARARGS((VFunc)VListVector2, runtime, statics, 2, argc, k, lst) {
-    int len = 0;
-    VWORD v = lst;
-    while(VWordType(v) == VPOINTER_PAIR) {
-      len++;
-      v = VDecodePair(v)->rest;
-    }
-    if(VBits(v) != VBits(VNULL)) VErrorC(runtime, "list->vector: not a null-terminated list\n");
-
-    VVector * vec = V_ALLOCA_VECTOR(len);
-    vec->base = VMakeSmallObject(VVECTOR);
-    vec->len = len;
-
-    v = lst;
-    int i = 0;
-    while(VWordType(v) == VPOINTER_PAIR) {
-      VPair * p = VDecodePair(v);
-      vec->arr[i++] = p->first;
-      v = p->rest;
-    }
-    V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER));
+  int len = 0;
+  VWORD v = lst;
+  while(VWordType(v) == VPOINTER_PAIR) {
+    len++;
+    v = VDecodePair(v)->rest;
   }
+  if(VBits(v) != VBits(VNULL)) VErrorC(runtime, "list->vector: not a null-terminated list\n");
+
+  VVector * vec = V_ALLOCA_VECTOR(len);
+  vec->base = VMakeSmallObject(VVECTOR);
+  vec->len = len;
+
+  v = lst;
+  int i = 0;
+  while(VWordType(v) == VPOINTER_PAIR) {
+    VPair * p = VDecodePair(v);
+    vec->arr[i++] = p->first;
+    v = p->rest;
+  }
+  V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER));
 }
 
 SYSV_CALL void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vector, VWORD index) {
@@ -1312,26 +1310,49 @@ SYSV_CALL void VReadChar2(V_CORE_ARGS, VWORD k, VWORD _port) {
 // FIXME BADLY only reads 256 char lines
 SYSV_CALL void VReadLine2(V_CORE_ARGS, VWORD k, VWORD _port) {
   V_ARG_CHECK3(runtime, "read-line", 2, argc);
-  V_GC_CHECK2_VARARGS((VFunc)VReadLine2, runtime, statics, 2, argc, k, _port) {
-    VPort * port = (VPort*)VDecodePointer(_port);
-    if(!port || port->base.tag != VPORT) VErrorC(runtime, "read-line: not a port ~S~N", _port);
-    if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read-line: not an readable port ~S~N", _port);
+  VPort * port = (VPort*)VDecodePointer(_port);
+  if(!port || port->base.tag != VPORT) VErrorC(runtime, "read-line: not a port ~S~N", _port);
+  if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read-line: not an readable port ~S~N", _port);
 
-    FILE * f = port->stream;
-    VBlob * str = alloca(sizeof(VBlob) + 256);
-    str->base = VMakeSmallObject(VSTRING);
-    if(!fgets(str->buf, 256, f)) {
-      V_CALL(k, runtime, VEOF);
-    } else {
-      size_t len = strlen(str->buf);
-      if(len > 0 && str->buf[len-1] == '\n')
-        len--;
+  FILE * f = port->stream;
+  VBlob * str = alloca(sizeof(VBlob) + 256);
+  str->base = VMakeSmallObject(VSTRING);
+  if(!fgets(str->buf, 256, f)) {
+    V_CALL(k, runtime, VEOF);
+  } else {
+    size_t len = strlen(str->buf);
+    if(len > 0 && str->buf[len-1] == '\n')
+      len--;
+    if(len > 0 && str->buf[len-1] == '\r')
+      len--;
+    str->buf[len] = '\0';
+    str->len = len+1; // account for the null terminal
+    V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
+  }
+}
+SYSV_CALL void VReadLine3(V_CORE_ARGS, VWORD k, VWORD _port) {
+  V_ARG_CHECK3(runtime, "read-line", 2, argc);
+  VPort * port = (VPort*)VDecodePointer(_port);
+  if(!port || port->base.tag != VPORT) VErrorC(runtime, "read-line: not a port ~S~N", _port);
+  if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read-line: not an readable port ~S~N", _port);
+
+  FILE * f = port->stream;
+  VBlob * str = alloca(sizeof(VBlob) + 256);
+  str->base = VMakeSmallObject(VSTRING);
+  if(!fgets(str->buf, 256, f)) {
+    V_CALL(k, runtime, VEOF, VFALSE);
+  } else {
+    bool line = false;
+    size_t len = strlen(str->buf);
+    if(len > 0 && str->buf[len-1] == '\n') {
+      line = true;
+      len--;
       if(len > 0 && str->buf[len-1] == '\r')
         len--;
-      str->buf[len] = '\0';
-      str->len = len+1; // account for the null terminal
-      V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
     }
+    str->buf[len] = '\0';
+    str->len = len+1; // account for the null terminal
+    V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER), VEncodeBool(line));
   }
 }
 
@@ -1790,54 +1811,50 @@ void V ## Prefix ## VectorP(V_CORE_ARGS, VWORD k, VWORD _buf) { \
 } \
 void VMake ## Prefix ## Vector(V_CORE_ARGS, VWORD k, VWORD _len, VWORD fill) { \
   V_ARG_CHECK3(runtime, "make-" #prefix "vector", 3, argc); \
-  V_GC_CHECK2_VARARGS((VFunc)VMake ## Prefix ## Vector, runtime, statics, 3, argc, k, _len, fill) { \
-    unsigned len = VCheckedDecodeInt2(runtime, _len, "make-" #prefix "vector"); \
-    if(len > INT_MAX) \
-      VErrorC(runtime, "make-" #prefix "vector: tried to make a vector of length ~D, maximum vector length is ~D", len, INT_MAX); \
-    unsigned size = elem_width * (len+1); \
-    VBlob * ret = V_ALLOCA_BLOB2((void*)&runtime, runtime, size); \
-    if(!ret) VGarbageCollect2Func(runtime, (VFunc)VMake ## Prefix ## Vector, argc, k, _len, fill); \
-    ret->base = VMakeSmallObject(VBUFFER); \
-    ret->len = size; \
-    ret->buf[0] = BUF_ ## Prefix; \
-    if(VDecodeBool(fill)) { \
-      unsigned offset = elem_width; \
-      for(unsigned i = 0; i < len; i++) { \
-        Prefix ## Write(runtime, ret, offset, fill); \
-        offset += elem_width; \
-      } \
+  unsigned len = VCheckedDecodeInt2(runtime, _len, "make-" #prefix "vector"); \
+  if(len > INT_MAX) \
+    VErrorC(runtime, "make-" #prefix "vector: tried to make a vector of length ~D, maximum vector length is ~D", len, INT_MAX); \
+  unsigned size = elem_width * (len+1); \
+  VBlob * ret = V_ALLOCA_BLOB2((void*)&runtime, runtime, size); \
+  if(!ret) VGarbageCollect2Func(runtime, (VFunc)VMake ## Prefix ## Vector, argc, k, _len, fill); \
+  ret->base = VMakeSmallObject(VBUFFER); \
+  ret->len = size; \
+  ret->buf[0] = BUF_ ## Prefix; \
+  if(VDecodeBool(fill)) { \
+    unsigned offset = elem_width; \
+    for(unsigned i = 0; i < len; i++) { \
+      Prefix ## Write(runtime, ret, offset, fill); \
+      offset += elem_width; \
     } \
-    V_CALL(k, runtime, VEncodePointer(ret, VPOINTER_OTHER)); \
   } \
+  V_CALL(k, runtime, VEncodePointer(ret, VPOINTER_OTHER)); \
 } \
 void VList ## Prefix ## Vector (V_CORE_ARGS, VWORD k, VWORD lst) { \
   V_ARG_CHECK3(runtime, "list->" #prefix "vector", 2, argc); \
-  V_GC_CHECK2_VARARGS((VFunc)VList ## Prefix ## Vector, runtime, statics, 2, argc, k, lst) { \
-    int len = 0; \
-    VWORD v = lst; \
-    while(VWordType(v) == VPOINTER_PAIR) { \
-      len++; \
-      v = VDecodePair(v)->rest; \
-    } \
-    if(VBits(v) != VBits(VNULL)) VErrorC(runtime, "list->" #prefix "vector: not a null-terminated list\n"); \
-    unsigned size = elem_width * (len+1); \
-    VBlob * vec = V_ALLOCA_BLOB2((void*)&runtime, runtime, size); \
-    if(!vec) VGarbageCollect2Func(runtime, (VFunc)VList ## Prefix ## Vector, argc, k, lst); \
-    vec->base = VMakeSmallObject(VBUFFER); \
-    vec->len = size; \
-    vec->buf[0] = BUF_ ## Prefix; \
-    v = lst; \
-    int i = 0; \
-    unsigned offset = elem_width; \
-    while(VWordType(v) == VPOINTER_PAIR) { \
-      VPair * p = VDecodePair(v); \
-      Prefix ## Write(runtime, vec, offset, p->first); \
-      offset += elem_width; \
-      i++; \
-      v = p->rest; \
-    } \
-    V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER)); \
+  int len = 0; \
+  VWORD v = lst; \
+  while(VWordType(v) == VPOINTER_PAIR) { \
+    len++; \
+    v = VDecodePair(v)->rest; \
   } \
+  if(VBits(v) != VBits(VNULL)) VErrorC(runtime, "list->" #prefix "vector: not a null-terminated list\n"); \
+  unsigned size = elem_width * (len+1); \
+  VBlob * vec = V_ALLOCA_BLOB2((void*)&runtime, runtime, size); \
+  if(!vec) VGarbageCollect2Func(runtime, (VFunc)VList ## Prefix ## Vector, argc, k, lst); \
+  vec->base = VMakeSmallObject(VBUFFER); \
+  vec->len = size; \
+  vec->buf[0] = BUF_ ## Prefix; \
+  v = lst; \
+  int i = 0; \
+  unsigned offset = elem_width; \
+  while(VWordType(v) == VPOINTER_PAIR) { \
+    VPair * p = VDecodePair(v); \
+    Prefix ## Write(runtime, vec, offset, p->first); \
+    offset += elem_width; \
+    i++; \
+    v = p->rest; \
+  } \
+  V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER)); \
 } \
 void V ## Prefix ## VectorLength(V_CORE_ARGS, VWORD k, VWORD _buf) { \
   V_ARG_CHECK3(runtime, #prefix "vector-length", 2, argc); \

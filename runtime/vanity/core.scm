@@ -973,8 +973,15 @@
       ((port) (##vcore.read-char port))))
   (define read-line
     (case-lambda
-      (() (##vcore.read-line (current-input-port)))
-      ((port) (##vcore.read-line port))))
+      (() (read-line (current-input-port)))
+      ((port)
+       (define-values (line complete) (##vcore.read-line2 port))
+       (cond ((eof-object? line) line)
+             (complete line)
+             (else
+              (let ((rest (read-line port)))
+                (string-append line (if (eof-object? rest) "" rest))))))))
+
   (define read
     (case-lambda
       (() (##vcore.read (current-input-port)))

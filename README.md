@@ -167,10 +167,6 @@ Call History (most recent to least recent)
 
 As continuation passing style folds the program inside out and all procedures gain an extra continuation parameter.  You can check it out by expanding the code to continuation passing style with `vsc -E2`.
 
-### Weird Limits
-
-Things like `read-line` only grabbing 256 characters. Have fun!
-
 ### Little Compile Time Checking
 
 There is no type checking at compile time, and header files currently only have lists of symbols not function shape.
