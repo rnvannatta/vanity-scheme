@@ -269,11 +269,11 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |rational?                      | Low Prio    |             |            |
 |rationalize                    | Low Prio    |             |            |
 |read                           | Yes         |             |            |
-|read-bytevector                |             |             |            |
+|read-bytevector                | Yes         |             |            |
 |read-bytevector!               |             |             |            |
 |read-char                      | Yes         |             |            |
 |read-error?                    |             |             |            |
-|read-line                      | Yes*        |             |            |
+|read-line                      | Yes         |             |            |
 |read-string                    |             |             |            |
 |read-u8                        |             |             |            |
 |real-part                      | Low Prio    |             |            |
@@ -376,11 +376,11 @@ Macros are also a low priority feature.
 
 Datum label notation and printing of recursive datastructures is unsupported.
 
-`read-line` has low internal limits.
-
 Vanity Scheme is UTF-ignorant ASCII: string refrencing is constant time and strings are unaware of multibyte unicode-8 characters.
 
 `load` only works in the interpreter, furthermore `eval` is low priority and will only work in the interpreter.
+
+Maximum number of function arguments is 65535, including the hidden continuation argument. Maximum vector length is 65535 elements. Symbols have a maximum length of 65536. Strings and srfi-4 typed vectors have a max length of 2^31 bytes.
 
 ## SRFI-1
 

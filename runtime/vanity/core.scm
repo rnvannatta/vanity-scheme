@@ -67,6 +67,7 @@
     u8vector? list->u8vector u8vector->list make-u8vector u8vector u8vector-ref u8vector-set! u8vector-length
     s8vector? list->s8vector s8vector->list make-s8vector s8vector s8vector-ref s8vector-set! s8vector-length
     bytevector? list->bytevector bytevector->list make-bytevector bytevector bytevector-u8-ref bytevector-u8-set! bytevector-length
+    read-u8vector read-bytevector
 
     typevector?
 
@@ -687,6 +688,12 @@
   (define bytevector-u8-ref u8vector-ref)
   (define bytevector-u8-set! u8vector-set!)
   (define bytevector-length u8vector-length)
+
+  (define read-u8vector
+    (case-lambda
+      ((n) (##vcore.read-u8vector n (current-input-port)))
+      ((n port) (##vcore.read-u8vector n port))))
+  (define read-bytevector read-u8vector)
 
   (define s8vector? ##vcore.s8vector?)
   (define make-s8vector

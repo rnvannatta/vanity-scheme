@@ -2277,7 +2277,7 @@ SYSV_CALL void VUnloadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
 
 #define IMPLEMENT_PRINT_VECTOR(Prefix, prefix, stride, ctype, format) \
 static void Print ## Prefix(FILE * f, VBlob * blob) {\
-  unsigned len = (blob->len/stride)-1; \
+  int len = (blob->len/stride)-1; \
   ctype * ints = (ctype*)(blob->buf+stride); \
   fprintf(f, "#" #prefix "("); \
   for(int i = 0; i < len-1; i++) \
