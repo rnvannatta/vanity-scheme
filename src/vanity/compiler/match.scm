@@ -61,15 +61,14 @@
              (k (gensym "kk"))
              (k2 (gensym "kk"))
              (expr (gensym "expr")))
-        `(call-with-values
+        `(##vcore.call-with-values
            (lambda ()
-             (call/cc
+             (##vcore.call/cc
                (lambda (,k)
                  (let loop ((,expr ,(car expr-stack)) . ,(map (lambda (sym) `(,sym '())) syms))
                    (if (##vcore.not (##vcore.pair? ,expr))
                        (,k ,expr . ,(map (lambda (sym) `(reverse ,sym)) syms)))
-                   (call-with-values
-                    (lambda ()
+                   (##vcore.call-with-values (lambda ()
                       ; use a second continuation to get rid of the wasteful
                       ; continuation after the end of the ellipses
                       ; ie (x ...) on (1 2 3 4 5) builds up 5 copies
@@ -77,7 +76,7 @@
                       ; drop the unnecessary (k (reverse sym1))'s by
                       ; jumping out and calling the loop instead of
                       ; directly calling the loop
-                      (call/cc
+                      (##vcore.call/cc
                         (lambda (,k2)
                           ,(match-iter (list `(##vcore.car ,expr)) (list pattern)
                             `(,k2 (##vcore.cdr ,expr) . ,(map (lambda (var sym) `(##vcore.cons ,var ,sym)) variables syms)))
@@ -130,16 +129,16 @@
       ))
     (let ((k (gensym "kk"))
           (input (gensym "input")))
-      `(call/cc
+      `(##vcore.call/cc
          (lambda (,k)
            (let ((,input ,(cadr expr)))
            . 
            ,(let loop ((patterns (cddr expr)))
               (cond
                 ((null? patterns) `((error "match statement exhausted")))
-                ((eqv? (caar patterns) 'else) `((,k (begin . ,(cdar patterns)))))
+                ((eqv? (caar patterns) 'else) `((##vcore.call-with-values (lambda () . ,(cdar patterns)) ,k)))
                 (else
                   (cons (match-iter (list input)
                                     (list (caar patterns))
-                                    `(,k (begin . ,(cdar patterns))))
+                                    `((##vcore.call-with-values (lambda () . ,(cdar patterns)) ,k)))
                         (loop (cdr patterns))))))))))))
