@@ -130,8 +130,9 @@
     (match expr
       (('##foreign.declare . _) expr)
       (('##vcore.declare f l)
-       ; (to-cps-impl l) returns (lambda (k) (k (lambda ...))) because lambda expressions are atoms
        `(##vcore.declare ,f ,(cadr (caddr (to-cps-impl l)))))
+      (('import lib)
+       (to-cps-impl `(##vcore.multidefine (##vcore.load-library ,(mangle-library lib)))))
       (else (to-cps-impl expr))))
 
   (define (substitute x atom expr n)
