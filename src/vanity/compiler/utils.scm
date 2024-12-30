@@ -25,7 +25,7 @@
 
 (define-library (vanity compiler utils)
   (import (vanity core) (vanity compiler config))
-  (export read-all search-open-input-file compiler-error gensym filter gcc-path)
+  (export read-all search-open-input-file compiler-error compiler-warning gensym filter gcc-path)
   (define (read-all port)
     (let ((expr (read port)))
       (if (eof-object? expr) '()
@@ -37,6 +37,12 @@
             (if fd fd (loop (cdr paths)))))))
   (define (compiler-error msg . irritants)
     (raise (##vcore.record #f 'compiler-error msg irritants)))
+  (define (compiler-warning msg . irritants)
+    (format (current-error-port) "vsc: compiler-warning: ~A:" msg)
+    (for-each
+      (lambda (irr) (display " " (current-error-port)) (write irr (current-error-port)))
+      irritants)
+    (newline (current-error-port)))
   (define (filter p lst)
     (cond ((null? lst) '())
           ((p (car lst)) (cons (car lst) (filter p (cdr lst))))

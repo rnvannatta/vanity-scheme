@@ -68,20 +68,21 @@
                  (let loop ((,expr ,(car expr-stack)) . ,(map (lambda (sym) `(,sym '())) syms))
                    (if (##vcore.not (##vcore.pair? ,expr))
                        (,k ,expr . ,(map (lambda (sym) `(reverse ,sym)) syms)))
-                   (##vcore.call-with-values (lambda ()
-                      ; use a second continuation to get rid of the wasteful
-                      ; continuation after the end of the ellipses
-                      ; ie (x ...) on (1 2 3 4 5) builds up 5 copies
-                      ; of (k (reverse sym1)) in the continuation so 
-                      ; drop the unnecessary (k (reverse sym1))'s by
-                      ; jumping out and calling the loop instead of
-                      ; directly calling the loop
-                      (##vcore.call/cc
-                        (lambda (,k2)
-                          ,(match-iter (list `(##vcore.car ,expr)) (list pattern)
-                            `(,k2 (##vcore.cdr ,expr) . ,(map (lambda (var sym) `(##vcore.cons ,var ,sym)) variables syms)))
-                          (,k ,expr . ,(map (lambda (sym) `(reverse ,sym)) syms)))))
-                    loop)))))
+                   (##vcore.call-with-values
+                      (lambda ()
+                        ; use a second continuation to get rid of the wasteful
+                        ; continuation after the end of the ellipses
+                        ; ie (x ...) on (1 2 3 4 5) builds up 5 copies
+                        ; of (k (reverse sym1)) in the continuation so 
+                        ; drop the unnecessary (k (reverse sym1))'s by
+                        ; jumping out and calling the loop instead of
+                        ; directly calling the loop
+                        (##vcore.call/cc
+                          (lambda (,k2)
+                            ,(match-iter (list `(##vcore.car ,expr)) (list pattern)
+                              `(,k2 (##vcore.cdr ,expr) . ,(map (lambda (var sym) `(##vcore.cons ,var ,sym)) variables syms)))
+                            (,k ,expr . ,(map (lambda (sym) `(reverse ,sym)) syms)))))
+                      loop)))))
            (lambda (tail-expr . ,variables)
              ,(match-iter (cons 'tail-expr (cdr expr-stack)) (cons tail-pattern pattern-stack) success-expr)))))
 

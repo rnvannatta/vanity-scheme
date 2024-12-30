@@ -139,7 +139,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |emergency-exit                 |             |             |            |
 |environment                    | Low Prio    |             |            |
 |eof-object                     |             |             |            |
-|eof-object?                    |             |             |            |
+|eof-object?                    | Yes         |             |            |
 |eq?                            | Yes         |             |            |
 |equal?                         | Yes         |             |            |
 |eqv?                           | Yes         |             |            |
