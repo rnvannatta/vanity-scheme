@@ -53,6 +53,7 @@
     cdaaar cdaadr cdadar cdaddr cddaar cddadr cdddar cddddr
     ; lists
     list list? length list-tail list-ref list-set! list-copy make-list map for-each append reverse memq memv member assq assv assoc
+    num-pairs split-at-right
     ; strings
     string->list list->string make-string substring string-copy string-copy! string-ref string-set! string-length string->symbol string->number string-append
     symbol->string
@@ -515,6 +516,22 @@
        (cond ((null? alst) #f)
              ((= x (caar alst)) (car alst))
              (else (assoc x (cdr alst)))))))
+
+  (define (num-pairs lst)
+    (let loop ((n 0) (lst lst))
+      (if (pair? lst)
+          (loop (+ n 1) (cdr lst))
+          n)))
+  (define (split-at-right lst n)
+    (let loop ((lst lst) (len (num-pairs lst)))
+      (if (eq? len n)
+          (values '() lst)
+          (call-with-values
+            (lambda () (loop (cdr lst) (- len 1)))
+            (lambda (d t)
+              (values
+                (cons (car lst) d)
+                t))))))
 
   ; strings
 

@@ -48,6 +48,11 @@
 
   ; (iota n b s) <==> (list-tabulate n (lambda (i) (+ (* s i) b)))
   ; (fold f knil (map g lst)) <==> (fold (lambda (a b) (f (g a) b)) knil lst)
+  (define (my-num-pairs lst)
+    (let loop ((lst lst) (n 0))
+      (if (pair? lst)
+          (loop (cdr lst) (+ n 1))
+          n)))
 
   (define iota
     (case-lambda
@@ -77,11 +82,11 @@
     (if (eq? i 0) lst
         (drop (cdr lst) (- i 1))))
   (define (take-right lst i)
-    (let loop ((lst lst) (len (length lst)))
+    (let loop ((lst lst) (len (my-num-pairs lst)))
       (if (eq? len i) lst
           (loop (cdr lst) (- len 1)))))
   (define (drop-right lst i)
-    (let loop ((lst lst) (len (length lst)))
+    (let loop ((lst lst) (len (my-num-pairs lst)))
       (if (eq? len i) '()
           (cons (car lst)
                 (loop (cdr lst) (- len 1))))))

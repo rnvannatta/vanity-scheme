@@ -299,7 +299,7 @@
                           (if (null? exprs)
                               (let ((free (filter (lambda (e) (not (memv e bound))) free)))
                                 (if (not (null? free))
-                                    (compiler-warning "free variables in program" free)))
+                                    ((if werror-unbound-variables compiler-error compiler-warning) "free variables in program" free)))
                               (let ()
                                 (define-values (new-free new-bound)
                                   (free-variables-toplevel (car exprs) bound (cons path paths)))
