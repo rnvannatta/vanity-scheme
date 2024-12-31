@@ -720,7 +720,6 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
         VBlob * b = ptr;
         size_t size = sizeof(VBlob) + (b->len + sizeof(VWORD) - 1)/sizeof(VWORD) * sizeof(VWORD);
         if(size >= V_HUGE_ALLOC_THRESHOLD) {
-          printf("marked\n");
           VMarkForeignFinalizer(runtime, word, false);
         }
       }
