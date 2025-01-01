@@ -26,11 +26,6 @@
 (define-library (vanity compiler match)
   (import (vanity core) (vanity compiler utils))
   (export transform-match)
-  (define (my-num-pairs lst)
-    (let loop ((lst lst) (n 0))
-      (if (pair? lst)
-          (loop (cdr lst) (+ n 1))
-          n)))
   (define (gather-variables pattern eqv?)
     (cond ((null? pattern) '())
           ((eqv? (car pattern) '_) (gather-variables (cdr pattern) eqv?))
@@ -98,7 +93,7 @@
     (define (match-ellipses expr-stack pattern-stack success-expr)
       (let* ((head-pattern (cons (caar pattern-stack) '(...)))
              (tail-pattern (cddar pattern-stack))
-             (len (my-num-pairs tail-pattern)))
+             (len (num-pairs tail-pattern)))
         (if (> len 0)
             ; handling trailing patterns
             ; splitting the pattern (a ... . b) onto the pattern stack as (a ...) and b
@@ -111,7 +106,7 @@
                      (lambda () (split-at-right ,(car expr-stack) ,len))
                      (lambda (,head ,tail)
                        ,(match-iter (cons head (cons tail (cdr expr-stack)))
-                                    (cons head-pattern (cons tail-pattern (cdr expr-stack)))
+                                    (cons head-pattern (cons tail-pattern (cdr pattern-stack)))
                                     success-expr)))))
             ; gotta collect ellipses variables
             ; gotta generate syms
