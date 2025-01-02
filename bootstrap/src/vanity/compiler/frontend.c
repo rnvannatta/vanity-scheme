@@ -3742,8 +3742,8 @@ static void _V0handle__exception_k153(VRuntime * runtime, VEnv * upenv, int argc
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.318 8 0) (bruijn ##.ret.42.46 1 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 8-1, 0)), 1,
+  // ((bruijn ##.k.318 7 0) (bruijn ##.ret.42.46 1 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 7-1, 0)), 1,
       upenv->vars[0]);
 }
 static void _V0handle__exception_k152(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -3756,8 +3756,8 @@ static void _V0handle__exception_k152(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((bruijn ##.parameter.40.44 6 0) (close _V0handle__exception_k153) '##vcore.pop-value (bruijn ##.keyval.41.45 4 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 6-1, 0)), 3,
+  // (current-output-port (close _V0handle__exception_k153) '##vcore.pop-value (bruijn ##.keyval.41.45 4 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "current-output-port")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0handle__exception_k153, env)}),
       _V10vcore_Dpop__value,
       upenv->up->up->up->vars[0]);
@@ -3801,10 +3801,10 @@ static void _V0handle__exception_k149(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (write (close _V0handle__exception_k150) (bruijn ##.err.43 4 1))
+  // (write (close _V0handle__exception_k150) (bruijn ##.err.43 3 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "write")), 2,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0handle__exception_k150, env)}),
-      upenv->up->up->up->vars[1]);
+      upenv->up->up->vars[1]);
 }
 static void _V0handle__exception_k148(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -3831,20 +3831,11 @@ static void _V0handle__exception_k147(VRuntime * runtime, VEnv * upenv, int argc
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((bruijn ##.parameter.40.44 1 0) (close _V0handle__exception_k148) '##vcore.push-value (bruijn ##.x.323 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, upenv->vars[0]), 3,
+  // (current-output-port (close _V0handle__exception_k148) '##vcore.push-value (bruijn ##.x.323 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "current-output-port")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0handle__exception_k148, env)}),
       _V10vcore_Dpush__value,
       _var0);
-}
-static void _V0handle__exception_lambda81(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (current-error-port (close _V0handle__exception_k147))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "current-error-port")), 1,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0handle__exception_k147, env)}));
 }
 static void _V0handle__exception_lambda80(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
@@ -3857,9 +3848,9 @@ static void _V0handle__exception_lambda80(VRuntime * runtime, VEnv * upenv, int 
   VInitEnv(env, 2, 2, upenv);
   env->vars[0] = _var0;
   env->vars[1] = _var1;
-  // ((close _V0handle__exception_lambda81) current-output-port)
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V0handle__exception_lambda81, .env = env }, }, 1,
-      VLookupGlobalVarFast2(runtime, "current-output-port"));
+  // (current-error-port (close _V0handle__exception_k147))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "current-error-port")), 1,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0handle__exception_k147, env)}));
 }
 static void global_lambda79(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -5726,9 +5717,9 @@ static void _V10_Dloop_D48_k154(VRuntime * runtime, VEnv * upenv, int argc, VWOR
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D48_k155, env)}),
       _var0);
 }
-static void _V10_Dloop_D48_lambda84(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Dloop_D48_lambda83(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D48_lambda84, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D48_lambda83, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -6887,28 +6878,6 @@ static void global_k257(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
         VNULL))),
         VNULL))))))))))));
 }
-static void global_lambda83(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to global_lambda83, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
-  // (letrec 1 ((close _V10_Dloop_D48_lambda84)) (command-line (close global_k257)))
-    // OH NO A LETREC!
-    {
-    VEnv * upenv = env;
-    struct { VEnv env; VWORD argv[1]; } container;
-    VEnv * env = &container.env;
-    VInitEnv(env, 1, 1, upenv);
-    env->vars[0] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D48_lambda84, env)});
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "command-line")), 1,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k257, env)}));
-    }
-}
 static void global_lambda82(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to global_lambda82, got ~D~N"
@@ -6919,11 +6888,33 @@ static void global_lambda82(VRuntime * runtime, VEnv * upenv, int argc, VWORD _v
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (with-exception-handler (bruijn ##.next.324 0 0) handle-exception (close global_lambda83))
+  // (letrec 1 ((close _V10_Dloop_D48_lambda83)) (command-line (close global_k257)))
+    // OH NO A LETREC!
+    {
+    VEnv * upenv = env;
+    struct { VEnv env; VWORD argv[1]; } container;
+    VEnv * env = &container.env;
+    VInitEnv(env, 1, 1, upenv);
+    env->vars[0] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D48_lambda83, env)});
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "command-line")), 1,
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k257, env)}));
+    }
+}
+static void global_lambda81(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to global_lambda81, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv env; VWORD argv[1]; } container;
+  VEnv * env = &container.env;
+  VInitEnv(env, 1, 1, upenv);
+  env->vars[0] = _var0;
+  // (with-exception-handler (bruijn ##.next.324 0 0) handle-exception (close global_lambda82))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "with-exception-handler")), 3,
       _var0,
       VLookupGlobalVarFast2(runtime, "handle-exception"),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda83, env)}));
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda82, env)}));
 }
 static void global_k319(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -7015,9 +7006,9 @@ static void global_k328(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       VEncodePointer(&_V10_Dstring_D782.sym, VPOINTER_OTHER),
       _var0);
 }
-static void global_lambda87(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+static void global_lambda86(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to global_lambda87, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda86, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -7041,7 +7032,7 @@ static void global_k327(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.688 1 0) (list (bruijn ##.k.689 0 0) out-file) (map (bruijn ##.k.689 0 0) (close global_lambda87) scm-files))
+  // (if (bruijn ##.p.688 1 0) (list (bruijn ##.k.689 0 0) out-file) (map (bruijn ##.k.689 0 0) (close global_lambda86) scm-files))
 if(VDecodeBool(
 upenv->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "list")), 2,
@@ -7050,7 +7041,7 @@ upenv->vars[0])) {
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "map")), 3,
       _var0,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda87, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda86, env)}),
       VLookupGlobalVarFast2(runtime, "scm-files"));
 }
 }
@@ -7110,9 +7101,9 @@ static void global_k335(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       VEncodePointer(&_V10_Dstring_D782.sym, VPOINTER_OTHER),
       _var0);
 }
-static void global_lambda88(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+static void global_lambda87(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to global_lambda88, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda87, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -7136,7 +7127,7 @@ static void global_k334(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.681 1 0) (list (bruijn ##.k.682 0 0) #f) (if object? (list (bruijn ##.k.682 0 0) out-file) (map (bruijn ##.k.682 0 0) (close global_lambda88) scm-files)))
+  // (if (bruijn ##.p.681 1 0) (list (bruijn ##.k.682 0 0) #f) (if object? (list (bruijn ##.k.682 0 0) out-file) (map (bruijn ##.k.682 0 0) (close global_lambda87) scm-files)))
 if(VDecodeBool(
 upenv->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "list")), 2,
@@ -7151,7 +7142,7 @@ VLookupGlobalVarFast2(runtime, "object?"))) {
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "map")), 3,
       _var0,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda88, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda87, env)}),
       VLookupGlobalVarFast2(runtime, "scm-files"));
 }
 }
@@ -7320,9 +7311,9 @@ _var0)) {
       upenv->vars[2]);
 }
 }
-static void _V10_Dloop_D92_lambda89(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void _V10_Dloop_D92_lambda88(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D92_lambda89, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D92_lambda88, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -7578,9 +7569,9 @@ static void global_k392(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       _var0
     );
 }
-static void global_lambda90(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+static void global_lambda89(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to global_lambda90, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda89, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -7605,10 +7596,10 @@ static void global_k386(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (for-each (close global_k387) (close global_lambda90) c-options)
+  // (for-each (close global_k387) (close global_lambda89) c-options)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "for-each")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k387, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda90, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda89, env)}),
       VLookupGlobalVarFast2(runtime, "c-options"));
 }
 static void global_k393(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -7628,9 +7619,9 @@ static void global_k393(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       _var0
     );
 }
-static void global_lambda91(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+static void global_lambda90(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to global_lambda91, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda90, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -7656,10 +7647,10 @@ static void global_k385(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (for-each (close global_k386) (close global_lambda91) (bruijn ##.x.577 0 0))
+  // (for-each (close global_k386) (close global_lambda90) (bruijn ##.x.577 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "for-each")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k386, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda91, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda90, env)}),
       _var0);
 }
 static void global_k384(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -8297,9 +8288,9 @@ static void global_k410(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       upenv->vars[3],
       upenv->vars[2]);
 }
-static void global_lambda93(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+static void global_lambda92(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
  if(argc != 4) {
-  VErrorC(runtime, "Not enough arguments to global_lambda93, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda92, got ~D~N"
   "-- expected 4~N"
   , argc);
  }
@@ -8315,9 +8306,9 @@ static void global_lambda93(VRuntime * runtime, VEnv * upenv, int argc, VWORD _v
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k410, env)}),
       _var1);
 }
-static void global_lambda92(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void global_lambda91(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to global_lambda92, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda91, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8325,10 +8316,10 @@ static void global_lambda92(VRuntime * runtime, VEnv * upenv, int argc, VWORD _v
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (for-each (bruijn ##.k.593 0 0) (close global_lambda93) scm-files (bruijn ##.cc-files.54 26 0) (bruijn ##.cc-obj-files.55 26 1))
+  // (for-each (bruijn ##.k.593 0 0) (close global_lambda92) scm-files (bruijn ##.cc-files.54 26 0) (bruijn ##.cc-obj-files.55 26 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "for-each")), 5,
       _var0,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda93, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda92, env)}),
       VLookupGlobalVarFast2(runtime, "scm-files"),
       VGetArg(upenv, 26-1, 0),
       VGetArg(upenv, 26-1, 1));
@@ -8343,11 +8334,11 @@ static void global_k365(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (benchmark (close global_k366) (##string ##.string.795) (close global_lambda92))
+  // (benchmark (close global_k366) (##string ##.string.795) (close global_lambda91))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "benchmark")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k366, env)}),
       VEncodePointer(&_V10_Dstring_D795.sym, VPOINTER_OTHER),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda92, env)}));
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda91, env)}));
 }
 static void global_k364(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -8392,7 +8383,7 @@ static void global_k357(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (letrec 1 (#f) (letrec 1 ((close _V10_Dloop_D92_lambda89)) (cdr (close global_k363) paths)))
+  // (letrec 1 (#f) (letrec 1 ((close _V10_Dloop_D92_lambda88)) (cdr (close global_k363) paths)))
     // OH NO A LETREC!
     {
     VEnv * upenv = env;
@@ -8406,7 +8397,7 @@ static void global_k357(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
     struct { VEnv env; VWORD argv[1]; } container;
     VEnv * env = &container.env;
     VInitEnv(env, 1, 1, upenv);
-    env->vars[0] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D92_lambda89, env)});
+    env->vars[0] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D92_lambda88, env)});
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "cdr")), 2,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k363, env)}),
       VLookupGlobalVarFast2(runtime, "paths"));
@@ -8516,9 +8507,9 @@ static void global_k420(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       upenv->vars[2],
       _var0);
 }
-static void global_lambda94(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void global_lambda93(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to global_lambda94, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda93, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -8542,10 +8533,10 @@ static void global_k348(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (fold (close global_k349) (close global_lambda94) 0 (bruijn ##.x.620 0 0))
+  // (fold (close global_k349) (close global_lambda93) 0 (bruijn ##.x.620 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "fold")), 4,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k349, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda94, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda93, env)}),
       VEncodeInt(0l),
       _var0);
 }
@@ -8638,9 +8629,9 @@ static void _V10_Dloop_D73_k432(VRuntime * runtime, VEnv * upenv, int argc, VWOR
       upenv->vars[0],
       _var0);
 }
-static void _V10_Dloop_D73_lambda98(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Dloop_D73_lambda97(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D73_lambda98, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D73_lambda97, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -8695,9 +8686,9 @@ static void _V10_Dloop_D73_k438(VRuntime * runtime, VEnv * upenv, int argc, VWOR
       upenv->vars[0],
       _var0);
 }
-static void _V10_Dloop_D73_lambda99(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Dloop_D73_lambda98(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D73_lambda99, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D73_lambda98, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -8722,10 +8713,10 @@ static void _V10_Dloop_D73_k435(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (filter (close _V10_Dloop_D73_k436) (close _V10_Dloop_D73_lambda99) (bruijn ##.new-free.79 3 0))
+  // (filter (close _V10_Dloop_D73_k436) (close _V10_Dloop_D73_lambda98) (bruijn ##.new-free.79 3 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "filter")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_k436, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_lambda99, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_lambda98, env)}),
       upenv->up->up->vars[0]);
 }
 static void _V10_Dloop_D73_k434(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -8789,9 +8780,9 @@ static void _V10_Dloop_D73_k439(VRuntime * runtime, VEnv * upenv, int argc, VWOR
       VGetArg(upenv, 11-1, 0),
       VLookupGlobalVarFast2(runtime, "paths"));
 }
-static void _V10_Dloop_D73_lambda100(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void _V10_Dloop_D73_lambda99(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D73_lambda100, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D73_lambda99, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8821,9 +8812,9 @@ static void _V10_Dloop_D73_k441(VRuntime * runtime, VEnv * upenv, int argc, VWOR
       upenv->vars[2]
     );
 }
-static void _V10_Dloop_D73_lambda101(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void _V10_Dloop_D73_lambda100(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D73_lambda101, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D73_lambda100, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -8850,12 +8841,12 @@ static void _V10_Dloop_D73_k426(VRuntime * runtime, VEnv * upenv, int argc, VWOR
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.647 0 0) (filter (close _V10_Dloop_D73_k427) (close _V10_Dloop_D73_lambda98) (bruijn ##.free.76 1 3)) (letrec 3 (#f #f #f) (##vcore.call-with-values (close _V10_Dloop_D73_k433) (close _V10_Dloop_D73_lambda100) (close _V10_Dloop_D73_lambda101))))
+  // (if (bruijn ##.p.647 0 0) (filter (close _V10_Dloop_D73_k427) (close _V10_Dloop_D73_lambda97) (bruijn ##.free.76 1 3)) (letrec 3 (#f #f #f) (##vcore.call-with-values (close _V10_Dloop_D73_k433) (close _V10_Dloop_D73_lambda99) (close _V10_Dloop_D73_lambda100))))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "filter")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_k427, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_lambda98, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_lambda97, env)}),
       upenv->vars[3]);
 } else {
     // OH NO A LETREC!
@@ -8869,14 +8860,14 @@ _var0)) {
     env->vars[2] = VEncodeBool(false);
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_k433, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_lambda100, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_lambda101, env)}));
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_lambda99, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_lambda100, env)}));
     }
 }
 }
-static void _V10_Dloop_D73_lambda97(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+static void _V10_Dloop_D73_lambda96(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
  if(argc != 4) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D73_lambda97, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D73_lambda96, got ~D~N"
   "-- expected 4~N"
   , argc);
  }
@@ -8915,7 +8906,7 @@ static void global_k425(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if w-unbound-variables (letrec 1 ((close _V10_Dloop_D73_lambda97)) (apply (close global_k442) append (bruijn ##.expanded.72 2 0))) ((bruijn ##.k.645 0 0) #f))
+  // (if w-unbound-variables (letrec 1 ((close _V10_Dloop_D73_lambda96)) (apply (close global_k442) append (bruijn ##.expanded.72 2 0))) ((bruijn ##.k.645 0 0) #f))
 if(VDecodeBool(
 VLookupGlobalVarFast2(runtime, "w-unbound-variables"))) {
     // OH NO A LETREC!
@@ -8924,7 +8915,7 @@ VLookupGlobalVarFast2(runtime, "w-unbound-variables"))) {
     struct { VEnv env; VWORD argv[1]; } container;
     VEnv * env = &container.env;
     VInitEnv(env, 1, 1, upenv);
-    env->vars[0] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_lambda97, env)});
+    env->vars[0] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D73_lambda96, env)});
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "apply")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k442, env)}),
       VLookupGlobalVarFast2(runtime, "append"),
@@ -9052,9 +9043,9 @@ static void global_k456(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       VLookupGlobalVarFast2(runtime, "debug?"),
       _var0);
 }
-static void global_lambda102(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void global_lambda101(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to global_lambda102, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda101, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9086,11 +9077,11 @@ static void global_k449(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (benchmark (bruijn ##.k.622 10 0) (##string ##.string.798) (close global_lambda102))
+  // (benchmark (bruijn ##.k.622 10 0) (##string ##.string.798) (close global_lambda101))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "benchmark")), 3,
       VGetArg(upenv, 10-1, 0),
       VEncodePointer(&_V10_Dstring_D798.sym, VPOINTER_OTHER),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda102, env)}));
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda101, env)}));
 }
 static void global_k459(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9119,9 +9110,9 @@ static void global_k458(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k459, env)}),
       VLookupGlobalVarFast2(runtime, "bytecode?"));
 }
-static void global_lambda103(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void global_lambda102(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to global_lambda103, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda102, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9145,7 +9136,7 @@ static void global_k448(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.626 0 0) (for-each (bruijn ##.k.622 9 0) pretty-print (bruijn ##.opt.86 1 0)) (benchmark (close global_k449) (##string ##.string.799) (close global_lambda103)))
+  // (if (bruijn ##.p.626 0 0) (for-each (bruijn ##.k.622 9 0) pretty-print (bruijn ##.opt.86 1 0)) (benchmark (close global_k449) (##string ##.string.799) (close global_lambda102)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "for-each")), 3,
@@ -9156,7 +9147,7 @@ _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "benchmark")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k449, env)}),
       VEncodePointer(&_V10_Dstring_D799.sym, VPOINTER_OTHER),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda103, env)}));
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda102, env)}));
 }
 }
 static void global_k447(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -9187,9 +9178,9 @@ static void global_k460(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       upenv->vars[1],
       _var0);
 }
-static void global_lambda105(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+static void global_lambda104(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to global_lambda105, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda104, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -9203,9 +9194,9 @@ static void global_lambda105(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k460, env)}),
       VLookupGlobalVarFast2(runtime, "bytecode?"));
 }
-static void global_lambda104(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void global_lambda103(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to global_lambda104, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda103, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9213,10 +9204,10 @@ static void global_lambda104(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (map (bruijn ##.k.639 0 0) (close global_lambda105) (bruijn ##.cps.85 2 0))
+  // (map (bruijn ##.k.639 0 0) (close global_lambda104) (bruijn ##.cps.85 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "map")), 3,
       _var0,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda105, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda104, env)}),
       upenv->up->vars[0]);
 }
 static void global_k446(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -9229,7 +9220,7 @@ static void global_k446(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.625 0 0) (for-each (bruijn ##.k.622 7 0) pretty-print (bruijn ##.cps.85 1 0)) (benchmark (close global_k447) (##string ##.string.800) (close global_lambda104)))
+  // (if (bruijn ##.p.625 0 0) (for-each (bruijn ##.k.622 7 0) pretty-print (bruijn ##.cps.85 1 0)) (benchmark (close global_k447) (##string ##.string.800) (close global_lambda103)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "for-each")), 3,
@@ -9240,7 +9231,7 @@ _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "benchmark")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k447, env)}),
       VEncodePointer(&_V10_Dstring_D800.sym, VPOINTER_OTHER),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda104, env)}));
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda103, env)}));
 }
 }
 static void global_k445(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -9259,9 +9250,9 @@ static void global_k445(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       VLookupGlobalVarFast2(runtime, "expand?"),
       VEncodeInt(1l));
 }
-static void global_lambda107(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+static void global_lambda106(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to global_lambda107, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda106, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -9280,15 +9271,15 @@ static void global_k461(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (map (bruijn ##.k.642 1 0) (close global_lambda107) (bruijn ##.x.644 0 0))
+  // (map (bruijn ##.k.642 1 0) (close global_lambda106) (bruijn ##.x.644 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "map")), 3,
       upenv->vars[0],
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda107, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda106, env)}),
       _var0);
 }
-static void global_lambda106(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void global_lambda105(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to global_lambda106, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda105, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9312,7 +9303,7 @@ static void global_k444(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.624 0 0) (for-each (bruijn ##.k.622 5 0) pretty-print (bruijn ##.expanded.72 2 0)) (benchmark (close global_k445) (##string ##.string.801) (close global_lambda106)))
+  // (if (bruijn ##.p.624 0 0) (for-each (bruijn ##.k.622 5 0) pretty-print (bruijn ##.expanded.72 2 0)) (benchmark (close global_k445) (##string ##.string.801) (close global_lambda105)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "for-each")), 3,
@@ -9323,7 +9314,7 @@ _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "benchmark")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k445, env)}),
       VEncodePointer(&_V10_Dstring_D801.sym, VPOINTER_OTHER),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda106, env)}));
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda105, env)}));
 }
 }
 static void global_k443(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -9385,9 +9376,9 @@ static void global_k462(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       _var0,
       VGetArg(upenv, 21-1, 5));
 }
-static void global_lambda109(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+static void global_lambda108(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to global_lambda109, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda108, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -9402,9 +9393,9 @@ static void global_lambda109(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
       VGetArg(upenv, 5-1, 0),
       VLookupGlobalVarFast2(runtime, "paths"));
 }
-static void global_lambda108(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void global_lambda107(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to global_lambda108, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda107, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9412,10 +9403,10 @@ static void global_lambda108(VRuntime * runtime, VEnv * upenv, int argc, VWORD _
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (map (bruijn ##.k.667 0 0) (close global_lambda109) (bruijn ##.file.71 1 0))
+  // (map (bruijn ##.k.667 0 0) (close global_lambda108) (bruijn ##.file.71 1 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "map")), 3,
       _var0,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda109, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda108, env)}),
       upenv->vars[0]);
 }
 static void global_k423(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
@@ -9428,11 +9419,11 @@ static void global_k423(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (benchmark (close global_k424) (##string ##.string.802) (close global_lambda108))
+  // (benchmark (close global_k424) (##string ##.string.802) (close global_lambda107))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "benchmark")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k424, env)}),
       VEncodePointer(&_V10_Dstring_D802.sym, VPOINTER_OTHER),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda108, env)}));
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda107, env)}));
 }
 static void global_k464(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9445,9 +9436,9 @@ static void global_k464(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
       upenv->vars[0],
       _var0);
 }
-static void global_lambda110(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void global_lambda109(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to global_lambda110, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda109, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9478,15 +9469,15 @@ static void global_k422(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (benchmark (close global_k423) (##string ##.string.803) (close global_lambda110))
+  // (benchmark (close global_k423) (##string ##.string.803) (close global_lambda109))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "benchmark")), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k423, env)}),
       VEncodePointer(&_V10_Dstring_D803.sym, VPOINTER_OTHER),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda110, env)}));
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda109, env)}));
 }
-static void global_lambda96(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void global_lambda95(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to global_lambda96, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda95, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9509,15 +9500,15 @@ static void global_k421(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (with-output-to-file (bruijn ##.k.621 1 0) (bruijn ##.cc-file.67 1 2) (close global_lambda96))
+  // (with-output-to-file (bruijn ##.k.621 1 0) (bruijn ##.cc-file.67 1 2) (close global_lambda95))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "with-output-to-file")), 3,
       upenv->vars[0],
       upenv->vars[2],
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda96, env)}));
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda95, env)}));
 }
-static void global_lambda95(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+static void global_lambda94(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
  if(argc != 4) {
-  VErrorC(runtime, "Not enough arguments to global_lambda95, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda94, got ~D~N"
   "-- expected 4~N"
   , argc);
  }
@@ -9543,10 +9534,10 @@ static void global_k347(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (map (close global_k348) (close global_lambda95) scm-files (bruijn ##.cc-files.54 13 0) (bruijn ##.cc-obj-files.55 13 1))
+  // (map (close global_k348) (close global_lambda94) scm-files (bruijn ##.cc-files.54 13 0) (bruijn ##.cc-obj-files.55 13 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "map")), 5,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k348, env)}),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda95, env)}),
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda94, env)}),
       VLookupGlobalVarFast2(runtime, "scm-files"),
       VGetArg(upenv, 13-1, 0),
       VGetArg(upenv, 13-1, 1));
@@ -9827,9 +9818,9 @@ static void global_k318(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0)
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)global_k319, .env = env }, }, 1,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_k320, env)}));
 }
-static void global_lambda86(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void global_lambda85(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to global_lambda86, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda85, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9843,9 +9834,9 @@ static void global_lambda86(VRuntime * runtime, VEnv * upenv, int argc, VWORD _v
       VLookupGlobalVarFast2(runtime, "platform"),
       VEncodePointer(&_V10_Dstring_D713.sym, VPOINTER_OTHER));
 }
-static void global_lambda85(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void global_lambda84(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to global_lambda85, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to global_lambda84, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9853,11 +9844,11 @@ static void global_lambda85(VRuntime * runtime, VEnv * upenv, int argc, VWORD _v
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (with-exception-handler (bruijn ##.next.534 0 0) handle-exception (close global_lambda86))
+  // (with-exception-handler (bruijn ##.next.534 0 0) handle-exception (close global_lambda85))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "with-exception-handler")), 3,
       _var0,
       VLookupGlobalVarFast2(runtime, "handle-exception"),
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda86, env)}));
+      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)global_lambda85, env)}));
 }
 void toplevel0(V_CORE_ARGS, VWORD _k) {
     VEnv * env = NULL;
@@ -10131,12 +10122,12 @@ void toplevel53(V_CORE_ARGS, VWORD _k) {
 }
 void toplevel54(V_CORE_ARGS, VWORD _k) {
     VEnv * env = NULL;
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)global_lambda82, .env = env }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)global_lambda81, .env = env }, }, 1,
       _k);
 }
 void toplevel55(V_CORE_ARGS, VWORD _k) {
     VEnv * env = NULL;
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)global_lambda85, .env = env }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)global_lambda84, .env = env }, }, 1,
       _k);
 }
 VThunk VanityToplevels[] = {

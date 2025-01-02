@@ -56,8 +56,8 @@ static void _V10_Dassert__equal_D9_k14(VRuntime * runtime, VEnv * upenv, int arg
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.exit.8 6 7) (bruijn ##.k.26 4 0) 1)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 6-1, 7)), 2,
+  // ((bruijn ##.x.25 6 0) (bruijn ##.k.26 4 0) 1)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 6-1, 0)), 2,
       upenv->up->up->up->vars[0],
       VEncodeInt(1l));
 }
@@ -71,8 +71,8 @@ static void _V10_Dassert__equal_D9_k13(VRuntime * runtime, VEnv * upenv, int arg
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((bruijn ##.format.7 5 6) (close _V10_Dassert__equal_D9_k14) (bruijn ##.x.29 0 0) (##string ##.string.40) (bruijn ##.x.10 3 1) (bruijn ##.y.11 3 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 5-1, 6)), 5,
+  // ((bruijn ##.x.24 6 0) (close _V10_Dassert__equal_D9_k14) (bruijn ##.x.29 0 0) (##string ##.string.40) (bruijn ##.x.10 3 1) (bruijn ##.y.11 3 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 6-1, 0)), 5,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassert__equal_D9_k14, env)}),
       _var0,
       VEncodePointer(&_V10_Dstring_D40.sym, VPOINTER_OTHER),
@@ -89,10 +89,10 @@ static void _V10_Dassert__equal_D9_k12(VRuntime * runtime, VEnv * upenv, int arg
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.27 0 0) ((bruijn ##.current-error-port.6 4 5) (close _V10_Dassert__equal_D9_k13)) ((bruijn ##.k.26 2 0) #f))
+  // (if (bruijn ##.p.27 0 0) ((bruijn ##.x.23 6 0) (close _V10_Dassert__equal_D9_k13)) ((bruijn ##.k.26 2 0) #f))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, upenv->up->up->up->vars[5]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 6-1, 0)), 1,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassert__equal_D9_k13, env)}));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, upenv->up->vars[0]), 1,
@@ -109,8 +109,8 @@ static void _V10_Dassert__equal_D9_k11(VRuntime * runtime, VEnv * upenv, int arg
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((bruijn ##.not.3 3 2) (close _V10_Dassert__equal_D9_k12) (bruijn ##.x.30 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, upenv->up->up->vars[2]), 2,
+  // ((bruijn ##.x.20 8 0) (close _V10_Dassert__equal_D9_k12) (bruijn ##.x.30 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 8-1, 0)), 2,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassert__equal_D9_k12, env)}),
       _var0);
 }
@@ -135,8 +135,8 @@ static void _V10_Dloop_D14_k18(VRuntime * runtime, VEnv * upenv, int argc, VWORD
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((bruijn ##.cdr.1 8 0) (close _V10_Dloop_D14_k19) (bruijn ##.rest.15 4 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 8-1, 0)), 2,
+  // ((bruijn ##.x.18 15 0) (close _V10_Dloop_D14_k19) (bruijn ##.rest.15 4 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 15-1, 0)), 2,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D14_k19, env)}),
       upenv->up->up->up->vars[1]);
 }
@@ -166,10 +166,10 @@ static void _V10_Dloop_D14_k16(VRuntime * runtime, VEnv * upenv, int argc, VWORD
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // (if (bruijn ##.p.33 0 0) ((bruijn ##.car.2 6 1) (close _V10_Dloop_D14_k17) (bruijn ##.rest.15 2 1)) ((bruijn ##.k.32 2 0) #f))
+  // (if (bruijn ##.p.33 0 0) ((bruijn ##.x.19 12 0) (close _V10_Dloop_D14_k17) (bruijn ##.rest.15 2 1)) ((bruijn ##.k.32 2 0) #f))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 6-1, 1)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 12-1, 0)), 2,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D14_k17, env)}),
       upenv->up->vars[1]);
 } else {
@@ -187,14 +187,14 @@ static void _V10_Dloop_D14_k15(VRuntime * runtime, VEnv * upenv, int argc, VWORD
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((bruijn ##.not.3 5 2) (close _V10_Dloop_D14_k16) (bruijn ##.x.37 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 5-1, 2)), 2,
+  // ((bruijn ##.x.20 10 0) (close _V10_Dloop_D14_k16) (bruijn ##.x.37 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 10-1, 0)), 2,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D14_k16, env)}),
       _var0);
 }
-static void _V10_Dloop_D14_lambda4(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Dloop_D14_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D14_lambda4, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D14_lambda3, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -203,32 +203,32 @@ static void _V10_Dloop_D14_lambda4(VRuntime * runtime, VEnv * upenv, int argc, V
   VInitEnv(env, 2, 2, upenv);
   env->vars[0] = _var0;
   env->vars[1] = _var1;
-  // ((bruijn ##.null?.4 4 3) (close _V10_Dloop_D14_k15) (bruijn ##.rest.15 0 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, upenv->up->up->up->vars[3]), 2,
+  // ((bruijn ##.x.21 8 0) (close _V10_Dloop_D14_k15) (bruijn ##.rest.15 0 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 8-1, 0)), 2,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D14_k15, env)}),
       _var1);
 }
-__attribute__((used)) static void _V20CaseError__V10_Dassert__equal_D9_lambda3(VRuntime * runtime, VEnv * upenv, int argc, ...) {
- // (_V10_Dassert__equal_D9_lambda3 #t (3 ((bruijn ##.equal?.5 2 4) (close _V10_Dassert__equal_D9_k11) (bruijn ##.x.10 0 1) (bruijn ##.y.11 0 2))) (2 + (letrec 1 ((close _V10_Dloop_D14_lambda4)) ((bruijn ##.loop.14 0 0) (bruijn ##.k.31 1 0) (bruijn ##.rest.13 1 2)))))
- VErrorC(runtime, "Not enough arguments to _V10_Dassert__equal_D9_lambda3, got ~D~N"
+__attribute__((used)) static void _V20CaseError__V10_Dassert__equal_D9_lambda2(VRuntime * runtime, VEnv * upenv, int argc, ...) {
+ // (_V10_Dassert__equal_D9_lambda2 #t (3 ((bruijn ##.x.22 5 0) (close _V10_Dassert__equal_D9_k11) (bruijn ##.x.10 0 1) (bruijn ##.y.11 0 2))) (2 + (letrec 1 ((close _V10_Dloop_D14_lambda3)) ((bruijn ##.loop.14 0 0) (bruijn ##.k.31 1 0) (bruijn ##.rest.13 1 2)))))
+ VErrorC(runtime, "Not enough arguments to _V10_Dassert__equal_D9_lambda2, got ~D~N"
  "-- expected 3~N"
  "-- expected 2 or more~N"
  , argc);
 }
-__attribute__((used)) static void _V20Case0__V10_Dassert__equal_D9_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+__attribute__((used)) static void _V20Case0__V10_Dassert__equal_D9_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
   struct { VEnv env; VWORD argv[3]; } container;
   VEnv * env = &container.env;
   VInitEnv(env, 3, 3, upenv);
   env->vars[0] = _var0;
   env->vars[1] = _var1;
   env->vars[2] = _var2;
-  // ((bruijn ##.equal?.5 2 4) (close _V10_Dassert__equal_D9_k11) (bruijn ##.x.10 0 1) (bruijn ##.y.11 0 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, upenv->up->vars[4]), 3,
+  // ((bruijn ##.x.22 5 0) (close _V10_Dassert__equal_D9_k11) (bruijn ##.x.10 0 1) (bruijn ##.y.11 0 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 5-1, 0)), 3,
       VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassert__equal_D9_k11, env)}),
       _var1,
       _var2);
 }
-__attribute__((used)) static void _V20Case1__V10_Dassert__equal_D9_lambda3(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, ...) {
+__attribute__((used)) static void _V20Case1__V10_Dassert__equal_D9_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, ...) {
  VWORD _varargs = VNULL;
  V_GATHER_VARARGS_VARIADIC(&_varargs, 2, argc, _var1);
   struct { VEnv env; VWORD argv[3]; } container;
@@ -237,60 +237,32 @@ __attribute__((used)) static void _V20Case1__V10_Dassert__equal_D9_lambda3(VRunt
   env->vars[0] = _var0;
   env->vars[1] = _var1;
   env->vars[2] = _varargs;
-  // (letrec 1 ((close _V10_Dloop_D14_lambda4)) ((bruijn ##.loop.14 0 0) (bruijn ##.k.31 1 0) (bruijn ##.rest.13 1 2)))
+  // (letrec 1 ((close _V10_Dloop_D14_lambda3)) ((bruijn ##.loop.14 0 0) (bruijn ##.k.31 1 0) (bruijn ##.rest.13 1 2)))
     // OH NO A LETREC!
     {
     VEnv * upenv = env;
     struct { VEnv env; VWORD argv[1]; } container;
     VEnv * env = &container.env;
     VInitEnv(env, 1, 1, upenv);
-    env->vars[0] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D14_lambda4, env)});
+    env->vars[0] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D14_lambda3, env)});
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, env->vars[0]), 2,
       upenv->vars[0],
       upenv->vars[2]);
     }
 }
-void _V10_Dassert__equal_D9_lambda3(VRuntime * runtime, VEnv * upenv, int argc, ...);
+void _V10_Dassert__equal_D9_lambda2(VRuntime * runtime, VEnv * upenv, int argc, ...);
 asm(
 ".intel_syntax noprefix\n"
 #ifdef __linux__
-".type _V10_Dassert__equal_D9_lambda3, @function\n"
+".type _V10_Dassert__equal_D9_lambda2, @function\n"
 #endif
-"_V10_Dassert__equal_D9_lambda3:\n"
+"_V10_Dassert__equal_D9_lambda2:\n"
 "    cmp " ARGC_REG ", 3\n"
-"    je _V20Case0__V10_Dassert__equal_D9_lambda3\n"
+"    je _V20Case0__V10_Dassert__equal_D9_lambda2\n"
 "    cmp " ARGC_REG ", 2\n"
-"    jge _V20Case1__V10_Dassert__equal_D9_lambda3\n"
-"    jmp _V20CaseError__V10_Dassert__equal_D9_lambda3\n"
+"    jge _V20Case1__V10_Dassert__equal_D9_lambda2\n"
+"    jmp _V20CaseError__V10_Dassert__equal_D9_lambda2\n"
 );
-static void _V0vanity_V0assert_V20_lambda2(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6, VWORD _var7) {
-  struct { VEnv env; VWORD argv[8]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 8, 8, upenv);
-  env->vars[0] = _var0;
-  env->vars[1] = _var1;
-  env->vars[2] = _var2;
-  env->vars[3] = _var3;
-  env->vars[4] = _var4;
-  env->vars[5] = _var5;
-  env->vars[6] = _var6;
-  env->vars[7] = _var7;
-  // (letrec 1 ((close _V10_Dassert__equal_D9_lambda3)) ((bruijn ##.k.17 12 0) (##inline ##vcore.cons (##inline ##vcore.cons 'assert-equal (bruijn ##.assert-equal.9 0 0)) '())))
-    // OH NO A LETREC!
-    {
-    VEnv * upenv = env;
-    struct { VEnv env; VWORD argv[1]; } container;
-    VEnv * env = &container.env;
-    VInitEnv(env, 1, 1, upenv);
-    env->vars[0] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassert__equal_D9_lambda3, env)});
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 12-1, 0)), 1,
-      VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        _V0assert__equal,
-        env->vars[0]),
-        VNULL));
-    }
-}
 static void _V0vanity_V0assert_V20_k10(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0assert_V20_k10, got ~D~N"
@@ -301,16 +273,21 @@ static void _V0vanity_V0assert_V20_k10(VRuntime * runtime, VEnv * upenv, int arg
   VEnv * env = &container.env;
   VInitEnv(env, 1, 1, upenv);
   env->vars[0] = _var0;
-  // ((close _V0vanity_V0assert_V20_lambda2) (bruijn ##.x.18 7 0) (bruijn ##.x.19 6 0) (bruijn ##.x.20 5 0) (bruijn ##.x.21 4 0) (bruijn ##.x.22 3 0) (bruijn ##.x.23 2 0) (bruijn ##.x.24 1 0) (bruijn ##.x.25 0 0))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V0vanity_V0assert_V20_lambda2, .env = env }, }, 8,
-      VGetArg(upenv, 7-1, 0),
-      VGetArg(upenv, 6-1, 0),
-      VGetArg(upenv, 5-1, 0),
-      upenv->up->up->up->vars[0],
-      upenv->up->up->vars[0],
-      upenv->up->vars[0],
-      upenv->vars[0],
-      _var0);
+  // (letrec 1 ((close _V10_Dassert__equal_D9_lambda2)) ((bruijn ##.k.17 11 0) (##inline ##vcore.cons (##inline ##vcore.cons 'assert-equal (bruijn ##.assert-equal.9 0 0)) '())))
+    // OH NO A LETREC!
+    {
+    VEnv * upenv = env;
+    struct { VEnv env; VWORD argv[1]; } container;
+    VEnv * env = &container.env;
+    VInitEnv(env, 1, 1, upenv);
+    env->vars[0] = VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassert__equal_D9_lambda2, env)});
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(upenv, 11-1, 0)), 1,
+      VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        _V0assert__equal,
+        env->vars[0]),
+        VNULL));
+    }
 }
 static void _V0vanity_V0assert_V20_k9(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
  if(argc != 1) {

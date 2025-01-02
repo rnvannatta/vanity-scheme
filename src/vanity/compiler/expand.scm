@@ -139,14 +139,54 @@
                  (cdr vals)
                  (cdr xs)))))))
 
-  (define (expand-body body)
-    (let loop ((defines '()) (body body))
+  (define (constant-expr? expr)
+    (or (and (symbol? expr) (lookup-intrinsic-name expr))
+        (and (not (pair? expr)) (not (symbol? expr)))
+        #;(and (pair? expr) (eqv? (car expr) 'lambda) (null? (free-variables expr)))))
+  (define (constant-pure-body? k xs body)
+    (if (memtail k xs)
+        #t
+        (constant-pure? k body)))
+  (define (constant-pure? k expr)
+    (match expr
+      (('quote . _) #t)
+      (('##foreign.function . _) #t)
+      (('lambda xs body)
+       (constant-pure-body? k xs body))
+      (('case-lambda . bodies)
+       (fold (lambda (body p) (and p (constant-pure-body? k (car body) (cadr body)))) #t bodies))
+      (('set! x val)
+       (and (not (eqv? x k)) (constant-pure? k val)))
+      (('letrec ((xs vals) ...) body)
+       ; a bit of a hack.
+       ; but if k is in the xs, it's shadowed
+       ; and such doesn't matter for the vals and the body
+       ; otherwise we need to check the vals and the body for a set! expr
+       (constant-pure-body? k xs (cons 'begin (cons body vals))))
+      ; if, begin, and or can be handled by this case as the 3 each contain a harmless keyword
+      ; and a sequence of plain statements
+      ((xs ...)
+       (fold (lambda (x p) (and p (constant-pure? k x))) #t xs))
+      (else #t)))
+  (define (expand-body full-body)
+    (let loop ((defines '()) (constants '()) (body full-body))
       (match body
-        ((('define (f . xs) . body) . rest) (loop (cons `(define ,f (lambda ,xs . ,body)) defines) rest))
+        ((('define (f . xs) . body) . rest)
+         (loop (cons `(define ,f (lambda ,xs . ,body)) defines) constants rest))
         ((('define x body) . rest)
          (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
-         (loop (cons `(define ,x ,body) defines) rest))
+         (loop (cons `(define ,x ,body) defines) constants rest))
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
+
+        ; TODO these guys forreal
+        ((('define-constant (f . xs) . body) . rest)
+         (loop defines constants (cons `(define-constant ,f (lambda ,xs . ,body)) rest)))
+        ((('define-constant x body) . rest)
+         (if (not (constant-expr? body)) (compiler-error "define-constant does not define a constant expression" `(define-constant ,x ,body)))
+         (if (not (symbol? x)) (compiler-error "define-constant's first argument is not a symbol" x))
+         (loop defines (cons (list x body) constants) rest))
+        (('define-constant . noise) (compiler-error "malformed define-constant" `(define . ,noise)))
+
         ((('define-values formals body) . rest)
          (let* ((names (undot formals))
                 (mangles (map gensym names)))
@@ -165,17 +205,32 @@
                        ,@(map (lambda (name mangle) `(set! ,name ,mangle)) names mangles)))))
                (reverse (map (lambda (name) `(define ,name #f)) names))
                defines)
+             constants
              rest)))
         ((('begin x) . rest)
-         (loop defines `(,x . ,rest)))
+         (loop defines constants `(,x . ,rest)))
         ((('begin x . ys) . rest)
-         (loop defines `(,x (begin . ,ys) . ,rest)))
+         (loop defines constants `(,x (begin . ,ys) . ,rest)))
         (else
           (let ((body (expand-syntax `(begin . ,body))))
-            (match (reverse defines)
-              (() body)
-              ((('define xs vals) ...)
-               (expand-syntax `(letrec* ,(map list xs vals) ,body)))))))))
+            (let ((the-letrec
+                    (match (reverse defines)
+                      (() body)
+                      ((('define xs vals) ...)
+                       (expand-syntax `(letrec* ,(map list xs vals) ,body))))))
+              (if (not (null? constants))
+                  (for-each
+                    (lambda (k)
+                      (if (not (constant-pure? (car k) the-letrec))
+                          (compiler-error "define-constant constant is mutated by set!" (cons 'define-constant k))))
+                    constants))
+              (if (null? constants)
+                  the-letrec
+                  (let* ((constants (reverse constants))
+                         (xs (map car constants))
+                         (vals (map cadr constants)))
+                    `((lambda ,xs ,the-letrec) . ,vals))
+                       )))))))
 
   (define (expand-quasiquote quotation expr)
     ; bug with chicken is why we use quasiquotes on quotes, unquotes, and unquote-splicings
