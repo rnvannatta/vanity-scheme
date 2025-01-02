@@ -325,7 +325,7 @@
            (opt-body `(,lamb ,xs ,opt-body))))
         (else (compiler-error "optimize-lambda: malformed lambda" expr))))
 
-    #;(define (inline-let expr done-ys done-xs ys xs)
+    (define (inline-let expr done-ys done-xs ys xs)
       (if (null? ys)
           (if (null? done-ys)
               (optimize-apply expr)
@@ -346,7 +346,6 @@
                           ; was probs the bug I had...
                           (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
                           pure)
-                     
                      (if (not (= refs 1))
                          (let ()
                            (define-values (xrefs xpure) (count-refs x))
@@ -380,10 +379,11 @@
          (optimize-apply expr))
         ((('lambda (ys ...) expr) xs ...)
          (if (not (= (length ys) (length xs))) (compiler-error "Not enough arguments to lambda"))
-         (map optimize-atom let-expr)
+         ; TODO switch based on optimization level
+         #;(map optimize-atom let-expr)
          ; There is a bug somewhere in this inline-let which is extremely subtle
          ; as it causes a miscompile that only rears its head after a few bootstrap iterations
-         #;(inline-let expr '() '() ys (map optimize-atom xs)))
+         (inline-let expr '() '() ys (map optimize-atom xs)))
         ((('continuation () body))
          (optimize-apply body))
         ((('lambda ys expr) . xs)
