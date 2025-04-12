@@ -53,17 +53,19 @@
 #include <signal.h>
 #include <stdatomic.h>
 
+#include "vanity/dfile.h"
 #include "vscheme/vruntime.h"
 #include "vsetjmp_private.h"
 #include "vruntime_private.h"
 #include "vqueue_private.h"
+#include "vport_private.h"
 #include "vscheme/vinlines.h"
 #include "vscheme/vhash.h"
 
 #define FORWARDED ULLONG_MAX
 
-// order of operations for implementing finalizers:
-// 6. add foreign pointers to finalizers
+// TODO kill this
+bool VANITY_USE_DFILE = false;
 
 // so finalizers can run in any order and thats them lumps
 
@@ -518,32 +520,46 @@ FILE * Windows_TmpFile() {
 }
 #endif
 
-static SYSV_CALL void VVFPrintfC(VRuntime * runtime, FILE * f, char const * str, va_list args);
+static SYSV_CALL void VVFPrintfC(VRuntime * runtime, VPort * p, char const * str, va_list args);
 SYSV_CALL void VErrorC(VRuntime * runtime, const char * str, ...) {
   va_list args;
   va_start(args, str);
+#define ERROR_USE_DFILE
+#ifdef ERROR_USE_DFILE
+  DFILE * f = d_tmpfile();
+#else
   #ifdef __linux__
   FILE * f = tmpfile();
   #endif
   #ifdef _WIN64
   FILE * f = Windows_TmpFile();
   #endif
+#endif
   VBlob * ret = alloca(sizeof(VBlob)+4096);
   ret->base = VMakeSmallObject(VSTRING);
   ret->len = 4096;
   if(f) {
-    VVFPrintfC(runtime, f, str, args);
-    int len = ftell(f);
-    rewind(f);
+#ifdef ERROR_USE_DFILE
+    VPort p = {
+      .base.tag = VPORT,
+      .dstream = f,
+      .flags = PFLAG_WRITE | PFLAG_READ | PFLAG_DFILE,
+    };
+#else
+    VPort p = VMakePortStream(f, PFLAG_WRITE | PFLAG_READ);
+#endif
+    VVFPrintfC(runtime, &p, str, args);
+    int len = port_ftell(&p);
+    port_rewind(&p);
 
     if(len < ret->len)
       ret->len = len;
     else
       len = ret->len-1;
 
-    fread(ret->buf, len, 1, f);
+    port_fread(ret->buf, len, &p);
     ret->buf[len] = '\0';
-    fclose(f);
+    port_close(&p);
   } else {
     char msg[] = "an error occured but file descriptors were exhausted. Unable to transcribe message.";
     memcpy(ret->buf, msg, sizeof msg);
@@ -1588,7 +1604,7 @@ SYSV_CALL void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
   VGarbageCollect2((VFunc)VExitK, runtime, NULL, 1, &num_finalizers);
 }
 
-static SYSV_CALL void VFPrintfC(VRuntime * runtime, FILE * f, char const * str, ...);
+static SYSV_CALL void VFPrintfC(VRuntime * runtime, VPort * p, char const * str, ...);
 SYSV_CALL void VAbort2(V_CORE_ARGS, ...) {
 
   // Print the msg, attempt to start a debugger... but only if we're the main thread
@@ -1603,16 +1619,18 @@ SYSV_CALL void VAbort2(V_CORE_ARGS, ...) {
       va_end(args);
 #ifdef __linux__
       if(isatty(fileno(stderr)))
-        VFPrintfC(NULL, stderr, "\033[1;31munhandled exception:\033[0m ~A~N", err);
+        VFPrintfC(NULL, (VPort[]){get_port_stderr()}, "\033[1;31munhandled exception:\033[0m ~A~N", err);
       else
 #endif
-      VFPrintfC(NULL, stderr, "unhandled exception: ~A~N", err);
+      VFPrintfC(NULL, (VPort[]){get_port_stderr()}, "unhandled exception: ~A~N", err);
     }
 
     if(runtime)
       VPrintCallHistory(runtime);
     fflush(stderr);
     fflush(stdout);
+    d_fflush(dstderr);
+    d_fflush(dstdout);
 #ifdef __linux__
     raise(SIGTRAP);
 #endif
@@ -1629,7 +1647,7 @@ SYSV_CALL void VAbort2(V_CORE_ARGS, ...) {
     abort();
 }
 
-static SYSV_CALL void VVFPrintfC(VRuntime * runtime, FILE * f, char const * str, va_list args) {
+static SYSV_CALL void VVFPrintfC(VRuntime * runtime, VPort * p, char const * str, va_list args) {
   char c;
   while((c = *str++)) {
     switch(c) {
@@ -1640,54 +1658,58 @@ static SYSV_CALL void VVFPrintfC(VRuntime * runtime, FILE * f, char const * str,
         switch(c)
         {
           case '~':
-            fputc('~', f);
+            port_fputc('~', p);
             break;
           case 'N':
           case 'n':
           {
-            fputc('\n', f);
+            port_fputc('\n', p);
             break;
           }
           case 'Z':
           case 'z':
           {
             char const * str = va_arg(args, char const*);
-            fprintf(f, "%s", str);
+            //fprintf(f, "%s", str);
+            port_fputs(str, p);
             break;
           }
           case 'F':
           case 'f':
           {
             double d = va_arg(args, double);
-            fprintf(f, "%f", d);
+            //fprintf(f, "%f", d);
+            port_fputd(d, p);
             break;
           }
           case 'D':
           case 'd':
           {
             int i = va_arg(args, int);
-            fprintf(f, "%i", i);
+            //fprintf(f, "%i", i);
+            port_fputi(i, p);
             break;
           }
           case 'L':
           case 'l':
           {
             long i = va_arg(args, long);
-            fprintf(f, "%li", i);
+            //fprintf(f, "%li", i);
+            port_fputli(i, p);
             break;
           }
           case 'A':
           case 'a':
           {
             VWORD w = va_arg(args, VWORD);
-            VDisplayWord(f, w, false);
+            VDisplayWord2(p, w, false);
             break;
           }
           case 'S':
           case 's':
           {
             VWORD w = va_arg(args, VWORD);
-            VDisplayWord(f, w, true);
+            VDisplayWord2(p, w, true);
             break;
           }
           default:
@@ -1700,16 +1722,16 @@ static SYSV_CALL void VVFPrintfC(VRuntime * runtime, FILE * f, char const * str,
         }
         break;
       default:
-        fputc(c, f);
+        port_fputc(c, p);
         break;
     }
   }
 }
 
-static SYSV_CALL void VFPrintfC(VRuntime * runtime, FILE * f, char const * str, ...) {
-  va_list args;;
+static SYSV_CALL void VFPrintfC(VRuntime * runtime, VPort * p, char const * str, ...) {
+  va_list args;
   va_start(args, str);
-  VVFPrintfC(runtime, f, str, args);
+  VVFPrintfC(runtime, p, str, args);
   va_end(args);
 }
 
@@ -2274,50 +2296,57 @@ SYSV_CALL void VUnloadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   V_CALL(k, runtime, VVOID);
 }
 
-#define IMPLEMENT_PRINT_VECTOR(Prefix, prefix, stride, ctype, format) \
-static void Print ## Prefix(FILE * f, VBlob * blob) {\
+#define IMPLEMENT_PRINT_VECTOR(Prefix, prefix, stride, ctype, fputi) \
+static void Print ## Prefix(VPort * p, VBlob * blob) {\
   int len = (blob->len/stride)-1; \
   ctype * ints = (ctype*)(blob->buf+stride); \
-  fprintf(f, "#" #prefix "("); \
-  for(int i = 0; i < len-1; i++) \
-    fprintf(f, format " ", ints[i]); \
+  port_fputs("#" #prefix "(", p); \
+  for(int i = 0; i < len-1; i++) { \
+    fputi(ints[i], p); \
+    port_fputc(' ', p); \
+  } \
   if(len) \
-    fprintf(f, format, ints[len-1]); \
-  fprintf(f, ")"); \
+    fputi(ints[len-1], p); \
+  port_fputs(")", p); \
 }
 
-IMPLEMENT_PRINT_VECTOR(S8, s8, 1, int8_t, "%hhd")
-IMPLEMENT_PRINT_VECTOR(U8, u8, 1, uint8_t, "%hhu")
-IMPLEMENT_PRINT_VECTOR(S16, s16, 2, int16_t, "%hd")
-IMPLEMENT_PRINT_VECTOR(U16, u16, 2, uint16_t, "%hu")
-IMPLEMENT_PRINT_VECTOR(S32, s32, 4, int32_t, "%d")
+IMPLEMENT_PRINT_VECTOR(S8, s8, 1, int8_t, port_fputi8)
+IMPLEMENT_PRINT_VECTOR(U8, u8, 1, uint8_t, port_fputu8)
+IMPLEMENT_PRINT_VECTOR(S16, s16, 2, int16_t, port_fputi16)
+IMPLEMENT_PRINT_VECTOR(U16, u16, 2, uint16_t, port_fputu16)
+IMPLEMENT_PRINT_VECTOR(S32, s32, 4, int32_t, port_fputi32)
 
-static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
+static void VDisplayWordImpl(VPort * port, VWORD v, bool write, int depth) {
   uint64_t type = VWordType(v);
   switch(type) {
     case VIMM_NUMBER:
-      fprintf(f, "%f", VDecodeNumber(v));
+      //fprintf(f, "%f", VDecodeNumber(v));
+      port_fputd(VDecodeNumber(v), port);
       break;
     case VIMM_INT:
-      fprintf(f, "%d", VDecodeInt(v));
+      //fprintf(f, "%d", VDecodeInt(v));
+      port_fputi(VDecodeInt(v), port);
       break;
     case VIMM_CHAR:
       if(write) {
         char c = VDecodeChar(v);
         switch(c) {
-          case '\a': fprintf(f, "#\\alarm"); break;
-          case '\b': fprintf(f, "#\\backspace"); break;
-          case (char)127: fprintf(f, "#\\delete"); break;
-          case (char)27: fprintf(f, "#\\escape"); break;
-          case '\n': fprintf(f, "#\\newline"); break;
-          case '\0': fprintf(f, "#\\null"); break;
-          case '\r': fprintf(f, "#\\return"); break;
-          case ' ': fprintf(f, "#\\space"); break;
-          case '\t': fprintf(f, "#\\tab"); break;
-          default: fprintf(f, "#\\%c", c); break;
+          case '\a': port_fputs("#\\alarm", port); break;
+          case '\b': port_fputs("#\\backspace", port); break;
+          case (char)127: port_fputs("#\\delete", port); break;
+          case (char)27: port_fputs("#\\escape", port); break;
+          case '\n': port_fputs("#\\newline", port); break;
+          case '\0': port_fputs("#\\null", port); break;
+          case '\r': port_fputs("#\\return", port); break;
+          case ' ': port_fputs("#\\space", port); break;
+          case '\t': port_fputs("#\\tab", port); break;
+          default:
+            port_fputs("#\\", port);
+            port_fputc(c, port);
+            break;
         }
       } else {
-        fprintf(f, "%c", VDecodeChar(v));
+        port_fputc(VDecodeChar(v), port);
       }
       break;
     case VIMM_TOK:
@@ -2325,22 +2354,22 @@ static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
       switch(VDecodeToken(v))
       {
         case VTOK_TRUE:
-          fprintf(f, "#t");
+          port_fputs("#t", port);
           break;
         case VTOK_FALSE:
-          fprintf(f, "#f");
+          port_fputs("#f", port);
           break;
         case VTOK_NULL:
-          fprintf(f, "()");
+          port_fputs("()", port);
           break;
         case VTOK_VOID:
-          fprintf(f, "#void");
+          port_fputs("#void", port);
           break;
         case VTOK_EOF:
-          fprintf(f, "#eof");
+          port_fputs("#eof", port);
           break;
         case VTOK_NAN:
-          fprintf(f, "#nan");
+          port_fputs("#nan", port);
           break;
       }
       break;
@@ -2348,35 +2377,35 @@ static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
     case VPOINTER_PAIR:
     {
       if(depth >= 16)
-        fprintf(f, "#pair");
+        port_fputs("#pair", port);
       else {
-        fprintf(f, "(");
+        port_fputs("(", port);
         VPair * p = (VPair*)VDecodePointer(v);
-        VDisplayWordImpl(f, p->first, write, depth+1);
+        VDisplayWordImpl(port, p->first, write, depth+1);
         while(VWordType(p->rest) == VPOINTER_PAIR) {
           p = (VPair*)VDecodePointer(p->rest);
-          fprintf(f, " ");
-          VDisplayWordImpl(f, p->first, write, depth+1);
+          port_fputs(" ", port);
+          VDisplayWordImpl(port, p->first, write, depth+1);
         }
         if(!(VWordType(p->rest) == VIMM_TOK && VDecodeToken(p->rest) == VTOK_NULL)) {
-          fprintf(f, " . ");
-          VDisplayWordImpl(f, p->rest, write, depth+1);
+          port_fputs(" . ", port);
+          VDisplayWordImpl(port, p->rest, write, depth+1);
         }
-        fprintf(f, ")");
+        port_fputs(")", port);
       }
       break;
     }
     case VPOINTER_CLOSURE:
     {
-      fprintf(f, "#closure");
+      port_fputs("#closure", port);
       break;
     }
     case VPOINTER_FOREIGN:
     {
       if(VIsEq(v, VNULLPTR))
-        fprintf(f, "#nullptr");
+        port_fputs("#nullptr", port);
       else
-        fprintf(f, "#foreign-pointer");
+        port_fputs("#foreign-pointer", port);
       break;
     }
     case VPOINTER_OTHER:
@@ -2390,38 +2419,39 @@ static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
           VBlob * blob = ptr;
           assert(blob->len);
           if(tag == VSTRING && write) {
-            fputc('"', f);
+            port_fputc('"', port);
             for(unsigned i = 0; i < blob->len-1; i++) {
               char c = blob->buf[i];
               switch(c) {
                 case '\a':
-                  fprintf(f, "\\a");
+                  port_fputs("\\a", port);
                   break;
                 case '\b':
-                  fprintf(f, "\\b");
+                  port_fputs("\\b", port);
                   break;
                 case '\t':
-                  fprintf(f, "\\t");
+                  port_fputs("\\t", port);
                   break;
                 case '\n':
-                  fprintf(f, "\\n");
+                  port_fputs("\\n", port);
                   break;
                 case '\r':
-                  fprintf(f, "\\r");
+                  port_fputs("\\r", port);
                   break;
                 case '\\':
                 case '"':
                 case '|':
-                  fprintf(f, "\\%c", c);
+                  port_fputc('\\', port);
+                  port_fputc(c, port);
                   break;
                 default:
-                  fputc(c, f);
+                  port_fputc(c, port);
                   break;
               }
             }
-            fputc('"', f);
+            port_fputc('"', port);
           } else {
-            fprintf(f, "%s", blob->buf);
+            port_fputs(blob->buf, port);
           }
           break;
         }
@@ -2430,42 +2460,46 @@ static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
           VBlob * blob = ptr;
           switch(blob->buf[0]) {
             case BUF_S8:
-              PrintS8(f, blob);
+              PrintS8(port, blob);
               break;
             case BUF_U8:
-              PrintU8(f, blob);
+              PrintU8(port, blob);
               break;
             case BUF_S16:
-              PrintS16(f, blob);
+              PrintS16(port, blob);
               break;
             case BUF_U16:
-              PrintU16(f, blob);
+              PrintU16(port, blob);
               break;
             case BUF_S32:
-              PrintS32(f, blob);
+              PrintS32(port, blob);
               break;
             case BUF_F32:
             {
               unsigned len = (blob->len/4)-1;
               float * floats = (float*)(blob->buf+4);
-              fprintf(f, "#f32(");
-              for(int i = 0; i < len-1; i++)
-                fprintf(f, "%f ", floats[i]);
+              port_fputs("#f32(", port);
+              for(int i = 0; i < len-1; i++) {
+                port_fputd(floats[i], port);
+                port_fputc(' ', port);
+              }
               if(len)
-                fprintf(f, "%f", floats[len-1]);
-              fprintf(f, ")");
+                port_fputd(floats[len-1], port);
+              port_fputs(")", port);
               break;
             }
             case BUF_F64:
             {
               unsigned len = (blob->len/8)-1;
               double * doubles = (double*)(blob->buf+8);
-              fprintf(f, "#f64(");
-              for(int i = 0; i < len-1; i++)
-                fprintf(f, "%f ", doubles[i]);
+              port_fputs("#f64(", port);
+              for(int i = 0; i < len-1; i++) {
+                port_fputd(doubles[i], port);
+                port_fputc(' ', port);
+              }
               if(len)
-                fprintf(f, "%f", doubles[len-1]);
-              fprintf(f, ")");
+                port_fputd(doubles[len-1], port);
+              port_fputs(")", port);
               break;
               break;
             }
@@ -2474,60 +2508,64 @@ static void VDisplayWordImpl(FILE * f, VWORD v, bool write, int depth) {
         }
         case VVECTOR:
         {
-          fprintf(f, "#vector");
+          port_fputs("#vector", port);
           break;
         }
         case VRECORD:
         {
           VVector * rec = ptr;
           if(rec->len == 4 && !VDecodeBool(rec->arr[0])) {
-            VDisplayWordImpl(f, rec->arr[1], write, depth+1);
-            fprintf(f, ": ");
-            VDisplayWordImpl(f, rec->arr[2], write, depth+1);
+            VDisplayWordImpl(port, rec->arr[1], write, depth+1);
+            port_fputs(": ", port);
+            VDisplayWordImpl(port, rec->arr[2], write, depth+1);
             VWORD irritants = rec->arr[3];
             if(!VIsEq(irritants, VNULL)) {
-              fprintf(f, ":");
+              port_fputs(":", port);
               while(VWordType(irritants) == VPOINTER_PAIR) {
-                fprintf(f, " ");
+                port_fputs(" ", port);
                 VPair * pair = VDecodePair(irritants);
-                VDisplayWordImpl(f, pair->first, write, depth+1);
+                VDisplayWordImpl(port, pair->first, write, depth+1);
                 irritants = pair->rest;
               }
             }
           } else {
-            fprintf(f, "#record");
+            port_fputs("#record", port);
           }
           break;
         }
         case VHASH_TABLE:
         {
-          fprintf(f, "#hash-table");
+          port_fputs("#hash-table", port);
           break;
         }
         case VPORT:
         {
-          fprintf(f, "#port");
+          port_fputs("#port", port);
           break;
         }
         case VFUTURE:
         {
-          fprintf(f, "#future");
+          port_fputs("#future", port);
           break;
         }
         default:
-          fprintf(f, "#pointer");
+          port_fputs("#pointer", port);
           break;
       }
       break;
     }
     default:
-      fprintf(f, "#?");
+      port_fputs("#?", port);
       break;
   }
 }
 
 SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write) {
-  VDisplayWordImpl(f, v, write, 0);
+  VPort p = VMakePortStream(f, PFLAG_WRITE | PFLAG_NOCLOSE);
+  VDisplayWordImpl(&p, v, write, 0);
+}
+SYSV_CALL void VDisplayWord2(VPort * p, VWORD v, bool write) {
+  VDisplayWordImpl(p, v, write, 0);
 }
 
 SYSV_CALL void VGetStackInfo(char ** start, size_t * size) {

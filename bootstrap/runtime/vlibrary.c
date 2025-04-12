@@ -34,6 +34,8 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <limits.h>
+#include "vanity/dfile.h"
+#include "vport_private.h"
 
 #ifdef __linux__
 #include <time.h>
@@ -47,6 +49,8 @@
 // only used by call/cc. maybe we should move call/cc to runtime.c
 // it's a pretty goofy function that's kind of fundamental
 #include "vruntime_private.h"
+
+/////////////////////////////////////////////////////////
 
 SYSV_CALL void VExact(V_CORE_ARGS, VWORD k, VWORD x) {
   uint64_t type = VWordType(x);
@@ -1117,32 +1121,17 @@ SYSV_CALL void VCharInt2(V_CORE_ARGS, VWORD k, VWORD c) {
 // TODO delete this idiotic procedures
 SYSV_CALL void VDupStdout2(V_CORE_ARGS, VWORD k) {
   V_ARG_CHECK3(runtime, "dup-stdout", 1, argc);
-
-  // also idiotic. just add a flag to ports to not close on final
-  int fd = dup(fileno(stdout));
-  FILE * f = fdopen(fd, "wb");
-  VPort port = VMakePortStream(f, PFLAG_WRITE);
-  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  VErrorC(runtime, "removed intrinsic!");
 }
 
 SYSV_CALL void VDupStdin2(V_CORE_ARGS, VWORD k) {
   V_ARG_CHECK3(runtime, "dup-stdin", 1, argc);
-
-  // also idiotic. just add a flag to ports to not close on final
-  int fd = dup(fileno(stdin));
-  FILE * f = fdopen(fd, "rb");
-  VPort port = VMakePortStream(f, PFLAG_READ);
-  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  VErrorC(runtime, "removed intrinsic!");
 }
 
 SYSV_CALL void VDupStderr2(V_CORE_ARGS, VWORD k) {
   V_ARG_CHECK3(runtime, "dup-stderr", 1, argc);
-
-  // also idiotic. just add a flag to ports to not close on final
-  int fd = dup(fileno(stderr));
-  FILE * f = fdopen(fd, "wb");
-  VPort port = VMakePortStream(f, PFLAG_WRITE);
-  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  VErrorC(runtime, "removed intrinsic!");
 }
 
 //
@@ -1208,16 +1197,9 @@ SYSV_CALL void VCloseStream2(V_CORE_ARGS, VWORD k, VWORD _port) {
   VPort * port = (VPort*)VDecodePointer(_port);
   if(port->base.tag != VPORT) VErrorC(runtime, "close-port: not a port\n");
 
-  if(port->flags && !(port->flags & PFLAG_NOCLOSE)) {
-    if(port->flags & PFLAG_PROCESS)
-      pclose(port->stream);
-    else
-      fclose(port->stream);
-    port->stream = NULL;
-    port->flags = 0;
-  }
+  int ret = port_close(port);
 
-  V_CALL(k, runtime, VVOID);
+  V_CALL(k, runtime, VEncodeInt(ret));
 }
 
 SYSV_CALL void VTtyPortP(V_CORE_ARGS, VWORD k, VWORD _port) {
@@ -1228,7 +1210,7 @@ SYSV_CALL void VTtyPortP(V_CORE_ARGS, VWORD k, VWORD _port) {
   if(port->base.tag != VPORT) VErrorC(runtime, "tty-port?: not a port\n");
   if(!(port->flags & PFLAG_WRITE)) VErrorC(runtime, "tty-port?: not an input port\n");
 
-  int fd = fileno(port->stream);
+  int fd = port_fileno(port);
   bool tty = isatty(fd);
   errno = 0;
 
@@ -1242,10 +1224,15 @@ SYSV_CALL void VOpenOutputString2(V_CORE_ARGS, VWORD k) {
   // but it works for now
   V_ARG_CHECK3(runtime, "open-output-string", 1, argc);
   errno = 0;
+#define USE_DFILE_OSTREAM
+#ifdef USE_DFILE_OSTREAM
+  DFILE * f = d_strfile();
+#else
 #ifdef _WIN64
   FILE * f = Windows_TmpFile();
 #else
   FILE * f = tmpfile();
+#endif
 #endif
   // ENFILE error can be fixed by running a garbage collect
   VWORD ok = VEncodeBool(errno != ENFILE && errno != EMFILE);
@@ -1253,6 +1240,9 @@ SYSV_CALL void VOpenOutputString2(V_CORE_ARGS, VWORD k) {
     if(errno == ENFILE || errno == EMFILE) {
       V_CALL(k, runtime, VFALSE, ok);
     } else {
+#ifdef USE_DFILE_OSTREAM
+      V_CALL(k, runtime, VFALSE, VFALSE);
+#else
 #ifdef _WIN64
       // Windows tmpfile() doesn't set errno! >:(
       V_CALL(k, runtime, VFALSE, VFALSE);
@@ -1261,10 +1251,19 @@ SYSV_CALL void VOpenOutputString2(V_CORE_ARGS, VWORD k) {
       // unrecoverable error: return false to the user
       V_CALL(k, runtime, VFALSE, VTRUE);
 #endif
+#endif
     }
   }
 
+#ifdef USE_DFILE_OSTREAM
+  VPort port = {
+    .base.tag = VPORT,
+    .dstream = f,
+    .flags = PFLAG_WRITE | PFLAG_OSTRING | PFLAG_DFILE,
+  };
+#else
   VPort port = VMakePortStream(f, PFLAG_WRITE | PFLAG_OSTRING);
+#endif
   V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER), ok);
 }
 
@@ -1274,18 +1273,17 @@ SYSV_CALL void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD _port) {
   if(port->base.tag != VPORT) VErrorC(runtime, "get-output-string: not a port\n");
   if(!(port->flags & PFLAG_OSTRING)) VErrorC(runtime, "get-output-string: not an output string port\n");
 
-  FILE * f = port->stream;
-  int len = ftell(f);
+  int len = port_ftell(port);
   VBlob * str = V_ALLOCA_BLOB2((void*)&runtime, runtime, len + 1);
   if(!str) {
     VGarbageCollect2Func(runtime, (VFunc)VGetOutputString2, 2, k, _port);
   }
   str->base = VMakeSmallObject(VSTRING);
   str->len = len+1;
-  rewind(f);
-  fread(str->buf, 1, len, f);
+  port_rewind(port);
+  port_fread(str->buf, len, port);
   str->buf[len] = '\0';
-  fseek(f, 0, SEEK_END);
+  port_fseek(port, 0, SEEK_END);
 
   V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }
@@ -1298,9 +1296,8 @@ SYSV_CALL void VReadChar2(V_CORE_ARGS, VWORD k, VWORD _port) {
   if(!port || port->base.tag != VPORT) VErrorC(runtime, "read-char: not a port ~S~N", _port);
   if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read-char: not an readable port ~S~N", _port);
 
-  FILE * f = port->stream;
-  char c = fgetc(f);
-  if(c == EOF) {
+  char c = port_fgetc(port);
+  if(c < 0) {
     V_CALL(k, runtime, VEOF);
   } else {
     V_CALL(k, runtime, VEncodeChar((char)c));
@@ -1314,10 +1311,9 @@ SYSV_CALL void VReadLine2(V_CORE_ARGS, VWORD k, VWORD _port) {
   if(!port || port->base.tag != VPORT) VErrorC(runtime, "read-line: not a port ~S~N", _port);
   if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read-line: not an readable port ~S~N", _port);
 
-  FILE * f = port->stream;
   VBlob * str = alloca(sizeof(VBlob) + 256);
   str->base = VMakeSmallObject(VSTRING);
-  if(!fgets(str->buf, 256, f)) {
+  if(!port_fgets(str->buf, 256, port)) {
     V_CALL(k, runtime, VEOF);
   } else {
     size_t len = strlen(str->buf);
@@ -1336,10 +1332,9 @@ SYSV_CALL void VReadLine3(V_CORE_ARGS, VWORD k, VWORD _port) {
   if(!port || port->base.tag != VPORT) VErrorC(runtime, "read-line: not a port ~S~N", _port);
   if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read-line: not an readable port ~S~N", _port);
 
-  FILE * f = port->stream;
   VBlob * str = alloca(sizeof(VBlob) + 256);
   str->base = VMakeSmallObject(VSTRING);
-  if(!fgets(str->buf, 256, f)) {
+  if(!port_fgets(str->buf, 256, port)) {
     V_CALL(k, runtime, VEOF, VFALSE);
   } else {
     bool line = false;
@@ -1362,40 +1357,40 @@ SYSV_CALL void VDisplay2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port) {
     V_ARG_CHECK3(runtime, "display-word", 3, argc);
     VPort * p = VCheckedDecodePort2(runtime, port, "display-word");
     if(!(p->flags & PFLAG_WRITE)) VErrorC(runtime, "display-word: port's write end is closed~N");
-    VDisplayWord(p->stream, val, false);
+    VDisplayWord2(p, val, false);
     V_CALL(k, runtime, VVOID);
 }
 SYSV_CALL void VWrite2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port) {
     V_ARG_CHECK3(runtime, "write-word", 3, argc);
     VPort * p = VCheckedDecodePort2(runtime, port, "write-word");
     if(!(p->flags & PFLAG_WRITE)) VErrorC(runtime, "write-word: port's write end is closed~N");
-    VDisplayWord(p->stream, val, true);
+    VDisplayWord2(p, val, true);
     V_CALL(k, runtime, VVOID);
 }
 SYSV_CALL void VNewline2(V_CORE_ARGS, VWORD k, VWORD port) {
     V_ARG_CHECK3(runtime, "newline", 2, argc);
     VPort * p = VCheckedDecodePort2(runtime, port, "newline");
     if(!(p->flags & PFLAG_WRITE)) VErrorC(runtime, "newline: port's write end is closed~N");
-    FILE * f = p->stream;
-    fprintf(f, "\n");
-    fflush(f);
+    port_fputc('\n', p);
+    port_fflush(p);
     V_CALL(k, runtime, VVOID);
 }
 
 SYSV_CALL void VDisplayStdout(V_CORE_ARGS, VWORD k, VWORD val) {
     V_ARG_CHECK3(runtime, "display-stdout", 2, argc);
-    VDisplayWord(stdout, val, false);
+    VDisplayWord2((VPort[]){get_port_stdout()}, val, false);
     V_CALL(k, runtime, VVOID);
 }
 SYSV_CALL void VWriteStdout(V_CORE_ARGS, VWORD k, VWORD val) {
     V_ARG_CHECK3(runtime, "write-stdout", 2, argc);
-    VDisplayWord(stdout, val, true);
+    VDisplayWord2((VPort[]){get_port_stdout()}, val, true);
     V_CALL(k, runtime, VVOID);
 }
 SYSV_CALL void VNewlineStdout(V_CORE_ARGS, VWORD k) {
     V_ARG_CHECK3(runtime, "newline-stdout", 1, argc);
-    fprintf(stdout, "\n");
-    fflush(stdout);
+    VPort port = get_port_stdout();
+    port_fputc('\n', &port);
+    port_fflush(&port);
     V_CALL(k, runtime, VVOID);
 }
 
@@ -1893,21 +1888,20 @@ IMPLEMENT_BUFFER(f64, F64, 8)
 void VReadU8Vector(V_CORE_ARGS, VWORD k, VWORD _n, VWORD _port) {
   V_ARG_CHECK3(runtime, "read-u8vector", 3, argc);
   VPort * port = VCheckedDecodePointer2(runtime, _port, VPORT, "read-u8vector");
-  int n = VCheckedDecodeInt2(runtime, _n, "read-u8vector");
+  off64_t n = VCheckedDecodeInt2(runtime, _n, "read-u8vector");
   if(n < -1) VErrorC(runtime, "read-u8vector: invalid amount of bytes to read ~D", n);
 
-  FILE * f = port->stream;
   if(n == -1) {
     errno = 0;
-    int start = ftell(f);
-    if(fseek(f, 0, SEEK_END)) {
+    off64_t start = port_ftell(port);
+    if(port_fseek(port, 0, SEEK_END)) {
       if(errno == ESPIPE) {
         VErrorC(runtime, "read-u8vector: -1 for size cannot be passed to non-seekable ports");
       }
       VErrorC(runtime, "read-u8vector: io error during read");
     }
-    int end = ftell(f);
-    fseek(f, start, SEEK_SET);
+    off64_t end = port_ftell(port);
+    port_fseek(port, start, SEEK_SET);
     n = end-start;
     if(n == 0)
       V_CALL(k, runtime, VEOF);
@@ -1920,12 +1914,12 @@ void VReadU8Vector(V_CORE_ARGS, VWORD k, VWORD _n, VWORD _port) {
 
   if(n) {
     errno = 0;
-    n = fread(ret->buf+1, 1, n, f);
+    n = port_fread(ret->buf+1, n, port);
     ret->len = n+1;
     if(n <= 0) {
-      if(feof(f))
+      if(port_feof(port))
         V_CALL(k, runtime, VEOF);
-      if(ferror(f))
+      if(port_ferror(port))
         VErrorC(runtime, "read-u8vector: io error during read");
     }
   }

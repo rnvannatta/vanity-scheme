@@ -90,13 +90,14 @@ tests_windows : compiler runtime windows_runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
     ( EXE=`mktemp` ; \
 		echo "bin/vsc $$test && wine ./a.exe" ; \
-    OVERRIDE=`realpath lib/` ; \
-		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Llib/x86_64-w64-mingw32 -Wc,-Iinclude -Iinclude --platform=windows) ; then \
+    OVERRIDE="`realpath lib/`:`realpath vendor/lib/`" ; \
+		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Llib/x86_64-w64-mingw32 -Wc,-Lvendor/lib/x86_64-w64-mingw32  -Wc,-Iinclude -Iinclude --platform=windows) ; then \
 			echo "COMPILE FAILURE: $$test"; \
       \rm -f $$EXE ; \
 			exit 1; \
 	  fi ; \
 		ln -sf `realpath lib/x86_64-w64-mingw32/vscheme.dll` `dirname $$test`/; \
+		ln -sf `realpath vendor/lib/x86_64-w64-mingw32/dfile.dll` `dirname $$test`/; \
 		if ! (cd `dirname $$test` ; wine $$EXE) ; then \
 			echo "FAILURE: $$test"; \
       \rm -f $$EXE ; \
@@ -180,7 +181,7 @@ lib/libvscheme.so : $(RUNTIME_OBJ)
 
 lib/x86_64-w64-mingw32/vscheme.dll : $(WINDOWS_RUNTIME_OBJ)
 	@mkdir -p `dirname $@`
-	/usr/bin/x86_64-w64-mingw32-gcc -o $@ $^ $(CFLAGS) -shared -Wl,--export-all-symbols -Wl,--stack,8388608
+	/usr/bin/x86_64-w64-mingw32-gcc -o $@ $^ $(CFLAGS) -shared -Wl,--export-all-symbols -Wl,--stack,8388608 -Lvendor/lib/x86_64-w64-mingw32 -ldfile
 
 build/%.o : build/%.scm
 	$(PATCH) vsc -c $< -o $@ $(SCMFLAGS) -Wc,-fPIC -Iinclude -Ibuild/include

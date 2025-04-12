@@ -43,6 +43,15 @@ static_assert(sizeof(int) == sizeof(int32_t));
 static_assert(sizeof(long) == sizeof(int64_t) || sizeof(long) == sizeof(int32_t));
 static_assert(sizeof(long long) == sizeof(int64_t));
 
+#ifdef __EMSCRIPTEN__
+static_assert(sizeof(long) == sizeof(void*));
+static_assert(sizeof(int32_t) == sizeof(void*));
+typedef int ssize_t;
+#ifndef VANITY_PURE_C
+static_assert(0);
+#endif
+#endif
+
 //#define SYSV_CALL __attribute__((sysv_abi))
 #define SYSV_CALL
 
@@ -299,11 +308,16 @@ enum PORT_FLAG_T {
   PFLAG_OSTRING = 4,
   PFLAG_PROCESS = 8,
   PFLAG_NOCLOSE = 16,
+  PFLAG_DFILE = 32,
 };
 
+typedef struct DFILE DFILE;
 typedef struct VPort {
   VObject base;
-  FILE * stream;
+  union {
+    FILE * stream;
+    DFILE * dstream;
+  };
   unsigned flags;
 } VPort;
 
@@ -841,6 +855,9 @@ ALWAYS_INLINE SYSV_CALL static inline void VInitEnv(VEnv * env, unsigned short n
 ALWAYS_INLINE SYSV_CALL static inline VPort VMakePortStream(FILE * stream, unsigned flags) {
   return (VPort) { .base = VMakeObject(VPORT), .stream = stream, .flags = flags };
 }
+ALWAYS_INLINE SYSV_CALL static inline VPort VMakePortStream2(DFILE * dstream, unsigned flags) {
+  return (VPort) { .base = VMakeObject(VPORT), .dstream = dstream, .flags = flags | PFLAG_DFILE };
+}
 
 ALWAYS_INLINE SYSV_CALL static inline VClosure VMakeClosure2(VFunc f, VEnv * env) {
   return (VClosure) {
@@ -1016,7 +1033,7 @@ SYSV_CALL static inline bool VStackOverflow(VRuntime * _runtime) {
   VPublicRuntime * runtime = (VPublicRuntime*)_runtime;
   char * VStackStop = (char*)&runtime; 
   ptrdiff_t size = runtime->VStackStart - VStackStop;
-#ifndef __x86_64__
+#if !defined(__x86_64__) && !defined(__EMSCRIPTEN__)
   // stack may grow upwards on some platforms
   static_assert(0);
 #endif
@@ -1048,6 +1065,7 @@ SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics,
   } else
 
 SYSV_CALL void VDisplayWord(FILE * f, VWORD v, bool write);
+SYSV_CALL void VDisplayWord2(VPort * p, VWORD v, bool write);
 
 SYSV_CALL void VTrackMutation(VRuntime * runtime, void * container, VWORD * slot, VWORD val);
 SYSV_CALL static inline void VSetFirst(VRuntime * runtime, VPair * p, VWORD w) {

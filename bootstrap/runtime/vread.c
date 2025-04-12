@@ -31,6 +31,7 @@
 
 #include "vscheme/vruntime.h"
 #include "vruntime_private.h"
+#include "vport_private.h"
 
 enum lex_t {
   LEX_START,
@@ -65,14 +66,8 @@ enum lex_t {
 
 
 // TODO in lexer:
-//   peculiar identifiers - still have ... left
-//   quotation
-//   booleans
-//   strings
 //   fancy numbers
-
-//   characters
-//   vectors
+//   bar symbols
 
 SYSV_CALL static int VLexStart(int c, bool * satisfied, bool * unget) {
   switch(c) {
@@ -405,7 +400,7 @@ SYSV_CALL static int VLexNamedChar(int c, bool *satisfied, bool *unget) {
   }
 }
 
-SYSV_CALL static int VLex(VRuntime * runtime, FILE * f) {
+SYSV_CALL static int VLex(VRuntime * runtime, VPort * port) {
   bool satisfied = false;
   bool unget = false;
   int c;
@@ -413,7 +408,7 @@ SYSV_CALL static int VLex(VRuntime * runtime, FILE * f) {
   int lex_state = LEX_START;
 
   size_t buf_cursor = 0;
-  while(!satisfied && (c = getc(f)) != EOF) {
+  while(!satisfied && (c = port_fgetc(port)) >= 0) {
     switch(lex_state) {
       case LEX_START:
         lex_state = VLexStart(c, &satisfied, &unget);
@@ -475,7 +470,7 @@ SYSV_CALL static int VLex(VRuntime * runtime, FILE * f) {
       runtime->lex_buf[buf_cursor++] = c;
     }
   }
-  if(unget) ungetc(c, f);
+  if(unget) port_ungetc(c, port);
   switch(lex_state) {
     case LEX_START:
     case LEX_COMMENT:
@@ -784,9 +779,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
   V_ARG_CHECK3(runtime, "##sys.read-iter", 5, argc);
 
   VPort * port = VCheckedDecodePort2(runtime, _port, "read");
-  FILE * f = port->stream;
-  if(!f) VErrorC(runtime, "read: trying to read from closed port\n");
-  if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read: trying to read from writeonly port\n");
+  if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read: trying to read from port with closed input\n");
   int depth = VDecodeInt(_depth);
   bool read_more = VDecodeBool(_read_more);
   VPair * const root = VDecodePair(_root);
@@ -800,7 +793,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
       VGarbageCollect2Args((VFunc)VReadIter2, runtime, statics, 5, argc, k, _port, VEncodeInt(depth), VEncodeBool(read_more), _root);
     }
 
-    int token = VLex(runtime, f);
+    int token = VLex(runtime, port);
     if(token != LEX_EOF)
       read_more = false;
     switch(token)
