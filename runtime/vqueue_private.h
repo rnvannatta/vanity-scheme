@@ -57,8 +57,8 @@ typedef struct VListPtr {
     };
   };
 } VListPtr;
-static_assert(sizeof(VListPtr) == 16);
-static_assert(_Alignof(VListPtr) == 16);
+static_assert(sizeof(VListPtr) == 16, "");
+static_assert(_Alignof(VListPtr) == 16, "");
 
 typedef struct VListNodePool {
   VListPtr nodes;

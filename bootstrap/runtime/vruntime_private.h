@@ -117,11 +117,12 @@ typedef struct VRuntime {
   int num_half_reaped_fibers;
   VRuntime ** half_reaped_fibers;
   // misc
-  uint64_t gensym_storage;
+  uint64_t _Atomic gensym_storage;
   uint64_t _Atomic * gensym_index;
   VWORD declare_list;
   VWORD library_list;
 } VRuntime;
+_Static_assert(sizeof(uint64_t _Atomic) == sizeof(uint64_t), "");
 
 SYSV_CALL void VGetStackInfo(char ** start, size_t * size);
 void VTrackHashTable(VRuntime * runtime, VHashTable * table, VWORD key);
