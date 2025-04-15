@@ -31,6 +31,10 @@ enum { D_STDIN_FILENO, D_STDOUT_FILENO, D_STDERR_FILENO };
 typedef long long ssize_t;
 typedef long long off64_t;
 enum { D_IOFBF, D_IOLBF = 64, D_IONBF = 4 };
+#elif defined(__EMSCRIPTEN__)
+typedef long ssize_t;
+typedef long long off64_t;
+enum { D_IOFBF, D_IOLBF, D_IONBF };
 #else
 typedef long ssize_t;
 typedef long off64_t;

@@ -57,10 +57,63 @@
 #include "vscheme/vruntime.h"
 #include "vsetjmp_private.h"
 #include "vruntime_private.h"
-#include "vqueue_private.h"
 #include "vport_private.h"
 #include "vscheme/vinlines.h"
 #include "vscheme/vhash.h"
+
+#ifndef VANITY_PURE_C
+// fibers require asm support
+#include "vqueue_private.h"
+#else
+// single threaded stack impl since PURE_C abi is single threaded.
+// still need the stack to hold heap pages.
+typedef struct VListNode {
+  void * data;
+  struct VListNode * next;
+} VListNode;
+
+typedef struct VListNodePool {
+  VListNode * nodes;
+} VListNodePool;
+typedef struct VStack {
+  VListNode * head;
+  VListNodePool pool;
+} VStack;
+
+static void VStackInit(VStack * stack) {
+  stack->head = NULL;
+  stack->pool.nodes = NULL;
+}
+
+static VListNode * VAllocNode(VListNodePool * pool) {
+  VListNode * ret = pool->nodes;
+  if(!ret)
+    ret = malloc(sizeof(VListNode));
+  ret->data = NULL;
+  ret->next = NULL;
+  return ret;
+}
+static void VFreeNode(VListNodePool * pool, VListNode * node) {
+  node->data = NULL;
+  node->next = pool->nodes;
+  pool->nodes = node;
+}
+static void VStackPush(VStack * stack, void * data) {
+  VListNode * node = VAllocNode(&stack->pool);
+  node->data = data;
+  node->next = stack->head;
+  stack->head = node;
+}
+static void * VStackPop(VStack * stack) {
+  VListNode * node = stack->head;
+  if(!node)
+    return NULL;
+  stack->head = node->next;
+  void * data = node->data;
+  VFreeNode(&stack->pool, node);
+  return data;
+}
+#endif
 
 #define FORWARDED ULLONG_MAX
 
@@ -350,8 +403,7 @@ SYSV_CALL static void VMarkForeignFinalizer(VRuntime * runtime, VWORD mem, bool 
   }
 }
 
-SYSV_CALL void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer) {
-  V_ARG_CHECK3(runtime, "set-finalizer!", 3, argc);
+V_BEGIN_FUNC(VSetFinalizer, "set-finalizer!", 3, k, mem, finalizer)
   if(!(VIsPointer(mem) || VIsForeignPointer(mem)))
     VErrorC(runtime, "set-finalizer!: Finalizers can only be set on addresses ~S\n", mem);
   if(!(VWordType(finalizer) == VPOINTER_CLOSURE))
@@ -363,11 +415,10 @@ SYSV_CALL void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer) {
 
   VSetFinalizerImpl(runtime, &runtime->VHeapFinalizers[runtime->VActiveHeap], mem, finalizer);
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
 
-SYSV_CALL void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem) {
+V_BEGIN_FUNC(VFinalize, "finalize!", 2, k, mem)
   V_GC_CHECK2_VARARGS((VFunc)VFinalize, runtime, statics, 2, argc, k, mem) {
-    V_ARG_CHECK3(runtime, "finalize!", 2, argc);
     if(!(VIsPointer(mem) || VIsForeignPointer(mem)))
       VErrorC(runtime, "finalize!: Not an address ~S\n", mem);
 
@@ -380,29 +431,29 @@ SYSV_CALL void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem) {
     finalizer->finalizer = VFALSE;
     V_CALL(final, runtime, k, mem);
   }
-}
+V_END_FUNC
 
-SYSV_CALL void VHasFinalizer(V_CORE_ARGS, VWORD k, VWORD mem) {
+V_BEGIN_FUNC(VHasFinalizer, "has-finalizer?", 2, k, mem)
   if(!(VIsPointer(mem) || VIsForeignPointer(mem)))
     VErrorC(runtime, "has-finalizer?: Not an address ~S\n", mem);
   V_CALL(k, runtime, VEncodeBool(VGetFinalizer(runtime, mem, true)));
-}
+V_END_FUNC
 
-SYSV_CALL void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major) {
+V_BEGIN_FUNC(VGarbageCollect, "garbage-collect", 2, k, major)
   VClosure * cl = VDecodeClosure(k);
   if(VDecodeBool(major)) {
     runtime->VForceMajorGC = true;
   }
   VGarbageCollect2Args(cl->func, runtime, cl->env, 1, 1, VVOID);
-}
+V_END_FUNC
 
 // continuation to run finalizers that didn't survive a gc
-SYSV_CALL static void VApplyFinalizer(V_CORE_ARGS, ...) {
+V_BEGIN_FUNC_MIN(VApplyFinalizer, "apply-finalizer!", 0)
   VWORD k = statics->vars[0];
   VWORD mem = statics->vars[1];
 
   V_CALL_FUNC(VFinalize, NULL, runtime, k, mem);
-}
+V_END_FUNC
 
 SYSV_CALL void * VForwarded(void * address) {
   if(*(uint64_t*)address == FORWARDED)
@@ -411,19 +462,19 @@ SYSV_CALL void * VForwarded(void * address) {
     return NULL;
 }
 
-SYSV_CALL void VGetDynamics(V_CORE_ARGS, VWORD k) {
+V_BEGIN_FUNC(VGetDynamics, "get-dynamics", 1, k)
   V_CALL(k, runtime, runtime->dynamics);
-}
+V_END_FUNC
 
-SYSV_CALL void VPushDynamic(V_CORE_ARGS, VWORD k, VWORD key, VWORD val) {
+V_BEGIN_FUNC(VPushDynamic, "push-dynamic", 3, k, key, val)
   VPair entry = VMakePair(key, val);
   VPair node = VMakePair(VEncodePair(&entry), runtime->dynamics);
   runtime->dynamics = VEncodePair(&node);
 
   V_CALL(k, runtime, VEncodePair(&entry));
-}
+V_END_FUNC
 
-SYSV_CALL void VPopDynamic(V_CORE_ARGS, VWORD k, VWORD keyval) {
+V_BEGIN_FUNC(VPopDynamic, "pop-dynamic", 2, k, keyval)
   if(VIsEq(runtime->dynamics, VNULL))
     VErrorC(runtime, "pop-dynamic: attempted to pop a dynamic when there are none bound: ~S\n", keyval);
   VPair * top = VDecodePair(runtime->dynamics);
@@ -433,15 +484,16 @@ SYSV_CALL void VPopDynamic(V_CORE_ARGS, VWORD k, VWORD keyval) {
   runtime->dynamics = top->rest;
 
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
 
-SYSV_CALL void VGetExceptionHandlers(V_CORE_ARGS, VWORD k) {
+V_BEGIN_FUNC(VGetExceptionHandlers, "get-exception-handlers", 1, k)
   V_CALL(k, runtime, runtime->exception_handlers);
-}
+V_END_FUNC
 
-static SYSV_CALL void VDefaultExceptionHandler(V_CORE_ARGS, VWORD k, VWORD err) {
-  VAbort2(runtime, NULL, 1, err);
-}
+static V_BEGIN_FUNC(VDefaultExceptionHandler, "default-exception-handler", 2, k, err)
+  V_CALL_FUNC(VAbort2, NULL, runtime, err);
+V_END_FUNC
+
 static VClosure default_exception_handler = { .base = { .tag = VCLOSURE }, .func = (VFunc)VDefaultExceptionHandler, .env = NULL };
 static SYSV_CALL VWORD VGetExceptionHandlerImpl(VRuntime * runtime) {
   if(VIsEq(runtime->exception_handlers, VNULL)) {
@@ -452,20 +504,20 @@ static SYSV_CALL VWORD VGetExceptionHandlerImpl(VRuntime * runtime) {
     return top->first;
   }
 }
-SYSV_CALL void VGetExceptionHandler(V_CORE_ARGS, VWORD k) {
+V_BEGIN_FUNC(VGetExceptionHandler, "get-exception-handler", 1, k)
   V_CALL(k, runtime, VGetExceptionHandlerImpl(runtime));
-}
+V_END_FUNC
 
-SYSV_CALL void VPushExceptionHandler(V_CORE_ARGS, VWORD k, VWORD handler) {
+V_BEGIN_FUNC(VPushExceptionHandler, "push-exception-hander", 2, k, handler)
   (void)VCheckedDecodeClosure2(runtime, handler, "push-exception-hander");
     
   VPair node = VMakePair(handler, runtime->exception_handlers);
   runtime->exception_handlers = VEncodePair(&node);
 
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
 
-SYSV_CALL void VPopExceptionHandler(V_CORE_ARGS, VWORD k, VWORD handler) {
+V_BEGIN_FUNC(VPopExceptionHandler, "pop-exception-handler", 2, k, handler)
   if(VIsEq(runtime->exception_handlers, VNULL))
     VErrorC(runtime, "pop-exception-handler: attempted to pop an exception handler when there are none bound: ~S\n", handler);
 
@@ -477,15 +529,14 @@ SYSV_CALL void VPopExceptionHandler(V_CORE_ARGS, VWORD k, VWORD handler) {
   runtime->exception_handlers = top->rest;
 
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
 
-SYSV_CALL void VRaise(V_CORE_ARGS, VWORD k, VWORD x);
-static SYSV_CALL void VRaiseK(V_CORE_ARGS, ...) {
+static V_BEGIN_FUNC_MIN(VRaiseK, "raise-k", 0)
   VWORD x = statics->vars[0];
   V_CALL_FUNC(VRaise, NULL, runtime, VFALSE, x);
-}
+V_END_FUNC
 
-SYSV_CALL void VRaise(V_CORE_ARGS, VWORD _, VWORD x) {
+V_BEGIN_FUNC(VRaise, "raise", 2, _, x)
   VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[1]));
   VInitEnv(env, 1, 1, NULL);
   env->vars[0] = x;
@@ -493,7 +544,7 @@ SYSV_CALL void VRaise(V_CORE_ARGS, VWORD _, VWORD x) {
 
   VWORD handler = VGetExceptionHandlerImpl(runtime);
   V_CALL(handler, runtime, VEncodeClosure(&raisek), x);
-}
+V_END_FUNC
 
 #ifdef _WIN64
 FILE * Windows_TmpFile() {
@@ -526,7 +577,7 @@ SYSV_CALL void VErrorC(VRuntime * runtime, const char * str, ...) {
   va_start(args, str);
 #define ERROR_USE_DFILE
 #ifdef ERROR_USE_DFILE
-  DFILE * f = d_tmpfile();
+  DFILE * f = d_strfile();
 #else
   #ifdef __linux__
   FILE * f = tmpfile();
@@ -573,8 +624,7 @@ SYSV_CALL void VErrorC(VRuntime * runtime, const char * str, ...) {
 //                   GARBAGE COLLECTOR                     //
 /////////////////////////////////////////////////////////////
 
-static void VHugeFree(V_CORE_ARGS, VWORD k, VWORD mem) {
-  V_ARG_CHECK3(runtime, "huge-free", 2, argc);
+static V_BEGIN_FUNC(VHugeFree, "huge-free", 2, k, mem)
   if(!VIsPointer(mem))
     VErrorC(runtime, "huge-free: not huge memory");
   void * ptr = VDecodePointer(mem);
@@ -582,7 +632,7 @@ static void VHugeFree(V_CORE_ARGS, VWORD k, VWORD mem) {
     VErrorC(runtime, "huge-free: not huge memory");
   free(ptr);
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
 static VClosure VHugeFreeClosure = {
   .base = {
     .tag = VCLOSURE,
@@ -1261,6 +1311,7 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     runtime->VMajorGCTime += diff_nsec;
   else
     runtime->VMinorGCTime += diff_nsec;
+#else
 #endif
 
   VLongJmp(runtime->VRoot, VJMP_GC);
@@ -1522,11 +1573,11 @@ SYSV_CALL static void VPrintCallHistory(VRuntime * runtime) {
 }
 
 
-SYSV_CALL static void VNext2K(V_CORE_ARGS, ...) {
+static V_BEGIN_FUNC_MIN(VNext2K, "next-k", 0)
   VLongJmp(runtime->VRoot, VJMP_FINISH);
-}
+V_END_FUNC
 
-SYSV_CALL void VNext2(V_CORE_ARGS, VWORD e) {
+V_BEGIN_FUNC_RANGE(VNext2, "next", 0, 1, e)
   if(argc)
     runtime->VExitCode = e;
   else
@@ -1535,9 +1586,9 @@ SYSV_CALL void VNext2(V_CORE_ARGS, VWORD e) {
   if(!VIsMain(runtime))
     runtime->VForceMajorGC = true;
   VGarbageCollect2(VNext2K, runtime, statics, 0, NULL);
-}
+V_END_FUNC
 
-SYSV_CALL static void VExitK(V_CORE_ARGS, VWORD before_finalizers) {
+static V_BEGIN_FUNC(VExitK, "exit-k", 1, before_finalizers)
   VFinalizerTable * table = &runtime->VHeapFinalizers[runtime->VActiveHeap];
   if(table->num_finalizers == 0)
     VLongJmp(runtime->VRoot, VJMP_EXIT);
@@ -1586,9 +1637,9 @@ SYSV_CALL static void VExitK(V_CORE_ARGS, VWORD before_finalizers) {
     V_CALL(k, runtime, VVOID);
   else
     VLongJmp(runtime->VRoot, VJMP_EXIT);
-}
+V_END_FUNC
 
-SYSV_CALL void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
+V_BEGIN_FUNC_RANGE(VExit2, "exit", 1, 2, k, e)
   V_ARG_RANGE3(runtime, "exit", 1, 2, argc);
   runtime->VExitCode = VEncodeInt(0);
   if(argc == 2) {
@@ -1602,21 +1653,25 @@ SYSV_CALL void VExit2(V_CORE_ARGS, VWORD k, VWORD e) {
   runtime->VForceMajorGC = true;
   VWORD num_finalizers = VEncodeInt(runtime->VHeapFinalizers[runtime->VActiveHeap].num_finalizers);
   VGarbageCollect2((VFunc)VExitK, runtime, NULL, 1, &num_finalizers);
-}
+V_END_FUNC
 
 static SYSV_CALL void VFPrintfC(VRuntime * runtime, VPort * p, char const * str, ...);
-SYSV_CALL void VAbort2(V_CORE_ARGS, ...) {
 
+V_BEGIN_FUNC_MIN(VAbort2, "abort", 0)
   // Print the msg, attempt to start a debugger... but only if we're the main thread
   // fibers should continue throwing through into the main thread.
   // we might have more exception handlers in the main thread.
   VWORD err = VERROR;
   if(!runtime || VIsMain(runtime)) {
     if(argc) {
+#if 0
       va_list args;
       va_start(args, argc);
       err = va_arg(args, VWORD);
       va_end(args);
+#else
+      err = self->vars[0];
+#endif
 #ifdef __linux__
       if(isatty(fileno(stderr)))
         VFPrintfC(NULL, (VPort[]){get_port_stderr()}, "\033[1;31munhandled exception:\033[0m ~A~N", err);
@@ -1645,7 +1700,7 @@ SYSV_CALL void VAbort2(V_CORE_ARGS, ...) {
     VLongJmp(runtime->VRoot, VJMP_ERROR);
   else
     abort();
-}
+V_END_FUNC
 
 static SYSV_CALL void VVFPrintfC(VRuntime * runtime, VPort * p, char const * str, va_list args) {
   char c;
@@ -1782,9 +1837,8 @@ void VTrackHashTable(VRuntime * runtime, VHashTable * table, VWORD key) {
   }
 }
 
-SYSV_CALL static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val) {
+static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val) {
   char * proc = bSetCar ? "set-car!" : "set-cdr!";
-  V_ARG_CHECK3(runtime, proc, 3, argc);
   if(VStackOverflowNoInline(runtime)) {
     VGarbageCollect2Args((VFunc)(bSetCar ? VSetCar2 : VSetCdr2), runtime, statics, 3, argc, k, pair, val);
   } else {
@@ -1800,22 +1854,22 @@ SYSV_CALL static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, 
     V_CALL(k, runtime, VVOID);
   }
 }
-SYSV_CALL void VSetCar2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val) {
+V_BEGIN_FUNC(VSetCar2, "set-car!", 3, k, pair, val)
   VSetPair2(runtime, statics, argc, true, k, pair, val);
-}
-SYSV_CALL void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val) {
-  VSetPair2(runtime, statics, argc, false, k, pair, val);
-}
+V_END_FUNC
 
-SYSV_CALL void VVectorSetImpl(VRuntime * runtime, VWORD k, VVector * vector, int index, VWORD val) {
+V_BEGIN_FUNC(VSetCdr2, "set-cdr!", 3, k, pair, val)
+  VSetPair2(runtime, statics, argc, false, k, pair, val);
+V_END_FUNC
+
+static void VVectorSetImpl(VRuntime * runtime, VWORD k, VVector * vector, int index, VWORD val) {
   VTrackMutation(runtime, vector, vector->arr + index, val);
   vector->arr[index] = val;
 
   V_CALL(k, runtime, VVOID);
 }
 
-SYSV_CALL void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
-  V_ARG_CHECK3(runtime, "vector-set!", 4, argc);
+V_BEGIN_FUNC(VVectorSet2, "vector-set!", 4, k, v, i, val)
   if(VStackOverflowNoInline(runtime)) {
     VGarbageCollect2Args((VFunc)VVectorSet2, runtime, statics, 4, argc, k, v, i, val);
   } else {
@@ -1826,9 +1880,9 @@ SYSV_CALL void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD v, VWORD i, VWORD val) {
 
     VVectorSetImpl(runtime, k, vector, index, val);
   }
-}
-SYSV_CALL void VRecordSet2(V_CORE_ARGS, VWORD k, VWORD r, VWORD i, VWORD val) {
-  V_ARG_CHECK3(runtime, "record-set!", 4, argc);
+V_END_FUNC
+
+V_BEGIN_FUNC(VRecordSet2, "record-set!", 4, k, r, i, val)
   if(VStackOverflowNoInline(runtime)) {
     VGarbageCollect2Args((VFunc)VRecordSet2, runtime, statics, 4, argc, k, r, i, val);
   } else {
@@ -1840,9 +1894,9 @@ SYSV_CALL void VRecordSet2(V_CORE_ARGS, VWORD k, VWORD r, VWORD i, VWORD val) {
 
     VVectorSetImpl(runtime, k, record, index, val);
   }
-}
+V_END_FUNC
 
-SYSV_CALL void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD val) {
+V_BEGIN_FUNC(VSetEnvVar2, "set-env-var!", 4, k, _up, _var, val)
   // not really a procedure but needs to abuse the procedure
   // interface to garbage collect
   if(argc != 4) VErrorC(runtime, "set!: not enough arguments? This should be impossible\n");
@@ -1861,9 +1915,9 @@ SYSV_CALL void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD _up, VWORD _var, VWORD va
     VTrackMutation(runtime, statics, &statics->vars[var], val);
     V_CALL(k, runtime, VVOID);
   }
-}
+V_END_FUNC
 
-SYSV_CALL static bool VDefineImpl(VRuntime * runtime, VWORD sym, VWORD val, bool is_set) {
+static bool VDefineImpl(VRuntime * runtime, VWORD sym, VWORD val, bool is_set) {
   if(!VIsMain(runtime)) {
     VErrorC(runtime, "define-global: not permitted inside of a fiber or during active asynchronous execution\n");
   }
@@ -1886,28 +1940,25 @@ SYSV_CALL static bool VDefineImpl(VRuntime * runtime, VWORD sym, VWORD val, bool
   return true;
 }
 
-SYSV_CALL void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
-  V_ARG_CHECK3(runtime, "set!", 3, argc);
+V_BEGIN_FUNC(VSetGlobalVar2, "set!", 3, k, sym, val)
   if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VSetGlobalVar2, runtime, statics, 3, argc, k, sym, val);
 
   if(!VDefineImpl(runtime, sym, val, true))
     VErrorC(runtime, "set!: Symbol not found: ~a\n", sym);
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
 
 
-SYSV_CALL void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val) {
-  V_ARG_CHECK3(runtime, "define", 3, argc);
+V_BEGIN_FUNC(VDefineGlobalVar2, "define", 3, k, sym, val)
   if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VDefineGlobalVar2, runtime, statics, 3, argc, k, sym, val);
 
   VDefineImpl(runtime, sym, val, false);
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
 
-SYSV_CALL void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
-  V_ARG_CHECK3(runtime, "multidefine", 2, argc);
+V_BEGIN_FUNC(VMultiDefine2, "multidefine", 2, k, defines)
   int num = 0;
   VWORD root = defines;
   while(!VIsEq(defines, VNULL)) {
@@ -1932,10 +1983,9 @@ SYSV_CALL void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines) {
     defines = VDecodePair(defines)->rest;
   }
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
 
-SYSV_CALL void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
-  V_ARG_CHECK3(runtime, "lookup-library", 2, argc);
+V_BEGIN_FUNC(VLookupLibrary2, "lookup-library", 2, k, name)
   if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VLookupLibrary2, runtime, statics, 2, argc, k, name);
 
@@ -1969,9 +2019,9 @@ SYSV_CALL void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
     libs = libs_dec->rest;
   }
   V_CALL(k, runtime, lib);
-}
+V_END_FUNC
 
-SYSV_CALL static void VMakeImportLambda(V_CORE_ARGS, VWORD k, VWORD x) {
+static V_BEGIN_FUNC(VMakeImportLambda, "make-import-lambda", 2, k, x)
   int cur = 2, end = statics->var_len;
   VWORD * rest = statics->vars;
   VWORD args = VNULL;
@@ -1993,10 +2043,10 @@ SYSV_CALL static void VMakeImportLambda(V_CORE_ARGS, VWORD k, VWORD x) {
       args = VInlineCdr2(runtime, args);
     }
   }
-}
+V_END_FUNC
 
-SYSV_CALL void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...) {
-  V_ARG_MIN3(runtime, "make-import", 2, argc);
+V_BEGIN_FUNC_MIN(VMakeImport2, "make-import", 2, k, lib)
+#if 0
   VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[argc]));
   env->base = VMakeSmallObject(VENV);
   env->num_vars = argc;
@@ -2009,9 +2059,10 @@ SYSV_CALL void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...) {
   for(int i = 2; i < argc; i++)
     env->vars[i] = va_arg(args, VWORD);
   va_end(args);
-  VClosure ret = VMakeClosure2((VFunc)VMakeImportLambda, env);
+#endif
+  VClosure ret = VMakeClosure2((VFunc)VMakeImportLambda, self);
   V_CALL(k, runtime, VEncodeClosure(&ret));
-}
+V_END_FUNC
 
 #ifdef _WIN64
 SYSV_CALL static void * VDLSym(char const * name) {
@@ -2065,26 +2116,27 @@ static VPair * VAssocDeclares(VRuntime * runtime, VBlob * string) {
   return NULL;
 }
 
-SYSV_CALL void VDlopenLibraryImpl(V_CORE_ARGS, VWORD k, VWORD _string) {
-  V_ARG_CHECK3(runtime, "dlopen-library!", 2, argc);
+V_BEGIN_FUNC(VDlopenLibraryImpl, "dlopen-library!", 2, k, _string)
   VBlob * string = VCheckedDecodeString2(runtime, _string, "dlopen-library!");
 #ifdef __linux__
   void * handle = dlopen(string->buf, RTLD_LAZY | RTLD_GLOBAL);
   if(!handle) VErrorC(runtime, "dlopen-library!: failed to dlopen ~S: ~Z", _string, dlerror());
-#endif
-#ifdef _WIN64
+#elif defined(_WIN64)
   void * handle = LoadLibraryA(string->buf);
   if(!handle) VErrorC(runtime, "dlopen-library!: failed to LoadLibraryA ~S", _string);
 
   //VPair newlibrary = VMakePair(_string, VEncodeForeignPointer(handle));
   //VPair newnode = VMakePair(VEncodePair(&newlibrary), runtime->library_list);
   //runtime->library_list = VEncodePair(&newnode);
+#else
+  VErrorC(runtime, "dlopen-library!: unsupported platform.");
 #endif
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
+
 VFunc VDlopenLibrary = (VFunc)VDlopenLibraryImpl;
 
-SYSV_CALL void VSetDeclare(V_CORE_ARGS, VWORD k, VWORD _string, VWORD proc) {
+V_BEGIN_FUNC(VSetDeclare, "set-declare!", 3, k, _string, proc)
   if(!VIsMain(runtime)) {
     VErrorC(runtime, "set-declare!: not permitted inside of a fiber or during active asynchronous execution");
   }
@@ -2105,16 +2157,18 @@ SYSV_CALL void VSetDeclare(V_CORE_ARGS, VWORD k, VWORD _string, VWORD proc) {
     runtime->declare_list = VEncodePair(&newnode);
   }
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
 
 void * VLoadFunction(VRuntime * runtime, VWORD name) {
   char const * str = VCheckedDecodeConstCString2(runtime, name, "load-function");
 
 #ifdef __linux__
   void * ptr = dlsym(RTLD_DEFAULT, str);
-#endif
-#ifdef _WIN64
+#elif defined(_WIN64)
   void * ptr = VDLSym(str);
+#else
+  void * ptr;
+  VErrorC(runtime, "load-function: unsupported platform");
 #endif
 
   if(!ptr) {
@@ -2123,15 +2177,17 @@ void * VLoadFunction(VRuntime * runtime, VWORD name) {
   return ptr;
 }
 
-static SYSV_CALL VClosure VFunctionImpl(VRuntime * runtime, VWORD name) {
+static VClosure VFunctionImpl(VRuntime * runtime, VWORD name) {
   VBlob * blob = VCheckedDecodeString2(runtime, name, "function");
 
   const char * str = blob->buf;
 #ifdef __linux__
   void * ptr = dlsym(RTLD_DEFAULT, str);
-#endif
-#ifdef _WIN64
+#elif defined(_WIN64)
   void * ptr = VDLSym(str);
+#else
+  void * ptr;
+  VErrorC(runtime, "function: unsupported platform");
 #endif
   if(!ptr) {
     VPair * decl = VAssocDeclares(runtime, blob);
@@ -2145,16 +2201,17 @@ static SYSV_CALL VClosure VFunctionImpl(VRuntime * runtime, VWORD name) {
   return VMakeClosure2(*fun, NULL);
 }
 
-static SYSV_CALL void VLoadForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD name) {
-  V_ARG_CHECK3(runtime, "load-foreign-function", 2, argc);
+static V_BEGIN_FUNC(VLoadForeignFunctionImpl, "load-foreign-function", 2, k, name)
   VBlob * blob = VCheckedDecodeString2(runtime, name, "load-foreign-function");
 
   const char * str = blob->buf;
 #ifdef __linux__
   void * ptr = dlsym(RTLD_DEFAULT, str);
-#endif
-#ifdef _WIN64
+#elif defined(_WIN64)
   void * ptr = VDLSym(str);
+#else
+  void * ptr;
+  VErrorC(runtime, "function: unsupported platform");
 #endif
 
   if(!ptr) {
@@ -2162,7 +2219,7 @@ static SYSV_CALL void VLoadForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD name)
   }
   void * fun = ptr;
   V_CALL(k, runtime, VEncodeForeignPointer(fun));
-}
+V_END_FUNC
 
 VFunc VLoadForeignFunction = (VFunc)VLoadForeignFunctionImpl;
 
@@ -2183,8 +2240,7 @@ VFunc VLoadForeignFunction = (VFunc)VLoadForeignFunctionImpl;
 // 5. the importer function is then run to fetch the definitions for multidefine
 
 
-SYSV_CALL static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
-  V_ARG_CHECK3(runtime, "load-library-k", 1, argc);
+static V_BEGIN_FUNC(VLoadLibraryK, "load-library-k", 1, loader)
   if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VLoadLibraryK, runtime, statics, 1, argc, loader);
 
@@ -2199,10 +2255,9 @@ SYSV_CALL static void VLoadLibraryK(V_CORE_ARGS, VWORD loader) {
   VDefineImpl(runtime, libraries_sym, VEncodePair(&newlibs), true);
 
   V_CALL(k, runtime, loader);
-}
+V_END_FUNC
 
-SYSV_CALL void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
-  V_ARG_CHECK3(runtime, "load-library", 2, argc);
+V_BEGIN_FUNC(VLoadLibrary2, "load-library", 2, k, name)
   if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VLoadLibrary2, runtime, statics, 2, argc, k, name);
 
@@ -2248,10 +2303,9 @@ SYSV_CALL void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
   } else {
     V_CALL(k, runtime, lib);
   }
-}
+V_END_FUNC
 
-SYSV_CALL void VUnloadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
-  V_ARG_CHECK3(runtime, "unload-library", 2, argc);
+V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
   if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VUnloadLibrary2, runtime, statics, 2, argc, k, name);
 
@@ -2294,7 +2348,7 @@ SYSV_CALL void VUnloadLibrary2(V_CORE_ARGS, VWORD k, VWORD name) {
     VDefineImpl(runtime, sym_word, lib_entry->rest, true);
   }
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
 
 #define IMPLEMENT_PRINT_VECTOR(Prefix, prefix, stride, ctype, fputi) \
 static void Print ## Prefix(VPort * p, VBlob * blob) {\
@@ -2580,17 +2634,13 @@ SYSV_CALL void VGetStackInfo(char ** start, size_t * size) {
   ret = pthread_attr_destroy(&attribs);
   if(ret) printf("pthread error\n");
   *start += *size;
-#endif
-#ifdef _WIN64
+#elif defined(_WIN64)
   ULONG_PTR lo, hi;
   GetCurrentThreadStackLimits(&lo, &hi);
   *start = (char*)hi;
   *size = (char*)hi - (char*)lo;
-#endif
-
-#ifndef __x86_64__
-  // stack may grow upwards on some platforms
-  static_assert(0);
+#else
+  assert("get-stack-info: unsupported platform" && 0);
 #endif
 }
 
@@ -2699,7 +2749,7 @@ SYSV_CALL VWORD VStart2(VRuntime * runtime, int num_toplevels, VThunk const * to
     int which = VSetJmp(runtime->VRoot);
     switch(which) {
       case 0:
-        func(runtime, NULL, 1, next);
+        V_CALL_FUNC(func, NULL, runtime, next);
         break;
       case VJMP_GC:
         if(VWordType(runtime->VGCResumeCont) == VPOINTER_CLOSURE)
@@ -2725,10 +2775,12 @@ SYSV_CALL VWORD VStart2(VRuntime * runtime, int num_toplevels, VThunk const * to
       }
     }
   }
-  VExit2(runtime, NULL, 2, VVOID, VEncodeInt(0));
+  V_CALL_FUNC(VExit2, NULL, runtime, VVOID, VEncodeInt(0));
 end:
+#ifndef VANITY_PURE_C
   if(runtime->fiber_context)
     VCloseFiberWorkers(runtime->my_fiber, runtime->fiber_context);
+#endif
   return ret;
 }
 
@@ -2804,24 +2856,22 @@ SYSV_CALL VWORD VStart3(VRuntime * runtime, int num_toplevels, VWORD const * top
   // VVOID will make the fiber return unhappy
   // while translating to a successful return code
   // to int main()
-  VExit2(runtime, NULL, 2, VVOID, runtime->VExitCode);
+  V_CALL_FUNC(VExit2, NULL, runtime, VVOID, runtime->VExitCode);
 end:
+#ifndef VANITY_PURE_C
   if(VIsMain(runtime) && runtime->fiber_context)
     VCloseFiberWorkers(runtime->my_fiber, runtime->fiber_context);
+#endif
   return ret;
 }
 
-SYSV_CALL void VFunction2(V_CORE_ARGS, VWORD k, VWORD name) {
-  V_ARG_CHECK3(runtime, "function", 2, argc);
-
+V_BEGIN_FUNC(VFunction2, "function", 2, k, name)
   VClosure fun = VFunctionImpl(runtime, name);
 
   V_CALL(k, runtime, VEncodeClosure(&fun));
-}
+V_END_FUNC
 
-SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k) {
-  V_ARG_CHECK3(runtime, "command-line", 1, argc);
-
+V_BEGIN_FUNC(VCommandLine2, "command-line", 1, k)
   VWORD ret = VNULL;
   int cmd_argc = runtime->VArgc;
   while(cmd_argc--) {
@@ -2836,10 +2886,9 @@ SYSV_CALL void VCommandLine2(V_CORE_ARGS, VWORD k) {
     ret = VEncodePair(pair);
   }
   V_CALL(k, runtime, ret);
-}
+V_END_FUNC
 
-SYSV_CALL void VGensym(V_CORE_ARGS, VWORD k, VWORD _str) {
-  V_ARG_CHECK3(runtime, "gensym", 2, argc);
+V_BEGIN_FUNC(VGensym, "gensym", 2, k, _str)
   if(!(VIsSymbol(_str) || VIsString(_str)))
     VErrorC(runtime, "gensym: not a string or symbol: ~S~N", _str);
 
@@ -2864,21 +2913,15 @@ SYSV_CALL void VGensym(V_CORE_ARGS, VWORD k, VWORD _str) {
   int ret = snprintf(sym->buf, sym->len, "##%s%s.%llu", dots, var, (unsigned long long)index);
   assert(ret == sym->len-1);
   V_CALL(k, runtime, VEncodePointer(sym, VPOINTER_OTHER));
-}
+V_END_FUNC
 
 SYSV_CALL bool __attribute__((noinline)) VStackOverflowNoInline(VRuntime * runtime) {
   char * VStackStop = (char*)&runtime;
   ptrdiff_t size = runtime->public.VStackStart - VStackStop;
-#ifndef __x86_64__
-  static_assert(0);
-#endif
   return size > runtime->public.VStackLen;
 }
 SYSV_CALL bool __attribute__((noinline)) VStackOverflowNoInline2(VRuntime * runtime, char * VStackStop) {
   ptrdiff_t size = runtime->public.VStackStart - VStackStop;
-#ifndef __x86_64__
-  static_assert(0);
-#endif
   return size > runtime->public.VStackLen;
 }
 SYSV_CALL void VRecordCallNoInline(VRuntime * runtime, VDebugInfo * debug) {
@@ -2907,6 +2950,7 @@ typedef struct VLaunchFiberData {
   VRuntime * my_runtime;
 } VLaunchFiberData;
 
+#ifndef VANITY_PURE_C
 static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * fiber) {
   *r = *runtime;
 
@@ -3152,9 +3196,10 @@ static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfiber
   assert(0);
   return 0;
 }
+#endif
 
-SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst) {
-  V_ARG_CHECK3(runtime, "fiber-fork", 2, argc);
+V_BEGIN_FUNC(VFiberForkList, "fiber-fork", 2, k, lst)
+#ifndef VANITY_PURE_C
   V_GC_CHECK2_VARARGS((VFunc)VFiberForkList, runtime, statics, 2, argc, k, lst) {
     if(!runtime->fiber_context) {
       runtime->my_fiber = VLaunchFiberWorkers(&runtime->fiber_context, 8, 2 * 1024 * 1024);
@@ -3187,12 +3232,14 @@ SYSV_CALL void VFiberForkList(V_CORE_ARGS, VWORD k, VWORD lst) {
       V_CALL(k, runtime, VNULL);
     }
   }
+#endif
   VErrorC(runtime, "fiber-fork: unsupported platform\n");
   assert(0);
-}
+V_END_FUNC
 
 ///////////////////// AWAIT //////////////////////////
 
+#ifndef VANITY_PURE_C
 typedef struct VLaunchAwaiterData {
   VWORD k;
   VWORD future;
@@ -3223,14 +3270,15 @@ static uint64_t VLaunchAwaiter(VFiber * me, void * _data) {
 
   return VBits(ret);
 }
+#endif
 
 // async first launches the thunk fiber, which is just (thunk)
 // then it launches the continuation fiber, which is (k future)
 // then it waits on the continuation fiber
 // the continuation fiber returns a zero arg continuation to resume at
 // then it garbage collects with the two runtimes and a resume at the zero arg continuation
-SYSV_CALL void VAsync(V_CORE_ARGS, VWORD k, VWORD future_thunk) {
-  V_ARG_CHECK3(runtime, "async", 2, argc);
+V_BEGIN_FUNC(VAsync, "async", 2, k, future_thunk)
+#ifndef VANITY_PURE_C
   V_GC_CHECK2_VARARGS((VFunc)VAsync, runtime, statics, 2, argc, k, future_thunk) {
     if(!runtime->fiber_context) {
       runtime->my_fiber = VLaunchFiberWorkers(&runtime->fiber_context, 8, 2 * 1024 * 1024);
@@ -3278,14 +3326,17 @@ SYSV_CALL void VAsync(V_CORE_ARGS, VWORD k, VWORD future_thunk) {
     VClosure * _resume_thunk = VDecodeClosure(resume_thunk);
     VGarbageCollect2(_resume_thunk->func, runtime, _resume_thunk->env, 0, NULL);
   }
+#endif
   VErrorC(runtime, "async: unsupported platform\n");
   assert(0);
-}
+V_END_FUNC
 
+#ifndef VANITY_PURE_C
 static SYSV_CALL void VAwaitRejoinK(V_CORE_ARGS, VWORD resume_thunk) {
   runtime->VExitCode = resume_thunk;
   VLongJmp(runtime->VRoot, VJMP_AWAIT);
 }
+#endif
 
 // locks the future
 // if the fiber hasn't exited, waits on it
@@ -3295,8 +3346,8 @@ static SYSV_CALL void VAwaitRejoinK(V_CORE_ARGS, VWORD resume_thunk) {
 //   longjmps returning a thunk to continue at returning the future's value
 // otherwise returns the fiber value
 // the spawning thread is responsible for reaping the future's context
-SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD _future) {
-  V_ARG_CHECK3(runtime, "await", 2, argc);
+V_BEGIN_FUNC(VAwait, "await", 2, k, _future)
+#ifndef VANITY_PURE_C
   VFuture * future = VCheckedDecodeFuture2(runtime, _future, "await");
 
   VFiber * fiber = atomic_load(&future->fiber);
@@ -3342,18 +3393,19 @@ SYSV_CALL void VAwait(V_CORE_ARGS, VWORD k, VWORD _future) {
   } else {
     V_CALL(k, runtime, future->val);
   }
+#endif
   VErrorC(runtime, "await: unsupported platform");
   assert(0);
-}
+V_END_FUNC
 
-static void sigint_handler(int) {
+static void sigint_handler(int i) {
   atomic_store(&VInterruptSignal, 1);
 }
 
-SYSV_CALL void VRegisterSigint(V_CORE_ARGS, VWORD k) {
+V_BEGIN_FUNC(VRegisterSigint, "register-sigint", 1, k)
   signal(SIGINT, sigint_handler);
   V_CALL(k, runtime, VVOID);
-}
+V_END_FUNC
 
 // ======================================================
 // ------------------- DEBUGGING STUFF ------------------

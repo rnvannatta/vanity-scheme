@@ -1,6 +1,14 @@
 #pragma once
 
-#ifdef __linux__
+#ifdef VANITY_PURE_C
+#include <setjmp.h>
+typedef struct VRegisters { int _; } VRegisters;
+
+#define VJmpBuf jmp_buf
+#define VSetJmp setjmp
+#define VLongJmp longjmp
+
+#elif defined(__linux__)
 #include <setjmp.h>
 
 typedef struct VRegisters {
@@ -20,9 +28,8 @@ static_assert(sizeof(struct VRegisters) == 64);
 #define VJmpBuf jmp_buf
 #define VSetJmp setjmp
 #define VLongJmp longjmp
-#endif
 
-#ifdef _WIN64
+#elif defined(_WIN64)
 // Thank you for the stack unwinding that causes stack overflows, Windows
 #include <xmmintrin.h>
 typedef struct VRegisters {
