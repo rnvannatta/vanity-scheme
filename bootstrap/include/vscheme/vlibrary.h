@@ -27,65 +27,66 @@
 
 #pragma once
 // math
-SYSV_CALL void VExact(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VInexact(V_CORE_ARGS, VWORD k, VWORD x);
+V_DECLARE_FUNC(VExact, k, x);
+V_DECLARE_FUNC(VInexact, k, x);
 
-SYSV_CALL void VAdd2(V_CORE_ARGS, VWORD k, ...);
-SYSV_CALL void VSub2(V_CORE_ARGS, VWORD k, VWORD x, ...);
-SYSV_CALL void VMul2(V_CORE_ARGS, VWORD k, ...);
-SYSV_CALL void VCmp2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
+V_DECLARE_FUNC_MIN(VAdd2, k);
+V_DECLARE_FUNC_MIN(VSub2, k, x);
 
-SYSV_CALL void VQuot2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-SYSV_CALL void VRem2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-SYSV_CALL void VDiv2(V_CORE_ARGS, VWORD k, VWORD x, ...);
+V_DECLARE_FUNC_MIN(VMul2, k);
+V_DECLARE_FUNC(VCmp2, k, a, b);
+
+V_DECLARE_FUNC(VQuot2, k, x, y);
+V_DECLARE_FUNC(VRem2, k, x, y);
+V_DECLARE_FUNC_MIN(VDiv2, k, x);
 
 // predicates
-SYSV_CALL void VNullP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VEofP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VPairP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VVectorP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VHashTableP(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VRecordP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VProcedureP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VBlobP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VSymbolP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VStringP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VDoubleP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VIntP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VCharP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VVoidP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VNullptrP2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VForeignPointerP2(V_CORE_ARGS, VWORD k, VWORD x);
+V_DECLARE_FUNC(VNullP2, k, x);
+V_DECLARE_FUNC(VEofP2, k, x);
+V_DECLARE_FUNC(VPairP2, k, x);
+V_DECLARE_FUNC(VVectorP2, k, x);
+V_DECLARE_FUNC(VHashTableP, k, x);
+V_DECLARE_FUNC(VRecordP2, k, x);
+V_DECLARE_FUNC(VProcedureP2, k, x);
+V_DECLARE_FUNC(VBlobP2, k, x);
+V_DECLARE_FUNC(VSymbolP2, k, x);
+V_DECLARE_FUNC(VStringP2, k, x);
+V_DECLARE_FUNC(VDoubleP2, k, x);
+V_DECLARE_FUNC(VIntP2, k, x);
+V_DECLARE_FUNC(VCharP2, k, x);
+V_DECLARE_FUNC(VVoidP2, k, x);
+V_DECLARE_FUNC(VNullptrP2, k, x);
+V_DECLARE_FUNC(VForeignPointerP2, k, x);
 
 // equality
-SYSV_CALL void VEq2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-SYSV_CALL void VSymbolEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-SYSV_CALL void VBlobEqv2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-SYSV_CALL void VEqv(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
+V_DECLARE_FUNC(VEq2, k, x, y);
+V_DECLARE_FUNC(VSymbolEqv2, k, x, y);
+V_DECLARE_FUNC(VBlobEqv2, k, x, y);
+V_DECLARE_FUNC(VEqv, k, x, y);
 
 // logic
-SYSV_CALL void VNot2(V_CORE_ARGS, VWORD k, VWORD x);
+V_DECLARE_FUNC(VNot2, k, x);
 
 // lists
-SYSV_CALL void VCons2(V_CORE_ARGS, VWORD k, VWORD x, VWORD y);
-SYSV_CALL void VCar2(V_CORE_ARGS, VWORD k, VWORD x);
-SYSV_CALL void VCdr2(V_CORE_ARGS, VWORD k, VWORD x);
+V_DECLARE_FUNC(VCons2, k, x, y);
+V_DECLARE_FUNC(VCar2, k, x);
+V_DECLARE_FUNC(VCdr2, k, x);
 
 // vectors
 
-SYSV_CALL void VListVector2(V_CORE_ARGS, VWORD k, VWORD vec);
-SYSV_CALL void VVectorRef2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i);
-SYSV_CALL void VVectorLength2(V_CORE_ARGS, VWORD k, VWORD vec);
+V_DECLARE_FUNC(VListVector2, k, vec);
+V_DECLARE_FUNC(VVectorRef2, k, vec, i);
+V_DECLARE_FUNC(VVectorLength2, k, vec);
 
 // typevectors
 
 #define IMPLEMENT_BUFFER_PROTOTYPES(Prefix) \
-SYSV_CALL void VMake ## Prefix ## Vector(V_CORE_ARGS, VWORD k, VWORD len, VWORD fill); \
-SYSV_CALL void V ## Prefix ## VectorP(V_CORE_ARGS, VWORD k, VWORD vec); \
-SYSV_CALL void V ## Prefix ## VectorRef(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i); \
-SYSV_CALL void V ## Prefix ## VectorSet(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i, VWORD x); \
-SYSV_CALL void V ## Prefix ## VectorLength(V_CORE_ARGS, VWORD k, VWORD vec); \
-SYSV_CALL void VList ## Prefix ## Vector(V_CORE_ARGS, VWORD k, VWORD vec);
+V_DECLARE_FUNC(VMake ## Prefix ## Vector, k, len, fill); \
+V_DECLARE_FUNC(V ## Prefix ## VectorP, k, vec); \
+V_DECLARE_FUNC(V ## Prefix ## VectorRef, k, vec, i); \
+V_DECLARE_FUNC(V ## Prefix ## VectorSet, k, vec, i, x); \
+V_DECLARE_FUNC(V ## Prefix ## VectorLength, k, vec); \
+V_DECLARE_FUNC(VList ## Prefix ## Vector, k, vec);
 
 IMPLEMENT_BUFFER_PROTOTYPES(S8)
 IMPLEMENT_BUFFER_PROTOTYPES(U8)
@@ -96,115 +97,115 @@ IMPLEMENT_BUFFER_PROTOTYPES(S32)
 IMPLEMENT_BUFFER_PROTOTYPES(F32)
 IMPLEMENT_BUFFER_PROTOTYPES(F64)
 
-void VReadU8Vector(V_CORE_ARGS, VWORD k, VWORD n, VWORD port);
+V_DECLARE_FUNC(VReadU8Vector, k, n, port);
 
 // records
 
-SYSV_CALL void VCreateRecord2(V_CORE_ARGS, VWORD k, VWORD type, ...);
-SYSV_CALL void VRecordRef2(V_CORE_ARGS, VWORD k, VWORD rec, VWORD i);
-SYSV_CALL void VRecordLength2(V_CORE_ARGS, VWORD k, VWORD rec);
+V_DECLARE_FUNC_MIN(VCreateRecord2, k, type);
+V_DECLARE_FUNC(VRecordRef2, k, rec, i);
+V_DECLARE_FUNC(VRecordLength2, k, rec);
 
 // hash table
 
-SYSV_CALL void VMakeHashTable(V_CORE_ARGS, VWORD k, VWORD eq, VWORD hash, VWORD _len);
-SYSV_CALL void VHashTableEqvFunc(V_CORE_ARGS, VWORD k, VWORD table);
-SYSV_CALL void VHashTableHashFunc(V_CORE_ARGS, VWORD k, VWORD table);
-SYSV_CALL void VHashTableVector(V_CORE_ARGS, VWORD k, VWORD _table);
-SYSV_CALL void VHashTableRef(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD thunk);
-SYSV_CALL void VHashTableSet(V_CORE_ARGS, VWORD k, VWORD table, VWORD key, VWORD val);
-SYSV_CALL void VHashTableDelete(V_CORE_ARGS, VWORD k, VWORD table, VWORD key);
+V_DECLARE_FUNC(VMakeHashTable, k, eq, hash, _len);
+V_DECLARE_FUNC(VHashTableEqvFunc, k, table);
+V_DECLARE_FUNC(VHashTableHashFunc, k, table);
+V_DECLARE_FUNC(VHashTableVector, k, _table);
+V_DECLARE_FUNC(VHashTableRef, k, table, key, thunk);
+V_DECLARE_FUNC(VHashTableSet, k, table, key, val);
+V_DECLARE_FUNC(VHashTableDelete, k, table, key);
 
 // strings
 
-SYSV_CALL void VMakeString2(V_CORE_ARGS, VWORD k, VWORD i, ...);
-SYSV_CALL void VSubstring2(V_CORE_ARGS, VWORD k, VWORD str, ...);
-SYSV_CALL void VStringCopy2(V_CORE_ARGS, VWORD k, VWORD dst, VWORD src, VWORD at, ...);
-SYSV_CALL void VStringLength2(V_CORE_ARGS, VWORD k, VWORD str);
-SYSV_CALL void VStringRef2(V_CORE_ARGS, VWORD k, VWORD str, VWORD i);
-SYSV_CALL void VStringSet2(V_CORE_ARGS, VWORD k, VWORD str, VWORD i, VWORD c);
+V_DECLARE_FUNC(VMakeString2, k, i, fill);
+V_DECLARE_FUNC(VSubstring2, k, str, _start, _end);
+V_DECLARE_FUNC(VStringCopy2, k, dst, src, at, _start, _end);
+V_DECLARE_FUNC(VStringLength2, k, str);
+V_DECLARE_FUNC(VStringRef2, k, str, i);
+V_DECLARE_FUNC(VStringSet2, k, str, i, c);
 
-SYSV_CALL void VStringNumber2(V_CORE_ARGS, VWORD k, VWORD str);
+V_DECLARE_FUNC(VStringNumber2, k, str);
 //void VNumberString2(V_CORE_ARGS, VWORD k, VWORD num);
-SYSV_CALL void VStringSymbol2(V_CORE_ARGS, VWORD k, VWORD str);
-SYSV_CALL void VSymbolString2(V_CORE_ARGS, VWORD k, VWORD sym);
+V_DECLARE_FUNC(VStringSymbol2, k, str);
+V_DECLARE_FUNC(VSymbolString2, k, sym);
 
 // chars
 
-SYSV_CALL void VCharInt2(V_CORE_ARGS, VWORD k, VWORD c);
+V_DECLARE_FUNC(VCharInt2, k, c);
 //void VIntChar2(V_CORE_ARGS, VWORD k, VWORD int);
 
 // ports
-SYSV_CALL void VStdinPort(V_CORE_ARGS, VWORD k);
-SYSV_CALL void VStdoutPort(V_CORE_ARGS, VWORD k);
-SYSV_CALL void VStderrPort(V_CORE_ARGS, VWORD k);
+V_DECLARE_FUNC(VStdinPort, k);
+V_DECLARE_FUNC(VStdoutPort, k);
+V_DECLARE_FUNC(VStderrPort, k);
 
-SYSV_CALL void VDupStdin2(V_CORE_ARGS, VWORD k);
-SYSV_CALL void VDupStdout2(V_CORE_ARGS, VWORD k);
-SYSV_CALL void VDupStderr2(V_CORE_ARGS, VWORD k);
+V_DECLARE_FUNC(VDupStdin2, k);
+V_DECLARE_FUNC(VDupStdout2, k);
+V_DECLARE_FUNC(VDupStderr2, k);
 
-SYSV_CALL void VOpenInputStream2(V_CORE_ARGS, VWORD k, VWORD path);
-SYSV_CALL void VOpenOutputStream2(V_CORE_ARGS, VWORD k, VWORD path);
-SYSV_CALL void VCloseStream2(V_CORE_ARGS, VWORD k, VWORD port);
+V_DECLARE_FUNC(VOpenInputStream2, k, path);
+V_DECLARE_FUNC(VOpenOutputStream2, k, path);
+V_DECLARE_FUNC(VCloseStream2, k, port);
 
-SYSV_CALL void VTtyPortP(V_CORE_ARGS, VWORD k, VWORD _port);
+V_DECLARE_FUNC(VTtyPortP, k, _port);
 
-SYSV_CALL void VOpenOutputString2(V_CORE_ARGS, VWORD k);
-SYSV_CALL void VGetOutputString2(V_CORE_ARGS, VWORD k, VWORD port);
+V_DECLARE_FUNC(VOpenOutputString2, k);
+V_DECLARE_FUNC(VGetOutputString2, k, port);
 
 // input
-SYSV_CALL void VReadChar2(V_CORE_ARGS, VWORD k, VWORD port);
-SYSV_CALL void VReadLine2(V_CORE_ARGS, VWORD k, VWORD port);
-SYSV_CALL void VReadLine3(V_CORE_ARGS, VWORD k, VWORD port);
-SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
+V_DECLARE_FUNC(VReadChar2, k, port);
+V_DECLARE_FUNC(VReadLine2, k, port);
+V_DECLARE_FUNC(VReadLine3, k, port);
+V_DECLARE_FUNC(VRead2, k, port);
 
 // output
-SYSV_CALL void VDisplay2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port);
-SYSV_CALL void VWrite2(V_CORE_ARGS, VWORD k, VWORD val, VWORD port);
-SYSV_CALL void VNewline2(V_CORE_ARGS, VWORD k, VWORD port);
+V_DECLARE_FUNC(VDisplay2, k, val, port);
+V_DECLARE_FUNC(VWrite2, k, val, port);
+V_DECLARE_FUNC(VNewline2, k, port);
 
-SYSV_CALL void VDisplayStdout(V_CORE_ARGS, VWORD k, VWORD val);
-SYSV_CALL void VWriteStdout(V_CORE_ARGS, VWORD k, VWORD val);
-SYSV_CALL void VNewlineStdout(V_CORE_ARGS, VWORD k);
+V_DECLARE_FUNC(VDisplayStdout, k, val);
+V_DECLARE_FUNC(VWriteStdout, k, val);
+V_DECLARE_FUNC(VNewlineStdout, k);
 
 // control flow
-SYSV_CALL void VCallCC2(V_CORE_ARGS, VWORD k, VWORD proc);
-SYSV_CALL void VCallValues2(V_CORE_ARGS, VWORD k, VWORD producer, VWORD consumer);
-SYSV_CALL void VApply2(V_CORE_ARGS, VWORD k, VWORD proc, ...);
-SYSV_CALL void VApplyCps(V_CORE_ARGS, VWORD k, VWORD proc, VWORD lst);
+V_DECLARE_FUNC(VCallCC2, k, proc);
+V_DECLARE_FUNC(VCallValues2, k, producer, consumer);
+V_DECLARE_FUNC_MIN(VApply2, k, proc);
+V_DECLARE_FUNC(VApplyCps, k, proc, lst);
 
 // system
-SYSV_CALL void VSystem2(V_CORE_ARGS, VWORD k, VWORD cmd);
-SYSV_CALL void VOpenInputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
-SYSV_CALL void VOpenOutputProcess2(V_CORE_ARGS, VWORD k, VWORD cmd);
+V_DECLARE_FUNC(VSystem2, k, cmd);
+V_DECLARE_FUNC(VOpenInputProcess2, k, cmd);
+V_DECLARE_FUNC(VOpenOutputProcess2, k, cmd);
 
 // rng
-SYSV_CALL void VMakeRandom(V_CORE_ARGS, VWORD k, VWORD seed, VWORD stream);
-SYSV_CALL void VRandomCopy(V_CORE_ARGS, VWORD k, VWORD rng);
-SYSV_CALL void VRandomSample(V_CORE_ARGS, VWORD k, VWORD rng);
-SYSV_CALL void VRandomSampleBounded(V_CORE_ARGS, VWORD k, VWORD rng, VWORD end);
-SYSV_CALL void VRandomSampleFloat(V_CORE_ARGS, VWORD k, VWORD rng);
-SYSV_CALL void VRandomAdvance(V_CORE_ARGS, VWORD k, VWORD rng, VWORD step);
+V_DECLARE_FUNC(VMakeRandom, k, seed, stream);
+V_DECLARE_FUNC(VRandomCopy, k, rng);
+V_DECLARE_FUNC(VRandomSample, k, rng);
+V_DECLARE_FUNC(VRandomSampleBounded, k, rng, end);
+V_DECLARE_FUNC(VRandomSampleFloat, k, rng);
+V_DECLARE_FUNC(VRandomAdvance, k, rng, step);
 
 // filesystem
-SYSV_CALL void VRealpath(V_CORE_ARGS, VWORD k, VWORD relpath);
-SYSV_CALL void VMakeTemporaryFile2(V_CORE_ARGS, VWORD k, VWORD prefix, ...);
-SYSV_CALL void VAccess(V_CORE_ARGS, VWORD k, VWORD path, VWORD mode);
+V_DECLARE_FUNC(VRealpath, k, relpath);
+V_DECLARE_FUNC(VMakeTemporaryFile2, k, prefix, suffix);
+V_DECLARE_FUNC(VAccess, k, path, mode);
 
 // time
-SYSV_CALL void VCurrentJiffy(V_CORE_ARGS, VWORD k);
-SYSV_CALL void VJiffiesPerSecond(V_CORE_ARGS, VWORD k);
+V_DECLARE_FUNC(VCurrentJiffy, k);
+V_DECLARE_FUNC(VJiffiesPerSecond, k);
 
 // bit banging
-void VBitwiseNot(V_CORE_ARGS, VWORD k, VWORD x);
-void VBitwiseIor(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
-void VBitwiseXor(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
-void VBitwiseAnd(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
-void VBitwiseXnor(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
-void VBitwiseNand(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
-void VBitwiseNor(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
-void VBitwiseAndC1(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
-void VBitwiseAndC2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
-void VBitwiseOrC1(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
-void VBitwiseOrC2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
-void VArithmeticShift(V_CORE_ARGS, VWORD k, VWORD a, VWORD b);
-void VBitCount(V_CORE_ARGS, VWORD k, VWORD a);
+V_DECLARE_FUNC(VBitwiseNot, k, x);
+V_DECLARE_FUNC(VBitwiseIor, k, a, b);
+V_DECLARE_FUNC(VBitwiseXor, k, a, b);
+V_DECLARE_FUNC(VBitwiseAnd, k, a, b);
+V_DECLARE_FUNC(VBitwiseXnor, k, a, b);
+V_DECLARE_FUNC(VBitwiseNand, k, a, b);
+V_DECLARE_FUNC(VBitwiseNor, k, a, b);
+V_DECLARE_FUNC(VBitwiseAndC1, k, a, b);
+V_DECLARE_FUNC(VBitwiseAndC2, k, a, b);
+V_DECLARE_FUNC(VBitwiseOrC1, k, a, b);
+V_DECLARE_FUNC(VBitwiseOrC2, k, a, b);
+V_DECLARE_FUNC(VArithmeticShift, k, a, b);
+V_DECLARE_FUNC(VBitCount, k, a);

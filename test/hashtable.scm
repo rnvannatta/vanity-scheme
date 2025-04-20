@@ -25,7 +25,6 @@
 
 (hash-table-delete! table 9)
 
-
 (define eqv-table (make-hash-table eqv?))
 
 (hash-table-set! eqv-table 'one 1)

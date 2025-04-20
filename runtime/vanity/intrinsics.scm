@@ -251,6 +251,8 @@
          ((##vcore.has-finalizer?) "VHasFinalizer")
          ((##vcore.finalize!) "VFinalize")
          ((##vcore.garbage-collect) "VGarbageCollect")
+         ((##vcore.yield-to-host) "VYieldToHost")
+         ((##vcore.yield-to-host-major) "VYieldToHostMajor")
 
          ; System
          ((##vcore.system) "VSystem2")
@@ -511,6 +513,8 @@
          ((##vcore.has-finalizer?) ##vcore.has-finalizer?)
          ((##vcore.finalize!) ##vcore.finalize!)
          ((##vcore.garbage-collect) ##vcore.garbage-collect)
+         ((##vcore.yield-to-host) ##vcore.yield-to-host)
+         ((##vcore.yield-to-host-major) ##vcore.yield-to-host-major)
 
          ; System
          ((##vcore.system) ##vcore.system)

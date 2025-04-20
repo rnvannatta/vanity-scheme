@@ -39,59 +39,58 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0install__root = VEncodePointer(VLookupConstant("_V0install__root", &_VW_V0install__root), VPOINTER_OTHER);
   _V0linux = VEncodePointer(VLookupConstant("_V0linux", &_VW_V0linux), VPOINTER_OTHER);
 }
-static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_k1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
   // (letrec 3 ((##inline ##vcore.qcons '0 (##inline ##vcore.qcons '0 '())) (##string ##.string.13) 'linux) ((bruijn ##.k.5 2 0) (##inline ##vcore.cons (##inline ##vcore.cons 'install-root (bruijn ##.install-root.2 0 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'version (bruijn ##.version.1 0 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'platform (bruijn ##.platform.3 0 2)) '())))))
-    // OH NO A LETREC!
     {
-    VEnv * upenv = env;
-    struct { VEnv env; VWORD argv[3]; } container;
-    VEnv * env = &container.env;
-    VInitEnv(env, 3, 3, upenv);
-    env->vars[0] = VInlineCons2(runtime,
+    VEnv * statics = self;
+    struct { VEnv self; VWORD argv[3]; } container;
+    VEnv * self = &container.self;
+    VInitEnv(self, 3, 3, statics);
+    self->vars[0] = VInlineCons2(runtime,
         VEncodeInt(0l),
         VInlineCons2(runtime,
         VEncodeInt(0l),
         VNULL));
-    env->vars[1] = VEncodePointer(&_V10_Dstring_D13.sym, VPOINTER_OTHER);
-    env->vars[2] = _V0linux;
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, upenv->up->vars[0]), 1,
+    self->vars[1] = VEncodePointer(&_V10_Dstring_D13.sym, VPOINTER_OTHER);
+    self->vars[2] = _V0linux;
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VInlineCons2(runtime,
         VInlineCons2(runtime,
         _V0install__root,
-        env->vars[1]),
+        self->vars[1]),
         VInlineCons2(runtime,
         VInlineCons2(runtime,
         _V0version,
-        env->vars[0]),
+        self->vars[0]),
         VInlineCons2(runtime,
         VInlineCons2(runtime,
         _V0platform,
-        env->vars[2]),
+        self->vars[2]),
         VNULL))));
     }
 }
-static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv * upenv, int argc, VWORD _var0) {
+static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_lambda1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv env; VWORD argv[1]; } container;
-  VEnv * env = &container.env;
-  VInitEnv(env, 1, 1, upenv);
-  env->vars[0] = _var0;
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
   // (##vcore.make-import (close _V0vanity_V0compiler_V0config_V20_k1) (##string ##.string.14))
     VCallFuncWithGC(runtime, (VFunc)VMakeImport2, 2,
-      VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0config_V20_k1, env)}),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0config_V20_k1, self)})),
       VEncodePointer(&_V10_Dstring_D14.sym, VPOINTER_OTHER));
 }
 VFunc _V0vanity_V0compiler_V0config_V20 = (VFunc)_V0vanity_V0compiler_V0config_V20_lambda1;

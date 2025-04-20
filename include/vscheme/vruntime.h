@@ -171,11 +171,15 @@ typedef struct VSmallObject {
 #ifdef __linux__
 #define VWEAK __attribute__((weak))
 #endif
+#ifdef __EMSCRIPTEN__
+#define VWEAK __attribute__((weak))
+#endif
 #ifdef _WIN64
 #define VWEAK __declspec(selectany)
 #endif
 
-enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT, VJMP_AWAIT };
+enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT, VJMP_AWAIT, VJMP_YIELD };
+enum VRETURN_CODE { VUNDEFINED, VEXITED, VFINISHED, VYIELDED };
 
 #define LITERAL_TYPE_MASK (15ul*TAG_BIAS)
 
@@ -454,8 +458,25 @@ typedef struct VPublicRuntime {
   ssize_t VStackSize;
   VDebugInfo * VCallHistory[V_CALL_HISTORY_LEN];
   unsigned VCallHistoryCursor;
+#ifdef __EMSCRIPTEN__
+  // emscripten has TWO stacks. the wasm argument stack, which
+  // has no way to query it, and the linear memory stack which
+  // is used for local variables which does have queries.
+  // to get around the inability to query the wasm stack, we
+  // simply gc after N calls. Which means every function call
+  // has to decrement this.
+  int max_callgas;
+  int callgas;
+#endif
 } VPublicRuntime;
 typedef struct VRuntime VRuntime;
+
+#ifdef __EMSCRIPTEN__
+#define VSpendCallgas(runtime) (((VPublicRuntime*)runtime)->callgas--)
+#else
+#define VSpendCallgas(runtime)
+#endif
+
 /* ======================== Encoding and Decoding ======================= */
 
 // Immediate types
@@ -555,7 +576,7 @@ static inline VPair * VDecodePair(VWORD v) {
 }
 #else
 #define VEncodePointer(_v, _type) VWord( (((uint64_t)(intptr_t)_v) & ~POINTER_MIRROR) | _type | LITERAL_HEADER)
-#define VDecodePointer(_v) ((VWORD*)(intptr_t)( (VBits(_v) << 16) >> 16))
+#define VDecodePointer(_v) ((VWORD*)(intptr_t)( ((int64_t)VBits(_v) << 16) >> 16))
 
 #define VEncodeClosure(_c) (VEncodePointer(_c, VPOINTER_CLOSURE))
 #define VDecodeClosure(_c) ((VClosure*)VDecodePointer(_c))
@@ -974,6 +995,12 @@ static inline VPair * VFillPair(VPair * pair, VWORD a, VWORD b) {
   pair->rest = b;
   return pair;
 }
+static inline VWORD VFillEncodePair(VPair * pair, VWORD a, VWORD b) {
+  pair->base = VMakeObject(VPAIR);
+  pair->first = a;
+  pair->rest = b;
+  return VEncodePair(pair);
+}
 
 enum { V_HUGE_ALLOC_THRESHOLD = 128 * 1024 };
 void * VHugeAlloc(VRuntime * runtime, size_t size, bool plain_old_data);
@@ -1075,6 +1102,17 @@ static inline void VRecordCall2(VRuntime * _runtime, VDebugInfo * debug) {
   va_end(_vlist); \
   *_varargs = _root_pair.rest; \
 } while(0)
+#define V_GATHER_VARARGS_PUREC(_varargs, numfixed, argc) do { \
+  VPair _root_pair = VMakePair(VVOID, VNULL); \
+  VPair * _cur = &_root_pair; \
+  for(int i = numfixed; i < argc; i++) { \
+    VPair * p = alloca(sizeof(VPair)); \
+    *p = VMakePair(self->vars[i], VNULL); \
+    _cur->rest = VEncodePair(p); \
+    _cur = p; \
+  } \
+  *_varargs = _root_pair.rest; \
+} while(0)
 
 void VCallFuncWithGC(VRuntime* runtime, VFunc func, int argc, ...);
 void VCallDecodedWithGC(VRuntime* runtime, VClosure * closure, int argc, ...);
@@ -1093,6 +1131,7 @@ void VCallDecodedWithGC(VRuntime* runtime, VClosure * closure, int argc, ...);
       }, \
       .args = { __VA_ARGS__ }, \
     }; \
+    VSpendCallgas(runtime); \
     V_GC_CHECK2(fnc, runtime, nv, _argcount, _arguments.args) { \
       (fnc)(runtime, _upenv, _argcount, &_arguments.env); \
     } \
@@ -1106,12 +1145,14 @@ void VCallDecodedWithGC(VRuntime* runtime, VClosure * closure, int argc, ...);
 #else
 #define V_CALL_FUNC(fnc, nv, runtime, ...) \
  do { \
+    VSpendCallgas(runtime); \
    VCallDecodedWithGC(runtime, (VClosure[]){{ .func = (VFunc)fnc, .env = nv }}, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
    /*(fnc)(runtime, nv, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__);*/ \
  } while(0)
 
 #define V_CALL(closure, runtime, ...) \
   do { \
+    VSpendCallgas(runtime); \
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, closure), sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
     /*VClosure * _closure = VDecodeClosureApply2(runtime, closure);*/ \
     /*(_closure->func)(runtime, _closure->env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__);*/ \
@@ -1134,7 +1175,14 @@ static inline bool VStackOverflow(VRuntime * _runtime) {
   // stack may grow upwards on some platforms
   static_assert(0, "");
 #endif
-  return size > runtime->VStackLen;
+  bool has_gas = true;
+#ifdef __EMSCRIPTEN__
+  has_gas = runtime->callgas > 0;
+  if(!has_gas) {
+    printf("out of gas!\n");
+  }
+#endif
+  return size > runtime->VStackLen || !has_gas;
 }
 bool VStackOverflowNoInline(VRuntime * runtime);
 bool VStackOverflowNoInline2(VRuntime * runtime, char * VStackStop);
@@ -1185,7 +1233,8 @@ V_DECLARE_FUNC_MIN(VAbort2);
 // Exit PROCEDURE, expects a continuation in slot 1
 //void VExit2(V_CORE_ARGS, VWORD k, VWORD e);
 V_DECLARE_FUNC(VExit2, k, e);
-
+V_DECLARE_FUNC(VYieldToHost, k, e);
+V_DECLARE_FUNC(VYieldToHostMajor, k, e);
 
 //void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major);
 //void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer);
@@ -1246,6 +1295,7 @@ V_DECLARE_FUNC(VUnloadLibrary2, k, lib);
 
 int VStart(int nargs, void(* const * toplevels)());
 void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv);
+void VDestroyRuntime(VRuntime * runtime);
 VWORD VStart2(VRuntime * runtime, int num_toplevels, VThunk const * toplevels);
 static inline int VDecodeExitCode(VWORD v) {
   if(VIsToken(v, VTOK_ERROR))
@@ -1254,6 +1304,8 @@ static inline int VDecodeExitCode(VWORD v) {
     return VDecodeInt(v);
   return !VDecodeBool(v);
 }
+int VExecute(VRuntime * runtime, VClosure * thunk);
+VWORD VGetExitCode(VRuntime * runtime);
 
 //void VCommandLine2(V_CORE_ARGS, VWORD k);
 //void VGensym(V_CORE_ARGS, VWORD k, VWORD _str);

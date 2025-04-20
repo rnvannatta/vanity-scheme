@@ -31,11 +31,12 @@
       (lambda ()
         (set! x (+ x 1))
         (sprintf "VDllMain~A" x))))
-  (define (printout2 debug? shared? literal-table foreign-functions functions declares toplevels)
+  (define (printout2 main purec? debug? shared? literal-table foreign-functions functions declares toplevels)
     (define (print-global sym)
       (let ((builtin (lookup-intrinsic-name sym)))
         (if builtin
-            (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A,NULL)})" builtin)
+            ; thank u for the parens clang
+            (printf "(VEncodeClosure(((VClosure[]){VMakeClosure2((VFunc)~A,NULL)})))" builtin)
             (printf "VLookupGlobalVarFast2(runtime, \"~A\")" sym))))
     (define (print-string s)
       (display #\")
@@ -156,8 +157,9 @@
         (else (compiler-error "closes?: unknown form" expr))))
     (define (print-expr expr args)
       (define (print-builtin-apply f xs tail-call?)
-        ;(printf "    (~A)(runtime, NULL, ~A" (lookup-intrinsic-name f) (length xs))
-        (printf "    VCallFuncWithGC(runtime, (VFunc)~A, ~A" (lookup-intrinsic-name f) (length xs))
+        (if purec?
+            (printf "    V_CALL_FUNC((VFunc)~A, self, runtime" (lookup-intrinsic-name f))
+            (printf "    VCallFuncWithGC(runtime, (VFunc)~A, ~A" (lookup-intrinsic-name f) (length xs)))
         (for-each
           (lambda (x)
            (printf ",~N      ")
@@ -167,17 +169,22 @@
       (define (print-closure-apply f xs tail-call?)
         (match f
           (('close fun)
-           ;(printf "    (~A)(runtime, env, ~A" fun (length xs))
-           (printf "    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)~A, .env = env }, }, ~A" fun (length xs))
+           (if purec?
+               (printf "    V_CALL_FUNC((VFunc)~A, self, runtime" fun)
+               ; FIXME yucky! let's find a way to avoid creating this stack data
+               (printf "    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)~A, .env = self }, }, ~A" fun (length xs)))
            )
           (else
-            ;(display "    V_CALL(")
-            ;(print-expr f args)
-            ;(printf ", runtime")
-            (display "    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, ")
-            (print-expr f args)
-            (printf "), ~A" (length xs))
-            ))
+            (if purec?
+                (begin
+                  (display "    V_CALL(")
+                  (print-expr f args)
+                  (printf ", runtime")
+                )
+                (begin
+                  (display "    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, ")
+                  (print-expr f args)
+                  (printf "), ~A" (length xs))))))
         (for-each
           (lambda (x)
            (printf ",~N      ")
@@ -185,16 +192,15 @@
           xs)
         (printf ");~N"))
       (define (print-letrec n xs body args)
-        (printf "    // OH NO A LETREC!~N")
         (displayln "    {")
-        (displayln "    VEnv * upenv = env;")
-        (printf "    struct { VEnv env; VWORD argv[~A]; } container;~N" n)
-        (printf "    VEnv * env = &container.env;~N")
-        (printf "    VInitEnv(env, ~A, ~A, upenv);~N" n n)
-        (let ((args (map (lambda (i) (sprintf "env->vars[~A]" i)) (iota n))))
+        (displayln "    VEnv * statics = self;")
+        (printf "    struct { VEnv self; VWORD argv[~A]; } container;~N" n)
+        (printf "    VEnv * self = &container.self;~N")
+        (printf "    VInitEnv(self, ~A, ~A, statics);~N" n n)
+        (let ((args (map (lambda (i) (sprintf "self->vars[~A]" i)) (iota n))))
           (for-each
             (lambda (x i)
-              (printf "    env->vars[~A] = " i)
+              (printf "    self->vars[~A] = " i)
               (print-expr x args)
               (displayln ";"))
             xs
@@ -202,10 +208,10 @@
           (print-expr body args))
         (displayln "    }"))
       
-      ; should always be a tail call eh
       (define (print-define-global k y x tail-call?)
-        (printf "    VCallFuncWithGC(runtime, (VFunc)VDefineGlobalVar2, 3,~N      ")
-        ;(printf "    VDefineGlobalVar2(runtime, env, 3,~N      ")
+        (if purec?
+            (printf "    V_CALL_FUNC(VDefineGlobalVar2, NULL, runtime,~N      ")
+            (printf "    VCallFuncWithGC(runtime, (VFunc)VDefineGlobalVar2, 3,~N      "))
         (print-expr k args)
         (printf ",~N      ")
         (print-literal y)
@@ -215,8 +221,9 @@
       (define (print-set k y x tail-call?)
         (match y
           (('bruijn name up right)
-           (printf "    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = env }, }, 4,~N      ")
-           ;(printf "    VSetEnvVar2(runtime, env, 4,~N      ")
+           (if purec?
+               (printf "    V_CALL((VEncodeClosure(((VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }))), runtime,~N      ")
+               (printf "    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,~N      "))
            (print-expr k args)
            (printf ",~N      VEncodeInt(~Al), VEncodeInt(~Al),~N      " up right)
            (print-expr x args)
@@ -224,8 +231,9 @@
           (sym
            (if (symbol? sym)
                (begin
-                 (printf "    VCallFuncWithGC(runtime, (VFunc)VSetGlobalVar2, 3,~N      ")
-                 ;(printf "    VSetGlobalVar2(runtime, env, 3,~N      ")
+                 (if purec?
+                     (printf "    V_CALL_FUNC(VSetGlobalVar2, NULL, runtime,~N      ")
+                     (printf "    VCallFuncWithGC(runtime, (VFunc)VSetGlobalVar2, 3,~N      "))
                  (print-expr k args)
                  (printf ",~N      ")
                  (print-literal sym)
@@ -253,14 +261,14 @@
         ; FIXME
         (('quote ('##string x)) (print-literal-string x))
         (('quote x) (print-literal x))
-        (('close fun) (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A, env)})" fun))
+        (('close fun) (printf "(VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A, self)}))" fun))
         (('bruijn name up right)
          (cond ((= up 0) (display (list-ref args right)))
-               ((= up 1) (printf "upenv->vars[~A]" right))
-               ((= up 2) (printf "upenv->up->vars[~A]" right))
-               ((= up 3) (printf "upenv->up->up->vars[~A]" right))
-               ((= up 4) (printf "upenv->up->up->up->vars[~A]" right))
-               (else (printf "VGetArg(upenv, ~A-1, ~A)" up right))))
+               ((= up 1) (printf "statics->vars[~A]" right))
+               ((= up 2) (printf "statics->up->vars[~A]" right))
+               ((= up 3) (printf "statics->up->up->vars[~A]" right))
+               ((= up 4) (printf "statics->up->up->up->vars[~A]" right))
+               (else (printf "VGetArg(statics, ~A-1, ~A)" up right))))
         (('if p a b)
          (displayln "if(VDecodeBool(") (print-expr p args) (displayln ")) {") 
          (print-expr a args)
@@ -278,7 +286,7 @@
         (('##intrinsic x)
          (print-intrinsic x))
         (('##foreign.function x)
-         (printf "VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A, NULL)})" x))
+         (printf "(VEncodeClosure(((VClosure[]){VMakeClosure2((VFunc)~A, NULL)})))" x))
         (('letrec n xs body)
          (print-letrec n xs body args))
         ((f xs ...)
@@ -293,15 +301,21 @@
         (map (lambda (e) (sprintf "_var~A" e)) (iota num)))
       (let ((args (gen-args num)))
         (if needs-used? (printf "__attribute__((used)) "))
-        (printf "static void ~A(VRuntime * runtime, VEnv * upenv, int argc" name)
-        (for-each (lambda (arg) (printf ", VWORD ~A" arg)) args)
-        (if variadic? (printf ", ..."))
-        (printf ") {~N")
+        (if purec?
+            (begin
+              (printf "static V_BEGIN_FUNC~A(~A, \"~A\", ~A" (if variadic? "_MIN" "") name name num)
+              (for-each (lambda (arg) (printf ", ~A" arg)) args)
+              (printf ")~N"))
+            (begin
+              (printf "static void ~A(VRuntime * runtime, VEnv * statics, int argc" name)
+              (for-each (lambda (arg) (printf ", VWORD ~A" arg)) args)
+              (if variadic? (printf ", ..."))
+              (printf ") {~N")))
         (if debug?
           (begin
             (printf " static VDebugInfo dbg = { \"~A\" };~N" name)
             (printf " VRecordCall2(runtime, &dbg);~N")))
-        (if check-args?
+        (if (and (not purec?) check-args?)
             (if variadic?
                 (begin
                   (printf " if(argc < ~A) {~N" num)
@@ -316,37 +330,37 @@
                   (printf "  , argc);~N")
                   (printf " }~N"))))
         (if variadic?
+            (if purec?
+                (begin
+                  (printf " VWORD _varargs = VNULL;~N")
+                  (printf " V_GATHER_VARARGS_PUREC(&_varargs, ~A, argc);~N" num)
+                  (printf " self->vars[~A] = _varargs;~N" num))
+                (begin
+                  (printf " VWORD _varargs = VNULL;~N")
+                  (printf " V_GATHER_VARARGS_VARIADIC(&_varargs, ~A, argc, ~A);~N" num (if (= num 0) "argc" (list-ref args (- num 1)))))))
+        (if (and (not purec?) (closes? body))
             (begin
-              (printf " VWORD _varargs = VNULL;~N")
-              (printf " V_GATHER_VARARGS_VARIADIC(&_varargs, ~A, argc, ~A);~N" num (if (= num 0) "argc" (list-ref args (- num 1))))))
-        ;(printf " V_GC_CHECK2_VARARGS((VFunc)~A, runtime, upenv, ~A, argc" name num)
-        ;(for-each (lambda (arg) (printf ", ~A" arg)) args)
-        ;(if variadic?
-            ;(printf ", _varargs) {~N")
-            ;(printf ") {~N")
-            ;)
-        (if (closes? body)
-            (begin
-              (printf "  struct { VEnv env; VWORD argv[~A]; } container;~N" (if variadic? (+ num 1) num))
-              (printf "  VEnv * env = &container.env;~N")
+              (printf "  struct { VEnv self; VWORD argv[~A]; } container;~N" (if variadic? (+ num 1) num))
+              (printf "  VEnv * self = &container.self;~N")
               (let ((nargs (if variadic? (+ num 1) num)))
-                (printf "  VInitEnv(env, ~A, ~A, upenv);~N" nargs nargs))
+                (printf "  VInitEnv(self, ~A, ~A, statics);~N" nargs nargs))
               (for-each
                 (lambda (i arg)
-                  (printf "  env->vars[~A] = ~A;~N" i arg))
+                  (printf "  self->vars[~A] = ~A;~N" i arg))
                 (iota num)
                 args)
-              (if variadic? (printf "  env->vars[~A] = _varargs;~N" num))))
+              (if variadic? (printf "  self->vars[~A] = _varargs;~N" num))))
 
        (printf "  // ~S~N" body)
        (print-expr body (if variadic? (append args '("_varargs")) args))
-       ;(printf " }~N")
        (printf "}~N")))
     (define (print-fun-case fun)
       (let* ((name (car fun))
              (cases (cddr fun))
              (cases (map (lambda (i e) `(,(sprintf "_V20Case~A_~A" i name) #f ,e)) (iota (length cases)) cases)))
-       (printf "__attribute__((used)) static void _V20CaseError_~A(VRuntime * runtime, VEnv * upenv, int argc, ...) {~N" name)
+       (if purec?
+           (printf "__attribute__((used)) static V_BEGIN_FUNC_MIN(_V20CaseError_~A, \"_V20CaseError_~A\", 0)~N" name name)
+           (printf "__attribute__((used)) static void _V20CaseError_~A(VRuntime * runtime, VEnv * statics, int argc, ...) {~N" name))
        (printf " // ~S~N" fun)
        (printf " VErrorC(runtime, \"Not enough arguments to ~A, got ~~D~~N\"~N" name)
        (for-each
@@ -369,28 +383,48 @@
              (print-fun-single name #f num #f body #t))))
          cases)
 
-       ; while this declaration is nonstatic, the definition lacks the .globl directive so it's still a static function
-       (printf "void ~A(VRuntime * runtime, VEnv * upenv, int argc, ...);~N" name)
-       (printf "asm(~N")
-       (printf "\".intel_syntax noprefix\\n\"~N")
+       (if purec?
+           (begin
+             (printf "V_BEGIN_FUNC_MIN(~A, \"~A\", 0)~N" name name)
+             (printf "  VFunc func = (VFunc)_V20CaseError_~A;~N" name)
+             (printf "  if(0)~N")
+             (printf "    /*dummy*/;~N")
+             (for-each
+               (lambda (e)
+                (match e
+                  ((name _ (num '+ _))
+                   (printf "  else if(argc >= ~A)~N" num)
+                   (printf "    func = (VFunc)~A;~N" name))
+                  ((name _ (num _))
+                   (printf "  else if(argc == ~A)~N" num)
+                   (printf "    func = (VFunc)~A;~N" name))))
+               cases)
+             (printf "  func(runtime, statics, argc, self);~N")
+             (printf "}~N"))
+           (begin
+             ; while this declaration is nonstatic, the definition lacks the .globl directive so it's still a static function
+             ; it's a compiler error to forward declare a static func without an implementation, compiler isn't aware of asm
+             (printf "void ~A(VRuntime * runtime, VEnv * statics, int argc, ...);~N" name)
+             (printf "asm(~N")
+             (printf "\".intel_syntax noprefix\\n\"~N")
 
-       (printf "#ifdef __linux__~N")
-       (printf "\".type ~A, @function\\n\"~N" name)
-       (printf "#endif~N")
+             (printf "#ifdef __linux__~N")
+             (printf "\".type ~A, @function\\n\"~N" name)
+             (printf "#endif~N")
 
-       (printf "\"~A:\\n\"~N" name)
-       (for-each
-         (lambda (e)
-          (match e
-            ((name _ (num '+ _))
-             (printf "\"    cmp \" ARGC_REG \", ~A\\n\"~N" num)
-             (printf "\"    jge ~A\\n\"~N" name))
-            ((name _ (num _))
-             (printf "\"    cmp \" ARGC_REG \", ~A\\n\"~N" num)
-             (printf "\"    je ~A\\n\"~N" name))))
-         cases)
-       (printf "\"    jmp _V20CaseError_~A\\n\"~N" name)
-       (printf ");~N")))
+             (printf "\"~A:\\n\"~N" name)
+             (for-each
+               (lambda (e)
+                (match e
+                  ((name _ (num '+ _))
+                   (printf "\"    cmp \" ARGC_REG \", ~A\\n\"~N" num)
+                   (printf "\"    jge ~A\\n\"~N" name))
+                  ((name _ (num _))
+                   (printf "\"    cmp \" ARGC_REG \", ~A\\n\"~N" num)
+                   (printf "\"    je ~A\\n\"~N" name))))
+               cases)
+             (printf "\"    jmp _V20CaseError_~A\\n\"~N" name)
+             (printf ");~N")))))
     (define (print-fun fun)
       (match fun
        ((name check-args? (num body))
@@ -400,10 +434,17 @@
        (else (print-fun-case fun))))
 
     (define (print-toplevel i expr)
-      (printf "void toplevel~A(V_CORE_ARGS, VWORD _k) {~N" i)
-      (displayln "    VEnv * env = NULL;")
-      (print-expr `(,expr (bruijn k 0 0)) '("_k"))
-      (displayln "}"))
+      (if purec?
+          (begin
+            (printf "static V_BEGIN_FUNC(toplevel~A, \"toplevel~A\", 1, _k)~N" i i)
+            (displayln "    self = NULL;")
+            (print-expr `(,expr (bruijn k 0 0)) '("_k"))
+            (displayln "}"))
+          (begin
+            (printf "static void toplevel~A(V_CORE_ARGS, VWORD _k) {~N" i)
+            (displayln "    VEnv * self = NULL;")
+            (print-expr `(,expr (bruijn k 0 0)) '("_k"))
+            (displayln "}"))))
 
     ; Kind of gross to do it this way but whatever
     (define (print-foreign-declare declare)
@@ -418,19 +459,53 @@
          (printf "VFunc ~A = (VFunc)~A;~N" f v))
         (else (compiler-error "print-declare: unknown form" declare))))
 
-    (define (print-main toplevels)
+    (define (print-toplevels toplevels)
       (for-each (cut print-toplevel <> <>) (iota (length toplevels)) toplevels)
 
-      (printf "VThunk VanityToplevels[] = {~N")
-      (for-each (lambda (i) (printf "  toplevel~A~N," i)) (iota (length toplevels)))
+      (printf "VClosure VanityToplevels[] = {~N")
+      (for-each (lambda (i) (printf "  { .base.tag = VCLOSURE, .func = (VFunc)toplevel~A~N, .env = NULL }," i)) (iota (length toplevels)))
       (printf "};~N")
-      (printf "int VanityToplevelCount = sizeof VanityToplevels / sizeof *VanityToplevels;~N")
-
-      (printf "int main(int argc, char ** argv) {~N")
-      (displayln "  VRuntime * runtime;")
-      (displayln "  VInitRuntime2(&runtime, argc, argv);")
-      (printf "  return VDecodeExitCode(VStart2(runtime, VanityToplevelCount, VanityToplevels));~N")
-      (displayln "}"))
+      (printf "int VanityToplevelCount = sizeof VanityToplevels / sizeof *VanityToplevels;~N"))
+    (define (print-main-standard main)
+      (displayln "#include <stdlib.h>")
+      (displayln "int VanityCurToplevel;")
+      (displayln "VRuntime * VanityRuntime;")
+      (displayln "int VanityStatus;")
+      (displayln "void VanityMainLoop() {")
+      (displayln "  if(VanityStatus == VEXITED)")
+      (displayln "    return;")
+      (displayln "  bool dotoplevel = VanityCurToplevel < VanityToplevelCount;")
+      (displayln "  VClosure * thunk = dotoplevel ? &VanityToplevels[VanityCurToplevel]")
+      (displayln "                                : (VClosure[]){VMakeClosure2((VFunc)VExit2, NULL)};")
+      (displayln "  VanityStatus = VExecute(VanityRuntime, thunk);")
+      (displayln "  if(VanityStatus == VEXITED) {")
+      (displayln "    int ret = VDecodeExitCode(VGetExitCode(VanityRuntime));")
+      (displayln "    VDestroyRuntime(VanityRuntime);")
+      (displayln "    exit(ret);")
+      (displayln "  }")
+      (displayln "  if(VanityStatus == VFINISHED)")
+      (displayln "    VanityCurToplevel++;")
+      (displayln "}")
+      (displayln "")
+      (cond ((equal? main "none")
+             #f)
+            ((equal? main "emscripten-loop")
+             (displayln "#include <emscripten/emscripten.h>")
+             (displayln "int main(int argc, char ** argv) {")
+             (displayln "  VInitRuntime2(&VanityRuntime, argc, argv);")
+             (displayln "  emscripten_set_main_loop(VanityMainLoop, 0, 1);")
+             (displayln "}"))
+            ((equal? main "winmain")
+             (displayln "int __stdcall WinMain(void* hInstance, void* hPrevInstance, char* lpCmdLine, int nShowCmd) {")
+             (displayln "  VInitRuntime2(&VanityRuntime, __argc, __argv);")
+             (displayln "  while(1) VanityMainLoop();")
+             (displayln "}"))
+            (else
+             (displayln "int main(int argc, char ** argv) {")
+             (displayln "  VInitRuntime2(&VanityRuntime, argc, argv);")
+             (displayln "  while(1) VanityMainLoop();")
+             (displayln "}"))
+             ))
 
     (let ((print-main? (not (null? toplevels)))
           (functions (reverse functions)))
@@ -448,6 +523,8 @@
       (if (and shared? print-main?)
           (compiler-error "shared library has toplevel expressions or defines" toplevels))
       (if print-main?
-          (print-main toplevels))
+          (begin
+            (print-toplevels toplevels)
+            (print-main-standard main)))
       print-main?))
 )

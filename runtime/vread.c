@@ -482,8 +482,8 @@ SYSV_CALL static int VLex(VRuntime * runtime, VPort * port) {
 }
 
 
-SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port);
-SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, VWORD _cur) {
+V_DECLARE_FUNC(VRead2, k, port);
+static V_BEGIN_FUNC(VTreeify, "##sys.treeify", 4, k, _port, _root, _cur)
   // cur's first value is a pointer to the list we are CONSing to
   // for example if we're treeifying (a b c d e f) and we've alreay consed on f an de
   // then cur->first is (e f)
@@ -707,7 +707,8 @@ SYSV_CALL static void VTreeify(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _root, V
 
   if(VIsEq(ret, VVOID)) {
     // read a comment, try again
-    VRead2(runtime, statics, 2, k, _port);
+    V_CALL_FUNC(VRead2, statics, runtime, k, _port);
+    //VRead2(runtime, statics, 2, k, _port);
   } else {
     V_CALL(k, runtime, ret);
   }
@@ -775,9 +776,7 @@ SYSV_CALL static char * ParseString(VRuntime * runtime, char * buf) {
 
 // ============================================================================
 
-SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD _read_more, VWORD _root) {
-  V_ARG_CHECK3(runtime, "##sys.read-iter", 5, argc);
-
+static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 5, k, _port, _depth, _read_more, _root);
   VPort * port = VCheckedDecodePort2(runtime, _port, "read");
   if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read: trying to read from port with closed input\n");
   int depth = VDecodeInt(_depth);
@@ -1090,8 +1089,7 @@ SYSV_CALL void VReadIter2(V_CORE_ARGS, VWORD k, VWORD _port, VWORD _depth, VWORD
 #endif
 }
 
-SYSV_CALL void VRead2(V_CORE_ARGS, VWORD k, VWORD port) {
-  V_ARG_CHECK3(runtime, "read", 2, argc);
+V_BEGIN_FUNC(VRead2, "read", 2, k, port)
   int depth = 0;
   bool read_more = false;
   VPair root = VMakePair(VNULL, VNULL);
