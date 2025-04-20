@@ -29,15 +29,22 @@
 #include <dlfcn.h>
 #include <pthread.h>
 #include <setjmp.h>
+#include <time.h>
 #endif
 #ifdef _WIN64
-#include "io.h"
-#include "fileapi.h"
-#include "errhandlingapi.h"
+#include <io.h>
+#include <fileapi.h>
+#include <errhandlingapi.h>
 #include <debugapi.h>
 #include <libloaderapi.h>
 #include <processthreadsapi.h>
 #include <psapi.h>
+#include <profileapi.h>
+#endif
+#ifdef __EMSCRIPTEN__
+#include <emscripten/stack.h>
+#include <emscripten/emscripten.h>
+#include <dlfcn.h>
 #endif
 
 #include <stdbool.h>
@@ -112,6 +119,17 @@ static void * VStackPop(VStack * stack) {
   void * data = node->data;
   VFreeNode(&stack->pool, node);
   return data;
+}
+#endif
+
+#ifdef VANITY_PURE_C
+void VSysApply(VFunc func, VEnvironment * environ) {
+  int argc = environ->argc;
+  VEnv * self = alloca(sizeof(VEnv)+sizeof(VWORD[argc]));
+  memcpy(self->vars, environ->argv, sizeof(VWORD[argc]));
+  VInitEnv(self, argc, argc, environ->static_chain);
+
+  func(environ->runtime, environ->static_chain, argc, self);
 }
 #endif
 
@@ -1314,7 +1332,9 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
 #else
 #endif
 
-  VLongJmp(runtime->VRoot, VJMP_GC);
+  bool yield = runtime->VYield;
+  runtime->VYield = false;
+  VLongJmp(runtime->VRoot, yield ? VJMP_YIELD : VJMP_GC);
 }
 
 // The last thing that happens in garbage collection before resuming
@@ -1572,7 +1592,6 @@ SYSV_CALL static void VPrintCallHistory(VRuntime * runtime) {
   fprintf(stderr, "%2u. ...\n", i);
 }
 
-
 static V_BEGIN_FUNC_MIN(VNext2K, "next-k", 0)
   VLongJmp(runtime->VRoot, VJMP_FINISH);
 V_END_FUNC
@@ -1586,6 +1605,28 @@ V_BEGIN_FUNC_RANGE(VNext2, "next", 0, 1, e)
   if(!VIsMain(runtime))
     runtime->VForceMajorGC = true;
   VGarbageCollect2(VNext2K, runtime, statics, 0, NULL);
+V_END_FUNC
+
+static void VYieldToHostImpl(VRuntime * runtime, VEnv * statics, int argc, VWORD _k, VWORD e) {
+  runtime->VYield = true;
+  if(argc > 1)
+    runtime->VExitCode = e;
+  else
+    runtime->VExitCode = VVOID;
+  if(!VIsMain(runtime))
+    VErrorC(runtime, "yield-to-host does not support parallelism yet");
+  VWORD vvoid = VVOID;
+  VClosure * k = VDecodeClosureApply2(runtime, _k);
+  VGarbageCollect2(k->func, runtime, k->env, 1, &vvoid);
+}
+
+V_BEGIN_FUNC_RANGE(VYieldToHost, "yield-to-host", 1, 2, _k, e)
+  VYieldToHostImpl(runtime, statics, argc, _k, e);
+V_END_FUNC
+
+V_BEGIN_FUNC_RANGE(VYieldToHostMajor, "yield-to-host-major", 1, 2, _k, e)
+  runtime->VForceMajorGC = true;
+  VYieldToHostImpl(runtime, statics, argc, _k, e);
 V_END_FUNC
 
 static V_BEGIN_FUNC(VExitK, "exit-k", 1, before_finalizers)
@@ -1899,7 +1940,6 @@ V_END_FUNC
 V_BEGIN_FUNC(VSetEnvVar2, "set-env-var!", 4, k, _up, _var, val)
   // not really a procedure but needs to abuse the procedure
   // interface to garbage collect
-  if(argc != 4) VErrorC(runtime, "set!: not enough arguments? This should be impossible\n");
   if(VStackOverflowNoInline(runtime)) {
     VGarbageCollect2Args((VFunc)VSetEnvVar2, runtime, statics, 4, 4, k, _up, _var, val);
   } else {
@@ -2141,7 +2181,6 @@ V_BEGIN_FUNC(VSetDeclare, "set-declare!", 3, k, _string, proc)
     VErrorC(runtime, "set-declare!: not permitted inside of a fiber or during active asynchronous execution");
   }
 
-  V_ARG_CHECK3(runtime, "set-declare!", 3, argc);
   VBlob * string = VCheckedDecodeString2(runtime, _string, "set-declare!");
   (void)VCheckedDecodeClosure2(runtime, proc, "set-declare!");
 
@@ -2162,12 +2201,12 @@ V_END_FUNC
 void * VLoadFunction(VRuntime * runtime, VWORD name) {
   char const * str = VCheckedDecodeConstCString2(runtime, name, "load-function");
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__EMSCRIPTEN__)
   void * ptr = dlsym(RTLD_DEFAULT, str);
 #elif defined(_WIN64)
   void * ptr = VDLSym(str);
 #else
-  void * ptr;
+  void * ptr == NULL;
   VErrorC(runtime, "load-function: unsupported platform");
 #endif
 
@@ -2181,12 +2220,12 @@ static VClosure VFunctionImpl(VRuntime * runtime, VWORD name) {
   VBlob * blob = VCheckedDecodeString2(runtime, name, "function");
 
   const char * str = blob->buf;
-#ifdef __linux__
+#if defined(__linux__) || defined(__EMSCRIPTEN__)
   void * ptr = dlsym(RTLD_DEFAULT, str);
 #elif defined(_WIN64)
   void * ptr = VDLSym(str);
 #else
-  void * ptr;
+  void * ptr == NULL;
   VErrorC(runtime, "function: unsupported platform");
 #endif
   if(!ptr) {
@@ -2205,7 +2244,7 @@ static V_BEGIN_FUNC(VLoadForeignFunctionImpl, "load-foreign-function", 2, k, nam
   VBlob * blob = VCheckedDecodeString2(runtime, name, "load-foreign-function");
 
   const char * str = blob->buf;
-#ifdef __linux__
+#if defined(__linux__) || defined(__EMSCRIPTEN__)
   void * ptr = dlsym(RTLD_DEFAULT, str);
 #elif defined(_WIN64)
   void * ptr = VDLSym(str);
@@ -2639,6 +2678,9 @@ SYSV_CALL void VGetStackInfo(char ** start, size_t * size) {
   GetCurrentThreadStackLimits(&lo, &hi);
   *start = (char*)hi;
   *size = (char*)hi - (char*)lo;
+#elif defined(__EMSCRIPTEN__)
+  *start = (char*)emscripten_stack_get_base();
+  *size = *start - (char*)emscripten_stack_get_end();
 #else
   assert("get-stack-info: unsupported platform" && 0);
 #endif
@@ -2659,6 +2701,10 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   r->public.VStackStart = start;
   r->public.VStackLen = (ssize_t)stacksize - V_STACK_MARGIN;
   r->public.VStackSize = (ssize_t)stacksize;
+#ifdef __EMSCRIPTEN__
+  // FIXME actually query and pass this somehow
+  r->public.callgas = r->public.max_callgas = 128;
+#endif
 
   r->VActiveHeap = true;
   r->VForceMajorGC = false;
@@ -2747,10 +2793,14 @@ SYSV_CALL VWORD VStart2(VRuntime * runtime, int num_toplevels, VThunk const * to
   {
     VThunk func = toplevels[i];
     int which = VSetJmp(runtime->VRoot);
+#ifdef __EMSCRIPTEN__
+    runtime->public.callgas = runtime->public.max_callgas;
+#endif
     switch(which) {
       case 0:
         V_CALL_FUNC(func, NULL, runtime, next);
         break;
+      case VJMP_YIELD:
       case VJMP_GC:
         if(VWordType(runtime->VGCResumeCont) == VPOINTER_CLOSURE)
           V_CALL(runtime->VGCResumeCont, runtime, VVOID);
@@ -2808,6 +2858,7 @@ SYSV_CALL VWORD VStart3(VRuntime * runtime, int num_toplevels, VWORD const * top
       case 0:
         V_CALL(func, runtime, next);
         break;
+      case VJMP_YIELD:
       case VJMP_GC:
         if(VWordType(runtime->VGCResumeCont) == VPOINTER_CLOSURE)
           V_CALL(runtime->VGCResumeCont, runtime, VVOID);
@@ -2865,6 +2916,74 @@ end:
   return ret;
 }
 
+void VDestroyRuntime(VRuntime * runtime) {
+#ifndef VANITY_PURE_C
+  if(runtime->fiber_context)
+    VCloseFiberWorkers(runtime->my_fiber, runtime->fiber_context);
+#endif
+}
+
+int VExecute(VRuntime * runtime, VClosure * _thunk) {
+  VClosure * volatile thunk = _thunk;
+  if(!runtime->VGlobalTable)
+    VInitGlobalTable(runtime);
+
+  VWORD next = VEncodeClosure(&next_closure);
+  {
+    int which = VSetJmp(runtime->VRoot);
+#ifdef __EMSCRIPTEN__
+    runtime->public.callgas = runtime->public.max_callgas;
+#endif
+    switch(which) {
+      case 0:
+        if(VDecodeBool(runtime->VGCResumeCont)) {
+          assert(VWordType(runtime->VGCResumeCont) == VPOINTER_CLOSURE);
+          thunk = VDecodeClosure(runtime->VGCResumeCont);
+          runtime->VGCResumeCont = VFALSE;
+        }
+        V_CALL_FUNC(thunk->func, thunk->env, runtime, next);
+        break;
+      case VJMP_GC:
+        if(VWordType(runtime->VGCResumeCont) == VPOINTER_CLOSURE) {
+          thunk = VDecodeClosure(runtime->VGCResumeCont);
+          runtime->VGCResumeCont = VFALSE;
+          V_CALL_FUNC(thunk->func, thunk->env, runtime, next);
+        }
+        assert(0);
+        break;
+      case VJMP_FINISH:
+      {
+        return VFINISHED;
+      }
+      case VJMP_EXIT:
+      {
+        return VEXITED;
+      }
+      case VJMP_YIELD:
+      {
+        return VYIELDED;
+      }
+      case VJMP_ERROR:
+      default:
+      {
+        runtime->VExitCode = VEncodeInt(1);
+        return VEXITED;
+      }
+    }
+  }
+  fprintf(stderr, "vanity: warning: invalid control flow: a function returned\n");
+  runtime->VExitCode = VEncodeInt(1);
+  //return VEXITED;
+  // kludge atm in case of badness, the old method of
+  // pumping vanity ended up having it act as if a finish happened
+  // self hosting is a curse!
+  return VFINISHED;
+}
+
+VWORD VGetExitCode(VRuntime * runtime) {
+  return runtime->VExitCode;
+}
+
 V_BEGIN_FUNC(VFunction2, "function", 2, k, name)
   VClosure fun = VFunctionImpl(runtime, name);
 
@@ -2918,11 +3037,19 @@ V_END_FUNC
 SYSV_CALL bool __attribute__((noinline)) VStackOverflowNoInline(VRuntime * runtime) {
   char * VStackStop = (char*)&runtime;
   ptrdiff_t size = runtime->public.VStackStart - VStackStop;
-  return size > runtime->public.VStackLen;
+  bool has_gas = true;
+#ifdef __EMSCRIPTEN__
+  has_gas = runtime->public.callgas > 0;
+#endif
+  return size > runtime->public.VStackLen || !has_gas;
 }
 SYSV_CALL bool __attribute__((noinline)) VStackOverflowNoInline2(VRuntime * runtime, char * VStackStop) {
   ptrdiff_t size = runtime->public.VStackStart - VStackStop;
-  return size > runtime->public.VStackLen;
+  bool has_gas = true;
+#ifdef __EMSCRIPTEN__
+  has_gas = runtime->public.callgas > 0;
+#endif
+  return size > runtime->public.VStackLen || !has_gas;
 }
 SYSV_CALL void VRecordCallNoInline(VRuntime * runtime, VDebugInfo * debug) {
   runtime->public.VCallHistory[++runtime->public.VCallHistoryCursor % V_CALL_HISTORY_LEN] = debug;
@@ -2959,6 +3086,10 @@ static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * f
   r->public.VStackStart = fiber->stack + stacksize;
   r->public.VStackLen = stacksize - 1024*1024;
   r->public.VStackSize = stacksize;
+#ifdef __EMSCRIPTEN__
+  r->public.max_callgas = runtime->max_callgas;
+  r->public.callgas = r->public.max_callgas;
+#endif
 
   memcpy(r->public.VCallHistory, runtime->public.VCallHistory, sizeof runtime->public.VCallHistory);
   r->public.VCallHistoryCursor = runtime->public.VCallHistoryCursor;
@@ -3406,6 +3537,42 @@ V_BEGIN_FUNC(VRegisterSigint, "register-sigint", 1, k)
   signal(SIGINT, sigint_handler);
   V_CALL(k, runtime, VVOID);
 V_END_FUNC
+
+static bool jiffy_epoch_set;
+static uint64_t jiffy_epoch;
+static uint64_t one_billion = 1000ull * 1000 * 1000;
+uint64_t VCurrentJiffyImpl() {
+  (void)one_billion;
+#ifdef __linux__
+  struct timespec nanotime;
+  // using clock monotonic to avoid skew? the adjustments are allegedly gentle
+  clock_gettime(CLOCK_MONOTONIC, &nanotime);
+  uint64_t ret = nanotime.tv_nsec + one_billion * nanotime.tv_sec;
+#elif defined(_WIN64)
+  LARGE_INTEGER ticks;
+  QueryPerformanceCounter(&ticks);
+  uint64_t ret = ticks.QuadPart;
+#else
+  uint64_t ret = 0;
+#endif
+  if(!jiffy_epoch_set)
+  {
+    jiffy_epoch_set = true;
+    jiffy_epoch = ret;
+  }
+  return ret - jiffy_epoch;
+}
+uint64_t VJiffiesPerSecondImpl() {
+#ifdef __linux__
+  return one_billion;
+#endif
+#ifdef _WIN64
+  LARGE_INTEGER ticks_per_second;
+  QueryPerformanceFrequency(&ticks_per_second);
+  return ticks_per_second.QuadPart;
+#endif
+  return 0;
+}
 
 // ======================================================
 // ------------------- DEBUGGING STUFF ------------------

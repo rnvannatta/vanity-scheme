@@ -11,6 +11,10 @@ windows_runtime windows_interpreter : CC = /usr/bin/x86_64-w64-mingw32-gcc
 windows_runtime windows_interpreter : CFLAGS += -Wa,--no-warn -lshlwapi
 windows_runtime windows_interpreter : SCMFLAGS += --platform=windows -Wc,-lshlwapi
 
+wasm_runtime : CC = emcc
+wasm_runtime : CFLAGS += -Wno-gnu -DVANITY_PURE_C -Wno-unused-variable -Wno-unused-command-line-argument
+wasm_runtime : SCMFLAGS += --platform=emscripten
+
 vpath %.h src $(INCLUDES)
 vpath %.scmh build/include $(INCLUDES)
 
@@ -29,10 +33,12 @@ DEP += $(addprefix build/x86_64-w64-mingw32/, $(RUNTIME_SRC:.c=.d) $(RUNTIME_LIS
 WINDOWS_OBJ = $(addprefix build/x86_64-w64-mingw32/, $(SRC:.scm=.o)) build/x86_64-w64-mingw32/ffi.tab.o build/x86_64-w64-mingw32/ffi.lex.o
 WINDOWS_INTERP_OBJ = $(addprefix build/x86_64-w64-mingw32/, $(INTERP_SRC:.scm=.o))
 
-
 WINDOWS_RUNTIME_OBJ = $(addprefix build/x86_64-w64-mingw32/, $(RUNTIME_SRC:.c=.o))
 WINDOWS_RUNTIME_OBJ += $(addprefix build/x86_64-w64-mingw32/, $(WINDOWS_ASSEMBLY_SRC:.S=.o))
 WINDOWS_RUNTIME_OBJ +=  $(addprefix build/x86_64-w64-mingw32/, $(RUNTIME_LISP_SRC:.scm=.o))
+
+WASM_OBJ = $(addprefix build/wasm/, $(WASM_SRC:.c=.o))
+WASM_OBJ +=  $(addprefix build/wasm/, $(RUNTIME_LISP_SRC:.scm=.o))
 
 BOOT = $(addprefix bin/bootstrap/src/, $(SRC:.scm=.c) $(COMPILE_SRC:.scm=.c))
 BOOT += $(addprefix bin/bootstrap/runtime/, $(ASSEMBLY_SRC) $(RUNTIME_SRC) $(PRIVATE_HEADERS) $(RUNTIME_LISP_SRC:.scm=.c))
@@ -48,13 +54,14 @@ interpreter : bin/vanity
 runtime : lib/libvscheme.so
 windows_runtime : lib/x86_64-w64-mingw32/vscheme.dll
 windows_interpreter : bin/x86_64-w64-mingw32/vanity.exe
-tests : tests_linux tests_windows interpreter
-all : compiler interpreter windows_interpreter runtime windows_runtime
+wasm_runtime : lib/wasm/libvscheme.a
+tests : tests_linux tests_windows interpreter wasm_runtime
+all : compiler interpreter windows_interpreter runtime windows_runtime wasm_runtime
 
 # the include copy doesn't have an -u on it because
 # include files aren't build. Can add the -u if we
 # copy the files to the bin directory
-install : compiler interpreter runtime windows_runtime
+install : compiler interpreter runtime windows_runtime wasm_runtime
 	cp -u lib/libvscheme.so $(INSTALL_DIR)/lib/$(VSCHEME)
 	ldconfig
 	cp -r include/* $(INSTALL_DIR)/include/.
@@ -66,6 +73,8 @@ install : compiler interpreter runtime windows_runtime
 	mkdir -p $(INSTALL_DIR)/x86_64-w64-mingw32/lib
 	ln -sfn $(INSTALL_DIR)/include/vscheme $(INSTALL_DIR)/x86_64-w64-mingw32/include/vscheme
 	cp -u lib/x86_64-w64-mingw32/vscheme.dll $(INSTALL_DIR)/x86_64-w64-mingw32/lib/
+	cp -u lib/wasm/libvscheme.a $(EMSCRIPTEN_INSTALL_DIR)/lib/wasm32-emscripten/libvscheme.a
+	cp -r include/* $(EMSCRIPTEN_INSTALL_DIR)/include/.
 
 tests_linux : compiler runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
@@ -151,6 +160,9 @@ build/x86_64-w64-mingw32/% : runtime/%
 build/x86_64-w64-mingw32/% : src/%
 	@mkdir -p $(dir $@)
 	ln -sfr $< $@
+build/wasm/% : runtime/%
+	@mkdir -p $(dir $@)
+	ln -sfr $< $@
 build/% : config/%
 	@mkdir -p $(dir $@)
 	ln -sfr $< $@
@@ -177,11 +189,16 @@ bin/x86_64-w64-mingw32/vanity.exe : $(WINDOWS_OBJ) $(WINDOWS_INTERP_OBJ) build/v
 	/usr/bin/x86_64-w64-mingw32-gcc -o $@ $^ $(CFLAGS) -L$(INSTALL_DIR)/x86_64-w64-mingw32/lib/ -lvscheme -Wl,--no-as-needed -Wl,--export-all-symbols -Wl,--stack,8388608 -Wmissing-braces -masm=intel
 
 lib/libvscheme.so : $(RUNTIME_OBJ)
+	@mkdir -p `dirname $@`
 	gcc -o $@ $^ $(LIBS) $(CFLAGS) -shared
 
 lib/x86_64-w64-mingw32/vscheme.dll : $(WINDOWS_RUNTIME_OBJ)
 	@mkdir -p `dirname $@`
 	/usr/bin/x86_64-w64-mingw32-gcc -o $@ $^ $(CFLAGS) -shared -Wl,--export-all-symbols -Wl,--stack,8388608 -Lvendor/lib/x86_64-w64-mingw32 -ldfile
+
+lib/wasm/libvscheme.a : $(WASM_OBJ)
+	@mkdir -p `dirname $@`
+	emar rcs $@ $^
 
 build/%.o : build/%.scm
 	$(PATCH) vsc -c $< -o $@ $(SCMFLAGS) -Wc,-fPIC -Iinclude -Ibuild/include

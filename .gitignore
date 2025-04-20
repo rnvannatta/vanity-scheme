@@ -14,6 +14,8 @@ a.out
 *.escm
 *.exe
 *.dll
+*.js
+*.wasm
 core
 .gdb_history
 

@@ -40,6 +40,8 @@
 (define api 1)
 (define out-file #f)
 (define platform "linux")
+(define purec? #f)
+(define main "main")
 (define cc #f)
 (define w-unbound-variables #f)
 (define werror-unbound-variables #f)
@@ -152,7 +154,8 @@
   (displayln "  --shared        Compile as shared library")
   (displayln "  --keep-temps    Keep temporary compilation files, such as C intermediates")
   ;(displayln "  --api=<num>    Compile with major api version 0 or 1")
-  (displayln "  --platform=<os> Which OS to make executables for. Either 'linux' or 'windows'.")
+  (displayln "  --platform=<os> Which OS to make executables for. Either 'linux' or 'windows' or 'emscripten'.")
+  (displayln "  --main=<main>   What style of main to use. Either 'main' or 'winmain' or 'emscripten-loop' or 'none'.")
   (displayln "  --cc=<compiler> Use the C compiler of your choice. The default is gcc")
   (displayln "  --help          You know about this")
   (displayln "  --version       Show version and build info")
@@ -172,7 +175,7 @@
 
 (with-exception-handler handle-exception
   (lambda ()
-    (let loop ((args (getopt "vghtco:I:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark)))))
+    (let loop ((args (getopt "vghtco:I:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (main #t main) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark)))))
       (if (not (null? args))
           (begin
             (case (caar args)
@@ -214,7 +217,11 @@
               ((version) (display-version) (exit 0))
               ((shared) (set! shared? #t))
               ((api) (set! api (string->number (cdar args))))
-              ((platform) (set! platform (cdar args)))
+              ((platform)
+               (set! platform (cdar args))
+               (if (equal? platform "emscripten")
+                   (set! purec? #t)))
+              ((main) (set! main (cdar args)))
               ((cc) (set! cc (cdar args)))
               ((keep-temps) (set! keep? #t))
               ((makefile) (set! makefile? #t))
@@ -227,7 +234,8 @@
         (set! cc
           (cond ((equal? platform "linux") "gcc")
                 ((equal? platform "windows") "/usr/bin/x86_64-w64-mingw32-gcc")
-                (else (compiler-error "Unknown --platform, only 'linux' and 'windows' are valid" platform)))))
+                ((equal? platform "emscripten") "emcc")
+                (else (compiler-error "Unknown --platform, only 'linux' and 'windows' and 'emscripten' are valid" platform)))))
 
     (if (> (count-true makefile? header? bytecode? transpile? object? expand?) 1) (compiler-error "Only one of '-h' or '-c' or '-t' or '-E' or '--makefile' can be set"))
 
@@ -267,9 +275,9 @@
             (else (map (lambda (file) (make-temporary-file (string-append "/tmp/" (basename file)) ".o")) scm-files))))
 
     (define base-cc-flags
-      (if (equal? platform "linux")
-          " -rdynamic -Wmissing-braces -masm=intel"
-          (sprintf " -Wl,--export-all-symbols -Wl,--stack,8388608 -Wmissing-braces -masm=intel -I~A/x86_64-w64-mingw32/include/" install-root)))
+      (cond ((equal? platform "linux") " -rdynamic -Wmissing-braces -masm=intel")
+            ((equal? platform "emscripten") " -Wno-gnu -DVANITY_PURE_C -fbracket-depth=4096")
+            (else (sprintf " -Wl,--export-all-symbols -Wl,--stack,8388608 -Wmissing-braces -masm=intel -I~A/x86_64-w64-mingw32/include/" install-root))))
     (define cc-command-flags
       (string-append
         base-cc-flags
@@ -316,7 +324,7 @@
                                             (begin
                                               (write-bytecode (apply to-bytecode (cons debug? (cons shared? funs))))
                                               (not (null? (take-right funs 1))))
-                                            (apply printout2 (cons debug? (cons shared? funs)))))))))))))))))
+                                            (apply printout2 (cons main (cons purec? (cons debug? (cons shared? funs)))))))))))))))))))
           scm-files
           cc-files
           cc-obj-files)))
@@ -355,10 +363,13 @@
               (sprintf " -O~A" optimization)
               (if debug? " -g" "")
               ; TODO way to not link vscheme in
-              (if (equal? platform "linux")
-                  " -lvscheme"
-                  (sprintf " -L~A/x86_64-w64-mingw32/lib/ -lvscheme" install-root))
-              (if shared? " -fPIC -shared" " -Wl,--no-as-needed")))
+              (cond ((equal? platform "linux") " -lvscheme")
+                    ((equal? platform "emscripten") " -lvscheme -s LLD_REPORT_UNDEFINED -s ALLOW_MEMORY_GROWTH=1")
+                    (else (sprintf " -L~A/x86_64-w64-mingw32/lib/ -lvscheme" install-root)))
+              (if shared? " -fPIC -shared"
+                          (if (equal? platform "emscripten")
+                              " -ldfile"
+                              " -Wl,--no-as-needed"))))
           (define link-command
             (if out-file
                 (sprintf "~A -o ~A" cc out-file)

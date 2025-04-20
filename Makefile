@@ -1,4 +1,4 @@
-.PHONY : clean deps cleandeps compiler interpreter windows_interpreter runtime windows_runtime install tests tests_linux tests_windows config lay_egg boot_dirs testffi
+.PHONY : clean deps cleandeps compiler interpreter windows_interpreter runtime windows_runtime wasm_runtime install tests tests_linux tests_windows config lay_egg boot_dirs testffi
 
 all :
 
@@ -13,7 +13,7 @@ hatch :
 	@$(MAKE) $@ -f Makefile.bootstrap --no-print-directory --no-builtin-rules
 	@$(MAKE) clean --no-print-directory --no-builtin-rules
 
-all deps compiler interpreter windows_interpreter runtime windows_runtime install tests tests_linux tests_windows lay_egg testffi : Makefile.all
+all deps compiler interpreter windows_interpreter runtime windows_runtime wasm_runtime install tests tests_linux tests_windows lay_egg testffi : Makefile.all
 	@mkdir -p lib bin/bootstrap/vanity/compiler bin/bootstrap/scheme build/vanity/compiler build/scheme
 	@if ! $(MAKE) deps -f Makefile.all --no-print-directory --no-builtin-rules; \
 	then \

@@ -19,6 +19,8 @@
 (assert-equal (nil? mypare) #f)
 (assert-equal mypare (kons 1 3))
 (assert-equal (equal? mypare (kons 1 2)) #f)
+(assert-equal (kar mypare) 1)
+(assert-equal (kdr mypare) 3)
 
 (define-record-type pare
   (kons first rest)

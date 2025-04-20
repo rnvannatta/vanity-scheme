@@ -8,11 +8,13 @@ mkdir -p config/x86_64-w64-mingw32/vanity/compiler/
 read -p "Major Version:" major
 read -p "Minor Version:" minor
 read -p "Install Dir:" install
+read -p "Emscripten Install Dir:" eminstall
 read -p "Debug Build? (y/N):" debug
 
 if [ -z "$major" ]; then major=0; fi
 if [ -z "$minor" ]; then minor=0; fi
 if [ -z "$install" ]; then install="/usr/local"; fi
+if [ -z "$eminstall" ]; then eminstall="/usr/share/emscripten/cache/sysroot"; fi
 if [ "$debug" = "y" ]; then cflags="-O0 -g"; else cflags="-O3"; fi
 if [ "$debug" = "y" ]; then scmflags="-O0 -g"; else scmflags="-O3"; fi
 
@@ -20,10 +22,12 @@ install="${install/#\~/$HOME}"
 install=`realpath $install`
 
 echo "Installing Vanity Scheme $major.$minor to $install with extra CFLAGS: $cflags and extra SCMFLAGS: $scmflags"
+echo "and installing wasm to $eminstall"
 
 echo "MAJOR := $major" > config.mk
 echo "MINOR := $minor" >> config.mk
 echo "INSTALL_DIR := $install" >> config.mk
+echo "EMSCRIPTEN_INSTALL_DIR := $eminstall" >> config.mk
 echo "CFLAGS += $cflags" >> config.mk
 echo "SCMFLAGS += $scmflags" >> config.mk
 

@@ -59,9 +59,13 @@ typedef struct VRuntime {
   // what is preserved when jumping
   VWORD VGCResumeCont;
   VWORD VExitCode;
+  // stuff to support yield-to-host
+  int num_exit_values;
+  VWORD * exit_values; // yeah time to get rid of VExitCode
   // heap info
   bool VForceMajorGC;
   bool VActiveHeap;
+  bool VYield;
   unsigned VGCsSinceMajor;
   void * VHeap;
   void * VHeapPos;
