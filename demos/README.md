@@ -31,3 +31,9 @@ You must install SDL2 dev files if running linux native.
 SDL2 is vendored for you.
 
 * interpreter: `build_and_run.bat`
+
+## WASM
+
+You must use linux to build. An html file is provided.
+
+* html: `make a.out.js && emrun index.html`
