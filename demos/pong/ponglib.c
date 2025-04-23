@@ -20,7 +20,7 @@ struct Window * make_window(int w, int h, char * title) {
   if(SDL_Init(SDL_INIT_VIDEO) < 0)
     return NULL; struct Window * out = malloc(sizeof(struct Window));
   memset(out, 0, sizeof(struct Window));
-  out->window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_HIDDEN);
+  out->window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_HIDDEN | SDL_WINDOW_RESIZABLE);
   out->w = w;
   out->h = h;
   if(!out->window) {
@@ -38,6 +38,12 @@ struct Window * make_window(int w, int h, char * title) {
 
 static void handle_event(struct Window * win, SDL_Event e) {
   switch(e.type) {
+    case SDL_WINDOWEVENT:
+      if(e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
+        win->w = e.window.data1;
+        win->h = e.window.data2;
+      }
+      break;
     case SDL_MOUSEMOTION:
       win->mouse_x = e.motion.x;
       win->mouse_y = e.motion.y;

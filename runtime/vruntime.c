@@ -2086,25 +2086,58 @@ static V_BEGIN_FUNC(VMakeImportLambda, "make-import-lambda", 2, k, x)
 V_END_FUNC
 
 V_BEGIN_FUNC_MIN(VMakeImport2, "make-import", 2, k, lib)
-#if 0
-  VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[argc]));
-  env->base = VMakeSmallObject(VENV);
-  env->num_vars = argc;
-  env->var_len = argc;
-  env->up = statics;
-  env->vars[0] = k;
-  env->vars[1] = lib;
-  va_list args;
-  va_start(args, lib);
-  for(int i = 2; i < argc; i++)
-    env->vars[i] = va_arg(args, VWORD);
-  va_end(args);
-#endif
   VClosure ret = VMakeClosure2((VFunc)VMakeImportLambda, self);
   V_CALL(k, runtime, VEncodeClosure(&ret));
 V_END_FUNC
 
-#ifdef _WIN64
+
+#ifdef __linux__
+static void * VDLOpen(char const * name) {
+  return dlopen(name, RTLD_LAZY | RTLD_GLOBAL);
+}
+static void * VDLSym(char const * name) {
+  return dlsym(RTLD_DEFAULT, name);
+}
+#elif defined(__EMSCRIPTEN__)
+// FIXME cba to hash table tbh
+typedef struct DLSymNode {
+  char const * name;
+  void * ptr;
+  struct DLSymNode * next;
+} DLSymNode;
+static DLSymNode * VDLSymChainRoot;
+void VRegisterSym(char const * name, void * ptr) {
+  DLSymNode * chain = VDLSymChainRoot;
+  while(chain) {
+    if(!strcmp(chain->name, name)) {
+      chain->ptr = ptr;
+    }
+    chain = chain->next;
+  }
+  DLSymNode * node = malloc(sizeof(DLSymNode));
+  node->name = name;
+  node->ptr = ptr;
+  node->next = VDLSymChainRoot;
+  VDLSymChainRoot = node;
+}
+
+static void * VDLOpen(char const * name) {
+  // emscripten doesn't support dynamic linking
+  return (void*)0;
+}
+static void * VDLSym(char const * name) {
+  DLSymNode * chain = VDLSymChainRoot;
+  while(chain) {
+    if(!strcmp(chain->name, name))
+      return chain->ptr;
+    chain = chain->next;
+  }
+  return NULL;
+}
+#elif defined(_WIN64)
+static void * VDLOpen(char const * name) {
+  return LoadLibraryA(name);
+}
 SYSV_CALL static void * VDLSym(char const * name) {
   HMODULE hmod = GetModuleHandle(NULL);
   void * ptr = GetProcAddress(hmod, name);
@@ -2158,6 +2191,7 @@ static VPair * VAssocDeclares(VRuntime * runtime, VBlob * string) {
 
 V_BEGIN_FUNC(VDlopenLibraryImpl, "dlopen-library!", 2, k, _string)
   VBlob * string = VCheckedDecodeString2(runtime, _string, "dlopen-library!");
+#if 0
 #ifdef __linux__
   void * handle = dlopen(string->buf, RTLD_LAZY | RTLD_GLOBAL);
   if(!handle) VErrorC(runtime, "dlopen-library!: failed to dlopen ~S: ~Z", _string, dlerror());
@@ -2165,11 +2199,18 @@ V_BEGIN_FUNC(VDlopenLibraryImpl, "dlopen-library!", 2, k, _string)
   void * handle = LoadLibraryA(string->buf);
   if(!handle) VErrorC(runtime, "dlopen-library!: failed to LoadLibraryA ~S", _string);
 
-  //VPair newlibrary = VMakePair(_string, VEncodeForeignPointer(handle));
-  //VPair newnode = VMakePair(VEncodePair(&newlibrary), runtime->library_list);
-  //runtime->library_list = VEncodePair(&newnode);
 #else
   VErrorC(runtime, "dlopen-library!: unsupported platform.");
+#endif
+#else
+  void * handle = VDLOpen(string->buf);
+  if(!handle) VErrorC(runtime, "dlopen-library!: failed to dlopen ~S: ~Z", _string,
+#ifdef __linux__
+  dlerror()
+#else
+  "unknown error"
+#endif
+  );
 #endif
   V_CALL(k, runtime, VVOID);
 V_END_FUNC
@@ -2201,6 +2242,7 @@ V_END_FUNC
 void * VLoadFunction(VRuntime * runtime, VWORD name) {
   char const * str = VCheckedDecodeConstCString2(runtime, name, "load-function");
 
+#if 0
 #if defined(__linux__) || defined(__EMSCRIPTEN__)
   void * ptr = dlsym(RTLD_DEFAULT, str);
 #elif defined(_WIN64)
@@ -2208,6 +2250,9 @@ void * VLoadFunction(VRuntime * runtime, VWORD name) {
 #else
   void * ptr == NULL;
   VErrorC(runtime, "load-function: unsupported platform");
+#endif
+#else
+  void * ptr = VDLSym(str);
 #endif
 
   if(!ptr) {
@@ -2220,6 +2265,7 @@ static VClosure VFunctionImpl(VRuntime * runtime, VWORD name) {
   VBlob * blob = VCheckedDecodeString2(runtime, name, "function");
 
   const char * str = blob->buf;
+#if 0
 #if defined(__linux__) || defined(__EMSCRIPTEN__)
   void * ptr = dlsym(RTLD_DEFAULT, str);
 #elif defined(_WIN64)
@@ -2227,6 +2273,9 @@ static VClosure VFunctionImpl(VRuntime * runtime, VWORD name) {
 #else
   void * ptr == NULL;
   VErrorC(runtime, "function: unsupported platform");
+#endif
+#else
+  void * ptr = VDLSym(str);
 #endif
   if(!ptr) {
     VPair * decl = VAssocDeclares(runtime, blob);
@@ -2244,6 +2293,7 @@ static V_BEGIN_FUNC(VLoadForeignFunctionImpl, "load-foreign-function", 2, k, nam
   VBlob * blob = VCheckedDecodeString2(runtime, name, "load-foreign-function");
 
   const char * str = blob->buf;
+#if 0
 #if defined(__linux__) || defined(__EMSCRIPTEN__)
   void * ptr = dlsym(RTLD_DEFAULT, str);
 #elif defined(_WIN64)
@@ -2251,6 +2301,9 @@ static V_BEGIN_FUNC(VLoadForeignFunctionImpl, "load-foreign-function", 2, k, nam
 #else
   void * ptr;
   VErrorC(runtime, "function: unsupported platform");
+#endif
+#else
+  void * ptr = VDLSym(str);
 #endif
 
   if(!ptr) {
@@ -2703,7 +2756,8 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   r->public.VStackSize = (ssize_t)stacksize;
 #ifdef __EMSCRIPTEN__
   // FIXME actually query and pass this somehow
-  r->public.callgas = r->public.max_callgas = 128;
+  // it's really, really low on iOS :/
+  r->public.callgas = r->public.max_callgas = 1024;
 #endif
 
   r->VActiveHeap = true;
@@ -3552,6 +3606,9 @@ uint64_t VCurrentJiffyImpl() {
   LARGE_INTEGER ticks;
   QueryPerformanceCounter(&ticks);
   uint64_t ret = ticks.QuadPart;
+#elif defined(__EMSCRIPTEN__)
+  double d = emscripten_get_now();
+  uint64_t ret = round(d * 1000);
 #else
   uint64_t ret = 0;
 #endif
@@ -3570,6 +3627,9 @@ uint64_t VJiffiesPerSecondImpl() {
   LARGE_INTEGER ticks_per_second;
   QueryPerformanceFrequency(&ticks_per_second);
   return ticks_per_second.QuadPart;
+#endif
+#ifdef __EMSCRIPTEN__
+  return 1000 * 1000;
 #endif
   return 0;
 }

@@ -458,6 +458,17 @@
         (('##vcore.declare f v) 
          (printf "VFunc ~A = (VFunc)~A;~N" f v))
         (else (compiler-error "print-declare: unknown form" declare))))
+    (define (print-declaretable declares)
+      (printf "__attribute__((constructor)) static void VRegisterAllDeclares() {~N")
+      (for-each
+        (lambda (declare)
+          (match declare
+            (('##foreign.declare d) #f)
+            (('##vcore.declare f v) 
+             (printf "  VRegisterSym(\"~A\", &~A);~N" f f))
+            (else (compiler-error "print-declaretable: unknown form" declare))))
+        declares)
+      (printf "}~N"))
 
     (define (print-toplevels toplevels)
       (for-each (cut print-toplevel <> <>) (iota (length toplevels)) toplevels)
@@ -516,9 +527,10 @@
       (for-each print-literal-declaration literal-table)
       (print-dllmain literal-table)
       (for-each print-foreign-declare declares)
-      (for-each print-foreign-function foreign-functions)
+      (for-each (lambda (e) (print-foreign-function purec? e)) foreign-functions)
       (for-each print-fun functions)
       (for-each print-declare declares)
+      (if purec? (print-declaretable declares))
 
       (if (and shared? print-main?)
           (compiler-error "shared library has toplevel expressions or defines" toplevels))

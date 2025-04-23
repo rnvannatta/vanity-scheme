@@ -49,18 +49,21 @@
 (define initial-vel (vector 0.375 0.5))
 
 ; scheme side simulation stuff
-(define (new-ball-vel ball-vel nbounces)
-  (let ((sp33d (+ 1.0 (* 9.0 (/ nbounces (+ 20 nbounces))))))
+(define (paddle-bounceat paddle-y ball)
+  (/ (- ($ ball 1) paddle-y) (/ paddle-h 2)))
+(define (new-ball-vel paddle-y ball ball-vel nbounces)
+  (let ((old-sp33d (+ 1.0 (* 7.5 (/ (- nbounces 1) (+ 20 (- nbounces 1))))))
+        (sp33d (+ 1.0 (* 7.5 (/ nbounces (+ 20 nbounces))))))
     (vector*
-      (vector*
-        initial-vel
-        (vector-map sign ball-vel))
-      (vector*
-        (vector -1 +1)
-        (vector sp33d sp33d)))))
+      (vector sp33d sp33d)
+      (vector
+        (vector-ref initial-vel 0)
+        (+ (* (paddle-bounceat paddle-y ball) 0.25)
+           (* 0.85 (/ (vector-ref ball-vel 1) old-sp33d)))))))
 (define (paddle-bounce? paddle-y ball)
   (and (< (- paddle-x (/ paddle-w 2)) ($ ball 0) (+ paddle-x (/ paddle-w 2)))
        (< (- paddle-y (/ paddle-h 2)) ($ ball 1) (+ paddle-y (/ paddle-h 2)))))
+
 (define (bounce-ball ball ball-vel)
   (define (bounce p v)
     (if (or (> p 1.0) (< p 0.0)) (- v) v))
@@ -70,7 +73,7 @@
          (ball-vel (bounce-ball ball ball-vel))
          (paddle-bounced? (paddle-bounce? paddle-y ball))
          (nbounces (if paddle-bounced? (+ nbounces 1) nbounces))
-         (ball-vel (if paddle-bounced? (new-ball-vel ball-vel nbounces) ball-vel))
+         (ball-vel (if paddle-bounced? (new-ball-vel paddle-y ball ball-vel nbounces) ball-vel))
          (ball (if paddle-bounced?
                    (vector (+ (/ paddle-w 2) (/ ball-w 2) paddle-x) ($ ball 1))
                    ball))
@@ -135,6 +138,7 @@
   (set_draw_color win 1 1 1 1)
   (draw_rect win (- x (/ ball-w 2)) (- y (/ ball-h 2)) ball-w ball-h))
 (let loop ((ball initial-ball) (ball-vel initial-vel) (nbounces 0))
+  (##vcore.yield-to-host)
   (clear_window win)
   (poll_events win)
   (set_draw_color win 1 1 1 1)

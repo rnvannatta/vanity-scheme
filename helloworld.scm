@@ -1,2 +1,5 @@
+#;(define-library (foo)
+  (export one)
+  (define one 1))
 (import (vanity core))
 (displayln "Hello, World!")

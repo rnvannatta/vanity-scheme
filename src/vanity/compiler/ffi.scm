@@ -402,7 +402,7 @@
                      (c-string . "VCheckedDecodeCString2")
                      ; no FILE yet
                      ))))
-  (define (print-foreign-function expr)
+  (define (print-foreign-function purec? expr)
     (match expr
       (('##foreign.function lang decl ret name args ...)
        (let ((mangled (mangle-foreign-function name))
@@ -410,13 +410,20 @@
          (define (print-arg arg argname)
            (printf "~A(runtime, _arg~A, \"~A\")" (cdr (get-foreign-decoder arg)) argname name))
          (printf "~A;~N" decl)
-         (printf "static void _V30~A_shim(V_CORE_ARGS, VWORD _k" name)
-         (for-each (lambda (e) (printf ", VWORD _arg~A" e)) names)
-         (printf ") {~N")
-         (printf "  V_ARG_CHECK3(runtime, \"~A\", ~A, argc);~N" mangled (+ 1 (length args)))
-         (printf "  V_GC_CHECK2_VARARGS((VFunc)~A, runtime, statics, ~A, ~A, _k" mangled (+ 1 (length args)) (+ 1 (length args)))
-         (for-each (lambda (e) (printf ", _arg~A" e)) names)
-         (printf ") {~N")
+         (if purec?
+             (begin
+               (printf "static V_BEGIN_FUNC(_V30~A_shim, \"_V30~A_shim\", ~A, _k " name name (+ 1 (length args)))
+               (for-each (lambda (e) (printf ", _arg~A" e)) names)
+               (printf ") {~N"))
+             (begin
+               (printf "static void _V30~A_shim(V_CORE_ARGS, VWORD _k" name)
+               (for-each (lambda (e) (printf ", VWORD _arg~A" e)) names)
+               (printf ") {~N")
+               (printf "  V_ARG_CHECK3(runtime, \"~A\", ~A, argc);~N" mangled (+ 1 (length args)))
+               (printf "  V_GC_CHECK2_VARARGS((VFunc)~A, runtime, statics, ~A, ~A, _k" mangled (+ 1 (length args)) (+ 1 (length args)))
+               (for-each (lambda (e) (printf ", _arg~A" e)) names)
+               (printf ") {~N")
+               ))
          (if (eqv? ret 'void)
              (printf "(~A(" name)
              (printf "    VWORD _ret = ~A(~A(" (cdr (get-foreign-encoder ret)) name))
