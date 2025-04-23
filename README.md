@@ -10,6 +10,8 @@ The parallelism model uses cooperative M:N fibers with a continuation-stealing s
 
 It is capable of producing executables which run on Linux and Windows, using GCC and MinGW. The compiler itself only runs on Linux. An interpreter is also provided, as well as windows builds for that interpreter. The interpreter is fully capable of running any vanity scheme program. There are no limitations on FFI code, unlike e.g. Chicken Scheme.
 
+The compiler also has support for targeting wasm via the emscripten toolchain.
+
 The compiler is free software under GPL v2.0, and the runtime is free software under LGPL v2.1. So, just as with gcc, you may use the compiler to build and link nonfree software if you do not statically link the runtime library.
 
 ## Install Instructions
@@ -25,6 +27,7 @@ Linux Dependencies:
 * rsync
 * flex
 * bison
+* emscripten
 
 For the pong demo:
 * SDL2
@@ -95,7 +98,7 @@ The compiler is able to import C functions and C header files with one line. Try
 (displayln (* (/ 180 3.1416) (atan2 -1 1)))
 ```
 
-Check `demos/pong` for a complete example. Use `make a.out` for the Linux version, and `make a.exe` for the windows version. To run the windows version you will need to copy SDL2.dll and vscheme.dll into the pong folder. vscheme.dll can be found in `/usr/local/x86_64-w64-mingw32/lib`.
+Check `demos/pong` for a complete example. Use `make a.out` for the Linux version, and `make a.exe` for the windows version. And `make a.out.js` for the wasm version: an html file is provided to `emrun` it with. To run the windows version you will need to copy SDL2.dll and vscheme.dll into the pong folder. vscheme.dll can be found in `/usr/local/x86_64-w64-mingw32/lib`.
 
 There's also a bit of cool syntax in the compiler: pattern matching! Here's an example that expands let expressions:
 
