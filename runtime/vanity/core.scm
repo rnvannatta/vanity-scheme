@@ -30,7 +30,8 @@
     null? eof-object? boolean? pair? vector? hash-table? record? procedure? symbol? string? exact? exact-integer? inexact? real? integer? char?
     nullptr? foreign-pointer?
     ; equality
-    eq? symbol=? eqv? equal?
+    eq? eqv? equal?
+    boolean=? char=? symbol=? string=?
     ; logic
     not
     ; math equality
@@ -77,7 +78,8 @@
     ; hash table
     make-hash-table hash-table-ref hash-table-set! hash-table-delete! hash-table->alist
     ; chars
-    char->integer
+    char->integer number->string
+    char-numeric? char-alphabetic?
     ; io
     current-output-port current-error-port current-input-port open-input-file open-output-file close-port
     open-output-string get-output-string with-output-to-file with-input-from-file 
@@ -130,6 +132,12 @@
 
   ; equality
   (define eq? ##vcore.eq?)
+  (define eqv? ##vcore.eqv?)
+
+  (define boolean=? eq?)
+  (define char=? eq?)
+
+  (define string=? ##vcore.blob=?)
   (define symbol=?
     (case-lambda
       ((x y) (##vcore.symbol=? x y))
@@ -140,18 +148,7 @@
          (cond ((null? xs) #t)
                ((not (##vcore.symbol=? x (car xs))) #f)
                (else (loop (cdr xs))))))))
-  (define boolean=?
-    (case-lambda
-      ((x y) (and (eq? x y) (boolean? x) (boolean? y)))
-      ((x y z) (and (boolean=? x y) (boolean=? y z)))
-      ((x y z w) (and (boolean=? x y) (boolean=? y z) (boolean=? z w)))
-      ((x y . xs)
-       (let loop ((xs (cons y xs)))
-         (cond ((null? xs) #t)
-               ((not (boolean=? x (car xs))) #f)
-               (else (loop (cdr xs))))))))
 
-  (define eqv? ##vcore.eqv?)
   (define (vector=? x y)
     (if (not (= (vector-length x) (vector-length y)))
         #f
@@ -915,6 +912,13 @@
   ; chars
 
   (define char->integer ##vcore.char-integer)
+  ; lol horrendous
+  (define (number->string x) (sprintf "~A" x))
+  (define (char-numeric? x)
+    (<= 48 (char->integer x) 57))
+  (define (char-alphabetic? x)
+    (let ((i (char->integer x)))
+      (or (<= 65 i 90) (<= 97 i 122))))
 
   ; io
   (define current-output-port (make-parameter (##vcore.stdout->port)))

@@ -14,7 +14,13 @@ read -p "Debug Build? (y/N):" debug
 if [ -z "$major" ]; then major=0; fi
 if [ -z "$minor" ]; then minor=0; fi
 if [ -z "$install" ]; then install="/usr/local"; fi
-if [ -z "$eminstall" ]; then eminstall="/usr/share/emscripten/cache/sysroot"; fi
+if [ -z "$eminstall" ]; then
+  if [ -z $EM_CACHE ]; then
+    eminstall="/usr/share/emscripten/cache/sysroot";
+  else
+    eminstall=$EM_CACHE/sysroot;
+  fi
+fi
 if [ "$debug" = "y" ]; then cflags="-O0 -g"; else cflags="-O3"; fi
 if [ "$debug" = "y" ]; then scmflags="-O0 -g"; else scmflags="-O3"; fi
 

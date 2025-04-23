@@ -32,4 +32,6 @@
             ((##vcore.eq? n 0) (ack (##vcore.- m 1) 1))
             (else (ack (##vcore.- m 1) (ack m (##vcore.- n 1))))))))
 (import (acker))
+;(##vcore.display-stdout (ack 3 9))
+;(##vcore.newline-stdout)
 (##vcore.exit (##vcore.eq? (ack 3 9) 4093))

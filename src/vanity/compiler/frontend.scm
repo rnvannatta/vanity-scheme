@@ -364,11 +364,11 @@
               (if debug? " -g" "")
               ; TODO way to not link vscheme in
               (cond ((equal? platform "linux") " -lvscheme")
-                    ((equal? platform "emscripten") " -lvscheme -s LLD_REPORT_UNDEFINED -s ALLOW_MEMORY_GROWTH=1")
+                    ((equal? platform "emscripten") " -Wl,--whole-archive -lvscheme -ldfile -s LLD_REPORT_UNDEFINED -s ALLOW_MEMORY_GROWTH=1")
                     (else (sprintf " -L~A/x86_64-w64-mingw32/lib/ -lvscheme" install-root)))
               (if shared? " -fPIC -shared"
                           (if (equal? platform "emscripten")
-                              " -ldfile"
+                              ""
                               " -Wl,--no-as-needed"))))
           (define link-command
             (if out-file

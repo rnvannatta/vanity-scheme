@@ -455,11 +455,15 @@ V_BEGIN_FUNC(VSymbolEqv2, "symbol=?", 3, k, x, y)
 V_END_FUNC
 
 V_BEGIN_FUNC(VBlobEqv2, "blob=?", 3, k, x, y)
-  VBlob * blob_a = VCheckedDecodeBlob2(runtime, x, "blob=?");
-  VBlob * blob_b = VCheckedDecodeBlob2(runtime, y, "blob=?");
   bool ret = false;
-  if(blob_a->len == blob_b->len)
-    ret = blob_a->base.tag == blob_b->base.tag && !memcmp(blob_a->buf, blob_b->buf, blob_a->len);
+  if(VIsEq(x, y)) {
+    ret = true;
+  } else {
+    VBlob * blob_a = VCheckedDecodeBlob2(runtime, x, "blob=?");
+    VBlob * blob_b = VCheckedDecodeBlob2(runtime, y, "blob=?");
+    if(blob_a->len == blob_b->len)
+      ret = blob_a->base.tag == blob_b->base.tag && !memcmp(blob_a->buf, blob_b->buf, blob_a->len);
+  }
   V_CALL(k, runtime, VEncodeBool(ret));
 V_END_FUNC
 
@@ -1843,7 +1847,7 @@ uint64_t VCurrentJiffyImpl();
 uint64_t VJiffiesPerSecondImpl();
 
 V_BEGIN_FUNC(VCurrentJiffy, "current-jiffy", 1, k)
-#if defined(__linux) || defined(_WIN64)
+#if defined(__linux) || defined(_WIN64) || defined(__EMSCRIPTEN__)
   uint64_t ret = VCurrentJiffyImpl();
   V_CALL(k, runtime, VEncodeNumber(ret));
 #endif
@@ -1851,7 +1855,7 @@ V_BEGIN_FUNC(VCurrentJiffy, "current-jiffy", 1, k)
 }
 
 V_BEGIN_FUNC(VJiffiesPerSecond, "jiffies-per-second", 1, k)
-#if defined(__linux) || defined(_WIN64)
+#if defined(__linux) || defined(_WIN64) || defined(__EMSCRIPTEN__)
   V_CALL(k, runtime, VEncodeNumber(VJiffiesPerSecondImpl()));
 #endif
   VErrorC(runtime, "jiffies-per-second: unsupported platform");

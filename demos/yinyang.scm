@@ -1,5 +1,5 @@
 (import (vanity core))
-(let* ((yin ((lambda (foo) (newline) foo)
+(let* ((yin ((lambda (foo) (##vcore.yield-to-host) (newline) foo)
              (call/cc (lambda (bar) bar))))
        (yang ((lambda (foo) (display #\*) foo)
               (call/cc (lambda (bar) bar)))))
