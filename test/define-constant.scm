@@ -2,6 +2,7 @@
 (define-library (my list)
   (export car cadr cdr cons list pair?)
   (define-constant car ##vcore.car)
+  (define kar car)
   (define-constant cdr ##vcore.cdr)
   (define-constant cons ##vcore.cons)
   (define list (lambda xs xs))

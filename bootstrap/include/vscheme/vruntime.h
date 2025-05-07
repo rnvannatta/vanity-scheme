@@ -1051,6 +1051,10 @@ static inline VVector * VFillVector(VVector * vec, VNEWTAG tag, unsigned len, VW
 
 /* ======================== Misc ======================= */
 
+#ifdef __EMSCRIPTEN__
+void VRegisterSym(char const * name, void * ptr);
+#endif
+
 // stores constants like the literal 'foo or the value of ##sys.+
 // necessary because Windows doesn't have weak symbols lmao
 void * VLookupConstant(char * name, void * val);
@@ -1179,7 +1183,7 @@ static inline bool VStackOverflow(VRuntime * _runtime) {
 #ifdef __EMSCRIPTEN__
   has_gas = runtime->callgas > 0;
   if(!has_gas) {
-    printf("out of gas!\n");
+    //printf("out of gas!\n");
   }
 #endif
   return size > runtime->VStackLen || !has_gas;
@@ -1225,70 +1229,42 @@ static inline void VSetRest(VRuntime * runtime, VPair * p, VWORD w) {
 /* ======================== Core Functions ======================= */
 
 // Root level continuation
-//void VNext2(V_CORE_ARGS, VWORD e);
 V_DECLARE_FUNC(VNext2, e);
 // Default exception continuation
-//void VAbort2(V_CORE_ARGS, ...);
 V_DECLARE_FUNC_MIN(VAbort2);
 // Exit PROCEDURE, expects a continuation in slot 1
-//void VExit2(V_CORE_ARGS, VWORD k, VWORD e);
 V_DECLARE_FUNC(VExit2, k, e);
 V_DECLARE_FUNC(VYieldToHost, k, e);
 V_DECLARE_FUNC(VYieldToHostMajor, k, e);
 
-//void VGarbageCollect(V_CORE_ARGS, VWORD k, VWORD major);
-//void VSetFinalizer(V_CORE_ARGS, VWORD k, VWORD mem, VWORD finalizer);
-//void VHasFinalizer(V_CORE_ARGS, VWORD k, VWORD mem);
-//void VFinalize(V_CORE_ARGS, VWORD k, VWORD mem);
 V_DECLARE_FUNC(VGarbageCollect, k, major);
 V_DECLARE_FUNC(VSetFinalizer, k, mem, finalizer);
 V_DECLARE_FUNC(VHasFinalizer, k, mem);
 V_DECLARE_FUNC(VFinalize, k, mem);
 
-//void VGetDynamics(V_CORE_ARGS, VWORD k);
-//void VPushDynamic(V_CORE_ARGS, VWORD k, VWORD key, VWORD val);
-//void VPopDynamic(V_CORE_ARGS, VWORD k, VWORD keyval);
 V_DECLARE_FUNC(VGetDynamics, k);
 V_DECLARE_FUNC(VPushDynamic, k, key, val);
 V_DECLARE_FUNC(VPopDynamic, k, keyval);
 
-//void VGetExceptionHandlers(V_CORE_ARGS, VWORD k);
-//void VGetExceptionHandler(V_CORE_ARGS, VWORD k);
-//void VPushExceptionHandler(V_CORE_ARGS, VWORD k, VWORD handler);
-//void VPopExceptionHandler(V_CORE_ARGS, VWORD k, VWORD node);
-//void VRaise(V_CORE_ARGS, VWORD k, VWORD x);
 V_DECLARE_FUNC(VGetExceptionHandlers, k);
 V_DECLARE_FUNC(VGetExceptionHandler, k);
 V_DECLARE_FUNC(VPushExceptionHandler, k, handler);
 V_DECLARE_FUNC(VPopExceptionHandler, k, node);
 V_DECLARE_FUNC(VRaise, k, x);
 
-//void VSetCar2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
-//void VSetCdr2(V_CORE_ARGS, VWORD k, VWORD pair, VWORD val);
-//void VVectorSet2(V_CORE_ARGS, VWORD k, VWORD vec, VWORD i, VWORD val);
-//void VRecordSet2(V_CORE_ARGS, VWORD k, VWORD rec, VWORD i, VWORD val);
 V_DECLARE_FUNC(VSetCar2, k, pair, val);
 V_DECLARE_FUNC(VSetCdr2, k, pair, val);
 V_DECLARE_FUNC(VVectorSet2, k, vec, i, val);
 V_DECLARE_FUNC(VRecordSet2, k, rec, i, val);
 
-//void VSetEnvVar2(V_CORE_ARGS, VWORD k, VWORD up, VWORD var, VWORD val);
-//void VSetGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val);
-//void VDefineGlobalVar2(V_CORE_ARGS, VWORD k, VWORD sym, VWORD val);
-//void VMultiDefine2(V_CORE_ARGS, VWORD k, VWORD defines);
 V_DECLARE_FUNC(VSetEnvVar2, k, up, var, val);
 V_DECLARE_FUNC(VSetGlobalVar2, k, sym, val);
 V_DECLARE_FUNC(VDefineGlobalVar2, k, sym, val);
 V_DECLARE_FUNC(VMultiDefine2, k, defines);
 
-//void VFunction2(V_CORE_ARGS, VWORD k, VWORD name);
-//void VLookupLibrary2(V_CORE_ARGS, VWORD k, VWORD name);
 V_DECLARE_FUNC(VFunction2, k, name);
 V_DECLARE_FUNC(VLookupLibrary2, k, name);
 
-//void VMakeImport2(V_CORE_ARGS, VWORD k, VWORD lib, ...);
-//void VLoadLibrary2(V_CORE_ARGS, VWORD k, VWORD lib);
-//void VUnloadLibrary2(V_CORE_ARGS, VWORD k, VWORD lib);
 V_DECLARE_FUNC_MIN(VMakeImport2, k, lib);
 V_DECLARE_FUNC(VLoadLibrary2, k, lib);
 V_DECLARE_FUNC(VUnloadLibrary2, k, lib);

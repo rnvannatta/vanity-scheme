@@ -27,14 +27,14 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D2078 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D2077 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0list_V20" };
-static struct { VBlob sym; char bytes[33]; } _V10_Dstring_D2076 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 33 }, "_V0vanity_V0compiler_V0utils_V20" };
-static struct { VBlob sym; char bytes[33]; } _V10_Dstring_D2075 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 33 }, "_V0vanity_V0compiler_V0match_V20" };
-static struct { VBlob sym; char bytes[37]; } _V10_Dstring_D2074 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 37 }, "_V0vanity_V0compiler_V0variables_V20" };
-static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D2073 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "_V0vanity_V0intrinsics_V20" };
-static struct { VBlob sym; char bytes[30]; } _V10_Dstring_D2072 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 30 }, "_V0vanity_V0pretty__print_V20" };
-static struct { VBlob sym; char bytes[31]; } _V10_Dstring_D2071 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 31 }, "_V0vanity_V0compiler_V0cps_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D2079 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D2078 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0list_V20" };
+static struct { VBlob sym; char bytes[33]; } _V10_Dstring_D2077 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 33 }, "_V0vanity_V0compiler_V0utils_V20" };
+static struct { VBlob sym; char bytes[33]; } _V10_Dstring_D2076 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 33 }, "_V0vanity_V0compiler_V0match_V20" };
+static struct { VBlob sym; char bytes[37]; } _V10_Dstring_D2075 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 37 }, "_V0vanity_V0compiler_V0variables_V20" };
+static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D2074 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "_V0vanity_V0intrinsics_V20" };
+static struct { VBlob sym; char bytes[30]; } _V10_Dstring_D2073 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 30 }, "_V0vanity_V0pretty__print_V20" };
+static struct { VBlob sym; char bytes[31]; } _V10_Dstring_D2072 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 31 }, "_V0vanity_V0compiler_V0cps_V20" };
 VWEAK VWORD _V0gensym;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0gensym = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "gensym" };
 VWEAK VWORD _V0eq_Q;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0eq_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "eq\?" };
 VWEAK VWORD _V0cadr;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0cadr = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "cadr" };
@@ -72,26 +72,26 @@ VWEAK VWORD _V0null_Q;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0null_Q = 
 VWEAK VWORD _V0equal_Q;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0equal_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "equal\?" };
 VWEAK VWORD _V0optimize;VWEAK struct { VBlob sym; char bytes[9]; } _VW_V0optimize = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 9 }, "optimize" };
 VWEAK VWORD _V0to__cps;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0to__cps = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "to-cps" };
-static struct { VBlob sym; char bytes[38]; } _V10_Dstring_D2070 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 38 }, "optimize-apply: malformed application" };
-static struct { VBlob sym; char bytes[38]; } _V10_Dstring_D2069 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 38 }, "optimize-let: malformed let statement" };
-static struct { VBlob sym; char bytes[51]; } _V10_Dstring_D2068 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 51 }, "Not enough arguments to continuation. Codegen bug." };
-static struct { VBlob sym; char bytes[31]; } _V10_Dstring_D2067 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 31 }, "Not enough arguments to lambda" };
-static struct { VBlob sym; char bytes[34]; } _V10_Dstring_D2066 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 34 }, "optimize-lambda: malformed lambda" };
-static struct { VBlob sym; char bytes[34]; } _V10_Dstring_D2065 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 34 }, "count-refs: malformed application" };
+static struct { VBlob sym; char bytes[38]; } _V10_Dstring_D2071 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 38 }, "optimize-apply: malformed application" };
+static struct { VBlob sym; char bytes[38]; } _V10_Dstring_D2070 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 38 }, "optimize-let: malformed let statement" };
+static struct { VBlob sym; char bytes[51]; } _V10_Dstring_D2069 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 51 }, "Not enough arguments to continuation. Codegen bug." };
+static struct { VBlob sym; char bytes[31]; } _V10_Dstring_D2068 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 31 }, "Not enough arguments to lambda" };
+static struct { VBlob sym; char bytes[34]; } _V10_Dstring_D2067 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 34 }, "optimize-lambda: malformed lambda" };
+static struct { VBlob sym; char bytes[34]; } _V10_Dstring_D2066 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 34 }, "count-refs: malformed application" };
 VWEAK VWORD _V0set_B;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0set_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "set!" };
-static struct { VBlob sym; char bytes[52]; } _V10_Dstring_D2064 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 52 }, "internal compiler error: negative variable refcount" };
-static struct { VBlob sym; char bytes[26]; } _V10_Dstring_D2063 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 26 }, "match statement exhausted" };
+static struct { VBlob sym; char bytes[52]; } _V10_Dstring_D2065 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 52 }, "internal compiler error: negative variable refcount" };
+static struct { VBlob sym; char bytes[26]; } _V10_Dstring_D2064 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 26 }, "match statement exhausted" };
 VWEAK VWORD _V0import;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0import = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "import" };
 VWEAK VWORD _V10vcore_Dload__library;VWEAK struct { VBlob sym; char bytes[21]; } _VW_V10vcore_Dload__library = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 21 }, "##vcore.load-library" };
 VWEAK VWORD _V10vcore_Dmultidefine;VWEAK struct { VBlob sym; char bytes[20]; } _VW_V10vcore_Dmultidefine = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 20 }, "##vcore.multidefine" };
 VWEAK VWORD _V10vcore_Ddeclare;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V10vcore_Ddeclare = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "##vcore.declare" };
 VWEAK VWORD _V10foreign_Ddeclare;VWEAK struct { VBlob sym; char bytes[18]; } _VW_V10foreign_Ddeclare = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 18 }, "##foreign.declare" };
-static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D2062 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "next" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2061 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "p" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D2060 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "ignored" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2059 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "x" };
-static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D2058 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "stray () in program" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2057 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "k" };
+static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D2063 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "next" };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2062 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "p" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D2061 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "ignored" };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2060 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "x" };
+static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D2059 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "stray () in program" };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D2058 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "k" };
 VWEAK VWORD _V0letrec;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0letrec = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "letrec" };
 VWEAK VWORD _V0or;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0or = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "or" };
 VWEAK VWORD _V0if;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0if = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "if" };
@@ -163,7 +163,7 @@ static void _V10_Dapplication_Q_D286_k46(VRuntime * runtime, VEnv * statics, int
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.814 19 0) (bruijn ##.k.829 3 0) (bruijn ##.x.831 0 0))
+  // ((bruijn ##.x.812 19 0) (bruijn ##.k.827 3 0) (bruijn ##.x.829 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 2,
       statics->up->up->vars[0],
       _var0);
@@ -178,7 +178,7 @@ static void _V10_Dapplication_Q_D286_k45(VRuntime * runtime, VEnv * statics, int
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.822 10 0) (close _V10_Dapplication_Q_D286_k46) (bruijn ##.x.832 0 0) (##inline ##vcore.qcons 'quote (##inline ##vcore.qcons 'lambda (##inline ##vcore.qcons 'continuation (##inline ##vcore.qcons 'case-lambda (##inline ##vcore.qcons '##foreign.function (##inline ##vcore.qcons '##inline '())))))))
+  // ((bruijn ##.x.820 10 0) (close _V10_Dapplication_Q_D286_k46) (bruijn ##.x.830 0 0) (##inline ##vcore.qcons 'quote (##inline ##vcore.qcons 'lambda (##inline ##vcore.qcons 'continuation (##inline ##vcore.qcons 'case-lambda (##inline ##vcore.qcons '##foreign.function (##inline ##vcore.qcons '##inline '())))))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dapplication_Q_D286_k46, self)})),
       _var0,
@@ -206,7 +206,7 @@ static void _V10_Dapplication_Q_D286_k44(VRuntime * runtime, VEnv * statics, int
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.830 0 0) ((bruijn ##.x.823 8 0) (close _V10_Dapplication_Q_D286_k45) (bruijn ##.x.299 1 1)) ((bruijn ##.k.829 1 0) #f))
+  // (if (bruijn ##.p.828 0 0) ((bruijn ##.x.821 8 0) (close _V10_Dapplication_Q_D286_k45) (bruijn ##.x.299 1 1)) ((bruijn ##.k.827 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 2,
@@ -228,7 +228,7 @@ static void _V10_Dapplication_Q_D286_lambda2(VRuntime * runtime, VEnv * statics,
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.821 9 0) (close _V10_Dapplication_Q_D286_k44) (bruijn ##.x.299 0 1))
+  // ((bruijn ##.x.819 9 0) (close _V10_Dapplication_Q_D286_k44) (bruijn ##.x.299 0 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dapplication_Q_D286_k44, self)})),
       _var1);
@@ -239,7 +239,7 @@ static void _V10_Dcombination_Q_D287_k49(VRuntime * runtime, VEnv * statics, int
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.814 19 0) (bruijn ##.k.839 3 0) (bruijn ##.x.841 0 0))
+  // ((bruijn ##.x.812 19 0) (bruijn ##.k.837 3 0) (bruijn ##.x.839 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 2,
       statics->up->up->vars[0],
       _var0);
@@ -254,7 +254,7 @@ static void _V10_Dcombination_Q_D287_k48(VRuntime * runtime, VEnv * statics, int
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.822 10 0) (close _V10_Dcombination_Q_D287_k49) (bruijn ##.x.842 0 0) (##inline ##vcore.qcons 'quote (##inline ##vcore.qcons 'lambda (##inline ##vcore.qcons 'continuation (##inline ##vcore.qcons 'case-lambda (##inline ##vcore.qcons '##foreign.function (##inline ##vcore.qcons '##inline (##inline ##vcore.qcons 'begin (##inline ##vcore.qcons 'if (##inline ##vcore.qcons 'or (##inline ##vcore.qcons 'letrec '())))))))))))
+  // ((bruijn ##.x.820 10 0) (close _V10_Dcombination_Q_D287_k49) (bruijn ##.x.840 0 0) (##inline ##vcore.qcons 'quote (##inline ##vcore.qcons 'lambda (##inline ##vcore.qcons 'continuation (##inline ##vcore.qcons 'case-lambda (##inline ##vcore.qcons '##foreign.function (##inline ##vcore.qcons '##inline (##inline ##vcore.qcons 'begin (##inline ##vcore.qcons 'if (##inline ##vcore.qcons 'or (##inline ##vcore.qcons 'letrec '())))))))))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcombination_Q_D287_k49, self)})),
       _var0,
@@ -290,7 +290,7 @@ static void _V10_Dcombination_Q_D287_k47(VRuntime * runtime, VEnv * statics, int
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.840 0 0) ((bruijn ##.x.823 8 0) (close _V10_Dcombination_Q_D287_k48) (bruijn ##.x.300 1 1)) ((bruijn ##.k.839 1 0) #f))
+  // (if (bruijn ##.p.838 0 0) ((bruijn ##.x.821 8 0) (close _V10_Dcombination_Q_D287_k48) (bruijn ##.x.300 1 1)) ((bruijn ##.k.837 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 2,
@@ -312,7 +312,7 @@ static void _V10_Dcombination_Q_D287_lambda3(VRuntime * runtime, VEnv * statics,
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.821 9 0) (close _V10_Dcombination_Q_D287_k47) (bruijn ##.x.300 0 1))
+  // ((bruijn ##.x.819 9 0) (close _V10_Dcombination_Q_D287_k47) (bruijn ##.x.300 0 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcombination_Q_D287_k47, self)})),
       _var1);
@@ -323,7 +323,7 @@ static void _V10_Diter__lambda_D309_k51(VRuntime * runtime, VEnv * statics, int 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.855 2 0) (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.k.312 1 0) (bruijn ##.args.310 2 1)) (##inline ##vcore.cons (bruijn ##.x.858 0 0) '())))
+  // ((bruijn ##.k.853 2 0) (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.k.312 1 0) (bruijn ##.args.310 2 1)) (##inline ##vcore.cons (bruijn ##.x.856 0 0) '())))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VInlineCons2(runtime,
         VInlineCons2(runtime,
@@ -361,10 +361,10 @@ static void _V10_Diter__lambda_D309_lambda6(VRuntime * runtime, VEnv * statics, 
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((bruijn ##.x.794 40 0) (close _V10_Diter__lambda_D309_k50) (##string ##.string.2057))
+  // ((bruijn ##.x.792 40 0) (close _V10_Diter__lambda_D309_k50) (##string ##.string.2058))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter__lambda_D309_k50, self)})),
-      VEncodePointer(&_V10_Dstring_D2057.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2058.sym, VPOINTER_OTHER));
 }
 static void _V10_Diter__atom_D302_k56(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -372,7 +372,7 @@ static void _V10_Diter__atom_D302_k56(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.922 0 0) (bruijn ##.k.917 4 0))
+  // ((bruijn ##.x.920 0 0) (bruijn ##.k.915 4 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->up->vars[0]);
 }
@@ -382,7 +382,7 @@ static void _V10_Diter__atom_D302_k57(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.809 31 0) (bruijn ##.k.923 1 0) 'lambda (bruijn ##.x.924 0 0))
+  // ((bruijn ##.x.807 31 0) (bruijn ##.k.921 1 0) 'lambda (bruijn ##.x.922 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 3,
       statics->vars[0],
       _V0lambda,
@@ -416,7 +416,7 @@ static void _V10_Diter__atom_D302_k55(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.12.318 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.12.318 0 0))) (##vcore.call-with-values (close _V10_Diter__atom_D302_k56) (close _V10_Diter__atom_D302_lambda8) (bruijn ##.kk.8.313 4 1)) ((bruijn ##.k.917 3 0) #f)) ((bruijn ##.k.917 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.12.318 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.12.318 0 0))) (##vcore.call-with-values (close _V10_Diter__atom_D302_k56) (close _V10_Diter__atom_D302_lambda8) (bruijn ##.kk.8.313 4 1)) ((bruijn ##.k.915 3 0) #f)) ((bruijn ##.k.915 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -447,7 +447,7 @@ static void _V10_Diter__atom_D302_k54(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.11.316 0 0)) ((close _V10_Diter__atom_D302_k55) (##inline ##vcore.cdr (bruijn ##.expr.11.316 0 0))) ((bruijn ##.k.917 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.11.316 0 0)) ((close _V10_Diter__atom_D302_k55) (##inline ##vcore.cdr (bruijn ##.expr.11.316 0 0))) ((bruijn ##.k.915 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -469,7 +469,7 @@ static void _V10_Diter__atom_D302_k53(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.918 0 0) ((close _V10_Diter__atom_D302_k54) (##inline ##vcore.cdr (bruijn ##.x.308 4 1))) ((bruijn ##.k.917 1 0) #f))
+  // (if (bruijn ##.p.916 0 0) ((close _V10_Diter__atom_D302_k54) (##inline ##vcore.cdr (bruijn ##.x.308 4 1))) ((bruijn ##.k.915 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter__atom_D302_k54, .env = self }, }, 1,
@@ -490,7 +490,7 @@ static void _V10_Diter__atom_D302_k52(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.x.308 3 1)) ((bruijn ##.x.828 7 0) (close _V10_Diter__atom_D302_k53) 'lambda (##inline ##vcore.car (bruijn ##.x.308 3 1))) ((bruijn ##.k.917 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.x.308 3 1)) ((bruijn ##.x.826 7 0) (close _V10_Diter__atom_D302_k53) 'lambda (##inline ##vcore.car (bruijn ##.x.308 3 1))) ((bruijn ##.k.915 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->vars[1]))) {
@@ -510,7 +510,7 @@ static void _V10_Dloop_D323_k63(VRuntime * runtime, VEnv * statics, int argc, VW
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.17.322 5 1) (bruijn ##.k.906 2 0) (bruijn ##.expr.19.324 3 1) (bruijn ##.x.907 1 0) (bruijn ##.x.908 0 0))
+  // ((bruijn ##.kk.17.322 5 1) (bruijn ##.k.904 2 0) (bruijn ##.expr.19.324 3 1) (bruijn ##.x.905 1 0) (bruijn ##.x.906 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 1)), 4,
       statics->up->vars[0],
       statics->up->up->vars[1],
@@ -527,7 +527,7 @@ static void _V10_Dloop_D323_k62(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 37 0) (close _V10_Dloop_D323_k63) (bruijn ##.body.16.326 2 3))
+  // ((bruijn ##.x.804 37 0) (close _V10_Dloop_D323_k63) (bruijn ##.body.16.326 2 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 37-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D323_k63, self)})),
       statics->up->vars[3]);
@@ -542,7 +542,7 @@ static void _V10_Dloop_D323_k61(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.19.324 1 1))) ((bruijn ##.x.806 36 0) (close _V10_Dloop_D323_k62) (bruijn ##.args.15.325 1 2)) ((bruijn ##.k.906 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.19.324 1 1))) ((bruijn ##.x.804 36 0) (close _V10_Dloop_D323_k62) (bruijn ##.args.15.325 1 2)) ((bruijn ##.k.904 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlinePairP2(runtime,
@@ -561,7 +561,7 @@ static void _V10_Dloop_D323_k67(VRuntime * runtime, VEnv * statics, int argc, VW
   "-- expected 1~N"
   , argc);
  }
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.21.330 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.21.330 0 0))) ((bruijn ##.kk.18.327 3 1) (bruijn ##.k.898 1 0) (##inline ##vcore.cdr (bruijn ##.expr.19.324 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.20.328 2 0)) (bruijn ##.args.15.325 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.21.330 0 0)) (bruijn ##.body.16.326 6 3))) ((bruijn ##.k.898 1 0) #f)) ((bruijn ##.k.898 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.21.330 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.21.330 0 0))) ((bruijn ##.kk.18.327 3 1) (bruijn ##.k.896 1 0) (##inline ##vcore.cdr (bruijn ##.expr.19.324 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.20.328 2 0)) (bruijn ##.args.15.325 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.21.330 0 0)) (bruijn ##.body.16.326 6 3))) ((bruijn ##.k.896 1 0) #f)) ((bruijn ##.k.896 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -600,7 +600,7 @@ static void _V10_Dloop_D323_k66(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.20.328 1 0)) ((close _V10_Dloop_D323_k67) (##inline ##vcore.cdr (bruijn ##.expr.20.328 1 0))) ((bruijn ##.k.898 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.20.328 1 0)) ((close _V10_Dloop_D323_k67) (##inline ##vcore.cdr (bruijn ##.expr.20.328 1 0))) ((bruijn ##.k.896 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->vars[0]))) {
@@ -618,7 +618,7 @@ static void _V10_Dloop_D323_k70(VRuntime * runtime, VEnv * statics, int argc, VW
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.17.322 9 1) (bruijn ##.k.893 4 0) (bruijn ##.expr.19.324 7 1) (bruijn ##.x.895 1 0) (bruijn ##.x.896 0 0))
+  // ((bruijn ##.kk.17.322 9 1) (bruijn ##.k.891 4 0) (bruijn ##.expr.19.324 7 1) (bruijn ##.x.893 1 0) (bruijn ##.x.894 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 1)), 4,
       statics->up->up->up->vars[0],
       VGetArg(statics, 7-1, 1),
@@ -635,7 +635,7 @@ static void _V10_Dloop_D323_k69(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 41 0) (close _V10_Dloop_D323_k70) (bruijn ##.body.16.326 6 3))
+  // ((bruijn ##.x.804 41 0) (close _V10_Dloop_D323_k70) (bruijn ##.body.16.326 6 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D323_k70, self)})),
       VGetArg(statics, 6-1, 3));
@@ -650,7 +650,7 @@ static void _V10_Dloop_D323_k68(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 40 0) (close _V10_Dloop_D323_k69) (bruijn ##.args.15.325 5 2))
+  // ((bruijn ##.x.804 40 0) (close _V10_Dloop_D323_k69) (bruijn ##.args.15.325 5 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D323_k69, self)})),
       VGetArg(statics, 5-1, 2));
@@ -695,7 +695,7 @@ static void _V10_Dloop_D323_lambda12(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.892 0 0) (close _V10_Dloop_D323_lambda13))
+  // (##vcore.call/cc (bruijn ##.k.890 0 0) (close _V10_Dloop_D323_lambda13))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D323_lambda13, self)})));
@@ -710,7 +710,7 @@ static void _V10_Dloop_D323_k64(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.890 1 0) (close _V10_Dloop_D323_lambda12) (bruijn ##.loop.323 2 0))
+  // (##vcore.call-with-values (bruijn ##.k.888 1 0) (close _V10_Dloop_D323_lambda12) (bruijn ##.loop.323 2 0))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D323_lambda12, self)})),
@@ -744,7 +744,7 @@ static void _V10_Diter__atom_D302_lambda10(VRuntime * runtime, VEnv * statics, i
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Dloop_D323_lambda11)) ((bruijn ##.loop.323 0 0) (bruijn ##.k.889 1 0) (##inline ##vcore.cdr (bruijn ##.x.308 8 1)) '() '()))
+  // (letrec 1 ((close _V10_Dloop_D323_lambda11)) ((bruijn ##.loop.323 0 0) (bruijn ##.k.887 1 0) (##inline ##vcore.cdr (bruijn ##.x.308 8 1)) '() '()))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -769,7 +769,7 @@ static void _V10_Diter__atom_D302_lambda9(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.888 0 0) (close _V10_Diter__atom_D302_lambda10))
+  // (##vcore.call/cc (bruijn ##.k.886 0 0) (close _V10_Diter__atom_D302_lambda10))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter__atom_D302_lambda10, self)})));
@@ -780,7 +780,7 @@ static void _V10_Diter__atom_D302_k71(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.912 0 0) (bruijn ##.k.910 1 0))
+  // ((bruijn ##.x.910 0 0) (bruijn ##.k.908 1 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->vars[0]);
 }
@@ -790,7 +790,7 @@ static void _V10_Diter__atom_D302_k72(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.809 31 0) (bruijn ##.k.913 1 0) 'case-lambda (bruijn ##.x.914 0 0))
+  // ((bruijn ##.x.807 31 0) (bruijn ##.k.911 1 0) 'case-lambda (bruijn ##.x.912 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 3,
       statics->vars[0],
       _V0case__lambda,
@@ -806,7 +806,7 @@ static void _V10_Diter__atom_D302_lambda15(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.807 32 0) (close _V10_Diter__atom_D302_k72) (bruijn ##.iter-lambda.309 6 0) (bruijn ##.args.333 1 2) (bruijn ##.body.334 1 3))
+  // ((bruijn ##.x.805 32 0) (close _V10_Diter__atom_D302_k72) (bruijn ##.iter-lambda.309 6 0) (bruijn ##.args.333 1 2) (bruijn ##.body.334 1 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 4,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter__atom_D302_k72, self)})),
       VGetArg(statics, 6-1, 0),
@@ -826,7 +826,7 @@ static void _V10_Diter__atom_D302_lambda14(VRuntime * runtime, VEnv * statics, i
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.332 0 1)) (##vcore.call-with-values (close _V10_Diter__atom_D302_k71) (close _V10_Diter__atom_D302_lambda15) (bruijn ##.kk.8.313 4 1)) ((bruijn ##.k.910 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.332 0 1)) (##vcore.call-with-values (close _V10_Diter__atom_D302_k71) (close _V10_Diter__atom_D302_lambda15) (bruijn ##.kk.8.313 4 1)) ((bruijn ##.k.908 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
@@ -849,7 +849,7 @@ static void _V10_Diter__atom_D302_k60(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.887 0 0) (##vcore.call-with-values (bruijn ##.k.886 1 0) (close _V10_Diter__atom_D302_lambda9) (close _V10_Diter__atom_D302_lambda14)) ((bruijn ##.k.886 1 0) #f))
+  // (if (bruijn ##.p.885 0 0) (##vcore.call-with-values (bruijn ##.k.884 1 0) (close _V10_Diter__atom_D302_lambda9) (close _V10_Diter__atom_D302_lambda14)) ((bruijn ##.k.884 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
@@ -871,7 +871,7 @@ static void _V10_Diter__atom_D302_k59(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.x.308 4 1)) ((bruijn ##.x.828 8 0) (close _V10_Diter__atom_D302_k60) 'case-lambda (##inline ##vcore.car (bruijn ##.x.308 4 1))) ((bruijn ##.k.886 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.x.308 4 1)) ((bruijn ##.x.826 8 0) (close _V10_Diter__atom_D302_k60) 'case-lambda (##inline ##vcore.car (bruijn ##.x.308 4 1))) ((bruijn ##.k.884 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->up->vars[1]))) {
@@ -891,7 +891,7 @@ static void _V10_Diter__atom_D302_k76(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.882 0 0) (bruijn ##.k.880 2 0))
+  // ((bruijn ##.x.880 0 0) (bruijn ##.k.878 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -901,7 +901,7 @@ static void _V10_Diter__atom_D302_lambda16(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.883 0 0) (bruijn ##.x.308 7 1))
+  // ((bruijn ##.k.881 0 0) (bruijn ##.x.308 7 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 7-1, 1));
 }
@@ -915,7 +915,7 @@ static void _V10_Diter__atom_D302_k75(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.881 0 0) (##vcore.call-with-values (close _V10_Diter__atom_D302_k76) (close _V10_Diter__atom_D302_lambda16) (bruijn ##.kk.8.313 4 1)) ((bruijn ##.k.880 1 0) #f))
+  // (if (bruijn ##.p.879 0 0) (##vcore.call-with-values (close _V10_Diter__atom_D302_k76) (close _V10_Diter__atom_D302_lambda16) (bruijn ##.kk.8.313 4 1)) ((bruijn ##.k.878 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
@@ -937,7 +937,7 @@ static void _V10_Diter__atom_D302_k74(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.x.308 5 1)) ((bruijn ##.x.828 9 0) (close _V10_Diter__atom_D302_k75) '##foreign.function (##inline ##vcore.car (bruijn ##.x.308 5 1))) ((bruijn ##.k.880 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.x.308 5 1)) ((bruijn ##.x.826 9 0) (close _V10_Diter__atom_D302_k75) '##foreign.function (##inline ##vcore.car (bruijn ##.x.308 5 1))) ((bruijn ##.k.878 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 5-1, 1)))) {
@@ -957,7 +957,7 @@ static void _V10_Diter__atom_D302_k81(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.875 0 0) (bruijn ##.k.871 3 0))
+  // ((bruijn ##.x.873 0 0) (bruijn ##.k.869 3 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->vars[0]);
 }
@@ -967,7 +967,7 @@ static void _V10_Diter__atom_D302_lambda17(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.876 0 0) (bruijn ##.x.308 9 1))
+  // ((bruijn ##.k.874 0 0) (bruijn ##.x.308 9 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 9-1, 1));
 }
@@ -981,7 +981,7 @@ static void _V10_Diter__atom_D302_k80(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.24.337 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.24.337 0 0))) (##vcore.call-with-values (close _V10_Diter__atom_D302_k81) (close _V10_Diter__atom_D302_lambda17) (bruijn ##.kk.8.313 6 1)) ((bruijn ##.k.871 2 0) #f)) ((bruijn ##.k.871 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.24.337 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.24.337 0 0))) (##vcore.call-with-values (close _V10_Diter__atom_D302_k81) (close _V10_Diter__atom_D302_lambda17) (bruijn ##.kk.8.313 6 1)) ((bruijn ##.k.869 2 0) #f)) ((bruijn ##.k.869 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -1012,7 +1012,7 @@ static void _V10_Diter__atom_D302_k79(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.872 0 0) ((close _V10_Diter__atom_D302_k80) (##inline ##vcore.cdr (bruijn ##.x.308 7 1))) ((bruijn ##.k.871 1 0) #f))
+  // (if (bruijn ##.p.870 0 0) ((close _V10_Diter__atom_D302_k80) (##inline ##vcore.cdr (bruijn ##.x.308 7 1))) ((bruijn ##.k.869 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter__atom_D302_k80, .env = self }, }, 1,
@@ -1033,7 +1033,7 @@ static void _V10_Diter__atom_D302_k78(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.x.308 6 1)) ((bruijn ##.x.828 10 0) (close _V10_Diter__atom_D302_k79) 'quote (##inline ##vcore.car (bruijn ##.x.308 6 1))) ((bruijn ##.k.871 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.x.308 6 1)) ((bruijn ##.x.826 10 0) (close _V10_Diter__atom_D302_k79) 'quote (##inline ##vcore.car (bruijn ##.x.308 6 1))) ((bruijn ##.k.869 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 6-1, 1)))) {
@@ -1053,7 +1053,7 @@ static void _V10_Diter__atom_D302_k84(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.868 0 0) (bruijn ##.k.867 1 0))
+  // ((bruijn ##.x.866 0 0) (bruijn ##.k.865 1 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->vars[0]);
 }
@@ -1063,10 +1063,10 @@ static void _V10_Diter__atom_D302_lambda18(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.808 32 0) (bruijn ##.k.869 0 0) (##string ##.string.2058))
+  // ((bruijn ##.x.806 32 0) (bruijn ##.k.867 0 0) (##string ##.string.2059))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 2,
       _var0,
-      VEncodePointer(&_V10_Dstring_D2058.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2059.sym, VPOINTER_OTHER));
 }
 static void _V10_Diter__atom_D302_k83(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -1078,7 +1078,7 @@ static void _V10_Diter__atom_D302_k83(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.null? (bruijn ##.x.308 7 1)) (##vcore.call-with-values (close _V10_Diter__atom_D302_k84) (close _V10_Diter__atom_D302_lambda18) (bruijn ##.kk.8.313 5 1)) ((bruijn ##.k.867 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.x.308 7 1)) (##vcore.call-with-values (close _V10_Diter__atom_D302_k84) (close _V10_Diter__atom_D302_lambda18) (bruijn ##.kk.8.313 5 1)) ((bruijn ##.k.865 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         VGetArg(statics, 7-1, 1)))) {
@@ -1097,7 +1097,7 @@ static void _V10_Diter__atom_D302_lambda19(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.865 0 0) (bruijn ##.x.308 8 1))
+  // ((bruijn ##.k.863 0 0) (bruijn ##.x.308 8 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 8-1, 1));
 }
@@ -1111,7 +1111,7 @@ static void _V10_Diter__atom_D302_k85(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.859 5 0) (close _V10_Diter__atom_D302_lambda19) (bruijn ##.kk.8.313 5 1))
+  // (##vcore.call-with-values (bruijn ##.k.857 5 0) (close _V10_Diter__atom_D302_lambda19) (bruijn ##.kk.8.313 5 1))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       VGetArg(statics, 5-1, 0),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter__atom_D302_lambda19, self)})),
@@ -1199,7 +1199,7 @@ static void _V10_Diter__atom_D302_lambda5(VRuntime * runtime, VEnv * statics, in
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Diter__lambda_D309_lambda6)) (##vcore.call/cc (bruijn ##.k.854 1 0) (close _V10_Diter__atom_D302_lambda7)))
+  // (letrec 1 ((close _V10_Diter__lambda_D309_lambda6)) (##vcore.call/cc (bruijn ##.k.852 1 0) (close _V10_Diter__atom_D302_lambda7)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -1217,7 +1217,7 @@ static void _V10_Dloop_D342_k88(VRuntime * runtime, VEnv * statics, int argc, VW
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.928 3 0) (##inline ##vcore.cons (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (bruijn ##.args.338 5 1) (##inline ##vcore.cons (bruijn ##.x.933 0 0) '()))) (bruijn ##.appl.345 1 0)))
+  // ((bruijn ##.k.926 3 0) (##inline ##vcore.cons (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (bruijn ##.args.338 5 1) (##inline ##vcore.cons (bruijn ##.x.931 0 0) '()))) (bruijn ##.appl.345 1 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VInlineCons2(runtime,
         VInlineCons2(runtime,
@@ -1251,7 +1251,7 @@ static void _V10_Dloop_D342_k95(VRuntime * runtime, VEnv * statics, int argc, VW
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.iter2.306 11 4) (bruijn ##.k.928 8 0) (bruijn ##.x.935 3 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.346 4 0) '()) (##inline ##vcore.cons (bruijn ##.x.940 0 0) '()))))
+  // ((bruijn ##.iter2.306 11 4) (bruijn ##.k.926 8 0) (bruijn ##.x.933 3 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.346 4 0) '()) (##inline ##vcore.cons (bruijn ##.x.938 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 4)), 3,
       VGetArg(statics, 8-1, 0),
       statics->up->up->vars[0],
@@ -1275,7 +1275,7 @@ static void _V10_Dloop_D342_k94(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.loop.342 8 0) (close _V10_Dloop_D342_k95) (bruijn ##.x.941 1 0) (bruijn ##.x.942 0 0))
+  // ((bruijn ##.loop.342 8 0) (close _V10_Dloop_D342_k95) (bruijn ##.x.939 1 0) (bruijn ##.x.940 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D342_k95, self)})),
       statics->vars[0],
@@ -1291,7 +1291,7 @@ static void _V10_Dloop_D342_k93(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.826 14 0) (close _V10_Dloop_D342_k94) (bruijn ##.vals.344 6 2))
+  // ((bruijn ##.x.824 14 0) (close _V10_Dloop_D342_k94) (bruijn ##.vals.344 6 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D342_k94, self)})),
       VGetArg(statics, 6-1, 2));
@@ -1306,7 +1306,7 @@ static void _V10_Dloop_D342_k92(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.809 30 0) (close _V10_Dloop_D342_k93) (bruijn ##.x.346 1 0) (bruijn ##.appl.343 5 1))
+  // ((bruijn ##.x.807 30 0) (close _V10_Dloop_D342_k93) (bruijn ##.x.346 1 0) (bruijn ##.appl.343 5 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D342_k93, self)})),
       statics->vars[0],
@@ -1322,7 +1322,7 @@ static void _V10_Dloop_D342_k91(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.823 15 0) (close _V10_Dloop_D342_k92) (bruijn ##.vals.344 4 2))
+  // ((bruijn ##.x.821 15 0) (close _V10_Dloop_D342_k92) (bruijn ##.vals.344 4 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D342_k92, self)})),
       statics->up->up->up->vars[2]);
@@ -1333,7 +1333,7 @@ static void _V10_Dloop_D342_k99(VRuntime * runtime, VEnv * statics, int argc, VW
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.loop.342 8 0) (bruijn ##.k.928 7 0) (bruijn ##.x.943 1 0) (bruijn ##.x.944 0 0))
+  // ((bruijn ##.loop.342 8 0) (bruijn ##.k.926 7 0) (bruijn ##.x.941 1 0) (bruijn ##.x.942 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
       VGetArg(statics, 7-1, 0),
       statics->vars[0],
@@ -1349,7 +1349,7 @@ static void _V10_Dloop_D342_k98(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.826 14 0) (close _V10_Dloop_D342_k99) (bruijn ##.vals.344 6 2))
+  // ((bruijn ##.x.824 14 0) (close _V10_Dloop_D342_k99) (bruijn ##.vals.344 6 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D342_k99, self)})),
       VGetArg(statics, 6-1, 2));
@@ -1364,7 +1364,7 @@ static void _V10_Dloop_D342_k97(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.809 30 0) (close _V10_Dloop_D342_k98) (bruijn ##.x.945 0 0) (bruijn ##.appl.343 5 1))
+  // ((bruijn ##.x.807 30 0) (close _V10_Dloop_D342_k98) (bruijn ##.x.943 0 0) (bruijn ##.appl.343 5 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D342_k98, self)})),
       _var0,
@@ -1380,7 +1380,7 @@ static void _V10_Dloop_D342_k96(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.iter-atom.302 7 0) (close _V10_Dloop_D342_k97) (bruijn ##.x.946 0 0))
+  // ((bruijn ##.iter-atom.302 7 0) (close _V10_Dloop_D342_k97) (bruijn ##.x.944 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D342_k97, self)})),
       _var0);
@@ -1395,12 +1395,12 @@ static void _V10_Dloop_D342_k90(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.934 0 0) ((bruijn ##.x.794 43 0) (close _V10_Dloop_D342_k91) (##string ##.string.2059)) ((bruijn ##.x.823 14 0) (close _V10_Dloop_D342_k96) (bruijn ##.vals.344 3 2)))
+  // (if (bruijn ##.p.932 0 0) ((bruijn ##.x.792 43 0) (close _V10_Dloop_D342_k91) (##string ##.string.2060)) ((bruijn ##.x.821 14 0) (close _V10_Dloop_D342_k96) (bruijn ##.vals.344 3 2)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 43-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D342_k91, self)})),
-      VEncodePointer(&_V10_Dstring_D2059.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2060.sym, VPOINTER_OTHER));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D342_k96, self)})),
@@ -1417,7 +1417,7 @@ static void _V10_Dloop_D342_k89(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.application?.286 7 0) (close _V10_Dloop_D342_k90) (bruijn ##.x.947 0 0))
+  // ((bruijn ##.application?.286 7 0) (close _V10_Dloop_D342_k90) (bruijn ##.x.945 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D342_k90, self)})),
       _var0);
@@ -1432,7 +1432,7 @@ static void _V10_Dloop_D342_k86(VRuntime * runtime, VEnv * statics, int argc, VW
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.929 0 0) ((bruijn ##.x.806 29 0) (close _V10_Dloop_D342_k87) (bruijn ##.appl.343 1 1)) ((bruijn ##.x.823 12 0) (close _V10_Dloop_D342_k89) (bruijn ##.vals.344 1 2)))
+  // (if (bruijn ##.p.927 0 0) ((bruijn ##.x.804 29 0) (close _V10_Dloop_D342_k87) (bruijn ##.appl.343 1 1)) ((bruijn ##.x.821 12 0) (close _V10_Dloop_D342_k89) (bruijn ##.vals.344 1 2)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
@@ -1456,7 +1456,7 @@ static void _V10_Dloop_D342_lambda21(VRuntime * runtime, VEnv * statics, int arg
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((bruijn ##.x.827 7 0) (close _V10_Dloop_D342_k86) (bruijn ##.vals.344 0 2))
+  // ((bruijn ##.x.825 7 0) (close _V10_Dloop_D342_k86) (bruijn ##.vals.344 0 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D342_k86, self)})),
       _var2);
@@ -1475,7 +1475,7 @@ static void _V10_Diter__let_D303_lambda20(VRuntime * runtime, VEnv * statics, in
   self->vars[2] = _var2;
   self->vars[3] = _var3;
   self->vars[4] = _var4;
-  // (letrec 1 ((close _V10_Dloop_D342_lambda21)) ((bruijn ##.loop.342 0 0) (bruijn ##.k.927 1 0) '() (bruijn ##.vals.340 1 3)))
+  // (letrec 1 ((close _V10_Dloop_D342_lambda21)) ((bruijn ##.loop.342 0 0) (bruijn ##.k.925 1 0) '() (bruijn ##.vals.340 1 3)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -1494,7 +1494,7 @@ static void _V10_Dloop_D351_k103(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.949 4 0) (##inline ##vcore.cons 'letrec (##inline ##vcore.cons (bruijn ##.x.952 1 0) (##inline ##vcore.cons (bruijn ##.x.954 0 0) '()))))
+  // ((bruijn ##.k.947 4 0) (##inline ##vcore.cons 'letrec (##inline ##vcore.cons (bruijn ##.x.950 1 0) (##inline ##vcore.cons (bruijn ##.x.952 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
       VInlineCons2(runtime,
         _V0letrec,
@@ -1530,7 +1530,7 @@ static void _V10_Dloop_D351_k101(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.807 29 0) (close _V10_Dloop_D351_k102) (bruijn ##.x.813 23 0) (bruijn ##.args.347 4 1) (bruijn ##.x.955 0 0))
+  // ((bruijn ##.x.805 29 0) (close _V10_Dloop_D351_k102) (bruijn ##.x.811 23 0) (bruijn ##.args.347 4 1) (bruijn ##.x.953 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 4,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k102, self)})),
       VGetArg(statics, 23-1, 0),
@@ -1543,7 +1543,7 @@ static void _V10_Dloop_D351_k110(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.iter2.306 11 4) (bruijn ##.k.949 8 0) (bruijn ##.x.957 3 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.354 4 0) '()) (##inline ##vcore.cons (bruijn ##.x.962 0 0) '()))))
+  // ((bruijn ##.iter2.306 11 4) (bruijn ##.k.947 8 0) (bruijn ##.x.955 3 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.354 4 0) '()) (##inline ##vcore.cons (bruijn ##.x.960 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 4)), 3,
       VGetArg(statics, 8-1, 0),
       statics->up->up->vars[0],
@@ -1567,7 +1567,7 @@ static void _V10_Dloop_D351_k109(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.loop.351 8 0) (close _V10_Dloop_D351_k110) (bruijn ##.x.963 1 0) (bruijn ##.x.964 0 0))
+  // ((bruijn ##.loop.351 8 0) (close _V10_Dloop_D351_k110) (bruijn ##.x.961 1 0) (bruijn ##.x.962 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k110, self)})),
       statics->vars[0],
@@ -1583,7 +1583,7 @@ static void _V10_Dloop_D351_k108(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.826 14 0) (close _V10_Dloop_D351_k109) (bruijn ##.vals.353 6 2))
+  // ((bruijn ##.x.824 14 0) (close _V10_Dloop_D351_k109) (bruijn ##.vals.353 6 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k109, self)})),
       VGetArg(statics, 6-1, 2));
@@ -1598,7 +1598,7 @@ static void _V10_Dloop_D351_k107(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.809 30 0) (close _V10_Dloop_D351_k108) (bruijn ##.x.354 1 0) (bruijn ##.done-vals.352 5 1))
+  // ((bruijn ##.x.807 30 0) (close _V10_Dloop_D351_k108) (bruijn ##.x.354 1 0) (bruijn ##.done-vals.352 5 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k108, self)})),
       statics->vars[0],
@@ -1614,7 +1614,7 @@ static void _V10_Dloop_D351_k106(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.823 15 0) (close _V10_Dloop_D351_k107) (bruijn ##.vals.353 4 2))
+  // ((bruijn ##.x.821 15 0) (close _V10_Dloop_D351_k107) (bruijn ##.vals.353 4 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k107, self)})),
       statics->up->up->up->vars[2]);
@@ -1625,7 +1625,7 @@ static void _V10_Dloop_D351_k114(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.loop.351 8 0) (bruijn ##.k.949 7 0) (bruijn ##.x.965 1 0) (bruijn ##.x.966 0 0))
+  // ((bruijn ##.loop.351 8 0) (bruijn ##.k.947 7 0) (bruijn ##.x.963 1 0) (bruijn ##.x.964 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
       VGetArg(statics, 7-1, 0),
       statics->vars[0],
@@ -1641,7 +1641,7 @@ static void _V10_Dloop_D351_k113(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.826 14 0) (close _V10_Dloop_D351_k114) (bruijn ##.vals.353 6 2))
+  // ((bruijn ##.x.824 14 0) (close _V10_Dloop_D351_k114) (bruijn ##.vals.353 6 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k114, self)})),
       VGetArg(statics, 6-1, 2));
@@ -1656,7 +1656,7 @@ static void _V10_Dloop_D351_k112(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.809 30 0) (close _V10_Dloop_D351_k113) (bruijn ##.x.967 0 0) (bruijn ##.done-vals.352 5 1))
+  // ((bruijn ##.x.807 30 0) (close _V10_Dloop_D351_k113) (bruijn ##.x.965 0 0) (bruijn ##.done-vals.352 5 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k113, self)})),
       _var0,
@@ -1672,7 +1672,7 @@ static void _V10_Dloop_D351_k111(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.iter-atom.302 7 0) (close _V10_Dloop_D351_k112) (bruijn ##.x.968 0 0))
+  // ((bruijn ##.iter-atom.302 7 0) (close _V10_Dloop_D351_k112) (bruijn ##.x.966 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k112, self)})),
       _var0);
@@ -1687,12 +1687,12 @@ static void _V10_Dloop_D351_k105(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.956 0 0) ((bruijn ##.x.794 43 0) (close _V10_Dloop_D351_k106) (##string ##.string.2059)) ((bruijn ##.x.823 14 0) (close _V10_Dloop_D351_k111) (bruijn ##.vals.353 3 2)))
+  // (if (bruijn ##.p.954 0 0) ((bruijn ##.x.792 43 0) (close _V10_Dloop_D351_k106) (##string ##.string.2060)) ((bruijn ##.x.821 14 0) (close _V10_Dloop_D351_k111) (bruijn ##.vals.353 3 2)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 43-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k106, self)})),
-      VEncodePointer(&_V10_Dstring_D2059.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2060.sym, VPOINTER_OTHER));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k111, self)})),
@@ -1709,7 +1709,7 @@ static void _V10_Dloop_D351_k104(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.application?.286 7 0) (close _V10_Dloop_D351_k105) (bruijn ##.x.969 0 0))
+  // ((bruijn ##.application?.286 7 0) (close _V10_Dloop_D351_k105) (bruijn ##.x.967 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k105, self)})),
       _var0);
@@ -1724,7 +1724,7 @@ static void _V10_Dloop_D351_k100(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.950 0 0) ((bruijn ##.x.806 29 0) (close _V10_Dloop_D351_k101) (bruijn ##.done-vals.352 1 1)) ((bruijn ##.x.823 12 0) (close _V10_Dloop_D351_k104) (bruijn ##.vals.353 1 2)))
+  // (if (bruijn ##.p.948 0 0) ((bruijn ##.x.804 29 0) (close _V10_Dloop_D351_k101) (bruijn ##.done-vals.352 1 1)) ((bruijn ##.x.821 12 0) (close _V10_Dloop_D351_k104) (bruijn ##.vals.353 1 2)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
@@ -1748,7 +1748,7 @@ static void _V10_Dloop_D351_lambda23(VRuntime * runtime, VEnv * statics, int arg
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((bruijn ##.x.827 7 0) (close _V10_Dloop_D351_k100) (bruijn ##.vals.353 0 2))
+  // ((bruijn ##.x.825 7 0) (close _V10_Dloop_D351_k100) (bruijn ##.vals.353 0 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D351_k100, self)})),
       _var2);
@@ -1767,7 +1767,7 @@ static void _V10_Diter__letrec_D304_lambda22(VRuntime * runtime, VEnv * statics,
   self->vars[2] = _var2;
   self->vars[3] = _var3;
   self->vars[4] = _var4;
-  // (letrec 1 ((close _V10_Dloop_D351_lambda23)) ((bruijn ##.loop.351 0 0) (bruijn ##.k.948 1 0) '() (bruijn ##.vals.349 1 3)))
+  // (letrec 1 ((close _V10_Dloop_D351_lambda23)) ((bruijn ##.loop.351 0 0) (bruijn ##.k.946 1 0) '() (bruijn ##.vals.349 1 3)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -1786,7 +1786,7 @@ static void _V10_Dloop_D357_k118(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.971 4 0) (##inline ##vcore.cons (bruijn ##.x.973 1 0) (##inline ##vcore.cons (bruijn ##.cont.356 6 2) (bruijn ##.x.975 0 0))))
+  // ((bruijn ##.k.969 4 0) (##inline ##vcore.cons (bruijn ##.x.971 1 0) (##inline ##vcore.cons (bruijn ##.cont.356 6 2) (bruijn ##.x.973 0 0))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
       VInlineCons2(runtime,
         statics->vars[0],
@@ -1804,7 +1804,7 @@ static void _V10_Dloop_D357_k117(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.826 11 0) (close _V10_Dloop_D357_k118) (bruijn ##.appl.360 1 0))
+  // ((bruijn ##.x.824 11 0) (close _V10_Dloop_D357_k118) (bruijn ##.appl.360 1 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k118, self)})),
       statics->vars[0]);
@@ -1819,7 +1819,7 @@ static void _V10_Dloop_D357_k116(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.823 13 0) (close _V10_Dloop_D357_k117) (bruijn ##.appl.360 0 0))
+  // ((bruijn ##.x.821 13 0) (close _V10_Dloop_D357_k117) (bruijn ##.appl.360 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k117, self)})),
       _var0);
@@ -1830,7 +1830,7 @@ static void _V10_Dloop_D357_k125(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.iter2.306 11 4) (bruijn ##.k.971 8 0) (bruijn ##.x.977 3 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.361 4 0) '()) (##inline ##vcore.cons (bruijn ##.x.982 0 0) '()))))
+  // ((bruijn ##.iter2.306 11 4) (bruijn ##.k.969 8 0) (bruijn ##.x.975 3 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.361 4 0) '()) (##inline ##vcore.cons (bruijn ##.x.980 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 4)), 3,
       VGetArg(statics, 8-1, 0),
       statics->up->up->vars[0],
@@ -1854,7 +1854,7 @@ static void _V10_Dloop_D357_k124(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.loop.357 8 0) (close _V10_Dloop_D357_k125) (bruijn ##.x.983 1 0) (bruijn ##.x.984 0 0))
+  // ((bruijn ##.loop.357 8 0) (close _V10_Dloop_D357_k125) (bruijn ##.x.981 1 0) (bruijn ##.x.982 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k125, self)})),
       statics->vars[0],
@@ -1870,7 +1870,7 @@ static void _V10_Dloop_D357_k123(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.826 14 0) (close _V10_Dloop_D357_k124) (bruijn ##.args.359 6 2))
+  // ((bruijn ##.x.824 14 0) (close _V10_Dloop_D357_k124) (bruijn ##.args.359 6 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k124, self)})),
       VGetArg(statics, 6-1, 2));
@@ -1885,7 +1885,7 @@ static void _V10_Dloop_D357_k122(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.809 30 0) (close _V10_Dloop_D357_k123) (bruijn ##.x.361 1 0) (bruijn ##.appl.358 5 1))
+  // ((bruijn ##.x.807 30 0) (close _V10_Dloop_D357_k123) (bruijn ##.x.361 1 0) (bruijn ##.appl.358 5 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k123, self)})),
       statics->vars[0],
@@ -1901,7 +1901,7 @@ static void _V10_Dloop_D357_k121(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.823 15 0) (close _V10_Dloop_D357_k122) (bruijn ##.args.359 4 2))
+  // ((bruijn ##.x.821 15 0) (close _V10_Dloop_D357_k122) (bruijn ##.args.359 4 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k122, self)})),
       statics->up->up->up->vars[2]);
@@ -1912,7 +1912,7 @@ static void _V10_Dloop_D357_k129(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.loop.357 8 0) (bruijn ##.k.971 7 0) (bruijn ##.x.985 1 0) (bruijn ##.x.986 0 0))
+  // ((bruijn ##.loop.357 8 0) (bruijn ##.k.969 7 0) (bruijn ##.x.983 1 0) (bruijn ##.x.984 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
       VGetArg(statics, 7-1, 0),
       statics->vars[0],
@@ -1928,7 +1928,7 @@ static void _V10_Dloop_D357_k128(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.826 14 0) (close _V10_Dloop_D357_k129) (bruijn ##.args.359 6 2))
+  // ((bruijn ##.x.824 14 0) (close _V10_Dloop_D357_k129) (bruijn ##.args.359 6 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k129, self)})),
       VGetArg(statics, 6-1, 2));
@@ -1943,7 +1943,7 @@ static void _V10_Dloop_D357_k127(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.809 30 0) (close _V10_Dloop_D357_k128) (bruijn ##.x.987 0 0) (bruijn ##.appl.358 5 1))
+  // ((bruijn ##.x.807 30 0) (close _V10_Dloop_D357_k128) (bruijn ##.x.985 0 0) (bruijn ##.appl.358 5 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k128, self)})),
       _var0,
@@ -1959,7 +1959,7 @@ static void _V10_Dloop_D357_k126(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.iter-atom.302 7 0) (close _V10_Dloop_D357_k127) (bruijn ##.x.988 0 0))
+  // ((bruijn ##.iter-atom.302 7 0) (close _V10_Dloop_D357_k127) (bruijn ##.x.986 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k127, self)})),
       _var0);
@@ -1974,12 +1974,12 @@ static void _V10_Dloop_D357_k120(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.976 0 0) ((bruijn ##.x.794 43 0) (close _V10_Dloop_D357_k121) (##string ##.string.2059)) ((bruijn ##.x.823 14 0) (close _V10_Dloop_D357_k126) (bruijn ##.args.359 3 2)))
+  // (if (bruijn ##.p.974 0 0) ((bruijn ##.x.792 43 0) (close _V10_Dloop_D357_k121) (##string ##.string.2060)) ((bruijn ##.x.821 14 0) (close _V10_Dloop_D357_k126) (bruijn ##.args.359 3 2)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 43-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k121, self)})),
-      VEncodePointer(&_V10_Dstring_D2059.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2060.sym, VPOINTER_OTHER));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k126, self)})),
@@ -1996,7 +1996,7 @@ static void _V10_Dloop_D357_k119(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.application?.286 7 0) (close _V10_Dloop_D357_k120) (bruijn ##.x.989 0 0))
+  // ((bruijn ##.application?.286 7 0) (close _V10_Dloop_D357_k120) (bruijn ##.x.987 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k120, self)})),
       _var0);
@@ -2011,7 +2011,7 @@ static void _V10_Dloop_D357_k115(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.972 0 0) ((bruijn ##.x.806 29 0) (close _V10_Dloop_D357_k116) (bruijn ##.appl.358 1 1)) ((bruijn ##.x.823 12 0) (close _V10_Dloop_D357_k119) (bruijn ##.args.359 1 2)))
+  // (if (bruijn ##.p.970 0 0) ((bruijn ##.x.804 29 0) (close _V10_Dloop_D357_k116) (bruijn ##.appl.358 1 1)) ((bruijn ##.x.821 12 0) (close _V10_Dloop_D357_k119) (bruijn ##.args.359 1 2)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
@@ -2035,7 +2035,7 @@ static void _V10_Dloop_D357_lambda25(VRuntime * runtime, VEnv * statics, int arg
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((bruijn ##.x.827 7 0) (close _V10_Dloop_D357_k115) (bruijn ##.args.359 0 2))
+  // ((bruijn ##.x.825 7 0) (close _V10_Dloop_D357_k115) (bruijn ##.args.359 0 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D357_k115, self)})),
       _var2);
@@ -2052,7 +2052,7 @@ static void _V10_Diter__combination_D305_lambda24(VRuntime * runtime, VEnv * sta
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (letrec 1 ((close _V10_Dloop_D357_lambda25)) ((bruijn ##.loop.357 0 0) (bruijn ##.k.970 1 0) '() (bruijn ##.args.355 1 1)))
+  // (letrec 1 ((close _V10_Dloop_D357_lambda25)) ((bruijn ##.loop.357 0 0) (bruijn ##.k.968 1 0) '() (bruijn ##.args.355 1 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -2071,7 +2071,7 @@ static void _V10_Diter2_D306_k137(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1139 0 0) (bruijn ##.k.1134 6 0))
+  // ((bruijn ##.x.1137 0 0) (bruijn ##.k.1132 6 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 6-1, 0));
 }
@@ -2081,7 +2081,7 @@ static void _V10_Diter2_D306_k140(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.iter2.306 13 4) (bruijn ##.k.1140 3 0) (bruijn ##.x.368 6 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.1147 1 0) '()) (##inline ##vcore.cons (bruijn ##.x.1146 0 0) '()))))
+  // ((bruijn ##.iter2.306 13 4) (bruijn ##.k.1138 3 0) (bruijn ##.x.368 6 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.1145 1 0) '()) (##inline ##vcore.cons (bruijn ##.x.1144 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 4)), 3,
       statics->up->up->vars[0],
       VGetArg(statics, 6-1, 0),
@@ -2121,12 +2121,12 @@ static void _V10_Diter2_D306_k138(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1141 0 0) ((bruijn ##.x.794 48 0) (close _V10_Diter2_D306_k139) (##string ##.string.2060)) ((bruijn ##.iter2.306 11 4) (bruijn ##.k.1140 1 0) (bruijn ##.y.370 2 0) (bruijn ##.cont.363 10 2)))
+  // (if (bruijn ##.p.1139 0 0) ((bruijn ##.x.792 48 0) (close _V10_Diter2_D306_k139) (##string ##.string.2061)) ((bruijn ##.iter2.306 11 4) (bruijn ##.k.1138 1 0) (bruijn ##.y.370 2 0) (bruijn ##.cont.363 10 2)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 48-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter2_D306_k139, self)})),
-      VEncodePointer(&_V10_Dstring_D2060.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2061.sym, VPOINTER_OTHER));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 4)), 3,
       statics->vars[0],
@@ -2159,7 +2159,7 @@ static void _V10_Diter2_D306_k136(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.29.369 1 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k137) (close _V10_Diter2_D306_lambda28) (bruijn ##.kk.25.364 6 1)) ((bruijn ##.k.1134 5 0) #f))
+  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.29.369 1 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k137) (close _V10_Diter2_D306_lambda28) (bruijn ##.kk.25.364 6 1)) ((bruijn ##.k.1132 5 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         VInlineCdr2(runtime,
@@ -2183,7 +2183,7 @@ static void _V10_Diter2_D306_k135(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.29.369 0 0)) ((close _V10_Diter2_D306_k136) (##inline ##vcore.car (bruijn ##.expr.29.369 0 0))) ((bruijn ##.k.1134 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.29.369 0 0)) ((close _V10_Diter2_D306_k136) (##inline ##vcore.car (bruijn ##.expr.29.369 0 0))) ((bruijn ##.k.1132 4 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -2220,7 +2220,7 @@ static void _V10_Diter2_D306_k133(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.28.367 0 0)) ((close _V10_Diter2_D306_k134) (##inline ##vcore.car (bruijn ##.expr.28.367 0 0))) ((bruijn ##.k.1134 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.28.367 0 0)) ((close _V10_Diter2_D306_k134) (##inline ##vcore.car (bruijn ##.expr.28.367 0 0))) ((bruijn ##.k.1132 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -2242,7 +2242,7 @@ static void _V10_Diter2_D306_k132(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1135 0 0) ((close _V10_Diter2_D306_k133) (##inline ##vcore.cdr (bruijn ##.expr.362 4 1))) ((bruijn ##.k.1134 1 0) #f))
+  // (if (bruijn ##.p.1133 0 0) ((close _V10_Diter2_D306_k133) (##inline ##vcore.cdr (bruijn ##.expr.362 4 1))) ((bruijn ##.k.1132 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter2_D306_k133, .env = self }, }, 1,
@@ -2263,7 +2263,7 @@ static void _V10_Diter2_D306_k131(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 3 1)) ((bruijn ##.x.828 7 0) (close _V10_Diter2_D306_k132) 'begin (##inline ##vcore.car (bruijn ##.expr.362 3 1))) ((bruijn ##.k.1134 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 3 1)) ((bruijn ##.x.826 7 0) (close _V10_Diter2_D306_k132) 'begin (##inline ##vcore.car (bruijn ##.expr.362 3 1))) ((bruijn ##.k.1132 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->vars[1]))) {
@@ -2283,7 +2283,7 @@ static void _V10_Diter2_D306_k150(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1100 0 0) (bruijn ##.k.1094 8 0))
+  // ((bruijn ##.x.1098 0 0) (bruijn ##.k.1092 8 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 8-1, 0));
 }
@@ -2293,7 +2293,7 @@ static void _V10_Diter2_D306_k153(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.iter2.306 16 4) (bruijn ##.k.1101 3 0) (bruijn ##.p.373 8 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.sym.378 1 0) '()) (##inline ##vcore.cons (bruijn ##.x.1107 0 0) '()))))
+  // ((bruijn ##.iter2.306 16 4) (bruijn ##.k.1099 3 0) (bruijn ##.p.373 8 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.sym.378 1 0) '()) (##inline ##vcore.cons (bruijn ##.x.1105 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 4)), 3,
       statics->up->up->vars[0],
       VGetArg(statics, 8-1, 0),
@@ -2337,7 +2337,7 @@ static void _V10_Diter2_D306_k157(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1101 5 0) (##inline ##vcore.cons 'if (##inline ##vcore.cons (bruijn ##.p.373 10 0) (##inline ##vcore.cons (bruijn ##.x.1116 1 0) (##inline ##vcore.cons (bruijn ##.x.1118 0 0) '())))))
+  // ((bruijn ##.k.1099 5 0) (##inline ##vcore.cons 'if (##inline ##vcore.cons (bruijn ##.p.373 10 0) (##inline ##vcore.cons (bruijn ##.x.1114 1 0) (##inline ##vcore.cons (bruijn ##.x.1116 0 0) '())))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
       VInlineCons2(runtime,
         _V0if,
@@ -2371,7 +2371,7 @@ static void _V10_Diter2_D306_k160(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1101 6 0) (##inline ##vcore.cons (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.k.379 2 0) '()) (##inline ##vcore.cons (##inline ##vcore.cons 'if (##inline ##vcore.cons (bruijn ##.p.373 11 0) (##inline ##vcore.cons (bruijn ##.x.1127 1 0) (##inline ##vcore.cons (bruijn ##.x.1129 0 0) '())))) '()))) (##inline ##vcore.cons (bruijn ##.cont.363 18 2) '())))
+  // ((bruijn ##.k.1099 6 0) (##inline ##vcore.cons (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.k.379 2 0) '()) (##inline ##vcore.cons (##inline ##vcore.cons 'if (##inline ##vcore.cons (bruijn ##.p.373 11 0) (##inline ##vcore.cons (bruijn ##.x.1125 1 0) (##inline ##vcore.cons (bruijn ##.x.1127 0 0) '())))) '()))) (##inline ##vcore.cons (bruijn ##.cont.363 18 2) '())))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 1,
       VInlineCons2(runtime,
         VInlineCons2(runtime,
@@ -2437,7 +2437,7 @@ static void _V10_Diter2_D306_k155(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1113 0 0) ((bruijn ##.iter2.306 16 4) (close _V10_Diter2_D306_k156) (bruijn ##.x.375 6 0) (bruijn ##.cont.363 15 2)) ((bruijn ##.x.794 53 0) (close _V10_Diter2_D306_k158) (##string ##.string.2057)))
+  // (if (bruijn ##.p.1111 0 0) ((bruijn ##.iter2.306 16 4) (close _V10_Diter2_D306_k156) (bruijn ##.x.375 6 0) (bruijn ##.cont.363 15 2)) ((bruijn ##.x.792 53 0) (close _V10_Diter2_D306_k158) (##string ##.string.2058)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 4)), 3,
@@ -2447,7 +2447,7 @@ _var0)) {
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 53-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter2_D306_k158, self)})),
-      VEncodePointer(&_V10_Dstring_D2057.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2058.sym, VPOINTER_OTHER));
 }
 }
 static void _V10_Diter2_D306_k161(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -2456,7 +2456,7 @@ static void _V10_Diter2_D306_k161(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.1130 0 0) ((bruijn ##.iter2.306 16 4) (bruijn ##.k.1101 3 0) (bruijn ##.y.377 4 0) (bruijn ##.cont.363 15 2)) ((bruijn ##.iter2.306 16 4) (bruijn ##.k.1101 3 0) (bruijn ##.x.375 6 0) (bruijn ##.cont.363 15 2)))
+  // (if (bruijn ##.p.1128 0 0) ((bruijn ##.iter2.306 16 4) (bruijn ##.k.1099 3 0) (bruijn ##.y.377 4 0) (bruijn ##.cont.363 15 2)) ((bruijn ##.iter2.306 16 4) (bruijn ##.k.1099 3 0) (bruijn ##.x.375 6 0) (bruijn ##.cont.363 15 2)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 4)), 3,
@@ -2480,7 +2480,7 @@ static void _V10_Diter2_D306_k154(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1112 0 0) ((bruijn ##.x.811 35 0) (close _V10_Diter2_D306_k155) (bruijn ##.cont.363 14 2)) ((bruijn ##.x.795 51 0) (close _V10_Diter2_D306_k161) (bruijn ##.p.373 7 0) #f))
+  // (if (bruijn ##.p.1110 0 0) ((bruijn ##.x.809 35 0) (close _V10_Diter2_D306_k155) (bruijn ##.cont.363 14 2)) ((bruijn ##.x.793 51 0) (close _V10_Diter2_D306_k161) (bruijn ##.p.373 7 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 2,
@@ -2503,12 +2503,12 @@ static void _V10_Diter2_D306_k151(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1102 0 0) ((bruijn ##.x.794 51 0) (close _V10_Diter2_D306_k152) (##string ##.string.2061)) ((bruijn ##.x.811 34 0) (close _V10_Diter2_D306_k154) (bruijn ##.p.373 6 0)))
+  // (if (bruijn ##.p.1100 0 0) ((bruijn ##.x.792 51 0) (close _V10_Diter2_D306_k152) (##string ##.string.2062)) ((bruijn ##.x.809 34 0) (close _V10_Diter2_D306_k154) (bruijn ##.p.373 6 0)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 51-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter2_D306_k152, self)})),
-      VEncodePointer(&_V10_Dstring_D2061.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2062.sym, VPOINTER_OTHER));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter2_D306_k154, self)})),
@@ -2540,7 +2540,7 @@ static void _V10_Diter2_D306_k149(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.33.376 1 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k150) (close _V10_Diter2_D306_lambda29) (bruijn ##.kk.25.364 9 1)) ((bruijn ##.k.1094 7 0) #f))
+  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.33.376 1 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k150) (close _V10_Diter2_D306_lambda29) (bruijn ##.kk.25.364 9 1)) ((bruijn ##.k.1092 7 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         VInlineCdr2(runtime,
@@ -2564,7 +2564,7 @@ static void _V10_Diter2_D306_k148(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.33.376 0 0)) ((close _V10_Diter2_D306_k149) (##inline ##vcore.car (bruijn ##.expr.33.376 0 0))) ((bruijn ##.k.1094 6 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.33.376 0 0)) ((close _V10_Diter2_D306_k149) (##inline ##vcore.car (bruijn ##.expr.33.376 0 0))) ((bruijn ##.k.1092 6 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -2601,7 +2601,7 @@ static void _V10_Diter2_D306_k146(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.32.374 0 0)) ((close _V10_Diter2_D306_k147) (##inline ##vcore.car (bruijn ##.expr.32.374 0 0))) ((bruijn ##.k.1094 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.32.374 0 0)) ((close _V10_Diter2_D306_k147) (##inline ##vcore.car (bruijn ##.expr.32.374 0 0))) ((bruijn ##.k.1092 4 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -2638,7 +2638,7 @@ static void _V10_Diter2_D306_k144(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.31.372 0 0)) ((close _V10_Diter2_D306_k145) (##inline ##vcore.car (bruijn ##.expr.31.372 0 0))) ((bruijn ##.k.1094 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.31.372 0 0)) ((close _V10_Diter2_D306_k145) (##inline ##vcore.car (bruijn ##.expr.31.372 0 0))) ((bruijn ##.k.1092 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -2660,7 +2660,7 @@ static void _V10_Diter2_D306_k143(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1095 0 0) ((close _V10_Diter2_D306_k144) (##inline ##vcore.cdr (bruijn ##.expr.362 5 1))) ((bruijn ##.k.1094 1 0) #f))
+  // (if (bruijn ##.p.1093 0 0) ((close _V10_Diter2_D306_k144) (##inline ##vcore.cdr (bruijn ##.expr.362 5 1))) ((bruijn ##.k.1092 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter2_D306_k144, .env = self }, }, 1,
@@ -2681,7 +2681,7 @@ static void _V10_Diter2_D306_k142(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 4 1)) ((bruijn ##.x.828 8 0) (close _V10_Diter2_D306_k143) 'if (##inline ##vcore.car (bruijn ##.expr.362 4 1))) ((bruijn ##.k.1094 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 4 1)) ((bruijn ##.x.826 8 0) (close _V10_Diter2_D306_k143) 'if (##inline ##vcore.car (bruijn ##.expr.362 4 1))) ((bruijn ##.k.1092 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->up->vars[1]))) {
@@ -2701,7 +2701,7 @@ static void _V10_Diter2_D306_k169(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1076 0 0) (bruijn ##.k.1071 6 0))
+  // ((bruijn ##.x.1074 0 0) (bruijn ##.k.1069 6 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 6-1, 0));
 }
@@ -2711,7 +2711,7 @@ static void _V10_Diter2_D306_k172(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.iter2.306 15 4) (bruijn ##.k.1077 3 0) (bruijn ##.x.382 6 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.sym.385 1 0) '()) (##inline ##vcore.cons (bruijn ##.x.1083 0 0) '()))))
+  // ((bruijn ##.iter2.306 15 4) (bruijn ##.k.1075 3 0) (bruijn ##.x.382 6 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.sym.385 1 0) '()) (##inline ##vcore.cons (bruijn ##.x.1081 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 4)), 3,
       statics->up->up->vars[0],
       VGetArg(statics, 6-1, 0),
@@ -2757,12 +2757,12 @@ static void _V10_Diter2_D306_k170(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1078 0 0) ((bruijn ##.x.794 50 0) (close _V10_Diter2_D306_k171) (##string ##.string.2061)) ((bruijn ##.iter2.306 13 4) (bruijn ##.k.1077 1 0) (##inline ##vcore.cons 'if (##inline ##vcore.cons (bruijn ##.x.382 4 0) (##inline ##vcore.cons (bruijn ##.x.382 4 0) (##inline ##vcore.cons (bruijn ##.y.384 2 0) '())))) (bruijn ##.cont.363 12 2)))
+  // (if (bruijn ##.p.1076 0 0) ((bruijn ##.x.792 50 0) (close _V10_Diter2_D306_k171) (##string ##.string.2062)) ((bruijn ##.iter2.306 13 4) (bruijn ##.k.1075 1 0) (##inline ##vcore.cons 'if (##inline ##vcore.cons (bruijn ##.x.382 4 0) (##inline ##vcore.cons (bruijn ##.x.382 4 0) (##inline ##vcore.cons (bruijn ##.y.384 2 0) '())))) (bruijn ##.cont.363 12 2)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 50-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter2_D306_k171, self)})),
-      VEncodePointer(&_V10_Dstring_D2061.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2062.sym, VPOINTER_OTHER));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 4)), 3,
       statics->vars[0],
@@ -2803,7 +2803,7 @@ static void _V10_Diter2_D306_k168(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.36.383 1 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k169) (close _V10_Diter2_D306_lambda30) (bruijn ##.kk.25.364 8 1)) ((bruijn ##.k.1071 5 0) #f))
+  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.36.383 1 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k169) (close _V10_Diter2_D306_lambda30) (bruijn ##.kk.25.364 8 1)) ((bruijn ##.k.1069 5 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         VInlineCdr2(runtime,
@@ -2827,7 +2827,7 @@ static void _V10_Diter2_D306_k167(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.36.383 0 0)) ((close _V10_Diter2_D306_k168) (##inline ##vcore.car (bruijn ##.expr.36.383 0 0))) ((bruijn ##.k.1071 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.36.383 0 0)) ((close _V10_Diter2_D306_k168) (##inline ##vcore.car (bruijn ##.expr.36.383 0 0))) ((bruijn ##.k.1069 4 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -2864,7 +2864,7 @@ static void _V10_Diter2_D306_k165(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.35.381 0 0)) ((close _V10_Diter2_D306_k166) (##inline ##vcore.car (bruijn ##.expr.35.381 0 0))) ((bruijn ##.k.1071 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.35.381 0 0)) ((close _V10_Diter2_D306_k166) (##inline ##vcore.car (bruijn ##.expr.35.381 0 0))) ((bruijn ##.k.1069 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -2886,7 +2886,7 @@ static void _V10_Diter2_D306_k164(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1072 0 0) ((close _V10_Diter2_D306_k165) (##inline ##vcore.cdr (bruijn ##.expr.362 6 1))) ((bruijn ##.k.1071 1 0) #f))
+  // (if (bruijn ##.p.1070 0 0) ((close _V10_Diter2_D306_k165) (##inline ##vcore.cdr (bruijn ##.expr.362 6 1))) ((bruijn ##.k.1069 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter2_D306_k165, .env = self }, }, 1,
@@ -2907,7 +2907,7 @@ static void _V10_Diter2_D306_k163(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 5 1)) ((bruijn ##.x.828 9 0) (close _V10_Diter2_D306_k164) 'or (##inline ##vcore.car (bruijn ##.expr.362 5 1))) ((bruijn ##.k.1071 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 5 1)) ((bruijn ##.x.826 9 0) (close _V10_Diter2_D306_k164) 'or (##inline ##vcore.car (bruijn ##.expr.362 5 1))) ((bruijn ##.k.1069 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 5-1, 1)))) {
@@ -2927,7 +2927,7 @@ static void _V10_Diter2_D306_k184(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1056 0 0) (bruijn ##.k.1046 10 0))
+  // ((bruijn ##.x.1054 0 0) (bruijn ##.k.1044 10 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 10-1, 0));
 }
@@ -2937,7 +2937,7 @@ static void _V10_Diter2_D306_k186(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.iter2.306 19 4) (bruijn ##.k.1057 2 0) (bruijn ##.val.394 3 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.390 7 0) '()) (##inline ##vcore.cons (bruijn ##.x.1063 0 0) '()))))
+  // ((bruijn ##.iter2.306 19 4) (bruijn ##.k.1055 2 0) (bruijn ##.val.394 3 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.390 7 0) '()) (##inline ##vcore.cons (bruijn ##.x.1061 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 4)), 3,
       statics->up->vars[0],
       statics->up->up->vars[0],
@@ -2957,7 +2957,7 @@ static void _V10_Diter2_D306_k188(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.iter-let.303 20 1) (bruijn ##.k.1057 3 0) (bruijn ##.x.1064 1 0) (bruijn ##.body.392 6 0) (bruijn ##.x.1065 0 0) (bruijn ##.cont.363 19 2))
+  // ((bruijn ##.iter-let.303 20 1) (bruijn ##.k.1055 3 0) (bruijn ##.x.1062 1 0) (bruijn ##.body.392 6 0) (bruijn ##.x.1063 0 0) (bruijn ##.cont.363 19 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 1)), 5,
       statics->up->up->vars[0],
       statics->vars[0],
@@ -2975,7 +2975,7 @@ static void _V10_Diter2_D306_k187(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.813 37 0) (close _V10_Diter2_D306_k188) (bruijn ##.val.394 3 0))
+  // ((bruijn ##.x.811 37 0) (close _V10_Diter2_D306_k188) (bruijn ##.val.394 3 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 37-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter2_D306_k188, self)})),
       statics->up->up->vars[0]);
@@ -2990,7 +2990,7 @@ static void _V10_Diter2_D306_k185(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1058 0 0) ((bruijn ##.iter2.306 18 4) (close _V10_Diter2_D306_k186) (bruijn ##.body.392 4 0) (bruijn ##.cont.363 17 2)) ((bruijn ##.x.813 36 0) (close _V10_Diter2_D306_k187) (bruijn ##.x.390 6 0)))
+  // (if (bruijn ##.p.1056 0 0) ((bruijn ##.iter2.306 18 4) (close _V10_Diter2_D306_k186) (bruijn ##.body.392 4 0) (bruijn ##.cont.363 17 2)) ((bruijn ##.x.811 36 0) (close _V10_Diter2_D306_k187) (bruijn ##.x.390 6 0)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 4)), 3,
@@ -3028,7 +3028,7 @@ static void _V10_Diter2_D306_k183(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.42.393 1 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k184) (close _V10_Diter2_D306_lambda31) (bruijn ##.kk.25.364 13 1)) ((bruijn ##.k.1046 9 0) #f))
+  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.42.393 1 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k184) (close _V10_Diter2_D306_lambda31) (bruijn ##.kk.25.364 13 1)) ((bruijn ##.k.1044 9 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         VInlineCdr2(runtime,
@@ -3052,7 +3052,7 @@ static void _V10_Diter2_D306_k182(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.42.393 0 0)) ((close _V10_Diter2_D306_k183) (##inline ##vcore.car (bruijn ##.expr.42.393 0 0))) ((bruijn ##.k.1046 8 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.42.393 0 0)) ((close _V10_Diter2_D306_k183) (##inline ##vcore.car (bruijn ##.expr.42.393 0 0))) ((bruijn ##.k.1044 8 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -3074,7 +3074,7 @@ static void _V10_Diter2_D306_k181(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.41.391 1 0))) ((close _V10_Diter2_D306_k182) (##inline ##vcore.cdr (bruijn ##.expr.362 13 1))) ((bruijn ##.k.1046 7 0) #f))
+  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.41.391 1 0))) ((close _V10_Diter2_D306_k182) (##inline ##vcore.cdr (bruijn ##.expr.362 13 1))) ((bruijn ##.k.1044 7 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         VInlineCdr2(runtime,
@@ -3097,7 +3097,7 @@ static void _V10_Diter2_D306_k180(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.41.391 0 0)) ((close _V10_Diter2_D306_k181) (##inline ##vcore.car (bruijn ##.expr.41.391 0 0))) ((bruijn ##.k.1046 6 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.41.391 0 0)) ((close _V10_Diter2_D306_k181) (##inline ##vcore.car (bruijn ##.expr.41.391 0 0))) ((bruijn ##.k.1044 6 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -3119,7 +3119,7 @@ static void _V10_Diter2_D306_k179(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.40.389 1 0))) ((close _V10_Diter2_D306_k180) (##inline ##vcore.cdr (bruijn ##.expr.39.388 2 0))) ((bruijn ##.k.1046 5 0) #f))
+  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.40.389 1 0))) ((close _V10_Diter2_D306_k180) (##inline ##vcore.cdr (bruijn ##.expr.39.388 2 0))) ((bruijn ##.k.1044 5 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         VInlineCdr2(runtime,
@@ -3142,7 +3142,7 @@ static void _V10_Diter2_D306_k178(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.40.389 0 0)) ((close _V10_Diter2_D306_k179) (##inline ##vcore.car (bruijn ##.expr.40.389 0 0))) ((bruijn ##.k.1046 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.40.389 0 0)) ((close _V10_Diter2_D306_k179) (##inline ##vcore.car (bruijn ##.expr.40.389 0 0))) ((bruijn ##.k.1044 4 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -3164,7 +3164,7 @@ static void _V10_Diter2_D306_k177(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.39.388 0 0)) ((close _V10_Diter2_D306_k178) (##inline ##vcore.car (bruijn ##.expr.39.388 0 0))) ((bruijn ##.k.1046 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.39.388 0 0)) ((close _V10_Diter2_D306_k178) (##inline ##vcore.car (bruijn ##.expr.39.388 0 0))) ((bruijn ##.k.1044 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -3186,7 +3186,7 @@ static void _V10_Diter2_D306_k176(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1048 0 0) ((close _V10_Diter2_D306_k177) (##inline ##vcore.cdr (bruijn ##.expr.38.387 1 0))) ((bruijn ##.k.1046 2 0) #f))
+  // (if (bruijn ##.p.1046 0 0) ((close _V10_Diter2_D306_k177) (##inline ##vcore.cdr (bruijn ##.expr.38.387 1 0))) ((bruijn ##.k.1044 2 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter2_D306_k177, .env = self }, }, 1,
@@ -3207,7 +3207,7 @@ static void _V10_Diter2_D306_k175(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.38.387 0 0)) ((bruijn ##.x.828 11 0) (close _V10_Diter2_D306_k176) 'lambda (##inline ##vcore.car (bruijn ##.expr.38.387 0 0))) ((bruijn ##.k.1046 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.38.387 0 0)) ((bruijn ##.x.826 11 0) (close _V10_Diter2_D306_k176) 'lambda (##inline ##vcore.car (bruijn ##.expr.38.387 0 0))) ((bruijn ##.k.1044 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -3231,7 +3231,7 @@ static void _V10_Diter2_D306_k174(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 6 1)) ((close _V10_Diter2_D306_k175) (##inline ##vcore.car (bruijn ##.expr.362 6 1))) ((bruijn ##.k.1046 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 6 1)) ((close _V10_Diter2_D306_k175) (##inline ##vcore.car (bruijn ##.expr.362 6 1))) ((bruijn ##.k.1044 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 6-1, 1)))) {
@@ -3249,7 +3249,7 @@ static void _V10_Diter2_D306_k195(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1041 0 0) (bruijn ##.k.1035 5 0))
+  // ((bruijn ##.x.1039 0 0) (bruijn ##.k.1033 5 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 5-1, 0));
 }
@@ -3259,7 +3259,7 @@ static void _V10_Diter2_D306_lambda32(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.iter-let.303 13 1) (bruijn ##.k.1042 0 0) (##inline ##vcore.car (bruijn ##.expr.45.397 2 0)) (##inline ##vcore.car (bruijn ##.expr.46.399 1 0)) (##inline ##vcore.cdr (bruijn ##.expr.362 12 1)) (bruijn ##.cont.363 12 2))
+  // ((bruijn ##.iter-let.303 13 1) (bruijn ##.k.1040 0 0) (##inline ##vcore.car (bruijn ##.expr.45.397 2 0)) (##inline ##vcore.car (bruijn ##.expr.46.399 1 0)) (##inline ##vcore.cdr (bruijn ##.expr.362 12 1)) (bruijn ##.cont.363 12 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 1)), 5,
       _var0,
       VInlineCar2(runtime,
@@ -3280,7 +3280,7 @@ static void _V10_Diter2_D306_k194(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.46.399 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.46.399 0 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k195) (close _V10_Diter2_D306_lambda32) (bruijn ##.kk.25.364 9 1)) ((bruijn ##.k.1035 4 0) #f)) ((bruijn ##.k.1035 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.46.399 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.46.399 0 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k195) (close _V10_Diter2_D306_lambda32) (bruijn ##.kk.25.364 9 1)) ((bruijn ##.k.1033 4 0) #f)) ((bruijn ##.k.1033 4 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -3311,7 +3311,7 @@ static void _V10_Diter2_D306_k193(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.45.397 0 0)) ((close _V10_Diter2_D306_k194) (##inline ##vcore.cdr (bruijn ##.expr.45.397 0 0))) ((bruijn ##.k.1035 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.45.397 0 0)) ((close _V10_Diter2_D306_k194) (##inline ##vcore.cdr (bruijn ##.expr.45.397 0 0))) ((bruijn ##.k.1033 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -3333,7 +3333,7 @@ static void _V10_Diter2_D306_k192(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1037 0 0) ((close _V10_Diter2_D306_k193) (##inline ##vcore.cdr (bruijn ##.expr.44.396 1 0))) ((bruijn ##.k.1035 2 0) #f))
+  // (if (bruijn ##.p.1035 0 0) ((close _V10_Diter2_D306_k193) (##inline ##vcore.cdr (bruijn ##.expr.44.396 1 0))) ((bruijn ##.k.1033 2 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter2_D306_k193, .env = self }, }, 1,
@@ -3354,7 +3354,7 @@ static void _V10_Diter2_D306_k191(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.44.396 0 0)) ((bruijn ##.x.828 12 0) (close _V10_Diter2_D306_k192) 'lambda (##inline ##vcore.car (bruijn ##.expr.44.396 0 0))) ((bruijn ##.k.1035 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.44.396 0 0)) ((bruijn ##.x.826 12 0) (close _V10_Diter2_D306_k192) 'lambda (##inline ##vcore.car (bruijn ##.expr.44.396 0 0))) ((bruijn ##.k.1033 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -3378,7 +3378,7 @@ static void _V10_Diter2_D306_k190(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 7 1)) ((close _V10_Diter2_D306_k191) (##inline ##vcore.car (bruijn ##.expr.362 7 1))) ((bruijn ##.k.1035 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 7 1)) ((close _V10_Diter2_D306_k191) (##inline ##vcore.car (bruijn ##.expr.362 7 1))) ((bruijn ##.k.1033 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 7-1, 1)))) {
@@ -3396,7 +3396,7 @@ static void _V10_Dloop_D406_k202(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.52.405 5 1) (bruijn ##.k.1022 2 0) (bruijn ##.expr.54.407 3 1) (bruijn ##.x.1023 1 0) (bruijn ##.x.1024 0 0))
+  // ((bruijn ##.kk.52.405 5 1) (bruijn ##.k.1020 2 0) (bruijn ##.expr.54.407 3 1) (bruijn ##.x.1021 1 0) (bruijn ##.x.1022 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 1)), 4,
       statics->up->vars[0],
       statics->up->up->vars[1],
@@ -3413,7 +3413,7 @@ static void _V10_Dloop_D406_k201(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 42 0) (close _V10_Dloop_D406_k202) (bruijn ##.vals.51.409 2 3))
+  // ((bruijn ##.x.804 42 0) (close _V10_Dloop_D406_k202) (bruijn ##.vals.51.409 2 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D406_k202, self)})),
       statics->up->vars[3]);
@@ -3428,7 +3428,7 @@ static void _V10_Dloop_D406_k200(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.54.407 1 1))) ((bruijn ##.x.806 41 0) (close _V10_Dloop_D406_k201) (bruijn ##.xs.50.408 1 2)) ((bruijn ##.k.1022 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.54.407 1 1))) ((bruijn ##.x.804 41 0) (close _V10_Dloop_D406_k201) (bruijn ##.xs.50.408 1 2)) ((bruijn ##.k.1020 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlinePairP2(runtime,
@@ -3447,7 +3447,7 @@ static void _V10_Dloop_D406_k206(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.56.413 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.56.413 0 0))) ((bruijn ##.kk.53.410 3 1) (bruijn ##.k.1014 1 0) (##inline ##vcore.cdr (bruijn ##.expr.54.407 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.55.411 2 0)) (bruijn ##.xs.50.408 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.56.413 0 0)) (bruijn ##.vals.51.409 6 3))) ((bruijn ##.k.1014 1 0) #f)) ((bruijn ##.k.1014 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.56.413 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.56.413 0 0))) ((bruijn ##.kk.53.410 3 1) (bruijn ##.k.1012 1 0) (##inline ##vcore.cdr (bruijn ##.expr.54.407 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.55.411 2 0)) (bruijn ##.xs.50.408 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.56.413 0 0)) (bruijn ##.vals.51.409 6 3))) ((bruijn ##.k.1012 1 0) #f)) ((bruijn ##.k.1012 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -3486,7 +3486,7 @@ static void _V10_Dloop_D406_k205(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.55.411 1 0)) ((close _V10_Dloop_D406_k206) (##inline ##vcore.cdr (bruijn ##.expr.55.411 1 0))) ((bruijn ##.k.1014 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.55.411 1 0)) ((close _V10_Dloop_D406_k206) (##inline ##vcore.cdr (bruijn ##.expr.55.411 1 0))) ((bruijn ##.k.1012 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->vars[0]))) {
@@ -3504,7 +3504,7 @@ static void _V10_Dloop_D406_k209(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.52.405 9 1) (bruijn ##.k.1009 4 0) (bruijn ##.expr.54.407 7 1) (bruijn ##.x.1011 1 0) (bruijn ##.x.1012 0 0))
+  // ((bruijn ##.kk.52.405 9 1) (bruijn ##.k.1007 4 0) (bruijn ##.expr.54.407 7 1) (bruijn ##.x.1009 1 0) (bruijn ##.x.1010 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 1)), 4,
       statics->up->up->up->vars[0],
       VGetArg(statics, 7-1, 1),
@@ -3521,7 +3521,7 @@ static void _V10_Dloop_D406_k208(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 46 0) (close _V10_Dloop_D406_k209) (bruijn ##.vals.51.409 6 3))
+  // ((bruijn ##.x.804 46 0) (close _V10_Dloop_D406_k209) (bruijn ##.vals.51.409 6 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 46-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D406_k209, self)})),
       VGetArg(statics, 6-1, 3));
@@ -3536,7 +3536,7 @@ static void _V10_Dloop_D406_k207(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 45 0) (close _V10_Dloop_D406_k208) (bruijn ##.xs.50.408 5 2))
+  // ((bruijn ##.x.804 45 0) (close _V10_Dloop_D406_k208) (bruijn ##.xs.50.408 5 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 45-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D406_k208, self)})),
       VGetArg(statics, 5-1, 2));
@@ -3581,7 +3581,7 @@ static void _V10_Dloop_D406_lambda36(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1008 0 0) (close _V10_Dloop_D406_lambda37))
+  // (##vcore.call/cc (bruijn ##.k.1006 0 0) (close _V10_Dloop_D406_lambda37))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D406_lambda37, self)})));
@@ -3596,7 +3596,7 @@ static void _V10_Dloop_D406_k203(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1006 1 0) (close _V10_Dloop_D406_lambda36) (bruijn ##.loop.406 2 0))
+  // (##vcore.call-with-values (bruijn ##.k.1004 1 0) (close _V10_Dloop_D406_lambda36) (bruijn ##.loop.406 2 0))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D406_lambda36, self)})),
@@ -3630,7 +3630,7 @@ static void _V10_Diter2_D306_lambda34(VRuntime * runtime, VEnv * statics, int ar
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Dloop_D406_lambda35)) ((bruijn ##.loop.406 0 0) (bruijn ##.k.1005 1 0) (##inline ##vcore.car (bruijn ##.expr.48.403 3 0)) '() '()))
+  // (letrec 1 ((close _V10_Dloop_D406_lambda35)) ((bruijn ##.loop.406 0 0) (bruijn ##.k.1003 1 0) (##inline ##vcore.car (bruijn ##.expr.48.403 3 0)) '() '()))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -3655,7 +3655,7 @@ static void _V10_Diter2_D306_lambda33(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1004 0 0) (close _V10_Diter2_D306_lambda34))
+  // (##vcore.call/cc (bruijn ##.k.1002 0 0) (close _V10_Diter2_D306_lambda34))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter2_D306_lambda34, self)})));
@@ -3666,7 +3666,7 @@ static void _V10_Diter2_D306_k211(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1030 0 0) (bruijn ##.k.1026 2 0))
+  // ((bruijn ##.x.1028 0 0) (bruijn ##.k.1024 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -3676,7 +3676,7 @@ static void _V10_Diter2_D306_lambda39(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.iter-letrec.304 14 2) (bruijn ##.k.1031 0 0) (bruijn ##.xs.416 2 2) (##inline ##vcore.car (bruijn ##.expr.57.418 1 0)) (bruijn ##.vals.417 2 3) (bruijn ##.cont.363 13 2))
+  // ((bruijn ##.iter-letrec.304 14 2) (bruijn ##.k.1029 0 0) (bruijn ##.xs.416 2 2) (##inline ##vcore.car (bruijn ##.expr.57.418 1 0)) (bruijn ##.vals.417 2 3) (bruijn ##.cont.363 13 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 2)), 5,
       _var0,
       statics->up->vars[2],
@@ -3695,7 +3695,7 @@ static void _V10_Diter2_D306_k210(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.57.418 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.57.418 0 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k211) (close _V10_Diter2_D306_lambda39) (bruijn ##.kk.25.364 10 1)) ((bruijn ##.k.1026 1 0) #f)) ((bruijn ##.k.1026 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.57.418 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.57.418 0 0))) (##vcore.call-with-values (close _V10_Diter2_D306_k211) (close _V10_Diter2_D306_lambda39) (bruijn ##.kk.25.364 10 1)) ((bruijn ##.k.1024 1 0) #f)) ((bruijn ##.k.1024 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -3729,7 +3729,7 @@ static void _V10_Diter2_D306_lambda38(VRuntime * runtime, VEnv * statics, int ar
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.415 0 1)) ((close _V10_Diter2_D306_k210) (##inline ##vcore.cdr (bruijn ##.expr.48.403 1 0))) ((bruijn ##.k.1026 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.415 0 1)) ((close _V10_Diter2_D306_k210) (##inline ##vcore.cdr (bruijn ##.expr.48.403 1 0))) ((bruijn ##.k.1024 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
@@ -3751,7 +3751,7 @@ static void _V10_Diter2_D306_k199(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.48.403 0 0)) (##vcore.call-with-values (bruijn ##.k.1001 2 0) (close _V10_Diter2_D306_lambda33) (close _V10_Diter2_D306_lambda38)) ((bruijn ##.k.1001 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.48.403 0 0)) (##vcore.call-with-values (bruijn ##.k.999 2 0) (close _V10_Diter2_D306_lambda33) (close _V10_Diter2_D306_lambda38)) ((bruijn ##.k.999 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -3774,7 +3774,7 @@ static void _V10_Diter2_D306_k198(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1002 0 0) ((close _V10_Diter2_D306_k199) (##inline ##vcore.cdr (bruijn ##.expr.362 9 1))) ((bruijn ##.k.1001 1 0) #f))
+  // (if (bruijn ##.p.1000 0 0) ((close _V10_Diter2_D306_k199) (##inline ##vcore.cdr (bruijn ##.expr.362 9 1))) ((bruijn ##.k.999 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter2_D306_k199, .env = self }, }, 1,
@@ -3795,7 +3795,7 @@ static void _V10_Diter2_D306_k197(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 8 1)) ((bruijn ##.x.828 12 0) (close _V10_Diter2_D306_k198) 'letrec (##inline ##vcore.car (bruijn ##.expr.362 8 1))) ((bruijn ##.k.1001 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.362 8 1)) ((bruijn ##.x.826 12 0) (close _V10_Diter2_D306_k198) 'letrec (##inline ##vcore.car (bruijn ##.expr.362 8 1))) ((bruijn ##.k.999 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 8-1, 1)))) {
@@ -3815,7 +3815,7 @@ static void _V10_Diter2_D306_lambda40(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.iter-combination.305 10 3) (bruijn ##.k.999 0 0) (bruijn ##.expr.362 9 1) (bruijn ##.cont.363 9 2))
+  // ((bruijn ##.iter-combination.305 10 3) (bruijn ##.k.997 0 0) (bruijn ##.expr.362 9 1) (bruijn ##.cont.363 9 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 3)), 3,
       _var0,
       VGetArg(statics, 9-1, 1),
@@ -3831,7 +3831,7 @@ static void _V10_Diter2_D306_k212(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.992 6 0) (close _V10_Diter2_D306_lambda40) (bruijn ##.kk.25.364 6 1))
+  // (##vcore.call-with-values (bruijn ##.k.990 6 0) (close _V10_Diter2_D306_lambda40) (bruijn ##.kk.25.364 6 1))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       VGetArg(statics, 6-1, 0),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter2_D306_lambda40, self)})),
@@ -3928,7 +3928,7 @@ static void _V10_Diter2_D306_k213(VRuntime * runtime, VEnv * statics, int argc, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.990 2 0) (##inline ##vcore.cons (bruijn ##.cont.363 2 2) (##inline ##vcore.cons (bruijn ##.x.1151 0 0) '())))
+  // ((bruijn ##.k.988 2 0) (##inline ##vcore.cons (bruijn ##.cont.363 2 2) (##inline ##vcore.cons (bruijn ##.x.1149 0 0) '())))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VInlineCons2(runtime,
         statics->up->vars[2],
@@ -3946,7 +3946,7 @@ static void _V10_Diter2_D306_k130(VRuntime * runtime, VEnv * statics, int argc, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.991 0 0) (##vcore.call/cc (bruijn ##.k.990 1 0) (close _V10_Diter2_D306_lambda27)) ((bruijn ##.iter-atom.302 2 0) (close _V10_Diter2_D306_k213) (bruijn ##.expr.362 1 1)))
+  // (if (bruijn ##.p.989 0 0) (##vcore.call/cc (bruijn ##.k.988 1 0) (close _V10_Diter2_D306_lambda27)) ((bruijn ##.iter-atom.302 2 0) (close _V10_Diter2_D306_k213) (bruijn ##.expr.362 1 1)))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
@@ -3981,7 +3981,7 @@ static void _V10_Dto__cps__impl_D307_k215(VRuntime * runtime, VEnv * statics, in
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1152 2 0) (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.next.421 1 0) '()) (##inline ##vcore.cons (bruijn ##.x.1156 0 0) '()))))
+  // ((bruijn ##.k.1150 2 0) (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.next.421 1 0) '()) (##inline ##vcore.cons (bruijn ##.x.1154 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VInlineCons2(runtime,
         _V0lambda,
@@ -4020,10 +4020,10 @@ static void _V10_Dto__cps__impl_D307_lambda41(VRuntime * runtime, VEnv * statics
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.794 38 0) (close _V10_Dto__cps__impl_D307_k214) (##string ##.string.2062))
+  // ((bruijn ##.x.792 38 0) (close _V10_Dto__cps__impl_D307_k214) (##string ##.string.2063))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dto__cps__impl_D307_k214, self)})),
-      VEncodePointer(&_V10_Dstring_D2062.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2063.sym, VPOINTER_OTHER));
 }
 static void _V10_Dto__cps_D288_k218(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -4031,7 +4031,7 @@ static void _V10_Dto__cps_D288_k218(VRuntime * runtime, VEnv * statics, int argc
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1194 0 0) (bruijn ##.k.1192 2 0))
+  // ((bruijn ##.x.1192 0 0) (bruijn ##.k.1190 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -4041,7 +4041,7 @@ static void _V10_Dto__cps_D288_lambda43(VRuntime * runtime, VEnv * statics, int 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1195 0 0) (bruijn ##.expr.301 5 1))
+  // ((bruijn ##.k.1193 0 0) (bruijn ##.expr.301 5 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 5-1, 1));
 }
@@ -4055,7 +4055,7 @@ static void _V10_Dto__cps_D288_k217(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1193 0 0) (##vcore.call-with-values (close _V10_Dto__cps_D288_k218) (close _V10_Dto__cps_D288_lambda43) (bruijn ##.kk.0.422 2 1)) ((bruijn ##.k.1192 1 0) #f))
+  // (if (bruijn ##.p.1191 0 0) (##vcore.call-with-values (close _V10_Dto__cps_D288_k218) (close _V10_Dto__cps_D288_lambda43) (bruijn ##.kk.0.422 2 1)) ((bruijn ##.k.1190 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
@@ -4077,7 +4077,7 @@ static void _V10_Dto__cps_D288_k216(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.301 3 1)) ((bruijn ##.x.828 5 0) (close _V10_Dto__cps_D288_k217) '##foreign.declare (##inline ##vcore.car (bruijn ##.expr.301 3 1))) ((bruijn ##.k.1192 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.301 3 1)) ((bruijn ##.x.826 5 0) (close _V10_Dto__cps_D288_k217) '##foreign.declare (##inline ##vcore.car (bruijn ##.expr.301 3 1))) ((bruijn ##.k.1190 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->vars[1]))) {
@@ -4097,7 +4097,7 @@ static void _V10_Dto__cps_D288_k224(VRuntime * runtime, VEnv * statics, int argc
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1182 0 0) (bruijn ##.k.1177 4 0))
+  // ((bruijn ##.x.1180 0 0) (bruijn ##.k.1175 4 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->up->vars[0]);
 }
@@ -4107,7 +4107,7 @@ static void _V10_Dto__cps_D288_k227(VRuntime * runtime, VEnv * statics, int argc
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1183 3 0) (##inline ##vcore.cons '##vcore.declare (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.4.426 5 0)) (##inline ##vcore.cons (bruijn ##.x.1186 0 0) '()))))
+  // ((bruijn ##.k.1181 3 0) (##inline ##vcore.cons '##vcore.declare (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.4.426 5 0)) (##inline ##vcore.cons (bruijn ##.x.1184 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VInlineCons2(runtime,
         _V10vcore_Ddeclare,
@@ -4128,7 +4128,7 @@ static void _V10_Dto__cps_D288_k226(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.796 44 0) (close _V10_Dto__cps_D288_k227) (bruijn ##.x.1187 0 0))
+  // ((bruijn ##.x.794 44 0) (close _V10_Dto__cps_D288_k227) (bruijn ##.x.1185 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 44-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dto__cps_D288_k227, self)})),
       _var0);
@@ -4143,7 +4143,7 @@ static void _V10_Dto__cps_D288_k225(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.797 42 0) (close _V10_Dto__cps_D288_k226) (bruijn ##.x.1188 0 0))
+  // ((bruijn ##.x.795 42 0) (close _V10_Dto__cps_D288_k226) (bruijn ##.x.1186 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dto__cps_D288_k226, self)})),
       _var0);
@@ -4174,7 +4174,7 @@ static void _V10_Dto__cps_D288_k223(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.5.428 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.5.428 0 0))) (##vcore.call-with-values (close _V10_Dto__cps_D288_k224) (close _V10_Dto__cps_D288_lambda44) (bruijn ##.kk.0.422 5 1)) ((bruijn ##.k.1177 3 0) #f)) ((bruijn ##.k.1177 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.5.428 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.5.428 0 0))) (##vcore.call-with-values (close _V10_Dto__cps_D288_k224) (close _V10_Dto__cps_D288_lambda44) (bruijn ##.kk.0.422 5 1)) ((bruijn ##.k.1175 3 0) #f)) ((bruijn ##.k.1175 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4205,7 +4205,7 @@ static void _V10_Dto__cps_D288_k222(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.4.426 0 0)) ((close _V10_Dto__cps_D288_k223) (##inline ##vcore.cdr (bruijn ##.expr.4.426 0 0))) ((bruijn ##.k.1177 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.4.426 0 0)) ((close _V10_Dto__cps_D288_k223) (##inline ##vcore.cdr (bruijn ##.expr.4.426 0 0))) ((bruijn ##.k.1175 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4227,7 +4227,7 @@ static void _V10_Dto__cps_D288_k221(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1178 0 0) ((close _V10_Dto__cps_D288_k222) (##inline ##vcore.cdr (bruijn ##.expr.301 5 1))) ((bruijn ##.k.1177 1 0) #f))
+  // (if (bruijn ##.p.1176 0 0) ((close _V10_Dto__cps_D288_k222) (##inline ##vcore.cdr (bruijn ##.expr.301 5 1))) ((bruijn ##.k.1175 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dto__cps_D288_k222, .env = self }, }, 1,
@@ -4248,7 +4248,7 @@ static void _V10_Dto__cps_D288_k220(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.301 4 1)) ((bruijn ##.x.828 6 0) (close _V10_Dto__cps_D288_k221) '##vcore.declare (##inline ##vcore.car (bruijn ##.expr.301 4 1))) ((bruijn ##.k.1177 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.301 4 1)) ((bruijn ##.x.826 6 0) (close _V10_Dto__cps_D288_k221) '##vcore.declare (##inline ##vcore.car (bruijn ##.expr.301 4 1))) ((bruijn ##.k.1175 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->up->vars[1]))) {
@@ -4268,7 +4268,7 @@ static void _V10_Dto__cps_D288_k232(VRuntime * runtime, VEnv * statics, int argc
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1167 0 0) (bruijn ##.k.1163 3 0))
+  // ((bruijn ##.x.1165 0 0) (bruijn ##.k.1161 3 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->vars[0]);
 }
@@ -4278,7 +4278,7 @@ static void _V10_Dto__cps_D288_k233(VRuntime * runtime, VEnv * statics, int argc
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.to-cps-impl.307 8 5) (bruijn ##.k.1168 1 0) (##inline ##vcore.cons '##vcore.multidefine (##inline ##vcore.cons (##inline ##vcore.cons '##vcore.load-library (##inline ##vcore.cons (bruijn ##.x.1173 0 0) '())) '())))
+  // ((bruijn ##.to-cps-impl.307 8 5) (bruijn ##.k.1166 1 0) (##inline ##vcore.cons '##vcore.multidefine (##inline ##vcore.cons (##inline ##vcore.cons '##vcore.load-library (##inline ##vcore.cons (bruijn ##.x.1171 0 0) '())) '())))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 5)), 2,
       statics->vars[0],
       VInlineCons2(runtime,
@@ -4301,7 +4301,7 @@ static void _V10_Dto__cps_D288_lambda45(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.798 40 0) (close _V10_Dto__cps_D288_k233) (##inline ##vcore.car (bruijn ##.expr.7.431 1 0)))
+  // ((bruijn ##.x.796 40 0) (close _V10_Dto__cps_D288_k233) (##inline ##vcore.car (bruijn ##.expr.7.431 1 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dto__cps_D288_k233, self)})),
       VInlineCar2(runtime,
@@ -4317,7 +4317,7 @@ static void _V10_Dto__cps_D288_k231(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.7.431 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.7.431 0 0))) (##vcore.call-with-values (close _V10_Dto__cps_D288_k232) (close _V10_Dto__cps_D288_lambda45) (bruijn ##.kk.0.422 5 1)) ((bruijn ##.k.1163 2 0) #f)) ((bruijn ##.k.1163 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.7.431 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.7.431 0 0))) (##vcore.call-with-values (close _V10_Dto__cps_D288_k232) (close _V10_Dto__cps_D288_lambda45) (bruijn ##.kk.0.422 5 1)) ((bruijn ##.k.1161 2 0) #f)) ((bruijn ##.k.1161 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4348,7 +4348,7 @@ static void _V10_Dto__cps_D288_k230(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1164 0 0) ((close _V10_Dto__cps_D288_k231) (##inline ##vcore.cdr (bruijn ##.expr.301 6 1))) ((bruijn ##.k.1163 1 0) #f))
+  // (if (bruijn ##.p.1162 0 0) ((close _V10_Dto__cps_D288_k231) (##inline ##vcore.cdr (bruijn ##.expr.301 6 1))) ((bruijn ##.k.1161 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dto__cps_D288_k231, .env = self }, }, 1,
@@ -4369,7 +4369,7 @@ static void _V10_Dto__cps_D288_k229(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.301 5 1)) ((bruijn ##.x.828 7 0) (close _V10_Dto__cps_D288_k230) 'import (##inline ##vcore.car (bruijn ##.expr.301 5 1))) ((bruijn ##.k.1163 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.301 5 1)) ((bruijn ##.x.826 7 0) (close _V10_Dto__cps_D288_k230) 'import (##inline ##vcore.car (bruijn ##.expr.301 5 1))) ((bruijn ##.k.1161 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 5-1, 1)))) {
@@ -4389,7 +4389,7 @@ static void _V10_Dto__cps_D288_lambda46(VRuntime * runtime, VEnv * statics, int 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.to-cps-impl.307 5 5) (bruijn ##.k.1161 0 0) (bruijn ##.expr.301 6 1))
+  // ((bruijn ##.to-cps-impl.307 5 5) (bruijn ##.k.1159 0 0) (bruijn ##.expr.301 6 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 5)), 2,
       _var0,
       VGetArg(statics, 6-1, 1));
@@ -4404,7 +4404,7 @@ static void _V10_Dto__cps_D288_k234(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1157 3 0) (close _V10_Dto__cps_D288_lambda46) (bruijn ##.kk.0.422 3 1))
+  // (##vcore.call-with-values (bruijn ##.k.1155 3 0) (close _V10_Dto__cps_D288_lambda46) (bruijn ##.kk.0.422 3 1))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->up->up->vars[0],
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dto__cps_D288_lambda46, self)})),
@@ -4464,7 +4464,7 @@ static void _V10_Dto__cps_D288_lambda4(VRuntime * runtime, VEnv * statics, int a
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 6 ((close _V10_Diter__atom_D302_lambda5) (close _V10_Diter__let_D303_lambda20) (close _V10_Diter__letrec_D304_lambda22) (close _V10_Diter__combination_D305_lambda24) (close _V10_Diter2_D306_lambda26) (close _V10_Dto__cps__impl_D307_lambda41)) (##vcore.call/cc (bruijn ##.k.853 1 0) (close _V10_Dto__cps_D288_lambda42)))
+  // (letrec 6 ((close _V10_Diter__atom_D302_lambda5) (close _V10_Diter__let_D303_lambda20) (close _V10_Diter__letrec_D304_lambda22) (close _V10_Diter__combination_D305_lambda24) (close _V10_Diter2_D306_lambda26) (close _V10_Dto__cps__impl_D307_lambda41)) (##vcore.call/cc (bruijn ##.k.851 1 0) (close _V10_Dto__cps_D288_lambda42)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[6]; } container;
@@ -4487,7 +4487,7 @@ static void _V10_Diter_D437_k240(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1328 0 0) (bruijn ##.k.1323 4 0))
+  // ((bruijn ##.x.1326 0 0) (bruijn ##.k.1321 4 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->up->vars[0]);
 }
@@ -4497,7 +4497,7 @@ static void _V10_Diter_D437_k241(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1329 1 0) (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.61.442 3 0)) (##inline ##vcore.cons (bruijn ##.x.1332 0 0) '()))))
+  // ((bruijn ##.k.1327 1 0) (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.61.442 3 0)) (##inline ##vcore.cons (bruijn ##.x.1330 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VInlineCons2(runtime,
         _V0lambda,
@@ -4534,7 +4534,7 @@ static void _V10_Diter_D437_k239(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.62.444 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.62.444 0 0))) (##vcore.call-with-values (close _V10_Diter_D437_k240) (close _V10_Diter_D437_lambda50) (bruijn ##.kk.58.439 4 1)) ((bruijn ##.k.1323 3 0) #f)) ((bruijn ##.k.1323 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.62.444 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.62.444 0 0))) (##vcore.call-with-values (close _V10_Diter_D437_k240) (close _V10_Diter_D437_lambda50) (bruijn ##.kk.58.439 4 1)) ((bruijn ##.k.1321 3 0) #f)) ((bruijn ##.k.1321 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4565,7 +4565,7 @@ static void _V10_Diter_D437_k238(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.61.442 0 0)) ((close _V10_Diter_D437_k239) (##inline ##vcore.cdr (bruijn ##.expr.61.442 0 0))) ((bruijn ##.k.1323 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.61.442 0 0)) ((close _V10_Diter_D437_k239) (##inline ##vcore.cdr (bruijn ##.expr.61.442 0 0))) ((bruijn ##.k.1321 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4587,7 +4587,7 @@ static void _V10_Diter_D437_k237(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1324 0 0) ((close _V10_Diter_D437_k238) (##inline ##vcore.cdr (bruijn ##.expr.438 4 1))) ((bruijn ##.k.1323 1 0) #f))
+  // (if (bruijn ##.p.1322 0 0) ((close _V10_Diter_D437_k238) (##inline ##vcore.cdr (bruijn ##.expr.438 4 1))) ((bruijn ##.k.1321 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter_D437_k238, .env = self }, }, 1,
@@ -4608,7 +4608,7 @@ static void _V10_Diter_D437_k236(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 3 1)) ((bruijn ##.x.828 7 0) (close _V10_Diter_D437_k237) 'lambda (##inline ##vcore.car (bruijn ##.expr.438 3 1))) ((bruijn ##.k.1323 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 3 1)) ((bruijn ##.x.826 7 0) (close _V10_Diter_D437_k237) 'lambda (##inline ##vcore.car (bruijn ##.expr.438 3 1))) ((bruijn ##.k.1321 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->vars[1]))) {
@@ -4628,7 +4628,7 @@ static void _V10_Diter_D437_k247(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1315 0 0) (bruijn ##.k.1310 4 0))
+  // ((bruijn ##.x.1313 0 0) (bruijn ##.k.1308 4 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->up->vars[0]);
 }
@@ -4638,7 +4638,7 @@ static void _V10_Diter_D437_k248(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1316 1 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.64.447 3 0)) (##inline ##vcore.cons (bruijn ##.x.1319 0 0) '()))))
+  // ((bruijn ##.k.1314 1 0) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.64.447 3 0)) (##inline ##vcore.cons (bruijn ##.x.1317 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VInlineCons2(runtime,
         _V0continuation,
@@ -4675,7 +4675,7 @@ static void _V10_Diter_D437_k246(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.65.449 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.65.449 0 0))) (##vcore.call-with-values (close _V10_Diter_D437_k247) (close _V10_Diter_D437_lambda51) (bruijn ##.kk.58.439 5 1)) ((bruijn ##.k.1310 3 0) #f)) ((bruijn ##.k.1310 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.65.449 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.65.449 0 0))) (##vcore.call-with-values (close _V10_Diter_D437_k247) (close _V10_Diter_D437_lambda51) (bruijn ##.kk.58.439 5 1)) ((bruijn ##.k.1308 3 0) #f)) ((bruijn ##.k.1308 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4706,7 +4706,7 @@ static void _V10_Diter_D437_k245(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.64.447 0 0)) ((close _V10_Diter_D437_k246) (##inline ##vcore.cdr (bruijn ##.expr.64.447 0 0))) ((bruijn ##.k.1310 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.64.447 0 0)) ((close _V10_Diter_D437_k246) (##inline ##vcore.cdr (bruijn ##.expr.64.447 0 0))) ((bruijn ##.k.1308 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4728,7 +4728,7 @@ static void _V10_Diter_D437_k244(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1311 0 0) ((close _V10_Diter_D437_k245) (##inline ##vcore.cdr (bruijn ##.expr.438 5 1))) ((bruijn ##.k.1310 1 0) #f))
+  // (if (bruijn ##.p.1309 0 0) ((close _V10_Diter_D437_k245) (##inline ##vcore.cdr (bruijn ##.expr.438 5 1))) ((bruijn ##.k.1308 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter_D437_k245, .env = self }, }, 1,
@@ -4749,7 +4749,7 @@ static void _V10_Diter_D437_k243(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 4 1)) ((bruijn ##.x.828 8 0) (close _V10_Diter_D437_k244) 'continuation (##inline ##vcore.car (bruijn ##.expr.438 4 1))) ((bruijn ##.k.1310 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 4 1)) ((bruijn ##.x.826 8 0) (close _V10_Diter_D437_k244) 'continuation (##inline ##vcore.car (bruijn ##.expr.438 4 1))) ((bruijn ##.k.1308 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->up->vars[1]))) {
@@ -4769,7 +4769,7 @@ static void _V10_Dloop_D454_k254(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.70.453 5 1) (bruijn ##.k.1296 2 0) (bruijn ##.expr.72.455 3 1) (bruijn ##.x.1297 1 0) (bruijn ##.x.1298 0 0))
+  // ((bruijn ##.kk.70.453 5 1) (bruijn ##.k.1294 2 0) (bruijn ##.expr.72.455 3 1) (bruijn ##.x.1295 1 0) (bruijn ##.x.1296 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 1)), 4,
       statics->up->vars[0],
       statics->up->up->vars[1],
@@ -4786,7 +4786,7 @@ static void _V10_Dloop_D454_k253(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 38 0) (close _V10_Dloop_D454_k254) (bruijn ##.body.69.457 2 3))
+  // ((bruijn ##.x.804 38 0) (close _V10_Dloop_D454_k254) (bruijn ##.body.69.457 2 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D454_k254, self)})),
       statics->up->vars[3]);
@@ -4801,7 +4801,7 @@ static void _V10_Dloop_D454_k252(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.72.455 1 1))) ((bruijn ##.x.806 37 0) (close _V10_Dloop_D454_k253) (bruijn ##.args.68.456 1 2)) ((bruijn ##.k.1296 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.72.455 1 1))) ((bruijn ##.x.804 37 0) (close _V10_Dloop_D454_k253) (bruijn ##.args.68.456 1 2)) ((bruijn ##.k.1294 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlinePairP2(runtime,
@@ -4820,7 +4820,7 @@ static void _V10_Dloop_D454_k258(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.74.461 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.74.461 0 0))) ((bruijn ##.kk.71.458 3 1) (bruijn ##.k.1288 1 0) (##inline ##vcore.cdr (bruijn ##.expr.72.455 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.73.459 2 0)) (bruijn ##.args.68.456 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.74.461 0 0)) (bruijn ##.body.69.457 6 3))) ((bruijn ##.k.1288 1 0) #f)) ((bruijn ##.k.1288 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.74.461 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.74.461 0 0))) ((bruijn ##.kk.71.458 3 1) (bruijn ##.k.1286 1 0) (##inline ##vcore.cdr (bruijn ##.expr.72.455 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.73.459 2 0)) (bruijn ##.args.68.456 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.74.461 0 0)) (bruijn ##.body.69.457 6 3))) ((bruijn ##.k.1286 1 0) #f)) ((bruijn ##.k.1286 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4859,7 +4859,7 @@ static void _V10_Dloop_D454_k257(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.73.459 1 0)) ((close _V10_Dloop_D454_k258) (##inline ##vcore.cdr (bruijn ##.expr.73.459 1 0))) ((bruijn ##.k.1288 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.73.459 1 0)) ((close _V10_Dloop_D454_k258) (##inline ##vcore.cdr (bruijn ##.expr.73.459 1 0))) ((bruijn ##.k.1286 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->vars[0]))) {
@@ -4877,7 +4877,7 @@ static void _V10_Dloop_D454_k261(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.70.453 9 1) (bruijn ##.k.1283 4 0) (bruijn ##.expr.72.455 7 1) (bruijn ##.x.1285 1 0) (bruijn ##.x.1286 0 0))
+  // ((bruijn ##.kk.70.453 9 1) (bruijn ##.k.1281 4 0) (bruijn ##.expr.72.455 7 1) (bruijn ##.x.1283 1 0) (bruijn ##.x.1284 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 1)), 4,
       statics->up->up->up->vars[0],
       VGetArg(statics, 7-1, 1),
@@ -4894,7 +4894,7 @@ static void _V10_Dloop_D454_k260(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 42 0) (close _V10_Dloop_D454_k261) (bruijn ##.body.69.457 6 3))
+  // ((bruijn ##.x.804 42 0) (close _V10_Dloop_D454_k261) (bruijn ##.body.69.457 6 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D454_k261, self)})),
       VGetArg(statics, 6-1, 3));
@@ -4909,7 +4909,7 @@ static void _V10_Dloop_D454_k259(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 41 0) (close _V10_Dloop_D454_k260) (bruijn ##.args.68.456 5 2))
+  // ((bruijn ##.x.804 41 0) (close _V10_Dloop_D454_k260) (bruijn ##.args.68.456 5 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D454_k260, self)})),
       VGetArg(statics, 5-1, 2));
@@ -4954,7 +4954,7 @@ static void _V10_Dloop_D454_lambda55(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1282 0 0) (close _V10_Dloop_D454_lambda56))
+  // (##vcore.call/cc (bruijn ##.k.1280 0 0) (close _V10_Dloop_D454_lambda56))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D454_lambda56, self)})));
@@ -4969,7 +4969,7 @@ static void _V10_Dloop_D454_k255(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1280 1 0) (close _V10_Dloop_D454_lambda55) (bruijn ##.loop.454 2 0))
+  // (##vcore.call-with-values (bruijn ##.k.1278 1 0) (close _V10_Dloop_D454_lambda55) (bruijn ##.loop.454 2 0))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D454_lambda55, self)})),
@@ -5003,7 +5003,7 @@ static void _V10_Diter_D437_lambda53(VRuntime * runtime, VEnv * statics, int arg
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Dloop_D454_lambda54)) ((bruijn ##.loop.454 0 0) (bruijn ##.k.1279 1 0) (##inline ##vcore.cdr (bruijn ##.expr.438 9 1)) '() '()))
+  // (letrec 1 ((close _V10_Dloop_D454_lambda54)) ((bruijn ##.loop.454 0 0) (bruijn ##.k.1277 1 0) (##inline ##vcore.cdr (bruijn ##.expr.438 9 1)) '() '()))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -5028,7 +5028,7 @@ static void _V10_Diter_D437_lambda52(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1278 0 0) (close _V10_Diter_D437_lambda53))
+  // (##vcore.call/cc (bruijn ##.k.1276 0 0) (close _V10_Diter_D437_lambda53))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter_D437_lambda53, self)})));
@@ -5039,7 +5039,7 @@ static void _V10_Diter_D437_k262(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1302 0 0) (bruijn ##.k.1300 1 0))
+  // ((bruijn ##.x.1300 0 0) (bruijn ##.k.1298 1 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->vars[0]);
 }
@@ -5049,7 +5049,7 @@ static void _V10_Diter_D437_k263(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.809 32 0) (bruijn ##.k.1303 1 0) 'case-lambda (bruijn ##.x.1304 0 0))
+  // ((bruijn ##.x.807 32 0) (bruijn ##.k.1301 1 0) 'case-lambda (bruijn ##.x.1302 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 3,
       statics->vars[0],
       _V0case__lambda,
@@ -5061,7 +5061,7 @@ static void _V10_Diter_D437_k264(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1305 1 0) (##inline ##vcore.cons (bruijn ##.args.466 1 1) (##inline ##vcore.cons (bruijn ##.x.1307 0 0) '())))
+  // ((bruijn ##.k.1303 1 0) (##inline ##vcore.cons (bruijn ##.args.466 1 1) (##inline ##vcore.cons (bruijn ##.x.1305 0 0) '())))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VInlineCons2(runtime,
         statics->vars[1],
@@ -5096,7 +5096,7 @@ static void _V10_Diter_D437_lambda58(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.807 33 0) (close _V10_Diter_D437_k263) (close _V10_Diter_D437_lambda59) (bruijn ##.args.464 1 2) (bruijn ##.body.465 1 3))
+  // ((bruijn ##.x.805 33 0) (close _V10_Diter_D437_k263) (close _V10_Diter_D437_lambda59) (bruijn ##.args.464 1 2) (bruijn ##.body.465 1 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 4,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter_D437_k263, self)})),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter_D437_lambda59, self)})),
@@ -5116,7 +5116,7 @@ static void _V10_Diter_D437_lambda57(VRuntime * runtime, VEnv * statics, int arg
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.463 0 1)) (##vcore.call-with-values (close _V10_Diter_D437_k262) (close _V10_Diter_D437_lambda58) (bruijn ##.kk.58.439 5 1)) ((bruijn ##.k.1300 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.463 0 1)) (##vcore.call-with-values (close _V10_Diter_D437_k262) (close _V10_Diter_D437_lambda58) (bruijn ##.kk.58.439 5 1)) ((bruijn ##.k.1298 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
@@ -5139,7 +5139,7 @@ static void _V10_Diter_D437_k251(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1277 0 0) (##vcore.call-with-values (bruijn ##.k.1276 1 0) (close _V10_Diter_D437_lambda52) (close _V10_Diter_D437_lambda57)) ((bruijn ##.k.1276 1 0) #f))
+  // (if (bruijn ##.p.1275 0 0) (##vcore.call-with-values (bruijn ##.k.1274 1 0) (close _V10_Diter_D437_lambda52) (close _V10_Diter_D437_lambda57)) ((bruijn ##.k.1274 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
@@ -5161,7 +5161,7 @@ static void _V10_Diter_D437_k250(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 5 1)) ((bruijn ##.x.828 9 0) (close _V10_Diter_D437_k251) 'case-lambda (##inline ##vcore.car (bruijn ##.expr.438 5 1))) ((bruijn ##.k.1276 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 5 1)) ((bruijn ##.x.826 9 0) (close _V10_Diter_D437_k251) 'case-lambda (##inline ##vcore.car (bruijn ##.expr.438 5 1))) ((bruijn ##.k.1274 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 5-1, 1)))) {
@@ -5181,7 +5181,7 @@ static void _V10_Diter_D437_k268(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1272 0 0) (bruijn ##.k.1270 2 0))
+  // ((bruijn ##.x.1270 0 0) (bruijn ##.k.1268 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -5191,7 +5191,7 @@ static void _V10_Diter_D437_lambda60(VRuntime * runtime, VEnv * statics, int arg
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1273 0 0) (bruijn ##.expr.438 8 1))
+  // ((bruijn ##.k.1271 0 0) (bruijn ##.expr.438 8 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 8-1, 1));
 }
@@ -5205,7 +5205,7 @@ static void _V10_Diter_D437_k267(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1271 0 0) (##vcore.call-with-values (close _V10_Diter_D437_k268) (close _V10_Diter_D437_lambda60) (bruijn ##.kk.58.439 5 1)) ((bruijn ##.k.1270 1 0) #f))
+  // (if (bruijn ##.p.1269 0 0) (##vcore.call-with-values (close _V10_Diter_D437_k268) (close _V10_Diter_D437_lambda60) (bruijn ##.kk.58.439 5 1)) ((bruijn ##.k.1268 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
@@ -5227,7 +5227,7 @@ static void _V10_Diter_D437_k266(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 6 1)) ((bruijn ##.x.828 10 0) (close _V10_Diter_D437_k267) '##foreign.function (##inline ##vcore.car (bruijn ##.expr.438 6 1))) ((bruijn ##.k.1270 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 6 1)) ((bruijn ##.x.826 10 0) (close _V10_Diter_D437_k267) '##foreign.function (##inline ##vcore.car (bruijn ##.expr.438 6 1))) ((bruijn ##.k.1268 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 6-1, 1)))) {
@@ -5247,7 +5247,7 @@ static void _V10_Diter_D437_k273(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1265 0 0) (bruijn ##.k.1261 3 0))
+  // ((bruijn ##.x.1263 0 0) (bruijn ##.k.1259 3 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->vars[0]);
 }
@@ -5257,7 +5257,7 @@ static void _V10_Diter_D437_lambda61(VRuntime * runtime, VEnv * statics, int arg
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1266 0 0) (bruijn ##.expr.438 10 1))
+  // ((bruijn ##.k.1264 0 0) (bruijn ##.expr.438 10 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 10-1, 1));
 }
@@ -5271,7 +5271,7 @@ static void _V10_Diter_D437_k272(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.77.470 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.77.470 0 0))) (##vcore.call-with-values (close _V10_Diter_D437_k273) (close _V10_Diter_D437_lambda61) (bruijn ##.kk.58.439 7 1)) ((bruijn ##.k.1261 2 0) #f)) ((bruijn ##.k.1261 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.77.470 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.77.470 0 0))) (##vcore.call-with-values (close _V10_Diter_D437_k273) (close _V10_Diter_D437_lambda61) (bruijn ##.kk.58.439 7 1)) ((bruijn ##.k.1259 2 0) #f)) ((bruijn ##.k.1259 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -5302,7 +5302,7 @@ static void _V10_Diter_D437_k271(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1262 0 0) ((close _V10_Diter_D437_k272) (##inline ##vcore.cdr (bruijn ##.expr.438 8 1))) ((bruijn ##.k.1261 1 0) #f))
+  // (if (bruijn ##.p.1260 0 0) ((close _V10_Diter_D437_k272) (##inline ##vcore.cdr (bruijn ##.expr.438 8 1))) ((bruijn ##.k.1259 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter_D437_k272, .env = self }, }, 1,
@@ -5323,7 +5323,7 @@ static void _V10_Diter_D437_k270(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 7 1)) ((bruijn ##.x.828 11 0) (close _V10_Diter_D437_k271) 'quote (##inline ##vcore.car (bruijn ##.expr.438 7 1))) ((bruijn ##.k.1261 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 7 1)) ((bruijn ##.x.826 11 0) (close _V10_Diter_D437_k271) 'quote (##inline ##vcore.car (bruijn ##.expr.438 7 1))) ((bruijn ##.k.1259 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 7-1, 1)))) {
@@ -5343,7 +5343,7 @@ static void _V10_Dloop_D476_k280(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.83.475 5 1) (bruijn ##.k.1242 2 0) (bruijn ##.expr.85.477 3 1) (bruijn ##.x.1243 1 0) (bruijn ##.x.1244 0 0))
+  // ((bruijn ##.kk.83.475 5 1) (bruijn ##.k.1240 2 0) (bruijn ##.expr.85.477 3 1) (bruijn ##.x.1241 1 0) (bruijn ##.x.1242 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 1)), 4,
       statics->up->vars[0],
       statics->up->up->vars[1],
@@ -5360,7 +5360,7 @@ static void _V10_Dloop_D476_k279(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 42 0) (close _V10_Dloop_D476_k280) (bruijn ##.vals.82.479 2 3))
+  // ((bruijn ##.x.804 42 0) (close _V10_Dloop_D476_k280) (bruijn ##.vals.82.479 2 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D476_k280, self)})),
       statics->up->vars[3]);
@@ -5375,7 +5375,7 @@ static void _V10_Dloop_D476_k278(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.85.477 1 1))) ((bruijn ##.x.806 41 0) (close _V10_Dloop_D476_k279) (bruijn ##.args.81.478 1 2)) ((bruijn ##.k.1242 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.85.477 1 1))) ((bruijn ##.x.804 41 0) (close _V10_Dloop_D476_k279) (bruijn ##.args.81.478 1 2)) ((bruijn ##.k.1240 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlinePairP2(runtime,
@@ -5394,7 +5394,7 @@ static void _V10_Dloop_D476_k284(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.87.483 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.87.483 0 0))) ((bruijn ##.kk.84.480 3 1) (bruijn ##.k.1234 1 0) (##inline ##vcore.cdr (bruijn ##.expr.85.477 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.86.481 2 0)) (bruijn ##.args.81.478 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.87.483 0 0)) (bruijn ##.vals.82.479 6 3))) ((bruijn ##.k.1234 1 0) #f)) ((bruijn ##.k.1234 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.87.483 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.87.483 0 0))) ((bruijn ##.kk.84.480 3 1) (bruijn ##.k.1232 1 0) (##inline ##vcore.cdr (bruijn ##.expr.85.477 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.86.481 2 0)) (bruijn ##.args.81.478 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.87.483 0 0)) (bruijn ##.vals.82.479 6 3))) ((bruijn ##.k.1232 1 0) #f)) ((bruijn ##.k.1232 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -5433,7 +5433,7 @@ static void _V10_Dloop_D476_k283(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.86.481 1 0)) ((close _V10_Dloop_D476_k284) (##inline ##vcore.cdr (bruijn ##.expr.86.481 1 0))) ((bruijn ##.k.1234 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.86.481 1 0)) ((close _V10_Dloop_D476_k284) (##inline ##vcore.cdr (bruijn ##.expr.86.481 1 0))) ((bruijn ##.k.1232 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->vars[0]))) {
@@ -5451,7 +5451,7 @@ static void _V10_Dloop_D476_k287(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.83.475 9 1) (bruijn ##.k.1229 4 0) (bruijn ##.expr.85.477 7 1) (bruijn ##.x.1231 1 0) (bruijn ##.x.1232 0 0))
+  // ((bruijn ##.kk.83.475 9 1) (bruijn ##.k.1227 4 0) (bruijn ##.expr.85.477 7 1) (bruijn ##.x.1229 1 0) (bruijn ##.x.1230 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 1)), 4,
       statics->up->up->up->vars[0],
       VGetArg(statics, 7-1, 1),
@@ -5468,7 +5468,7 @@ static void _V10_Dloop_D476_k286(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 46 0) (close _V10_Dloop_D476_k287) (bruijn ##.vals.82.479 6 3))
+  // ((bruijn ##.x.804 46 0) (close _V10_Dloop_D476_k287) (bruijn ##.vals.82.479 6 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 46-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D476_k287, self)})),
       VGetArg(statics, 6-1, 3));
@@ -5483,7 +5483,7 @@ static void _V10_Dloop_D476_k285(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 45 0) (close _V10_Dloop_D476_k286) (bruijn ##.args.81.478 5 2))
+  // ((bruijn ##.x.804 45 0) (close _V10_Dloop_D476_k286) (bruijn ##.args.81.478 5 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 45-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D476_k286, self)})),
       VGetArg(statics, 5-1, 2));
@@ -5528,7 +5528,7 @@ static void _V10_Dloop_D476_lambda65(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1228 0 0) (close _V10_Dloop_D476_lambda66))
+  // (##vcore.call/cc (bruijn ##.k.1226 0 0) (close _V10_Dloop_D476_lambda66))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D476_lambda66, self)})));
@@ -5543,7 +5543,7 @@ static void _V10_Dloop_D476_k281(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1226 1 0) (close _V10_Dloop_D476_lambda65) (bruijn ##.loop.476 2 0))
+  // (##vcore.call-with-values (bruijn ##.k.1224 1 0) (close _V10_Dloop_D476_lambda65) (bruijn ##.loop.476 2 0))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D476_lambda65, self)})),
@@ -5577,7 +5577,7 @@ static void _V10_Diter_D437_lambda63(VRuntime * runtime, VEnv * statics, int arg
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Dloop_D476_lambda64)) ((bruijn ##.loop.476 0 0) (bruijn ##.k.1225 1 0) (##inline ##vcore.car (bruijn ##.expr.79.473 3 0)) '() '()))
+  // (letrec 1 ((close _V10_Dloop_D476_lambda64)) ((bruijn ##.loop.476 0 0) (bruijn ##.k.1223 1 0) (##inline ##vcore.car (bruijn ##.expr.79.473 3 0)) '() '()))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -5602,7 +5602,7 @@ static void _V10_Diter_D437_lambda62(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1224 0 0) (close _V10_Diter_D437_lambda63))
+  // (##vcore.call/cc (bruijn ##.k.1222 0 0) (close _V10_Diter_D437_lambda63))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter_D437_lambda63, self)})));
@@ -5613,7 +5613,7 @@ static void _V10_Diter_D437_k289(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1250 0 0) (bruijn ##.k.1246 2 0))
+  // ((bruijn ##.x.1248 0 0) (bruijn ##.k.1244 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -5623,7 +5623,7 @@ static void _V10_Diter_D437_k292(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1251 3 0) (##inline ##vcore.cons 'letrec (##inline ##vcore.cons (bruijn ##.x.1253 1 0) (##inline ##vcore.cons (bruijn ##.x.1255 0 0) '()))))
+  // ((bruijn ##.k.1249 3 0) (##inline ##vcore.cons 'letrec (##inline ##vcore.cons (bruijn ##.x.1251 1 0) (##inline ##vcore.cons (bruijn ##.x.1253 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VInlineCons2(runtime,
         _V0letrec,
@@ -5659,7 +5659,7 @@ static void _V10_Diter_D437_k290(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.807 39 0) (close _V10_Diter_D437_k291) (bruijn ##.x.813 33 0) (bruijn ##.args.486 3 2) (bruijn ##.x.1256 0 0))
+  // ((bruijn ##.x.805 39 0) (close _V10_Diter_D437_k291) (bruijn ##.x.811 33 0) (bruijn ##.args.486 3 2) (bruijn ##.x.1254 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 4,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter_D437_k291, self)})),
       VGetArg(statics, 33-1, 0),
@@ -5672,7 +5672,7 @@ static void _V10_Diter_D437_lambda69(VRuntime * runtime, VEnv * statics, int arg
   "-- expected 2~N"
   , argc);
  }
-  // ((bruijn ##.iter.437 15 0) (bruijn ##.k.1257 0 0) (bruijn ##.val.490 0 1))
+  // ((bruijn ##.iter.437 15 0) (bruijn ##.k.1255 0 0) (bruijn ##.val.490 0 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 0)), 2,
       _var0,
       _var1);
@@ -5687,7 +5687,7 @@ static void _V10_Diter_D437_lambda68(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.807 38 0) (close _V10_Diter_D437_k290) (close _V10_Diter_D437_lambda69) (bruijn ##.vals.487 2 3))
+  // ((bruijn ##.x.805 38 0) (close _V10_Diter_D437_k290) (close _V10_Diter_D437_lambda69) (bruijn ##.vals.487 2 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter_D437_k290, self)})),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter_D437_lambda69, self)})),
@@ -5703,7 +5703,7 @@ static void _V10_Diter_D437_k288(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.88.488 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.88.488 0 0))) (##vcore.call-with-values (close _V10_Diter_D437_k289) (close _V10_Diter_D437_lambda68) (bruijn ##.kk.58.439 10 1)) ((bruijn ##.k.1246 1 0) #f)) ((bruijn ##.k.1246 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.88.488 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.88.488 0 0))) (##vcore.call-with-values (close _V10_Diter_D437_k289) (close _V10_Diter_D437_lambda68) (bruijn ##.kk.58.439 10 1)) ((bruijn ##.k.1244 1 0) #f)) ((bruijn ##.k.1244 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -5737,7 +5737,7 @@ static void _V10_Diter_D437_lambda67(VRuntime * runtime, VEnv * statics, int arg
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.485 0 1)) ((close _V10_Diter_D437_k288) (##inline ##vcore.cdr (bruijn ##.expr.79.473 1 0))) ((bruijn ##.k.1246 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.485 0 1)) ((close _V10_Diter_D437_k288) (##inline ##vcore.cdr (bruijn ##.expr.79.473 1 0))) ((bruijn ##.k.1244 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
@@ -5759,7 +5759,7 @@ static void _V10_Diter_D437_k277(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.79.473 0 0)) (##vcore.call-with-values (bruijn ##.k.1221 2 0) (close _V10_Diter_D437_lambda62) (close _V10_Diter_D437_lambda67)) ((bruijn ##.k.1221 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.79.473 0 0)) (##vcore.call-with-values (bruijn ##.k.1219 2 0) (close _V10_Diter_D437_lambda62) (close _V10_Diter_D437_lambda67)) ((bruijn ##.k.1219 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -5782,7 +5782,7 @@ static void _V10_Diter_D437_k276(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1222 0 0) ((close _V10_Diter_D437_k277) (##inline ##vcore.cdr (bruijn ##.expr.438 9 1))) ((bruijn ##.k.1221 1 0) #f))
+  // (if (bruijn ##.p.1220 0 0) ((close _V10_Diter_D437_k277) (##inline ##vcore.cdr (bruijn ##.expr.438 9 1))) ((bruijn ##.k.1219 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Diter_D437_k277, .env = self }, }, 1,
@@ -5803,7 +5803,7 @@ static void _V10_Diter_D437_k275(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 8 1)) ((bruijn ##.x.828 12 0) (close _V10_Diter_D437_k276) 'letrec (##inline ##vcore.car (bruijn ##.expr.438 8 1))) ((bruijn ##.k.1221 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 8 1)) ((bruijn ##.x.826 12 0) (close _V10_Diter_D437_k276) 'letrec (##inline ##vcore.car (bruijn ##.expr.438 8 1))) ((bruijn ##.k.1219 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 8-1, 1)))) {
@@ -5823,7 +5823,7 @@ static void _V10_Diter_D437_k295(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1216 0 0) (bruijn ##.k.1215 1 0))
+  // ((bruijn ##.x.1214 0 0) (bruijn ##.k.1213 1 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->vars[0]);
 }
@@ -5833,7 +5833,7 @@ static void _V10_Diter_D437_k297(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.809 35 0) (bruijn ##.k.1217 2 0) (bruijn ##.x.1218 1 0) (bruijn ##.x.1219 0 0))
+  // ((bruijn ##.x.807 35 0) (bruijn ##.k.1215 2 0) (bruijn ##.x.1216 1 0) (bruijn ##.x.1217 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 3,
       statics->up->vars[0],
       statics->vars[0],
@@ -5881,7 +5881,7 @@ static void _V10_Diter_D437_k294(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 9 1)) (##vcore.call-with-values (close _V10_Diter_D437_k295) (close _V10_Diter_D437_lambda70) (bruijn ##.kk.58.439 7 1)) ((bruijn ##.k.1215 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.438 9 1)) (##vcore.call-with-values (close _V10_Diter_D437_k295) (close _V10_Diter_D437_lambda70) (bruijn ##.kk.58.439 7 1)) ((bruijn ##.k.1213 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 9-1, 1)))) {
@@ -5900,10 +5900,10 @@ static void _V10_Diter_D437_k300(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.812 31 0) (bruijn ##.k.1200 9 0) (##string ##.string.2063))
+  // ((bruijn ##.x.810 31 0) (bruijn ##.k.1198 9 0) (##string ##.string.2064))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 2,
       VGetArg(statics, 9-1, 0),
-      VEncodePointer(&_V10_Dstring_D2063.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2064.sym, VPOINTER_OTHER));
 }
 static void _V10_Diter_D437_k299(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -5915,7 +5915,7 @@ static void _V10_Diter_D437_k299(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.1209 0 0) (close _V10_Diter_D437_k300))
+  // ((bruijn ##.x.1207 0 0) (close _V10_Diter_D437_k300))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter_D437_k300, self)})));
 }
@@ -5925,7 +5925,7 @@ static void _V10_Diter_D437_k303(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1210 3 0) (bruijn ##.atom.434 15 2))
+  // ((bruijn ##.k.1208 3 0) (bruijn ##.atom.434 15 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VGetArg(statics, 15-1, 2));
 }
@@ -5939,7 +5939,7 @@ static void _V10_Diter_D437_k302(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (set! (close _V10_Diter_D437_k303) (bruijn ##.n.436 14 4) (bruijn ##.x.1213 0 0))
+  // (set! (close _V10_Diter_D437_k303) (bruijn ##.n.436 14 4) (bruijn ##.x.1211 0 0))
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter_D437_k303, self)})),
       VEncodeInt(14l), VEncodeInt(4l),
@@ -5956,7 +5956,7 @@ static void _V10_Diter_D437_k301(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1211 0 0) ((bruijn ##.x.824 19 0) (close _V10_Diter_D437_k302) (bruijn ##.n.436 13 4) 1) ((bruijn ##.k.1210 1 0) (bruijn ##.expr.438 11 1)))
+  // (if (bruijn ##.p.1209 0 0) ((bruijn ##.x.822 19 0) (close _V10_Diter_D437_k302) (bruijn ##.n.436 13 4) 1) ((bruijn ##.k.1208 1 0) (bruijn ##.expr.438 11 1)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 3,
@@ -5978,7 +5978,7 @@ static void _V10_Diter_D437_lambda71(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.819 23 0) (close _V10_Diter_D437_k301) (bruijn ##.x.433 12 1) (bruijn ##.expr.438 10 1))
+  // ((bruijn ##.x.817 23 0) (close _V10_Diter_D437_k301) (bruijn ##.x.433 12 1) (bruijn ##.expr.438 10 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter_D437_k301, self)})),
       VGetArg(statics, 12-1, 1),
@@ -6109,7 +6109,7 @@ static void _V10_Diter_D437_k235(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1199 0 0) ((bruijn ##.k.1198 1 0) (bruijn ##.expr.438 1 1)) (##vcore.call/cc (bruijn ##.k.1198 1 0) (close _V10_Diter_D437_lambda49)))
+  // (if (bruijn ##.p.1197 0 0) ((bruijn ##.k.1196 1 0) (bruijn ##.expr.438 1 1)) (##vcore.call/cc (bruijn ##.k.1196 1 0) (close _V10_Diter_D437_lambda49)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
@@ -6131,7 +6131,7 @@ static void _V10_Diter_D437_lambda48(VRuntime * runtime, VEnv * statics, int arg
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.817 15 0) (close _V10_Diter_D437_k235) (bruijn ##.n.436 2 4) 0)
+  // ((bruijn ##.x.815 15 0) (close _V10_Diter_D437_k235) (bruijn ##.n.436 2 4) 0)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Diter_D437_k235, self)})),
       statics->up->vars[4],
@@ -6151,7 +6151,7 @@ static void _V10_Dsubstitute_D289_lambda47(VRuntime * runtime, VEnv * statics, i
   self->vars[2] = _var2;
   self->vars[3] = _var3;
   self->vars[4] = _var4;
-  // (letrec 1 ((close _V10_Diter_D437_lambda48)) ((bruijn ##.iter.437 0 0) (bruijn ##.k.1197 1 0) (bruijn ##.expr.435 1 3)))
+  // (letrec 1 ((close _V10_Diter_D437_lambda48)) ((bruijn ##.iter.437 0 0) (bruijn ##.k.1195 1 0) (bruijn ##.expr.435 1 3)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -6169,7 +6169,7 @@ static void _V10_Dspecial__apply_Q_D290_lambda72(VRuntime * runtime, VEnv * stat
   "-- expected 2~N"
   , argc);
  }
-  // ((bruijn ##.x.822 8 0) (bruijn ##.k.1335 0 0) (bruijn ##.tok.495 0 1) (##inline ##vcore.qcons 'if (##inline ##vcore.qcons 'letrec '())))
+  // ((bruijn ##.x.820 8 0) (bruijn ##.k.1333 0 0) (bruijn ##.tok.495 0 1) (##inline ##vcore.qcons 'if (##inline ##vcore.qcons 'letrec '())))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
       _var0,
       _var1,
@@ -6185,7 +6185,7 @@ static void _V10_Dloop_D497_k306(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.loop.497 4 0) (bruijn ##.k.1339 3 0) (bruijn ##.x.1341 1 0) (bruijn ##.x.1342 0 0))
+  // ((bruijn ##.loop.497 4 0) (bruijn ##.k.1337 3 0) (bruijn ##.x.1339 1 0) (bruijn ##.x.1340 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 3,
       statics->up->up->vars[0],
       statics->vars[0],
@@ -6201,7 +6201,7 @@ static void _V10_Dloop_D497_k305(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.803 31 0) (close _V10_Dloop_D497_k306) (bruijn ##.len.499 2 2) 1)
+  // ((bruijn ##.x.801 31 0) (close _V10_Dloop_D497_k306) (bruijn ##.len.499 2 2) 1)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D497_k306, self)})),
       statics->up->vars[2],
@@ -6217,7 +6217,7 @@ static void _V10_Dloop_D497_k304(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1340 0 0) ((bruijn ##.x.826 7 0) (close _V10_Dloop_D497_k305) (bruijn ##.lst.498 1 1)) ((bruijn ##.k.1339 1 0) (bruijn ##.len.499 1 2)))
+  // (if (bruijn ##.p.1338 0 0) ((bruijn ##.x.824 7 0) (close _V10_Dloop_D497_k305) (bruijn ##.lst.498 1 1)) ((bruijn ##.k.1337 1 0) (bruijn ##.len.499 1 2)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
@@ -6240,7 +6240,7 @@ static void _V10_Dloop_D497_lambda74(VRuntime * runtime, VEnv * statics, int arg
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((bruijn ##.x.821 11 0) (close _V10_Dloop_D497_k304) (bruijn ##.lst.498 0 1))
+  // ((bruijn ##.x.819 11 0) (close _V10_Dloop_D497_k304) (bruijn ##.lst.498 0 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D497_k304, self)})),
       _var1);
@@ -6256,7 +6256,7 @@ static void _V10_Dtaillength_D291_lambda73(VRuntime * runtime, VEnv * statics, i
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Dloop_D497_lambda74)) ((bruijn ##.loop.497 0 0) (bruijn ##.k.1338 1 0) (bruijn ##.lst.496 1 1) 0))
+  // (letrec 1 ((close _V10_Dloop_D497_lambda74)) ((bruijn ##.loop.497 0 0) (bruijn ##.k.1336 1 0) (bruijn ##.lst.496 1 1) 0))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -6275,7 +6275,7 @@ static void _V10_Dadd__ref_B_D292_k308(VRuntime * runtime, VEnv * statics, int a
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.825 7 0) (bruijn ##.k.1343 2 0) (bruijn ##.refs.500 2 1) (bruijn ##.x.501 2 2) (bruijn ##.x.1344 0 0))
+  // ((bruijn ##.x.823 7 0) (bruijn ##.k.1341 2 0) (bruijn ##.refs.500 2 1) (bruijn ##.x.501 2 2) (bruijn ##.x.1342 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 4,
       statics->up->vars[0],
       statics->up->vars[1],
@@ -6292,7 +6292,7 @@ static void _V10_Dadd__ref_B_D292_k307(VRuntime * runtime, VEnv * statics, int a
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.803 28 0) (close _V10_Dadd__ref_B_D292_k308) (bruijn ##.n0.503 0 0) (bruijn ##.n.502 1 3))
+  // ((bruijn ##.x.801 28 0) (close _V10_Dadd__ref_B_D292_k308) (bruijn ##.n0.503 0 0) (bruijn ##.n.502 1 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dadd__ref_B_D292_k308, self)})),
       _var0,
@@ -6304,7 +6304,7 @@ static void _V10_Dadd__ref_B_D292_lambda76(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1345 0 0) 0)
+  // ((bruijn ##.k.1343 0 0) 0)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeInt(0l));
 }
@@ -6321,7 +6321,7 @@ static void _V10_Dadd__ref_B_D292_lambda75(VRuntime * runtime, VEnv * statics, i
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // ((bruijn ##.x.818 12 0) (close _V10_Dadd__ref_B_D292_k307) (bruijn ##.refs.500 0 1) (bruijn ##.x.501 0 2) (close _V10_Dadd__ref_B_D292_lambda76))
+  // ((bruijn ##.x.816 12 0) (close _V10_Dadd__ref_B_D292_k307) (bruijn ##.refs.500 0 1) (bruijn ##.x.501 0 2) (close _V10_Dadd__ref_B_D292_lambda76))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 4,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dadd__ref_B_D292_k307, self)})),
       _var1,
@@ -6334,12 +6334,12 @@ static void _V10_Dsub__ref_B_D293_k311(VRuntime * runtime, VEnv * statics, int a
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.1349 1 0) ((bruijn ##.x.812 21 0) (bruijn ##.k.1350 0 0) (##string ##.string.2064) (bruijn ##.x.505 3 2) (bruijn ##.n0.507 2 0) (bruijn ##.n.506 3 3)) ((bruijn ##.k.1350 0 0) #f))
+  // (if (bruijn ##.p.1347 1 0) ((bruijn ##.x.810 21 0) (bruijn ##.k.1348 0 0) (##string ##.string.2065) (bruijn ##.x.505 3 2) (bruijn ##.n0.507 2 0) (bruijn ##.n.506 3 3)) ((bruijn ##.k.1348 0 0) #f))
 if(VDecodeBool(
 statics->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 21-1, 0)), 5,
       _var0,
-      VEncodePointer(&_V10_Dstring_D2064.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2065.sym, VPOINTER_OTHER),
       statics->up->up->vars[2],
       statics->up->vars[0],
       statics->up->up->vars[3]);
@@ -6354,7 +6354,7 @@ static void _V10_Dsub__ref_B_D293_k313(VRuntime * runtime, VEnv * statics, int a
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.825 9 0) (bruijn ##.k.1346 4 0) (bruijn ##.refs.504 4 1) (bruijn ##.x.505 4 2) (bruijn ##.x.1348 0 0))
+  // ((bruijn ##.x.823 9 0) (bruijn ##.k.1344 4 0) (bruijn ##.refs.504 4 1) (bruijn ##.x.505 4 2) (bruijn ##.x.1346 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 4,
       statics->up->up->up->vars[0],
       statics->up->up->up->vars[1],
@@ -6371,7 +6371,7 @@ static void _V10_Dsub__ref_B_D293_k312(VRuntime * runtime, VEnv * statics, int a
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.824 9 0) (close _V10_Dsub__ref_B_D293_k313) (bruijn ##.n0.507 2 0) (bruijn ##.n.506 3 3))
+  // ((bruijn ##.x.822 9 0) (close _V10_Dsub__ref_B_D293_k313) (bruijn ##.n0.507 2 0) (bruijn ##.n.506 3 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dsub__ref_B_D293_k313, self)})),
       statics->up->vars[0],
@@ -6401,7 +6401,7 @@ static void _V10_Dsub__ref_B_D293_k309(VRuntime * runtime, VEnv * statics, int a
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.799 32 0) (close _V10_Dsub__ref_B_D293_k310) (bruijn ##.n.506 1 3) (bruijn ##.n0.507 0 0))
+  // ((bruijn ##.x.797 32 0) (close _V10_Dsub__ref_B_D293_k310) (bruijn ##.n.506 1 3) (bruijn ##.n0.507 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dsub__ref_B_D293_k310, self)})),
       statics->vars[3],
@@ -6413,7 +6413,7 @@ static void _V10_Dsub__ref_B_D293_lambda78(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1351 0 0) 0)
+  // ((bruijn ##.k.1349 0 0) 0)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeInt(0l));
 }
@@ -6430,7 +6430,7 @@ static void _V10_Dsub__ref_B_D293_lambda77(VRuntime * runtime, VEnv * statics, i
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // ((bruijn ##.x.818 12 0) (close _V10_Dsub__ref_B_D293_k309) (bruijn ##.refs.504 0 1) (bruijn ##.x.505 0 2) (close _V10_Dsub__ref_B_D293_lambda78))
+  // ((bruijn ##.x.816 12 0) (close _V10_Dsub__ref_B_D293_k309) (bruijn ##.refs.504 0 1) (bruijn ##.x.505 0 2) (close _V10_Dsub__ref_B_D293_lambda78))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 4,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dsub__ref_B_D293_k309, self)})),
       _var1,
@@ -6443,7 +6443,7 @@ static void _V10_Dadd__refs_B_D294_k317(VRuntime * runtime, VEnv * statics, int 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.add-ref!.292 6 6) (bruijn ##.k.1354 3 0) (bruijn ##.arefs.510 5 1) (bruijn ##.x.1355 2 0) (bruijn ##.x.1356 0 0))
+  // ((bruijn ##.add-ref!.292 6 6) (bruijn ##.k.1352 3 0) (bruijn ##.arefs.510 5 1) (bruijn ##.x.1353 2 0) (bruijn ##.x.1354 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 6)), 4,
       statics->up->up->vars[0],
       VGetArg(statics, 5-1, 1),
@@ -6460,7 +6460,7 @@ static void _V10_Dadd__refs_B_D294_k316(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.800 34 0) (close _V10_Dadd__refs_B_D294_k317) (bruijn ##.n.512 4 3) (bruijn ##.x.1357 0 0))
+  // ((bruijn ##.x.798 34 0) (close _V10_Dadd__refs_B_D294_k317) (bruijn ##.n.512 4 3) (bruijn ##.x.1355 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dadd__refs_B_D294_k317, self)})),
       statics->up->up->up->vars[3],
@@ -6476,7 +6476,7 @@ static void _V10_Dadd__refs_B_D294_k315(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.826 7 0) (close _V10_Dadd__refs_B_D294_k316) (bruijn ##.keyval.513 1 1))
+  // ((bruijn ##.x.824 7 0) (close _V10_Dadd__refs_B_D294_k316) (bruijn ##.keyval.513 1 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dadd__refs_B_D294_k316, self)})),
       statics->vars[1]);
@@ -6492,7 +6492,7 @@ static void _V10_Dadd__refs_B_D294_lambda80(VRuntime * runtime, VEnv * statics, 
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.823 9 0) (close _V10_Dadd__refs_B_D294_k315) (bruijn ##.keyval.513 0 1))
+  // ((bruijn ##.x.821 9 0) (close _V10_Dadd__refs_B_D294_k315) (bruijn ##.keyval.513 0 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dadd__refs_B_D294_k315, self)})),
       _var1);
@@ -6507,21 +6507,21 @@ static void _V10_Dadd__refs_B_D294_k314(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.802 29 0) (bruijn ##.k.1353 1 0) (close _V10_Dadd__refs_B_D294_lambda80) (bruijn ##.x.1358 0 0))
+  // ((bruijn ##.x.800 29 0) (bruijn ##.k.1351 1 0) (close _V10_Dadd__refs_B_D294_lambda80) (bruijn ##.x.1356 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 3,
       statics->vars[0],
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dadd__refs_B_D294_lambda80, self)})),
       _var0);
 }
 __attribute__((used)) static void _V20CaseError__V10_Dadd__refs_B_D294_lambda79(VRuntime * runtime, VEnv * statics, int argc, ...) {
- // (_V10_Dadd__refs_B_D294_lambda79 #t (3 ((bruijn ##.add-refs!.294 1 8) (bruijn ##.k.1352 0 0) (bruijn ##.arefs.508 0 1) (bruijn ##.brefs.509 0 2) 1)) (4 ((bruijn ##.x.801 29 0) (close _V10_Dadd__refs_B_D294_k314) (bruijn ##.brefs.511 0 2))))
+ // (_V10_Dadd__refs_B_D294_lambda79 #t (3 ((bruijn ##.add-refs!.294 1 8) (bruijn ##.k.1350 0 0) (bruijn ##.arefs.508 0 1) (bruijn ##.brefs.509 0 2) 1)) (4 ((bruijn ##.x.799 29 0) (close _V10_Dadd__refs_B_D294_k314) (bruijn ##.brefs.511 0 2))))
  VErrorC(runtime, "Not enough arguments to _V10_Dadd__refs_B_D294_lambda79, got ~D~N"
  "-- expected 3~N"
  "-- expected 4~N"
  , argc);
 }
 __attribute__((used)) static void _V20Case0__V10_Dadd__refs_B_D294_lambda79(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
-  // ((bruijn ##.add-refs!.294 1 8) (bruijn ##.k.1352 0 0) (bruijn ##.arefs.508 0 1) (bruijn ##.brefs.509 0 2) 1)
+  // ((bruijn ##.add-refs!.294 1 8) (bruijn ##.k.1350 0 0) (bruijn ##.arefs.508 0 1) (bruijn ##.brefs.509 0 2) 1)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[8]), 4,
       _var0,
       _var1,
@@ -6536,7 +6536,7 @@ __attribute__((used)) static void _V20Case1__V10_Dadd__refs_B_D294_lambda79(VRun
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // ((bruijn ##.x.801 29 0) (close _V10_Dadd__refs_B_D294_k314) (bruijn ##.brefs.511 0 2))
+  // ((bruijn ##.x.799 29 0) (close _V10_Dadd__refs_B_D294_k314) (bruijn ##.brefs.511 0 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dadd__refs_B_D294_k314, self)})),
       _var2);
@@ -6560,7 +6560,7 @@ static void _V10_Dsub__refs_B_D295_k320(VRuntime * runtime, VEnv * statics, int 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.sub-ref!.293 5 7) (bruijn ##.k.1360 2 0) (bruijn ##.arefs.514 4 1) (bruijn ##.x.1361 1 0) (bruijn ##.x.1362 0 0))
+  // ((bruijn ##.sub-ref!.293 5 7) (bruijn ##.k.1358 2 0) (bruijn ##.arefs.514 4 1) (bruijn ##.x.1359 1 0) (bruijn ##.x.1360 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 7)), 4,
       statics->up->vars[0],
       statics->up->up->up->vars[1],
@@ -6577,7 +6577,7 @@ static void _V10_Dsub__refs_B_D295_k319(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.826 7 0) (close _V10_Dsub__refs_B_D295_k320) (bruijn ##.keyval.516 1 1))
+  // ((bruijn ##.x.824 7 0) (close _V10_Dsub__refs_B_D295_k320) (bruijn ##.keyval.516 1 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dsub__refs_B_D295_k320, self)})),
       statics->vars[1]);
@@ -6593,7 +6593,7 @@ static void _V10_Dsub__refs_B_D295_lambda82(VRuntime * runtime, VEnv * statics, 
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.823 9 0) (close _V10_Dsub__refs_B_D295_k319) (bruijn ##.keyval.516 0 1))
+  // ((bruijn ##.x.821 9 0) (close _V10_Dsub__refs_B_D295_k319) (bruijn ##.keyval.516 0 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dsub__refs_B_D295_k319, self)})),
       _var1);
@@ -6608,7 +6608,7 @@ static void _V10_Dsub__refs_B_D295_k318(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.802 29 0) (bruijn ##.k.1359 1 0) (close _V10_Dsub__refs_B_D295_lambda82) (bruijn ##.x.1363 0 0))
+  // ((bruijn ##.x.800 29 0) (bruijn ##.k.1357 1 0) (close _V10_Dsub__refs_B_D295_lambda82) (bruijn ##.x.1361 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 3,
       statics->vars[0],
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dsub__refs_B_D295_lambda82, self)})),
@@ -6626,7 +6626,7 @@ static void _V10_Dsub__refs_B_D295_lambda81(VRuntime * runtime, VEnv * statics, 
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((bruijn ##.x.801 29 0) (close _V10_Dsub__refs_B_D295_k318) (bruijn ##.brefs.515 0 2))
+  // ((bruijn ##.x.799 29 0) (close _V10_Dsub__refs_B_D295_k318) (bruijn ##.brefs.515 0 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dsub__refs_B_D295_k318, self)})),
       _var2);
@@ -6637,7 +6637,7 @@ static void _V10_Dcount__refs__atom_D520_k325(VRuntime * runtime, VEnv * statics
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1443 0 0) (bruijn ##.k.1441 2 0))
+  // ((bruijn ##.x.1441 0 0) (bruijn ##.k.1439 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -6647,7 +6647,7 @@ static void _V10_Dcount__refs__atom_D520_lambda86(VRuntime * runtime, VEnv * sta
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1444 0 0) #f)
+  // ((bruijn ##.k.1442 0 0) #f)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
@@ -6661,7 +6661,7 @@ static void _V10_Dcount__refs__atom_D520_k324(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1442 0 0) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k325) (close _V10_Dcount__refs__atom_D520_lambda86) (bruijn ##.kk.90.523 2 1)) ((bruijn ##.k.1441 1 0) #f))
+  // (if (bruijn ##.p.1440 0 0) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k325) (close _V10_Dcount__refs__atom_D520_lambda86) (bruijn ##.kk.90.523 2 1)) ((bruijn ##.k.1439 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
@@ -6683,7 +6683,7 @@ static void _V10_Dcount__refs__atom_D520_k323(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 2 1)) ((bruijn ##.x.828 8 0) (close _V10_Dcount__refs__atom_D520_k324) 'quote (##inline ##vcore.car (bruijn ##.expr.522 2 1))) ((bruijn ##.k.1441 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 2 1)) ((bruijn ##.x.826 8 0) (close _V10_Dcount__refs__atom_D520_k324) 'quote (##inline ##vcore.car (bruijn ##.expr.522 2 1))) ((bruijn ##.k.1439 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->vars[1]))) {
@@ -6703,7 +6703,7 @@ static void _V10_Dcount__refs__atom_D520_k329(VRuntime * runtime, VEnv * statics
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1437 0 0) (bruijn ##.k.1435 2 0))
+  // ((bruijn ##.x.1435 0 0) (bruijn ##.k.1433 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -6713,7 +6713,7 @@ static void _V10_Dcount__refs__atom_D520_lambda87(VRuntime * runtime, VEnv * sta
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1438 0 0) #f)
+  // ((bruijn ##.k.1436 0 0) #f)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
@@ -6727,7 +6727,7 @@ static void _V10_Dcount__refs__atom_D520_k328(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1436 0 0) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k329) (close _V10_Dcount__refs__atom_D520_lambda87) (bruijn ##.kk.90.523 3 1)) ((bruijn ##.k.1435 1 0) #f))
+  // (if (bruijn ##.p.1434 0 0) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k329) (close _V10_Dcount__refs__atom_D520_lambda87) (bruijn ##.kk.90.523 3 1)) ((bruijn ##.k.1433 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
@@ -6749,7 +6749,7 @@ static void _V10_Dcount__refs__atom_D520_k327(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 3 1)) ((bruijn ##.x.828 9 0) (close _V10_Dcount__refs__atom_D520_k328) '##foreign.function (##inline ##vcore.car (bruijn ##.expr.522 3 1))) ((bruijn ##.k.1435 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 3 1)) ((bruijn ##.x.826 9 0) (close _V10_Dcount__refs__atom_D520_k328) '##foreign.function (##inline ##vcore.car (bruijn ##.expr.522 3 1))) ((bruijn ##.k.1433 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->vars[1]))) {
@@ -6769,7 +6769,7 @@ static void _V10_Dcount__refs__atom_D520_k333(VRuntime * runtime, VEnv * statics
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1431 0 0) (bruijn ##.k.1429 2 0))
+  // ((bruijn ##.x.1429 0 0) (bruijn ##.k.1427 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -6779,7 +6779,7 @@ static void _V10_Dcount__refs__atom_D520_lambda88(VRuntime * runtime, VEnv * sta
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.802 38 0) (bruijn ##.k.1432 0 0) (bruijn ##.count-refs-atom.520 7 2) (##inline ##vcore.cdr (bruijn ##.expr.522 6 1)))
+  // ((bruijn ##.x.800 38 0) (bruijn ##.k.1430 0 0) (bruijn ##.count-refs-atom.520 7 2) (##inline ##vcore.cdr (bruijn ##.expr.522 6 1)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 3,
       _var0,
       VGetArg(statics, 7-1, 2),
@@ -6796,7 +6796,7 @@ static void _V10_Dcount__refs__atom_D520_k332(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1430 0 0) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k333) (close _V10_Dcount__refs__atom_D520_lambda88) (bruijn ##.kk.90.523 4 1)) ((bruijn ##.k.1429 1 0) #f))
+  // (if (bruijn ##.p.1428 0 0) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k333) (close _V10_Dcount__refs__atom_D520_lambda88) (bruijn ##.kk.90.523 4 1)) ((bruijn ##.k.1427 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
@@ -6818,7 +6818,7 @@ static void _V10_Dcount__refs__atom_D520_k331(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 4 1)) ((bruijn ##.x.828 10 0) (close _V10_Dcount__refs__atom_D520_k332) '##inline (##inline ##vcore.car (bruijn ##.expr.522 4 1))) ((bruijn ##.k.1429 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 4 1)) ((bruijn ##.x.826 10 0) (close _V10_Dcount__refs__atom_D520_k332) '##inline (##inline ##vcore.car (bruijn ##.expr.522 4 1))) ((bruijn ##.k.1427 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->up->vars[1]))) {
@@ -6838,7 +6838,7 @@ static void _V10_Dcount__refs__atom_D520_k339(VRuntime * runtime, VEnv * statics
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1424 0 0) (bruijn ##.k.1419 4 0))
+  // ((bruijn ##.x.1422 0 0) (bruijn ##.k.1417 4 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->up->vars[0]);
 }
@@ -6848,7 +6848,7 @@ static void _V10_Dcount__refs__atom_D520_lambda89(VRuntime * runtime, VEnv * sta
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.count-refs-apply.521 10 3) (bruijn ##.k.1425 0 0) (##inline ##vcore.car (bruijn ##.expr.97.531 1 0)))
+  // ((bruijn ##.count-refs-apply.521 10 3) (bruijn ##.k.1423 0 0) (##inline ##vcore.car (bruijn ##.expr.97.531 1 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 3)), 2,
       _var0,
       VInlineCar2(runtime,
@@ -6864,7 +6864,7 @@ static void _V10_Dcount__refs__atom_D520_k338(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.97.531 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.97.531 0 0))) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k339) (close _V10_Dcount__refs__atom_D520_lambda89) (bruijn ##.kk.90.523 7 1)) ((bruijn ##.k.1419 3 0) #f)) ((bruijn ##.k.1419 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.97.531 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.97.531 0 0))) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k339) (close _V10_Dcount__refs__atom_D520_lambda89) (bruijn ##.kk.90.523 7 1)) ((bruijn ##.k.1417 3 0) #f)) ((bruijn ##.k.1417 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -6895,7 +6895,7 @@ static void _V10_Dcount__refs__atom_D520_k337(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.96.530 0 0)) ((close _V10_Dcount__refs__atom_D520_k338) (##inline ##vcore.cdr (bruijn ##.expr.96.530 0 0))) ((bruijn ##.k.1419 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.96.530 0 0)) ((close _V10_Dcount__refs__atom_D520_k338) (##inline ##vcore.cdr (bruijn ##.expr.96.530 0 0))) ((bruijn ##.k.1417 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -6917,7 +6917,7 @@ static void _V10_Dcount__refs__atom_D520_k336(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1420 0 0) ((close _V10_Dcount__refs__atom_D520_k337) (##inline ##vcore.cdr (bruijn ##.expr.522 6 1))) ((bruijn ##.k.1419 1 0) #f))
+  // (if (bruijn ##.p.1418 0 0) ((close _V10_Dcount__refs__atom_D520_k337) (##inline ##vcore.cdr (bruijn ##.expr.522 6 1))) ((bruijn ##.k.1417 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dcount__refs__atom_D520_k337, .env = self }, }, 1,
@@ -6938,7 +6938,7 @@ static void _V10_Dcount__refs__atom_D520_k335(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 5 1)) ((bruijn ##.x.828 11 0) (close _V10_Dcount__refs__atom_D520_k336) 'lambda (##inline ##vcore.car (bruijn ##.expr.522 5 1))) ((bruijn ##.k.1419 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 5 1)) ((bruijn ##.x.826 11 0) (close _V10_Dcount__refs__atom_D520_k336) 'lambda (##inline ##vcore.car (bruijn ##.expr.522 5 1))) ((bruijn ##.k.1417 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 5-1, 1)))) {
@@ -6958,7 +6958,7 @@ static void _V10_Dcount__refs__atom_D520_k345(VRuntime * runtime, VEnv * statics
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1414 0 0) (bruijn ##.k.1409 4 0))
+  // ((bruijn ##.x.1412 0 0) (bruijn ##.k.1407 4 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->up->vars[0]);
 }
@@ -6968,7 +6968,7 @@ static void _V10_Dcount__refs__atom_D520_lambda90(VRuntime * runtime, VEnv * sta
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.count-refs-apply.521 11 3) (bruijn ##.k.1415 0 0) (##inline ##vcore.car (bruijn ##.expr.100.535 1 0)))
+  // ((bruijn ##.count-refs-apply.521 11 3) (bruijn ##.k.1413 0 0) (##inline ##vcore.car (bruijn ##.expr.100.535 1 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 3)), 2,
       _var0,
       VInlineCar2(runtime,
@@ -6984,7 +6984,7 @@ static void _V10_Dcount__refs__atom_D520_k344(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.100.535 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.100.535 0 0))) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k345) (close _V10_Dcount__refs__atom_D520_lambda90) (bruijn ##.kk.90.523 8 1)) ((bruijn ##.k.1409 3 0) #f)) ((bruijn ##.k.1409 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.100.535 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.100.535 0 0))) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k345) (close _V10_Dcount__refs__atom_D520_lambda90) (bruijn ##.kk.90.523 8 1)) ((bruijn ##.k.1407 3 0) #f)) ((bruijn ##.k.1407 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -7015,7 +7015,7 @@ static void _V10_Dcount__refs__atom_D520_k343(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.99.534 0 0)) ((close _V10_Dcount__refs__atom_D520_k344) (##inline ##vcore.cdr (bruijn ##.expr.99.534 0 0))) ((bruijn ##.k.1409 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.99.534 0 0)) ((close _V10_Dcount__refs__atom_D520_k344) (##inline ##vcore.cdr (bruijn ##.expr.99.534 0 0))) ((bruijn ##.k.1407 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -7037,7 +7037,7 @@ static void _V10_Dcount__refs__atom_D520_k342(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1410 0 0) ((close _V10_Dcount__refs__atom_D520_k343) (##inline ##vcore.cdr (bruijn ##.expr.522 7 1))) ((bruijn ##.k.1409 1 0) #f))
+  // (if (bruijn ##.p.1408 0 0) ((close _V10_Dcount__refs__atom_D520_k343) (##inline ##vcore.cdr (bruijn ##.expr.522 7 1))) ((bruijn ##.k.1407 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dcount__refs__atom_D520_k343, .env = self }, }, 1,
@@ -7058,7 +7058,7 @@ static void _V10_Dcount__refs__atom_D520_k341(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 6 1)) ((bruijn ##.x.828 12 0) (close _V10_Dcount__refs__atom_D520_k342) 'continuation (##inline ##vcore.car (bruijn ##.expr.522 6 1))) ((bruijn ##.k.1409 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 6 1)) ((bruijn ##.x.826 12 0) (close _V10_Dcount__refs__atom_D520_k342) 'continuation (##inline ##vcore.car (bruijn ##.expr.522 6 1))) ((bruijn ##.k.1407 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 6-1, 1)))) {
@@ -7078,7 +7078,7 @@ static void _V10_Dloop_D540_k350(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.104.539 4 1) (bruijn ##.k.1399 1 0) (bruijn ##.expr.106.541 2 1) (bruijn ##.x.1400 0 0))
+  // ((bruijn ##.kk.104.539 4 1) (bruijn ##.k.1397 1 0) (bruijn ##.expr.106.541 2 1) (bruijn ##.x.1398 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[1]), 3,
       statics->vars[0],
       statics->up->vars[1],
@@ -7094,7 +7094,7 @@ static void _V10_Dloop_D540_k349(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.106.541 1 1))) ((bruijn ##.x.806 41 0) (close _V10_Dloop_D540_k350) (bruijn ##.body.103.542 1 2)) ((bruijn ##.k.1399 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.106.541 1 1))) ((bruijn ##.x.804 41 0) (close _V10_Dloop_D540_k350) (bruijn ##.body.103.542 1 2)) ((bruijn ##.k.1397 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlinePairP2(runtime,
@@ -7113,7 +7113,7 @@ static void _V10_Dloop_D540_k354(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.108.545 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.108.545 0 0))) ((bruijn ##.kk.105.543 3 1) (bruijn ##.k.1392 1 0) (##inline ##vcore.cdr (bruijn ##.expr.106.541 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.108.545 0 0)) (bruijn ##.body.103.542 6 2))) ((bruijn ##.k.1392 1 0) #f)) ((bruijn ##.k.1392 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.108.545 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.108.545 0 0))) ((bruijn ##.kk.105.543 3 1) (bruijn ##.k.1390 1 0) (##inline ##vcore.cdr (bruijn ##.expr.106.541 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.108.545 0 0)) (bruijn ##.body.103.542 6 2))) ((bruijn ##.k.1390 1 0) #f)) ((bruijn ##.k.1390 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -7148,7 +7148,7 @@ static void _V10_Dloop_D540_k353(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.107.544 1 0)) ((close _V10_Dloop_D540_k354) (##inline ##vcore.cdr (bruijn ##.expr.107.544 1 0))) ((bruijn ##.k.1392 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.107.544 1 0)) ((close _V10_Dloop_D540_k354) (##inline ##vcore.cdr (bruijn ##.expr.107.544 1 0))) ((bruijn ##.k.1390 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->vars[0]))) {
@@ -7166,7 +7166,7 @@ static void _V10_Dloop_D540_k356(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.104.539 8 1) (bruijn ##.k.1388 3 0) (bruijn ##.expr.106.541 6 1) (bruijn ##.x.1390 0 0))
+  // ((bruijn ##.kk.104.539 8 1) (bruijn ##.k.1386 3 0) (bruijn ##.expr.106.541 6 1) (bruijn ##.x.1388 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 1)), 3,
       statics->up->up->vars[0],
       VGetArg(statics, 6-1, 1),
@@ -7182,7 +7182,7 @@ static void _V10_Dloop_D540_k355(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 45 0) (close _V10_Dloop_D540_k356) (bruijn ##.body.103.542 5 2))
+  // ((bruijn ##.x.804 45 0) (close _V10_Dloop_D540_k356) (bruijn ##.body.103.542 5 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 45-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D540_k356, self)})),
       VGetArg(statics, 5-1, 2));
@@ -7227,7 +7227,7 @@ static void _V10_Dloop_D540_lambda94(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1387 0 0) (close _V10_Dloop_D540_lambda95))
+  // (##vcore.call/cc (bruijn ##.k.1385 0 0) (close _V10_Dloop_D540_lambda95))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D540_lambda95, self)})));
@@ -7242,7 +7242,7 @@ static void _V10_Dloop_D540_k351(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1385 1 0) (close _V10_Dloop_D540_lambda94) (bruijn ##.loop.540 2 0))
+  // (##vcore.call-with-values (bruijn ##.k.1383 1 0) (close _V10_Dloop_D540_lambda94) (bruijn ##.loop.540 2 0))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D540_lambda94, self)})),
@@ -7275,7 +7275,7 @@ static void _V10_Dcount__refs__atom_D520_lambda92(VRuntime * runtime, VEnv * sta
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Dloop_D540_lambda93)) ((bruijn ##.loop.540 0 0) (bruijn ##.k.1384 1 0) (##inline ##vcore.cdr (bruijn ##.expr.522 11 1)) '()))
+  // (letrec 1 ((close _V10_Dloop_D540_lambda93)) ((bruijn ##.loop.540 0 0) (bruijn ##.k.1382 1 0) (##inline ##vcore.cdr (bruijn ##.expr.522 11 1)) '()))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -7299,7 +7299,7 @@ static void _V10_Dcount__refs__atom_D520_lambda91(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1383 0 0) (close _V10_Dcount__refs__atom_D520_lambda92))
+  // (##vcore.call/cc (bruijn ##.k.1381 0 0) (close _V10_Dcount__refs__atom_D520_lambda92))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs__atom_D520_lambda92, self)})));
@@ -7310,7 +7310,7 @@ static void _V10_Dcount__refs__atom_D520_k357(VRuntime * runtime, VEnv * statics
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1404 0 0) (bruijn ##.k.1402 1 0))
+  // ((bruijn ##.x.1402 0 0) (bruijn ##.k.1400 1 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->vars[0]);
 }
@@ -7320,7 +7320,7 @@ static void _V10_Dcount__refs__atom_D520_lambda98(VRuntime * runtime, VEnv * sta
   "-- expected 2~N"
   , argc);
  }
-  // ((bruijn ##.count-refs-apply.521 12 3) (bruijn ##.k.1406 0 0) (bruijn ##.body.549 0 1))
+  // ((bruijn ##.count-refs-apply.521 12 3) (bruijn ##.k.1404 0 0) (bruijn ##.body.549 0 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 3)), 2,
       _var0,
       _var1);
@@ -7335,7 +7335,7 @@ static void _V10_Dcount__refs__atom_D520_lambda97(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.802 42 0) (bruijn ##.k.1405 0 0) (close _V10_Dcount__refs__atom_D520_lambda98) (bruijn ##.body.548 1 2))
+  // ((bruijn ##.x.800 42 0) (bruijn ##.k.1403 0 0) (close _V10_Dcount__refs__atom_D520_lambda98) (bruijn ##.body.548 1 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 3,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs__atom_D520_lambda98, self)})),
@@ -7353,7 +7353,7 @@ static void _V10_Dcount__refs__atom_D520_lambda96(VRuntime * runtime, VEnv * sta
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.547 0 1)) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k357) (close _V10_Dcount__refs__atom_D520_lambda97) (bruijn ##.kk.90.523 8 1)) ((bruijn ##.k.1402 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.547 0 1)) (##vcore.call-with-values (close _V10_Dcount__refs__atom_D520_k357) (close _V10_Dcount__refs__atom_D520_lambda97) (bruijn ##.kk.90.523 8 1)) ((bruijn ##.k.1400 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
@@ -7376,7 +7376,7 @@ static void _V10_Dcount__refs__atom_D520_k348(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1382 0 0) (##vcore.call-with-values (bruijn ##.k.1381 1 0) (close _V10_Dcount__refs__atom_D520_lambda91) (close _V10_Dcount__refs__atom_D520_lambda96)) ((bruijn ##.k.1381 1 0) #f))
+  // (if (bruijn ##.p.1380 0 0) (##vcore.call-with-values (bruijn ##.k.1379 1 0) (close _V10_Dcount__refs__atom_D520_lambda91) (close _V10_Dcount__refs__atom_D520_lambda96)) ((bruijn ##.k.1379 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
@@ -7398,7 +7398,7 @@ static void _V10_Dcount__refs__atom_D520_k347(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 7 1)) ((bruijn ##.x.828 13 0) (close _V10_Dcount__refs__atom_D520_k348) 'case-lambda (##inline ##vcore.car (bruijn ##.expr.522 7 1))) ((bruijn ##.k.1381 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.522 7 1)) ((bruijn ##.x.826 13 0) (close _V10_Dcount__refs__atom_D520_k348) 'case-lambda (##inline ##vcore.car (bruijn ##.expr.522 7 1))) ((bruijn ##.k.1379 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 7-1, 1)))) {
@@ -7418,7 +7418,7 @@ static void _V10_Dcount__refs__atom_D520_k361(VRuntime * runtime, VEnv * statics
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.825 20 0) (bruijn ##.k.1375 3 0) (bruijn ##.count-table.518 12 0) (bruijn ##.expr.522 11 1) (bruijn ##.x.1377 0 0))
+  // ((bruijn ##.x.823 20 0) (bruijn ##.k.1373 3 0) (bruijn ##.count-table.518 12 0) (bruijn ##.expr.522 11 1) (bruijn ##.x.1375 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 4,
       statics->up->up->vars[0],
       VGetArg(statics, 12-1, 0),
@@ -7435,7 +7435,7 @@ static void _V10_Dcount__refs__atom_D520_k360(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.803 41 0) (close _V10_Dcount__refs__atom_D520_k361) 1 (bruijn ##.x.1378 0 0))
+  // ((bruijn ##.x.801 41 0) (close _V10_Dcount__refs__atom_D520_k361) 1 (bruijn ##.x.1376 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs__atom_D520_k361, self)})),
       VEncodeInt(1l),
@@ -7447,7 +7447,7 @@ static void _V10_Dcount__refs__atom_D520_lambda100(VRuntime * runtime, VEnv * st
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1379 0 0) 0)
+  // ((bruijn ##.k.1377 0 0) 0)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeInt(0l));
 }
@@ -7461,7 +7461,7 @@ static void _V10_Dcount__refs__atom_D520_k359(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1376 0 0) ((bruijn ##.x.818 25 0) (close _V10_Dcount__refs__atom_D520_k360) (bruijn ##.count-table.518 10 0) (bruijn ##.expr.522 9 1) (close _V10_Dcount__refs__atom_D520_lambda100)) ((bruijn ##.k.1375 1 0) #f))
+  // (if (bruijn ##.p.1374 0 0) ((bruijn ##.x.816 25 0) (close _V10_Dcount__refs__atom_D520_k360) (bruijn ##.count-table.518 10 0) (bruijn ##.expr.522 9 1) (close _V10_Dcount__refs__atom_D520_lambda100)) ((bruijn ##.k.1373 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 4,
@@ -7484,7 +7484,7 @@ static void _V10_Dcount__refs__atom_D520_lambda99(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.811 31 0) (close _V10_Dcount__refs__atom_D520_k359) (bruijn ##.expr.522 8 1))
+  // ((bruijn ##.x.809 31 0) (close _V10_Dcount__refs__atom_D520_k359) (bruijn ##.expr.522 8 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs__atom_D520_k359, self)})),
       VGetArg(statics, 8-1, 1));
@@ -7499,7 +7499,7 @@ static void _V10_Dcount__refs__atom_D520_k358(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1368 6 0) (close _V10_Dcount__refs__atom_D520_lambda99) (bruijn ##.kk.90.523 6 1))
+  // (##vcore.call-with-values (bruijn ##.k.1366 6 0) (close _V10_Dcount__refs__atom_D520_lambda99) (bruijn ##.kk.90.523 6 1))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       VGetArg(statics, 6-1, 0),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs__atom_D520_lambda99, self)})),
@@ -7601,7 +7601,7 @@ static void _V10_Dcount__refs__atom_D520_lambda84(VRuntime * runtime, VEnv * sta
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (##vcore.call/cc (bruijn ##.k.1367 0 0) (close _V10_Dcount__refs__atom_D520_lambda85))
+  // (##vcore.call/cc (bruijn ##.k.1365 0 0) (close _V10_Dcount__refs__atom_D520_lambda85))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs__atom_D520_lambda85, self)})));
@@ -7612,7 +7612,7 @@ static void _V10_Dloop_D557_k366(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.115.556 4 1) (bruijn ##.k.1505 1 0) (bruijn ##.expr.117.558 2 1) (bruijn ##.x.1506 0 0))
+  // ((bruijn ##.kk.115.556 4 1) (bruijn ##.k.1503 1 0) (bruijn ##.expr.117.558 2 1) (bruijn ##.x.1504 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[1]), 3,
       statics->vars[0],
       statics->up->vars[1],
@@ -7628,7 +7628,7 @@ static void _V10_Dloop_D557_k365(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.117.558 1 1))) ((bruijn ##.x.806 37 0) (close _V10_Dloop_D557_k366) (bruijn ##.vals.114.559 1 2)) ((bruijn ##.k.1505 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.117.558 1 1))) ((bruijn ##.x.804 37 0) (close _V10_Dloop_D557_k366) (bruijn ##.vals.114.559 1 2)) ((bruijn ##.k.1503 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlinePairP2(runtime,
@@ -7647,7 +7647,7 @@ static void _V10_Dloop_D557_k370(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.119.562 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.119.562 0 0))) ((bruijn ##.kk.116.560 3 1) (bruijn ##.k.1498 1 0) (##inline ##vcore.cdr (bruijn ##.expr.117.558 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.119.562 0 0)) (bruijn ##.vals.114.559 6 2))) ((bruijn ##.k.1498 1 0) #f)) ((bruijn ##.k.1498 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.119.562 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.119.562 0 0))) ((bruijn ##.kk.116.560 3 1) (bruijn ##.k.1496 1 0) (##inline ##vcore.cdr (bruijn ##.expr.117.558 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.119.562 0 0)) (bruijn ##.vals.114.559 6 2))) ((bruijn ##.k.1496 1 0) #f)) ((bruijn ##.k.1496 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -7682,7 +7682,7 @@ static void _V10_Dloop_D557_k369(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.118.561 1 0)) ((close _V10_Dloop_D557_k370) (##inline ##vcore.cdr (bruijn ##.expr.118.561 1 0))) ((bruijn ##.k.1498 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.118.561 1 0)) ((close _V10_Dloop_D557_k370) (##inline ##vcore.cdr (bruijn ##.expr.118.561 1 0))) ((bruijn ##.k.1496 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->vars[0]))) {
@@ -7700,7 +7700,7 @@ static void _V10_Dloop_D557_k372(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.115.556 8 1) (bruijn ##.k.1494 3 0) (bruijn ##.expr.117.558 6 1) (bruijn ##.x.1496 0 0))
+  // ((bruijn ##.kk.115.556 8 1) (bruijn ##.k.1492 3 0) (bruijn ##.expr.117.558 6 1) (bruijn ##.x.1494 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 1)), 3,
       statics->up->up->vars[0],
       VGetArg(statics, 6-1, 1),
@@ -7716,7 +7716,7 @@ static void _V10_Dloop_D557_k371(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 41 0) (close _V10_Dloop_D557_k372) (bruijn ##.vals.114.559 5 2))
+  // ((bruijn ##.x.804 41 0) (close _V10_Dloop_D557_k372) (bruijn ##.vals.114.559 5 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D557_k372, self)})),
       VGetArg(statics, 5-1, 2));
@@ -7761,7 +7761,7 @@ static void _V10_Dloop_D557_lambda106(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1493 0 0) (close _V10_Dloop_D557_lambda107))
+  // (##vcore.call/cc (bruijn ##.k.1491 0 0) (close _V10_Dloop_D557_lambda107))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D557_lambda107, self)})));
@@ -7776,7 +7776,7 @@ static void _V10_Dloop_D557_k367(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1491 1 0) (close _V10_Dloop_D557_lambda106) (bruijn ##.loop.557 2 0))
+  // (##vcore.call-with-values (bruijn ##.k.1489 1 0) (close _V10_Dloop_D557_lambda106) (bruijn ##.loop.557 2 0))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D557_lambda106, self)})),
@@ -7809,7 +7809,7 @@ static void _V10_Dcount__refs__apply_D521_lambda104(VRuntime * runtime, VEnv * s
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Dloop_D557_lambda105)) ((bruijn ##.loop.557 0 0) (bruijn ##.k.1490 1 0) (##inline ##vcore.car (bruijn ##.expr.112.554 3 0)) '()))
+  // (letrec 1 ((close _V10_Dloop_D557_lambda105)) ((bruijn ##.loop.557 0 0) (bruijn ##.k.1488 1 0) (##inline ##vcore.car (bruijn ##.expr.112.554 3 0)) '()))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -7833,7 +7833,7 @@ static void _V10_Dcount__refs__apply_D521_lambda103(VRuntime * runtime, VEnv * s
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1489 0 0) (close _V10_Dcount__refs__apply_D521_lambda104))
+  // (##vcore.call/cc (bruijn ##.k.1487 0 0) (close _V10_Dcount__refs__apply_D521_lambda104))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs__apply_D521_lambda104, self)})));
@@ -7844,7 +7844,7 @@ static void _V10_Dcount__refs__apply_D521_k374(VRuntime * runtime, VEnv * static
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1512 0 0) (bruijn ##.k.1508 2 0))
+  // ((bruijn ##.x.1510 0 0) (bruijn ##.k.1506 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -7854,7 +7854,7 @@ static void _V10_Dcount__refs__apply_D521_k375(VRuntime * runtime, VEnv * static
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.count-refs-apply.521 9 3) (bruijn ##.k.1513 1 0) (##inline ##vcore.car (bruijn ##.expr.120.566 2 0)))
+  // ((bruijn ##.count-refs-apply.521 9 3) (bruijn ##.k.1511 1 0) (##inline ##vcore.car (bruijn ##.expr.120.566 2 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 3)), 2,
       statics->vars[0],
       VInlineCar2(runtime,
@@ -7870,7 +7870,7 @@ static void _V10_Dcount__refs__apply_D521_lambda109(VRuntime * runtime, VEnv * s
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.802 39 0) (close _V10_Dcount__refs__apply_D521_k375) (bruijn ##.count-refs-atom.520 8 2) (bruijn ##.vals.565 2 2))
+  // ((bruijn ##.x.800 39 0) (close _V10_Dcount__refs__apply_D521_k375) (bruijn ##.count-refs-atom.520 8 2) (bruijn ##.vals.565 2 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs__apply_D521_k375, self)})),
       VGetArg(statics, 8-1, 2),
@@ -7886,7 +7886,7 @@ static void _V10_Dcount__refs__apply_D521_k373(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.120.566 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.120.566 0 0))) (##vcore.call-with-values (close _V10_Dcount__refs__apply_D521_k374) (close _V10_Dcount__refs__apply_D521_lambda109) (bruijn ##.kk.109.551 5 1)) ((bruijn ##.k.1508 1 0) #f)) ((bruijn ##.k.1508 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.120.566 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.120.566 0 0))) (##vcore.call-with-values (close _V10_Dcount__refs__apply_D521_k374) (close _V10_Dcount__refs__apply_D521_lambda109) (bruijn ##.kk.109.551 5 1)) ((bruijn ##.k.1506 1 0) #f)) ((bruijn ##.k.1506 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -7919,7 +7919,7 @@ static void _V10_Dcount__refs__apply_D521_lambda108(VRuntime * runtime, VEnv * s
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.564 0 1)) ((close _V10_Dcount__refs__apply_D521_k373) (##inline ##vcore.cdr (bruijn ##.expr.112.554 1 0))) ((bruijn ##.k.1508 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.564 0 1)) ((close _V10_Dcount__refs__apply_D521_k373) (##inline ##vcore.cdr (bruijn ##.expr.112.554 1 0))) ((bruijn ##.k.1506 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
@@ -7941,7 +7941,7 @@ static void _V10_Dcount__refs__apply_D521_k364(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.112.554 0 0)) (##vcore.call-with-values (bruijn ##.k.1486 2 0) (close _V10_Dcount__refs__apply_D521_lambda103) (close _V10_Dcount__refs__apply_D521_lambda108)) ((bruijn ##.k.1486 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.112.554 0 0)) (##vcore.call-with-values (bruijn ##.k.1484 2 0) (close _V10_Dcount__refs__apply_D521_lambda103) (close _V10_Dcount__refs__apply_D521_lambda108)) ((bruijn ##.k.1484 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -7964,7 +7964,7 @@ static void _V10_Dcount__refs__apply_D521_k363(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1487 0 0) ((close _V10_Dcount__refs__apply_D521_k364) (##inline ##vcore.cdr (bruijn ##.expr.550 3 1))) ((bruijn ##.k.1486 1 0) #f))
+  // (if (bruijn ##.p.1485 0 0) ((close _V10_Dcount__refs__apply_D521_k364) (##inline ##vcore.cdr (bruijn ##.expr.550 3 1))) ((bruijn ##.k.1484 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dcount__refs__apply_D521_k364, .env = self }, }, 1,
@@ -7985,7 +7985,7 @@ static void _V10_Dcount__refs__apply_D521_k362(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.550 2 1)) ((bruijn ##.x.828 8 0) (close _V10_Dcount__refs__apply_D521_k363) 'letrec (##inline ##vcore.car (bruijn ##.expr.550 2 1))) ((bruijn ##.k.1486 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.550 2 1)) ((bruijn ##.x.826 8 0) (close _V10_Dcount__refs__apply_D521_k363) 'letrec (##inline ##vcore.car (bruijn ##.expr.550 2 1))) ((bruijn ##.k.1484 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->vars[1]))) {
@@ -8005,7 +8005,7 @@ static void _V10_Dcount__refs__apply_D521_k382(VRuntime * runtime, VEnv * static
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1479 0 0) (bruijn ##.k.1473 5 0))
+  // ((bruijn ##.x.1477 0 0) (bruijn ##.k.1471 5 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 5-1, 0));
 }
@@ -8015,7 +8015,7 @@ static void _V10_Dcount__refs__apply_D521_k384(VRuntime * runtime, VEnv * static
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.count-refs-apply.521 11 3) (bruijn ##.k.1480 2 0) (##inline ##vcore.car (bruijn ##.expr.124.573 3 0)))
+  // ((bruijn ##.count-refs-apply.521 11 3) (bruijn ##.k.1478 2 0) (##inline ##vcore.car (bruijn ##.expr.124.573 3 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 3)), 2,
       statics->up->vars[0],
       VInlineCar2(runtime,
@@ -8063,7 +8063,7 @@ static void _V10_Dcount__refs__apply_D521_k381(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.124.573 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.124.573 0 0))) (##vcore.call-with-values (close _V10_Dcount__refs__apply_D521_k382) (close _V10_Dcount__refs__apply_D521_lambda110) (bruijn ##.kk.109.551 6 1)) ((bruijn ##.k.1473 4 0) #f)) ((bruijn ##.k.1473 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.124.573 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.124.573 0 0))) (##vcore.call-with-values (close _V10_Dcount__refs__apply_D521_k382) (close _V10_Dcount__refs__apply_D521_lambda110) (bruijn ##.kk.109.551 6 1)) ((bruijn ##.k.1471 4 0) #f)) ((bruijn ##.k.1471 4 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -8094,7 +8094,7 @@ static void _V10_Dcount__refs__apply_D521_k380(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.123.571 0 0)) ((close _V10_Dcount__refs__apply_D521_k381) (##inline ##vcore.cdr (bruijn ##.expr.123.571 0 0))) ((bruijn ##.k.1473 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.123.571 0 0)) ((close _V10_Dcount__refs__apply_D521_k381) (##inline ##vcore.cdr (bruijn ##.expr.123.571 0 0))) ((bruijn ##.k.1471 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -8116,7 +8116,7 @@ static void _V10_Dcount__refs__apply_D521_k379(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.122.569 0 0)) ((close _V10_Dcount__refs__apply_D521_k380) (##inline ##vcore.cdr (bruijn ##.expr.122.569 0 0))) ((bruijn ##.k.1473 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.122.569 0 0)) ((close _V10_Dcount__refs__apply_D521_k380) (##inline ##vcore.cdr (bruijn ##.expr.122.569 0 0))) ((bruijn ##.k.1471 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -8138,7 +8138,7 @@ static void _V10_Dcount__refs__apply_D521_k378(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1474 0 0) ((close _V10_Dcount__refs__apply_D521_k379) (##inline ##vcore.cdr (bruijn ##.expr.550 4 1))) ((bruijn ##.k.1473 1 0) #f))
+  // (if (bruijn ##.p.1472 0 0) ((close _V10_Dcount__refs__apply_D521_k379) (##inline ##vcore.cdr (bruijn ##.expr.550 4 1))) ((bruijn ##.k.1471 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dcount__refs__apply_D521_k379, .env = self }, }, 1,
@@ -8159,7 +8159,7 @@ static void _V10_Dcount__refs__apply_D521_k377(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.550 3 1)) ((bruijn ##.x.828 9 0) (close _V10_Dcount__refs__apply_D521_k378) 'if (##inline ##vcore.car (bruijn ##.expr.550 3 1))) ((bruijn ##.k.1473 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.550 3 1)) ((bruijn ##.x.826 9 0) (close _V10_Dcount__refs__apply_D521_k378) 'if (##inline ##vcore.car (bruijn ##.expr.550 3 1))) ((bruijn ##.k.1471 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->vars[1]))) {
@@ -8179,7 +8179,7 @@ static void _V10_Dcount__refs__apply_D521_k392(VRuntime * runtime, VEnv * static
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1465 0 0) (bruijn ##.k.1459 6 0))
+  // ((bruijn ##.x.1463 0 0) (bruijn ##.k.1457 6 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 6-1, 0));
 }
@@ -8189,7 +8189,7 @@ static void _V10_Dcount__refs__apply_D521_k395(VRuntime * runtime, VEnv * static
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.825 22 0) (bruijn ##.k.1466 3 0) (bruijn ##.impure-table.519 14 1) (bruijn ##.y.579 5 0) #t)
+  // ((bruijn ##.x.823 22 0) (bruijn ##.k.1464 3 0) (bruijn ##.impure-table.519 14 1) (bruijn ##.y.579 5 0) #t)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 4,
       statics->up->up->vars[0],
       VGetArg(statics, 14-1, 1),
@@ -8253,7 +8253,7 @@ static void _V10_Dcount__refs__apply_D521_k391(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.128.580 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.128.580 0 0))) (##vcore.call-with-values (close _V10_Dcount__refs__apply_D521_k392) (close _V10_Dcount__refs__apply_D521_lambda111) (bruijn ##.kk.109.551 8 1)) ((bruijn ##.k.1459 5 0) #f)) ((bruijn ##.k.1459 5 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.128.580 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.128.580 0 0))) (##vcore.call-with-values (close _V10_Dcount__refs__apply_D521_k392) (close _V10_Dcount__refs__apply_D521_lambda111) (bruijn ##.kk.109.551 8 1)) ((bruijn ##.k.1457 5 0) #f)) ((bruijn ##.k.1457 5 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -8299,7 +8299,7 @@ static void _V10_Dcount__refs__apply_D521_k389(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.127.578 0 0)) ((close _V10_Dcount__refs__apply_D521_k390) (##inline ##vcore.car (bruijn ##.expr.127.578 0 0))) ((bruijn ##.k.1459 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.127.578 0 0)) ((close _V10_Dcount__refs__apply_D521_k390) (##inline ##vcore.car (bruijn ##.expr.127.578 0 0))) ((bruijn ##.k.1457 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -8321,7 +8321,7 @@ static void _V10_Dcount__refs__apply_D521_k388(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.126.576 0 0)) ((close _V10_Dcount__refs__apply_D521_k389) (##inline ##vcore.cdr (bruijn ##.expr.126.576 0 0))) ((bruijn ##.k.1459 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.126.576 0 0)) ((close _V10_Dcount__refs__apply_D521_k389) (##inline ##vcore.cdr (bruijn ##.expr.126.576 0 0))) ((bruijn ##.k.1457 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -8343,7 +8343,7 @@ static void _V10_Dcount__refs__apply_D521_k387(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1460 0 0) ((close _V10_Dcount__refs__apply_D521_k388) (##inline ##vcore.cdr (bruijn ##.expr.550 5 1))) ((bruijn ##.k.1459 1 0) #f))
+  // (if (bruijn ##.p.1458 0 0) ((close _V10_Dcount__refs__apply_D521_k388) (##inline ##vcore.cdr (bruijn ##.expr.550 5 1))) ((bruijn ##.k.1457 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dcount__refs__apply_D521_k388, .env = self }, }, 1,
@@ -8364,7 +8364,7 @@ static void _V10_Dcount__refs__apply_D521_k386(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.550 4 1)) ((bruijn ##.x.828 10 0) (close _V10_Dcount__refs__apply_D521_k387) 'set! (##inline ##vcore.car (bruijn ##.expr.550 4 1))) ((bruijn ##.k.1459 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.550 4 1)) ((bruijn ##.x.826 10 0) (close _V10_Dcount__refs__apply_D521_k387) 'set! (##inline ##vcore.car (bruijn ##.expr.550 4 1))) ((bruijn ##.k.1457 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->up->vars[1]))) {
@@ -8384,7 +8384,7 @@ static void _V10_Dcount__refs__apply_D521_k398(VRuntime * runtime, VEnv * static
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1455 0 0) (bruijn ##.k.1454 1 0))
+  // ((bruijn ##.x.1453 0 0) (bruijn ##.k.1452 1 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->vars[0]);
 }
@@ -8394,7 +8394,7 @@ static void _V10_Dcount__refs__apply_D521_k399(VRuntime * runtime, VEnv * static
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.802 39 0) (bruijn ##.k.1456 1 0) (bruijn ##.count-refs-atom.520 8 2) (##inline ##vcore.cdr (bruijn ##.expr.550 7 1)))
+  // ((bruijn ##.x.800 39 0) (bruijn ##.k.1454 1 0) (bruijn ##.count-refs-atom.520 8 2) (##inline ##vcore.cdr (bruijn ##.expr.550 7 1)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 3,
       statics->vars[0],
       VGetArg(statics, 8-1, 2),
@@ -8427,7 +8427,7 @@ static void _V10_Dcount__refs__apply_D521_k397(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.550 5 1)) (##vcore.call-with-values (close _V10_Dcount__refs__apply_D521_k398) (close _V10_Dcount__refs__apply_D521_lambda112) (bruijn ##.kk.109.551 4 1)) ((bruijn ##.k.1454 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.550 5 1)) (##vcore.call-with-values (close _V10_Dcount__refs__apply_D521_k398) (close _V10_Dcount__refs__apply_D521_lambda112) (bruijn ##.kk.109.551 4 1)) ((bruijn ##.k.1452 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 5-1, 1)))) {
@@ -8446,10 +8446,10 @@ static void _V10_Dcount__refs__apply_D521_lambda113(VRuntime * runtime, VEnv * s
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.808 32 0) (bruijn ##.k.1452 0 0) (##string ##.string.2065) (bruijn ##.expr.550 6 1))
+  // ((bruijn ##.x.806 32 0) (bruijn ##.k.1450 0 0) (##string ##.string.2066) (bruijn ##.expr.550 6 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 3,
       _var0,
-      VEncodePointer(&_V10_Dstring_D2065.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2066.sym, VPOINTER_OTHER),
       VGetArg(statics, 6-1, 1));
 }
 static void _V10_Dcount__refs__apply_D521_k400(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -8462,7 +8462,7 @@ static void _V10_Dcount__refs__apply_D521_k400(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1447 4 0) (close _V10_Dcount__refs__apply_D521_lambda113) (bruijn ##.kk.109.551 4 1))
+  // (##vcore.call-with-values (bruijn ##.k.1445 4 0) (close _V10_Dcount__refs__apply_D521_lambda113) (bruijn ##.kk.109.551 4 1))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->up->up->up->vars[0],
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs__apply_D521_lambda113, self)})),
@@ -8536,7 +8536,7 @@ static void _V10_Dcount__refs__apply_D521_lambda101(VRuntime * runtime, VEnv * s
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (##vcore.call/cc (bruijn ##.k.1446 0 0) (close _V10_Dcount__refs__apply_D521_lambda102))
+  // (##vcore.call/cc (bruijn ##.k.1444 0 0) (close _V10_Dcount__refs__apply_D521_lambda102))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs__apply_D521_lambda102, self)})));
@@ -8547,7 +8547,7 @@ static void _V10_Dcount__refs_D296_k402(VRuntime * runtime, VEnv * statics, int 
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.1518 1 0) ((bruijn ##.count-refs-apply.521 2 3) (bruijn ##.k.1519 0 0) (bruijn ##.expr.517 5 1)) ((bruijn ##.count-refs-atom.520 2 2) (bruijn ##.k.1519 0 0) (bruijn ##.expr.517 5 1)))
+  // (if (bruijn ##.p.1516 1 0) ((bruijn ##.count-refs-apply.521 2 3) (bruijn ##.k.1517 0 0) (bruijn ##.expr.517 5 1)) ((bruijn ##.count-refs-atom.520 2 2) (bruijn ##.k.1517 0 0) (bruijn ##.expr.517 5 1)))
 if(VDecodeBool(
 statics->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[3]), 2,
@@ -8565,7 +8565,7 @@ static void _V10_Dcount__refs_D296_k403(VRuntime * runtime, VEnv * statics, int 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.805 30 0) (bruijn ##.k.1364 5 0) (bruijn ##.count-table.518 2 0) (bruijn ##.impure-table.519 2 1))
+  // ((bruijn ##.x.803 30 0) (bruijn ##.k.1362 5 0) (bruijn ##.count-table.518 2 0) (bruijn ##.impure-table.519 2 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
       VGetArg(statics, 5-1, 0),
       statics->up->vars[0],
@@ -8595,7 +8595,7 @@ static void _V10_Dcount__refs_D296_k322(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (letrec 4 ((bruijn ##.x.1365 2 0) (bruijn ##.x.1366 1 0) (close _V10_Dcount__refs__atom_D520_lambda84) (close _V10_Dcount__refs__apply_D521_lambda101)) ((bruijn ##.application?.286 4 0) (close _V10_Dcount__refs_D296_k401) (bruijn ##.expr.517 3 1)))
+  // (letrec 4 ((bruijn ##.x.1363 2 0) (bruijn ##.x.1364 1 0) (close _V10_Dcount__refs__atom_D520_lambda84) (close _V10_Dcount__refs__apply_D521_lambda101)) ((bruijn ##.application?.286 4 0) (close _V10_Dcount__refs_D296_k401) (bruijn ##.expr.517 3 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[4]; } container;
@@ -8620,7 +8620,7 @@ static void _V10_Dcount__refs_D296_k321(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.804 27 0) (close _V10_Dcount__refs_D296_k322) (bruijn ##.x.819 12 0))
+  // ((bruijn ##.x.802 27 0) (close _V10_Dcount__refs_D296_k322) (bruijn ##.x.817 12 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs_D296_k322, self)})),
       VGetArg(statics, 12-1, 0));
@@ -8636,7 +8636,7 @@ static void _V10_Dcount__refs_D296_lambda83(VRuntime * runtime, VEnv * statics, 
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.804 26 0) (close _V10_Dcount__refs_D296_k321) (bruijn ##.x.819 11 0))
+  // ((bruijn ##.x.802 26 0) (close _V10_Dcount__refs_D296_k321) (bruijn ##.x.817 11 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs_D296_k321, self)})),
       VGetArg(statics, 11-1, 0));
@@ -8647,7 +8647,7 @@ static void _V10_Doptimize__lambda_D587_k407(VRuntime * runtime, VEnv * statics,
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1530 0 0) (bruijn ##.k.1526 3 0))
+  // ((bruijn ##.x.1528 0 0) (bruijn ##.k.1524 3 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->vars[0]);
 }
@@ -8657,7 +8657,7 @@ static void _V10_Doptimize__lambda_D587_k408(VRuntime * runtime, VEnv * statics,
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1531 1 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.596 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.144.601 3 0)) (##inline ##vcore.cons (bruijn ##.x.1534 0 0) '()))))
+  // ((bruijn ##.k.1529 1 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.596 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.144.601 3 0)) (##inline ##vcore.cons (bruijn ##.x.1532 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VInlineCons2(runtime,
         VInlineCar2(runtime,
@@ -8695,7 +8695,7 @@ static void _V10_Doptimize__lambda_D587_k406(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.145.603 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.145.603 0 0))) (##vcore.call-with-values (close _V10_Doptimize__lambda_D587_k407) (close _V10_Doptimize__lambda_D587_lambda117) (bruijn ##.kk.141.597 3 1)) ((bruijn ##.k.1526 2 0) #f)) ((bruijn ##.k.1526 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.145.603 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.145.603 0 0))) (##vcore.call-with-values (close _V10_Doptimize__lambda_D587_k407) (close _V10_Doptimize__lambda_D587_lambda117) (bruijn ##.kk.141.597 3 1)) ((bruijn ##.k.1524 2 0) #f)) ((bruijn ##.k.1524 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -8726,7 +8726,7 @@ static void _V10_Doptimize__lambda_D587_k405(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.144.601 0 0)) ((close _V10_Doptimize__lambda_D587_k406) (##inline ##vcore.cdr (bruijn ##.expr.144.601 0 0))) ((bruijn ##.k.1526 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.144.601 0 0)) ((close _V10_Doptimize__lambda_D587_k406) (##inline ##vcore.cdr (bruijn ##.expr.144.601 0 0))) ((bruijn ##.k.1524 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -8748,7 +8748,7 @@ static void _V10_Doptimize__lambda_D587_k404(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.596 2 1)) ((close _V10_Doptimize__lambda_D587_k405) (##inline ##vcore.cdr (bruijn ##.expr.596 2 1))) ((bruijn ##.k.1526 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.596 2 1)) ((close _V10_Doptimize__lambda_D587_k405) (##inline ##vcore.cdr (bruijn ##.expr.596 2 1))) ((bruijn ##.k.1524 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->vars[1]))) {
@@ -8766,10 +8766,10 @@ static void _V10_Doptimize__lambda_D587_lambda118(VRuntime * runtime, VEnv * sta
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.808 27 0) (bruijn ##.k.1524 0 0) (##string ##.string.2066) (bruijn ##.expr.596 3 1))
+  // ((bruijn ##.x.806 27 0) (bruijn ##.k.1522 0 0) (##string ##.string.2067) (bruijn ##.expr.596 3 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 3,
       _var0,
-      VEncodePointer(&_V10_Dstring_D2066.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2067.sym, VPOINTER_OTHER),
       statics->up->up->vars[1]);
 }
 static void _V10_Doptimize__lambda_D587_k409(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -8782,7 +8782,7 @@ static void _V10_Doptimize__lambda_D587_k409(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1522 1 0) (close _V10_Doptimize__lambda_D587_lambda118) (bruijn ##.kk.141.597 1 1))
+  // (##vcore.call-with-values (bruijn ##.k.1520 1 0) (close _V10_Doptimize__lambda_D587_lambda118) (bruijn ##.kk.141.597 1 1))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__lambda_D587_lambda118, self)})),
@@ -8814,7 +8814,7 @@ static void _V10_Doptimize__lambda_D587_lambda115(VRuntime * runtime, VEnv * sta
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (##vcore.call/cc (bruijn ##.k.1521 0 0) (close _V10_Doptimize__lambda_D587_lambda116))
+  // (##vcore.call/cc (bruijn ##.k.1519 0 0) (close _V10_Doptimize__lambda_D587_lambda116))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__lambda_D587_lambda116, self)})));
@@ -8825,7 +8825,7 @@ static void _V10_Dinline__let_D588_k414(VRuntime * runtime, VEnv * statics, int 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1536 5 0) (##inline ##vcore.cons (bruijn ##.x.1539 1 0) (bruijn ##.x.1540 0 0)))
+  // ((bruijn ##.k.1534 5 0) (##inline ##vcore.cons (bruijn ##.x.1537 1 0) (bruijn ##.x.1538 0 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
       VInlineCons2(runtime,
         statics->vars[0],
@@ -8841,7 +8841,7 @@ static void _V10_Dinline__let_D588_k413(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 30 0) (close _V10_Dinline__let_D588_k414) (bruijn ##.done-xs.607 4 3))
+  // ((bruijn ##.x.804 30 0) (close _V10_Dinline__let_D588_k414) (bruijn ##.done-xs.607 4 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k414, self)})),
       statics->up->up->up->vars[3]);
@@ -8856,7 +8856,7 @@ static void _V10_Dinline__let_D588_k412(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.optimize-atom.592 4 5) (close _V10_Dinline__let_D588_k413) (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (bruijn ##.x.1543 0 0) (##inline ##vcore.cons (bruijn ##.expr.605 3 1) '()))))
+  // ((bruijn ##.optimize-atom.592 4 5) (close _V10_Dinline__let_D588_k413) (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (bruijn ##.x.1541 0 0) (##inline ##vcore.cons (bruijn ##.expr.605 3 1) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[5]), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k413, self)})),
       VInlineCons2(runtime,
@@ -8877,7 +8877,7 @@ static void _V10_Dinline__let_D588_k411(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1538 0 0) ((bruijn ##.optimize-apply.591 3 4) (bruijn ##.k.1536 2 0) (bruijn ##.expr.605 2 1)) ((bruijn ##.x.806 28 0) (close _V10_Dinline__let_D588_k412) (bruijn ##.done-ys.606 2 2)))
+  // (if (bruijn ##.p.1536 0 0) ((bruijn ##.optimize-apply.591 3 4) (bruijn ##.k.1534 2 0) (bruijn ##.expr.605 2 1)) ((bruijn ##.x.804 28 0) (close _V10_Dinline__let_D588_k412) (bruijn ##.done-ys.606 2 2)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[4]), 2,
@@ -8889,59 +8889,22 @@ _var0)) {
       statics->up->vars[2]);
 }
 }
-static void _V10_Dinline__let_D588_k428(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k428, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // (if (bruijn ##.p.1576 0 0) ((bruijn ##.k.1574 4 0) (bruijn ##.p.1576 0 0)) ((bruijn ##.x.817 30 0) (bruijn ##.k.1574 4 0) (bruijn ##.x.1545 9 0) 1))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
-      _var0);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
-      statics->up->up->up->vars[0],
-      VGetArg(statics, 9-1, 0),
-      VEncodeInt(1l));
-}
-}
-static void _V10_Dinline__let_D588_k427(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k427, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.819 27 0) (close _V10_Dinline__let_D588_k428) (bruijn ##.x.1577 0 0) '##foreign.function)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k428, self)})),
-      _var0,
-      _V10foreign_Dfunction);
-}
 static void _V10_Dinline__let_D588_k426(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k426, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1575 0 0) ((bruijn ##.k.1574 2 0) (bruijn ##.p.1575 0 0)) ((bruijn ##.x.823 22 0) (close _V10_Dinline__let_D588_k427) (bruijn ##.x.611 10 0)))
+  // (if (bruijn ##.p.1577 0 0) ((bruijn ##.k.1575 4 0) (bruijn ##.p.1577 0 0)) ((bruijn ##.x.815 28 0) (bruijn ##.k.1575 4 0) (bruijn ##.refs.614 7 0) 1))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
       _var0);
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k427, self)})),
-      VGetArg(statics, 10-1, 0));
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 3,
+      statics->up->up->up->vars[0],
+      VGetArg(statics, 7-1, 0),
+      VEncodeInt(1l));
 }
 }
 static void _V10_Dinline__let_D588_k425(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -8954,11 +8917,11 @@ static void _V10_Dinline__let_D588_k425(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.819 25 0) (close _V10_Dinline__let_D588_k426) (bruijn ##.x.1578 0 0) 'quote)
+  // ((bruijn ##.x.817 25 0) (close _V10_Dinline__let_D588_k426) (bruijn ##.x.1578 0 0) '##foreign.function)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k426, self)})),
       _var0,
-      _V0quote);
+      _V10foreign_Dfunction);
 }
 static void _V10_Dinline__let_D588_k424(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -8970,25 +8933,62 @@ static void _V10_Dinline__let_D588_k424(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1573 1 0) ((bruijn ##.k.1574 0 0) (bruijn ##.p.1573 1 0)) ((bruijn ##.x.823 20 0) (close _V10_Dinline__let_D588_k425) (bruijn ##.x.611 8 0)))
+  // (if (bruijn ##.p.1576 0 0) ((bruijn ##.k.1575 2 0) (bruijn ##.p.1576 0 0)) ((bruijn ##.x.821 20 0) (close _V10_Dinline__let_D588_k425) (bruijn ##.x.611 8 0)))
 if(VDecodeBool(
-statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->vars[0]);
+_var0)) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      _var0);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k425, self)})),
       VGetArg(statics, 8-1, 0));
 }
 }
-static void _V10_Dinline__let_D588_k433(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dinline__let_D588_k423(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k433, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k423, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.822 25 0) (bruijn ##.k.1568 1 0) (bruijn ##.x.1569 0 0) (##inline ##vcore.qcons 'lambda (##inline ##vcore.qcons 'continuation (##inline ##vcore.qcons 'case-lambda '()))))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 3,
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.817 23 0) (close _V10_Dinline__let_D588_k424) (bruijn ##.x.1579 0 0) 'quote)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k424, self)})),
+      _var0,
+      _V0quote);
+}
+static void _V10_Dinline__let_D588_k422(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k422, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1574 1 0) ((bruijn ##.k.1575 0 0) (bruijn ##.p.1574 1 0)) ((bruijn ##.x.821 18 0) (close _V10_Dinline__let_D588_k423) (bruijn ##.x.611 6 0)))
+if(VDecodeBool(
+statics->vars[0])) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->vars[0]);
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k423, self)})),
+      VGetArg(statics, 6-1, 0));
+}
+}
+static void _V10_Dinline__let_D588_k431(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k431, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.820 23 0) (bruijn ##.k.1569 1 0) (bruijn ##.x.1570 0 0) (##inline ##vcore.qcons 'lambda (##inline ##vcore.qcons 'continuation (##inline ##vcore.qcons 'case-lambda '()))))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 3,
       statics->vars[0],
       _var0,
       VInlineCons2(runtime,
@@ -8999,9 +8999,9 @@ static void _V10_Dinline__let_D588_k433(VRuntime * runtime, VEnv * statics, int 
         _V0case__lambda,
         VNULL))));
 }
-static void _V10_Dinline__let_D588_k432(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dinline__let_D588_k430(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k432, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k430, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9009,16 +9009,37 @@ static void _V10_Dinline__let_D588_k432(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1567 1 0) ((bruijn ##.x.823 23 0) (close _V10_Dinline__let_D588_k433) (bruijn ##.x.611 11 0)) ((bruijn ##.k.1568 0 0) #f))
+  // (if (bruijn ##.p.1568 1 0) ((bruijn ##.x.821 21 0) (close _V10_Dinline__let_D588_k431) (bruijn ##.x.611 9 0)) ((bruijn ##.k.1569 0 0) #f))
 if(VDecodeBool(
 statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k433, self)})),
-      VGetArg(statics, 11-1, 0));
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 21-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k431, self)})),
+      VGetArg(statics, 9-1, 0));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
+}
+static void _V10_Dinline__let_D588_k436(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k436, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.812 34 0) (bruijn ##.k.1560 6 0) (bruijn ##.x.1563 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 2,
+      VGetArg(statics, 6-1, 0),
+      _var0);
+}
+static void _V10_Dinline__let_D588_lambda120(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_lambda120, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.k.1564 0 0) #f)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
 }
 static void _V10_Dinline__let_D588_k435(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9026,13 +9047,20 @@ static void _V10_Dinline__let_D588_k435(VRuntime * runtime, VEnv * statics, int 
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.1565 0 0) ((bruijn ##.k.1564 3 0) (bruijn ##.x.1546 7 0)) ((bruijn ##.k.1564 3 0) #f))
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1562 0 0) ((bruijn ##.x.816 29 0) (close _V10_Dinline__let_D588_k436) (bruijn ##.impure-table.594 16 7) (bruijn ##.x.611 12 0) (close _V10_Dinline__let_D588_lambda120)) ((bruijn ##.k.1560 5 0) #f))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
-      VGetArg(statics, 7-1, 0));
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k436, self)})),
+      VGetArg(statics, 16-1, 7),
+      VGetArg(statics, 12-1, 0),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_lambda120, self)})));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
       VEncodeBool(false));
 }
 }
@@ -9046,188 +9074,24 @@ static void _V10_Dinline__let_D588_k434(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.814 32 0) (close _V10_Dinline__let_D588_k435) (bruijn ##.x.1566 0 0))
+  // ((bruijn ##.x.812 32 0) (close _V10_Dinline__let_D588_k435) (bruijn ##.x.1565 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k435, self)})),
       _var0);
 }
-static void _V10_Dinline__let_D588_k431(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dinline__let_D588_lambda121(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k431, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Dinline__let_D588_k432) (close _V10_Dinline__let_D588_k434))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dinline__let_D588_k432, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k434, self)})));
-}
-static void _V10_Dinline__let_D588_k430(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k430, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1563 1 0) ((bruijn ##.x.821 23 0) (close _V10_Dinline__let_D588_k431) (bruijn ##.x.611 9 0)) ((bruijn ##.k.1564 0 0) #f))
-if(VDecodeBool(
-statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k431, self)})),
-      VGetArg(statics, 9-1, 0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Dinline__let_D588_k442(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k442, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.add-refs!.294 22 8) (bruijn ##.k.1553 4 0) (bruijn ##.ref-table.593 20 6) (bruijn ##.xrefs.616 3 0) (bruijn ##.x.1555 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 8)), 4,
-      statics->up->up->up->vars[0],
-      VGetArg(statics, 20-1, 6),
-      statics->up->up->vars[0],
-      _var0);
-}
-static void _V10_Dinline__let_D588_k441(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k441, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.824 26 0) (close _V10_Dinline__let_D588_k442) (bruijn ##.x.1545 12 0) 1)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k442, self)})),
-      VGetArg(statics, 12-1, 0),
-      VEncodeInt(1l));
-}
-static void _V10_Dinline__let_D588_k440(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k440, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (set! (close _V10_Dinline__let_D588_k441) (bruijn ##.dummy.148.618 1 2) (bruijn ##.x.1556 0 0))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k441, self)})),
-      VEncodeInt(1l), VEncodeInt(2l),
-      _var0
-    );
-}
-static void _V10_Dinline__let_D588_lambda120(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_lambda120, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.count-refs.296 20 10) (bruijn ##.k.1557 0 0) (bruijn ##.x.611 14 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 10)), 2,
-      _var0,
-      VGetArg(statics, 14-1, 0));
-}
-static void _V10_Dinline__let_D588_k443(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k443, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (set! (bruijn ##.k.1558 1 0) (bruijn ##.xpure.617 2 1) (bruijn ##.xpure.147.620 1 2))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      statics->vars[0],
-      VEncodeInt(2l), VEncodeInt(1l),
-      statics->vars[2]
-    );
-}
-static void _V10_Dinline__let_D588_lambda121(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
- if(argc != 3) {
   VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_lambda121, got ~D~N"
-  "-- expected 3~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[3]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 3, 3, statics);
-  self->vars[0] = _var0;
-  self->vars[1] = _var1;
-  self->vars[2] = _var2;
-  // (set! (close _V10_Dinline__let_D588_k443) (bruijn ##.xrefs.616 1 0) (bruijn ##.xrefs.146.619 0 1))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k443, self)})),
-      VEncodeInt(1l), VEncodeInt(0l),
-      _var1
-    );
-}
-static void _V10_Dinline__let_D588_k439(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k439, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1552 1 0) (letrec 3 (#f #f #f) (##vcore.call-with-values (close _V10_Dinline__let_D588_k440) (close _V10_Dinline__let_D588_lambda120) (close _V10_Dinline__let_D588_lambda121))) ((bruijn ##.k.1553 0 0) #f))
-if(VDecodeBool(
-statics->vars[0])) {
-    {
-    VEnv * statics = self;
-    struct { VEnv self; VWORD argv[3]; } container;
-    VEnv * self = &container.self;
-    VInitEnv(self, 3, 3, statics);
-    self->vars[0] = VEncodeBool(false);
-    self->vars[1] = VEncodeBool(false);
-    self->vars[2] = VEncodeBool(false);
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k440, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_lambda120, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_lambda121, self)})));
-    }
-} else {
+  // ((bruijn ##.k.1566 0 0) #f)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
-}
-static void _V10_Dinline__let_D588_k446(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dinline__let_D588_k433(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k446, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.inline-let.588 18 1) (bruijn ##.k.1536 17 0) (bruijn ##.x.1551 0 0) (bruijn ##.done-ys.606 17 2) (bruijn ##.done-xs.607 17 3) (bruijn ##.ys.612 13 0) (bruijn ##.xs.613 12 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 1)), 6,
-      VGetArg(statics, 17-1, 0),
-      _var0,
-      VGetArg(statics, 17-1, 2),
-      VGetArg(statics, 17-1, 3),
-      VGetArg(statics, 13-1, 0),
-      VGetArg(statics, 12-1, 0));
-}
-static void _V10_Dinline__let_D588_k445(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k445, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k433, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9235,114 +9099,33 @@ static void _V10_Dinline__let_D588_k445(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.substitute.289 19 3) (close _V10_Dinline__let_D588_k446) (bruijn ##.y.610 14 0) (bruijn ##.x.611 13 0) (bruijn ##.expr.605 16 1) (bruijn ##.x.1545 10 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 3)), 5,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k446, self)})),
-      VGetArg(statics, 14-1, 0),
-      VGetArg(statics, 13-1, 0),
-      VGetArg(statics, 16-1, 1),
-      VGetArg(statics, 10-1, 0));
-}
-static void _V10_Dinline__let_D588_k444(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k444, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.825 22 0) (close _V10_Dinline__let_D588_k445) (bruijn ##.ref-table.593 16 6) (bruijn ##.y.610 13 0) 0)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k445, self)})),
-      VGetArg(statics, 16-1, 6),
-      VGetArg(statics, 13-1, 0),
-      VEncodeInt(0l));
-}
-static void _V10_Dinline__let_D588_k438(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k438, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Dinline__let_D588_k439) (close _V10_Dinline__let_D588_k444))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dinline__let_D588_k439, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k444, self)})));
-}
-static void _V10_Dinline__let_D588_k437(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k437, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.814 31 0) (close _V10_Dinline__let_D588_k438) (bruijn ##.x.1560 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k438, self)})),
-      _var0);
-}
-static void _V10_Dinline__let_D588_k448(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k448, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.inline-let.588 15 1) (bruijn ##.k.1536 14 0) (bruijn ##.expr.605 14 1) (bruijn ##.x.1561 1 0) (bruijn ##.x.1562 0 0) (bruijn ##.ys.612 10 0) (bruijn ##.xs.613 9 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 1)), 6,
-      VGetArg(statics, 14-1, 0),
-      VGetArg(statics, 14-1, 1),
-      statics->vars[0],
-      _var0,
-      VGetArg(statics, 10-1, 0),
-      VGetArg(statics, 9-1, 0));
-}
-static void _V10_Dinline__let_D588_k447(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k447, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.809 36 0) (close _V10_Dinline__let_D588_k448) (bruijn ##.x.611 10 0) (bruijn ##.done-xs.607 13 3))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 36-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k448, self)})),
-      VGetArg(statics, 10-1, 0),
-      VGetArg(statics, 13-1, 3));
-}
-static void _V10_Dinline__let_D588_k436(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k436, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1548 0 0) ((bruijn ##.x.817 27 0) (close _V10_Dinline__let_D588_k437) (bruijn ##.x.1545 6 0) 1) ((bruijn ##.x.809 35 0) (close _V10_Dinline__let_D588_k447) (bruijn ##.y.610 10 0) (bruijn ##.done-ys.606 12 2)))
+  // (if (bruijn ##.p.1561 0 0) ((bruijn ##.x.816 27 0) (close _V10_Dinline__let_D588_k434) (bruijn ##.impure-table.594 14 7) (bruijn ##.y.610 11 0) (close _V10_Dinline__let_D588_lambda121)) ((bruijn ##.k.1560 3 0) #f))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k437, self)})),
-      VGetArg(statics, 6-1, 0),
-      VEncodeInt(1l));
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k434, self)})),
+      VGetArg(statics, 14-1, 7),
+      VGetArg(statics, 11-1, 0),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_lambda121, self)})));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k447, self)})),
-      VGetArg(statics, 10-1, 0),
-      VGetArg(statics, 12-1, 2));
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
 }
+}
+static void _V10_Dinline__let_D588_k432(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k432, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.812 30 0) (close _V10_Dinline__let_D588_k433) (bruijn ##.x.1567 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k433, self)})),
+      _var0);
 }
 static void _V10_Dinline__let_D588_k429(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9354,13 +9137,13 @@ static void _V10_Dinline__let_D588_k429(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Dinline__let_D588_k430) (close _V10_Dinline__let_D588_k436))
+  // ((close _V10_Dinline__let_D588_k430) (close _V10_Dinline__let_D588_k432))
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dinline__let_D588_k430, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k436, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k432, self)})));
 }
-static void _V10_Dinline__let_D588_k423(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dinline__let_D588_k428(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k423, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k428, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9368,13 +9151,33 @@ static void _V10_Dinline__let_D588_k423(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Dinline__let_D588_k424) (close _V10_Dinline__let_D588_k429))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dinline__let_D588_k424, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k429, self)})));
+  // (if (bruijn ##.p.1559 1 0) ((bruijn ##.x.819 21 0) (close _V10_Dinline__let_D588_k429) (bruijn ##.x.611 7 0)) ((bruijn ##.k.1560 0 0) #f))
+if(VDecodeBool(
+statics->vars[0])) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 21-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k429, self)})),
+      VGetArg(statics, 7-1, 0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
 }
-static void _V10_Dinline__let_D588_k422(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+}
+static void _V10_Dinline__let_D588_k443(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k422, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k443, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.add-refs!.294 20 8) (bruijn ##.k.1549 4 0) (bruijn ##.ref-table.593 18 6) (bruijn ##.xrefs.615 3 0) (bruijn ##.x.1551 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 8)), 4,
+      statics->up->up->up->vars[0],
+      VGetArg(statics, 18-1, 6),
+      statics->up->up->vars[0],
+      _var0);
+}
+static void _V10_Dinline__let_D588_k442(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k442, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9382,21 +9185,254 @@ static void _V10_Dinline__let_D588_k422(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1547 0 0) ((bruijn ##.inline-let.588 10 1) (bruijn ##.k.1536 9 0) (bruijn ##.expr.605 9 1) (bruijn ##.done-ys.606 9 2) (bruijn ##.done-xs.607 9 3) (bruijn ##.ys.612 5 0) (bruijn ##.xs.613 4 0)) ((bruijn ##.x.820 21 0) (close _V10_Dinline__let_D588_k423) (bruijn ##.x.611 6 0)))
+  // ((bruijn ##.x.822 24 0) (close _V10_Dinline__let_D588_k443) (bruijn ##.refs.614 10 0) 1)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k443, self)})),
+      VGetArg(statics, 10-1, 0),
+      VEncodeInt(1l));
+}
+static void _V10_Dinline__let_D588_k441(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k441, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (set! (close _V10_Dinline__let_D588_k442) (bruijn ##.dummy.148.617 1 2) (bruijn ##.x.1552 0 0))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k442, self)})),
+      VEncodeInt(1l), VEncodeInt(2l),
+      _var0
+    );
+}
+static void _V10_Dinline__let_D588_lambda122(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_lambda122, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.count-refs.296 18 10) (bruijn ##.k.1553 0 0) (bruijn ##.x.611 12 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 10)), 2,
+      _var0,
+      VGetArg(statics, 12-1, 0));
+}
+static void _V10_Dinline__let_D588_k444(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k444, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (set! (bruijn ##.k.1554 1 0) (bruijn ##.xpure.616 2 1) (bruijn ##.xpure.147.619 1 2))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
+      statics->vars[0],
+      VEncodeInt(2l), VEncodeInt(1l),
+      statics->vars[2]
+    );
+}
+static void _V10_Dinline__let_D588_lambda123(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ if(argc != 3) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_lambda123, got ~D~N"
+  "-- expected 3~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[3]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 3, 3, statics);
+  self->vars[0] = _var0;
+  self->vars[1] = _var1;
+  self->vars[2] = _var2;
+  // (set! (close _V10_Dinline__let_D588_k444) (bruijn ##.xrefs.615 1 0) (bruijn ##.xrefs.146.618 0 1))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k444, self)})),
+      VEncodeInt(1l), VEncodeInt(0l),
+      _var1
+    );
+}
+static void _V10_Dinline__let_D588_k440(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k440, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1548 1 0) (letrec 3 (#f #f #f) (##vcore.call-with-values (close _V10_Dinline__let_D588_k441) (close _V10_Dinline__let_D588_lambda122) (close _V10_Dinline__let_D588_lambda123))) ((bruijn ##.k.1549 0 0) #f))
+if(VDecodeBool(
+statics->vars[0])) {
+    {
+    VEnv * statics = self;
+    struct { VEnv self; VWORD argv[3]; } container;
+    VEnv * self = &container.self;
+    VInitEnv(self, 3, 3, statics);
+    self->vars[0] = VEncodeBool(false);
+    self->vars[1] = VEncodeBool(false);
+    self->vars[2] = VEncodeBool(false);
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k441, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_lambda122, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_lambda123, self)})));
+    }
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Dinline__let_D588_k447(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k447, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.inline-let.588 16 1) (bruijn ##.k.1534 15 0) (bruijn ##.x.1547 0 0) (bruijn ##.done-ys.606 15 2) (bruijn ##.done-xs.607 15 3) (bruijn ##.ys.612 11 0) (bruijn ##.xs.613 10 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 1)), 6,
+      VGetArg(statics, 15-1, 0),
+      _var0,
+      VGetArg(statics, 15-1, 2),
+      VGetArg(statics, 15-1, 3),
+      VGetArg(statics, 11-1, 0),
+      VGetArg(statics, 10-1, 0));
+}
+static void _V10_Dinline__let_D588_k446(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k446, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.substitute.289 17 3) (close _V10_Dinline__let_D588_k447) (bruijn ##.y.610 12 0) (bruijn ##.x.611 11 0) (bruijn ##.expr.605 14 1) (bruijn ##.refs.614 8 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 3)), 5,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k447, self)})),
+      VGetArg(statics, 12-1, 0),
+      VGetArg(statics, 11-1, 0),
+      VGetArg(statics, 14-1, 1),
+      VGetArg(statics, 8-1, 0));
+}
+static void _V10_Dinline__let_D588_k445(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k445, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.823 20 0) (close _V10_Dinline__let_D588_k446) (bruijn ##.ref-table.593 14 6) (bruijn ##.y.610 11 0) 0)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k446, self)})),
+      VGetArg(statics, 14-1, 6),
+      VGetArg(statics, 11-1, 0),
+      VEncodeInt(0l));
+}
+static void _V10_Dinline__let_D588_k439(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k439, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Dinline__let_D588_k440) (close _V10_Dinline__let_D588_k445))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dinline__let_D588_k440, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k445, self)})));
+}
+static void _V10_Dinline__let_D588_k438(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k438, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.812 29 0) (close _V10_Dinline__let_D588_k439) (bruijn ##.x.1556 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k439, self)})),
+      _var0);
+}
+static void _V10_Dinline__let_D588_k449(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k449, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.inline-let.588 13 1) (bruijn ##.k.1534 12 0) (bruijn ##.expr.605 12 1) (bruijn ##.x.1557 1 0) (bruijn ##.x.1558 0 0) (bruijn ##.ys.612 8 0) (bruijn ##.xs.613 7 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 1)), 6,
+      VGetArg(statics, 12-1, 0),
+      VGetArg(statics, 12-1, 1),
+      statics->vars[0],
+      _var0,
+      VGetArg(statics, 8-1, 0),
+      VGetArg(statics, 7-1, 0));
+}
+static void _V10_Dinline__let_D588_k448(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k448, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.807 34 0) (close _V10_Dinline__let_D588_k449) (bruijn ##.x.611 8 0) (bruijn ##.done-xs.607 11 3))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k449, self)})),
+      VGetArg(statics, 8-1, 0),
+      VGetArg(statics, 11-1, 3));
+}
+static void _V10_Dinline__let_D588_k437(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k437, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1544 0 0) ((bruijn ##.x.815 25 0) (close _V10_Dinline__let_D588_k438) (bruijn ##.refs.614 4 0) 1) ((bruijn ##.x.807 33 0) (close _V10_Dinline__let_D588_k448) (bruijn ##.y.610 8 0) (bruijn ##.done-ys.606 10 2)))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 1)), 6,
-      VGetArg(statics, 9-1, 0),
-      VGetArg(statics, 9-1, 1),
-      VGetArg(statics, 9-1, 2),
-      VGetArg(statics, 9-1, 3),
-      VGetArg(statics, 5-1, 0),
-      statics->up->up->up->vars[0]);
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k438, self)})),
+      statics->up->up->up->vars[0],
+      VEncodeInt(1l));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 21-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k423, self)})),
-      VGetArg(statics, 6-1, 0));
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k448, self)})),
+      VGetArg(statics, 8-1, 0),
+      VGetArg(statics, 10-1, 2));
 }
+}
+static void _V10_Dinline__let_D588_k427(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_k427, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Dinline__let_D588_k428) (close _V10_Dinline__let_D588_k437))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dinline__let_D588_k428, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k437, self)})));
 }
 static void _V10_Dinline__let_D588_k421(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9408,11 +9444,9 @@ static void _V10_Dinline__let_D588_k421(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.817 23 0) (close _V10_Dinline__let_D588_k422) (bruijn ##.x.1545 2 0) 0)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k422, self)})),
-      statics->up->vars[0],
-      VEncodeInt(0l));
+  // ((close _V10_Dinline__let_D588_k422) (close _V10_Dinline__let_D588_k427))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dinline__let_D588_k422, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k427, self)})));
 }
 static void _V10_Dinline__let_D588_k420(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9424,20 +9458,21 @@ static void _V10_Dinline__let_D588_k420(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.814 25 0) (close _V10_Dinline__let_D588_k421) (bruijn ##.x.1579 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 2,
+  // (if (bruijn ##.p.1543 0 0) ((bruijn ##.inline-let.588 8 1) (bruijn ##.k.1534 7 0) (bruijn ##.expr.605 7 1) (bruijn ##.done-ys.606 7 2) (bruijn ##.done-xs.607 7 3) (bruijn ##.ys.612 3 0) (bruijn ##.xs.613 2 0)) ((bruijn ##.x.818 19 0) (close _V10_Dinline__let_D588_k421) (bruijn ##.x.611 4 0)))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 1)), 6,
+      VGetArg(statics, 7-1, 0),
+      VGetArg(statics, 7-1, 1),
+      VGetArg(statics, 7-1, 2),
+      VGetArg(statics, 7-1, 3),
+      statics->up->up->vars[0],
+      statics->up->vars[0]);
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k421, self)})),
-      _var0);
+      statics->up->up->up->vars[0]);
 }
-static void _V10_Dinline__let_D588_lambda122(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_lambda122, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.1580 0 0) #f)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
 }
 static void _V10_Dinline__let_D588_k419(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9449,20 +9484,19 @@ static void _V10_Dinline__let_D588_k419(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.818 20 0) (close _V10_Dinline__let_D588_k420) (bruijn ##.impure-table.594 7 7) (bruijn ##.y.610 4 0) (close _V10_Dinline__let_D588_lambda122))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 4,
+  // ((bruijn ##.x.815 21 0) (close _V10_Dinline__let_D588_k420) (bruijn ##.refs.614 0 0) 0)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 21-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k420, self)})),
-      VGetArg(statics, 7-1, 7),
-      statics->up->up->up->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_lambda122, self)})));
+      _var0,
+      VEncodeInt(0l));
 }
-static void _V10_Dinline__let_D588_lambda123(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dinline__let_D588_lambda124(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_lambda123, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dinline__let_D588_lambda124, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1581 0 0) 0)
+  // ((bruijn ##.k.1580 0 0) 0)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeInt(0l));
 }
@@ -9476,12 +9510,12 @@ static void _V10_Dinline__let_D588_k418(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.818 19 0) (close _V10_Dinline__let_D588_k419) (bruijn ##.ref-table.593 6 6) (bruijn ##.y.610 3 0) (close _V10_Dinline__let_D588_lambda123))
+  // ((bruijn ##.x.816 19 0) (close _V10_Dinline__let_D588_k419) (bruijn ##.ref-table.593 6 6) (bruijn ##.y.610 3 0) (close _V10_Dinline__let_D588_lambda124))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 4,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k419, self)})),
       VGetArg(statics, 6-1, 6),
       statics->up->up->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_lambda123, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_lambda124, self)})));
 }
 static void _V10_Dinline__let_D588_k417(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9493,7 +9527,7 @@ static void _V10_Dinline__let_D588_k417(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.826 10 0) (close _V10_Dinline__let_D588_k418) (bruijn ##.xs.609 4 5))
+  // ((bruijn ##.x.824 10 0) (close _V10_Dinline__let_D588_k418) (bruijn ##.xs.609 4 5))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k418, self)})),
       statics->up->up->up->vars[5]);
@@ -9508,7 +9542,7 @@ static void _V10_Dinline__let_D588_k416(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.826 9 0) (close _V10_Dinline__let_D588_k417) (bruijn ##.ys.608 3 4))
+  // ((bruijn ##.x.824 9 0) (close _V10_Dinline__let_D588_k417) (bruijn ##.ys.608 3 4))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k417, self)})),
       statics->up->up->vars[4]);
@@ -9523,7 +9557,7 @@ static void _V10_Dinline__let_D588_k415(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.823 11 0) (close _V10_Dinline__let_D588_k416) (bruijn ##.xs.609 2 5))
+  // ((bruijn ##.x.821 11 0) (close _V10_Dinline__let_D588_k416) (bruijn ##.xs.609 2 5))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k416, self)})),
       statics->up->vars[5]);
@@ -9538,7 +9572,7 @@ static void _V10_Dinline__let_D588_k410(VRuntime * runtime, VEnv * statics, int 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1537 0 0) ((bruijn ##.x.827 6 0) (close _V10_Dinline__let_D588_k411) (bruijn ##.done-ys.606 1 2)) ((bruijn ##.x.823 10 0) (close _V10_Dinline__let_D588_k415) (bruijn ##.ys.608 1 4)))
+  // (if (bruijn ##.p.1535 0 0) ((bruijn ##.x.825 6 0) (close _V10_Dinline__let_D588_k411) (bruijn ##.done-ys.606 1 2)) ((bruijn ##.x.821 10 0) (close _V10_Dinline__let_D588_k415) (bruijn ##.ys.608 1 4)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 2,
@@ -9565,38 +9599,20 @@ static void _V10_Dinline__let_D588_lambda119(VRuntime * runtime, VEnv * statics,
   self->vars[3] = _var3;
   self->vars[4] = _var4;
   self->vars[5] = _var5;
-  // ((bruijn ##.x.827 5 0) (close _V10_Dinline__let_D588_k410) (bruijn ##.ys.608 0 4))
+  // ((bruijn ##.x.825 5 0) (close _V10_Dinline__let_D588_k410) (bruijn ##.ys.608 0 4))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_k410, self)})),
       _var4);
 }
-static void _V10_Doptimize__let_D589_k458(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k459(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k458, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k459, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1711 0 0) (bruijn ##.k.1701 9 0))
+  // ((bruijn ##.x.1710 0 0) (bruijn ##.k.1700 9 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 9-1, 0));
-}
-static void _V10_Doptimize__let_D589_k469(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k469, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // (if (bruijn ##.p.1749 0 0) ((bruijn ##.k.1747 4 0) (bruijn ##.p.1749 0 0)) ((bruijn ##.x.817 37 0) (bruijn ##.k.1747 4 0) (bruijn ##.x.1714 9 0) 1))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
-      _var0);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 37-1, 0)), 3,
-      statics->up->up->up->vars[0],
-      VGetArg(statics, 9-1, 0),
-      VEncodeInt(1l));
-}
 }
 static void _V10_Doptimize__let_D589_k468(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9604,15 +9620,17 @@ static void _V10_Doptimize__let_D589_k468(VRuntime * runtime, VEnv * statics, in
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.819 34 0) (close _V10_Doptimize__let_D589_k469) (bruijn ##.x.1750 0 0) '##foreign.function)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k469, self)})),
-      _var0,
-      _V10foreign_Dfunction);
+  // (if (bruijn ##.p.1752 0 0) ((bruijn ##.k.1750 4 0) (bruijn ##.p.1752 0 0)) ((bruijn ##.x.815 35 0) (bruijn ##.k.1750 4 0) (bruijn ##.x.1713 7 0) 1))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+      _var0);
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 3,
+      statics->up->up->up->vars[0],
+      VGetArg(statics, 7-1, 0),
+      VEncodeInt(1l));
+}
 }
 static void _V10_Doptimize__let_D589_k467(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9624,16 +9642,11 @@ static void _V10_Doptimize__let_D589_k467(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1748 0 0) ((bruijn ##.k.1747 2 0) (bruijn ##.p.1748 0 0)) ((bruijn ##.x.823 29 0) (close _V10_Doptimize__let_D589_k468) (bruijn ##.x.1713 8 0)))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      _var0);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
+  // ((bruijn ##.x.817 32 0) (close _V10_Doptimize__let_D589_k468) (bruijn ##.x.1753 0 0) '##foreign.function)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k468, self)})),
-      VGetArg(statics, 8-1, 0));
-}
+      _var0,
+      _V10foreign_Dfunction);
 }
 static void _V10_Doptimize__let_D589_k466(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9645,11 +9658,16 @@ static void _V10_Doptimize__let_D589_k466(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.819 32 0) (close _V10_Doptimize__let_D589_k467) (bruijn ##.x.1751 0 0) 'quote)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 3,
+  // (if (bruijn ##.p.1751 0 0) ((bruijn ##.k.1750 2 0) (bruijn ##.p.1751 0 0)) ((bruijn ##.x.821 27 0) (close _V10_Doptimize__let_D589_k467) (bruijn ##.x.1712 6 0)))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      _var0);
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k467, self)})),
-      _var0,
-      _V0quote);
+      VGetArg(statics, 6-1, 0));
+}
 }
 static void _V10_Doptimize__let_D589_k465(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -9661,379 +9679,11 @@ static void _V10_Doptimize__let_D589_k465(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1746 1 0) ((bruijn ##.k.1747 0 0) (bruijn ##.p.1746 1 0)) ((bruijn ##.x.823 27 0) (close _V10_Doptimize__let_D589_k466) (bruijn ##.x.1713 6 0)))
-if(VDecodeBool(
-statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->vars[0]);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 2,
+  // ((bruijn ##.x.817 30 0) (close _V10_Doptimize__let_D589_k466) (bruijn ##.x.1754 0 0) 'quote)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k466, self)})),
-      VGetArg(statics, 6-1, 0));
-}
-}
-static void _V10_Doptimize__let_D589_k474(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k474, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.822 32 0) (bruijn ##.k.1741 1 0) (bruijn ##.x.1742 0 0) (##inline ##vcore.qcons 'lambda (##inline ##vcore.qcons 'continuation (##inline ##vcore.qcons 'case-lambda '()))))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 3,
-      statics->vars[0],
       _var0,
-      VInlineCons2(runtime,
-        _V0lambda,
-        VInlineCons2(runtime,
-        _V0continuation,
-        VInlineCons2(runtime,
-        _V0case__lambda,
-        VNULL))));
-}
-static void _V10_Doptimize__let_D589_k473(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k473, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1740 1 0) ((bruijn ##.x.823 30 0) (close _V10_Doptimize__let_D589_k474) (bruijn ##.x.1713 9 0)) ((bruijn ##.k.1741 0 0) #f))
-if(VDecodeBool(
-statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k474, self)})),
-      VGetArg(statics, 9-1, 0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k476(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k476, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // (if (bruijn ##.p.1738 0 0) ((bruijn ##.k.1737 3 0) (bruijn ##.x.1715 7 0)) ((bruijn ##.k.1737 3 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
-      VGetArg(statics, 7-1, 0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k475(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k475, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.814 39 0) (close _V10_Doptimize__let_D589_k476) (bruijn ##.x.1739 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k476, self)})),
-      _var0);
-}
-static void _V10_Doptimize__let_D589_k472(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k472, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k473) (close _V10_Doptimize__let_D589_k475))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k473, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k475, self)})));
-}
-static void _V10_Doptimize__let_D589_k471(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k471, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1736 1 0) ((bruijn ##.x.821 30 0) (close _V10_Doptimize__let_D589_k472) (bruijn ##.x.1713 7 0)) ((bruijn ##.k.1737 0 0) #f))
-if(VDecodeBool(
-statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k472, self)})),
-      VGetArg(statics, 7-1, 0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k483(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k483, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.add-refs!.294 29 8) (bruijn ##.k.1722 4 0) (bruijn ##.ref-table.593 27 6) (bruijn ##.xrefs.636 3 0) (bruijn ##.x.1724 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 8)), 4,
-      statics->up->up->up->vars[0],
-      VGetArg(statics, 27-1, 6),
-      statics->up->up->vars[0],
-      _var0);
-}
-static void _V10_Doptimize__let_D589_k482(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k482, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.824 33 0) (close _V10_Doptimize__let_D589_k483) (bruijn ##.x.1714 12 0) 1)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k483, self)})),
-      VGetArg(statics, 12-1, 0),
-      VEncodeInt(1l));
-}
-static void _V10_Doptimize__let_D589_k481(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k481, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (set! (close _V10_Doptimize__let_D589_k482) (bruijn ##.dummy.187.638 1 2) (bruijn ##.x.1725 0 0))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k482, self)})),
-      VEncodeInt(1l), VEncodeInt(2l),
-      _var0
-    );
-}
-static void _V10_Doptimize__let_D589_lambda127(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda127, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.count-refs.296 27 10) (bruijn ##.k.1726 0 0) (bruijn ##.x.1713 12 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 10)), 2,
-      _var0,
-      VGetArg(statics, 12-1, 0));
-}
-static void _V10_Doptimize__let_D589_k484(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k484, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (set! (bruijn ##.k.1727 1 0) (bruijn ##.xpure.637 2 1) (bruijn ##.xpure.186.640 1 2))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      statics->vars[0],
-      VEncodeInt(2l), VEncodeInt(1l),
-      statics->vars[2]
-    );
-}
-static void _V10_Doptimize__let_D589_lambda128(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
- if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda128, got ~D~N"
-  "-- expected 3~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[3]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 3, 3, statics);
-  self->vars[0] = _var0;
-  self->vars[1] = _var1;
-  self->vars[2] = _var2;
-  // (set! (close _V10_Doptimize__let_D589_k484) (bruijn ##.xrefs.636 1 0) (bruijn ##.xrefs.185.639 0 1))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k484, self)})),
-      VEncodeInt(1l), VEncodeInt(0l),
-      _var1
-    );
-}
-static void _V10_Doptimize__let_D589_k480(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k480, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1721 1 0) (letrec 3 (#f #f #f) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k481) (close _V10_Doptimize__let_D589_lambda127) (close _V10_Doptimize__let_D589_lambda128))) ((bruijn ##.k.1722 0 0) #f))
-if(VDecodeBool(
-statics->vars[0])) {
-    {
-    VEnv * statics = self;
-    struct { VEnv self; VWORD argv[3]; } container;
-    VEnv * self = &container.self;
-    VInitEnv(self, 3, 3, statics);
-    self->vars[0] = VEncodeBool(false);
-    self->vars[1] = VEncodeBool(false);
-    self->vars[2] = VEncodeBool(false);
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k481, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda127, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda128, self)})));
-    }
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k487(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k487, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.optimize-apply.591 25 4) (bruijn ##.k.1712 13 0) (bruijn ##.x.1720 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 4)), 2,
-      VGetArg(statics, 13-1, 0),
-      _var0);
-}
-static void _V10_Doptimize__let_D589_k486(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k486, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.substitute.289 26 3) (close _V10_Doptimize__let_D589_k487) (bruijn ##.y.628 16 0) (bruijn ##.x.1713 11 0) (bruijn ##.expr.630 14 0) (bruijn ##.x.1714 10 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 3)), 5,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k487, self)})),
-      VGetArg(statics, 16-1, 0),
-      VGetArg(statics, 11-1, 0),
-      VGetArg(statics, 14-1, 0),
-      VGetArg(statics, 10-1, 0));
-}
-static void _V10_Doptimize__let_D589_k485(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k485, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.825 29 0) (close _V10_Doptimize__let_D589_k486) (bruijn ##.ref-table.593 23 6) (bruijn ##.y.628 15 0) 0)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k486, self)})),
-      VGetArg(statics, 23-1, 6),
-      VGetArg(statics, 15-1, 0),
-      VEncodeInt(0l));
-}
-static void _V10_Doptimize__let_D589_k479(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k479, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k480) (close _V10_Doptimize__let_D589_k485))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k480, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k485, self)})));
-}
-static void _V10_Doptimize__let_D589_k478(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k478, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.814 38 0) (close _V10_Doptimize__let_D589_k479) (bruijn ##.x.1729 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k479, self)})),
-      _var0);
-}
-static void _V10_Doptimize__let_D589_k488(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k488, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.1712 9 0) (##inline ##vcore.cons (bruijn ##.x.1730 0 0) (##inline ##vcore.cons (bruijn ##.x.1713 8 0) '())))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 1,
-      VInlineCons2(runtime,
-        _var0,
-        VInlineCons2(runtime,
-        VGetArg(statics, 8-1, 0),
-        VNULL)));
-}
-static void _V10_Doptimize__let_D589_k477(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k477, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1717 0 0) ((bruijn ##.x.817 34 0) (close _V10_Doptimize__let_D589_k478) (bruijn ##.x.1714 6 0) 1) ((bruijn ##.optimize-atom.592 20 5) (close _V10_Doptimize__let_D589_k488) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.y.628 12 0) '()) (##inline ##vcore.cons (bruijn ##.expr.630 10 0) '())))))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k478, self)})),
-      VGetArg(statics, 6-1, 0),
-      VEncodeInt(1l));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 5)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k488, self)})),
-      VInlineCons2(runtime,
-        _V0continuation,
-        VInlineCons2(runtime,
-        VInlineCons2(runtime,
-        VGetArg(statics, 12-1, 0),
-        VNULL),
-        VInlineCons2(runtime,
-        VGetArg(statics, 10-1, 0),
-        VNULL))));
-}
-}
-static void _V10_Doptimize__let_D589_k470(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k470, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k471) (close _V10_Doptimize__let_D589_k477))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k471, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k477, self)})));
+      _V0quote);
 }
 static void _V10_Doptimize__let_D589_k464(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -10045,9 +9695,455 @@ static void _V10_Doptimize__let_D589_k464(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k465) (close _V10_Doptimize__let_D589_k470))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k465, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k470, self)})));
+  // (if (bruijn ##.p.1749 1 0) ((bruijn ##.k.1750 0 0) (bruijn ##.p.1749 1 0)) ((bruijn ##.x.821 25 0) (close _V10_Doptimize__let_D589_k465) (bruijn ##.x.1712 4 0)))
+if(VDecodeBool(
+statics->vars[0])) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->vars[0]);
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k465, self)})),
+      statics->up->up->up->vars[0]);
+}
+}
+static void _V10_Doptimize__let_D589_k473(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k473, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.820 30 0) (bruijn ##.k.1744 1 0) (bruijn ##.x.1745 0 0) (##inline ##vcore.qcons 'lambda (##inline ##vcore.qcons 'continuation (##inline ##vcore.qcons 'case-lambda '()))))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
+      statics->vars[0],
+      _var0,
+      VInlineCons2(runtime,
+        _V0lambda,
+        VInlineCons2(runtime,
+        _V0continuation,
+        VInlineCons2(runtime,
+        _V0case__lambda,
+        VNULL))));
+}
+static void _V10_Doptimize__let_D589_k472(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k472, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1743 1 0) ((bruijn ##.x.821 28 0) (close _V10_Doptimize__let_D589_k473) (bruijn ##.x.1712 7 0)) ((bruijn ##.k.1744 0 0) #f))
+if(VDecodeBool(
+statics->vars[0])) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k473, self)})),
+      VGetArg(statics, 7-1, 0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k478(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k478, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.812 41 0) (bruijn ##.k.1735 6 0) (bruijn ##.x.1738 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 2,
+      VGetArg(statics, 6-1, 0),
+      _var0);
+}
+static void _V10_Doptimize__let_D589_lambda128(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda128, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.k.1739 0 0) #f)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+static void _V10_Doptimize__let_D589_k477(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k477, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1737 0 0) ((bruijn ##.x.816 36 0) (close _V10_Doptimize__let_D589_k478) (bruijn ##.impure-table.594 23 7) (bruijn ##.x.1712 10 0) (close _V10_Doptimize__let_D589_lambda128)) ((bruijn ##.k.1735 5 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 36-1, 0)), 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k478, self)})),
+      VGetArg(statics, 23-1, 7),
+      VGetArg(statics, 10-1, 0),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda128, self)})));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k476(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k476, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.812 39 0) (close _V10_Doptimize__let_D589_k477) (bruijn ##.x.1740 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k477, self)})),
+      _var0);
+}
+static void _V10_Doptimize__let_D589_lambda129(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda129, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.k.1741 0 0) #f)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+static void _V10_Doptimize__let_D589_k475(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k475, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1736 0 0) ((bruijn ##.x.816 34 0) (close _V10_Doptimize__let_D589_k476) (bruijn ##.impure-table.594 21 7) (bruijn ##.y.627 13 0) (close _V10_Doptimize__let_D589_lambda129)) ((bruijn ##.k.1735 3 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k476, self)})),
+      VGetArg(statics, 21-1, 7),
+      VGetArg(statics, 13-1, 0),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda129, self)})));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k474(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k474, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.812 37 0) (close _V10_Doptimize__let_D589_k475) (bruijn ##.x.1742 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 37-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k475, self)})),
+      _var0);
+}
+static void _V10_Doptimize__let_D589_k471(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k471, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Doptimize__let_D589_k472) (close _V10_Doptimize__let_D589_k474))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k472, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k474, self)})));
+}
+static void _V10_Doptimize__let_D589_k470(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k470, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1734 1 0) ((bruijn ##.x.819 28 0) (close _V10_Doptimize__let_D589_k471) (bruijn ##.x.1712 5 0)) ((bruijn ##.k.1735 0 0) #f))
+if(VDecodeBool(
+statics->vars[0])) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k471, self)})),
+      VGetArg(statics, 5-1, 0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k485(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k485, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.add-refs!.294 27 8) (bruijn ##.k.1720 4 0) (bruijn ##.ref-table.593 25 6) (bruijn ##.xrefs.634 3 0) (bruijn ##.x.1722 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 8)), 4,
+      statics->up->up->up->vars[0],
+      VGetArg(statics, 25-1, 6),
+      statics->up->up->vars[0],
+      _var0);
+}
+static void _V10_Doptimize__let_D589_k484(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k484, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.822 31 0) (close _V10_Doptimize__let_D589_k485) (bruijn ##.x.1713 10 0) 1)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k485, self)})),
+      VGetArg(statics, 10-1, 0),
+      VEncodeInt(1l));
+}
+static void _V10_Doptimize__let_D589_k483(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k483, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (set! (close _V10_Doptimize__let_D589_k484) (bruijn ##.dummy.187.636 1 2) (bruijn ##.x.1723 0 0))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k484, self)})),
+      VEncodeInt(1l), VEncodeInt(2l),
+      _var0
+    );
+}
+static void _V10_Doptimize__let_D589_lambda130(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda130, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.count-refs.296 25 10) (bruijn ##.k.1724 0 0) (bruijn ##.x.1712 10 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 10)), 2,
+      _var0,
+      VGetArg(statics, 10-1, 0));
+}
+static void _V10_Doptimize__let_D589_k486(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k486, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (set! (bruijn ##.k.1725 1 0) (bruijn ##.xpure.635 2 1) (bruijn ##.xpure.186.638 1 2))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
+      statics->vars[0],
+      VEncodeInt(2l), VEncodeInt(1l),
+      statics->vars[2]
+    );
+}
+static void _V10_Doptimize__let_D589_lambda131(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+ if(argc != 3) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda131, got ~D~N"
+  "-- expected 3~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[3]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 3, 3, statics);
+  self->vars[0] = _var0;
+  self->vars[1] = _var1;
+  self->vars[2] = _var2;
+  // (set! (close _V10_Doptimize__let_D589_k486) (bruijn ##.xrefs.634 1 0) (bruijn ##.xrefs.185.637 0 1))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k486, self)})),
+      VEncodeInt(1l), VEncodeInt(0l),
+      _var1
+    );
+}
+static void _V10_Doptimize__let_D589_k482(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k482, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1719 1 0) (letrec 3 (#f #f #f) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k483) (close _V10_Doptimize__let_D589_lambda130) (close _V10_Doptimize__let_D589_lambda131))) ((bruijn ##.k.1720 0 0) #f))
+if(VDecodeBool(
+statics->vars[0])) {
+    {
+    VEnv * statics = self;
+    struct { VEnv self; VWORD argv[3]; } container;
+    VEnv * self = &container.self;
+    VInitEnv(self, 3, 3, statics);
+    self->vars[0] = VEncodeBool(false);
+    self->vars[1] = VEncodeBool(false);
+    self->vars[2] = VEncodeBool(false);
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k483, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda130, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda131, self)})));
+    }
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k489(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k489, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.optimize-apply.591 23 4) (bruijn ##.k.1711 11 0) (bruijn ##.x.1718 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 4)), 2,
+      VGetArg(statics, 11-1, 0),
+      _var0);
+}
+static void _V10_Doptimize__let_D589_k488(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k488, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.substitute.289 24 3) (close _V10_Doptimize__let_D589_k489) (bruijn ##.y.627 14 0) (bruijn ##.x.1712 9 0) (bruijn ##.expr.629 12 0) (bruijn ##.x.1713 8 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 3)), 5,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k489, self)})),
+      VGetArg(statics, 14-1, 0),
+      VGetArg(statics, 9-1, 0),
+      VGetArg(statics, 12-1, 0),
+      VGetArg(statics, 8-1, 0));
+}
+static void _V10_Doptimize__let_D589_k487(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k487, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.823 27 0) (close _V10_Doptimize__let_D589_k488) (bruijn ##.ref-table.593 21 6) (bruijn ##.y.627 13 0) 0)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k488, self)})),
+      VGetArg(statics, 21-1, 6),
+      VGetArg(statics, 13-1, 0),
+      VEncodeInt(0l));
+}
+static void _V10_Doptimize__let_D589_k481(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k481, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Doptimize__let_D589_k482) (close _V10_Doptimize__let_D589_k487))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k482, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k487, self)})));
+}
+static void _V10_Doptimize__let_D589_k480(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k480, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.812 36 0) (close _V10_Doptimize__let_D589_k481) (bruijn ##.x.1727 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 36-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k481, self)})),
+      _var0);
+}
+static void _V10_Doptimize__let_D589_k490(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k490, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.k.1711 7 0) (##inline ##vcore.cons (bruijn ##.x.1728 0 0) (##inline ##vcore.cons (bruijn ##.x.1712 6 0) '())))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 1,
+      VInlineCons2(runtime,
+        _var0,
+        VInlineCons2(runtime,
+        VGetArg(statics, 6-1, 0),
+        VNULL)));
+}
+static void _V10_Doptimize__let_D589_k479(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k479, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1715 0 0) ((bruijn ##.x.815 32 0) (close _V10_Doptimize__let_D589_k480) (bruijn ##.x.1713 4 0) 1) ((bruijn ##.optimize-atom.592 18 5) (close _V10_Doptimize__let_D589_k490) (##inline ##vcore.cons 'continuation (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.y.627 10 0) '()) (##inline ##vcore.cons (bruijn ##.expr.629 8 0) '())))))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k480, self)})),
+      statics->up->up->up->vars[0],
+      VEncodeInt(1l));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 5)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k490, self)})),
+      VInlineCons2(runtime,
+        _V0continuation,
+        VInlineCons2(runtime,
+        VInlineCons2(runtime,
+        VGetArg(statics, 10-1, 0),
+        VNULL),
+        VInlineCons2(runtime,
+        VGetArg(statics, 8-1, 0),
+        VNULL))));
+}
+}
+static void _V10_Doptimize__let_D589_k469(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k469, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Doptimize__let_D589_k470) (close _V10_Doptimize__let_D589_k479))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k470, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k479, self)})));
 }
 static void _V10_Doptimize__let_D589_k463(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -10059,17 +10155,9 @@ static void _V10_Doptimize__let_D589_k463(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1716 0 0) ((bruijn ##.optimize-apply.591 17 4) (bruijn ##.k.1712 5 0) (bruijn ##.expr.630 7 0)) ((bruijn ##.x.820 28 0) (close _V10_Doptimize__let_D589_k464) (bruijn ##.x.1713 4 0)))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 4)), 2,
-      VGetArg(statics, 5-1, 0),
-      VGetArg(statics, 7-1, 0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k464, self)})),
-      statics->up->up->up->vars[0]);
-}
+  // ((close _V10_Doptimize__let_D589_k464) (close _V10_Doptimize__let_D589_k469))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k464, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k469, self)})));
 }
 static void _V10_Doptimize__let_D589_k462(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -10081,11 +10169,17 @@ static void _V10_Doptimize__let_D589_k462(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.817 30 0) (close _V10_Doptimize__let_D589_k463) (bruijn ##.x.1714 2 0) 0)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
+  // (if (bruijn ##.p.1714 0 0) ((bruijn ##.optimize-apply.591 15 4) (bruijn ##.k.1711 3 0) (bruijn ##.expr.629 5 0)) ((bruijn ##.x.818 26 0) (close _V10_Doptimize__let_D589_k463) (bruijn ##.x.1712 2 0)))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 4)), 2,
+      statics->up->up->vars[0],
+      VGetArg(statics, 5-1, 0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k463, self)})),
-      statics->up->vars[0],
-      VEncodeInt(0l));
+      statics->up->vars[0]);
+}
 }
 static void _V10_Doptimize__let_D589_k461(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -10097,20 +10191,21 @@ static void _V10_Doptimize__let_D589_k461(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.814 32 0) (close _V10_Doptimize__let_D589_k462) (bruijn ##.x.1752 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 2,
+  // ((bruijn ##.x.815 28 0) (close _V10_Doptimize__let_D589_k462) (bruijn ##.x.1713 0 0) 0)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k462, self)})),
-      _var0);
+      _var0,
+      VEncodeInt(0l));
 }
-static void _V10_Doptimize__let_D589_lambda129(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_lambda132(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda129, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda132, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1753 0 0) #f)
+  // ((bruijn ##.k.1755 0 0) 0)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
+      VEncodeInt(0l));
 }
 static void _V10_Doptimize__let_D589_k460(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -10122,43 +10217,16 @@ static void _V10_Doptimize__let_D589_k460(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.818 27 0) (close _V10_Doptimize__let_D589_k461) (bruijn ##.impure-table.594 14 7) (bruijn ##.y.628 6 0) (close _V10_Doptimize__let_D589_lambda129))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k461, self)})),
-      VGetArg(statics, 14-1, 7),
-      VGetArg(statics, 6-1, 0),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda129, self)})));
-}
-static void _V10_Doptimize__let_D589_lambda130(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda130, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.1754 0 0) 0)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeInt(0l));
-}
-static void _V10_Doptimize__let_D589_k459(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k459, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.818 26 0) (close _V10_Doptimize__let_D589_k460) (bruijn ##.ref-table.593 13 6) (bruijn ##.y.628 5 0) (close _V10_Doptimize__let_D589_lambda130))
+  // ((bruijn ##.x.816 26 0) (close _V10_Doptimize__let_D589_k461) (bruijn ##.ref-table.593 13 6) (bruijn ##.y.627 5 0) (close _V10_Doptimize__let_D589_lambda132))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k460, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k461, self)})),
       VGetArg(statics, 13-1, 6),
       VGetArg(statics, 5-1, 0),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda130, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda132, self)})));
 }
-static void _V10_Doptimize__let_D589_lambda126(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_lambda127(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda126, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda127, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10166,11 +10234,42 @@ static void _V10_Doptimize__let_D589_lambda126(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.optimize-atom.592 12 5) (close _V10_Doptimize__let_D589_k459) (##inline ##vcore.car (bruijn ##.expr.156.631 1 0)))
+  // ((bruijn ##.optimize-atom.592 12 5) (close _V10_Doptimize__let_D589_k460) (##inline ##vcore.car (bruijn ##.expr.156.630 1 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 5)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k459, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k460, self)})),
       VInlineCar2(runtime,
         statics->vars[0]));
+}
+static void _V10_Doptimize__let_D589_k458(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k458, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.156.630 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.156.630 0 0))) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k459) (close _V10_Doptimize__let_D589_lambda127) (bruijn ##.kk.149.621 9 1)) ((bruijn ##.k.1700 8 0) #f)) ((bruijn ##.k.1700 8 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+if(VDecodeBool(
+VInlineNullP2(runtime,
+        VInlineCdr2(runtime,
+        _var0)))) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k459, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda127, self)})),
+      VGetArg(statics, 9-1, 1));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 1,
+      VEncodeBool(false));
+}
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 1,
+      VEncodeBool(false));
+}
 }
 static void _V10_Doptimize__let_D589_k457(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -10182,24 +10281,16 @@ static void _V10_Doptimize__let_D589_k457(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.156.631 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.156.631 0 0))) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k458) (close _V10_Doptimize__let_D589_lambda126) (bruijn ##.kk.149.622 9 1)) ((bruijn ##.k.1701 8 0) #f)) ((bruijn ##.k.1701 8 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
+  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.155.628 1 0))) ((close _V10_Doptimize__let_D589_k458) (##inline ##vcore.cdr (bruijn ##.let-expr.620 9 1))) ((bruijn ##.k.1700 7 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         VInlineCdr2(runtime,
-        _var0)))) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k458, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda126, self)})),
-      VGetArg(statics, 9-1, 1));
+        statics->vars[0])))) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k458, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        VGetArg(statics, 9-1, 1)));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 1,
-      VEncodeBool(false));
-}
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 1,
       VEncodeBool(false));
 }
 }
@@ -10213,16 +10304,15 @@ static void _V10_Doptimize__let_D589_k456(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.155.629 1 0))) ((close _V10_Doptimize__let_D589_k457) (##inline ##vcore.cdr (bruijn ##.let-expr.621 9 1))) ((bruijn ##.k.1701 7 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.155.628 0 0)) ((close _V10_Doptimize__let_D589_k457) (##inline ##vcore.car (bruijn ##.expr.155.628 0 0))) ((bruijn ##.k.1700 6 0) #f))
 if(VDecodeBool(
-VInlineNullP2(runtime,
-        VInlineCdr2(runtime,
-        statics->vars[0])))) {
+VInlinePairP2(runtime,
+        _var0))) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k457, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        VGetArg(statics, 9-1, 1)));
+      VInlineCar2(runtime,
+        _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 1,
       VEncodeBool(false));
 }
 }
@@ -10236,15 +10326,16 @@ static void _V10_Doptimize__let_D589_k455(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.155.629 0 0)) ((close _V10_Doptimize__let_D589_k456) (##inline ##vcore.car (bruijn ##.expr.155.629 0 0))) ((bruijn ##.k.1701 6 0) #f))
+  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.154.626 1 0))) ((close _V10_Doptimize__let_D589_k456) (##inline ##vcore.cdr (bruijn ##.expr.153.625 2 0))) ((bruijn ##.k.1700 5 0) #f))
 if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
+VInlineNullP2(runtime,
+        VInlineCdr2(runtime,
+        statics->vars[0])))) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k456, .env = self }, }, 1,
-      VInlineCar2(runtime,
-        _var0));
+      VInlineCdr2(runtime,
+        statics->up->vars[0]));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
       VEncodeBool(false));
 }
 }
@@ -10258,16 +10349,15 @@ static void _V10_Doptimize__let_D589_k454(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.154.627 1 0))) ((close _V10_Doptimize__let_D589_k455) (##inline ##vcore.cdr (bruijn ##.expr.153.626 2 0))) ((bruijn ##.k.1701 5 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.154.626 0 0)) ((close _V10_Doptimize__let_D589_k455) (##inline ##vcore.car (bruijn ##.expr.154.626 0 0))) ((bruijn ##.k.1700 4 0) #f))
 if(VDecodeBool(
-VInlineNullP2(runtime,
-        VInlineCdr2(runtime,
-        statics->vars[0])))) {
+VInlinePairP2(runtime,
+        _var0))) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k455, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        statics->up->vars[0]));
+      VInlineCar2(runtime,
+        _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -10281,7 +10371,7 @@ static void _V10_Doptimize__let_D589_k453(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.154.627 0 0)) ((close _V10_Doptimize__let_D589_k454) (##inline ##vcore.car (bruijn ##.expr.154.627 0 0))) ((bruijn ##.k.1701 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.153.625 0 0)) ((close _V10_Doptimize__let_D589_k454) (##inline ##vcore.car (bruijn ##.expr.153.625 0 0))) ((bruijn ##.k.1700 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -10289,7 +10379,7 @@ VInlinePairP2(runtime,
       VInlineCar2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -10303,15 +10393,14 @@ static void _V10_Doptimize__let_D589_k452(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.153.626 0 0)) ((close _V10_Doptimize__let_D589_k453) (##inline ##vcore.car (bruijn ##.expr.153.626 0 0))) ((bruijn ##.k.1701 3 0) #f))
+  // (if (bruijn ##.p.1702 0 0) ((close _V10_Doptimize__let_D589_k453) (##inline ##vcore.cdr (bruijn ##.expr.152.624 1 0))) ((bruijn ##.k.1700 2 0) #f))
 if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
+_var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k453, .env = self }, }, 1,
-      VInlineCar2(runtime,
-        _var0));
+      VInlineCdr2(runtime,
+        statics->vars[0]));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -10325,14 +10414,17 @@ static void _V10_Doptimize__let_D589_k451(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1703 0 0) ((close _V10_Doptimize__let_D589_k452) (##inline ##vcore.cdr (bruijn ##.expr.152.625 1 0))) ((bruijn ##.k.1701 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.152.624 0 0)) ((bruijn ##.x.826 7 0) (close _V10_Doptimize__let_D589_k452) 'continuation (##inline ##vcore.car (bruijn ##.expr.152.624 0 0))) ((bruijn ##.k.1700 1 0) #f))
 if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k452, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        statics->vars[0]));
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k452, self)})),
+      _V0continuation,
+      VInlineCar2(runtime,
+        _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -10346,35 +10438,11 @@ static void _V10_Doptimize__let_D589_k450(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.152.625 0 0)) ((bruijn ##.x.828 7 0) (close _V10_Doptimize__let_D589_k451) 'continuation (##inline ##vcore.car (bruijn ##.expr.152.625 0 0))) ((bruijn ##.k.1701 1 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k451, self)})),
-      _V0continuation,
-      VInlineCar2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k449(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k449, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.621 2 1)) ((close _V10_Doptimize__let_D589_k450) (##inline ##vcore.car (bruijn ##.let-expr.621 2 1))) ((bruijn ##.k.1701 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.620 2 1)) ((close _V10_Doptimize__let_D589_k451) (##inline ##vcore.car (bruijn ##.let-expr.620 2 1))) ((bruijn ##.k.1700 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k450, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k451, .env = self }, }, 1,
       VInlineCar2(runtime,
         statics->up->vars[1]));
 } else {
@@ -10382,31 +10450,31 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__let_D589_k495(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k497(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k495, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k497, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1694 0 0) (bruijn ##.k.1686 5 0))
+  // ((bruijn ##.x.1693 0 0) (bruijn ##.k.1685 5 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 5-1, 0));
 }
-static void _V10_Doptimize__let_D589_lambda131(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_lambda133(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda131, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda133, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.optimize-apply.591 9 4) (bruijn ##.k.1695 0 0) (##inline ##vcore.car (bruijn ##.expr.160.644 1 0)))
+  // ((bruijn ##.optimize-apply.591 9 4) (bruijn ##.k.1694 0 0) (##inline ##vcore.car (bruijn ##.expr.160.642 1 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 4)), 2,
       _var0,
       VInlineCar2(runtime,
         statics->vars[0]));
 }
-static void _V10_Doptimize__let_D589_k494(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k496(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k494, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k496, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10414,7 +10482,7 @@ static void _V10_Doptimize__let_D589_k494(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.160.644 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.160.644 0 0))) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.let-expr.621 7 1))) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k495) (close _V10_Doptimize__let_D589_lambda131) (bruijn ##.kk.149.622 6 1)) ((bruijn ##.k.1686 4 0) #f)) ((bruijn ##.k.1686 4 0) #f)) ((bruijn ##.k.1686 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.160.642 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.160.642 0 0))) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.let-expr.620 7 1))) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k497) (close _V10_Doptimize__let_D589_lambda133) (bruijn ##.kk.149.621 6 1)) ((bruijn ##.k.1685 4 0) #f)) ((bruijn ##.k.1685 4 0) #f)) ((bruijn ##.k.1685 4 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -10427,8 +10495,8 @@ VInlineNullP2(runtime,
         VInlineCdr2(runtime,
         VGetArg(statics, 7-1, 1))))) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k495, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda131, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k497, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda133, self)})),
       VGetArg(statics, 6-1, 1));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
@@ -10440,6 +10508,57 @@ VInlineNullP2(runtime,
 }
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k495(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k495, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.159.641 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.car (bruijn ##.expr.159.641 0 0))) ((close _V10_Doptimize__let_D589_k496) (##inline ##vcore.cdr (bruijn ##.expr.159.641 0 0))) ((bruijn ##.k.1685 3 0) #f)) ((bruijn ##.k.1685 3 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+if(VDecodeBool(
+VInlineNullP2(runtime,
+        VInlineCar2(runtime,
+        _var0)))) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k496, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        _var0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k494(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k494, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1687 0 0) ((close _V10_Doptimize__let_D589_k495) (##inline ##vcore.cdr (bruijn ##.expr.158.640 1 0))) ((bruijn ##.k.1685 2 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k495, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        statics->vars[0]));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -10453,23 +10572,17 @@ static void _V10_Doptimize__let_D589_k493(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.159.643 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.car (bruijn ##.expr.159.643 0 0))) ((close _V10_Doptimize__let_D589_k494) (##inline ##vcore.cdr (bruijn ##.expr.159.643 0 0))) ((bruijn ##.k.1686 3 0) #f)) ((bruijn ##.k.1686 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.158.640 0 0)) ((bruijn ##.x.826 8 0) (close _V10_Doptimize__let_D589_k494) 'lambda (##inline ##vcore.car (bruijn ##.expr.158.640 0 0))) ((bruijn ##.k.1685 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
-if(VDecodeBool(
-VInlineNullP2(runtime,
-        VInlineCar2(runtime,
-        _var0)))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k494, .env = self }, }, 1,
-      VInlineCdr2(runtime,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k494, self)})),
+      _V0lambda,
+      VInlineCar2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -10483,56 +10596,11 @@ static void _V10_Doptimize__let_D589_k492(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1688 0 0) ((close _V10_Doptimize__let_D589_k493) (##inline ##vcore.cdr (bruijn ##.expr.158.642 1 0))) ((bruijn ##.k.1686 2 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k493, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        statics->vars[0]));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k491(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k491, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.158.642 0 0)) ((bruijn ##.x.828 8 0) (close _V10_Doptimize__let_D589_k492) 'lambda (##inline ##vcore.car (bruijn ##.expr.158.642 0 0))) ((bruijn ##.k.1686 1 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k492, self)})),
-      _V0lambda,
-      VInlineCar2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k490(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k490, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.621 3 1)) ((close _V10_Doptimize__let_D589_k491) (##inline ##vcore.car (bruijn ##.let-expr.621 3 1))) ((bruijn ##.k.1686 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.620 3 1)) ((close _V10_Doptimize__let_D589_k493) (##inline ##vcore.car (bruijn ##.let-expr.620 3 1))) ((bruijn ##.k.1685 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k491, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k493, .env = self }, }, 1,
       VInlineCar2(runtime,
         statics->up->up->vars[1]));
 } else {
@@ -10540,21 +10608,21 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Dloop_D651_k502(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D649_k504(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D651_k502, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D649_k504, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.166.650 4 1) (bruijn ##.k.1651 1 0) (bruijn ##.expr.168.652 2 1) (bruijn ##.x.1652 0 0))
+  // ((bruijn ##.kk.166.648 4 1) (bruijn ##.k.1650 1 0) (bruijn ##.expr.168.650 2 1) (bruijn ##.x.1651 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[1]), 3,
       statics->vars[0],
       statics->up->vars[1],
       _var0);
 }
-static void _V10_Dloop_D651_k501(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D649_k503(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D651_k501, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D649_k503, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10562,34 +10630,34 @@ static void _V10_Dloop_D651_k501(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.168.652 1 1))) ((bruijn ##.x.806 38 0) (close _V10_Dloop_D651_k502) (bruijn ##.ys.165.653 1 2)) ((bruijn ##.k.1651 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.168.650 1 1))) ((bruijn ##.x.804 38 0) (close _V10_Dloop_D649_k504) (bruijn ##.ys.165.651 1 2)) ((bruijn ##.k.1650 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlinePairP2(runtime,
         statics->vars[1])))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D651_k502, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D649_k504, self)})),
       statics->vars[2]);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
-static void _V10_Dloop_D651_k505(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D649_k507(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D651_k505, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D649_k507, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.166.650 7 1) (bruijn ##.k.1645 2 0) (bruijn ##.expr.168.652 5 1) (bruijn ##.x.1647 0 0))
+  // ((bruijn ##.kk.166.648 7 1) (bruijn ##.k.1644 2 0) (bruijn ##.expr.168.650 5 1) (bruijn ##.x.1646 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 1)), 3,
       statics->up->vars[0],
       VGetArg(statics, 5-1, 1),
       _var0);
 }
-static void _V10_Dloop_D651_k504(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D649_k506(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D651_k504, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D649_k506, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10597,14 +10665,14 @@ static void _V10_Dloop_D651_k504(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 41 0) (close _V10_Dloop_D651_k505) (bruijn ##.ys.165.653 4 2))
+  // ((bruijn ##.x.804 41 0) (close _V10_Dloop_D649_k507) (bruijn ##.ys.165.651 4 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D651_k505, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D649_k507, self)})),
       statics->up->up->up->vars[2]);
 }
-static void _V10_Dloop_D651_lambda136(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Dloop_D649_lambda138(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D651_lambda136, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D649_lambda138, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -10613,9 +10681,9 @@ static void _V10_Dloop_D651_lambda136(VRuntime * runtime, VEnv * statics, int ar
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.kk.167.654 0 1) (close _V10_Dloop_D651_k504) (##inline ##vcore.cdr (bruijn ##.expr.168.652 3 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.168.652 3 1)) (bruijn ##.ys.165.653 3 2)))
+  // ((bruijn ##.kk.167.652 0 1) (close _V10_Dloop_D649_k506) (##inline ##vcore.cdr (bruijn ##.expr.168.650 3 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.168.650 3 1)) (bruijn ##.ys.165.651 3 2)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var1), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D651_k504, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D649_k506, self)})),
       VInlineCdr2(runtime,
         statics->up->up->vars[1]),
       VInlineCons2(runtime,
@@ -10623,9 +10691,9 @@ static void _V10_Dloop_D651_lambda136(VRuntime * runtime, VEnv * statics, int ar
         statics->up->up->vars[1]),
         statics->up->up->vars[2]));
 }
-static void _V10_Dloop_D651_lambda135(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D649_lambda137(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D651_lambda135, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D649_lambda137, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10633,14 +10701,14 @@ static void _V10_Dloop_D651_lambda135(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1644 0 0) (close _V10_Dloop_D651_lambda136))
+  // (##vcore.call/cc (bruijn ##.k.1643 0 0) (close _V10_Dloop_D649_lambda138))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D651_lambda136, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D649_lambda138, self)})));
 }
-static void _V10_Dloop_D651_k503(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D649_k505(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D651_k503, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D649_k505, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10648,15 +10716,15 @@ static void _V10_Dloop_D651_k503(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1642 1 0) (close _V10_Dloop_D651_lambda135) (bruijn ##.loop.651 2 0))
+  // (##vcore.call-with-values (bruijn ##.k.1641 1 0) (close _V10_Dloop_D649_lambda137) (bruijn ##.loop.649 2 0))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D651_lambda135, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D649_lambda137, self)})),
       statics->up->vars[0]);
 }
-static void _V10_Dloop_D651_lambda134(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void _V10_Dloop_D649_lambda136(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D651_lambda134, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D649_lambda136, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -10666,13 +10734,13 @@ static void _V10_Dloop_D651_lambda134(VRuntime * runtime, VEnv * statics, int ar
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((close _V10_Dloop_D651_k501) (close _V10_Dloop_D651_k503))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D651_k501, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D651_k503, self)})));
+  // ((close _V10_Dloop_D649_k503) (close _V10_Dloop_D649_k505))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D649_k503, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D649_k505, self)})));
 }
-static void _V10_Doptimize__let_D589_lambda133(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Doptimize__let_D589_lambda135(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda133, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda135, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -10681,13 +10749,13 @@ static void _V10_Doptimize__let_D589_lambda133(VRuntime * runtime, VEnv * static
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Dloop_D651_lambda134)) ((bruijn ##.loop.651 0 0) (bruijn ##.k.1641 1 0) (##inline ##vcore.car (bruijn ##.expr.163.648 3 0)) '()))
+  // (letrec 1 ((close _V10_Dloop_D649_lambda136)) ((bruijn ##.loop.649 0 0) (bruijn ##.k.1640 1 0) (##inline ##vcore.car (bruijn ##.expr.163.646 3 0)) '()))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
     VEnv * self = &container.self;
     VInitEnv(self, 1, 1, statics);
-    self->vars[0] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D651_lambda134, self)}));
+    self->vars[0] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D649_lambda136, self)}));
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, self->vars[0]), 3,
       statics->vars[0],
       VInlineCar2(runtime,
@@ -10695,9 +10763,9 @@ static void _V10_Doptimize__let_D589_lambda133(VRuntime * runtime, VEnv * static
       VNULL);
     }
 }
-static void _V10_Doptimize__let_D589_lambda132(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_lambda134(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda132, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda134, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10705,26 +10773,26 @@ static void _V10_Doptimize__let_D589_lambda132(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1640 0 0) (close _V10_Doptimize__let_D589_lambda133))
+  // (##vcore.call/cc (bruijn ##.k.1639 0 0) (close _V10_Doptimize__let_D589_lambda135))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda133, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda135, self)})));
 }
-static void _V10_Dloop_D662_k508(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D660_k510(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D662_k508, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D660_k510, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.172.661 4 1) (bruijn ##.k.1669 1 0) (bruijn ##.expr.174.663 2 1) (bruijn ##.x.1670 0 0))
+  // ((bruijn ##.kk.172.659 4 1) (bruijn ##.k.1668 1 0) (bruijn ##.expr.174.661 2 1) (bruijn ##.x.1669 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[1]), 3,
       statics->vars[0],
       statics->up->vars[1],
       _var0);
 }
-static void _V10_Dloop_D662_k507(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D660_k509(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D662_k507, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D660_k509, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10732,34 +10800,34 @@ static void _V10_Dloop_D662_k507(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.174.663 1 1))) ((bruijn ##.x.806 40 0) (close _V10_Dloop_D662_k508) (bruijn ##.xs.171.664 1 2)) ((bruijn ##.k.1669 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.174.661 1 1))) ((bruijn ##.x.804 40 0) (close _V10_Dloop_D660_k510) (bruijn ##.xs.171.662 1 2)) ((bruijn ##.k.1668 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlinePairP2(runtime,
         statics->vars[1])))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D662_k508, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D660_k510, self)})),
       statics->vars[2]);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
-static void _V10_Dloop_D662_k511(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D660_k513(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D662_k511, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D660_k513, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.172.661 7 1) (bruijn ##.k.1663 2 0) (bruijn ##.expr.174.663 5 1) (bruijn ##.x.1665 0 0))
+  // ((bruijn ##.kk.172.659 7 1) (bruijn ##.k.1662 2 0) (bruijn ##.expr.174.661 5 1) (bruijn ##.x.1664 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 1)), 3,
       statics->up->vars[0],
       VGetArg(statics, 5-1, 1),
       _var0);
 }
-static void _V10_Dloop_D662_k510(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D660_k512(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D662_k510, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D660_k512, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10767,14 +10835,14 @@ static void _V10_Dloop_D662_k510(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 43 0) (close _V10_Dloop_D662_k511) (bruijn ##.xs.171.664 4 2))
+  // ((bruijn ##.x.804 43 0) (close _V10_Dloop_D660_k513) (bruijn ##.xs.171.662 4 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 43-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D662_k511, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D660_k513, self)})),
       statics->up->up->up->vars[2]);
 }
-static void _V10_Dloop_D662_lambda142(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Dloop_D660_lambda144(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D662_lambda142, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D660_lambda144, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -10783,9 +10851,9 @@ static void _V10_Dloop_D662_lambda142(VRuntime * runtime, VEnv * statics, int ar
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.kk.173.665 0 1) (close _V10_Dloop_D662_k510) (##inline ##vcore.cdr (bruijn ##.expr.174.663 3 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.174.663 3 1)) (bruijn ##.xs.171.664 3 2)))
+  // ((bruijn ##.kk.173.663 0 1) (close _V10_Dloop_D660_k512) (##inline ##vcore.cdr (bruijn ##.expr.174.661 3 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.174.661 3 1)) (bruijn ##.xs.171.662 3 2)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var1), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D662_k510, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D660_k512, self)})),
       VInlineCdr2(runtime,
         statics->up->up->vars[1]),
       VInlineCons2(runtime,
@@ -10793,9 +10861,9 @@ static void _V10_Dloop_D662_lambda142(VRuntime * runtime, VEnv * statics, int ar
         statics->up->up->vars[1]),
         statics->up->up->vars[2]));
 }
-static void _V10_Dloop_D662_lambda141(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D660_lambda143(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D662_lambda141, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D660_lambda143, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10803,14 +10871,14 @@ static void _V10_Dloop_D662_lambda141(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1662 0 0) (close _V10_Dloop_D662_lambda142))
+  // (##vcore.call/cc (bruijn ##.k.1661 0 0) (close _V10_Dloop_D660_lambda144))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D662_lambda142, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D660_lambda144, self)})));
 }
-static void _V10_Dloop_D662_k509(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D660_k511(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D662_k509, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D660_k511, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10818,15 +10886,15 @@ static void _V10_Dloop_D662_k509(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1660 1 0) (close _V10_Dloop_D662_lambda141) (bruijn ##.loop.662 2 0))
+  // (##vcore.call-with-values (bruijn ##.k.1659 1 0) (close _V10_Dloop_D660_lambda143) (bruijn ##.loop.660 2 0))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D662_lambda141, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D660_lambda143, self)})),
       statics->up->vars[0]);
 }
-static void _V10_Dloop_D662_lambda140(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void _V10_Dloop_D660_lambda142(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D662_lambda140, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D660_lambda142, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -10836,13 +10904,13 @@ static void _V10_Dloop_D662_lambda140(VRuntime * runtime, VEnv * statics, int ar
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((close _V10_Dloop_D662_k507) (close _V10_Dloop_D662_k509))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D662_k507, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D662_k509, self)})));
+  // ((close _V10_Dloop_D660_k509) (close _V10_Dloop_D660_k511))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D660_k509, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D660_k511, self)})));
 }
-static void _V10_Doptimize__let_D589_lambda139(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Doptimize__let_D589_lambda141(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda139, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda141, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -10851,13 +10919,13 @@ static void _V10_Doptimize__let_D589_lambda139(VRuntime * runtime, VEnv * static
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Dloop_D662_lambda140)) ((bruijn ##.loop.662 0 0) (bruijn ##.k.1659 1 0) (##inline ##vcore.cdr (bruijn ##.let-expr.621 12 1)) '()))
+  // (letrec 1 ((close _V10_Dloop_D660_lambda142)) ((bruijn ##.loop.660 0 0) (bruijn ##.k.1658 1 0) (##inline ##vcore.cdr (bruijn ##.let-expr.620 12 1)) '()))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
     VEnv * self = &container.self;
     VInitEnv(self, 1, 1, statics);
-    self->vars[0] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D662_lambda140, self)}));
+    self->vars[0] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D660_lambda142, self)}));
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, self->vars[0]), 3,
       statics->vars[0],
       VInlineCdr2(runtime,
@@ -10865,9 +10933,9 @@ static void _V10_Doptimize__let_D589_lambda139(VRuntime * runtime, VEnv * static
       VNULL);
     }
 }
-static void _V10_Doptimize__let_D589_lambda138(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_lambda140(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda138, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda140, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10875,37 +10943,20 @@ static void _V10_Doptimize__let_D589_lambda138(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1658 0 0) (close _V10_Doptimize__let_D589_lambda139))
+  // (##vcore.call/cc (bruijn ##.k.1657 0 0) (close _V10_Doptimize__let_D589_lambda141))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda139, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda141, self)})));
 }
-static void _V10_Doptimize__let_D589_k512(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k514(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k512, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k514, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1674 0 0) (bruijn ##.k.1672 1 0))
+  // ((bruijn ##.x.1673 0 0) (bruijn ##.k.1671 1 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->vars[0]);
-}
-static void _V10_Doptimize__let_D589_k517(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k517, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // (if (bruijn ##.p.1678 1 0) ((bruijn ##.x.808 40 0) (bruijn ##.k.1679 0 0) (##string ##.string.2067)) ((bruijn ##.k.1679 0 0) #f))
-if(VDecodeBool(
-statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 2,
-      _var0,
-      VEncodePointer(&_V10_Dstring_D2067.sym, VPOINTER_OTHER));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
 }
 static void _V10_Doptimize__let_D589_k519(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -10913,7 +10964,24 @@ static void _V10_Doptimize__let_D589_k519(VRuntime * runtime, VEnv * statics, in
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.inline-let.588 18 1) (bruijn ##.k.1675 6 0) (##inline ##vcore.car (bruijn ##.expr.169.658 8 0)) '() '() (bruijn ##.ys.657 9 2) (bruijn ##.x.1677 0 0))
+  // (if (bruijn ##.p.1677 1 0) ((bruijn ##.x.806 40 0) (bruijn ##.k.1678 0 0) (##string ##.string.2068)) ((bruijn ##.k.1678 0 0) #f))
+if(VDecodeBool(
+statics->vars[0])) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 2,
+      _var0,
+      VEncodePointer(&_V10_Dstring_D2068.sym, VPOINTER_OTHER));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k521(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k521, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.inline-let.588 18 1) (bruijn ##.k.1674 6 0) (##inline ##vcore.car (bruijn ##.expr.169.656 8 0)) '() '() (bruijn ##.ys.655 9 2) (bruijn ##.x.1676 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 1)), 6,
       VGetArg(statics, 6-1, 0),
       VInlineCar2(runtime,
@@ -10922,6 +10990,22 @@ static void _V10_Doptimize__let_D589_k519(VRuntime * runtime, VEnv * statics, in
       VNULL,
       VGetArg(statics, 9-1, 2),
       _var0);
+}
+static void _V10_Doptimize__let_D589_k520(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k520, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.805 41 0) (close _V10_Doptimize__let_D589_k521) (bruijn ##.optimize-atom.592 17 5) (bruijn ##.xs.666 6 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k521, self)})),
+      VGetArg(statics, 17-1, 5),
+      VGetArg(statics, 6-1, 2));
 }
 static void _V10_Doptimize__let_D589_k518(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -10933,11 +11017,24 @@ static void _V10_Doptimize__let_D589_k518(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.807 41 0) (close _V10_Doptimize__let_D589_k519) (bruijn ##.optimize-atom.592 17 5) (bruijn ##.xs.668 6 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k519, self)})),
-      VGetArg(statics, 17-1, 5),
-      VGetArg(statics, 6-1, 2));
+  // ((close _V10_Doptimize__let_D589_k519) (close _V10_Doptimize__let_D589_k520))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k519, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k520, self)})));
+}
+static void _V10_Doptimize__let_D589_k517(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k517, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.812 32 0) (close _V10_Doptimize__let_D589_k518) (bruijn ##.x.1679 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k518, self)})),
+      _var0);
 }
 static void _V10_Doptimize__let_D589_k516(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -10949,9 +11046,11 @@ static void _V10_Doptimize__let_D589_k516(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k517) (close _V10_Doptimize__let_D589_k518))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k517, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k518, self)})));
+  // ((bruijn ##.x.815 28 0) (close _V10_Doptimize__let_D589_k517) (bruijn ##.x.1680 1 0) (bruijn ##.x.1681 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k517, self)})),
+      statics->vars[0],
+      _var0);
 }
 static void _V10_Doptimize__let_D589_k515(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -10963,45 +11062,14 @@ static void _V10_Doptimize__let_D589_k515(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.814 32 0) (close _V10_Doptimize__let_D589_k516) (bruijn ##.x.1680 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k516, self)})),
-      _var0);
-}
-static void _V10_Doptimize__let_D589_k514(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k514, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.817 28 0) (close _V10_Doptimize__let_D589_k515) (bruijn ##.x.1681 1 0) (bruijn ##.x.1682 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k515, self)})),
-      statics->vars[0],
-      _var0);
-}
-static void _V10_Doptimize__let_D589_k513(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k513, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.815 29 0) (close _V10_Doptimize__let_D589_k514) (bruijn ##.xs.668 2 2))
+  // ((bruijn ##.x.813 29 0) (close _V10_Doptimize__let_D589_k516) (bruijn ##.xs.666 2 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k514, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k516, self)})),
       statics->up->vars[2]);
 }
-static void _V10_Doptimize__let_D589_lambda144(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_lambda146(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda144, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda146, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11009,14 +11077,14 @@ static void _V10_Doptimize__let_D589_lambda144(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.815 28 0) (close _V10_Doptimize__let_D589_k513) (bruijn ##.ys.657 3 2))
+  // ((bruijn ##.x.813 28 0) (close _V10_Doptimize__let_D589_k515) (bruijn ##.ys.655 3 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k513, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k515, self)})),
       statics->up->up->vars[2]);
 }
-static void _V10_Doptimize__let_D589_lambda143(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void _V10_Doptimize__let_D589_lambda145(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda143, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda145, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -11026,22 +11094,22 @@ static void _V10_Doptimize__let_D589_lambda143(VRuntime * runtime, VEnv * static
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.667 0 1)) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k512) (close _V10_Doptimize__let_D589_lambda144) (bruijn ##.kk.149.622 9 1)) ((bruijn ##.k.1672 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.665 0 1)) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k514) (close _V10_Doptimize__let_D589_lambda146) (bruijn ##.kk.149.621 9 1)) ((bruijn ##.k.1671 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k512, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda144, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k514, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda146, self)})),
       VGetArg(statics, 9-1, 1));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__let_D589_k506(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k508(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k506, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k508, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11049,7 +11117,7 @@ static void _V10_Doptimize__let_D589_k506(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.169.658 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.169.658 0 0))) (##vcore.call-with-values (bruijn ##.k.1654 1 0) (close _V10_Doptimize__let_D589_lambda138) (close _V10_Doptimize__let_D589_lambda143)) ((bruijn ##.k.1654 1 0) #f)) ((bruijn ##.k.1654 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.169.656 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.169.656 0 0))) (##vcore.call-with-values (bruijn ##.k.1653 1 0) (close _V10_Doptimize__let_D589_lambda140) (close _V10_Doptimize__let_D589_lambda145)) ((bruijn ##.k.1653 1 0) #f)) ((bruijn ##.k.1653 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -11059,8 +11127,8 @@ VInlineNullP2(runtime,
         _var0)))) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda138, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda143, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda140, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda145, self)})));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
@@ -11070,9 +11138,9 @@ VInlineNullP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__let_D589_lambda137(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void _V10_Doptimize__let_D589_lambda139(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda137, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda139, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -11082,15 +11150,59 @@ static void _V10_Doptimize__let_D589_lambda137(VRuntime * runtime, VEnv * static
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.656 0 1)) ((close _V10_Doptimize__let_D589_k506) (##inline ##vcore.cdr (bruijn ##.expr.163.648 1 0))) ((bruijn ##.k.1654 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.654 0 1)) ((close _V10_Doptimize__let_D589_k508) (##inline ##vcore.cdr (bruijn ##.expr.163.646 1 0))) ((bruijn ##.k.1653 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k506, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k508, .env = self }, }, 1,
       VInlineCdr2(runtime,
         statics->vars[0]));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k502(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k502, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.163.646 0 0)) (##vcore.call-with-values (bruijn ##.k.1635 3 0) (close _V10_Doptimize__let_D589_lambda134) (close _V10_Doptimize__let_D589_lambda139)) ((bruijn ##.k.1635 3 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      statics->up->up->vars[0],
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda134, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda139, self)})));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k501(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k501, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1637 0 0) ((close _V10_Doptimize__let_D589_k502) (##inline ##vcore.cdr (bruijn ##.expr.162.645 1 0))) ((bruijn ##.k.1635 2 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k502, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        statics->vars[0]));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -11104,16 +11216,17 @@ static void _V10_Doptimize__let_D589_k500(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.163.648 0 0)) (##vcore.call-with-values (bruijn ##.k.1636 3 0) (close _V10_Doptimize__let_D589_lambda132) (close _V10_Doptimize__let_D589_lambda137)) ((bruijn ##.k.1636 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.162.645 0 0)) ((bruijn ##.x.826 9 0) (close _V10_Doptimize__let_D589_k501) 'lambda (##inline ##vcore.car (bruijn ##.expr.162.645 0 0))) ((bruijn ##.k.1635 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      statics->up->up->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda132, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda137, self)})));
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k501, self)})),
+      _V0lambda,
+      VInlineCar2(runtime,
+        _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -11127,56 +11240,11 @@ static void _V10_Doptimize__let_D589_k499(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1638 0 0) ((close _V10_Doptimize__let_D589_k500) (##inline ##vcore.cdr (bruijn ##.expr.162.647 1 0))) ((bruijn ##.k.1636 2 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k500, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        statics->vars[0]));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k498(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k498, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.162.647 0 0)) ((bruijn ##.x.828 9 0) (close _V10_Doptimize__let_D589_k499) 'lambda (##inline ##vcore.car (bruijn ##.expr.162.647 0 0))) ((bruijn ##.k.1636 1 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k499, self)})),
-      _V0lambda,
-      VInlineCar2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k497(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k497, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.621 4 1)) ((close _V10_Doptimize__let_D589_k498) (##inline ##vcore.car (bruijn ##.let-expr.621 4 1))) ((bruijn ##.k.1636 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.620 4 1)) ((close _V10_Doptimize__let_D589_k500) (##inline ##vcore.car (bruijn ##.let-expr.620 4 1))) ((bruijn ##.k.1635 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k498, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k500, .env = self }, }, 1,
       VInlineCar2(runtime,
         statics->up->up->up->vars[1]));
 } else {
@@ -11184,31 +11252,31 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__let_D589_k526(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k528(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k526, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k528, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1629 0 0) (bruijn ##.k.1621 5 0))
+  // ((bruijn ##.x.1628 0 0) (bruijn ##.k.1620 5 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 5-1, 0));
 }
-static void _V10_Doptimize__let_D589_lambda145(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_lambda147(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda145, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda147, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.optimize-apply.591 11 4) (bruijn ##.k.1630 0 0) (##inline ##vcore.car (bruijn ##.expr.178.672 1 0)))
+  // ((bruijn ##.optimize-apply.591 11 4) (bruijn ##.k.1629 0 0) (##inline ##vcore.car (bruijn ##.expr.178.670 1 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 4)), 2,
       _var0,
       VInlineCar2(runtime,
         statics->vars[0]));
 }
-static void _V10_Doptimize__let_D589_k525(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k527(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k525, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k527, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11216,7 +11284,7 @@ static void _V10_Doptimize__let_D589_k525(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.178.672 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.178.672 0 0))) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.let-expr.621 9 1))) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k526) (close _V10_Doptimize__let_D589_lambda145) (bruijn ##.kk.149.622 8 1)) ((bruijn ##.k.1621 4 0) #f)) ((bruijn ##.k.1621 4 0) #f)) ((bruijn ##.k.1621 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.178.670 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.178.670 0 0))) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.let-expr.620 9 1))) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k528) (close _V10_Doptimize__let_D589_lambda147) (bruijn ##.kk.149.621 8 1)) ((bruijn ##.k.1620 4 0) #f)) ((bruijn ##.k.1620 4 0) #f)) ((bruijn ##.k.1620 4 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -11229,8 +11297,8 @@ VInlineNullP2(runtime,
         VInlineCdr2(runtime,
         VGetArg(statics, 9-1, 1))))) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k526, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda145, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k528, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda147, self)})),
       VGetArg(statics, 8-1, 1));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
@@ -11242,6 +11310,57 @@ VInlineNullP2(runtime,
 }
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k526(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k526, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.177.669 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.car (bruijn ##.expr.177.669 0 0))) ((close _V10_Doptimize__let_D589_k527) (##inline ##vcore.cdr (bruijn ##.expr.177.669 0 0))) ((bruijn ##.k.1620 3 0) #f)) ((bruijn ##.k.1620 3 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+if(VDecodeBool(
+VInlineNullP2(runtime,
+        VInlineCar2(runtime,
+        _var0)))) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k527, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        _var0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k525(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k525, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1622 0 0) ((close _V10_Doptimize__let_D589_k526) (##inline ##vcore.cdr (bruijn ##.expr.176.668 1 0))) ((bruijn ##.k.1620 2 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k526, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        statics->vars[0]));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -11255,23 +11374,17 @@ static void _V10_Doptimize__let_D589_k524(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.177.671 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.car (bruijn ##.expr.177.671 0 0))) ((close _V10_Doptimize__let_D589_k525) (##inline ##vcore.cdr (bruijn ##.expr.177.671 0 0))) ((bruijn ##.k.1621 3 0) #f)) ((bruijn ##.k.1621 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.176.668 0 0)) ((bruijn ##.x.826 10 0) (close _V10_Doptimize__let_D589_k525) 'continuation (##inline ##vcore.car (bruijn ##.expr.176.668 0 0))) ((bruijn ##.k.1620 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
-if(VDecodeBool(
-VInlineNullP2(runtime,
-        VInlineCar2(runtime,
-        _var0)))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k525, .env = self }, }, 1,
-      VInlineCdr2(runtime,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k525, self)})),
+      _V0continuation,
+      VInlineCar2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -11285,56 +11398,11 @@ static void _V10_Doptimize__let_D589_k523(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1623 0 0) ((close _V10_Doptimize__let_D589_k524) (##inline ##vcore.cdr (bruijn ##.expr.176.670 1 0))) ((bruijn ##.k.1621 2 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k524, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        statics->vars[0]));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k522(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k522, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.176.670 0 0)) ((bruijn ##.x.828 10 0) (close _V10_Doptimize__let_D589_k523) 'continuation (##inline ##vcore.car (bruijn ##.expr.176.670 0 0))) ((bruijn ##.k.1621 1 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k523, self)})),
-      _V0continuation,
-      VInlineCar2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k521(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k521, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.621 5 1)) ((close _V10_Doptimize__let_D589_k522) (##inline ##vcore.car (bruijn ##.let-expr.621 5 1))) ((bruijn ##.k.1621 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.620 5 1)) ((close _V10_Doptimize__let_D589_k524) (##inline ##vcore.car (bruijn ##.let-expr.620 5 1))) ((bruijn ##.k.1620 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 5-1, 1)))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k522, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k524, .env = self }, }, 1,
       VInlineCar2(runtime,
         VGetArg(statics, 5-1, 1)));
 } else {
@@ -11342,44 +11410,15 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__let_D589_k535(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k537(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k535, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k537, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1605 0 0) (bruijn ##.k.1599 7 0))
+  // ((bruijn ##.x.1604 0 0) (bruijn ##.k.1598 7 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 7-1, 0));
-}
-static void _V10_Doptimize__let_D589_k540(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k540, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // (if (bruijn ##.p.1613 1 0) ((bruijn ##.x.808 42 0) (bruijn ##.k.1614 0 0) (##string ##.string.2067)) ((bruijn ##.k.1614 0 0) #f))
-if(VDecodeBool(
-statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 2,
-      _var0,
-      VEncodePointer(&_V10_Dstring_D2067.sym, VPOINTER_OTHER));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k543(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k543, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.1606 7 0) (##inline ##vcore.cons (bruijn ##.x.1608 1 0) (bruijn ##.x.1609 0 0)))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 1,
-      VInlineCons2(runtime,
-        statics->vars[0],
-        _var0));
 }
 static void _V10_Doptimize__let_D589_k542(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -11387,15 +11426,66 @@ static void _V10_Doptimize__let_D589_k542(VRuntime * runtime, VEnv * statics, in
   "-- expected 1~N"
   , argc);
  }
+  // (if (bruijn ##.p.1612 1 0) ((bruijn ##.x.806 42 0) (bruijn ##.k.1613 0 0) (##string ##.string.2068)) ((bruijn ##.k.1613 0 0) #f))
+if(VDecodeBool(
+statics->vars[0])) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 2,
+      _var0,
+      VEncodePointer(&_V10_Dstring_D2068.sym, VPOINTER_OTHER));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k545(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k545, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.k.1605 7 0) (##inline ##vcore.cons (bruijn ##.x.1607 1 0) (bruijn ##.x.1608 0 0)))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 1,
+      VInlineCons2(runtime,
+        statics->vars[0],
+        _var0));
+}
+static void _V10_Doptimize__let_D589_k544(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k544, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
   struct { VEnv self; VWORD argv[1]; } container;
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.807 44 0) (close _V10_Doptimize__let_D589_k543) (bruijn ##.optimize-atom.592 20 5) (bruijn ##.xs.680 7 0))
+  // ((bruijn ##.x.805 44 0) (close _V10_Doptimize__let_D589_k545) (bruijn ##.optimize-atom.592 20 5) (bruijn ##.xs.678 7 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 44-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k543, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k545, self)})),
       VGetArg(statics, 20-1, 5),
       VGetArg(statics, 7-1, 0));
+}
+static void _V10_Doptimize__let_D589_k543(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k543, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.optimize-atom.592 19 5) (close _V10_Doptimize__let_D589_k544) (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (bruijn ##.ys.675 8 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.182.676 7 0)) '()))))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 5)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k544, self)})),
+      VInlineCons2(runtime,
+        _V0lambda,
+        VInlineCons2(runtime,
+        VGetArg(statics, 8-1, 0),
+        VInlineCons2(runtime,
+        VInlineCar2(runtime,
+        VGetArg(statics, 7-1, 0)),
+        VNULL))));
 }
 static void _V10_Doptimize__let_D589_k541(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -11407,17 +11497,24 @@ static void _V10_Doptimize__let_D589_k541(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.optimize-atom.592 19 5) (close _V10_Doptimize__let_D589_k542) (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (bruijn ##.ys.677 8 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.182.678 7 0)) '()))))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 5)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k542, self)})),
-      VInlineCons2(runtime,
-        _V0lambda,
-        VInlineCons2(runtime,
-        VGetArg(statics, 8-1, 0),
-        VInlineCons2(runtime,
-        VInlineCar2(runtime,
-        VGetArg(statics, 7-1, 0)),
-        VNULL))));
+  // ((close _V10_Doptimize__let_D589_k542) (close _V10_Doptimize__let_D589_k543))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k542, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k543, self)})));
+}
+static void _V10_Doptimize__let_D589_k540(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k540, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.812 34 0) (close _V10_Doptimize__let_D589_k541) (bruijn ##.x.1614 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k541, self)})),
+      _var0);
 }
 static void _V10_Doptimize__let_D589_k539(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -11429,9 +11526,11 @@ static void _V10_Doptimize__let_D589_k539(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k540) (close _V10_Doptimize__let_D589_k541))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k540, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k541, self)})));
+  // ((bruijn ##.x.814 31 0) (close _V10_Doptimize__let_D589_k540) (bruijn ##.x.1615 1 0) (bruijn ##.x.1616 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k540, self)})),
+      statics->vars[0],
+      _var0);
 }
 static void _V10_Doptimize__let_D589_k538(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -11443,14 +11542,14 @@ static void _V10_Doptimize__let_D589_k538(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.814 34 0) (close _V10_Doptimize__let_D589_k539) (bruijn ##.x.1615 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 2,
+  // ((bruijn ##.x.813 31 0) (close _V10_Doptimize__let_D589_k539) (bruijn ##.xs.678 2 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k539, self)})),
-      _var0);
+      statics->up->vars[0]);
 }
-static void _V10_Doptimize__let_D589_k537(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_lambda148(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k537, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda148, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11458,11 +11557,10 @@ static void _V10_Doptimize__let_D589_k537(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.816 31 0) (close _V10_Doptimize__let_D589_k538) (bruijn ##.x.1616 1 0) (bruijn ##.x.1617 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 3,
+  // ((bruijn ##.taillength.291 16 5) (close _V10_Doptimize__let_D589_k538) (bruijn ##.ys.675 3 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 5)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k538, self)})),
-      statics->vars[0],
-      _var0);
+      statics->up->up->vars[0]);
 }
 static void _V10_Doptimize__let_D589_k536(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -11474,14 +11572,15 @@ static void _V10_Doptimize__let_D589_k536(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.815 31 0) (close _V10_Doptimize__let_D589_k537) (bruijn ##.xs.680 2 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 2,
+  // (##vcore.call-with-values (close _V10_Doptimize__let_D589_k537) (close _V10_Doptimize__let_D589_lambda148) (bruijn ##.kk.149.621 11 1))
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k537, self)})),
-      statics->up->vars[0]);
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda148, self)})),
+      VGetArg(statics, 11-1, 1));
 }
-static void _V10_Doptimize__let_D589_lambda146(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k535(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda146, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k535, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11489,10 +11588,25 @@ static void _V10_Doptimize__let_D589_lambda146(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.taillength.291 16 5) (close _V10_Doptimize__let_D589_k536) (bruijn ##.ys.677 3 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 5)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k536, self)})),
-      statics->up->up->vars[0]);
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.182.676 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.182.676 0 0))) ((close _V10_Doptimize__let_D589_k536) (##inline ##vcore.cdr (bruijn ##.let-expr.620 11 1))) ((bruijn ##.k.1598 5 0) #f)) ((bruijn ##.k.1598 5 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+if(VDecodeBool(
+VInlineNullP2(runtime,
+        VInlineCdr2(runtime,
+        _var0)))) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k536, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        VGetArg(statics, 11-1, 1)));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
+      VEncodeBool(false));
+}
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
+      VEncodeBool(false));
+}
 }
 static void _V10_Doptimize__let_D589_k534(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -11504,11 +11618,10 @@ static void _V10_Doptimize__let_D589_k534(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (close _V10_Doptimize__let_D589_k535) (close _V10_Doptimize__let_D589_lambda146) (bruijn ##.kk.149.622 11 1))
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k535, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda146, self)})),
-      VGetArg(statics, 11-1, 1));
+  // ((close _V10_Doptimize__let_D589_k535) (##inline ##vcore.cdr (bruijn ##.expr.181.674 1 0)))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k535, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        statics->vars[0]));
 }
 static void _V10_Doptimize__let_D589_k533(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -11520,23 +11633,15 @@ static void _V10_Doptimize__let_D589_k533(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.182.678 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.182.678 0 0))) ((close _V10_Doptimize__let_D589_k534) (##inline ##vcore.cdr (bruijn ##.let-expr.621 11 1))) ((bruijn ##.k.1599 5 0) #f)) ((bruijn ##.k.1599 5 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.181.674 0 0)) ((close _V10_Doptimize__let_D589_k534) (##inline ##vcore.car (bruijn ##.expr.181.674 0 0))) ((bruijn ##.k.1598 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
-if(VDecodeBool(
-VInlineNullP2(runtime,
-        VInlineCdr2(runtime,
-        _var0)))) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k534, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        VGetArg(statics, 11-1, 1)));
+      VInlineCar2(runtime,
+        _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
-      VEncodeBool(false));
-}
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -11550,10 +11655,16 @@ static void _V10_Doptimize__let_D589_k532(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k533) (##inline ##vcore.cdr (bruijn ##.expr.181.676 1 0)))
+  // (if (bruijn ##.p.1600 0 0) ((close _V10_Doptimize__let_D589_k533) (##inline ##vcore.cdr (bruijn ##.expr.180.673 1 0))) ((bruijn ##.k.1598 2 0) #f))
+if(VDecodeBool(
+_var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k533, .env = self }, }, 1,
       VInlineCdr2(runtime,
         statics->vars[0]));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodeBool(false));
+}
 }
 static void _V10_Doptimize__let_D589_k531(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -11565,15 +11676,17 @@ static void _V10_Doptimize__let_D589_k531(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.181.676 0 0)) ((close _V10_Doptimize__let_D589_k532) (##inline ##vcore.car (bruijn ##.expr.181.676 0 0))) ((bruijn ##.k.1599 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.180.673 0 0)) ((bruijn ##.x.826 11 0) (close _V10_Doptimize__let_D589_k532) 'lambda (##inline ##vcore.car (bruijn ##.expr.180.673 0 0))) ((bruijn ##.k.1598 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k532, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k532, self)})),
+      _V0lambda,
       VInlineCar2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -11587,56 +11700,11 @@ static void _V10_Doptimize__let_D589_k530(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1601 0 0) ((close _V10_Doptimize__let_D589_k531) (##inline ##vcore.cdr (bruijn ##.expr.180.675 1 0))) ((bruijn ##.k.1599 2 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k531, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        statics->vars[0]));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k529(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k529, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.180.675 0 0)) ((bruijn ##.x.828 11 0) (close _V10_Doptimize__let_D589_k530) 'lambda (##inline ##vcore.car (bruijn ##.expr.180.675 0 0))) ((bruijn ##.k.1599 1 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k530, self)})),
-      _V0lambda,
-      VInlineCar2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k528(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k528, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.621 6 1)) ((close _V10_Doptimize__let_D589_k529) (##inline ##vcore.car (bruijn ##.let-expr.621 6 1))) ((bruijn ##.k.1599 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.620 6 1)) ((close _V10_Doptimize__let_D589_k531) (##inline ##vcore.car (bruijn ##.let-expr.620 6 1))) ((bruijn ##.k.1598 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 6-1, 1)))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k529, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k531, .env = self }, }, 1,
       VInlineCar2(runtime,
         VGetArg(statics, 6-1, 1)));
 } else {
@@ -11644,103 +11712,24 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__let_D589_k548(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k550(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k548, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k550, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1595 0 0) (bruijn ##.k.1592 3 0))
+  // ((bruijn ##.x.1594 0 0) (bruijn ##.k.1591 3 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->vars[0]);
 }
-static void _V10_Doptimize__let_D589_lambda147(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_lambda149(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda147, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda149, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.808 34 0) (bruijn ##.k.1596 0 0) (##string ##.string.2068))
+  // ((bruijn ##.x.806 34 0) (bruijn ##.k.1595 0 0) (##string ##.string.2069))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 2,
-      _var0,
-      VEncodePointer(&_V10_Dstring_D2068.sym, VPOINTER_OTHER));
-}
-static void _V10_Doptimize__let_D589_k547(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k547, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1594 0 0) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k548) (close _V10_Doptimize__let_D589_lambda147) (bruijn ##.kk.149.622 8 1)) ((bruijn ##.k.1592 2 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k548, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda147, self)})),
-      VGetArg(statics, 8-1, 1));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k546(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k546, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.184.682 0 0)) ((bruijn ##.x.828 12 0) (close _V10_Doptimize__let_D589_k547) 'continuation (##inline ##vcore.car (bruijn ##.expr.184.682 0 0))) ((bruijn ##.k.1592 1 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k547, self)})),
-      _V0continuation,
-      VInlineCar2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_k545(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k545, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.621 7 1)) ((close _V10_Doptimize__let_D589_k546) (##inline ##vcore.car (bruijn ##.let-expr.621 7 1))) ((bruijn ##.k.1592 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        VGetArg(statics, 7-1, 1)))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k546, .env = self }, }, 1,
-      VInlineCar2(runtime,
-        VGetArg(statics, 7-1, 1)));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__let_D589_lambda148(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda148, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.808 32 0) (bruijn ##.k.1590 0 0) (##string ##.string.2069))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 2,
       _var0,
       VEncodePointer(&_V10_Dstring_D2069.sym, VPOINTER_OTHER));
 }
@@ -11754,15 +11743,94 @@ static void _V10_Doptimize__let_D589_k549(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1583 6 0) (close _V10_Doptimize__let_D589_lambda148) (bruijn ##.kk.149.622 6 1))
+  // (if (bruijn ##.p.1593 0 0) (##vcore.call-with-values (close _V10_Doptimize__let_D589_k550) (close _V10_Doptimize__let_D589_lambda149) (bruijn ##.kk.149.621 8 1)) ((bruijn ##.k.1591 2 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k550, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda149, self)})),
+      VGetArg(statics, 8-1, 1));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k548(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k548, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.184.680 0 0)) ((bruijn ##.x.826 12 0) (close _V10_Doptimize__let_D589_k549) 'continuation (##inline ##vcore.car (bruijn ##.expr.184.680 0 0))) ((bruijn ##.k.1591 1 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k549, self)})),
+      _V0continuation,
+      VInlineCar2(runtime,
+        _var0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_k547(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k547, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.let-expr.620 7 1)) ((close _V10_Doptimize__let_D589_k548) (##inline ##vcore.car (bruijn ##.let-expr.620 7 1))) ((bruijn ##.k.1591 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        VGetArg(statics, 7-1, 1)))) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k548, .env = self }, }, 1,
+      VInlineCar2(runtime,
+        VGetArg(statics, 7-1, 1)));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__let_D589_lambda150(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda150, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.806 32 0) (bruijn ##.k.1589 0 0) (##string ##.string.2070))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 2,
+      _var0,
+      VEncodePointer(&_V10_Dstring_D2070.sym, VPOINTER_OTHER));
+}
+static void _V10_Doptimize__let_D589_k551(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k551, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (##vcore.call-with-values (bruijn ##.k.1582 6 0) (close _V10_Doptimize__let_D589_lambda150) (bruijn ##.kk.149.621 6 1))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       VGetArg(statics, 6-1, 0),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda148, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda150, self)})),
       VGetArg(statics, 6-1, 1));
 }
-static void _V10_Doptimize__let_D589_k544(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k546(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k544, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k546, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11770,13 +11838,13 @@ static void _V10_Doptimize__let_D589_k544(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k545) (close _V10_Doptimize__let_D589_k549))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k545, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k549, self)})));
+  // ((close _V10_Doptimize__let_D589_k547) (close _V10_Doptimize__let_D589_k551))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k547, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k551, self)})));
 }
-static void _V10_Doptimize__let_D589_k527(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k529(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k527, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k529, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11784,13 +11852,13 @@ static void _V10_Doptimize__let_D589_k527(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k528) (close _V10_Doptimize__let_D589_k544))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k528, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k544, self)})));
+  // ((close _V10_Doptimize__let_D589_k530) (close _V10_Doptimize__let_D589_k546))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k530, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k546, self)})));
 }
-static void _V10_Doptimize__let_D589_k520(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k522(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k520, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k522, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11798,13 +11866,13 @@ static void _V10_Doptimize__let_D589_k520(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k521) (close _V10_Doptimize__let_D589_k527))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k521, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k527, self)})));
+  // ((close _V10_Doptimize__let_D589_k523) (close _V10_Doptimize__let_D589_k529))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k523, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k529, self)})));
 }
-static void _V10_Doptimize__let_D589_k496(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k498(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k496, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k498, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11812,13 +11880,13 @@ static void _V10_Doptimize__let_D589_k496(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k497) (close _V10_Doptimize__let_D589_k520))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k497, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k520, self)})));
+  // ((close _V10_Doptimize__let_D589_k499) (close _V10_Doptimize__let_D589_k522))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k499, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k522, self)})));
 }
-static void _V10_Doptimize__let_D589_k489(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__let_D589_k491(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k489, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_k491, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11826,9 +11894,24 @@ static void _V10_Doptimize__let_D589_k489(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__let_D589_k490) (close _V10_Doptimize__let_D589_k496))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k490, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k496, self)})));
+  // ((close _V10_Doptimize__let_D589_k492) (close _V10_Doptimize__let_D589_k498))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k492, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k498, self)})));
+}
+static void _V10_Doptimize__let_D589_lambda126(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+ if(argc != 2) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda126, got ~D~N"
+  "-- expected 2~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[2]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 2, 2, statics);
+  self->vars[0] = _var0;
+  self->vars[1] = _var1;
+  // ((close _V10_Doptimize__let_D589_k450) (close _V10_Doptimize__let_D589_k491))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k450, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k491, self)})));
 }
 static void _V10_Doptimize__let_D589_lambda125(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
@@ -11841,42 +11924,27 @@ static void _V10_Doptimize__let_D589_lambda125(VRuntime * runtime, VEnv * static
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((close _V10_Doptimize__let_D589_k449) (close _V10_Doptimize__let_D589_k489))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__let_D589_k449, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_k489, self)})));
-}
-static void _V10_Doptimize__let_D589_lambda124(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
- if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__let_D589_lambda124, got ~D~N"
-  "-- expected 2~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[2]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 2, 2, statics);
-  self->vars[0] = _var0;
-  self->vars[1] = _var1;
-  // (##vcore.call/cc (bruijn ##.k.1582 0 0) (close _V10_Doptimize__let_D589_lambda125))
+  // (##vcore.call/cc (bruijn ##.k.1581 0 0) (close _V10_Doptimize__let_D589_lambda126))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda125, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda126, self)})));
 }
-static void _V10_Dloop_D690_k555(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D688_k557(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_k555, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_k557, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.195.689 5 1) (bruijn ##.k.1784 2 0) (bruijn ##.expr.197.691 3 1) (bruijn ##.x.1785 1 0) (bruijn ##.x.1786 0 0))
+  // ((bruijn ##.kk.195.687 5 1) (bruijn ##.k.1785 2 0) (bruijn ##.expr.197.689 3 1) (bruijn ##.x.1786 1 0) (bruijn ##.x.1787 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 1)), 4,
       statics->up->vars[0],
       statics->up->up->vars[1],
       statics->vars[0],
       _var0);
 }
-static void _V10_Dloop_D690_k554(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D688_k556(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_k554, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_k556, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11884,14 +11952,14 @@ static void _V10_Dloop_D690_k554(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 36 0) (close _V10_Dloop_D690_k555) (bruijn ##.vals.194.693 2 3))
+  // ((bruijn ##.x.804 36 0) (close _V10_Dloop_D688_k557) (bruijn ##.vals.194.691 2 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 36-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D690_k555, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D688_k557, self)})),
       statics->up->vars[3]);
 }
-static void _V10_Dloop_D690_k553(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D688_k555(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_k553, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_k555, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11899,26 +11967,26 @@ static void _V10_Dloop_D690_k553(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.197.691 1 1))) ((bruijn ##.x.806 35 0) (close _V10_Dloop_D690_k554) (bruijn ##.args.193.692 1 2)) ((bruijn ##.k.1784 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.197.689 1 1))) ((bruijn ##.x.804 35 0) (close _V10_Dloop_D688_k556) (bruijn ##.args.193.690 1 2)) ((bruijn ##.k.1785 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlinePairP2(runtime,
         statics->vars[1])))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D690_k554, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D688_k556, self)})),
       statics->vars[2]);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
-static void _V10_Dloop_D690_k559(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D688_k561(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_k559, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_k561, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.199.697 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.199.697 0 0))) ((bruijn ##.kk.196.694 3 1) (bruijn ##.k.1776 1 0) (##inline ##vcore.cdr (bruijn ##.expr.197.691 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.198.695 2 0)) (bruijn ##.args.193.692 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.199.697 0 0)) (bruijn ##.vals.194.693 6 3))) ((bruijn ##.k.1776 1 0) #f)) ((bruijn ##.k.1776 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.199.695 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.199.695 0 0))) ((bruijn ##.kk.196.692 3 1) (bruijn ##.k.1777 1 0) (##inline ##vcore.cdr (bruijn ##.expr.197.689 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.198.693 2 0)) (bruijn ##.args.193.690 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.199.695 0 0)) (bruijn ##.vals.194.691 6 3))) ((bruijn ##.k.1777 1 0) #f)) ((bruijn ##.k.1777 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -11947,9 +12015,9 @@ VInlineNullP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Dloop_D690_k558(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D688_k560(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_k558, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_k560, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11957,11 +12025,11 @@ static void _V10_Dloop_D690_k558(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.198.695 1 0)) ((close _V10_Dloop_D690_k559) (##inline ##vcore.cdr (bruijn ##.expr.198.695 1 0))) ((bruijn ##.k.1776 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.198.693 1 0)) ((close _V10_Dloop_D688_k561) (##inline ##vcore.cdr (bruijn ##.expr.198.693 1 0))) ((bruijn ##.k.1777 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->vars[0]))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D690_k559, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D688_k561, .env = self }, }, 1,
       VInlineCdr2(runtime,
         statics->vars[0]));
 } else {
@@ -11969,22 +12037,22 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Dloop_D690_k562(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D688_k564(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_k562, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_k564, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.195.689 9 1) (bruijn ##.k.1771 4 0) (bruijn ##.expr.197.691 7 1) (bruijn ##.x.1773 1 0) (bruijn ##.x.1774 0 0))
+  // ((bruijn ##.kk.195.687 9 1) (bruijn ##.k.1772 4 0) (bruijn ##.expr.197.689 7 1) (bruijn ##.x.1774 1 0) (bruijn ##.x.1775 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 1)), 4,
       statics->up->up->up->vars[0],
       VGetArg(statics, 7-1, 1),
       statics->vars[0],
       _var0);
 }
-static void _V10_Dloop_D690_k561(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D688_k563(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_k561, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_k563, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11992,14 +12060,14 @@ static void _V10_Dloop_D690_k561(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 40 0) (close _V10_Dloop_D690_k562) (bruijn ##.vals.194.693 6 3))
+  // ((bruijn ##.x.804 40 0) (close _V10_Dloop_D688_k564) (bruijn ##.vals.194.691 6 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D690_k562, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D688_k564, self)})),
       VGetArg(statics, 6-1, 3));
 }
-static void _V10_Dloop_D690_k560(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D688_k562(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_k560, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_k562, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -12007,14 +12075,14 @@ static void _V10_Dloop_D690_k560(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 39 0) (close _V10_Dloop_D690_k561) (bruijn ##.args.193.692 5 2))
+  // ((bruijn ##.x.804 39 0) (close _V10_Dloop_D688_k563) (bruijn ##.args.193.690 5 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D690_k561, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D688_k563, self)})),
       VGetArg(statics, 5-1, 2));
 }
-static void _V10_Dloop_D690_k557(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D688_k559(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_k557, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_k559, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -12022,13 +12090,13 @@ static void _V10_Dloop_D690_k557(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Dloop_D690_k558) (close _V10_Dloop_D690_k560))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D690_k558, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D690_k560, self)})));
+  // ((close _V10_Dloop_D688_k560) (close _V10_Dloop_D688_k562))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D688_k560, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D688_k562, self)})));
 }
-static void _V10_Dloop_D690_lambda155(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Dloop_D688_lambda157(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_lambda155, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_lambda157, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -12037,14 +12105,14 @@ static void _V10_Dloop_D690_lambda155(VRuntime * runtime, VEnv * statics, int ar
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((close _V10_Dloop_D690_k557) (##inline ##vcore.car (bruijn ##.expr.197.691 3 1)))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D690_k557, .env = self }, }, 1,
+  // ((close _V10_Dloop_D688_k559) (##inline ##vcore.car (bruijn ##.expr.197.689 3 1)))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D688_k559, .env = self }, }, 1,
       VInlineCar2(runtime,
         statics->up->up->vars[1]));
 }
-static void _V10_Dloop_D690_lambda154(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D688_lambda156(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_lambda154, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_lambda156, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -12052,14 +12120,14 @@ static void _V10_Dloop_D690_lambda154(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1770 0 0) (close _V10_Dloop_D690_lambda155))
+  // (##vcore.call/cc (bruijn ##.k.1771 0 0) (close _V10_Dloop_D688_lambda157))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D690_lambda155, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D688_lambda157, self)})));
 }
-static void _V10_Dloop_D690_k556(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D688_k558(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_k556, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_k558, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -12067,15 +12135,15 @@ static void _V10_Dloop_D690_k556(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1768 1 0) (close _V10_Dloop_D690_lambda154) (bruijn ##.loop.690 2 0))
+  // (##vcore.call-with-values (bruijn ##.k.1769 1 0) (close _V10_Dloop_D688_lambda156) (bruijn ##.loop.688 2 0))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D690_lambda154, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D688_lambda156, self)})),
       statics->up->vars[0]);
 }
-static void _V10_Dloop_D690_lambda153(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+static void _V10_Dloop_D688_lambda155(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
  if(argc != 4) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D690_lambda153, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D688_lambda155, got ~D~N"
   "-- expected 4~N"
   , argc);
  }
@@ -12086,13 +12154,13 @@ static void _V10_Dloop_D690_lambda153(VRuntime * runtime, VEnv * statics, int ar
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // ((close _V10_Dloop_D690_k553) (close _V10_Dloop_D690_k556))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D690_k553, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D690_k556, self)})));
+  // ((close _V10_Dloop_D688_k555) (close _V10_Dloop_D688_k558))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D688_k555, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D688_k558, self)})));
 }
-static void _V10_Doptimize__letrec_D590_lambda152(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Doptimize__letrec_D590_lambda154(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda152, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda154, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -12101,13 +12169,13 @@ static void _V10_Doptimize__letrec_D590_lambda152(VRuntime * runtime, VEnv * sta
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Dloop_D690_lambda153)) ((bruijn ##.loop.690 0 0) (bruijn ##.k.1767 1 0) (##inline ##vcore.car (bruijn ##.expr.191.687 3 0)) '() '()))
+  // (letrec 1 ((close _V10_Dloop_D688_lambda155)) ((bruijn ##.loop.688 0 0) (bruijn ##.k.1768 1 0) (##inline ##vcore.car (bruijn ##.expr.191.685 3 0)) '() '()))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
     VEnv * self = &container.self;
     VInitEnv(self, 1, 1, statics);
-    self->vars[0] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D690_lambda153, self)}));
+    self->vars[0] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D688_lambda155, self)}));
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, self->vars[0]), 4,
       statics->vars[0],
       VInlineCar2(runtime,
@@ -12116,9 +12184,9 @@ static void _V10_Doptimize__letrec_D590_lambda152(VRuntime * runtime, VEnv * sta
       VNULL);
     }
 }
-static void _V10_Doptimize__letrec_D590_lambda151(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__letrec_D590_lambda153(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda151, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda153, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -12126,28 +12194,28 @@ static void _V10_Doptimize__letrec_D590_lambda151(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1766 0 0) (close _V10_Doptimize__letrec_D590_lambda152))
+  // (##vcore.call/cc (bruijn ##.k.1767 0 0) (close _V10_Doptimize__letrec_D590_lambda154))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda152, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda154, self)})));
 }
-static void _V10_Doptimize__letrec_D590_k564(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__letrec_D590_k566(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k564, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k566, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1792 0 0) (bruijn ##.k.1788 2 0))
+  // ((bruijn ##.x.1793 0 0) (bruijn ##.k.1789 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
-static void _V10_Doptimize__letrec_D590_k567(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__letrec_D590_k569(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k567, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k569, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1793 3 0) (##inline ##vcore.cons 'letrec (##inline ##vcore.cons (bruijn ##.x.1795 1 0) (##inline ##vcore.cons (bruijn ##.x.1797 0 0) '()))))
+  // ((bruijn ##.k.1794 3 0) (##inline ##vcore.cons 'letrec (##inline ##vcore.cons (bruijn ##.x.1796 1 0) (##inline ##vcore.cons (bruijn ##.x.1798 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VInlineCons2(runtime,
         _V0letrec,
@@ -12157,9 +12225,9 @@ static void _V10_Doptimize__letrec_D590_k567(VRuntime * runtime, VEnv * statics,
         _var0,
         VNULL))));
 }
-static void _V10_Doptimize__letrec_D590_k566(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__letrec_D590_k568(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k566, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k568, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -12167,11 +12235,44 @@ static void _V10_Doptimize__letrec_D590_k566(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.optimize-apply.591 10 4) (close _V10_Doptimize__letrec_D590_k567) (##inline ##vcore.car (bruijn ##.expr.200.702 3 0)))
+  // ((bruijn ##.optimize-apply.591 10 4) (close _V10_Doptimize__letrec_D590_k569) (##inline ##vcore.car (bruijn ##.expr.200.700 3 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 4)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k567, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k569, self)})),
       VInlineCar2(runtime,
         statics->up->up->vars[0]));
+}
+static void _V10_Doptimize__letrec_D590_k567(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k567, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.805 33 0) (close _V10_Doptimize__letrec_D590_k568) (bruijn ##.x.811 27 0) (bruijn ##.args.698 3 2) (bruijn ##.x.1799 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k568, self)})),
+      VGetArg(statics, 27-1, 0),
+      statics->up->up->vars[2],
+      _var0);
+}
+static void _V10_Doptimize__letrec_D590_lambda159(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda159, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.805 32 0) (close _V10_Doptimize__letrec_D590_k567) (bruijn ##.optimize-atom.592 8 5) (bruijn ##.vals.699 2 3))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k567, self)})),
+      VGetArg(statics, 8-1, 5),
+      statics->up->vars[3]);
 }
 static void _V10_Doptimize__letrec_D590_k565(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -12183,40 +12284,7 @@ static void _V10_Doptimize__letrec_D590_k565(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.807 33 0) (close _V10_Doptimize__letrec_D590_k566) (bruijn ##.x.813 27 0) (bruijn ##.args.700 3 2) (bruijn ##.x.1798 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k566, self)})),
-      VGetArg(statics, 27-1, 0),
-      statics->up->up->vars[2],
-      _var0);
-}
-static void _V10_Doptimize__letrec_D590_lambda157(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda157, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.807 32 0) (close _V10_Doptimize__letrec_D590_k565) (bruijn ##.optimize-atom.592 8 5) (bruijn ##.vals.701 2 3))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k565, self)})),
-      VGetArg(statics, 8-1, 5),
-      statics->up->vars[3]);
-}
-static void _V10_Doptimize__letrec_D590_k563(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k563, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.200.702 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.200.702 0 0))) (##vcore.call-with-values (close _V10_Doptimize__letrec_D590_k564) (close _V10_Doptimize__letrec_D590_lambda157) (bruijn ##.kk.188.684 5 1)) ((bruijn ##.k.1788 1 0) #f)) ((bruijn ##.k.1788 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.200.700 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.200.700 0 0))) (##vcore.call-with-values (close _V10_Doptimize__letrec_D590_k566) (close _V10_Doptimize__letrec_D590_lambda159) (bruijn ##.kk.188.682 5 1)) ((bruijn ##.k.1789 1 0) #f)) ((bruijn ##.k.1789 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -12225,8 +12293,8 @@ VInlineNullP2(runtime,
         VInlineCdr2(runtime,
         _var0)))) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k564, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda157, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k566, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda159, self)})),
       VGetArg(statics, 5-1, 1));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
@@ -12237,9 +12305,9 @@ VInlineNullP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__letrec_D590_lambda156(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+static void _V10_Doptimize__letrec_D590_lambda158(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
  if(argc != 4) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda156, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda158, got ~D~N"
   "-- expected 4~N"
   , argc);
  }
@@ -12250,15 +12318,59 @@ static void _V10_Doptimize__letrec_D590_lambda156(VRuntime * runtime, VEnv * sta
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.699 0 1)) ((close _V10_Doptimize__letrec_D590_k563) (##inline ##vcore.cdr (bruijn ##.expr.191.687 1 0))) ((bruijn ##.k.1788 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.697 0 1)) ((close _V10_Doptimize__letrec_D590_k565) (##inline ##vcore.cdr (bruijn ##.expr.191.685 1 0))) ((bruijn ##.k.1789 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__letrec_D590_k563, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__letrec_D590_k565, .env = self }, }, 1,
       VInlineCdr2(runtime,
         statics->vars[0]));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__letrec_D590_k554(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k554, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.191.685 0 0)) (##vcore.call-with-values (bruijn ##.k.1764 2 0) (close _V10_Doptimize__letrec_D590_lambda153) (close _V10_Doptimize__letrec_D590_lambda158)) ((bruijn ##.k.1764 2 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      statics->up->vars[0],
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda153, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda158, self)})));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__letrec_D590_k553(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k553, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1765 0 0) ((close _V10_Doptimize__letrec_D590_k554) (##inline ##vcore.cdr (bruijn ##.letrec-expr.681 3 1))) ((bruijn ##.k.1764 1 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__letrec_D590_k554, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        statics->up->up->vars[1]));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -12272,56 +12384,12 @@ static void _V10_Doptimize__letrec_D590_k552(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.191.687 0 0)) (##vcore.call-with-values (bruijn ##.k.1763 2 0) (close _V10_Doptimize__letrec_D590_lambda151) (close _V10_Doptimize__letrec_D590_lambda156)) ((bruijn ##.k.1763 2 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      statics->up->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda151, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda156, self)})));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__letrec_D590_k551(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k551, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1764 0 0) ((close _V10_Doptimize__letrec_D590_k552) (##inline ##vcore.cdr (bruijn ##.letrec-expr.683 3 1))) ((bruijn ##.k.1763 1 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__letrec_D590_k552, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        statics->up->up->vars[1]));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__letrec_D590_k550(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k550, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.letrec-expr.683 2 1)) ((bruijn ##.x.828 6 0) (close _V10_Doptimize__letrec_D590_k551) 'letrec (##inline ##vcore.car (bruijn ##.letrec-expr.683 2 1))) ((bruijn ##.k.1763 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.letrec-expr.681 2 1)) ((bruijn ##.x.826 6 0) (close _V10_Doptimize__letrec_D590_k553) 'letrec (##inline ##vcore.car (bruijn ##.letrec-expr.681 2 1))) ((bruijn ##.k.1764 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->vars[1]))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k551, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k553, self)})),
       _V0letrec,
       VInlineCar2(runtime,
         statics->up->vars[1]));
@@ -12330,20 +12398,20 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__letrec_D590_k568(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__letrec_D590_k570(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k568, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_k570, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.812 22 0) (bruijn ##.k.1760 1 0) (##string ##.string.2063))
+  // ((bruijn ##.x.810 22 0) (bruijn ##.k.1761 1 0) (##string ##.string.2064))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 2,
       statics->vars[0],
-      VEncodePointer(&_V10_Dstring_D2063.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2064.sym, VPOINTER_OTHER));
 }
-static void _V10_Doptimize__letrec_D590_lambda150(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Doptimize__letrec_D590_lambda152(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda150, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda152, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -12352,13 +12420,13 @@ static void _V10_Doptimize__letrec_D590_lambda150(VRuntime * runtime, VEnv * sta
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((close _V10_Doptimize__letrec_D590_k550) (close _V10_Doptimize__letrec_D590_k568))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__letrec_D590_k550, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k568, self)})));
+  // ((close _V10_Doptimize__letrec_D590_k552) (close _V10_Doptimize__letrec_D590_k570))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__letrec_D590_k552, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_k570, self)})));
 }
-static void _V10_Doptimize__letrec_D590_lambda149(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Doptimize__letrec_D590_lambda151(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda149, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__letrec_D590_lambda151, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -12367,10 +12435,53 @@ static void _V10_Doptimize__letrec_D590_lambda149(VRuntime * runtime, VEnv * sta
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (##vcore.call/cc (bruijn ##.k.1759 0 0) (close _V10_Doptimize__letrec_D590_lambda150))
+  // (##vcore.call/cc (bruijn ##.k.1760 0 0) (close _V10_Doptimize__letrec_D590_lambda152))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda150, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda152, self)})));
+}
+static void _V10_Doptimize__apply_D591_k574(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k574, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.1901 0 0) (bruijn ##.k.1898 3 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->up->up->vars[0]);
+}
+static void _V10_Doptimize__apply_D591_lambda162(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda162, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.optimize-let.589 6 2) (bruijn ##.k.1902 0 0) (bruijn ##.expr.702 5 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 2)), 2,
+      _var0,
+      VGetArg(statics, 5-1, 1));
+}
+static void _V10_Doptimize__apply_D591_k573(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k573, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1900 0 0) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k574) (close _V10_Doptimize__apply_D591_lambda162) (bruijn ##.kk.201.703 3 1)) ((bruijn ##.k.1898 2 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k574, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda162, self)})),
+      statics->up->up->vars[1]);
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodeBool(false));
+}
 }
 static void _V10_Doptimize__apply_D591_k572(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -12378,20 +12489,23 @@ static void _V10_Doptimize__apply_D591_k572(VRuntime * runtime, VEnv * statics, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1900 0 0) (bruijn ##.k.1897 3 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->up->up->vars[0]);
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.204.706 0 0)) ((bruijn ##.x.826 7 0) (close _V10_Doptimize__apply_D591_k573) 'continuation (##inline ##vcore.car (bruijn ##.expr.204.706 0 0))) ((bruijn ##.k.1898 1 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k573, self)})),
+      _V0continuation,
+      VInlineCar2(runtime,
+        _var0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
 }
-static void _V10_Doptimize__apply_D591_lambda160(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda160, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.optimize-let.589 6 2) (bruijn ##.k.1901 0 0) (bruijn ##.expr.704 5 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 2)), 2,
-      _var0,
-      VGetArg(statics, 5-1, 1));
 }
 static void _V10_Doptimize__apply_D591_k571(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -12403,61 +12517,58 @@ static void _V10_Doptimize__apply_D591_k571(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1899 0 0) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k572) (close _V10_Doptimize__apply_D591_lambda160) (bruijn ##.kk.201.705 3 1)) ((bruijn ##.k.1897 2 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k572, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda160, self)})),
-      statics->up->up->vars[1]);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k570(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k570, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.204.708 0 0)) ((bruijn ##.x.828 7 0) (close _V10_Doptimize__apply_D591_k571) 'continuation (##inline ##vcore.car (bruijn ##.expr.204.708 0 0))) ((bruijn ##.k.1897 1 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k571, self)})),
-      _V0continuation,
-      VInlineCar2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k569(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k569, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.704 2 1)) ((close _V10_Doptimize__apply_D591_k570) (##inline ##vcore.car (bruijn ##.expr.704 2 1))) ((bruijn ##.k.1897 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.702 2 1)) ((close _V10_Doptimize__apply_D591_k572) (##inline ##vcore.car (bruijn ##.expr.702 2 1))) ((bruijn ##.k.1898 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k570, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k572, .env = self }, }, 1,
       VInlineCar2(runtime,
         statics->up->vars[1]));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__apply_D591_k579(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k579, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.1894 0 0) (bruijn ##.k.1891 3 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->up->up->vars[0]);
+}
+static void _V10_Doptimize__apply_D591_lambda163(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda163, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.optimize-let.589 7 2) (bruijn ##.k.1895 0 0) (bruijn ##.expr.702 6 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 2)), 2,
+      _var0,
+      VGetArg(statics, 6-1, 1));
+}
+static void _V10_Doptimize__apply_D591_k578(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k578, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1893 0 0) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k579) (close _V10_Doptimize__apply_D591_lambda163) (bruijn ##.kk.201.703 4 1)) ((bruijn ##.k.1891 2 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k579, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda163, self)})),
+      statics->up->up->up->vars[1]);
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -12467,20 +12578,23 @@ static void _V10_Doptimize__apply_D591_k577(VRuntime * runtime, VEnv * statics, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1893 0 0) (bruijn ##.k.1890 3 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->up->up->vars[0]);
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.206.708 0 0)) ((bruijn ##.x.826 8 0) (close _V10_Doptimize__apply_D591_k578) 'lambda (##inline ##vcore.car (bruijn ##.expr.206.708 0 0))) ((bruijn ##.k.1891 1 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k578, self)})),
+      _V0lambda,
+      VInlineCar2(runtime,
+        _var0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
 }
-static void _V10_Doptimize__apply_D591_lambda161(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda161, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.optimize-let.589 7 2) (bruijn ##.k.1894 0 0) (bruijn ##.expr.704 6 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 2)), 2,
-      _var0,
-      VGetArg(statics, 6-1, 1));
 }
 static void _V10_Doptimize__apply_D591_k576(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -12492,61 +12606,58 @@ static void _V10_Doptimize__apply_D591_k576(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1892 0 0) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k577) (close _V10_Doptimize__apply_D591_lambda161) (bruijn ##.kk.201.705 4 1)) ((bruijn ##.k.1890 2 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k577, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda161, self)})),
-      statics->up->up->up->vars[1]);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k575(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k575, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.206.710 0 0)) ((bruijn ##.x.828 8 0) (close _V10_Doptimize__apply_D591_k576) 'lambda (##inline ##vcore.car (bruijn ##.expr.206.710 0 0))) ((bruijn ##.k.1890 1 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k576, self)})),
-      _V0lambda,
-      VInlineCar2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k574(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k574, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.704 3 1)) ((close _V10_Doptimize__apply_D591_k575) (##inline ##vcore.car (bruijn ##.expr.704 3 1))) ((bruijn ##.k.1890 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.702 3 1)) ((close _V10_Doptimize__apply_D591_k577) (##inline ##vcore.car (bruijn ##.expr.702 3 1))) ((bruijn ##.k.1891 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k575, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k577, .env = self }, }, 1,
       VInlineCar2(runtime,
         statics->up->up->vars[1]));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__apply_D591_k583(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k583, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.1887 0 0) (bruijn ##.k.1885 2 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->up->vars[0]);
+}
+static void _V10_Doptimize__apply_D591_lambda164(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda164, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.optimize-letrec.590 7 3) (bruijn ##.k.1888 0 0) (bruijn ##.expr.702 6 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 3)), 2,
+      _var0,
+      VGetArg(statics, 6-1, 1));
+}
+static void _V10_Doptimize__apply_D591_k582(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k582, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1886 0 0) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k583) (close _V10_Doptimize__apply_D591_lambda164) (bruijn ##.kk.201.703 4 1)) ((bruijn ##.k.1885 1 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k583, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda164, self)})),
+      statics->up->up->up->vars[1]);
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -12556,59 +12667,16 @@ static void _V10_Doptimize__apply_D591_k581(VRuntime * runtime, VEnv * statics, 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1886 0 0) (bruijn ##.k.1884 2 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->up->vars[0]);
-}
-static void _V10_Doptimize__apply_D591_lambda162(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda162, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.optimize-letrec.590 7 3) (bruijn ##.k.1887 0 0) (bruijn ##.expr.704 6 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 3)), 2,
-      _var0,
-      VGetArg(statics, 6-1, 1));
-}
-static void _V10_Doptimize__apply_D591_k580(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k580, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
   struct { VEnv self; VWORD argv[1]; } container;
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1885 0 0) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k581) (close _V10_Doptimize__apply_D591_lambda162) (bruijn ##.kk.201.705 4 1)) ((bruijn ##.k.1884 1 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k581, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda162, self)})),
-      statics->up->up->up->vars[1]);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k579(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k579, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.704 4 1)) ((bruijn ##.x.828 8 0) (close _V10_Doptimize__apply_D591_k580) 'letrec (##inline ##vcore.car (bruijn ##.expr.704 4 1))) ((bruijn ##.k.1884 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.702 4 1)) ((bruijn ##.x.826 8 0) (close _V10_Doptimize__apply_D591_k582) 'letrec (##inline ##vcore.car (bruijn ##.expr.702 4 1))) ((bruijn ##.k.1885 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->up->vars[1]))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k580, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k582, self)})),
       _V0letrec,
       VInlineCar2(runtime,
         statics->up->up->up->vars[1]));
@@ -12617,72 +12685,27 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__apply_D591_k588(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k588, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1872 0 0) (bruijn ##.k.1865 5 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VGetArg(statics, 5-1, 0));
-}
-static void _V10_Doptimize__apply_D591_k591(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k591, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.optimize-apply.591 15 4) (bruijn ##.k.1873 4 0) (##inline ##vcore.car (bruijn ##.expr.210.714 6 0)))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 4)), 2,
-      statics->up->up->up->vars[0],
-      VInlineCar2(runtime,
-        VGetArg(statics, 6-1, 0)));
-}
 static void _V10_Doptimize__apply_D591_k590(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k590, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.sub-refs!.295 16 9) (close _V10_Doptimize__apply_D591_k591) (bruijn ##.ref-table.593 14 6) (bruijn ##.bcount.718 2 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 9)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k591, self)})),
-      VGetArg(statics, 14-1, 6),
-      statics->up->vars[0]);
+  // ((bruijn ##.x.1873 0 0) (bruijn ##.k.1866 5 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VGetArg(statics, 5-1, 0));
 }
-static void _V10_Doptimize__apply_D591_k589(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_k593(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k589, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k593, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (set! (close _V10_Doptimize__apply_D591_k590) (bruijn ##.dummy.224.720 1 2) (bruijn ##.x.1876 0 0))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k590, self)})),
-      VEncodeInt(1l), VEncodeInt(2l),
-      _var0
-    );
-}
-static void _V10_Doptimize__apply_D591_lambda164(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda164, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.count-refs.296 15 10) (bruijn ##.k.1877 0 0) (##inline ##vcore.car (bruijn ##.expr.211.716 3 0)))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 10)), 2,
-      _var0,
+  // ((bruijn ##.optimize-apply.591 15 4) (bruijn ##.k.1874 4 0) (##inline ##vcore.car (bruijn ##.expr.210.712 6 0)))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 4)), 2,
+      statics->up->up->up->vars[0],
       VInlineCar2(runtime,
-        statics->up->up->vars[0]));
+        VGetArg(statics, 6-1, 0)));
 }
 static void _V10_Doptimize__apply_D591_k592(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -12694,16 +12717,61 @@ static void _V10_Doptimize__apply_D591_k592(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (set! (bruijn ##.k.1878 1 0) (bruijn ##.bpure.719 2 1) (bruijn ##.bpure.223.722 1 2))
+  // ((bruijn ##.sub-refs!.295 16 9) (close _V10_Doptimize__apply_D591_k593) (bruijn ##.ref-table.593 14 6) (bruijn ##.bcount.716 2 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 9)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k593, self)})),
+      VGetArg(statics, 14-1, 6),
+      statics->up->vars[0]);
+}
+static void _V10_Doptimize__apply_D591_k591(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k591, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (set! (close _V10_Doptimize__apply_D591_k592) (bruijn ##.dummy.224.718 1 2) (bruijn ##.x.1877 0 0))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k592, self)})),
+      VEncodeInt(1l), VEncodeInt(2l),
+      _var0
+    );
+}
+static void _V10_Doptimize__apply_D591_lambda166(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda166, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.count-refs.296 15 10) (bruijn ##.k.1878 0 0) (##inline ##vcore.car (bruijn ##.expr.211.714 3 0)))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 10)), 2,
+      _var0,
+      VInlineCar2(runtime,
+        statics->up->up->vars[0]));
+}
+static void _V10_Doptimize__apply_D591_k594(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k594, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (set! (bruijn ##.k.1879 1 0) (bruijn ##.bpure.717 2 1) (bruijn ##.bpure.223.720 1 2))
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
       statics->vars[0],
       VEncodeInt(2l), VEncodeInt(1l),
       statics->vars[2]
     );
 }
-static void _V10_Doptimize__apply_D591_lambda165(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void _V10_Doptimize__apply_D591_lambda167(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda165, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda167, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -12713,16 +12781,16 @@ static void _V10_Doptimize__apply_D591_lambda165(VRuntime * runtime, VEnv * stat
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (set! (close _V10_Doptimize__apply_D591_k592) (bruijn ##.bcount.718 1 0) (bruijn ##.bcount.222.721 0 1))
+  // (set! (close _V10_Doptimize__apply_D591_k594) (bruijn ##.bcount.716 1 0) (bruijn ##.bcount.222.719 0 1))
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k592, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k594, self)})),
       VEncodeInt(1l), VEncodeInt(0l),
       _var1
     );
 }
-static void _V10_Doptimize__apply_D591_lambda163(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_lambda165(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda163, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda165, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -12730,7 +12798,7 @@ static void _V10_Doptimize__apply_D591_lambda163(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (letrec 3 (#f #f #f) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k589) (close _V10_Doptimize__apply_D591_lambda164) (close _V10_Doptimize__apply_D591_lambda165)))
+  // (letrec 3 (#f #f #f) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k591) (close _V10_Doptimize__apply_D591_lambda166) (close _V10_Doptimize__apply_D591_lambda167)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[3]; } container;
@@ -12740,10 +12808,63 @@ static void _V10_Doptimize__apply_D591_lambda163(VRuntime * runtime, VEnv * stat
     self->vars[1] = VEncodeBool(false);
     self->vars[2] = VEncodeBool(false);
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k589, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda164, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda165, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k591, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda166, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda167, self)})));
     }
+}
+static void _V10_Doptimize__apply_D591_k589(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k589, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.211.714 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.211.714 0 0))) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k590) (close _V10_Doptimize__apply_D591_lambda165) (bruijn ##.kk.201.703 8 1)) ((bruijn ##.k.1866 4 0) #f)) ((bruijn ##.k.1866 4 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+if(VDecodeBool(
+VInlineNullP2(runtime,
+        VInlineCdr2(runtime,
+        _var0)))) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k590, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda165, self)})),
+      VGetArg(statics, 8-1, 1));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__apply_D591_k588(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k588, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.210.712 0 0)) ((close _V10_Doptimize__apply_D591_k589) (##inline ##vcore.cdr (bruijn ##.expr.210.712 0 0))) ((bruijn ##.k.1866 3 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k589, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        _var0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
 }
 static void _V10_Doptimize__apply_D591_k587(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -12755,24 +12876,24 @@ static void _V10_Doptimize__apply_D591_k587(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.211.716 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.211.716 0 0))) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k588) (close _V10_Doptimize__apply_D591_lambda163) (bruijn ##.kk.201.705 8 1)) ((bruijn ##.k.1865 4 0) #f)) ((bruijn ##.k.1865 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.209.711 0 0)) (if (##inline ##vcore.eq? #t (##inline ##vcore.car (bruijn ##.expr.209.711 0 0))) ((close _V10_Doptimize__apply_D591_k588) (##inline ##vcore.cdr (bruijn ##.expr.209.711 0 0))) ((bruijn ##.k.1866 2 0) #f)) ((bruijn ##.k.1866 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
 if(VDecodeBool(
-VInlineNullP2(runtime,
-        VInlineCdr2(runtime,
+VInlineEq2(runtime,
+        VEncodeBool(true),
+        VInlineCar2(runtime,
         _var0)))) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k588, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda163, self)})),
-      VGetArg(statics, 8-1, 1));
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k588, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -12786,15 +12907,14 @@ static void _V10_Doptimize__apply_D591_k586(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.210.714 0 0)) ((close _V10_Doptimize__apply_D591_k587) (##inline ##vcore.cdr (bruijn ##.expr.210.714 0 0))) ((bruijn ##.k.1865 3 0) #f))
+  // (if (bruijn ##.p.1867 0 0) ((close _V10_Doptimize__apply_D591_k587) (##inline ##vcore.cdr (bruijn ##.expr.702 6 1))) ((bruijn ##.k.1866 1 0) #f))
 if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
+_var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k587, .env = self }, }, 1,
       VInlineCdr2(runtime,
-        _var0));
+        VGetArg(statics, 6-1, 1)));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -12808,64 +12928,12 @@ static void _V10_Doptimize__apply_D591_k585(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.209.713 0 0)) (if (##inline ##vcore.eq? #t (##inline ##vcore.car (bruijn ##.expr.209.713 0 0))) ((close _V10_Doptimize__apply_D591_k586) (##inline ##vcore.cdr (bruijn ##.expr.209.713 0 0))) ((bruijn ##.k.1865 2 0) #f)) ((bruijn ##.k.1865 2 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        VEncodeBool(true),
-        VInlineCar2(runtime,
-        _var0)))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k586, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k584(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k584, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1866 0 0) ((close _V10_Doptimize__apply_D591_k585) (##inline ##vcore.cdr (bruijn ##.expr.704 6 1))) ((bruijn ##.k.1865 1 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k585, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        VGetArg(statics, 6-1, 1)));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k583(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k583, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.704 5 1)) ((bruijn ##.x.828 9 0) (close _V10_Doptimize__apply_D591_k584) 'if (##inline ##vcore.car (bruijn ##.expr.704 5 1))) ((bruijn ##.k.1865 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.702 5 1)) ((bruijn ##.x.826 9 0) (close _V10_Doptimize__apply_D591_k586) 'if (##inline ##vcore.car (bruijn ##.expr.702 5 1))) ((bruijn ##.k.1866 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 5-1, 1)))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k584, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k586, self)})),
       _V0if,
       VInlineCar2(runtime,
         VGetArg(statics, 5-1, 1)));
@@ -12874,72 +12942,27 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__apply_D591_k599(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k599, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1853 0 0) (bruijn ##.k.1846 5 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VGetArg(statics, 5-1, 0));
-}
-static void _V10_Doptimize__apply_D591_k602(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k602, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.optimize-apply.591 16 4) (bruijn ##.k.1854 4 0) (##inline ##vcore.car (bruijn ##.expr.215.727 5 0)))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 4)), 2,
-      statics->up->up->up->vars[0],
-      VInlineCar2(runtime,
-        VGetArg(statics, 5-1, 0)));
-}
 static void _V10_Doptimize__apply_D591_k601(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k601, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.sub-refs!.295 17 9) (close _V10_Doptimize__apply_D591_k602) (bruijn ##.ref-table.593 15 6) (bruijn ##.acount.729 2 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 9)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k602, self)})),
-      VGetArg(statics, 15-1, 6),
-      statics->up->vars[0]);
+  // ((bruijn ##.x.1854 0 0) (bruijn ##.k.1847 5 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VGetArg(statics, 5-1, 0));
 }
-static void _V10_Doptimize__apply_D591_k600(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_k604(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k600, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k604, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (set! (close _V10_Doptimize__apply_D591_k601) (bruijn ##.dummy.227.731 1 2) (bruijn ##.x.1857 0 0))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k601, self)})),
-      VEncodeInt(1l), VEncodeInt(2l),
-      _var0
-    );
-}
-static void _V10_Doptimize__apply_D591_lambda167(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda167, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.count-refs.296 16 10) (bruijn ##.k.1858 0 0) (##inline ##vcore.car (bruijn ##.expr.214.725 4 0)))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 10)), 2,
-      _var0,
+  // ((bruijn ##.optimize-apply.591 16 4) (bruijn ##.k.1855 4 0) (##inline ##vcore.car (bruijn ##.expr.215.725 5 0)))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 4)), 2,
+      statics->up->up->up->vars[0],
       VInlineCar2(runtime,
-        statics->up->up->up->vars[0]));
+        VGetArg(statics, 5-1, 0)));
 }
 static void _V10_Doptimize__apply_D591_k603(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -12951,16 +12974,61 @@ static void _V10_Doptimize__apply_D591_k603(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (set! (bruijn ##.k.1859 1 0) (bruijn ##.apure.730 2 1) (bruijn ##.apure.226.733 1 2))
+  // ((bruijn ##.sub-refs!.295 17 9) (close _V10_Doptimize__apply_D591_k604) (bruijn ##.ref-table.593 15 6) (bruijn ##.acount.727 2 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 9)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k604, self)})),
+      VGetArg(statics, 15-1, 6),
+      statics->up->vars[0]);
+}
+static void _V10_Doptimize__apply_D591_k602(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k602, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (set! (close _V10_Doptimize__apply_D591_k603) (bruijn ##.dummy.227.729 1 2) (bruijn ##.x.1858 0 0))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k603, self)})),
+      VEncodeInt(1l), VEncodeInt(2l),
+      _var0
+    );
+}
+static void _V10_Doptimize__apply_D591_lambda169(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda169, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.count-refs.296 16 10) (bruijn ##.k.1859 0 0) (##inline ##vcore.car (bruijn ##.expr.214.723 4 0)))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 10)), 2,
+      _var0,
+      VInlineCar2(runtime,
+        statics->up->up->up->vars[0]));
+}
+static void _V10_Doptimize__apply_D591_k605(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k605, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (set! (bruijn ##.k.1860 1 0) (bruijn ##.apure.728 2 1) (bruijn ##.apure.226.731 1 2))
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
       statics->vars[0],
       VEncodeInt(2l), VEncodeInt(1l),
       statics->vars[2]
     );
 }
-static void _V10_Doptimize__apply_D591_lambda168(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void _V10_Doptimize__apply_D591_lambda170(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda168, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda170, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -12970,16 +13038,16 @@ static void _V10_Doptimize__apply_D591_lambda168(VRuntime * runtime, VEnv * stat
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (set! (close _V10_Doptimize__apply_D591_k603) (bruijn ##.acount.729 1 0) (bruijn ##.acount.225.732 0 1))
+  // (set! (close _V10_Doptimize__apply_D591_k605) (bruijn ##.acount.727 1 0) (bruijn ##.acount.225.730 0 1))
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k603, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k605, self)})),
       VEncodeInt(1l), VEncodeInt(0l),
       _var1
     );
 }
-static void _V10_Doptimize__apply_D591_lambda166(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_lambda168(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda166, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda168, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -12987,7 +13055,7 @@ static void _V10_Doptimize__apply_D591_lambda166(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (letrec 3 (#f #f #f) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k600) (close _V10_Doptimize__apply_D591_lambda167) (close _V10_Doptimize__apply_D591_lambda168)))
+  // (letrec 3 (#f #f #f) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k602) (close _V10_Doptimize__apply_D591_lambda169) (close _V10_Doptimize__apply_D591_lambda170)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[3]; } container;
@@ -12997,10 +13065,63 @@ static void _V10_Doptimize__apply_D591_lambda166(VRuntime * runtime, VEnv * stat
     self->vars[1] = VEncodeBool(false);
     self->vars[2] = VEncodeBool(false);
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k600, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda167, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda168, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k602, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda169, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda170, self)})));
     }
+}
+static void _V10_Doptimize__apply_D591_k600(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k600, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.215.725 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.215.725 0 0))) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k601) (close _V10_Doptimize__apply_D591_lambda168) (bruijn ##.kk.201.703 9 1)) ((bruijn ##.k.1847 4 0) #f)) ((bruijn ##.k.1847 4 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+if(VDecodeBool(
+VInlineNullP2(runtime,
+        VInlineCdr2(runtime,
+        _var0)))) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k601, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda168, self)})),
+      VGetArg(statics, 9-1, 1));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__apply_D591_k599(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k599, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.214.723 0 0)) ((close _V10_Doptimize__apply_D591_k600) (##inline ##vcore.cdr (bruijn ##.expr.214.723 0 0))) ((bruijn ##.k.1847 3 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k600, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        _var0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
 }
 static void _V10_Doptimize__apply_D591_k598(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -13012,24 +13133,24 @@ static void _V10_Doptimize__apply_D591_k598(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.215.727 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.215.727 0 0))) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k599) (close _V10_Doptimize__apply_D591_lambda166) (bruijn ##.kk.201.705 9 1)) ((bruijn ##.k.1846 4 0) #f)) ((bruijn ##.k.1846 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.213.722 0 0)) (if (##inline ##vcore.eq? #f (##inline ##vcore.car (bruijn ##.expr.213.722 0 0))) ((close _V10_Doptimize__apply_D591_k599) (##inline ##vcore.cdr (bruijn ##.expr.213.722 0 0))) ((bruijn ##.k.1847 2 0) #f)) ((bruijn ##.k.1847 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
 if(VDecodeBool(
-VInlineNullP2(runtime,
-        VInlineCdr2(runtime,
+VInlineEq2(runtime,
+        VEncodeBool(false),
+        VInlineCar2(runtime,
         _var0)))) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k599, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda166, self)})),
-      VGetArg(statics, 9-1, 1));
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k599, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -13043,15 +13164,14 @@ static void _V10_Doptimize__apply_D591_k597(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.214.725 0 0)) ((close _V10_Doptimize__apply_D591_k598) (##inline ##vcore.cdr (bruijn ##.expr.214.725 0 0))) ((bruijn ##.k.1846 3 0) #f))
+  // (if (bruijn ##.p.1848 0 0) ((close _V10_Doptimize__apply_D591_k598) (##inline ##vcore.cdr (bruijn ##.expr.702 7 1))) ((bruijn ##.k.1847 1 0) #f))
 if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
+_var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k598, .env = self }, }, 1,
       VInlineCdr2(runtime,
-        _var0));
+        VGetArg(statics, 7-1, 1)));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -13065,64 +13185,12 @@ static void _V10_Doptimize__apply_D591_k596(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.213.724 0 0)) (if (##inline ##vcore.eq? #f (##inline ##vcore.car (bruijn ##.expr.213.724 0 0))) ((close _V10_Doptimize__apply_D591_k597) (##inline ##vcore.cdr (bruijn ##.expr.213.724 0 0))) ((bruijn ##.k.1846 2 0) #f)) ((bruijn ##.k.1846 2 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        VEncodeBool(false),
-        VInlineCar2(runtime,
-        _var0)))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k597, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k595(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k595, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1847 0 0) ((close _V10_Doptimize__apply_D591_k596) (##inline ##vcore.cdr (bruijn ##.expr.704 7 1))) ((bruijn ##.k.1846 1 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k596, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        VGetArg(statics, 7-1, 1)));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k594(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k594, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.704 6 1)) ((bruijn ##.x.828 10 0) (close _V10_Doptimize__apply_D591_k595) 'if (##inline ##vcore.car (bruijn ##.expr.704 6 1))) ((bruijn ##.k.1846 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.702 6 1)) ((bruijn ##.x.826 10 0) (close _V10_Doptimize__apply_D591_k597) 'if (##inline ##vcore.car (bruijn ##.expr.702 6 1))) ((bruijn ##.k.1847 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 6-1, 1)))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k595, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k597, self)})),
       _V0if,
       VInlineCar2(runtime,
         VGetArg(statics, 6-1, 1)));
@@ -13131,23 +13199,23 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__apply_D591_k610(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k610, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1836 0 0) (bruijn ##.k.1830 5 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VGetArg(statics, 5-1, 0));
-}
 static void _V10_Doptimize__apply_D591_k612(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k612, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1837 2 0) (##inline ##vcore.cons 'if (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.217.735 5 0)) (##inline ##vcore.cons (bruijn ##.x.1840 1 0) (##inline ##vcore.cons (bruijn ##.x.1842 0 0) '())))))
+  // ((bruijn ##.x.1837 0 0) (bruijn ##.k.1831 5 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VGetArg(statics, 5-1, 0));
+}
+static void _V10_Doptimize__apply_D591_k614(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k614, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.k.1838 2 0) (##inline ##vcore.cons 'if (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.217.733 5 0)) (##inline ##vcore.cons (bruijn ##.x.1841 1 0) (##inline ##vcore.cons (bruijn ##.x.1843 0 0) '())))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VInlineCons2(runtime,
         _V0if,
@@ -13160,6 +13228,38 @@ static void _V10_Doptimize__apply_D591_k612(VRuntime * runtime, VEnv * statics, 
         _var0,
         VNULL)))));
 }
+static void _V10_Doptimize__apply_D591_k613(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k613, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.optimize-apply.591 14 4) (close _V10_Doptimize__apply_D591_k614) (##inline ##vcore.car (bruijn ##.expr.219.737 2 0)))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 4)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k614, self)})),
+      VInlineCar2(runtime,
+        statics->up->vars[0]));
+}
+static void _V10_Doptimize__apply_D591_lambda171(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda171, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.optimize-apply.591 13 4) (close _V10_Doptimize__apply_D591_k613) (##inline ##vcore.car (bruijn ##.expr.218.735 2 0)))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 4)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k613, self)})),
+      VInlineCar2(runtime,
+        statics->up->vars[0]));
+}
 static void _V10_Doptimize__apply_D591_k611(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k611, got ~D~N"
@@ -13170,15 +13270,30 @@ static void _V10_Doptimize__apply_D591_k611(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.optimize-apply.591 14 4) (close _V10_Doptimize__apply_D591_k612) (##inline ##vcore.car (bruijn ##.expr.219.739 2 0)))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 4)), 2,
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.219.737 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.219.737 0 0))) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k612) (close _V10_Doptimize__apply_D591_lambda171) (bruijn ##.kk.201.703 10 1)) ((bruijn ##.k.1831 4 0) #f)) ((bruijn ##.k.1831 4 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+if(VDecodeBool(
+VInlineNullP2(runtime,
+        VInlineCdr2(runtime,
+        _var0)))) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k612, self)})),
-      VInlineCar2(runtime,
-        statics->up->vars[0]));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda171, self)})),
+      VGetArg(statics, 10-1, 1));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+      VEncodeBool(false));
 }
-static void _V10_Doptimize__apply_D591_lambda169(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__apply_D591_k610(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda169, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k610, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -13186,11 +13301,17 @@ static void _V10_Doptimize__apply_D591_lambda169(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.optimize-apply.591 13 4) (close _V10_Doptimize__apply_D591_k611) (##inline ##vcore.car (bruijn ##.expr.218.737 2 0)))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 4)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k611, self)})),
-      VInlineCar2(runtime,
-        statics->up->vars[0]));
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.218.735 0 0)) ((close _V10_Doptimize__apply_D591_k611) (##inline ##vcore.cdr (bruijn ##.expr.218.735 0 0))) ((bruijn ##.k.1831 3 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k611, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        _var0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
 }
 static void _V10_Doptimize__apply_D591_k609(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -13202,24 +13323,15 @@ static void _V10_Doptimize__apply_D591_k609(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.219.739 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.219.739 0 0))) (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k610) (close _V10_Doptimize__apply_D591_lambda169) (bruijn ##.kk.201.705 10 1)) ((bruijn ##.k.1830 4 0) #f)) ((bruijn ##.k.1830 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.217.733 0 0)) ((close _V10_Doptimize__apply_D591_k610) (##inline ##vcore.cdr (bruijn ##.expr.217.733 0 0))) ((bruijn ##.k.1831 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
-if(VDecodeBool(
-VInlineNullP2(runtime,
-        VInlineCdr2(runtime,
-        _var0)))) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k610, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda169, self)})),
-      VGetArg(statics, 10-1, 1));
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k610, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -13233,15 +13345,14 @@ static void _V10_Doptimize__apply_D591_k608(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.218.737 0 0)) ((close _V10_Doptimize__apply_D591_k609) (##inline ##vcore.cdr (bruijn ##.expr.218.737 0 0))) ((bruijn ##.k.1830 3 0) #f))
+  // (if (bruijn ##.p.1832 0 0) ((close _V10_Doptimize__apply_D591_k609) (##inline ##vcore.cdr (bruijn ##.expr.702 8 1))) ((bruijn ##.k.1831 1 0) #f))
 if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
+_var0)) {
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k609, .env = self }, }, 1,
       VInlineCdr2(runtime,
-        _var0));
+        VGetArg(statics, 8-1, 1)));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -13255,55 +13366,12 @@ static void _V10_Doptimize__apply_D591_k607(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.217.735 0 0)) ((close _V10_Doptimize__apply_D591_k608) (##inline ##vcore.cdr (bruijn ##.expr.217.735 0 0))) ((bruijn ##.k.1830 2 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k608, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k606(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k606, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1831 0 0) ((close _V10_Doptimize__apply_D591_k607) (##inline ##vcore.cdr (bruijn ##.expr.704 8 1))) ((bruijn ##.k.1830 1 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k607, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        VGetArg(statics, 8-1, 1)));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k605(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k605, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.704 7 1)) ((bruijn ##.x.828 11 0) (close _V10_Doptimize__apply_D591_k606) 'if (##inline ##vcore.car (bruijn ##.expr.704 7 1))) ((bruijn ##.k.1830 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.702 7 1)) ((bruijn ##.x.826 11 0) (close _V10_Doptimize__apply_D591_k608) 'if (##inline ##vcore.car (bruijn ##.expr.702 7 1))) ((bruijn ##.k.1831 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 7-1, 1)))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k606, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k608, self)})),
       _V0if,
       VInlineCar2(runtime,
         VGetArg(statics, 7-1, 1)));
@@ -13312,23 +13380,23 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__apply_D591_k619(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k619, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1814 0 0) (bruijn ##.k.1812 5 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VGetArg(statics, 5-1, 0));
-}
 static void _V10_Doptimize__apply_D591_k621(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k621, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.1828 0 0) ((bruijn ##.x.810 37 0) (bruijn ##.k.1827 1 0) (bruijn ##.f.742 6 0)) ((bruijn ##.k.1827 1 0) #f))
+  // ((bruijn ##.x.1815 0 0) (bruijn ##.k.1813 5 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VGetArg(statics, 5-1, 0));
+}
+static void _V10_Doptimize__apply_D591_k623(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k623, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // (if (bruijn ##.p.1829 0 0) ((bruijn ##.x.808 37 0) (bruijn ##.k.1828 1 0) (bruijn ##.f.740 6 0)) ((bruijn ##.k.1828 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 37-1, 0)), 2,
@@ -13339,9 +13407,9 @@ _var0)) {
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__apply_D591_k620(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_k622(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k620, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k622, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -13349,24 +13417,24 @@ static void _V10_Doptimize__apply_D591_k620(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.inlining?.586 16 2) ((bruijn ##.x.811 35 0) (close _V10_Doptimize__apply_D591_k621) (bruijn ##.f.742 5 0)) ((bruijn ##.k.1827 0 0) #f))
+  // (if (bruijn ##.inlining?.586 16 2) ((bruijn ##.x.809 35 0) (close _V10_Doptimize__apply_D591_k623) (bruijn ##.f.740 5 0)) ((bruijn ##.k.1828 0 0) #f))
 if(VDecodeBool(
 VGetArg(statics, 16-1, 2))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k621, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k623, self)})),
       VGetArg(statics, 5-1, 0));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__apply_D591_k624(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_k626(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k624, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k626, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.optimize-apply.591 17 4) (bruijn ##.k.1815 3 0) (##inline ##vcore.cons (bruijn ##.x.1818 1 0) (##inline ##vcore.cons (##inline ##vcore.cons '##inline (##inline ##vcore.cons (bruijn ##.f.742 7 0) (bruijn ##.x.1822 0 0))) '())))
+  // ((bruijn ##.optimize-apply.591 17 4) (bruijn ##.k.1816 3 0) (##inline ##vcore.cons (bruijn ##.x.1819 1 0) (##inline ##vcore.cons (##inline ##vcore.cons '##inline (##inline ##vcore.cons (bruijn ##.f.740 7 0) (bruijn ##.x.1823 0 0))) '())))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 4)), 2,
       statics->up->up->vars[0],
       VInlineCons2(runtime,
@@ -13379,66 +13447,6 @@ static void _V10_Doptimize__apply_D591_k624(VRuntime * runtime, VEnv * statics, 
         _var0)),
         VNULL)));
 }
-static void _V10_Doptimize__apply_D591_k623(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k623, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.807 40 0) (close _V10_Doptimize__apply_D591_k624) (bruijn ##.optimize-atom.592 16 5) (bruijn ##.xs.745 3 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k624, self)})),
-      VGetArg(statics, 16-1, 5),
-      statics->up->up->vars[0]);
-}
-static void _V10_Doptimize__apply_D591_k628(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k628, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.809 41 0) (bruijn ##.k.1815 5 0) (bruijn ##.x.1823 3 0) (bruijn ##.x.1824 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 3,
-      VGetArg(statics, 5-1, 0),
-      statics->up->up->vars[0],
-      _var0);
-}
-static void _V10_Doptimize__apply_D591_k627(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k627, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.809 40 0) (close _V10_Doptimize__apply_D591_k628) (bruijn ##.x.1825 1 0) (bruijn ##.x.1826 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k628, self)})),
-      statics->vars[0],
-      _var0);
-}
-static void _V10_Doptimize__apply_D591_k626(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k626, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.807 41 0) (close _V10_Doptimize__apply_D591_k627) (bruijn ##.optimize-atom.592 17 5) (bruijn ##.xs.745 4 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k627, self)})),
-      VGetArg(statics, 17-1, 5),
-      statics->up->up->up->vars[0]);
-}
 static void _V10_Doptimize__apply_D591_k625(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k625, got ~D~N"
@@ -13449,148 +13457,23 @@ static void _V10_Doptimize__apply_D591_k625(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.optimize-atom.592 16 5) (close _V10_Doptimize__apply_D591_k626) (bruijn ##.k.744 4 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 5)), 2,
+  // ((bruijn ##.x.805 40 0) (close _V10_Doptimize__apply_D591_k626) (bruijn ##.optimize-atom.592 16 5) (bruijn ##.xs.743 3 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k626, self)})),
-      statics->up->up->up->vars[0]);
-}
-static void _V10_Doptimize__apply_D591_k622(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k622, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1816 0 0) ((bruijn ##.optimize-atom.592 15 5) (close _V10_Doptimize__apply_D591_k623) (bruijn ##.k.744 3 0)) ((bruijn ##.optimize-atom.592 15 5) (close _V10_Doptimize__apply_D591_k625) (bruijn ##.f.742 5 0)))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 5)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k623, self)})),
+      VGetArg(statics, 16-1, 5),
       statics->up->up->vars[0]);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 5)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k625, self)})),
-      VGetArg(statics, 5-1, 0));
 }
-}
-static void _V10_Doptimize__apply_D591_lambda170(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_k630(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda170, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k630, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__apply_D591_k620) (close _V10_Doptimize__apply_D591_k622))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k620, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k622, self)})));
-}
-static void _V10_Doptimize__apply_D591_k618(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k618, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k619) (close _V10_Doptimize__apply_D591_lambda170) (bruijn ##.kk.201.705 11 1))
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k619, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda170, self)})),
-      VGetArg(statics, 11-1, 1));
-}
-static void _V10_Doptimize__apply_D591_k617(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k617, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__apply_D591_k618) (##inline ##vcore.cdr (bruijn ##.expr.221.743 1 0)))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k618, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        statics->vars[0]));
-}
-static void _V10_Doptimize__apply_D591_k616(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k616, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.221.743 0 0)) ((close _V10_Doptimize__apply_D591_k617) (##inline ##vcore.car (bruijn ##.expr.221.743 0 0))) ((bruijn ##.k.1812 2 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k617, .env = self }, }, 1,
-      VInlineCar2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_k615(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k615, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__apply_D591_k616) (##inline ##vcore.cdr (bruijn ##.expr.704 9 1)))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k616, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        VGetArg(statics, 9-1, 1)));
-}
-static void _V10_Doptimize__apply_D591_k614(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k614, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.704 8 1)) ((close _V10_Doptimize__apply_D591_k615) (##inline ##vcore.car (bruijn ##.expr.704 8 1))) ((bruijn ##.k.1812 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        VGetArg(statics, 8-1, 1)))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k615, .env = self }, }, 1,
-      VInlineCar2(runtime,
-        VGetArg(statics, 8-1, 1)));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__apply_D591_lambda171(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda171, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.808 33 0) (bruijn ##.k.1810 0 0) (##string ##.string.2070) (bruijn ##.expr.704 9 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 3,
-      _var0,
-      VEncodePointer(&_V10_Dstring_D2070.sym, VPOINTER_OTHER),
-      VGetArg(statics, 9-1, 1));
+  // ((bruijn ##.x.807 41 0) (bruijn ##.k.1816 5 0) (bruijn ##.x.1824 3 0) (bruijn ##.x.1825 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 3,
+      VGetArg(statics, 5-1, 0),
+      statics->up->up->vars[0],
+      _var0);
 }
 static void _V10_Doptimize__apply_D591_k629(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -13602,15 +13485,15 @@ static void _V10_Doptimize__apply_D591_k629(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1802 7 0) (close _V10_Doptimize__apply_D591_lambda171) (bruijn ##.kk.201.705 7 1))
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      VGetArg(statics, 7-1, 0),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda171, self)})),
-      VGetArg(statics, 7-1, 1));
+  // ((bruijn ##.x.807 40 0) (close _V10_Doptimize__apply_D591_k630) (bruijn ##.x.1826 1 0) (bruijn ##.x.1827 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k630, self)})),
+      statics->vars[0],
+      _var0);
 }
-static void _V10_Doptimize__apply_D591_k613(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_k628(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k613, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k628, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -13618,13 +13501,15 @@ static void _V10_Doptimize__apply_D591_k613(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__apply_D591_k614) (close _V10_Doptimize__apply_D591_k629))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k614, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k629, self)})));
+  // ((bruijn ##.x.805 41 0) (close _V10_Doptimize__apply_D591_k629) (bruijn ##.optimize-atom.592 17 5) (bruijn ##.xs.743 4 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k629, self)})),
+      VGetArg(statics, 17-1, 5),
+      statics->up->up->up->vars[0]);
 }
-static void _V10_Doptimize__apply_D591_k604(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_k627(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k604, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k627, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -13632,13 +13517,14 @@ static void _V10_Doptimize__apply_D591_k604(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__apply_D591_k605) (close _V10_Doptimize__apply_D591_k613))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k605, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k613, self)})));
+  // ((bruijn ##.optimize-atom.592 16 5) (close _V10_Doptimize__apply_D591_k628) (bruijn ##.k.742 4 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 5)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k628, self)})),
+      statics->up->up->up->vars[0]);
 }
-static void _V10_Doptimize__apply_D591_k593(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_k624(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k593, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k624, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -13646,128 +13532,21 @@ static void _V10_Doptimize__apply_D591_k593(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__apply_D591_k594) (close _V10_Doptimize__apply_D591_k604))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k594, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k604, self)})));
-}
-static void _V10_Doptimize__apply_D591_k582(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k582, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__apply_D591_k583) (close _V10_Doptimize__apply_D591_k593))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k583, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k593, self)})));
-}
-static void _V10_Doptimize__apply_D591_k578(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k578, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__apply_D591_k579) (close _V10_Doptimize__apply_D591_k582))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k579, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k582, self)})));
-}
-static void _V10_Doptimize__apply_D591_k573(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k573, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__apply_D591_k574) (close _V10_Doptimize__apply_D591_k578))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k574, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k578, self)})));
-}
-static void _V10_Doptimize__apply_D591_lambda159(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
- if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda159, got ~D~N"
-  "-- expected 2~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[2]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 2, 2, statics);
-  self->vars[0] = _var0;
-  self->vars[1] = _var1;
-  // ((close _V10_Doptimize__apply_D591_k569) (close _V10_Doptimize__apply_D591_k573))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k569, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k573, self)})));
-}
-static void _V10_Doptimize__apply_D591_lambda158(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
- if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda158, got ~D~N"
-  "-- expected 2~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[2]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 2, 2, statics);
-  self->vars[0] = _var0;
-  self->vars[1] = _var1;
-  // (##vcore.call/cc (bruijn ##.k.1801 0 0) (close _V10_Doptimize__apply_D591_lambda159))
-    VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
-      _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda159, self)})));
-}
-static void _V10_Doptimize__atom_D592_k632(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k632, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1973 0 0) (bruijn ##.k.1971 2 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->up->vars[0]);
-}
-static void _V10_Doptimize__atom_D592_lambda174(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda174, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.1974 0 0) (bruijn ##.expr.746 4 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->up->up->up->vars[1]);
-}
-static void _V10_Doptimize__atom_D592_k631(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k631, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.1972 0 0) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k632) (close _V10_Doptimize__atom_D592_lambda174) (bruijn ##.kk.228.747 2 1)) ((bruijn ##.k.1971 1 0) #f))
+  // (if (bruijn ##.p.1817 0 0) ((bruijn ##.optimize-atom.592 15 5) (close _V10_Doptimize__apply_D591_k625) (bruijn ##.k.742 3 0)) ((bruijn ##.optimize-atom.592 15 5) (close _V10_Doptimize__apply_D591_k627) (bruijn ##.f.740 5 0)))
 if(VDecodeBool(
 _var0)) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k632, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda174, self)})),
-      statics->up->vars[1]);
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 5)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k625, self)})),
+      statics->up->up->vars[0]);
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 5)), 2,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k627, self)})),
+      VGetArg(statics, 5-1, 0));
 }
 }
-static void _V10_Doptimize__atom_D592_k630(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_lambda172(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k630, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda172, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -13775,43 +13554,66 @@ static void _V10_Doptimize__atom_D592_k630(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.746 2 1)) ((bruijn ##.x.828 6 0) (close _V10_Doptimize__atom_D592_k631) 'quote (##inline ##vcore.car (bruijn ##.expr.746 2 1))) ((bruijn ##.k.1971 0 0) #f))
+  // ((close _V10_Doptimize__apply_D591_k622) (close _V10_Doptimize__apply_D591_k624))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k622, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k624, self)})));
+}
+static void _V10_Doptimize__apply_D591_k620(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k620, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (##vcore.call-with-values (close _V10_Doptimize__apply_D591_k621) (close _V10_Doptimize__apply_D591_lambda172) (bruijn ##.kk.201.703 11 1))
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k621, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda172, self)})),
+      VGetArg(statics, 11-1, 1));
+}
+static void _V10_Doptimize__apply_D591_k619(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k619, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Doptimize__apply_D591_k620) (##inline ##vcore.cdr (bruijn ##.expr.221.741 1 0)))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k620, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        statics->vars[0]));
+}
+static void _V10_Doptimize__apply_D591_k618(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k618, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.221.741 0 0)) ((close _V10_Doptimize__apply_D591_k619) (##inline ##vcore.car (bruijn ##.expr.221.741 0 0))) ((bruijn ##.k.1813 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
-        statics->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k631, self)})),
-      _V0quote,
+        _var0))) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k619, .env = self }, }, 1,
       VInlineCar2(runtime,
-        statics->up->vars[1]));
+        _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__atom_D592_k636(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__apply_D591_k617(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k636, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1967 0 0) (bruijn ##.k.1965 2 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->up->vars[0]);
-}
-static void _V10_Doptimize__atom_D592_lambda175(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda175, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.1968 0 0) (bruijn ##.expr.746 5 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VGetArg(statics, 5-1, 1));
-}
-static void _V10_Doptimize__atom_D592_k635(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k635, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k617, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -13819,17 +13621,175 @@ static void _V10_Doptimize__atom_D592_k635(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1966 0 0) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k636) (close _V10_Doptimize__atom_D592_lambda175) (bruijn ##.kk.228.747 3 1)) ((bruijn ##.k.1965 1 0) #f))
+  // ((close _V10_Doptimize__apply_D591_k618) (##inline ##vcore.cdr (bruijn ##.expr.702 9 1)))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k618, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        VGetArg(statics, 9-1, 1)));
+}
+static void _V10_Doptimize__apply_D591_k616(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k616, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.702 8 1)) ((close _V10_Doptimize__apply_D591_k617) (##inline ##vcore.car (bruijn ##.expr.702 8 1))) ((bruijn ##.k.1813 0 0) #f))
 if(VDecodeBool(
-_var0)) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k636, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda175, self)})),
-      statics->up->up->vars[1]);
+VInlinePairP2(runtime,
+        VGetArg(statics, 8-1, 1)))) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k617, .env = self }, }, 1,
+      VInlineCar2(runtime,
+        VGetArg(statics, 8-1, 1)));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
+}
+static void _V10_Doptimize__apply_D591_lambda173(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda173, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.806 33 0) (bruijn ##.k.1811 0 0) (##string ##.string.2071) (bruijn ##.expr.702 9 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 3,
+      _var0,
+      VEncodePointer(&_V10_Dstring_D2071.sym, VPOINTER_OTHER),
+      VGetArg(statics, 9-1, 1));
+}
+static void _V10_Doptimize__apply_D591_k631(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k631, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (##vcore.call-with-values (bruijn ##.k.1803 7 0) (close _V10_Doptimize__apply_D591_lambda173) (bruijn ##.kk.201.703 7 1))
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      VGetArg(statics, 7-1, 0),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda173, self)})),
+      VGetArg(statics, 7-1, 1));
+}
+static void _V10_Doptimize__apply_D591_k615(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k615, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Doptimize__apply_D591_k616) (close _V10_Doptimize__apply_D591_k631))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k616, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k631, self)})));
+}
+static void _V10_Doptimize__apply_D591_k606(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k606, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Doptimize__apply_D591_k607) (close _V10_Doptimize__apply_D591_k615))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k607, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k615, self)})));
+}
+static void _V10_Doptimize__apply_D591_k595(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k595, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Doptimize__apply_D591_k596) (close _V10_Doptimize__apply_D591_k606))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k596, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k606, self)})));
+}
+static void _V10_Doptimize__apply_D591_k584(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k584, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Doptimize__apply_D591_k585) (close _V10_Doptimize__apply_D591_k595))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k585, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k595, self)})));
+}
+static void _V10_Doptimize__apply_D591_k580(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k580, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Doptimize__apply_D591_k581) (close _V10_Doptimize__apply_D591_k584))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k581, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k584, self)})));
+}
+static void _V10_Doptimize__apply_D591_k575(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_k575, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V10_Doptimize__apply_D591_k576) (close _V10_Doptimize__apply_D591_k580))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k576, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k580, self)})));
+}
+static void _V10_Doptimize__apply_D591_lambda161(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+ if(argc != 2) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda161, got ~D~N"
+  "-- expected 2~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[2]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 2, 2, statics);
+  self->vars[0] = _var0;
+  self->vars[1] = _var1;
+  // ((close _V10_Doptimize__apply_D591_k571) (close _V10_Doptimize__apply_D591_k575))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__apply_D591_k571, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_k575, self)})));
+}
+static void _V10_Doptimize__apply_D591_lambda160(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+ if(argc != 2) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__apply_D591_lambda160, got ~D~N"
+  "-- expected 2~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[2]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 2, 2, statics);
+  self->vars[0] = _var0;
+  self->vars[1] = _var1;
+  // (##vcore.call/cc (bruijn ##.k.1802 0 0) (close _V10_Doptimize__apply_D591_lambda161))
+    VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
+      _var0,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda161, self)})));
 }
 static void _V10_Doptimize__atom_D592_k634(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -13837,31 +13797,7 @@ static void _V10_Doptimize__atom_D592_k634(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.746 3 1)) ((bruijn ##.x.828 7 0) (close _V10_Doptimize__atom_D592_k635) '##foreign.function (##inline ##vcore.car (bruijn ##.expr.746 3 1))) ((bruijn ##.k.1965 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        statics->up->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k635, self)})),
-      _V10foreign_Dfunction,
-      VInlineCar2(runtime,
-        statics->up->up->vars[1]));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__atom_D592_k640(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k640, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1961 0 0) (bruijn ##.k.1959 2 0))
+  // ((bruijn ##.x.1974 0 0) (bruijn ##.k.1972 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -13871,13 +13807,13 @@ static void _V10_Doptimize__atom_D592_lambda176(VRuntime * runtime, VEnv * stati
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1962 0 0) (bruijn ##.expr.746 6 1))
+  // ((bruijn ##.k.1975 0 0) (bruijn ##.expr.744 4 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VGetArg(statics, 6-1, 1));
+      statics->up->up->up->vars[1]);
 }
-static void _V10_Doptimize__atom_D592_k639(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__atom_D592_k633(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k639, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k633, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -13885,15 +13821,39 @@ static void _V10_Doptimize__atom_D592_k639(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1960 0 0) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k640) (close _V10_Doptimize__atom_D592_lambda176) (bruijn ##.kk.228.747 4 1)) ((bruijn ##.k.1959 1 0) #f))
+  // (if (bruijn ##.p.1973 0 0) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k634) (close _V10_Doptimize__atom_D592_lambda176) (bruijn ##.kk.228.745 2 1)) ((bruijn ##.k.1972 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k640, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k634, self)})),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda176, self)})),
-      statics->up->up->up->vars[1]);
+      statics->up->vars[1]);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__atom_D592_k632(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k632, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.744 2 1)) ((bruijn ##.x.826 6 0) (close _V10_Doptimize__atom_D592_k633) 'quote (##inline ##vcore.car (bruijn ##.expr.744 2 1))) ((bruijn ##.k.1972 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        statics->up->vars[1]))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k633, self)})),
+      _V0quote,
+      VInlineCar2(runtime,
+        statics->up->vars[1]));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
@@ -13903,31 +13863,7 @@ static void _V10_Doptimize__atom_D592_k638(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.746 4 1)) ((bruijn ##.x.828 8 0) (close _V10_Doptimize__atom_D592_k639) '##inline (##inline ##vcore.car (bruijn ##.expr.746 4 1))) ((bruijn ##.k.1959 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        statics->up->up->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k639, self)})),
-      _V10inline,
-      VInlineCar2(runtime,
-        statics->up->up->up->vars[1]));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__atom_D592_k644(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k644, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1955 0 0) (bruijn ##.k.1953 2 0))
+  // ((bruijn ##.x.1968 0 0) (bruijn ##.k.1966 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -13937,14 +13873,13 @@ static void _V10_Doptimize__atom_D592_lambda177(VRuntime * runtime, VEnv * stati
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.optimize-lambda.587 8 0) (bruijn ##.k.1956 0 0) (bruijn ##.expr.746 7 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 2,
-      _var0,
-      VGetArg(statics, 7-1, 1));
+  // ((bruijn ##.k.1969 0 0) (bruijn ##.expr.744 5 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VGetArg(statics, 5-1, 1));
 }
-static void _V10_Doptimize__atom_D592_k643(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__atom_D592_k637(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k643, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k637, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -13952,15 +13887,39 @@ static void _V10_Doptimize__atom_D592_k643(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1954 0 0) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k644) (close _V10_Doptimize__atom_D592_lambda177) (bruijn ##.kk.228.747 5 1)) ((bruijn ##.k.1953 1 0) #f))
+  // (if (bruijn ##.p.1967 0 0) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k638) (close _V10_Doptimize__atom_D592_lambda177) (bruijn ##.kk.228.745 3 1)) ((bruijn ##.k.1966 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k644, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k638, self)})),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda177, self)})),
-      VGetArg(statics, 5-1, 1));
+      statics->up->up->vars[1]);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__atom_D592_k636(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k636, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.744 3 1)) ((bruijn ##.x.826 7 0) (close _V10_Doptimize__atom_D592_k637) '##foreign.function (##inline ##vcore.car (bruijn ##.expr.744 3 1))) ((bruijn ##.k.1966 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        statics->up->up->vars[1]))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k637, self)})),
+      _V10foreign_Dfunction,
+      VInlineCar2(runtime,
+        statics->up->up->vars[1]));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
@@ -13970,31 +13929,7 @@ static void _V10_Doptimize__atom_D592_k642(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.746 5 1)) ((bruijn ##.x.828 9 0) (close _V10_Doptimize__atom_D592_k643) 'lambda (##inline ##vcore.car (bruijn ##.expr.746 5 1))) ((bruijn ##.k.1953 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        VGetArg(statics, 5-1, 1)))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k643, self)})),
-      _V0lambda,
-      VInlineCar2(runtime,
-        VGetArg(statics, 5-1, 1)));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__atom_D592_k648(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k648, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1949 0 0) (bruijn ##.k.1947 2 0))
+  // ((bruijn ##.x.1962 0 0) (bruijn ##.k.1960 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -14004,14 +13939,13 @@ static void _V10_Doptimize__atom_D592_lambda178(VRuntime * runtime, VEnv * stati
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.optimize-lambda.587 9 0) (bruijn ##.k.1950 0 0) (bruijn ##.expr.746 8 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 2,
-      _var0,
-      VGetArg(statics, 8-1, 1));
+  // ((bruijn ##.k.1963 0 0) (bruijn ##.expr.744 6 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VGetArg(statics, 6-1, 1));
 }
-static void _V10_Doptimize__atom_D592_k647(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__atom_D592_k641(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k647, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k641, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14019,15 +13953,39 @@ static void _V10_Doptimize__atom_D592_k647(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1948 0 0) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k648) (close _V10_Doptimize__atom_D592_lambda178) (bruijn ##.kk.228.747 6 1)) ((bruijn ##.k.1947 1 0) #f))
+  // (if (bruijn ##.p.1961 0 0) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k642) (close _V10_Doptimize__atom_D592_lambda178) (bruijn ##.kk.228.745 4 1)) ((bruijn ##.k.1960 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k648, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k642, self)})),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda178, self)})),
-      VGetArg(statics, 6-1, 1));
+      statics->up->up->up->vars[1]);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__atom_D592_k640(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k640, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.744 4 1)) ((bruijn ##.x.826 8 0) (close _V10_Doptimize__atom_D592_k641) '##inline (##inline ##vcore.car (bruijn ##.expr.744 4 1))) ((bruijn ##.k.1960 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        statics->up->up->up->vars[1]))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k641, self)})),
+      _V10inline,
+      VInlineCar2(runtime,
+        statics->up->up->up->vars[1]));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
@@ -14037,16 +13995,126 @@ static void _V10_Doptimize__atom_D592_k646(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
+  // ((bruijn ##.x.1956 0 0) (bruijn ##.k.1954 2 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->up->vars[0]);
+}
+static void _V10_Doptimize__atom_D592_lambda179(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda179, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.optimize-lambda.587 8 0) (bruijn ##.k.1957 0 0) (bruijn ##.expr.744 7 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 2,
+      _var0,
+      VGetArg(statics, 7-1, 1));
+}
+static void _V10_Doptimize__atom_D592_k645(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k645, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
   struct { VEnv self; VWORD argv[1]; } container;
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.746 6 1)) ((bruijn ##.x.828 10 0) (close _V10_Doptimize__atom_D592_k647) 'continuation (##inline ##vcore.car (bruijn ##.expr.746 6 1))) ((bruijn ##.k.1947 0 0) #f))
+  // (if (bruijn ##.p.1955 0 0) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k646) (close _V10_Doptimize__atom_D592_lambda179) (bruijn ##.kk.228.745 5 1)) ((bruijn ##.k.1954 1 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k646, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda179, self)})),
+      VGetArg(statics, 5-1, 1));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__atom_D592_k644(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k644, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.744 5 1)) ((bruijn ##.x.826 9 0) (close _V10_Doptimize__atom_D592_k645) 'lambda (##inline ##vcore.car (bruijn ##.expr.744 5 1))) ((bruijn ##.k.1954 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        VGetArg(statics, 5-1, 1)))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k645, self)})),
+      _V0lambda,
+      VInlineCar2(runtime,
+        VGetArg(statics, 5-1, 1)));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__atom_D592_k650(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k650, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.1950 0 0) (bruijn ##.k.1948 2 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->up->vars[0]);
+}
+static void _V10_Doptimize__atom_D592_lambda180(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda180, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.optimize-lambda.587 9 0) (bruijn ##.k.1951 0 0) (bruijn ##.expr.744 8 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 2,
+      _var0,
+      VGetArg(statics, 8-1, 1));
+}
+static void _V10_Doptimize__atom_D592_k649(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k649, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1949 0 0) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k650) (close _V10_Doptimize__atom_D592_lambda180) (bruijn ##.kk.228.745 6 1)) ((bruijn ##.k.1948 1 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k650, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda180, self)})),
+      VGetArg(statics, 6-1, 1));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__atom_D592_k648(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k648, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.744 6 1)) ((bruijn ##.x.826 10 0) (close _V10_Doptimize__atom_D592_k649) 'continuation (##inline ##vcore.car (bruijn ##.expr.744 6 1))) ((bruijn ##.k.1948 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 6-1, 1)))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k647, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k649, self)})),
       _V0continuation,
       VInlineCar2(runtime,
         VGetArg(statics, 6-1, 1)));
@@ -14055,22 +14123,22 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Dloop_D757_k654(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D755_k656(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_k654, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_k656, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.239.756 5 1) (bruijn ##.k.1933 2 0) (bruijn ##.expr.241.758 3 1) (bruijn ##.x.1934 1 0) (bruijn ##.x.1935 0 0))
+  // ((bruijn ##.kk.239.754 5 1) (bruijn ##.k.1934 2 0) (bruijn ##.expr.241.756 3 1) (bruijn ##.x.1935 1 0) (bruijn ##.x.1936 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 1)), 4,
       statics->up->vars[0],
       statics->up->up->vars[1],
       statics->vars[0],
       _var0);
 }
-static void _V10_Dloop_D757_k653(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D755_k655(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_k653, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_k655, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14078,14 +14146,14 @@ static void _V10_Dloop_D757_k653(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 40 0) (close _V10_Dloop_D757_k654) (bruijn ##.body.238.760 2 3))
+  // ((bruijn ##.x.804 40 0) (close _V10_Dloop_D755_k656) (bruijn ##.body.238.758 2 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D757_k654, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D755_k656, self)})),
       statics->up->vars[3]);
 }
-static void _V10_Dloop_D757_k652(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D755_k654(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_k652, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_k654, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14093,26 +14161,26 @@ static void _V10_Dloop_D757_k652(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.241.758 1 1))) ((bruijn ##.x.806 39 0) (close _V10_Dloop_D757_k653) (bruijn ##.args.237.759 1 2)) ((bruijn ##.k.1933 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.241.756 1 1))) ((bruijn ##.x.804 39 0) (close _V10_Dloop_D755_k655) (bruijn ##.args.237.757 1 2)) ((bruijn ##.k.1934 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlinePairP2(runtime,
         statics->vars[1])))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D757_k653, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D755_k655, self)})),
       statics->vars[2]);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
-static void _V10_Dloop_D757_k658(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D755_k660(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_k658, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_k660, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.243.764 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.243.764 0 0))) ((bruijn ##.kk.240.761 3 1) (bruijn ##.k.1925 1 0) (##inline ##vcore.cdr (bruijn ##.expr.241.758 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.242.762 2 0)) (bruijn ##.args.237.759 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.243.764 0 0)) (bruijn ##.body.238.760 6 3))) ((bruijn ##.k.1925 1 0) #f)) ((bruijn ##.k.1925 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.243.762 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.243.762 0 0))) ((bruijn ##.kk.240.759 3 1) (bruijn ##.k.1926 1 0) (##inline ##vcore.cdr (bruijn ##.expr.241.756 6 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.242.760 2 0)) (bruijn ##.args.237.757 6 2)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.243.762 0 0)) (bruijn ##.body.238.758 6 3))) ((bruijn ##.k.1926 1 0) #f)) ((bruijn ##.k.1926 1 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -14141,9 +14209,9 @@ VInlineNullP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Dloop_D757_k657(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D755_k659(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_k657, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_k659, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14151,11 +14219,11 @@ static void _V10_Dloop_D757_k657(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.242.762 1 0)) ((close _V10_Dloop_D757_k658) (##inline ##vcore.cdr (bruijn ##.expr.242.762 1 0))) ((bruijn ##.k.1925 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.242.760 1 0)) ((close _V10_Dloop_D755_k660) (##inline ##vcore.cdr (bruijn ##.expr.242.760 1 0))) ((bruijn ##.k.1926 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->vars[0]))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D757_k658, .env = self }, }, 1,
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D755_k660, .env = self }, }, 1,
       VInlineCdr2(runtime,
         statics->vars[0]));
 } else {
@@ -14163,22 +14231,22 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Dloop_D757_k661(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D755_k663(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_k661, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_k663, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.kk.239.756 9 1) (bruijn ##.k.1920 4 0) (bruijn ##.expr.241.758 7 1) (bruijn ##.x.1922 1 0) (bruijn ##.x.1923 0 0))
+  // ((bruijn ##.kk.239.754 9 1) (bruijn ##.k.1921 4 0) (bruijn ##.expr.241.756 7 1) (bruijn ##.x.1923 1 0) (bruijn ##.x.1924 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 1)), 4,
       statics->up->up->up->vars[0],
       VGetArg(statics, 7-1, 1),
       statics->vars[0],
       _var0);
 }
-static void _V10_Dloop_D757_k660(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D755_k662(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_k660, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_k662, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14186,14 +14254,14 @@ static void _V10_Dloop_D757_k660(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 44 0) (close _V10_Dloop_D757_k661) (bruijn ##.body.238.760 6 3))
+  // ((bruijn ##.x.804 44 0) (close _V10_Dloop_D755_k663) (bruijn ##.body.238.758 6 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 44-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D757_k661, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D755_k663, self)})),
       VGetArg(statics, 6-1, 3));
 }
-static void _V10_Dloop_D757_k659(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D755_k661(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_k659, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_k661, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14201,14 +14269,14 @@ static void _V10_Dloop_D757_k659(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.806 43 0) (close _V10_Dloop_D757_k660) (bruijn ##.args.237.759 5 2))
+  // ((bruijn ##.x.804 43 0) (close _V10_Dloop_D755_k662) (bruijn ##.args.237.757 5 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 43-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D757_k660, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D755_k662, self)})),
       VGetArg(statics, 5-1, 2));
 }
-static void _V10_Dloop_D757_k656(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D755_k658(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_k656, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_k658, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14216,13 +14284,13 @@ static void _V10_Dloop_D757_k656(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Dloop_D757_k657) (close _V10_Dloop_D757_k659))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D757_k657, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D757_k659, self)})));
+  // ((close _V10_Dloop_D755_k659) (close _V10_Dloop_D755_k661))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D755_k659, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D755_k661, self)})));
 }
-static void _V10_Dloop_D757_lambda183(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Dloop_D755_lambda185(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_lambda183, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_lambda185, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -14231,14 +14299,14 @@ static void _V10_Dloop_D757_lambda183(VRuntime * runtime, VEnv * statics, int ar
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((close _V10_Dloop_D757_k656) (##inline ##vcore.car (bruijn ##.expr.241.758 3 1)))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D757_k656, .env = self }, }, 1,
+  // ((close _V10_Dloop_D755_k658) (##inline ##vcore.car (bruijn ##.expr.241.756 3 1)))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D755_k658, .env = self }, }, 1,
       VInlineCar2(runtime,
         statics->up->up->vars[1]));
 }
-static void _V10_Dloop_D757_lambda182(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D755_lambda184(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_lambda182, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_lambda184, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14246,14 +14314,14 @@ static void _V10_Dloop_D757_lambda182(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1919 0 0) (close _V10_Dloop_D757_lambda183))
+  // (##vcore.call/cc (bruijn ##.k.1920 0 0) (close _V10_Dloop_D755_lambda185))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D757_lambda183, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D755_lambda185, self)})));
 }
-static void _V10_Dloop_D757_k655(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Dloop_D755_k657(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_k655, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_k657, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14261,15 +14329,15 @@ static void _V10_Dloop_D757_k655(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1917 1 0) (close _V10_Dloop_D757_lambda182) (bruijn ##.loop.757 2 0))
+  // (##vcore.call-with-values (bruijn ##.k.1918 1 0) (close _V10_Dloop_D755_lambda184) (bruijn ##.loop.755 2 0))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       statics->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D757_lambda182, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D755_lambda184, self)})),
       statics->up->vars[0]);
 }
-static void _V10_Dloop_D757_lambda181(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+static void _V10_Dloop_D755_lambda183(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
  if(argc != 4) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D757_lambda181, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D755_lambda183, got ~D~N"
   "-- expected 4~N"
   , argc);
  }
@@ -14280,13 +14348,13 @@ static void _V10_Dloop_D757_lambda181(VRuntime * runtime, VEnv * statics, int ar
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // ((close _V10_Dloop_D757_k652) (close _V10_Dloop_D757_k655))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D757_k652, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D757_k655, self)})));
+  // ((close _V10_Dloop_D755_k654) (close _V10_Dloop_D755_k657))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dloop_D755_k654, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D755_k657, self)})));
 }
-static void _V10_Doptimize__atom_D592_lambda180(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Doptimize__atom_D592_lambda182(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda180, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda182, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -14295,13 +14363,13 @@ static void _V10_Doptimize__atom_D592_lambda180(VRuntime * runtime, VEnv * stati
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close _V10_Dloop_D757_lambda181)) ((bruijn ##.loop.757 0 0) (bruijn ##.k.1916 1 0) (##inline ##vcore.cdr (bruijn ##.expr.746 11 1)) '() '()))
+  // (letrec 1 ((close _V10_Dloop_D755_lambda183)) ((bruijn ##.loop.755 0 0) (bruijn ##.k.1917 1 0) (##inline ##vcore.cdr (bruijn ##.expr.744 11 1)) '() '()))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
     VEnv * self = &container.self;
     VInitEnv(self, 1, 1, statics);
-    self->vars[0] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D757_lambda181, self)}));
+    self->vars[0] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D755_lambda183, self)}));
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, self->vars[0]), 4,
       statics->vars[0],
       VInlineCdr2(runtime,
@@ -14310,9 +14378,9 @@ static void _V10_Doptimize__atom_D592_lambda180(VRuntime * runtime, VEnv * stati
       VNULL);
     }
 }
-static void _V10_Doptimize__atom_D592_lambda179(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__atom_D592_lambda181(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda179, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda181, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14320,32 +14388,10 @@ static void _V10_Doptimize__atom_D592_lambda179(VRuntime * runtime, VEnv * stati
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1915 0 0) (close _V10_Doptimize__atom_D592_lambda180))
+  // (##vcore.call/cc (bruijn ##.k.1916 0 0) (close _V10_Doptimize__atom_D592_lambda182))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda180, self)})));
-}
-static void _V10_Doptimize__atom_D592_k662(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k662, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1939 0 0) (bruijn ##.k.1937 1 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->vars[0]);
-}
-static void _V10_Doptimize__atom_D592_k663(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k663, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.1940 1 0) (##inline ##vcore.cons 'case-lambda (bruijn ##.x.1941 0 0)))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VInlineCons2(runtime,
-        _V0case__lambda,
-        _var0));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda182, self)})));
 }
 static void _V10_Doptimize__atom_D592_k664(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -14353,7 +14399,29 @@ static void _V10_Doptimize__atom_D592_k664(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.1942 1 0) (##inline ##vcore.cons (bruijn ##.args.769 1 1) (##inline ##vcore.cons (bruijn ##.x.1944 0 0) '())))
+  // ((bruijn ##.x.1940 0 0) (bruijn ##.k.1938 1 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->vars[0]);
+}
+static void _V10_Doptimize__atom_D592_k665(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k665, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.k.1941 1 0) (##inline ##vcore.cons 'case-lambda (bruijn ##.x.1942 0 0)))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VInlineCons2(runtime,
+        _V0case__lambda,
+        _var0));
+}
+static void _V10_Doptimize__atom_D592_k666(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k666, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.k.1943 1 0) (##inline ##vcore.cons (bruijn ##.args.767 1 1) (##inline ##vcore.cons (bruijn ##.x.1945 0 0) '())))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VInlineCons2(runtime,
         statics->vars[1],
@@ -14361,9 +14429,9 @@ static void _V10_Doptimize__atom_D592_k664(VRuntime * runtime, VEnv * statics, i
         _var0,
         VNULL)));
 }
-static void _V10_Doptimize__atom_D592_lambda186(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void _V10_Doptimize__atom_D592_lambda188(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda186, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda188, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -14373,14 +14441,14 @@ static void _V10_Doptimize__atom_D592_lambda186(VRuntime * runtime, VEnv * stati
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((bruijn ##.optimize-apply.591 12 4) (close _V10_Doptimize__atom_D592_k664) (bruijn ##.body.770 0 2))
+  // ((bruijn ##.optimize-apply.591 12 4) (close _V10_Doptimize__atom_D592_k666) (bruijn ##.body.768 0 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 4)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k664, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k666, self)})),
       _var2);
 }
-static void _V10_Doptimize__atom_D592_lambda185(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__atom_D592_lambda187(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda185, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda187, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14388,16 +14456,16 @@ static void _V10_Doptimize__atom_D592_lambda185(VRuntime * runtime, VEnv * stati
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.807 35 0) (close _V10_Doptimize__atom_D592_k663) (close _V10_Doptimize__atom_D592_lambda186) (bruijn ##.args.767 1 2) (bruijn ##.body.768 1 3))
+  // ((bruijn ##.x.805 35 0) (close _V10_Doptimize__atom_D592_k665) (close _V10_Doptimize__atom_D592_lambda188) (bruijn ##.args.765 1 2) (bruijn ##.body.766 1 3))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k663, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda186, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k665, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda188, self)})),
       statics->vars[2],
       statics->vars[3]);
 }
-static void _V10_Doptimize__atom_D592_lambda184(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
+static void _V10_Doptimize__atom_D592_lambda186(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
  if(argc != 4) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda184, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda186, got ~D~N"
   "-- expected 4~N"
   , argc);
  }
@@ -14408,18 +14476,90 @@ static void _V10_Doptimize__atom_D592_lambda184(VRuntime * runtime, VEnv * stati
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.766 0 1)) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k662) (close _V10_Doptimize__atom_D592_lambda185) (bruijn ##.kk.228.747 8 1)) ((bruijn ##.k.1937 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.764 0 1)) (##vcore.call-with-values (close _V10_Doptimize__atom_D592_k664) (close _V10_Doptimize__atom_D592_lambda187) (bruijn ##.kk.228.745 8 1)) ((bruijn ##.k.1938 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k662, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda185, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k664, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda187, self)})),
       VGetArg(statics, 8-1, 1));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
+}
+static void _V10_Doptimize__atom_D592_k653(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k653, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1915 0 0) (##vcore.call-with-values (bruijn ##.k.1914 1 0) (close _V10_Doptimize__atom_D592_lambda181) (close _V10_Doptimize__atom_D592_lambda186)) ((bruijn ##.k.1914 1 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      statics->vars[0],
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda181, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda186, self)})));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__atom_D592_k652(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k652, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.744 7 1)) ((bruijn ##.x.826 11 0) (close _V10_Doptimize__atom_D592_k653) 'case-lambda (##inline ##vcore.car (bruijn ##.expr.744 7 1))) ((bruijn ##.k.1914 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        VGetArg(statics, 7-1, 1)))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k653, self)})),
+      _V0case__lambda,
+      VInlineCar2(runtime,
+        VGetArg(statics, 7-1, 1)));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__atom_D592_lambda189(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda189, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.k.1912 0 0) (bruijn ##.expr.744 8 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VGetArg(statics, 8-1, 1));
+}
+static void _V10_Doptimize__atom_D592_k667(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k667, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (##vcore.call-with-values (bruijn ##.k.1905 6 0) (close _V10_Doptimize__atom_D592_lambda189) (bruijn ##.kk.228.745 6 1))
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      VGetArg(statics, 6-1, 0),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda189, self)})),
+      VGetArg(statics, 6-1, 1));
 }
 static void _V10_Doptimize__atom_D592_k651(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -14431,21 +14571,13 @@ static void _V10_Doptimize__atom_D592_k651(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1914 0 0) (##vcore.call-with-values (bruijn ##.k.1913 1 0) (close _V10_Doptimize__atom_D592_lambda179) (close _V10_Doptimize__atom_D592_lambda184)) ((bruijn ##.k.1913 1 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      statics->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda179, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda184, self)})));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
+  // ((close _V10_Doptimize__atom_D592_k652) (close _V10_Doptimize__atom_D592_k667))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k652, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k667, self)})));
 }
-}
-static void _V10_Doptimize__atom_D592_k650(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__atom_D592_k647(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k650, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k647, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14453,33 +14585,13 @@ static void _V10_Doptimize__atom_D592_k650(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.746 7 1)) ((bruijn ##.x.828 11 0) (close _V10_Doptimize__atom_D592_k651) 'case-lambda (##inline ##vcore.car (bruijn ##.expr.746 7 1))) ((bruijn ##.k.1913 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        VGetArg(statics, 7-1, 1)))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k651, self)})),
-      _V0case__lambda,
-      VInlineCar2(runtime,
-        VGetArg(statics, 7-1, 1)));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
+  // ((close _V10_Doptimize__atom_D592_k648) (close _V10_Doptimize__atom_D592_k651))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k648, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k651, self)})));
 }
-}
-static void _V10_Doptimize__atom_D592_lambda187(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__atom_D592_k643(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda187, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.1911 0 0) (bruijn ##.expr.746 8 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VGetArg(statics, 8-1, 1));
-}
-static void _V10_Doptimize__atom_D592_k665(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k665, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k643, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14487,15 +14599,13 @@ static void _V10_Doptimize__atom_D592_k665(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1904 6 0) (close _V10_Doptimize__atom_D592_lambda187) (bruijn ##.kk.228.747 6 1))
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      VGetArg(statics, 6-1, 0),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda187, self)})),
-      VGetArg(statics, 6-1, 1));
+  // ((close _V10_Doptimize__atom_D592_k644) (close _V10_Doptimize__atom_D592_k647))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k644, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k647, self)})));
 }
-static void _V10_Doptimize__atom_D592_k649(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__atom_D592_k639(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k649, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k639, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14503,13 +14613,13 @@ static void _V10_Doptimize__atom_D592_k649(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__atom_D592_k650) (close _V10_Doptimize__atom_D592_k665))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k650, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k665, self)})));
+  // ((close _V10_Doptimize__atom_D592_k640) (close _V10_Doptimize__atom_D592_k643))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k640, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k643, self)})));
 }
-static void _V10_Doptimize__atom_D592_k645(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__atom_D592_k635(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k645, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k635, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14517,55 +14627,13 @@ static void _V10_Doptimize__atom_D592_k645(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__atom_D592_k646) (close _V10_Doptimize__atom_D592_k649))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k646, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k649, self)})));
+  // ((close _V10_Doptimize__atom_D592_k636) (close _V10_Doptimize__atom_D592_k639))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k636, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k639, self)})));
 }
-static void _V10_Doptimize__atom_D592_k641(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k641, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__atom_D592_k642) (close _V10_Doptimize__atom_D592_k645))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k642, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k645, self)})));
-}
-static void _V10_Doptimize__atom_D592_k637(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k637, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__atom_D592_k638) (close _V10_Doptimize__atom_D592_k641))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k638, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k641, self)})));
-}
-static void _V10_Doptimize__atom_D592_k633(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_k633, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize__atom_D592_k634) (close _V10_Doptimize__atom_D592_k637))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k634, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k637, self)})));
-}
-static void _V10_Doptimize__atom_D592_lambda173(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Doptimize__atom_D592_lambda175(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda173, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda175, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -14574,13 +14642,13 @@ static void _V10_Doptimize__atom_D592_lambda173(VRuntime * runtime, VEnv * stati
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((close _V10_Doptimize__atom_D592_k630) (close _V10_Doptimize__atom_D592_k633))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k630, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k633, self)})));
+  // ((close _V10_Doptimize__atom_D592_k632) (close _V10_Doptimize__atom_D592_k635))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__atom_D592_k632, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_k635, self)})));
 }
-static void _V10_Doptimize__atom_D592_lambda172(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Doptimize__atom_D592_lambda174(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda172, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__atom_D592_lambda174, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -14589,118 +14657,10 @@ static void _V10_Doptimize__atom_D592_lambda172(VRuntime * runtime, VEnv * stati
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (##vcore.call/cc (bruijn ##.k.1903 0 0) (close _V10_Doptimize__atom_D592_lambda173))
+  // (##vcore.call/cc (bruijn ##.k.1904 0 0) (close _V10_Doptimize__atom_D592_lambda175))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda173, self)})));
-}
-static void _V10_Doptimize__impl_D297_k670(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k670, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.2016 0 0) (bruijn ##.k.2014 2 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->up->vars[0]);
-}
-static void _V10_Doptimize__impl_D297_lambda189(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda189, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.2017 0 0) (bruijn ##.expr.585 7 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VGetArg(statics, 7-1, 1));
-}
-static void _V10_Doptimize__impl_D297_k669(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k669, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.2015 0 0) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k670) (close _V10_Doptimize__impl_D297_lambda189) (bruijn ##.kk.133.773 2 1)) ((bruijn ##.k.2014 1 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k670, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda189, self)})),
-      statics->up->vars[1]);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__impl_D297_k668(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k668, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 5 1)) ((bruijn ##.x.828 7 0) (close _V10_Doptimize__impl_D297_k669) 'quote (##inline ##vcore.car (bruijn ##.expr.585 5 1))) ((bruijn ##.k.2014 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        VGetArg(statics, 5-1, 1)))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k669, self)})),
-      _V0quote,
-      VInlineCar2(runtime,
-        VGetArg(statics, 5-1, 1)));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__impl_D297_k674(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k674, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.2010 0 0) (bruijn ##.k.2008 2 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->up->vars[0]);
-}
-static void _V10_Doptimize__impl_D297_lambda190(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda190, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.2011 0 0) (bruijn ##.expr.585 8 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VGetArg(statics, 8-1, 1));
-}
-static void _V10_Doptimize__impl_D297_k673(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k673, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.2009 0 0) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k674) (close _V10_Doptimize__impl_D297_lambda190) (bruijn ##.kk.133.773 3 1)) ((bruijn ##.k.2008 1 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k674, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda190, self)})),
-      statics->up->up->vars[1]);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda175, self)})));
 }
 static void _V10_Doptimize__impl_D297_k672(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -14708,31 +14668,7 @@ static void _V10_Doptimize__impl_D297_k672(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 6 1)) ((bruijn ##.x.828 8 0) (close _V10_Doptimize__impl_D297_k673) '##foreign.function (##inline ##vcore.car (bruijn ##.expr.585 6 1))) ((bruijn ##.k.2008 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        VGetArg(statics, 6-1, 1)))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k673, self)})),
-      _V10foreign_Dfunction,
-      VInlineCar2(runtime,
-        VGetArg(statics, 6-1, 1)));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__impl_D297_k678(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k678, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.2004 0 0) (bruijn ##.k.2002 2 0))
+  // ((bruijn ##.x.2017 0 0) (bruijn ##.k.2015 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -14742,13 +14678,13 @@ static void _V10_Doptimize__impl_D297_lambda191(VRuntime * runtime, VEnv * stati
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.2005 0 0) (bruijn ##.expr.585 9 1))
+  // ((bruijn ##.k.2018 0 0) (bruijn ##.expr.585 7 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VGetArg(statics, 9-1, 1));
+      VGetArg(statics, 7-1, 1));
 }
-static void _V10_Doptimize__impl_D297_k677(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k671(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k677, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k671, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14756,15 +14692,39 @@ static void _V10_Doptimize__impl_D297_k677(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.2003 0 0) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k678) (close _V10_Doptimize__impl_D297_lambda191) (bruijn ##.kk.133.773 4 1)) ((bruijn ##.k.2002 1 0) #f))
+  // (if (bruijn ##.p.2016 0 0) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k672) (close _V10_Doptimize__impl_D297_lambda191) (bruijn ##.kk.133.771 2 1)) ((bruijn ##.k.2015 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k678, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k672, self)})),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda191, self)})),
-      statics->up->up->up->vars[1]);
+      statics->up->vars[1]);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__impl_D297_k670(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k670, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 5 1)) ((bruijn ##.x.826 7 0) (close _V10_Doptimize__impl_D297_k671) 'quote (##inline ##vcore.car (bruijn ##.expr.585 5 1))) ((bruijn ##.k.2015 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        VGetArg(statics, 5-1, 1)))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k671, self)})),
+      _V0quote,
+      VInlineCar2(runtime,
+        VGetArg(statics, 5-1, 1)));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
@@ -14774,31 +14734,7 @@ static void _V10_Doptimize__impl_D297_k676(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 7 1)) ((bruijn ##.x.828 9 0) (close _V10_Doptimize__impl_D297_k677) '##inline (##inline ##vcore.car (bruijn ##.expr.585 7 1))) ((bruijn ##.k.2002 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        VGetArg(statics, 7-1, 1)))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k677, self)})),
-      _V10inline,
-      VInlineCar2(runtime,
-        VGetArg(statics, 7-1, 1)));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__impl_D297_k682(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k682, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1998 0 0) (bruijn ##.k.1996 2 0))
+  // ((bruijn ##.x.2011 0 0) (bruijn ##.k.2009 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -14808,14 +14744,13 @@ static void _V10_Doptimize__impl_D297_lambda192(VRuntime * runtime, VEnv * stati
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.optimize-lambda.587 9 0) (bruijn ##.k.1999 0 0) (bruijn ##.expr.585 10 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 2,
-      _var0,
-      VGetArg(statics, 10-1, 1));
+  // ((bruijn ##.k.2012 0 0) (bruijn ##.expr.585 8 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VGetArg(statics, 8-1, 1));
 }
-static void _V10_Doptimize__impl_D297_k681(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k675(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k681, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k675, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14823,15 +14758,39 @@ static void _V10_Doptimize__impl_D297_k681(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1997 0 0) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k682) (close _V10_Doptimize__impl_D297_lambda192) (bruijn ##.kk.133.773 5 1)) ((bruijn ##.k.1996 1 0) #f))
+  // (if (bruijn ##.p.2010 0 0) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k676) (close _V10_Doptimize__impl_D297_lambda192) (bruijn ##.kk.133.771 3 1)) ((bruijn ##.k.2009 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k682, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k676, self)})),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda192, self)})),
-      VGetArg(statics, 5-1, 1));
+      statics->up->up->vars[1]);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__impl_D297_k674(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k674, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 6 1)) ((bruijn ##.x.826 8 0) (close _V10_Doptimize__impl_D297_k675) '##foreign.function (##inline ##vcore.car (bruijn ##.expr.585 6 1))) ((bruijn ##.k.2009 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        VGetArg(statics, 6-1, 1)))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k675, self)})),
+      _V10foreign_Dfunction,
+      VInlineCar2(runtime,
+        VGetArg(statics, 6-1, 1)));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
@@ -14841,31 +14800,7 @@ static void _V10_Doptimize__impl_D297_k680(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 8 1)) ((bruijn ##.x.828 10 0) (close _V10_Doptimize__impl_D297_k681) 'lambda (##inline ##vcore.car (bruijn ##.expr.585 8 1))) ((bruijn ##.k.1996 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        VGetArg(statics, 8-1, 1)))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k681, self)})),
-      _V0lambda,
-      VInlineCar2(runtime,
-        VGetArg(statics, 8-1, 1)));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__impl_D297_k686(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k686, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.1992 0 0) (bruijn ##.k.1990 2 0))
+  // ((bruijn ##.x.2005 0 0) (bruijn ##.k.2003 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->vars[0]);
 }
@@ -14875,14 +14810,13 @@ static void _V10_Doptimize__impl_D297_lambda193(VRuntime * runtime, VEnv * stati
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.optimize-lambda.587 10 0) (bruijn ##.k.1993 0 0) (bruijn ##.expr.585 11 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 2,
-      _var0,
-      VGetArg(statics, 11-1, 1));
+  // ((bruijn ##.k.2006 0 0) (bruijn ##.expr.585 9 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VGetArg(statics, 9-1, 1));
 }
-static void _V10_Doptimize__impl_D297_k685(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k679(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k685, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k679, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -14890,15 +14824,39 @@ static void _V10_Doptimize__impl_D297_k685(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.1991 0 0) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k686) (close _V10_Doptimize__impl_D297_lambda193) (bruijn ##.kk.133.773 6 1)) ((bruijn ##.k.1990 1 0) #f))
+  // (if (bruijn ##.p.2004 0 0) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k680) (close _V10_Doptimize__impl_D297_lambda193) (bruijn ##.kk.133.771 4 1)) ((bruijn ##.k.2003 1 0) #f))
 if(VDecodeBool(
 _var0)) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k686, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k680, self)})),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda193, self)})),
-      VGetArg(statics, 6-1, 1));
+      statics->up->up->up->vars[1]);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__impl_D297_k678(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k678, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 7 1)) ((bruijn ##.x.826 9 0) (close _V10_Doptimize__impl_D297_k679) '##inline (##inline ##vcore.car (bruijn ##.expr.585 7 1))) ((bruijn ##.k.2003 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        VGetArg(statics, 7-1, 1)))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k679, self)})),
+      _V10inline,
+      VInlineCar2(runtime,
+        VGetArg(statics, 7-1, 1)));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
@@ -14908,16 +14866,126 @@ static void _V10_Doptimize__impl_D297_k684(VRuntime * runtime, VEnv * statics, i
   "-- expected 1~N"
   , argc);
  }
+  // ((bruijn ##.x.1999 0 0) (bruijn ##.k.1997 2 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->up->vars[0]);
+}
+static void _V10_Doptimize__impl_D297_lambda194(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda194, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.optimize-lambda.587 9 0) (bruijn ##.k.2000 0 0) (bruijn ##.expr.585 10 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 2,
+      _var0,
+      VGetArg(statics, 10-1, 1));
+}
+static void _V10_Doptimize__impl_D297_k683(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k683, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
   struct { VEnv self; VWORD argv[1]; } container;
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 9 1)) ((bruijn ##.x.828 11 0) (close _V10_Doptimize__impl_D297_k685) 'continuation (##inline ##vcore.car (bruijn ##.expr.585 9 1))) ((bruijn ##.k.1990 0 0) #f))
+  // (if (bruijn ##.p.1998 0 0) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k684) (close _V10_Doptimize__impl_D297_lambda194) (bruijn ##.kk.133.771 5 1)) ((bruijn ##.k.1997 1 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k684, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda194, self)})),
+      VGetArg(statics, 5-1, 1));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__impl_D297_k682(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k682, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 8 1)) ((bruijn ##.x.826 10 0) (close _V10_Doptimize__impl_D297_k683) 'lambda (##inline ##vcore.car (bruijn ##.expr.585 8 1))) ((bruijn ##.k.1997 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        VGetArg(statics, 8-1, 1)))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k683, self)})),
+      _V0lambda,
+      VInlineCar2(runtime,
+        VGetArg(statics, 8-1, 1)));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__impl_D297_k688(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k688, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.1993 0 0) (bruijn ##.k.1991 2 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->up->vars[0]);
+}
+static void _V10_Doptimize__impl_D297_lambda195(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda195, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.optimize-lambda.587 10 0) (bruijn ##.k.1994 0 0) (bruijn ##.expr.585 11 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 2,
+      _var0,
+      VGetArg(statics, 11-1, 1));
+}
+static void _V10_Doptimize__impl_D297_k687(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k687, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.1992 0 0) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k688) (close _V10_Doptimize__impl_D297_lambda195) (bruijn ##.kk.133.771 6 1)) ((bruijn ##.k.1991 1 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k688, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda195, self)})),
+      VGetArg(statics, 6-1, 1));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__impl_D297_k686(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k686, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 9 1)) ((bruijn ##.x.826 11 0) (close _V10_Doptimize__impl_D297_k687) 'continuation (##inline ##vcore.car (bruijn ##.expr.585 9 1))) ((bruijn ##.k.1991 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         VGetArg(statics, 9-1, 1)))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k685, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k687, self)})),
       _V0continuation,
       VInlineCar2(runtime,
         VGetArg(statics, 9-1, 1)));
@@ -14926,58 +14994,25 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize__impl_D297_k689(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k691(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k689, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k691, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.1987 0 0) (bruijn ##.k.1986 1 0))
+  // ((bruijn ##.x.1988 0 0) (bruijn ##.k.1987 1 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->vars[0]);
 }
-static void _V10_Doptimize__impl_D297_lambda194(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_lambda196(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda194, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda196, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.optimize-apply.591 10 4) (bruijn ##.k.1988 0 0) (bruijn ##.expr.585 11 1))
+  // ((bruijn ##.optimize-apply.591 10 4) (bruijn ##.k.1989 0 0) (bruijn ##.expr.585 11 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 4)), 2,
       _var0,
-      VGetArg(statics, 11-1, 1));
-}
-static void _V10_Doptimize__impl_D297_k688(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k688, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 10 1)) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k689) (close _V10_Doptimize__impl_D297_lambda194) (bruijn ##.kk.133.773 6 1)) ((bruijn ##.k.1986 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        VGetArg(statics, 10-1, 1)))) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k689, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda194, self)})),
-      VGetArg(statics, 6-1, 1));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize__impl_D297_lambda195(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda195, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.1984 0 0) (bruijn ##.expr.585 11 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VGetArg(statics, 11-1, 1));
 }
 static void _V10_Doptimize__impl_D297_k690(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -14990,15 +15025,48 @@ static void _V10_Doptimize__impl_D297_k690(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.1977 6 0) (close _V10_Doptimize__impl_D297_lambda195) (bruijn ##.kk.133.773 6 1))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.585 10 1)) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k691) (close _V10_Doptimize__impl_D297_lambda196) (bruijn ##.kk.133.771 6 1)) ((bruijn ##.k.1987 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        VGetArg(statics, 10-1, 1)))) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k691, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda196, self)})),
+      VGetArg(statics, 6-1, 1));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize__impl_D297_lambda197(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda197, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.k.1985 0 0) (bruijn ##.expr.585 11 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VGetArg(statics, 11-1, 1));
+}
+static void _V10_Doptimize__impl_D297_k692(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k692, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (##vcore.call-with-values (bruijn ##.k.1978 6 0) (close _V10_Doptimize__impl_D297_lambda197) (bruijn ##.kk.133.771 6 1))
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
       VGetArg(statics, 6-1, 0),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda195, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda197, self)})),
       VGetArg(statics, 6-1, 1));
 }
-static void _V10_Doptimize__impl_D297_k687(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k689(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k687, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k689, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -15006,13 +15074,13 @@ static void _V10_Doptimize__impl_D297_k687(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__impl_D297_k688) (close _V10_Doptimize__impl_D297_k690))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k688, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k690, self)})));
+  // ((close _V10_Doptimize__impl_D297_k690) (close _V10_Doptimize__impl_D297_k692))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k690, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k692, self)})));
 }
-static void _V10_Doptimize__impl_D297_k683(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k685(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k683, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k685, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -15020,13 +15088,13 @@ static void _V10_Doptimize__impl_D297_k683(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__impl_D297_k684) (close _V10_Doptimize__impl_D297_k687))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k684, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k687, self)})));
+  // ((close _V10_Doptimize__impl_D297_k686) (close _V10_Doptimize__impl_D297_k689))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k686, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k689, self)})));
 }
-static void _V10_Doptimize__impl_D297_k679(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k681(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k679, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k681, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -15034,13 +15102,13 @@ static void _V10_Doptimize__impl_D297_k679(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__impl_D297_k680) (close _V10_Doptimize__impl_D297_k683))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k680, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k683, self)})));
+  // ((close _V10_Doptimize__impl_D297_k682) (close _V10_Doptimize__impl_D297_k685))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k682, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k685, self)})));
 }
-static void _V10_Doptimize__impl_D297_k675(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k677(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k675, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k677, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -15048,13 +15116,13 @@ static void _V10_Doptimize__impl_D297_k675(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__impl_D297_k676) (close _V10_Doptimize__impl_D297_k679))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k676, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k679, self)})));
+  // ((close _V10_Doptimize__impl_D297_k678) (close _V10_Doptimize__impl_D297_k681))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k678, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k681, self)})));
 }
-static void _V10_Doptimize__impl_D297_k671(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k673(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k671, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k673, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -15062,13 +15130,13 @@ static void _V10_Doptimize__impl_D297_k671(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Doptimize__impl_D297_k672) (close _V10_Doptimize__impl_D297_k675))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k672, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k675, self)})));
+  // ((close _V10_Doptimize__impl_D297_k674) (close _V10_Doptimize__impl_D297_k677))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k674, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k677, self)})));
 }
-static void _V10_Doptimize__impl_D297_lambda188(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Doptimize__impl_D297_lambda190(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda188, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda190, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -15077,13 +15145,13 @@ static void _V10_Doptimize__impl_D297_lambda188(VRuntime * runtime, VEnv * stati
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((close _V10_Doptimize__impl_D297_k668) (close _V10_Doptimize__impl_D297_k671))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k668, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k671, self)})));
+  // ((close _V10_Doptimize__impl_D297_k670) (close _V10_Doptimize__impl_D297_k673))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize__impl_D297_k670, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k673, self)})));
 }
-static void _V10_Doptimize__impl_D297_k667(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k669(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k667, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k669, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -15091,14 +15159,14 @@ static void _V10_Doptimize__impl_D297_k667(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call/cc (bruijn ##.k.1520 3 0) (close _V10_Doptimize__impl_D297_lambda188))
+  // (##vcore.call/cc (bruijn ##.k.1518 3 0) (close _V10_Doptimize__impl_D297_lambda190))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       statics->up->up->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda188, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda190, self)})));
 }
-static void _V10_Doptimize__impl_D297_k666(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k668(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k666, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k668, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -15106,27 +15174,27 @@ static void _V10_Doptimize__impl_D297_k666(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (set! (close _V10_Doptimize__impl_D297_k667) (bruijn ##.dummy.132.595 1 8) (bruijn ##.x.2019 0 0))
+  // (set! (close _V10_Doptimize__impl_D297_k669) (bruijn ##.dummy.132.595 1 8) (bruijn ##.x.2020 0 0))
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k667, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k669, self)})),
       VEncodeInt(1l), VEncodeInt(8l),
       _var0
     );
 }
-static void _V10_Doptimize__impl_D297_lambda196(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_lambda198(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda196, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda198, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.count-refs.296 3 10) (bruijn ##.k.2020 0 0) (bruijn ##.expr.585 2 1))
+  // ((bruijn ##.count-refs.296 3 10) (bruijn ##.k.2021 0 0) (bruijn ##.expr.585 2 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[10]), 2,
       _var0,
       statics->up->vars[1]);
 }
-static void _V10_Doptimize__impl_D297_k691(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize__impl_D297_k693(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k691, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_k693, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -15134,16 +15202,16 @@ static void _V10_Doptimize__impl_D297_k691(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (set! (bruijn ##.k.2021 1 0) (bruijn ##.impure-table.594 2 7) (bruijn ##.impure-table.131.772 1 2))
+  // (set! (bruijn ##.k.2022 1 0) (bruijn ##.impure-table.594 2 7) (bruijn ##.impure-table.131.770 1 2))
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
       statics->vars[0],
       VEncodeInt(2l), VEncodeInt(7l),
       statics->vars[2]
     );
 }
-static void _V10_Doptimize__impl_D297_lambda197(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void _V10_Doptimize__impl_D297_lambda199(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda197, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize__impl_D297_lambda199, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -15153,9 +15221,9 @@ static void _V10_Doptimize__impl_D297_lambda197(VRuntime * runtime, VEnv * stati
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (set! (close _V10_Doptimize__impl_D297_k691) (bruijn ##.ref-table.593 1 6) (bruijn ##.ref-table.130.771 0 1))
+  // (set! (close _V10_Doptimize__impl_D297_k693) (bruijn ##.ref-table.593 1 6) (bruijn ##.ref-table.130.769 0 1))
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k691, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k693, self)})),
       VEncodeInt(1l), VEncodeInt(6l),
       _var1
     );
@@ -15172,7 +15240,7 @@ static void _V10_Doptimize__impl_D297_lambda114(VRuntime * runtime, VEnv * stati
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (letrec 9 ((close _V10_Doptimize__lambda_D587_lambda115) (close _V10_Dinline__let_D588_lambda119) (close _V10_Doptimize__let_D589_lambda124) (close _V10_Doptimize__letrec_D590_lambda149) (close _V10_Doptimize__apply_D591_lambda158) (close _V10_Doptimize__atom_D592_lambda172) #f #f #f) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k666) (close _V10_Doptimize__impl_D297_lambda196) (close _V10_Doptimize__impl_D297_lambda197)))
+  // (letrec 9 ((close _V10_Doptimize__lambda_D587_lambda115) (close _V10_Dinline__let_D588_lambda119) (close _V10_Doptimize__let_D589_lambda125) (close _V10_Doptimize__letrec_D590_lambda151) (close _V10_Doptimize__apply_D591_lambda160) (close _V10_Doptimize__atom_D592_lambda174) #f #f #f) (##vcore.call-with-values (close _V10_Doptimize__impl_D297_k668) (close _V10_Doptimize__impl_D297_lambda198) (close _V10_Doptimize__impl_D297_lambda199)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[9]; } container;
@@ -15180,18 +15248,60 @@ static void _V10_Doptimize__impl_D297_lambda114(VRuntime * runtime, VEnv * stati
     VInitEnv(self, 9, 9, statics);
     self->vars[0] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__lambda_D587_lambda115, self)}));
     self->vars[1] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinline__let_D588_lambda119, self)}));
-    self->vars[2] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda124, self)}));
-    self->vars[3] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda149, self)}));
-    self->vars[4] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda158, self)}));
-    self->vars[5] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda172, self)}));
+    self->vars[2] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__let_D589_lambda125, self)}));
+    self->vars[3] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__letrec_D590_lambda151, self)}));
+    self->vars[4] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__apply_D591_lambda160, self)}));
+    self->vars[5] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__atom_D592_lambda174, self)}));
     self->vars[6] = VEncodeBool(false);
     self->vars[7] = VEncodeBool(false);
     self->vars[8] = VEncodeBool(false);
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k666, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda196, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda197, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_k668, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda198, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda199, self)})));
     }
+}
+static void _V10_Doptimize_D298_k696(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k696, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.2045 0 0) (bruijn ##.k.2043 2 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->up->vars[0]);
+}
+static void _V10_Doptimize_D298_lambda202(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_lambda202, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.k.2046 0 0) (bruijn ##.expr.779 4 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      statics->up->up->up->vars[1]);
+}
+static void _V10_Doptimize_D298_k695(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k695, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (bruijn ##.p.2044 0 0) (##vcore.call-with-values (close _V10_Doptimize_D298_k696) (close _V10_Doptimize_D298_lambda202) (bruijn ##.kk.244.782 2 1)) ((bruijn ##.k.2043 1 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k696, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_lambda202, self)})),
+      statics->up->vars[1]);
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
 }
 static void _V10_Doptimize_D298_k694(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -15199,58 +15309,16 @@ static void _V10_Doptimize_D298_k694(VRuntime * runtime, VEnv * statics, int arg
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.2044 0 0) (bruijn ##.k.2042 2 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->up->vars[0]);
-}
-static void _V10_Doptimize_D298_lambda200(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_lambda200, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.k.2045 0 0) (bruijn ##.expr.781 4 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      statics->up->up->up->vars[1]);
-}
-static void _V10_Doptimize_D298_k693(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k693, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
   struct { VEnv self; VWORD argv[1]; } container;
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.2043 0 0) (##vcore.call-with-values (close _V10_Doptimize_D298_k694) (close _V10_Doptimize_D298_lambda200) (bruijn ##.kk.244.784 2 1)) ((bruijn ##.k.2042 1 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k694, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_lambda200, self)})),
-      statics->up->vars[1]);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize_D298_k692(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k692, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.781 2 1)) ((bruijn ##.x.828 4 0) (close _V10_Doptimize_D298_k693) '##foreign.declare (##inline ##vcore.car (bruijn ##.expr.781 2 1))) ((bruijn ##.k.2042 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.779 2 1)) ((bruijn ##.x.826 4 0) (close _V10_Doptimize_D298_k695) '##foreign.declare (##inline ##vcore.car (bruijn ##.expr.779 2 1))) ((bruijn ##.k.2043 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->vars[1]))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k693, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k695, self)})),
       _V10foreign_Ddeclare,
       VInlineCar2(runtime,
         statics->up->vars[1]));
@@ -15259,23 +15327,23 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V10_Doptimize_D298_k700(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize_D298_k702(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k700, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k702, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.2034 0 0) (bruijn ##.k.2029 4 0))
+  // ((bruijn ##.x.2035 0 0) (bruijn ##.k.2030 4 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->up->up->up->vars[0]);
 }
-static void _V10_Doptimize_D298_k701(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize_D298_k703(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k701, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k703, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.k.2035 1 0) (##inline ##vcore.cons '##vcore.declare (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.248.788 3 0)) (##inline ##vcore.cons (bruijn ##.x.2038 0 0) '()))))
+  // ((bruijn ##.k.2036 1 0) (##inline ##vcore.cons '##vcore.declare (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.248.786 3 0)) (##inline ##vcore.cons (bruijn ##.x.2039 0 0) '()))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VInlineCons2(runtime,
         _V10vcore_Ddeclare,
@@ -15286,9 +15354,9 @@ static void _V10_Doptimize_D298_k701(VRuntime * runtime, VEnv * statics, int arg
         _var0,
         VNULL))));
 }
-static void _V10_Doptimize_D298_lambda201(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V10_Doptimize_D298_lambda203(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_lambda201, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_lambda203, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -15296,12 +15364,65 @@ static void _V10_Doptimize_D298_lambda201(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.optimize-impl.297 8 11) (close _V10_Doptimize_D298_k701) (##inline ##vcore.car (bruijn ##.expr.249.790 1 0)) (bruijn ##.inlining?.782 7 2))
+  // ((bruijn ##.optimize-impl.297 8 11) (close _V10_Doptimize_D298_k703) (##inline ##vcore.car (bruijn ##.expr.249.788 1 0)) (bruijn ##.inlining?.780 7 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 11)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k701, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k703, self)})),
       VInlineCar2(runtime,
         statics->vars[0]),
       VGetArg(statics, 7-1, 2));
+}
+static void _V10_Doptimize_D298_k701(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k701, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.249.788 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.249.788 0 0))) (##vcore.call-with-values (close _V10_Doptimize_D298_k702) (close _V10_Doptimize_D298_lambda203) (bruijn ##.kk.244.782 5 1)) ((bruijn ##.k.2030 3 0) #f)) ((bruijn ##.k.2030 3 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+if(VDecodeBool(
+VInlineNullP2(runtime,
+        VInlineCdr2(runtime,
+        _var0)))) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k702, self)})),
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_lambda203, self)})),
+      VGetArg(statics, 5-1, 1));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+static void _V10_Doptimize_D298_k700(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k700, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.248.786 0 0)) ((close _V10_Doptimize_D298_k701) (##inline ##vcore.cdr (bruijn ##.expr.248.786 0 0))) ((bruijn ##.k.2030 2 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize_D298_k701, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        _var0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodeBool(false));
+}
 }
 static void _V10_Doptimize_D298_k699(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -15313,24 +15434,14 @@ static void _V10_Doptimize_D298_k699(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.249.790 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.249.790 0 0))) (##vcore.call-with-values (close _V10_Doptimize_D298_k700) (close _V10_Doptimize_D298_lambda201) (bruijn ##.kk.244.784 5 1)) ((bruijn ##.k.2029 3 0) #f)) ((bruijn ##.k.2029 3 0) #f))
+  // (if (bruijn ##.p.2031 0 0) ((close _V10_Doptimize_D298_k700) (##inline ##vcore.cdr (bruijn ##.expr.779 4 1))) ((bruijn ##.k.2030 1 0) #f))
 if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-if(VDecodeBool(
-VInlineNullP2(runtime,
-        VInlineCdr2(runtime,
-        _var0)))) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k700, self)})),
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_lambda201, self)})),
-      VGetArg(statics, 5-1, 1));
+_var0)) {
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize_D298_k700, .env = self }, }, 1,
+      VInlineCdr2(runtime,
+        statics->up->up->up->vars[1]));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -15344,17 +15455,47 @@ static void _V10_Doptimize_D298_k698(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.248.788 0 0)) ((close _V10_Doptimize_D298_k699) (##inline ##vcore.cdr (bruijn ##.expr.248.788 0 0))) ((bruijn ##.k.2029 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.779 3 1)) ((bruijn ##.x.826 5 0) (close _V10_Doptimize_D298_k699) '##vcore.declare (##inline ##vcore.car (bruijn ##.expr.779 3 1))) ((bruijn ##.k.2030 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize_D298_k699, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        _var0));
+        statics->up->up->vars[1]))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 3,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k699, self)})),
+      _V10vcore_Ddeclare,
+      VInlineCar2(runtime,
+        statics->up->up->vars[1]));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
+}
+static void _V10_Doptimize_D298_lambda204(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_lambda204, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.optimize-impl.297 5 11) (bruijn ##.k.2028 0 0) (bruijn ##.expr.779 4 1) (bruijn ##.inlining?.780 4 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 11)), 3,
+      _var0,
+      statics->up->up->up->vars[1],
+      statics->up->up->up->vars[2]);
+}
+static void _V10_Doptimize_D298_k704(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k704, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (##vcore.call-with-values (bruijn ##.k.2025 2 0) (close _V10_Doptimize_D298_lambda204) (bruijn ##.kk.244.782 2 1))
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      statics->up->vars[0],
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_lambda204, self)})),
+      statics->up->vars[1]);
 }
 static void _V10_Doptimize_D298_k697(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -15366,86 +15507,13 @@ static void _V10_Doptimize_D298_k697(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.2030 0 0) ((close _V10_Doptimize_D298_k698) (##inline ##vcore.cdr (bruijn ##.expr.781 4 1))) ((bruijn ##.k.2029 1 0) #f))
-if(VDecodeBool(
-_var0)) {
+  // ((close _V10_Doptimize_D298_k698) (close _V10_Doptimize_D298_k704))
     VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize_D298_k698, .env = self }, }, 1,
-      VInlineCdr2(runtime,
-        statics->up->up->up->vars[1]));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodeBool(false));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k704, self)})));
 }
-}
-static void _V10_Doptimize_D298_k696(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k696, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.781 3 1)) ((bruijn ##.x.828 5 0) (close _V10_Doptimize_D298_k697) '##vcore.declare (##inline ##vcore.car (bruijn ##.expr.781 3 1))) ((bruijn ##.k.2029 0 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        statics->up->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k697, self)})),
-      _V10vcore_Ddeclare,
-      VInlineCar2(runtime,
-        statics->up->up->vars[1]));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-static void _V10_Doptimize_D298_lambda202(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_lambda202, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.optimize-impl.297 5 11) (bruijn ##.k.2027 0 0) (bruijn ##.expr.781 4 1) (bruijn ##.inlining?.782 4 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 11)), 3,
-      _var0,
-      statics->up->up->up->vars[1],
-      statics->up->up->up->vars[2]);
-}
-static void _V10_Doptimize_D298_k702(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k702, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.k.2024 2 0) (close _V10_Doptimize_D298_lambda202) (bruijn ##.kk.244.784 2 1))
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      statics->up->vars[0],
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_lambda202, self)})),
-      statics->up->vars[1]);
-}
-static void _V10_Doptimize_D298_k695(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_k695, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V10_Doptimize_D298_k696) (close _V10_Doptimize_D298_k702))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize_D298_k696, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k702, self)})));
-}
-static void _V10_Doptimize_D298_lambda199(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+static void _V10_Doptimize_D298_lambda201(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_lambda199, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_lambda201, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -15454,13 +15522,13 @@ static void _V10_Doptimize_D298_lambda199(VRuntime * runtime, VEnv * statics, in
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((close _V10_Doptimize_D298_k692) (close _V10_Doptimize_D298_k695))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize_D298_k692, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k695, self)})));
+  // ((close _V10_Doptimize_D298_k694) (close _V10_Doptimize_D298_k697))
+    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Doptimize_D298_k694, .env = self }, }, 1,
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_k697, self)})));
 }
-static void _V10_Doptimize_D298_lambda198(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+static void _V10_Doptimize_D298_lambda200(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_lambda198, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Doptimize_D298_lambda200, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -15470,10 +15538,10 @@ static void _V10_Doptimize_D298_lambda198(VRuntime * runtime, VEnv * statics, in
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (##vcore.call/cc (bruijn ##.k.2023 0 0) (close _V10_Doptimize_D298_lambda199))
+  // (##vcore.call/cc (bruijn ##.k.2024 0 0) (close _V10_Doptimize_D298_lambda201))
     VCallFuncWithGC(runtime, (VFunc)VCallCC2, 2,
       _var0,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_lambda199, self)})));
+      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_lambda201, self)})));
 }
 static void _V0vanity_V0compiler_V0cps_V20_k43(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -15485,7 +15553,7 @@ static void _V0vanity_V0compiler_V0cps_V20_k43(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (letrec 13 ((close _V10_Dapplication_Q_D286_lambda2) (close _V10_Dcombination_Q_D287_lambda3) (close _V10_Dto__cps_D288_lambda4) (close _V10_Dsubstitute_D289_lambda47) (close _V10_Dspecial__apply_Q_D290_lambda72) (close _V10_Dtaillength_D291_lambda73) (close _V10_Dadd__ref_B_D292_lambda75) (close _V10_Dsub__ref_B_D293_lambda77) (close _V10_Dadd__refs_B_D294_lambda79) (close _V10_Dsub__refs_B_D295_lambda81) (close _V10_Dcount__refs_D296_lambda83) (close _V10_Doptimize__impl_D297_lambda114) (close _V10_Doptimize_D298_lambda198)) ((bruijn ##.k.793 44 0) (##inline ##vcore.cons (##inline ##vcore.cons 'to-cps (bruijn ##.to-cps.288 0 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'optimize (bruijn ##.optimize.298 0 12)) '()))))
+  // (letrec 13 ((close _V10_Dapplication_Q_D286_lambda2) (close _V10_Dcombination_Q_D287_lambda3) (close _V10_Dto__cps_D288_lambda4) (close _V10_Dsubstitute_D289_lambda47) (close _V10_Dspecial__apply_Q_D290_lambda72) (close _V10_Dtaillength_D291_lambda73) (close _V10_Dadd__ref_B_D292_lambda75) (close _V10_Dsub__ref_B_D293_lambda77) (close _V10_Dadd__refs_B_D294_lambda79) (close _V10_Dsub__refs_B_D295_lambda81) (close _V10_Dcount__refs_D296_lambda83) (close _V10_Doptimize__impl_D297_lambda114) (close _V10_Doptimize_D298_lambda200)) ((bruijn ##.k.791 44 0) (##inline ##vcore.cons (##inline ##vcore.cons 'to-cps (bruijn ##.to-cps.288 0 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'optimize (bruijn ##.optimize.298 0 12)) '()))))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[13]; } container;
@@ -15503,7 +15571,7 @@ static void _V0vanity_V0compiler_V0cps_V20_k43(VRuntime * runtime, VEnv * static
     self->vars[9] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dsub__refs_B_D295_lambda81, self)}));
     self->vars[10] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dcount__refs_D296_lambda83, self)}));
     self->vars[11] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize__impl_D297_lambda114, self)}));
-    self->vars[12] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_lambda198, self)}));
+    self->vars[12] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Doptimize_D298_lambda200, self)}));
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 44-1, 0)), 1,
       VInlineCons2(runtime,
         VInlineCons2(runtime,
@@ -16051,10 +16119,10 @@ static void _V0vanity_V0compiler_V0cps_V20_k7(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.make-import (close _V0vanity_V0compiler_V0cps_V20_k8) (##string ##.string.2071) (bruijn ##.x.2050 6 0) (bruijn ##.x.2051 5 0) (bruijn ##.x.2052 4 0) (bruijn ##.x.2053 3 0) (bruijn ##.x.2054 2 0) (bruijn ##.x.2055 1 0) (bruijn ##.x.2056 0 0))
+  // (##vcore.make-import (close _V0vanity_V0compiler_V0cps_V20_k8) (##string ##.string.2072) (bruijn ##.x.2051 6 0) (bruijn ##.x.2052 5 0) (bruijn ##.x.2053 4 0) (bruijn ##.x.2054 3 0) (bruijn ##.x.2055 2 0) (bruijn ##.x.2056 1 0) (bruijn ##.x.2057 0 0))
     VCallFuncWithGC(runtime, (VFunc)VMakeImport2, 9,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0cps_V20_k8, self)})),
-      VEncodePointer(&_V10_Dstring_D2071.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D2072.sym, VPOINTER_OTHER),
       VGetArg(statics, 6-1, 0),
       VGetArg(statics, 5-1, 0),
       statics->up->up->up->vars[0],
@@ -16073,10 +16141,10 @@ static void _V0vanity_V0compiler_V0cps_V20_k6(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k7) (##string ##.string.2072))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k7) (##string ##.string.2073))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0cps_V20_k7, self)})),
-      VEncodePointer(&_V10_Dstring_D2072.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2073.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0cps_V20_k5(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -16088,10 +16156,10 @@ static void _V0vanity_V0compiler_V0cps_V20_k5(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k6) (##string ##.string.2073))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k6) (##string ##.string.2074))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0cps_V20_k6, self)})),
-      VEncodePointer(&_V10_Dstring_D2073.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2074.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0cps_V20_k4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -16103,10 +16171,10 @@ static void _V0vanity_V0compiler_V0cps_V20_k4(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k5) (##string ##.string.2074))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k5) (##string ##.string.2075))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0cps_V20_k5, self)})),
-      VEncodePointer(&_V10_Dstring_D2074.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2075.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0cps_V20_k3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -16118,10 +16186,10 @@ static void _V0vanity_V0compiler_V0cps_V20_k3(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k4) (##string ##.string.2075))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k4) (##string ##.string.2076))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0cps_V20_k4, self)})),
-      VEncodePointer(&_V10_Dstring_D2075.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2076.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0cps_V20_k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -16133,10 +16201,10 @@ static void _V0vanity_V0compiler_V0cps_V20_k2(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k3) (##string ##.string.2076))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k3) (##string ##.string.2077))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0cps_V20_k3, self)})),
-      VEncodePointer(&_V10_Dstring_D2076.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2077.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0cps_V20_k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -16148,10 +16216,10 @@ static void _V0vanity_V0compiler_V0cps_V20_k1(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k2) (##string ##.string.2077))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k2) (##string ##.string.2078))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0cps_V20_k2, self)})),
-      VEncodePointer(&_V10_Dstring_D2077.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2078.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0cps_V20_lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -16163,9 +16231,9 @@ static void _V0vanity_V0compiler_V0cps_V20_lambda1(VRuntime * runtime, VEnv * st
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k1) (##string ##.string.2078))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0cps_V20_k1) (##string ##.string.2079))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0cps_V20_k1, self)})),
-      VEncodePointer(&_V10_Dstring_D2078.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D2079.sym, VPOINTER_OTHER));
 }
 VFunc _V0vanity_V0compiler_V0cps_V20 = (VFunc)_V0vanity_V0compiler_V0cps_V20_lambda1;

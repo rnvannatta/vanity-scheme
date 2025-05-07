@@ -146,6 +146,7 @@
   (displayln "  -o<file>        Place the output into <file>")
   (displayln "  -I<dir>         Add the directory to the list to be searched for scheme header files")
   (displayln "  -Wc,<option>    Pass comma seperated to the C compiler")
+  (displayln "  -Wl,<option>    Pass comma seperated to the linker")
   (displayln "  -v              Show intermediate commands")
   (displayln "")
   (displayln "  --makefile      Generate makefile dependencies, similar to gcc invoked with -MM -MG")
@@ -181,6 +182,9 @@
             (case (caar args)
               ((#t)
                (cond ((equal? (extension (cdar args)) ".o") (set! obj-files (cons (cdar args) obj-files)))
+                     ; absolutely horrendous hack. we need to be better about argument order
+                     ((equal? (extension (cdar args)) ".a") (set! obj-files (cons (string-append "-Wl,--whole-archive " (cdar args) " -Wl,--no-whole-archive") obj-files)))
+                     ((equal? (extension (cdar args)) ".lib") (set! obj-files (cons (cdar args) obj-files)))
                      ((or (equal? (extension (cdar args)) ".scm")
                           (equal? (extension (cdar args)) ".ss"))
                       (set! scm-files (cons (cdar args) scm-files)))
@@ -208,11 +212,13 @@
                      ((equal? (cdar args) "error=unbound") (set! w-unbound-variables #t) (set! werror-unbound-variables #t))
                      ((equal? (cdar args) "no-error=unbound") (set! werror-unbound-variables #f))
                      (else
-                       (if (not (eq? (string-ref (cdar args) 0) #\c))
+                       (if (not (or (eq? (string-ref (cdar args) 0) #\c) (eq? (string-ref (cdar args) 0) #\l)))
                            (compiler-error "Wrapper flag -W can only pass args to the C compiler, eg -Wc,-Ilib"))
                        (if (not (and (>= (string-length (cdar args)) 2) (eq? (string-ref (cdar args) 1) #\,)))
                            (compiler-error "Wrapper flag -W missing comma"))
-                       (set! c-options (cons (decomma (substring (cdar args) 1)) c-options)))))
+                       (if (eq? (string-ref (cdar args) 0) #\c)
+                           (set! c-options (cons (decomma (substring (cdar args) 1)) c-options))
+                           (set! c-options (cons (string-append " -Wl," (substring (cdar args) 2)) c-options))))))
               ((help) (display-help) (exit 0))
               ((version) (display-version) (exit 0))
               ((shared) (set! shared? #t))
@@ -376,7 +382,7 @@
                 cc))
           (for-each
             (lambda (file) (set! link-command (string-append link-command " " file)))
-            (append obj-files cc-obj-files))
+            (append cc-obj-files (reverse obj-files)))
           (for-each
             (lambda (option) (set! link-command (string-append link-command option)))
             c-options)
