@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler expand)
-  (import (vanity core) (vanity intrinsics) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi) (vanity compiler library))
+  (import (vanity core) (vanity pretty-print) (vanity intrinsics) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi) (vanity compiler library))
   (export expand-toplevel free-variables-toplevel)
   ; TODO
 
@@ -280,6 +280,7 @@
 
     (define declares '())
     (define defines '())
+    (define constants '())
     (define just-defines #t)
 
     (define (expand-library-expr expr)
@@ -313,6 +314,15 @@
              (begin
                (set! defines (cons `(define ,x #f) defines))
                (list `(set! ,x ,(expand-syntax y))))))
+        (('define-constant (f . xs) . body)
+         (compiler-error "define-constant does not support trivial lambdas yet" `(define-constant (,f . ,xs) ,body)))
+        (('define-constant x body)
+         (if (not (constant-expr? body)) (compiler-error "define-constant does not define a constant expression" `(define-constant ,x ,body)))
+         (if (not (symbol? x)) (compiler-error "define-constant's first argument is not a symbol" x))
+         (begin
+           (set! constants (cons `(define-constant ,x ,body) constants))
+           (list)))
+        (('define-constant . noise) (compiler-error "malformed define-constant" `(define . ,noise)))
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
         (('begin x) (expand-library-expr x))
         (('begin . xs) (apply append (map expand-library-expr xs)))
@@ -333,14 +343,16 @@
       (let ((expanded (map expand-library-expr (cddr lib))))
         (expand-syntax
            `(lambda ()
+              ,@(reverse constants)
               ,@(reverse defines)
               . ,(append (apply append expanded)
                          (list (make-library-output exports)))))))
-
     (define free-vars
       (free-variables basic-library))
     (let ((unbound-vars (filter (lambda (var) (not (memv var imports))) free-vars)))
-      (if (not (null? unbound-vars)) (compiler-error "library has free variables" (cadr lib) unbound-vars)))
+      (if (not (null? unbound-vars))
+          (begin
+            (compiler-error "library has free variables" (cadr lib) unbound-vars))))
     (register-library-interface! (header-from-library lib))
     (let* ((libname (mangle-library (cadr lib))))
       (if (not (fold (lambda (a b) (and a b)) #t (map string? mangled-imports))) (compiler-error "imports to library must all be c strings"))

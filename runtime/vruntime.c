@@ -213,12 +213,14 @@ static SYSV_CALL VGlobalEntry * VInsertGlobalEntry(VRuntime * runtime, uint64_t 
 }
 
 static SYSV_CALL void VInitGlobalTable(VRuntime * runtime) {
-  runtime->VNumGlobalSlots = 32;
+  runtime->VNumGlobalSlots = 1024;
   runtime->VGlobalTable = malloc(sizeof(VGlobalEntry[runtime->VNumGlobalSlots]));
   for(int i = 0; i < runtime->VNumGlobalSlots; i++) runtime->VGlobalTable[i].symbol = VVOID;
 }
 
 static SYSV_CALL void VResizeGlobalTable(VRuntime * runtime) {
+  // FIXME: I'm convinced there is a memory issue here, because the mutation tracking
+  // would drop the objects. I've kludged around it by making the global table huge
   VGlobalEntry * newtable = malloc(sizeof(VGlobalEntry[runtime->VNumGlobalSlots*2]));
   for(int i = 0; i < runtime->VNumGlobalSlots*2; i++)
   {

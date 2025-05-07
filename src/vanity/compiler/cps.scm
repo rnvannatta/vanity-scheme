@@ -331,21 +331,26 @@
               (optimize-apply expr)
               `(,(optimize-atom `(lambda ,(reverse done-ys) ,expr)) . ,(reverse done-xs)))
           (let* ((y (car ys)) (x (car xs)) (ys (cdr ys)) (xs (cdr xs)))
-            (let ((refs (hash-table-ref ref-table y (lambda () 0)))
-                  (pure (not (hash-table-ref impure-table y (lambda () #f)))))
+            (let ((refs (hash-table-ref ref-table y (lambda () 0))))
               (cond ((= refs 0) (inline-let expr done-ys done-xs ys xs))
-                    ; we don't care whether the data the variable addresses is pure, just whether
-                    ; the variable is pure, which can be determined statically.
-                    ; ... and now that I think about it, any variable which is impure is used twice
-                    ; or can be eliminated, but eliminating that variable requires eliminating the
-                    ; set! expressions
                     ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1))
                           ; there's a bug with doing this with lambdas:
                           ; (let ((f (lambda (y) x))) (let ((x 0)) (f 2)))
                           ; we need complete alpha conversion to avoid this bug
                           ; was probs the bug I had...
+                          ; well we have that now.
                           (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
-                          pure)
+                          ; we don't care whether the data the variable addresses is pure, just whether
+                          ; the variable is pure, which can be determined statically.
+                          ; ... and now that I think about it, any variable which is impure is used twice
+                          ; or can be eliminated, but eliminating that variable requires eliminating the
+                          ; set! expressions
+                          (not (hash-table-ref impure-table y (lambda () #f)))
+                          ; the value needs to be pure too. simplest demonstration why:
+                          ; (let* ((x 0) (y x)) (set! x 1) y)
+                          ; if we replace y for x here, since y is pure, we'll geta miscompile
+                          ; how I yearn for SSA
+                          (not (hash-table-ref impure-table x (lambda () #f))))
                      (if (not (= refs 1))
                          (let ()
                            (define-values (xrefs xpure) (count-refs x))
@@ -357,17 +362,12 @@
       (match let-expr
         ((('continuation (y) expr) x)
          (let ((x (optimize-atom x))
-               (refs (hash-table-ref ref-table y (lambda () 0)))
-               (pure (not (hash-table-ref impure-table y (lambda () #f)))))
+               (refs (hash-table-ref ref-table y (lambda () 0))))
           (cond ((= refs 0) (optimize-apply expr))
-                ; we don't care whether the data the variable addresses is pure, just whether
-                ; the variable is pure, which can be determined statically.
-                ; ... and now that I think about it, any variable which is impure is used twice
-                ; or can be eliminated, but eliminating that variable requires eliminating the
-                ; set! expressions
                 ((and (or (atom? x) (eqv? (car x) 'quote) (eqv? (car x) '##foreign.function) (= refs 1))
                       (not (and (pair? x) (memv (car x) '(lambda continuation case-lambda))))
-                      pure)
+                      (not (hash-table-ref impure-table y (lambda () #f)))
+                      (not (hash-table-ref impure-table x (lambda () #f))))
                  (if (not (= refs 1))
                      (let ()
                        (define-values (xrefs xpure) (count-refs x))
