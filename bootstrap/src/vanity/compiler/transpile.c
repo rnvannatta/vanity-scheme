@@ -604,7 +604,7 @@ statics->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D251_k60, self)})),
       statics->up->vars[0],
-      VEncodeChar('\t'));
+      VEncodeChar('\b'));
 }
 }
 static void _V10_Dloop_D251_k72(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -1004,7 +1004,7 @@ statics->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dloop_D257_k80, self)})),
       statics->up->vars[0],
-      VEncodeChar('\t'));
+      VEncodeChar('\b'));
 }
 }
 static void _V10_Dloop_D257_k92(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -1340,7 +1340,7 @@ _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Descape__char_D231_k97, self)})),
       statics->vars[1],
-      VEncodeChar('\t'));
+      VEncodeChar('\b'));
 }
 }
 static void _V10_Descape__char_D231_lambda8(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {

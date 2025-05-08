@@ -111,33 +111,33 @@
     atom? displayln writeln format printf sprintf error
   )
   ; predicates
-  (define null? ##vcore.null?)
+  (define-constant null? ##vcore.null?)
   (define (boolean? x) (or (##vcore.eq? x #t) (##vcore.eq? x #f)))
-  (define eof-object? ##vcore.eof-object?)
-  (define pair? ##vcore.pair?)
-  (define vector? ##vcore.vector?)
-  (define hash-table? ##vcore.hash-table?)
-  (define record? ##vcore.record?)
-  (define procedure? ##vcore.procedure?)
-  (define symbol? ##vcore.symbol?)
-  (define string? ##vcore.string?)
-  (define char? ##vcore.char?)
-  (define nullptr? ##vcore.nullptr?)
-  (define foreign-pointer? ##vcore.foreign-pointer?)
-  (define exact? ##vcore.int?)
-  (define exact-integer? ##vcore.int?)
-  (define integer? ##vcore.int?)
-  (define inexact? ##vcore.double?)
-  (define real? ##vcore.double?)
+  (define-constant eof-object? ##vcore.eof-object?)
+  (define-constant pair? ##vcore.pair?)
+  (define-constant vector? ##vcore.vector?)
+  (define-constant hash-table? ##vcore.hash-table?)
+  (define-constant record? ##vcore.record?)
+  (define-constant procedure? ##vcore.procedure?)
+  (define-constant symbol? ##vcore.symbol?)
+  (define-constant string? ##vcore.string?)
+  (define-constant char? ##vcore.char?)
+  (define-constant nullptr? ##vcore.nullptr?)
+  (define-constant foreign-pointer? ##vcore.foreign-pointer?)
+  (define-constant exact? ##vcore.int?)
+  (define-constant exact-integer? ##vcore.int?)
+  (define-constant integer? ##vcore.int?)
+  (define-constant inexact? ##vcore.double?)
+  (define-constant real? ##vcore.double?)
 
   ; equality
-  (define eq? ##vcore.eq?)
-  (define eqv? ##vcore.eqv?)
+  (define-constant eq? ##vcore.eq?)
+  (define-constant eqv? ##vcore.eqv?)
 
-  (define boolean=? eq?)
-  (define char=? eq?)
+  (define-constant boolean=? ##vcore.eq?)
+  (define-constant char=? ##vcore.eq?)
 
-  (define string=? ##vcore.blob=?)
+  (define-constant string=? ##vcore.blob=?)
   (define symbol=?
     (case-lambda
       ((x y) (##vcore.symbol=? x y))
@@ -238,7 +238,7 @@
         (and (##vcore.record? x) (##vcore.record? y) (record=? x y))))
 
   ; logic
-  (define not ##vcore.not)
+  (define-constant not ##vcore.not)
 
   ; math equality
   (define (< x0 x1 . xs)
@@ -268,29 +268,28 @@
             (else (loop (cdr xs))))))
 
   ; math constructors
-  (define exact ##vcore.exact)
-  (define inexact->exact exact)
-  (define inexact ##vcore.inexact)
-  (define exact->inexact inexact)
+  (define-constant exact ##vcore.exact)
+  (define-constant inexact->exact ##vcore.exact)
+  (define-constant inexact ##vcore.inexact)
+  (define-constant exact->inexact ##vcore.inexact)
 
   ; math predicates
   (define (number? x)
     (or (##vcore.double? x) (##vcore.int? x)))
   (define complex? number?)
-  (define rational? integer?)
-  ;(define integer? ##vcore.int?)
+  (define rational? ##vcore.int?)
   (define (positive? x) (> x 0))
   (define (zero? x) (= x 0))
   (define (negative? x) (< x 0))
 
   ; math functions
-  (define + ##vcore.+)
-  (define - ##vcore.-)
-  (define * ##vcore.*)
-  (define / ##vcore./)
+  (define-constant + ##vcore.+)
+  (define-constant - ##vcore.-)
+  (define-constant * ##vcore.*)
+  (define-constant / ##vcore./)
 
-  (define quotient ##vcore.quotient)
-  (define remainder ##vcore.remainder)
+  (define-constant quotient ##vcore.quotient)
+  (define-constant remainder ##vcore.remainder)
 
   ; All need to work on ints
   (define (abs x) (if (< x 0) (- x) x))
@@ -351,11 +350,11 @@
             (loop (min a (car bs)) (cdr bs)))))))
 
   ; lists
-  (define cons ##vcore.cons)
-  (define car ##vcore.car)
-  (define cdr ##vcore.cdr)
-  (define set-car! ##vcore.set-car!)
-  (define set-cdr! ##vcore.set-cdr!)
+  (define-constant cons ##vcore.cons)
+  (define-constant car ##vcore.car)
+  (define-constant cdr ##vcore.cdr)
+  (define-constant set-car! ##vcore.set-car!)
+  (define-constant set-cdr! ##vcore.set-cdr!)
 
   (define (caar x) (##vcore.car (##vcore.car x)))
   (define (cadr x) (##vcore.car (##vcore.cdr x)))
@@ -532,17 +531,17 @@
 
   ; strings
 
-  (define make-string ##vcore.make-string)
-  (define substring ##vcore.substring)
-  (define string-copy ##vcore.substring)
-  (define string-copy! ##vcore.string-copy!)
-  (define string-ref ##vcore.string-ref)
-  (define string-set! ##vcore.string-set!)
-  (define string-length ##vcore.string-length)
-  (define string->symbol ##vcore.string->symbol)
-  (define string->number ##vcore.string->number)
+  (define-constant make-string ##vcore.make-string)
+  (define-constant substring ##vcore.substring)
+  (define-constant string-copy ##vcore.substring)
+  (define-constant string-copy! ##vcore.string-copy!)
+  (define-constant string-ref ##vcore.string-ref)
+  (define-constant string-set! ##vcore.string-set!)
+  (define-constant string-length ##vcore.string-length)
+  (define-constant string->symbol ##vcore.string->symbol)
+  (define-constant string->number ##vcore.string->number)
 
-  (define symbol->string ##vcore.symbol->string)
+  (define-constant symbol->string ##vcore.symbol->string)
 
   (define (list->string lst)
     (let ((str (make-string (length lst))))
@@ -585,23 +584,23 @@
       (strs (fold-right string-append "" strs))))
 
   ; vectors
-  (define list->vector ##vcore.list->vector)
+  (define-constant list->vector ##vcore.list->vector)
   (define vector (lambda args (list->vector args)))
-  (define vector-ref ##vcore.vector-ref)
-  (define vector-set! ##vcore.vector-set!)
-  (define vector-length ##vcore.vector-length)
+  (define-constant vector-ref ##vcore.vector-ref)
+  (define-constant vector-set! ##vcore.vector-set!)
+  (define-constant vector-length ##vcore.vector-length)
 
   ; typevectors
-  (define f32vector? ##vcore.f32vector?)
+  (define-constant f32vector? ##vcore.f32vector?)
   (define make-f32vector
     (case-lambda
       ((len) (##vcore.make-f32vector len #f))
       ((len fill) (##vcore.make-f32vector len fill))))
-  (define list->f32vector ##vcore.list->f32vector)
+  (define-constant list->f32vector ##vcore.list->f32vector)
   (define f32vector (lambda args (list->f32vector args)))
-  (define f32vector-ref ##vcore.f32vector-ref)
-  (define f32vector-set! ##vcore.f32vector-set!)
-  (define f32vector-length ##vcore.f32vector-length)
+  (define-constant f32vector-ref ##vcore.f32vector-ref)
+  (define-constant f32vector-set! ##vcore.f32vector-set!)
+  (define-constant f32vector-length ##vcore.f32vector-length)
   (define (f32vector->list vec)
     (let ((len (f32vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -609,16 +608,16 @@
             acc
             (loop (cons (f32vector-ref vec i) acc) (- i 1))))))
 
-  (define f64vector? ##vcore.f64vector?)
+  (define-constant f64vector? ##vcore.f64vector?)
   (define make-f64vector
     (case-lambda
       ((len) (##vcore.make-f64vector len #f))
       ((len fill) (##vcore.make-f64vector len fill))))
-  (define list->f64vector ##vcore.list->f64vector)
+  (define-constant list->f64vector ##vcore.list->f64vector)
   (define f64vector (lambda args (list->f64vector args)))
-  (define f64vector-ref ##vcore.f64vector-ref)
-  (define f64vector-set! ##vcore.f64vector-set!)
-  (define f64vector-length ##vcore.f64vector-length)
+  (define-constant f64vector-ref ##vcore.f64vector-ref)
+  (define-constant f64vector-set! ##vcore.f64vector-set!)
+  (define-constant f64vector-length ##vcore.f64vector-length)
   (define (f64vector->list vec)
     (let ((len (f64vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -626,16 +625,16 @@
             acc
             (loop (cons (f64vector-ref vec i) acc) (- i 1))))))
 
-  (define s32vector? ##vcore.s32vector?)
+  (define-constant s32vector? ##vcore.s32vector?)
   (define make-s32vector
     (case-lambda
       ((len) (##vcore.make-s32vector len #f))
       ((len fill) (##vcore.make-s32vector len fill))))
-  (define list->s32vector ##vcore.list->s32vector)
+  (define-constant list->s32vector ##vcore.list->s32vector)
   (define s32vector (lambda args (list->s32vector args)))
-  (define s32vector-ref ##vcore.s32vector-ref)
-  (define s32vector-set! ##vcore.s32vector-set!)
-  (define s32vector-length ##vcore.s32vector-length)
+  (define-constant s32vector-ref ##vcore.s32vector-ref)
+  (define-constant s32vector-set! ##vcore.s32vector-set!)
+  (define-constant s32vector-length ##vcore.s32vector-length)
   (define (s32vector->list vec)
     (let ((len (s32vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -643,16 +642,16 @@
             acc
             (loop (cons (s32vector-ref vec i) acc) (- i 1))))))
 
-  (define u16vector? ##vcore.u16vector?)
+  (define-constant u16vector? ##vcore.u16vector?)
   (define make-u16vector
     (case-lambda
       ((len) (##vcore.make-u16vector len #f))
       ((len fill) (##vcore.make-u16vector len fill))))
-  (define list->u16vector ##vcore.list->u16vector)
+  (define-constant list->u16vector ##vcore.list->u16vector)
   (define u16vector (lambda args (list->u16vector args)))
-  (define u16vector-ref ##vcore.u16vector-ref)
-  (define u16vector-set! ##vcore.u16vector-set!)
-  (define u16vector-length ##vcore.u16vector-length)
+  (define-constant u16vector-ref ##vcore.u16vector-ref)
+  (define-constant u16vector-set! ##vcore.u16vector-set!)
+  (define-constant u16vector-length ##vcore.u16vector-length)
   (define (u16vector->list vec)
     (let ((len (u16vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -660,16 +659,16 @@
             acc
             (loop (cons (u16vector-ref vec i) acc) (- i 1))))))
 
-  (define s16vector? ##vcore.s16vector?)
+  (define-constant s16vector? ##vcore.s16vector?)
   (define make-s16vector
     (case-lambda
       ((len) (##vcore.make-s16vector len #f))
       ((len fill) (##vcore.make-s16vector len fill))))
-  (define list->s16vector ##vcore.list->s16vector)
+  (define-constant list->s16vector ##vcore.list->s16vector)
   (define s16vector (lambda args (list->s16vector args)))
-  (define s16vector-ref ##vcore.s16vector-ref)
-  (define s16vector-set! ##vcore.s16vector-set!)
-  (define s16vector-length ##vcore.s16vector-length)
+  (define-constant s16vector-ref ##vcore.s16vector-ref)
+  (define-constant s16vector-set! ##vcore.s16vector-set!)
+  (define-constant s16vector-length ##vcore.s16vector-length)
   (define (s16vector->list vec)
     (let ((len (s16vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -677,16 +676,16 @@
             acc
             (loop (cons (s16vector-ref vec i) acc) (- i 1))))))
 
-  (define u8vector? ##vcore.u8vector?)
+  (define-constant u8vector? ##vcore.u8vector?)
   (define make-u8vector
     (case-lambda
       ((len) (##vcore.make-u8vector len #f))
       ((len fill) (##vcore.make-u8vector len fill))))
-  (define list->u8vector ##vcore.list->u8vector)
+  (define-constant list->u8vector ##vcore.list->u8vector)
   (define u8vector (lambda args (list->u8vector args)))
-  (define u8vector-ref ##vcore.u8vector-ref)
-  (define u8vector-set! ##vcore.u8vector-set!)
-  (define u8vector-length ##vcore.u8vector-length)
+  (define-constant u8vector-ref ##vcore.u8vector-ref)
+  (define-constant u8vector-set! ##vcore.u8vector-set!)
+  (define-constant u8vector-length ##vcore.u8vector-length)
   (define (u8vector->list vec)
     (let ((len (u8vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -709,16 +708,16 @@
       ((n port) (##vcore.read-u8vector n port))))
   (define read-bytevector read-u8vector)
 
-  (define s8vector? ##vcore.s8vector?)
+  (define-constant s8vector? ##vcore.s8vector?)
   (define make-s8vector
     (case-lambda
       ((len) (##vcore.make-s8vector len #f))
       ((len fill) (##vcore.make-s8vector len fill))))
-  (define list->s8vector ##vcore.list->s8vector)
+  (define-constant list->s8vector ##vcore.list->s8vector)
   (define s8vector (lambda args (list->s8vector args)))
-  (define s8vector-ref ##vcore.s8vector-ref)
-  (define s8vector-set! ##vcore.s8vector-set!)
-  (define s8vector-length ##vcore.s8vector-length)
+  (define-constant s8vector-ref ##vcore.s8vector-ref)
+  (define-constant s8vector-set! ##vcore.s8vector-set!)
+  (define-constant s8vector-length ##vcore.s8vector-length)
   (define (s8vector->list vec)
     (let ((len (s8vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -876,10 +875,10 @@
 
 
   ; records
-  (define record ##vcore.record)
-  (define record-ref ##vcore.record-ref)
-  (define record-set! ##vcore.record-set!)
-  (define record-length ##vcore.record-length)
+  (define-constant record ##vcore.record)
+  (define-constant record-ref ##vcore.record-ref)
+  (define-constant record-set! ##vcore.record-set!)
+  (define-constant record-length ##vcore.record-length)
 
   ; hash tables
 
@@ -889,15 +888,15 @@
       ((eq) (##vcore.make-hash-table eq #f 32))
       ((eq hash) (##vcore.make-hash-table eq hash 32))
       ((eq hash len) (##vcore.make-hash-table eq hash len))))
-  (define hash-table-equivalence-function ##vcore.hash-table-equivalence-function)
-  (define hash-table-hash-function ##vcore.hash-table-hash-function)
+  (define-constant hash-table-equivalence-function ##vcore.hash-table-equivalence-function)
+  (define-constant hash-table-hash-function ##vcore.hash-table-hash-function)
   (define hash-table-ref
     (case-lambda
       ((table key) (##vcore.hash-table-ref table key (lambda () (error "No such key in hash table" key))))
       ((table key thunk) (##vcore.hash-table-ref table key thunk))))
   (define (hash-table-set! table key val)
     (##vcore.hash-table-set! table key val))
-  (define hash-table-delete! ##vcore.hash-table-delete!)
+  (define-constant hash-table-delete! ##vcore.hash-table-delete!)
   (define (hash-table->alist table)
     (let ((vec (##vcore.hash-table-vector table)))
       (let loop ((i 0))
@@ -911,7 +910,7 @@
 
   ; chars
 
-  (define char->integer ##vcore.char-integer)
+  (define-constant char->integer ##vcore.char-integer)
   ; lol horrendous
   (define (number->string x) (sprintf "~A" x))
   (define (char-numeric? x)
@@ -1072,10 +1071,10 @@
       ((x port) (printout x #t port))))
 
   ; misc 
-  (define call/cc ##vcore.call/cc)
-  (define call-with-current-continuation ##vcore.call/cc)
-  (define call-with-values ##vcore.call-with-values)
-  (define apply ##vcore.apply)
+  (define-constant call/cc ##vcore.call/cc)
+  (define-constant call-with-current-continuation ##vcore.call/cc)
+  (define-constant call-with-values ##vcore.call-with-values)
+  (define-constant apply ##vcore.apply)
   (define (values . args)
     (call/cc (lambda (k) (apply k args))))
   
@@ -1100,21 +1099,21 @@
              (else (error "parameter object expects zero arguments")))))))))
 
   ; system interface
-  (define command-line ##vcore.command-line)
-  (define system ##vcore.system)
-  (define open-input-process ##vcore.open-input-process)
-  (define open-output-process ##vcore.open-output-process)
-  (define make-temporary-file ##vcore.make-temporary-file)
+  (define-constant command-line ##vcore.command-line)
+  (define-constant system ##vcore.system)
+  (define-constant open-input-process ##vcore.open-input-process)
+  (define-constant open-output-process ##vcore.open-output-process)
+  (define-constant make-temporary-file ##vcore.make-temporary-file)
   (define file-exists?
     (case-lambda
       ((path)
        (##vcore.access path 0))
       ((path mode)
        (##vcore.access path mode))))
-  (define exit ##vcore.exit)
+  (define-constant exit ##vcore.exit)
 
-  (define current-jiffy ##vcore.current-jiffy)
-  (define jiffies-per-second ##vcore.jiffies-per-second)
+  (define-constant current-jiffy ##vcore.current-jiffy)
+  (define-constant jiffies-per-second ##vcore.jiffies-per-second)
 
   (define bitwise-and
     (case-lambda
@@ -1163,16 +1162,16 @@
   (define bitwise-eqv bitwise-xnor)
   (define bitwise-or bitwise-ior)
 
-  (define bitwise-not ##vcore.bitwise-not)
+  (define-constant bitwise-not ##vcore.bitwise-not)
 
-  (define bitwise-nand ##vcore.bitwise-nand)
-  (define bitwise-nor ##vcore.bitwise-nor)
-  (define bitwise-andc1 ##vcore.bitwise-andc1)
-  (define bitwise-andc2 ##vcore.bitwise-andc2)
-  (define bitwise-orc1 ##vcore.bitwise-orc1)
-  (define bitwise-orc2 ##vcore.bitwise-orc2)
-  (define arithmetic-shift ##vcore.arithmetic-shift)
-  (define bit-count ##vcore.bit-count)
+  (define-constant bitwise-nand ##vcore.bitwise-nand)
+  (define-constant bitwise-nor ##vcore.bitwise-nor)
+  (define-constant bitwise-andc1 ##vcore.bitwise-andc1)
+  (define-constant bitwise-andc2 ##vcore.bitwise-andc2)
+  (define-constant bitwise-orc1 ##vcore.bitwise-orc1)
+  (define-constant bitwise-orc2 ##vcore.bitwise-orc2)
+  (define-constant arithmetic-shift ##vcore.arithmetic-shift)
+  (define-constant bit-count ##vcore.bit-count)
 
   ; (: exact (procedure number? -> exact?))
   ; (: list (procedure X ... -> (listof? X)))
@@ -1249,7 +1248,7 @@
              ((eq? a #f) (format-sprintf b args))
              (else (format-printf a b args))))))
 
-  (define raise ##vcore.raise)
+  (define-constant raise ##vcore.raise)
   (define (raise-continuable x)
     (let* ((handler (##vcore.get-exception-handler))
            (ret (handler x)))
@@ -1269,7 +1268,7 @@
   (define (error msg . irritants)
     (raise (##vcore.record #f 'error msg irritants)))
 
-  (define fiber-fork-list ##vcore.fiber-fork-list)
+  (define-constant fiber-fork-list ##vcore.fiber-fork-list)
   (define (fiber-fork . args)
     (##vcore.fiber-fork-list args))
   (define fiber-map
@@ -1278,6 +1277,6 @@
       ((f as bs) (fiber-fork-list (map (lambda (a b) (lambda () (f a b))) as bs)))
       ((f as bs cs) (fiber-fork-list (map (lambda (a b c) (lambda () (f a b c))) as bs cs)))
       ((f as . args) (fiber-fork-list (apply map (lambda args (lambda () (apply f args))) as args)))))
-  (define async ##vcore.async)
-  (define await ##vcore.await)
+  (define-constant async ##vcore.async)
+  (define-constant await ##vcore.await)
 )

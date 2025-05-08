@@ -76,7 +76,7 @@
     (define (escape-char c)
       (case c
         ((#\alarm) "\\a")
-        ((#\backspace) "\\t")
+        ((#\backspace) "\\b")
         ((#\tab) "\\t")
         ((#\newline) "\\n")
         ((#\return) "\\r")
