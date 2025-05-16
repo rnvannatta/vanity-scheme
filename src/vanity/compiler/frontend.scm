@@ -184,7 +184,7 @@
                (cond ((equal? (extension (cdar args)) ".o") (set! obj-files (cons (cdar args) obj-files)))
                      ; absolutely horrendous hack. we need to be better about argument order
                      ((equal? (extension (cdar args)) ".a") (set! obj-files (cons (string-append "-Wl,--whole-archive " (cdar args) " -Wl,--no-whole-archive") obj-files)))
-                     ((equal? (extension (cdar args)) ".lib") (set! obj-files (cons (cdar args) obj-files)))
+                     ((equal? (extension (cdar args)) ".lib") (set! obj-files (cons (string-append "-Wl,--whole-archive " (cdar args) " -Wl,--no-whole-archive") obj-files)))
                      ((or (equal? (extension (cdar args)) ".scm")
                           (equal? (extension (cdar args)) ".ss"))
                       (set! scm-files (cons (cdar args) scm-files)))
@@ -370,7 +370,7 @@
               (if debug? " -g" "")
               ; TODO way to not link vscheme in
               (cond ((equal? platform "linux") " -lvscheme")
-                    ((equal? platform "emscripten") " -Wl,--whole-archive -lvscheme -ldfile -s LLD_REPORT_UNDEFINED -s ALLOW_MEMORY_GROWTH=1")
+                    ((equal? platform "emscripten") " -Wl,--whole-archive -lvscheme -ldfile -s LLD_REPORT_UNDEFINED -s ALLOW_MEMORY_GROWTH=1 -s STACK_SIZE=2097152")
                     (else (sprintf " -L~A/x86_64-w64-mingw32/lib/ -lvscheme" install-root)))
               (if shared? " -fPIC -shared"
                           (if (equal? platform "emscripten")

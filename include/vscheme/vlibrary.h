@@ -41,22 +41,22 @@ V_DECLARE_FUNC(VRem2, k, x, y);
 V_DECLARE_FUNC_MIN(VDiv2, k, x);
 
 // predicates
-V_DECLARE_FUNC(VNullP2, k, x);
-V_DECLARE_FUNC(VEofP2, k, x);
-V_DECLARE_FUNC(VPairP2, k, x);
-V_DECLARE_FUNC(VVectorP2, k, x);
-V_DECLARE_FUNC(VHashTableP, k, x);
-V_DECLARE_FUNC(VRecordP2, k, x);
-V_DECLARE_FUNC(VProcedureP2, k, x);
-V_DECLARE_FUNC(VBlobP2, k, x);
-V_DECLARE_FUNC(VSymbolP2, k, x);
-V_DECLARE_FUNC(VStringP2, k, x);
-V_DECLARE_FUNC(VDoubleP2, k, x);
-V_DECLARE_FUNC(VIntP2, k, x);
-V_DECLARE_FUNC(VCharP2, k, x);
-V_DECLARE_FUNC(VVoidP2, k, x);
-V_DECLARE_FUNC(VNullptrP2, k, x);
-V_DECLARE_FUNC(VForeignPointerP2, k, x);
+V_DECLARE_FUNC_BASIC(VNullP2, x);
+V_DECLARE_FUNC_BASIC(VEofP2, x);
+V_DECLARE_FUNC_BASIC(VPairP2, x);
+V_DECLARE_FUNC_BASIC(VVectorP2, x);
+V_DECLARE_FUNC_BASIC(VHashTableP, x);
+V_DECLARE_FUNC_BASIC(VRecordP2, x);
+V_DECLARE_FUNC_BASIC(VProcedureP2, x);
+V_DECLARE_FUNC_BASIC(VBlobP2, x);
+V_DECLARE_FUNC_BASIC(VSymbolP2, x);
+V_DECLARE_FUNC_BASIC(VStringP2, x);
+V_DECLARE_FUNC_BASIC(VDoubleP2, x);
+V_DECLARE_FUNC_BASIC(VIntP2, x);
+V_DECLARE_FUNC_BASIC(VCharP2, x);
+V_DECLARE_FUNC_BASIC(VVoidP2, x);
+V_DECLARE_FUNC_BASIC(VNullptrP2, x);
+V_DECLARE_FUNC_BASIC(VForeignPointerP2, x);
 
 // equality
 V_DECLARE_FUNC(VEq2, k, x, y);
@@ -65,7 +65,7 @@ V_DECLARE_FUNC(VBlobEqv2, k, x, y);
 V_DECLARE_FUNC(VEqv, k, x, y);
 
 // logic
-V_DECLARE_FUNC(VNot2, k, x);
+V_DECLARE_FUNC_BASIC(VNot2, x);
 
 // lists
 V_DECLARE_FUNC(VCons2, k, x, y);
@@ -75,17 +75,17 @@ V_DECLARE_FUNC(VCdr2, k, x);
 // vectors
 
 V_DECLARE_FUNC(VListVector2, k, vec);
-V_DECLARE_FUNC(VVectorRef2, k, vec, i);
-V_DECLARE_FUNC(VVectorLength2, k, vec);
+V_DECLARE_FUNC_BASIC(VVectorRef2, vec, i);
+V_DECLARE_FUNC_BASIC(VVectorLength2, vec);
 
 // typevectors
 
 #define IMPLEMENT_BUFFER_PROTOTYPES(Prefix) \
 V_DECLARE_FUNC(VMake ## Prefix ## Vector, k, len, fill); \
-V_DECLARE_FUNC(V ## Prefix ## VectorP, k, vec); \
-V_DECLARE_FUNC(V ## Prefix ## VectorRef, k, vec, i); \
-V_DECLARE_FUNC(V ## Prefix ## VectorSet, k, vec, i, x); \
-V_DECLARE_FUNC(V ## Prefix ## VectorLength, k, vec); \
+V_DECLARE_FUNC_BASIC(V ## Prefix ## VectorP, vec); \
+V_DECLARE_FUNC_BASIC(V ## Prefix ## VectorRef, vec, i); \
+V_DECLARE_FUNC_BASIC(V ## Prefix ## VectorSet, vec, i, x); \
+V_DECLARE_FUNC_BASIC(V ## Prefix ## VectorLength, vec); \
 V_DECLARE_FUNC(VList ## Prefix ## Vector, k, vec);
 
 IMPLEMENT_BUFFER_PROTOTYPES(S8)
@@ -102,8 +102,8 @@ V_DECLARE_FUNC(VReadU8Vector, k, n, port);
 // records
 
 V_DECLARE_FUNC_MIN(VCreateRecord2, k, type);
-V_DECLARE_FUNC(VRecordRef2, k, rec, i);
-V_DECLARE_FUNC(VRecordLength2, k, rec);
+V_DECLARE_FUNC_BASIC(VRecordRef2, rec, i);
+V_DECLARE_FUNC_BASIC(VRecordLength2, rec);
 
 // hash table
 
@@ -120,18 +120,18 @@ V_DECLARE_FUNC(VHashTableDelete, k, table, key);
 V_DECLARE_FUNC(VMakeString2, k, i, fill);
 V_DECLARE_FUNC(VSubstring2, k, str, _start, _end);
 V_DECLARE_FUNC(VStringCopy2, k, dst, src, at, _start, _end);
-V_DECLARE_FUNC(VStringLength2, k, str);
-V_DECLARE_FUNC(VStringRef2, k, str, i);
-V_DECLARE_FUNC(VStringSet2, k, str, i, c);
+V_DECLARE_FUNC_BASIC(VStringLength2, str);
+V_DECLARE_FUNC_BASIC(VStringRef2, str, i);
+V_DECLARE_FUNC_BASIC(VStringSet2, str, i, c);
 
-V_DECLARE_FUNC(VStringNumber2, k, str);
+V_DECLARE_FUNC_BASIC(VStringNumber2, str);
 //void VNumberString2(V_CORE_ARGS, VWORD k, VWORD num);
 V_DECLARE_FUNC(VStringSymbol2, k, str);
 V_DECLARE_FUNC(VSymbolString2, k, sym);
 
 // chars
 
-V_DECLARE_FUNC(VCharInt2, k, c);
+V_DECLARE_FUNC_BASIC(VCharInt2, c);
 //void VIntChar2(V_CORE_ARGS, VWORD k, VWORD int);
 
 // ports
@@ -153,19 +153,19 @@ V_DECLARE_FUNC(VOpenOutputString2, k);
 V_DECLARE_FUNC(VGetOutputString2, k, port);
 
 // input
-V_DECLARE_FUNC(VReadChar2, k, port);
+V_DECLARE_FUNC_BASIC(VReadChar2, port);
 V_DECLARE_FUNC(VReadLine2, k, port);
 V_DECLARE_FUNC(VReadLine3, k, port);
 V_DECLARE_FUNC(VRead2, k, port);
 
 // output
-V_DECLARE_FUNC(VDisplay2, k, val, port);
-V_DECLARE_FUNC(VWrite2, k, val, port);
-V_DECLARE_FUNC(VNewline2, k, port);
+V_DECLARE_FUNC_BASIC(VDisplay2, val, port);
+V_DECLARE_FUNC_BASIC(VWrite2, val, port);
+V_DECLARE_FUNC_BASIC(VNewline2, port);
 
-V_DECLARE_FUNC(VDisplayStdout, k, val);
-V_DECLARE_FUNC(VWriteStdout, k, val);
-V_DECLARE_FUNC(VNewlineStdout, k);
+V_DECLARE_FUNC_BASIC(VDisplayStdout, val);
+V_DECLARE_FUNC_BASIC(VWriteStdout, val);
+V_DECLARE_FUNC_BASIC(VNewlineStdout);
 
 // control flow
 V_DECLARE_FUNC(VCallCC2, k, proc);

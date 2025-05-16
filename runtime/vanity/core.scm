@@ -693,14 +693,14 @@
             acc
             (loop (cons (u8vector-ref vec i) acc) (- i 1))))))
 
-  (define bytevector? u8vector?)
+  (define-constant bytevector? ##vcore.u8vector?)
   (define make-bytevector make-u8vector)
-  (define list->bytevector list->u8vector)
+  (define-constant list->bytevector ##vcore.list->u8vector)
   (define bytevector->list u8vector->list)
   (define bytevector u8vector)
-  (define bytevector-u8-ref u8vector-ref)
-  (define bytevector-u8-set! u8vector-set!)
-  (define bytevector-length u8vector-length)
+  (define-constant bytevector-u8-ref ##vcore.u8vector-ref)
+  (define-constant bytevector-u8-set! ##vcore.u8vector-set!)
+  (define-constant bytevector-length ##vcore.u8vector-length)
 
   (define read-u8vector
     (case-lambda

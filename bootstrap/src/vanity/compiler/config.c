@@ -53,7 +53,7 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * stat
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[3]; } container;
-    VEnv * self = &container.self;
+    self = &container.self;
     VInitEnv(self, 3, 3, statics);
     self->vars[0] = VInlineCons2(runtime,
         VEncodeInt(0l),

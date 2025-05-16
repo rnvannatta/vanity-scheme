@@ -1,1 +1,1 @@
-(define-library-interface (vanity hash) (import) (export make-random random-copy random-sample! random-sample-float! random-advance!) (inline-import) (inline-export))
+(define-library-interface (vanity hash) (import) (export make-random random-copy random-sample! random-sample-float! random-advance!) (constant-export))

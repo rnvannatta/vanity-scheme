@@ -151,6 +151,10 @@
             (('letrec ((args vals) ...) body)
              `(letrec ,(map list args (map (lambda (val) (iter val)) vals))
                       ,(iter body)))
+            (('basic-block cost (regs applies) ... cont)
+             `(basic-block ,cost
+                ,@(map list regs (map (lambda (appl) (iter appl)) applies))
+                ,(iter cont)))
             ((f . xs) (cons (iter f) (iter xs)))
             (y
              (if (eqv? x y)
@@ -226,6 +230,9 @@
          (count-refs-atom val)
 
          (hash-table-set! impure-table y #t))
+        (('basic-block cost (_ applies) ... cont)
+         (for-each count-refs-apply applies)
+         (count-refs-apply cont))
         ((f . xs)
          (count-refs-atom f)
          (for-each count-refs-atom xs))
@@ -234,69 +241,6 @@
         (count-refs-apply expr)
         (count-refs-atom expr))
     (values count-table impure-table))
-
-  #;(define (add-frees expr)
-    (define (copy-and-remove frees xs)
-      (let ((copy (hash-table-copy frees)))
-        (let loop ((xs xs))
-          (cond ((pair? xs)
-                 (hash-table-delete! copy (car xs))
-                 (loop (cdr xs)))
-                ((null? xs)
-                 copy)
-                (else
-                 (hash-table-delete! copy xs)
-                 copy)))))
-    (define (add-frees-atom frees expr)
-      (match expr
-        (('quote . _) #f)
-        (('##foreign.function . _) #f)
-        (('##inline . xs)
-         (map (lambda (x) (add-frees-atom frees x)) xs))
-
-        (('lambda xs body)
-         ; TODO
-         (let ((body (add-frees-apply frees body)))
-           `(lambda ,xs ,(copy-and-remove frees xs) ,body)))
-        (('continuation xs body)
-         (let ((body (add-frees-apply frees body)))
-           `(lambda ,xs ,(copy-and-remove frees xs) ,body)))
-        (('case-lambda (xs body) ...)
-         (map
-           (lambda (xs body)
-             (let ((body (add-frees-apply frees body)))
-               `(,xs ,(copy-and-remove frees xs) ,body)))
-           xs
-           body))
-        (else expr
-          (if (symbol? expr)
-              (begin
-                (hash-table-set! frees expr #t)
-                expr)))))
-    (define (add-frees-apply frees expr)
-      (match expr
-        ; Simplifying ((continuation (x) (x args ...)) y) to (y args)
-        (('letrec ((_ vals) ...) body)
-         ; TODO
-         (map (lambda (x) (add-frees-atom frees x)) vals)
-         (add-frees-apply frees body))
-
-        (('if p a b)
-         `(if
-           ,(add-frees-atom frees p)
-           ,(add-frees-apply frees a)
-           ,(add-frees-apply frees b)))
-        (('set! k y val)
-         `(set
-            ,(add-frees-atom frees k)
-            ,(add-frees-atom frees y)
-            ,(add-frees-atom frees val)))
-        ((f . xs)
-         (cons (add-frees-atom frees f) (map (lambda (x) (add-frees-atom frees x)) xs)))
-        (else (compiler-error "add-frees: malformed application" expr))))
-    (if (application? expr)
-        (add-frees-apply (make-hash-table eqv?) expr)
-        (add-frees-atom (make-hash-table eqv?) expr)))
 
   ; need to rewrite the optimize-impl to be more like an evaluator
   ; it's a crappy normal order evaluator rn
@@ -418,6 +362,12 @@
         (('if p a b)
          `(if ,p ,(optimize-apply a) ,(optimize-apply b)))
 
+        (('basic-block . _)
+         ; nothing to optimize: the applies are all intrinsics and have been optimized
+         ; and the cont has been optimized
+         ; we'll need to add basic-block fusion somewhere. probs when the basic block is
+         ; generated.
+         expr)
         ; Inlining builtins
         ; TODO: this doesn't take into account 'cost'. TODO account for function cost to avoid
         ; inlining so many functions that the garbage collect fails. One thing we could do is
@@ -425,9 +375,32 @@
         ; of this form would always save stack space. Well cdr and car never alloc so its a win
         ; but cons allocs
         ((f k . xs)
-         (if (and inlining? (symbol? f) (lookup-inline-name f))
-             (optimize-apply `(,(optimize-atom k) (##inline ,f . ,(map optimize-atom xs))))
-             (cons (optimize-atom f) (cons (optimize-atom k) (map optimize-atom xs)))))
+         (cond ((and inlining? (symbol? f) (lookup-inline-name f))
+                (optimize-apply `(,(optimize-atom k) (##inline ,f . ,(map optimize-atom xs)))))
+               ((and inlining? (symbol? f) (is-basic-intrinsic? f))
+                (let ((reg (gensym "reg")))
+                  (add-ref! ref-table reg 1)
+                  (let ((reg `(,reg (,f . ,(map optimize-atom xs))))
+                        (appl (optimize-apply `(,k ,reg))))
+                    (match appl
+                      (('basic-block next-cost next-regs ... next-appl)
+                       ; since appl has been optimized, we don't need to chain here. it has already chained.
+                       ; what's a good max cost?? probably needs to be low-ish for wasm's sake.
+                       (if (> next-cost 4095)
+                           ; the cost is too high, deliberately wrap appl in an empty let to introduce a gc point
+                           `(basic-block 1 ,reg ((lambda () ,appl)))
+                           `(basic-block ,(+ next-cost 1)
+                              ,reg
+                              ,@next-regs
+                              ,next-appl)))
+                      (else
+                        `(basic-block 1 ,reg ,appl))))))
+                #;(let ((reg (gensym "reg")))
+                  (add-ref! ref-table reg 1)
+                  `(basic-block 1
+                     (,reg (,f ,(map optimize-atom xs)))
+                     ,(optimize-apply `(,k ,reg))))
+               (else (cons (optimize-atom f) (cons (optimize-atom k) (map optimize-atom xs))))))
         (else (compiler-error "optimize-apply: malformed application" expr))))
     (define (optimize-atom expr)
       (match expr

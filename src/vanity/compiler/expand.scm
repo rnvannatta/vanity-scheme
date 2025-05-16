@@ -273,9 +273,13 @@
       (expand-syntax (list 'quasiquote (map (lambda (e) (cons e (list 'unquote e))) exports))))
     (define exports '())
     (define imports '())
+    (define constant-imports '())
     (define mangled-imports '())
     (define (extract-exports lib)
       (cond ((assoc 'export (cddr lib)) => cdr)
+            (else '())))
+    (define (extract-constants lib)
+      (cond ((assoc 'constant-export (cddr lib)) => cdr)
             (else '())))
 
     (define declares '())
@@ -289,8 +293,8 @@
          (set! exports (append syms exports))
          (list))
         (('import . libs)
-         (set! imports
-          (fold append imports (reverse (map (lambda (import) (extract-exports (find-library-interface! import paths))) libs))))
+         (set! imports (fold append imports (reverse (map (lambda (import) (extract-exports (find-library-interface! import paths))) libs))))
+         (set! constant-imports (fold append constant-imports (reverse (map (lambda (import) (extract-constants (find-library-interface! import paths))) libs))))
          (set! mangled-imports (append (map mangle-library libs) mangled-imports))
          (list))
         (('define (f . xs) . body)
@@ -349,10 +353,29 @@
                          (list (make-library-output exports)))))))
     (define free-vars
       (free-variables basic-library))
-    (let ((unbound-vars (filter (lambda (var) (not (memv var imports))) free-vars)))
+    #;(let ((unbound-vars (filter (lambda (var) (not (memv var imports))) free-vars)))
       (if (not (null? unbound-vars))
           (begin
             (compiler-error "library has free variables" (cadr lib) unbound-vars))))
+
+    (define unbound-vars '())
+    (define constant-vars '())
+    (define imported-vars '())
+
+    (let loop ((free-vars free-vars))
+      (if (null? free-vars)
+          #f
+          (begin
+            (cond ((assv (car free-vars) constant-imports)
+                   => (lambda (lookup) (set! constant-vars (cons (cons 'define-constant lookup) constant-vars))))
+                  ((memv (car free-vars) imports)
+                   (set! imported-vars (cons (car free-vars) imported-vars)))
+                  (else (set! unbound-vars (cons (car free-vars) unbound-vars))))
+            (loop (cdr free-vars)))))
+    (if (not (null? unbound-vars))
+        (begin
+          (compiler-error "library has free variables" (cadr lib) unbound-vars)))
+
     (register-library-interface! (header-from-library lib))
     (let* ((libname (mangle-library (cadr lib))))
       (if (not (fold (lambda (a b) (and a b)) #t (map string? mangled-imports))) (compiler-error "imports to library must all be c strings"))
@@ -363,9 +386,11 @@
            (lambda ()
             ,(expand-syntax
             `(let ((##vcore.import (##vcore.make-import ,libname . ,(map (lambda (i) `(##vcore.load-library ,i)) mangled-imports))))
-              (let ,(map (lambda (f) `(,f (##vcore.import ,(list 'quote f)))) free-vars)
-              .
-              ,(cddr basic-library)))))))))
+              (let ()
+                ,@constant-vars
+                (let ,(map (lambda (f) `(,f (##vcore.import ,(list 'quote f)))) imported-vars)
+                  .
+                  ,(cddr basic-library))))))))))
 
   (define (valid-identifier? s) (symbol? s))
   (define (valid-arguments? args)

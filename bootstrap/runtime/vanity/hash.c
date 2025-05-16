@@ -95,7 +95,7 @@ static void _V0vanity_V0hash_V20_k1(VRuntime * runtime, VEnv * statics, int argc
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[5]; } container;
-    VEnv * self = &container.self;
+    self = &container.self;
     VInitEnv(self, 5, 5, statics);
     self->vars[0] = _V40_V10vcore_Dmake__random;
     self->vars[1] = _V40_V10vcore_Drandom__copy;

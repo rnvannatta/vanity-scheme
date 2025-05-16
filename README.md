@@ -21,7 +21,7 @@ At the moment, x64 Linux is a requirement to run the compiler and thus to compil
 Prebuilt Windows releases of the interpreter are provided on github. The releases include vendored copies of all dependencies.
 
 Linux Dependencies:
-* gcc
+* gcc preferred (or clang)
 * mingw-w64
 * gnumake
 * rsync
@@ -31,8 +31,6 @@ Linux Dependencies:
 
 For the pong demo:
 * SDL2
-
-Sorry, clang isn't supported.
 
 1. Run `./configure` and answer the prompts, or just mash enter.
 	* The defaults install prefix is `/usr/local/`

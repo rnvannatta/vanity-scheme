@@ -66,6 +66,8 @@
          `(continuation 1 ,(iter (cons (list x) env) body)))
         (('letrec ((xs vals) ...) body)
          `(letrec ,(length xs) ,xs ,(map (lambda (e) (iter (cons xs env) e)) vals) ,(iter (cons xs env) body)))
+        (('basic-block cost (xs vals) ... appl)
+         `(basic-block ,cost ,(length xs) ,xs ,(map (lambda (e) (iter (cons xs env) e)) vals) ,(iter (cons xs env) appl)))
         (('##foreign.function . _) expr)
         (('quote . _) expr)
         (('##inline f . xs)
@@ -198,6 +200,18 @@
            `((close ,lamb) . ,(map (lambda (x) (iter-atom fun x #f)) xs))))
         (('letrec n xs vals body)
          `(letrec ,n ,(map (lambda (x val) (iter-atom (mangle-symbol x) val #f)) xs vals)
+            ,(iter-apply fun body)))
+        (('basic-block cost n xs vals body)
+         `(basic-block
+            ,cost
+            ,n
+            ,xs
+            ,(map (lambda (x val)
+                    (cons (iter-atom fun (car val) #t)
+                          (map (lambda (x) (iter-atom fun x #f))
+                               (cdr val))))
+                  xs
+                  vals)
             ,(iter-apply fun body)))
         ((f xs ...)
          (cons (iter-atom fun f #t)

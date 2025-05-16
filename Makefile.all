@@ -72,9 +72,11 @@ install : compiler interpreter runtime windows_runtime wasm_runtime
 	mkdir -p $(INSTALL_DIR)/x86_64-w64-mingw32/include
 	mkdir -p $(INSTALL_DIR)/x86_64-w64-mingw32/lib
 	ln -sfn $(INSTALL_DIR)/include/vscheme $(INSTALL_DIR)/x86_64-w64-mingw32/include/vscheme
+	mkdir -p $(EMSCRIPTEN_INSTALL_DIR)/lib/wasm32-emscripten/
 	cp -u lib/x86_64-w64-mingw32/vscheme.dll $(INSTALL_DIR)/x86_64-w64-mingw32/lib/
 	cp -u lib/wasm/libvscheme.a $(EMSCRIPTEN_INSTALL_DIR)/lib/wasm32-emscripten/libvscheme.a
 	cp -r include/* $(EMSCRIPTEN_INSTALL_DIR)/include/.
+	cp -u vendor/lib/wasm/* $(EMSCRIPTEN_INSTALL_DIR)/lib/wasm32-emscripten/
 
 tests_linux : compiler runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
