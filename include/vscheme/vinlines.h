@@ -28,6 +28,66 @@
 #pragma once
 #include "vruntime.h"
 
+// Next gen inlines
+VWORD _VBasic_VAdd_Binary(VRuntime * runtime, VEnv * statics, VWORD a, VWORD b);
+#define _VBasic_VAdd2(runtime, statics, ...) \
+  ({\
+     VRuntime * _basic_runtime = runtime; \
+     VEnv * _basic_statics = statics; \
+     VWORD _basic_args[] = { __VA_ARGS__ }; \
+     enum { _basic_argc = sizeof _basic_args / sizeof *_basic_args }; \
+     VWORD _basic_ret = _basic_argc ? _basic_args[0] : VEncodeInt(0); \
+     for(int _basic_i = 1; _basic_i < _basic_argc; _basic_i++) { \
+      _basic_ret = _VBasic_VAdd_Binary(runtime, statics, _basic_ret, _basic_args[_basic_i]); \
+     } \
+     _basic_ret; \
+  })
+VWORD _VBasic_VNeg(VRuntime * runtime, VEnv * statics, VWORD a);
+VWORD _VBasic_VSub_Binary(VRuntime * runtime, VEnv * statics, VWORD a, VWORD b);
+#define _VBasic_VSub2(runtime, statics, ...) \
+  ({\
+     VRuntime * _basic_runtime = runtime; \
+     VEnv * _basic_statics = statics; \
+     VWORD _basic_args[] = { __VA_ARGS__ }; \
+     enum { _basic_argc = sizeof _basic_args / sizeof *_basic_args }; \
+     _Static_assert(_basic_argc >= 1, "-: one or more arguments required"); \
+     VWORD _basic_ret = _basic_argc > 1 ? _basic_args[0] : _VBasic_VSub_Binary(runtime, statics, VEncodeInt(0), _basic_args[0]); \
+     for(int _basic_i = 1; _basic_i < _basic_argc; _basic_i++) { \
+      _basic_ret = _VBasic_VSub_Binary(runtime, statics, _basic_ret, _basic_args[_basic_i]); \
+     } \
+     _basic_ret; \
+  })
+VWORD _VBasic_VMul_Binary(VRuntime * runtime, VEnv * statics, VWORD a, VWORD b);
+#define _VBasic_VMul2(runtime, statics, ...) \
+  ({\
+     VRuntime * _basic_runtime = runtime; \
+     VEnv * _basic_statics = statics; \
+     VWORD _basic_args[] = { __VA_ARGS__ }; \
+     enum { _basic_argc = sizeof _basic_args / sizeof *_basic_args }; \
+     VWORD _basic_ret = _basic_argc ? _basic_args[0] : VEncodeInt(1); \
+     for(int _basic_i = 1; _basic_i < _basic_argc; _basic_i++) { \
+      _basic_ret = _VBasic_VMul_Binary(runtime, statics, _basic_ret, _basic_args[_basic_i]); \
+     } \
+     _basic_ret; \
+  })
+VWORD _VBasic_VRcp(VRuntime * runtime, VEnv * statics, VWORD a);
+VWORD _VBasic_VDiv_Binary(VRuntime * runtime, VEnv * statics, VWORD a, VWORD b);
+#define _VBasic_VDiv2(runtime, statics, ...) \
+  ({\
+     VRuntime * _basic_runtime = runtime; \
+     VEnv * _basic_statics = statics; \
+     VWORD _basic_args[] = { __VA_ARGS__ }; \
+     enum { _basic_argc = sizeof _basic_args / sizeof *_basic_args }; \
+     _Static_assert(_basic_argc >= 1, "/: one or more arguments required"); \
+     VWORD _basic_ret = _basic_argc > 1 ? _basic_args[0] : _VBasic_VDiv_Binary(runtime, statics, VEncodeInt(1), _basic_args[0]); \
+     for(int _basic_i = 1; _basic_i < _basic_argc; _basic_i++) { \
+      _basic_ret = _VBasic_VDiv_Binary(runtime, statics, _basic_ret, _basic_args[_basic_i]); \
+     } \
+     _basic_ret; \
+  })
+
+// Legacy inlines
+
 // predicates
 static inline VWORD VInlineNullP2(VRuntime * runtime, VWORD v) {
   return VEncodeBool(VBits(v) == VBits(VNULL));

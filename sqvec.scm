@@ -1,0 +1,11 @@
+(define-library (sq-len)
+  (import (vanity core))
+  (export sq-len)
+  (define (sq-len v)
+    (let ((x (f64vector-ref v 0))
+          (y (f64vector-ref v 1))
+          (z (f64vector-ref v 2)))
+      (+ (* x x) (* y y) (* z z)))))
+
+(import (sq-len) (vanity core))
+(displayln (sq-len #f64(3 4 5)))

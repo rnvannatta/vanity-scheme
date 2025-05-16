@@ -253,6 +253,7 @@ typedef struct VEnv VEnv;
       VErrorC(runtime, "Incorrect number of arguments to ~Z, got ~D, need between ~D and ~D", func, num_vars, nargmin, nargmax); \
       __builtin_unreachable(); \
     } } while(0)
+#define V_ADD_WORD(x) , VWORD x
 #ifdef VANITY_PURE_C
 #define V_DECLARE_FUNC(name, ...) void name(VRuntime * runtime, VEnv * statics, int argc, VEnv * self);
 #define V_DECLARE_FUNC_MIN(name, ...) void name(VRuntime * runtime, VEnv * statics, int argc, VEnv * self);
@@ -275,13 +276,13 @@ typedef struct VEnv VEnv;
 
 #define V_END_FUNC }
 #else
-#define V_ADD_WORD(x) , VWORD x
 #define V_DECLARE_FUNC(name, ...) void name(VRuntime * runtime, VEnv * statics, int argc __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__)));
 #define V_DECLARE_FUNC_MIN(name, ...) void name(VRuntime * runtime, VEnv * statics, int argc __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__)), ...);
 #define V_BEGIN_FUNC(name, scmname, nargs, ...) \
   void name(VRuntime * runtime, VEnv * statics, int argc __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__))) { \
     V_ARG_CHECK3(runtime, scmname, nargs, argc); \
     enum { _argcount = VARG_COUNT(__VA_ARGS__), }; \
+    _Static_assert(_argcount == nargs, "incorrect nargs in V_BEGIN_FUNC"); \
     struct { VEnv self; VWORD args[_argcount]; } _self = { \
       .args = { __VA_ARGS__ }, \
     }; \
@@ -311,6 +312,17 @@ typedef struct VEnv VEnv;
 
 #define V_END_FUNC }
 #endif
+
+#define V_DECLARE_FUNC_BASIC(name, ...) \
+  VWORD _VBasic_ ## name(VRuntime * runtime, VEnv * statics __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__))); \
+  V_DECLARE_FUNC(name, k __VA_OPT__(,) __VA_ARGS__);
+#define V_BEGIN_FUNC_BASIC(name, scmname, nargs, ...) \
+  VWORD _VBasic_ ## name(VRuntime * runtime, VEnv * statics __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__))); \
+  V_BEGIN_FUNC(name, scmname, (nargs)+1, k __VA_OPT__(,) __VA_ARGS__) \
+    VWORD ret = _VBasic_ ## name(runtime, statics __VA_OPT__(,) __VA_ARGS__); \
+    V_CALL(k, runtime, ret); \
+  V_END_FUNC \
+  VWORD _VBasic_ ## name(VRuntime * runtime, VEnv * statics __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__))) {
 
 #define V_CORE_ARGS VRuntime * runtime, VEnv * statics, int argc
 typedef V_DECLARE_FUNC_MIN((*VFunc));

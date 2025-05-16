@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity intrinsics)
-  (export lookup-inline-name lookup-intrinsic-name lookup-intrinsic)
+  (export lookup-inline-name lookup-intrinsic-name lookup-intrinsic is-basic-intrinsic?)
   (import (vanity core))
   (define (lookup-inline-name sym)
     (case sym
@@ -299,6 +299,108 @@
          ((##vcore.bit-count) "VBitCount")
 
          (else #f)))
+  (define (is-basic-intrinsic? sym)
+    (case sym
+      ; Math
+      ;((##vcore.inexact) #t)
+      ;((##vcore.exact) #t)
+      ((##vcore.+) #t)
+      ((##vcore.-) #t)
+      ((##vcore.*) #t)
+      ((##vcore./) #t)
+      ;((##vcore.quotient) #t)
+      ;((##vcore.remainder) #t)
+      ; predicates
+      ((##vcore.null?) #t)
+      ((##vcore.pair?) #t)
+      ((##vcore.eof-object?) #t)
+      ((##vcore.vector?) #t)
+      ((##vcore.record?) #t)
+      ((##vcore.hash-table?) #t)
+      ((##vcore.procedure?) #t)
+      ((##vcore.blob?) #t)
+      ((##vcore.symbol?) #t)
+      ((##vcore.string?) #t)
+      ((##vcore.double?) #t)
+      ((##vcore.int?) #t)
+      ((##vcore.char?) #t)
+      ((##vcore.void?) #t)
+      ((##vcore.nullptr?) #t)
+      ((##vcore.foreign-pointer?) #t)
+      ; logic
+      ((##vcore.not) #t)
+      ; equivalence
+      ;((##vcore.eq?) #t)
+      ; lists
+      ;((##vcore.cons ##vcore.qcons) #t)
+      ;((##vcore.car) #t)
+      ;((##vcore.cdr) #t)
+      ; Vectors
+      ((##vcore.vector-ref) #t)
+      ; TODO ((##vcore.vector-set!) #t) ; TODO make tweaks to hazard tracking so this can be basic
+      ((##vcore.vector-length) #t)
+      ; Typevectors
+      ((##vcore.f64vector?) #t)
+      ((##vcore.f64vector-ref) #t)
+      ((##vcore.f64vector-set!) #t)
+      ((##vcore.f64vector-length) #t)
+
+      ((##vcore.f32vector?) #t)
+      ((##vcore.f32vector-ref) #t)
+      ((##vcore.f32vector-set!) #t)
+      ((##vcore.f32vector-length) #t)
+
+      ((##vcore.s32vector?) #t)
+      ((##vcore.s32vector-ref) #t)
+      ((##vcore.s32vector-set!) #t)
+      ((##vcore.s32vector-length) #t)
+
+      ((##vcore.s16vector?) #t)
+      ((##vcore.s16vector-ref) #t)
+      ((##vcore.s16vector-set!) #t)
+      ((##vcore.s16vector-length) #t)
+
+      ((##vcore.u16vector?) #t)
+      ((##vcore.u16vector-ref) #t)
+      ((##vcore.u16vector-set!) #t)
+      ((##vcore.u16vector-length) #t)
+
+      ((##vcore.s8vector?) #t)
+      ((##vcore.s8vector-ref) #t)
+      ((##vcore.s8vector-set!) #t)
+      ((##vcore.s8vector-length) #t)
+
+      ((##vcore.u8vector?) #t)
+      ((##vcore.u8vector-ref) #t)
+      ((##vcore.u8vector-set!) #t)
+      ((##vcore.u8vector-length) #t)
+
+      ; Records
+      ((##vcore.record-ref) #t)
+      ;TODO ((##vcore.record-set!) "VRecordSet2") ; TODO same deal as with vector-set!
+      ((##vcore.record-length) #t)
+
+      ; Strings
+      ;TODO ((##vcore.string-copy!) #t) ; TODO lift variadicness into case-lambda and basic-optimize case-lambdas
+      ((##vcore.string-ref) #t)
+      ((##vcore.string-set!) #t)
+      ((##vcore.string-length) #t)
+      ((##vcore.string->number) #t)
+
+      ; Characters
+      ((##vcore.char-integer) #t)
+
+      ; IO
+      ((##vcore.read-char) #t)
+      ((##vcore.display-word) #t)
+      ((##vcore.write) #t)
+      ((##vcore.newline) #t)
+      ((##vcore.display-stdout) #t)
+      ((##vcore.write-stdout) #t)
+      ((##vcore.newline-stdout) #t)
+
+      (else #f))
+  )
   (define (lookup-intrinsic sym)
     (case sym
          ; Math

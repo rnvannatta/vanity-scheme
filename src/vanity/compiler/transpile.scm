@@ -150,11 +150,23 @@
         (('##inline f . xs)
          (closes? xs))
         (('letrec . _) #t)
+        ; FIXME!!! not always true
+        (('basic-block . _) #t)
         ((f) (closes? f))
         ((f . xs)
          (or (closes? f) (closes? xs)))
         (x #f)
         (else (compiler-error "closes?: unknown form" expr))))
+    (define (print-basic-expr expr args)
+      (let ((name (lookup-intrinsic-name (car expr))))
+        (if (not name) (compiler-error "basic expression that isn't an intrinsic call" expr))
+        (printf "_VBasic_~A(runtime, NULL" name))
+      (for-each
+        (lambda (x)
+          (printf ",~N      ")
+          (print-expr x args))
+        (cdr expr))
+      (printf ")"))
     (define (print-expr expr args)
       (define (print-builtin-apply f xs tail-call?)
         (if purec?
@@ -194,8 +206,11 @@
       (define (print-letrec n xs body args)
         (displayln "    {")
         (displayln "    VEnv * statics = self;")
-        (printf "    struct { VEnv self; VWORD argv[~A]; } container;~N" n)
-        (printf "    VEnv * self = &container.self;~N")
+        (if purec? ; bug in emscripten
+          (printf  "    self = alloca(sizeof(VEnv)+sizeof(VWORD[~A]));~N" n)
+          (begin
+            (printf "    struct { VEnv self; VWORD argv[~A]; } container;~N" n)
+            (printf "    self = &container.self;~N")))
         (printf "    VInitEnv(self, ~A, ~A, statics);~N" n n)
         (let ((args (map (lambda (i) (sprintf "self->vars[~A]" i)) (iota n))))
           (for-each
@@ -204,6 +219,25 @@
               (print-expr x args)
               (displayln ";"))
             xs
+            (iota n))
+          (print-expr body args))
+        (displayln "    }"))
+      (define (print-basic-block cost n xs vals body)
+        (displayln "    {")
+        (displayln "    VEnv * statics = self;")
+        (if purec? ; bug in emscripten
+          (printf  "    self = alloca(sizeof(VEnv)+sizeof(VWORD[~A]));~N" n)
+          (begin
+            (printf "    struct { VEnv self; VWORD argv[~A]; } container;~N" n)
+            (printf "    self = &container.self;~N")))
+        (printf "    VInitEnv(self, ~A, ~A, statics);~N" n n)
+        (let ((args (map (lambda (i) (sprintf "self->vars[~A]" i)) (iota n))))
+          (for-each
+            (lambda (x i)
+              (printf "    self->vars[~A] = " i)
+              (print-basic-expr x args)
+              (displayln ";"))
+            vals
             (iota n))
           (print-expr body args))
         (displayln "    }"))
@@ -289,6 +323,8 @@
          (printf "(VEncodeClosure(((VClosure[]){VMakeClosure2((VFunc)~A, NULL)})))" x))
         (('letrec n xs body)
          (print-letrec n xs body args))
+        (('basic-block cost n xs vals body)
+         (print-basic-block cost n xs vals body))
         ((f xs ...)
          (cond ((lookup-intrinsic-name f) (print-builtin-apply f xs #f))
                ((and (pair? f) (eqv? (car f) '##intrinsic))

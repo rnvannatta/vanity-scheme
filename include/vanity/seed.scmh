@@ -1,1 +1,1 @@
-(define-library-interface (vanity seed) (import) (export ##vcore.setter ##vcore.mutator) (inline-import) (inline-export))
+(define-library-interface (vanity seed) (import) (export ##vcore.setter ##vcore.mutator) (constant-export))

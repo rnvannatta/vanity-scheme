@@ -1,1 +1,1 @@
-(define-library-interface (vanity intrinsics) (import (vanity core)) (export lookup-inline-name lookup-intrinsic-name lookup-intrinsic) (inline-import) (inline-export))
+(define-library-interface (vanity intrinsics) (import (vanity core)) (export lookup-inline-name lookup-intrinsic-name lookup-intrinsic is-basic-intrinsic?) (constant-export))

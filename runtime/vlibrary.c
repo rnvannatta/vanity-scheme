@@ -48,6 +48,18 @@
 // it's a pretty goofy function that's kind of fundamental
 #include "vruntime_private.h"
 
+// TMP TMP
+#ifndef V_BEGIN_FUNC_BASIC
+#define V_BEGIN_FUNC_BASIC(name, scmname, nargs, ...) \
+  VWORD _VBasic_ ## name(VRuntime * runtime, VEnv * statics __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__))); \
+  V_BEGIN_FUNC(name, scmname, (nargs)+1, k __VA_OPT__(,) __VA_ARGS__) \
+    VWORD ret = _VBasic_ ## name(runtime, statics __VA_OPT__(,) __VA_ARGS__); \
+    V_CALL(k, runtime, ret); \
+  V_END_FUNC \
+  void _VBasic_ ## name(VRuntime * runtime, VEnv * statics __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__))) {
+#endif
+// TMP TMP
+
 /////////////////////////////////////////////////////////
 
 V_BEGIN_FUNC(VExact, "exact", 2, k, x)
@@ -71,6 +83,211 @@ V_BEGIN_FUNC(VInexact, "inexact", 2, k, x)
     VErrorC(runtime, "exact: not a number: ~S", x);
   }
 V_END_FUNC
+
+VWORD _VBasic_VAdd_Binary(VRuntime * runtime, VEnv * statics, VWORD a, VWORD b) {
+  bool exact = true;
+  double dacc = 0;
+  int64_t iacc = 0;
+  for(int i = 0; i < 2; i++)
+  {
+    VWORD v = i ? b : a;
+    uint64_t type = VWordType(v);
+    if(type == VIMM_INT) {
+      iacc += VDecodeInt(v);
+    } else if(type == VIMM_NUMBER) {
+      exact = false;
+      dacc += VDecodeNumber(v);
+    } else {
+      VErrorC(runtime, "+: not a number: ~S", v);
+    }
+  }
+  VWORD ret;
+  if(exact && (iacc > INT32_MAX || iacc < INT32_MIN)) {
+    VErrorC(runtime, "+: integer overflow");
+  }
+
+  if(exact)
+    ret = VEncodeInt(iacc);
+  else
+    ret = VEncodeNumber(iacc+dacc);
+  return ret;
+}
+VWORD _VBasic_VNeg(VRuntime * runtime, VEnv * statics, VWORD x) {
+  bool exact = true;
+  double dacc = 0;
+  int64_t iacc = 0;
+  {
+    uint64_t type = VWordType(x);
+    if(type == VIMM_INT) {
+      iacc = VDecodeInt(x);
+    } else if(type == VIMM_NUMBER) {
+      exact = false;
+      dacc = VDecodeNumber(x);
+    } else {
+      VErrorC(runtime, "-: not a number: ~S", x);
+    }
+  }
+  // performs the -x op
+  iacc = -iacc;
+  dacc = -dacc;
+  {
+    VWORD ret;
+    if(exact && (iacc > INT32_MAX || iacc < INT32_MIN)) {
+      VErrorC(runtime, "-: integer overflow");
+    }
+
+    if(exact)
+      ret = VEncodeInt(iacc);
+    else
+      ret = VEncodeNumber(iacc+dacc);
+    return ret;
+  }
+}
+VWORD _VBasic_VSub_Binary(VRuntime * runtime, VEnv * statics, VWORD x, VWORD y) {
+  bool exact = true;
+  double dacc = 0;
+  int64_t iacc = 0;
+  {
+    uint64_t type = VWordType(x);
+    if(type == VIMM_INT) {
+      iacc = VDecodeInt(x);
+    } else if(type == VIMM_NUMBER) {
+      exact = false;
+      dacc = VDecodeNumber(x);
+    } else {
+      VErrorC(runtime, "-: not a number: ~S", x);
+    }
+  }
+  // performs x0 - x1 - x2 - x3 ...
+  {
+    VWORD v = y;
+    uint64_t type = VWordType(v);
+    if(type == VIMM_INT) {
+      iacc -= VDecodeInt(v);
+    } else if(type == VIMM_NUMBER) {
+      exact = false;
+      dacc -= VDecodeNumber(v);
+    } else {
+      VErrorC(runtime, "-: not a number: ~S", v);
+    }
+  }
+  {
+    VWORD ret;
+    if(exact && (iacc > INT32_MAX || iacc < INT32_MIN)) {
+      VErrorC(runtime, "-: integer overflow");
+    }
+
+    if(exact)
+      ret = VEncodeInt(iacc);
+    else
+      ret = VEncodeNumber(iacc+dacc);
+    return ret;
+  }
+}
+VWORD _VBasic_VMul_Binary(VRuntime * runtime, VEnv * statics, VWORD a, VWORD b) {
+  bool exact = true;
+  double dacc = 1;
+  int64_t iacc = 1;
+  for(unsigned i = 0; i < 2; i++) {
+    VWORD v = i ? b : a;
+    uint64_t type = VWordType(v);
+    if(type == VIMM_INT) {
+      iacc *= VDecodeInt(v);
+      if(exact && (iacc > INT32_MAX || iacc < INT32_MIN)) {
+        VErrorC(runtime, "*: integer overflow");
+      }
+      if(iacc > INT32_MAX || iacc < INT32_MIN) {
+        exact = false;
+        dacc *= iacc;
+        iacc = 1;
+      }
+    } else if(type == VIMM_NUMBER) {
+      exact = false;
+      dacc *= VDecodeNumber(v);
+    } else {
+      VErrorC(runtime, "*: not a number: ~S", v);
+    }
+  }
+  VWORD ret;
+  if(exact)
+    ret = VEncodeInt(iacc);
+  else
+    ret = VEncodeNumber(iacc*dacc);
+  return ret;
+}
+VWORD _VBasic_VRcp(VRuntime * runtime, VEnv * statics, VWORD x) {
+  bool exact = true;
+  double dacc = 1;
+  int64_t iacc = 1;
+  {
+    uint64_t type = VWordType(x);
+    if(type == VIMM_INT) {
+      iacc = VDecodeInt(x);
+    } else if(type == VIMM_NUMBER) {
+      exact = false;
+      dacc = VDecodeNumber(x);
+    } else {
+      VErrorC(runtime, "/: not a number: ~S", x);
+    }
+  }
+  // performs the 1/x op
+  if(iacc != 1) {
+    dacc = iacc;
+    iacc = 1;
+    exact = false;
+  }
+  dacc = 1.0/dacc;
+  {
+    VWORD ret;
+    if(exact)
+      ret = VEncodeInt(iacc);
+    else
+      ret = VEncodeNumber(iacc*dacc);
+    return ret;
+  }
+}
+VWORD _VBasic_VDiv_Binary(VRuntime * runtime, VEnv * statics, VWORD a, VWORD b) {
+  bool exact = true;
+  double dacc = 1;
+  int64_t iacc = 1;
+  {
+    uint64_t type = VWordType(a);
+    if(type == VIMM_INT) {
+      iacc = VDecodeInt(a);
+    } else if(type == VIMM_NUMBER) {
+      exact = false;
+      dacc = VDecodeNumber(a);
+    } else {
+      VErrorC(runtime, "/: not a number: ~S", a);
+    }
+  }
+  {
+    VWORD v = b;
+    uint64_t type = VWordType(v);
+    if(type == VIMM_INT) {
+      int i = VDecodeInt(v);
+      if(iacc % i == 0) {
+        iacc /= i;
+      } else {
+        exact = false;
+        dacc /= i;
+      }
+    } else if(type == VIMM_NUMBER) {
+      exact = false;
+      dacc /= VDecodeNumber(v);
+    } else {
+      VErrorC(runtime, "/: not a number: ~S", v);
+    }
+  }
+  {
+    VWORD ret;
+    if(exact)
+      ret = VEncodeInt(iacc);
+    else
+      ret = VEncodeNumber(iacc*dacc);
+    return ret;
+  }
+}
 
 #ifdef VANITY_PURE_C
 V_BEGIN_FUNC_MIN(VAdd2, "+", 1, k)
@@ -106,33 +323,9 @@ SYSV_CALL __attribute__((used)) static V_BEGIN_FUNC_MIN(VAdd2CaseVarargs, "+", 1
 V_END_FUNC
 
 #ifndef VANITY_PURE_C
-SYSV_CALL __attribute__((used)) static void VAdd2Case2(V_CORE_ARGS, VWORD k, VWORD a, VWORD b) {
-    bool exact = true;
-    double dacc = 0;
-    int64_t iacc = 0;
-    for(int i = 0; i < 2; i++)
-    {
-      VWORD v = i ? b : a;
-      uint64_t type = VWordType(v);
-      if(type == VIMM_INT) {
-        iacc += VDecodeInt(v);
-      } else if(type == VIMM_NUMBER) {
-        exact = false;
-        dacc += VDecodeNumber(v);
-      } else {
-        VErrorC(runtime, "+: not a number: ~S", v);
-      }
-    }
-    VWORD ret;
-    if(exact && (iacc > INT32_MAX || iacc < INT32_MIN)) {
-      VErrorC(runtime, "+: integer overflow");
-    }
-
-    if(exact)
-      ret = VEncodeInt(iacc);
-    else
-      ret = VEncodeNumber(iacc+dacc);
-    V_CALL(k, runtime, ret);
+SYSV_CALL __attribute__((used)) static void VAddBinary(V_CORE_ARGS, VWORD k, VWORD a, VWORD b) {
+  VWORD ret = _VBasic_VAdd_Binary(runtime, statics, a, b);
+  V_CALL(k, runtime, ret);
 }
 
 SYSV_CALL void VAdd2(V_CORE_ARGS, VWORD k, ...);
@@ -144,7 +337,7 @@ asm(
 #endif
 "VAdd2:\n"
 " cmp " ARGC_REG ", 3\n"
-" je VAdd2Case2\n"
+" je VAddBinary\n"
 " jmp VAdd2CaseVarargs\n"
 );
 #endif
@@ -380,68 +573,68 @@ V_BEGIN_FUNC(VCmp2, "cmp", 3, k, x, y)
 V_END_FUNC
 
 // type predicates
-V_BEGIN_FUNC(VNullP2, "null?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VBits(x) == VBits(VNULL)));
+V_BEGIN_FUNC_BASIC(VNullP2, "null?", 1, x)
+  return VEncodeBool(VBits(x) == VBits(VNULL));
 V_END_FUNC
 
-V_BEGIN_FUNC(VEofP2, "eof-object?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VBits(x) == VBits(VEOF)));
+V_BEGIN_FUNC_BASIC(VEofP2, "eof-object?", 1, x)
+  return VEncodeBool(VBits(x) == VBits(VEOF));
 V_END_FUNC
 
-V_BEGIN_FUNC(VPairP2, "pair?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VWordType(x) == VPOINTER_PAIR));
+V_BEGIN_FUNC_BASIC(VPairP2, "pair?", 1, x)
+  return VEncodeBool(VWordType(x) == VPOINTER_PAIR);
 V_END_FUNC
 
-V_BEGIN_FUNC(VVectorP2, "vector?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VIsVector(x)));
+V_BEGIN_FUNC_BASIC(VVectorP2, "vector?", 1, x)
+  return VEncodeBool(VIsVector(x));
 V_END_FUNC
 
-V_BEGIN_FUNC(VRecordP2, "record?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VIsRecord(x)));
+V_BEGIN_FUNC_BASIC(VRecordP2, "record?", 1, x)
+  return VEncodeBool(VIsRecord(x));
 V_END_FUNC
 
-V_BEGIN_FUNC(VHashTableP, "hash-table?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VIsHashTable(x)));
+V_BEGIN_FUNC_BASIC(VHashTableP, "hash-table?", 1, x)
+  return VEncodeBool(VIsHashTable(x));
 V_END_FUNC
 
-V_BEGIN_FUNC(VProcedureP2, "procedure?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VWordType(x) == VPOINTER_CLOSURE));
+V_BEGIN_FUNC_BASIC(VProcedureP2, "procedure?", 1, x)
+  return VEncodeBool(VWordType(x) == VPOINTER_CLOSURE);
 V_END_FUNC
 
-V_BEGIN_FUNC(VBlobP2, "blob?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VIsBlob(x)));
+V_BEGIN_FUNC_BASIC(VBlobP2, "blob?", 1, x)
+  return VEncodeBool(VIsBlob(x));
 V_END_FUNC
 
-V_BEGIN_FUNC(VSymbolP2, "symbol?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VIsSymbol(x)));
+V_BEGIN_FUNC_BASIC(VSymbolP2, "symbol?", 1, x)
+  return VEncodeBool(VIsSymbol(x));
 V_END_FUNC
 
-V_BEGIN_FUNC(VStringP2, "string?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VIsString(x)));
+V_BEGIN_FUNC_BASIC(VStringP2, "string?", 1, x)
+  return VEncodeBool(VIsString(x));
 V_END_FUNC
 
-V_BEGIN_FUNC(VDoubleP2, "double?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VIsNumber(x)));
+V_BEGIN_FUNC_BASIC(VDoubleP2, "double?", 1, x)
+  return VEncodeBool(VIsNumber(x));
 V_END_FUNC
 
-V_BEGIN_FUNC(VIntP2, "int?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VWordType(x) == VIMM_INT));
+V_BEGIN_FUNC_BASIC(VIntP2, "int?", 1, x)
+  return VEncodeBool(VWordType(x) == VIMM_INT);
 V_END_FUNC
 
-V_BEGIN_FUNC(VCharP2, "char?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VWordType(x) == VIMM_CHAR));
+V_BEGIN_FUNC_BASIC(VCharP2, "char?", 1, x)
+  return VEncodeBool(VWordType(x) == VIMM_CHAR);
 V_END_FUNC
 
-V_BEGIN_FUNC(VVoidP2, "##vcore.void?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VBits(x) == VBits(VVOID)));
+V_BEGIN_FUNC_BASIC(VVoidP2, "##vcore.void?", 1, x)
+  return VEncodeBool(VBits(x) == VBits(VVOID));
 V_END_FUNC
 
-V_BEGIN_FUNC(VNullptrP2, "##vcore.nullptr?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VBits(x) == VBits(VNULLPTR)));
+V_BEGIN_FUNC_BASIC(VNullptrP2, "##vcore.nullptr?", 1, x)
+  return VEncodeBool(VBits(x) == VBits(VNULLPTR));
 V_END_FUNC
 
-V_BEGIN_FUNC(VForeignPointerP2, "##vcore.foreign-pointer?", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VWordType(x) == VPOINTER_FOREIGN));
+V_BEGIN_FUNC_BASIC(VForeignPointerP2, "##vcore.foreign-pointer?", 1, x)
+  return VEncodeBool(VWordType(x) == VPOINTER_FOREIGN);
 V_END_FUNC
 
 
@@ -473,8 +666,8 @@ V_END_FUNC
 
 // logic
 
-V_BEGIN_FUNC(VNot2, "not", 2, k, x)
-  V_CALL(k, runtime, VEncodeBool(VBits(x) == VBits(VFALSE)));
+V_BEGIN_FUNC_BASIC(VNot2, "not", 1, x)
+  return VEncodeBool(VBits(x) == VBits(VFALSE));
 V_END_FUNC
 
 // pairs
@@ -519,19 +712,19 @@ V_BEGIN_FUNC(VListVector2, "list->vector", 2, k, lst)
   V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER));
 }
 
-V_BEGIN_FUNC(VVectorRef2, "vector-ref", 3, k, vector, index)
+V_BEGIN_FUNC_BASIC(VVectorRef2, "vector-ref", 2, vector, index)
   VVector * vec = VCheckedDecodeVector2(runtime, vector, "vector-ref");
   if(VWordType(index) != VIMM_INT) VErrorC(runtime, "vector-ref: arg 2 not an int\n");
   int i = VDecodeInt(index);
   if(!(0 <= i && i < vec->len)) VErrorC(runtime, "vector-ref: out of range\n");
 
-  V_CALL(k, runtime, vec->arr[i]);
-}
+  return vec->arr[i];
+V_END_FUNC
 
-V_BEGIN_FUNC(VVectorLength2, "vector-length", 2, k, vector)
+V_BEGIN_FUNC_BASIC(VVectorLength2, "vector-length", 1, vector)
   VVector * vec = VCheckedDecodeVector2(runtime, vector, "vector-length");
-  V_CALL(k, runtime, VEncodeInt(vec->len));
-}
+  return VEncodeInt(vec->len);
+V_END_FUNC
 
 // records
 
@@ -554,19 +747,19 @@ V_BEGIN_FUNC_MIN(VCreateRecord2, "record", 2, k, type)
   V_CALL(k, runtime, VEncodePointer(rec, VPOINTER_OTHER));
 }
 
-V_BEGIN_FUNC(VRecordRef2, "record-ref", 3, k, record, index)
+V_BEGIN_FUNC_BASIC(VRecordRef2, "record-ref", 2, record, index)
   VVector * rec = VCheckedDecodeRecord2(runtime, record, "record-ref");
   if(VWordType(index) != VIMM_INT) VErrorC(runtime, "record-ref: arg 2 not an int\n");
   int i = VDecodeInt(index);
   if(!(0 <= i && i < rec->len)) VErrorC(runtime, "record-ref: out of range\n");
 
-  V_CALL(k, runtime, rec->arr[i]);
-}
+  return rec->arr[i];
+V_END_FUNC
 
-V_BEGIN_FUNC(VRecordLength2, "record-length", 2, k, record)
+V_BEGIN_FUNC_BASIC(VRecordLength2, "record-length", 1, record)
   VVector * rec = VCheckedDecodeRecord2(runtime, record, "record-length");
-  V_CALL(k, runtime, VEncodeInt(rec->len));
-}
+  return VEncodeInt(rec->len);
+V_END_FUNC
 
 // hashing
 
@@ -992,14 +1185,13 @@ V_BEGIN_FUNC_RANGE(VStringCopy2, "string-copy!", 4, 6, k, dest, _at, source, _st
   V_CALL(k, runtime, VVOID);
 }
 
-V_BEGIN_FUNC(VStringLength2, "string-length", 2, k, _str)
+V_BEGIN_FUNC_BASIC(VStringLength2, "string-length", 1, _str)
   VBlob * str = VCheckedDecodeString2(runtime, _str, "string-length");
-
   // not exposing the null terminal
-  V_CALL(k, runtime, VEncodeInt(str->len - 1));
-}
+  return VEncodeInt(str->len - 1);
+V_END_FUNC
 
-V_BEGIN_FUNC(VStringRef2, "string-ref", 3, k, _str, _i)
+V_BEGIN_FUNC_BASIC(VStringRef2, "string-ref", 2, _str, _i)
   VBlob * str = VCheckedDecodeString2(runtime, _str, "string-ref");
 
   if(VWordType(_i) != VIMM_INT) VErrorC(runtime, "string-ref: not an int");
@@ -1007,10 +1199,10 @@ V_BEGIN_FUNC(VStringRef2, "string-ref", 3, k, _str, _i)
   // not exposing the null terminal
   if(!(0 <= i && i < str->len)) VErrorC(runtime, "string-ref: ~A out of bounds (0 to ~D)~N", _i, str->len);
 
-  V_CALL(k, runtime, VEncodeChar(str->buf[i]));
-}
+  return VEncodeChar(str->buf[i]);
+V_END_FUNC
 
-V_BEGIN_FUNC(VStringSet2, "string-set!", 4, k, _str, _i, _c)
+V_BEGIN_FUNC_BASIC(VStringSet2, "string-set!", 3, _str, _i, _c)
   VBlob * str = VCheckedDecodeString2(runtime, _str, "string-set!");
 
   if(VWordType(_i) != VIMM_INT) VErrorC(runtime, "string-set!: not an int");
@@ -1023,8 +1215,8 @@ V_BEGIN_FUNC(VStringSet2, "string-set!", 4, k, _str, _i, _c)
   char c = VDecodeChar(_c);
   str->buf[i] = c;
 
-  V_CALL(k, runtime, VVOID);
-}
+  return VVOID;
+V_END_FUNC
 
 V_BEGIN_FUNC(VStringSymbol2, "string->symbol", 2, k, _str)
   VBlob * str = VCheckedDecodeString2(runtime, _str, "string->symbol");
@@ -1041,37 +1233,37 @@ V_BEGIN_FUNC(VSymbolString2, "symbol->string", 2, k, _sym)
   V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }
 
-V_BEGIN_FUNC(VStringNumber2, "string->number", 2, k, _str)
+V_BEGIN_FUNC_BASIC(VStringNumber2, "string->number", 1, _str)
   VBlob * str = VCheckedDecodeString2(runtime, _str, "string->number");
 
   if(str->len == 1)
-    V_CALL(k, runtime, VFALSE);
+    return VFALSE;
 
   char * end = NULL;
   errno = 0;
   double d = strtod(str->buf, &end);
   if(errno) {
     errno = 0;
-    V_CALL(k, runtime, VFALSE);
+    return VFALSE;
   }
   if(str->buf + str->len - 1 != end)
-    V_CALL(k, runtime, VFALSE);
+    return VFALSE;
 
   // FIXME lazy but incorrect way to parse ints vs doubles, need to parse by checking for period
   // actually, it's probably correct but stupid, deliberate deviation incoming
   if(floor(d) == d && INT32_MIN <= d && d <= INT32_MAX) {
-    V_CALL(k, runtime, VEncodeInt((int)d));
+    return VEncodeInt((int)d);
   } else {
-    V_CALL(k, runtime, VEncodeNumber(d));
+    return VEncodeNumber(d);
   }
-}
+V_END_FUNC
 
 // chars
 
-V_BEGIN_FUNC(VCharInt2, "char->int", 2, k, c)
+V_BEGIN_FUNC_BASIC(VCharInt2, "char->integer", 1, c)
   if(VWordType(c) != VIMM_CHAR) VErrorC(runtime, "char->integer: not a char");
-  V_CALL(k, runtime, VEncodeInt((int)VDecodeChar(c)));
-}
+  return VEncodeInt((int)VDecodeChar(c));
+V_END_FUNC
 
 // ports
 
@@ -1232,18 +1424,18 @@ V_BEGIN_FUNC(VGetOutputString2, "get-output-string", 2, k, _port)
 
 // input
 
-V_BEGIN_FUNC(VReadChar2, "read-char", 2, k, _port)
+V_BEGIN_FUNC_BASIC(VReadChar2, "read-char", 1, _port)
   VPort * port = (VPort*)VDecodePointer(_port);
   if(!port || port->base.tag != VPORT) VErrorC(runtime, "read-char: not a port ~S~N", _port);
   if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read-char: not an readable port ~S~N", _port);
 
   char c = port_fgetc(port);
   if(c < 0) {
-    V_CALL(k, runtime, VEOF);
+    return VEOF;
   } else {
-    V_CALL(k, runtime, VEncodeChar((char)c));
+    return VEncodeChar((char)c);
   }
-}
+V_END_FUNC
 
 V_BEGIN_FUNC(VReadLine2, "read-line", 2, k, _port)
   VPort * port = (VPort*)VDecodePointer(_port);
@@ -1291,39 +1483,39 @@ V_BEGIN_FUNC(VReadLine3, "read-line", 2, k, _port)
 
 // output
 
-V_BEGIN_FUNC(VDisplay2, "display-word", 3, k, val, port)
+V_BEGIN_FUNC_BASIC(VDisplay2, "display-word", 2, val, port)
     VPort * p = VCheckedDecodePort2(runtime, port, "display-word");
     if(!(p->flags & PFLAG_WRITE)) VErrorC(runtime, "display-word: port's write end is closed~N");
     VDisplayWord2(p, val, false);
-    V_CALL(k, runtime, VVOID);
+    return VVOID;
 }
-V_BEGIN_FUNC(VWrite2, "write-word", 3, k, val, port)
+V_BEGIN_FUNC_BASIC(VWrite2, "write-word", 2, val, port)
     VPort * p = VCheckedDecodePort2(runtime, port, "write-word");
     if(!(p->flags & PFLAG_WRITE)) VErrorC(runtime, "write-word: port's write end is closed~N");
     VDisplayWord2(p, val, true);
-    V_CALL(k, runtime, VVOID);
+    return VVOID;
 }
-V_BEGIN_FUNC(VNewline2, "newline", 2, k, port)
+V_BEGIN_FUNC_BASIC(VNewline2, "newline", 1, port)
     VPort * p = VCheckedDecodePort2(runtime, port, "newline");
     if(!(p->flags & PFLAG_WRITE)) VErrorC(runtime, "newline: port's write end is closed~N");
     port_fputc('\n', p);
     port_fflush(p);
-    V_CALL(k, runtime, VVOID);
+    return VVOID;
 }
 
-V_BEGIN_FUNC(VDisplayStdout, "display-stdout", 2, k, val)
+V_BEGIN_FUNC_BASIC(VDisplayStdout, "display-stdout", 1, val)
     VDisplayWord2((VPort[]){get_port_stdout()}, val, false);
-    V_CALL(k, runtime, VVOID);
+    return VVOID;
 }
-V_BEGIN_FUNC(VWriteStdout, "write-stdout", 2, k, val)
+V_BEGIN_FUNC_BASIC(VWriteStdout, "write-stdout", 1, val)
     VDisplayWord2((VPort[]){get_port_stdout()}, val, true);
-    V_CALL(k, runtime, VVOID);
+    return VVOID;
 }
-V_BEGIN_FUNC(VNewlineStdout, "newline-stdout", 1, k)
+V_BEGIN_FUNC_BASIC(VNewlineStdout, "newline-stdout", 0)
     VPort port = get_port_stdout();
     port_fputc('\n', &port);
     port_fflush(&port);
-    V_CALL(k, runtime, VVOID);
+    return VVOID;
 }
 
 // misc
@@ -1686,7 +1878,7 @@ static VWORD F32Read(VRuntime * runtime, VBlob * buffer, unsigned offset) {
 }
 static VWORD F64Read(VRuntime * runtime, VBlob * buffer, unsigned offset) {
   if(buffer->len < offset + 8)
-    VErrorC(runtime, "f32vector-ref!: index out of bounds ~D", (offset-8)/8);
+    VErrorC(runtime, "f64vector-ref!: index out of bounds ~D", (offset-8)/8);
   double d = 0;
   memcpy(&d, buffer->buf + offset, 8);
   return VEncodeNumber(d);
@@ -1706,26 +1898,26 @@ static void F32Write(VRuntime * runtime, VBlob * buffer, unsigned offset, VWORD 
 }
 static void F64Write(VRuntime * runtime, VBlob * buffer, unsigned offset, VWORD v) {
   if(buffer->len < offset + 8)
-    VErrorC(runtime, "f32vector-set!: index out of bounds ~D", (offset-8)/8);
+    VErrorC(runtime, "f64vector-set!: index out of bounds ~D", (offset-8)/8);
   double d = 0;
   if(VIsDouble(v))
     d = VDecodeNumber(v);
   else if(VWordType(v) == VIMM_INT)
     d = VDecodeInt(v);
   else
-    VErrorC(runtime, "f32vector-set!: not an int or a double ~S", v);
+    VErrorC(runtime, "f64vector-set!: not an int or a double ~S", v);
   memcpy(buffer->buf + offset, &d, 8);
 }
 
 #define IMPLEMENT_BUFFER(prefix, Prefix, elem_width) \
-V_BEGIN_FUNC(V ## Prefix ## VectorP, #prefix "vector?", 2, k, _buf) \
+V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorP, #prefix "vector?", 1, _buf) \
   VWORD ret = VFALSE; \
   if(VIsBlob(_buf)) { \
     VBlob * buf = VDecodeBlob(_buf); \
     if(buf->base.tag == VBUFFER && BUF_ ## Prefix == buf->buf[0]) \
       ret = VTRUE; \
   } \
-  V_CALL(k, runtime, ret); \
+  return ret; \
 V_END_FUNC \
 V_BEGIN_FUNC(VMake ## Prefix ## Vector, "make-" #prefix "vector", 3, k, _len, fill) \
   unsigned len = VCheckedDecodeInt2(runtime, _len, "make-" #prefix "vector"); \
@@ -1761,37 +1953,35 @@ V_BEGIN_FUNC(VList ## Prefix ## Vector, "list->" #prefix "vector", 2, k, lst) \
   vec->len = size; \
   vec->buf[0] = BUF_ ## Prefix; \
   v = lst; \
-  int i = 0; \
   unsigned offset = elem_width; \
   while(VWordType(v) == VPOINTER_PAIR) { \
     VPair * p = VDecodePair(v); \
     Prefix ## Write(runtime, vec, offset, p->first); \
     offset += elem_width; \
-    i++; \
     v = p->rest; \
   } \
   V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER)); \
 V_END_FUNC \
-V_BEGIN_FUNC(V ## Prefix ## VectorLength, #prefix "vector-length", 2, k, _buf) \
+V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorLength, #prefix "vector-length", 1, _buf) \
   VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, #prefix "vector-length"); \
   if(buf->buf[0] != BUF_ ## Prefix) \
     VErrorC(runtime, #prefix "vector-length: not a vector of the right type.", _buf); \
-  V_CALL(k, runtime, VEncodeInt(buf->len/elem_width - 1)); \
+  return VEncodeInt(buf->len/elem_width - 1); \
 V_END_FUNC \
-V_BEGIN_FUNC(V ## Prefix ## VectorRef, #prefix "vector-ref", 3, k, _buf, _i) \
+V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorRef, #prefix "vector-ref", 2, _buf, _i) \
   int i = VCheckedDecodeInt2(runtime, _i, #prefix "vector-ref"); \
   VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, #prefix "vector-ref"); \
   if(buf->buf[0] != BUF_ ## Prefix) \
     VErrorC(runtime, #prefix "vector-length: not a vector of the right type.", _buf); \
-  V_CALL(k, runtime, Prefix ## Read(runtime, buf, elem_width*(i+1))); \
+  return Prefix ## Read(runtime, buf, elem_width*(i+1)); \
 V_END_FUNC \
-V_BEGIN_FUNC(V ## Prefix ## VectorSet, #prefix "vector-set!", 4, k, _buf, _i, val) \
+V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorSet, #prefix "vector-set!", 3, _buf, _i, val) \
   int i = VCheckedDecodeInt2(runtime, _i, #prefix "vector-set!"); \
   VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, #prefix "vector-set!"); \
   if(buf->buf[0] != BUF_ ## Prefix) \
     VErrorC(runtime, #prefix "vector-set!: not a vector of the right type.", _buf); \
   Prefix ## Write(runtime, buf, elem_width*(i+1), val); \
-  V_CALL(k, runtime, VVOID); \
+  return VVOID; \
 V_END_FUNC
 
 IMPLEMENT_BUFFER(s8, S8, 1)

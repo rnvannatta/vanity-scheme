@@ -133,6 +133,60 @@ void VSysApply(VFunc func, VEnvironment * environ) {
 }
 #endif
 
+static inline bool VIsMain(VRuntime * runtime) {
+  return runtime->my_fiber == runtime->main_fiber;
+}
+
+SYSV_CALL static void VPrintCallHistory(VRuntime * runtime) {
+  fprintf(stderr, "Call History (most recent to least recent)\n");
+  unsigned i;
+  for(i = 0; i < 32; i++) {
+    VDebugInfo * debug = runtime->public.VCallHistory[(runtime->public.VCallHistoryCursor - i) % V_CALL_HISTORY_LEN];
+    if(!debug) break;
+    fprintf(stderr, "%2u. %s\n", i, debug->name);
+  }
+  fprintf(stderr, "%2u. ...\n", i);
+}
+
+static SYSV_CALL void VFPrintfC(VRuntime * runtime, VPort * p, char const * str, ...);
+
+__attribute__((noreturn))
+static void VAbortC(VRuntime * runtime, VWORD err) {
+  // Print the msg, attempt to start a debugger... but only if we're the main thread
+  // fibers should continue throwing through into the main thread.
+  // we might have more exception handlers in the main thread.
+  if(!runtime || VIsMain(runtime)) {
+#ifdef __linux__
+    if(isatty(fileno(stderr)))
+      VFPrintfC(NULL, (VPort[]){get_port_stderr()}, "\033[1;31munhandled exception:\033[0m ~A~N", err);
+    else
+#endif
+      VFPrintfC(NULL, (VPort[]){get_port_stderr()}, "unhandled exception: ~A~N", err);
+
+    if(runtime)
+      VPrintCallHistory(runtime);
+    fflush(stderr);
+    fflush(stdout);
+    d_fflush(dstderr);
+    d_fflush(dstdout);
+#ifdef __linux__
+    raise(SIGTRAP);
+#endif
+#ifdef _WIN64
+    DebugBreak();
+#endif
+#ifdef __EMSCRIPTEN__
+    emscripten_debugger();
+#endif
+  }
+
+  // TODO actually pass the error here
+
+  if(runtime)
+    VLongJmp(runtime->VRoot, VJMP_ERROR);
+  abort();
+}
+
 #define FORWARDED ULLONG_MAX
 
 // TODO kill this
@@ -684,10 +738,29 @@ SYSV_CALL static void * VAllocHeap(VRuntime * runtime, size_t size) {
 }
 
 SYSV_CALL static void * VMoveObject(VRuntime * runtime, void * obj, size_t size) {
+#ifdef __EMSCRIPTEN__
+  int tag = *(VNEWTAG*)obj;
+  if(!(VTAG_START <= tag && tag < VTAG_END)) {
+    fprintf(stderr, "object of size %zu has invalid tag %d\n", size, tag);
+    VAbortC(NULL, VERROR);
+  }
+#endif
   void * collected = VAllocHeap(runtime, size);
   if(!collected) {
-    fprintf(stderr, "Heap Overflow! This shouldn't have happened\n");
-    abort();
+    //if(runtime->VHeapPos + size >= runtime->VHeapEnd) {
+    fprintf(stderr, "Heap Overflow! This shouldn't have happened.\n"
+                    "--heap size: %zu\n"
+                    "--heap used: %zu\n"
+                    "--mem requested: %zu\n"
+                    "--heap ptr: %p\n"
+                    "--heap end ptr: %p\n",
+            runtime->VHeapEnd - runtime->VHeap,
+            runtime->VHeapPos - runtime->VHeap,
+            size,
+            runtime->VHeap,
+            runtime->VHeapEnd
+            );
+    VAbortC(NULL, VERROR);
   }
 
   memcpy(collected, obj, size);
@@ -760,6 +833,7 @@ SYSV_CALL static VClosure * VMoveClosure(VRuntime * runtime, VClosure * closure)
   return closure;
 }
 
+
 SYSV_CALL static VPair * VMovePair(VRuntime * runtime, VPair * pair) {
   VPair * ret = VMoveObject(runtime, pair, sizeof(VPair));
 
@@ -817,8 +891,9 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
 
   VNEWTAG tag = *(VNEWTAG*)ptr;
   if(!(VTAG_START <= tag && tag < VTAG_END)) {
-    fprintf(stderr, "Unknown tag %u in VMoveDispatch. Heap Corruption?\n", tag);
-    abort();
+    fprintf(stderr, "Unknown tag %u in VMoveDispatch. Heap Corruption? -MoveDispatch\n", tag);
+    VPrintCallHistory(runtime);
+    VAbortC(NULL, VERROR);
   }
   
   switch(type) {
@@ -869,7 +944,7 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
         }
         default:
           fprintf(stderr, "Unknown tag %u in VMoveDispatch. Heap corruption?\n", tag);
-          abort();
+          VAbortC(NULL, VERROR);
       }
       break;
     }
@@ -877,7 +952,7 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
       return VEncodePointer(VCheckedMoveEnviron(runtime, ptr), VPOINTER_OTHER);
     default:
       fprintf(stderr, "Unknown type %016llx in VMoveDispatch. Heap corruption?\n", (unsigned long long)type);
-      abort();
+      VAbortC(NULL, VERROR);
   }
 }
 
@@ -996,21 +1071,19 @@ SYSV_CALL static VWORD * VCheneyScan(VRuntime * runtime, VWORD * cur) {
       break;
     }
   }
-  fprintf(stderr, "Unknown type in VCheneyScan. Heap Corruption?\n");
-  abort();
+  fprintf(stderr, "Unknown tag %u in VCheneyScan. Heap Corruption? -CheneyScan\n", (int)(*(VNEWTAG*)cur));
+  VPrintCallHistory(runtime);
+  VAbortC(NULL, VERROR);
   return NULL;
 }
 
 #undef environ
-SYSV_CALL static void VGCResumeFunc(V_CORE_ARGS, ...) {
+static V_BEGIN_FUNC_MIN(VGCResumeFunc, "gc-resume", 0)
+//SYSV_CALL static void VGCResumeFunc(V_CORE_ARGS, ...) {
   VFunc f = VCheckedDecodeForeignPointer2(runtime, statics->vars[0], "gc-resume");
   VEnvironment * e = (void*)VDecodePointer(statics->vars[1]);
   VSysApply(f, e);
-}
-
-static inline bool VIsMain(VRuntime * runtime) {
-  return runtime->my_fiber == runtime->main_fiber;
-}
+V_END_FUNC
 
 SYSV_CALL static void VSwapHeap(VRuntime * runtime) {
   runtime->VActiveHeap = !runtime->VActiveHeap;
@@ -1114,14 +1187,19 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   if(after_gc_size > runtime->VHeaps[runtime->VActiveHeap].size) {
     if(!runtime->num_half_reaped_fibers) {
       fprintf(stderr, "Garbage collector may overflow: this should be impossible.\n");
-      abort();
+      VAbortC(NULL, VERROR);
     }
     fprintf(stderr, "resizing heap from big fiber returnz %lld\n", (long long)after_gc_size);
     free(runtime->VHeaps[runtime->VActiveHeap].begin);
     while(after_gc_size > runtime->VHeaps[runtime->VActiveHeap].size) {
       runtime->VHeaps[runtime->VActiveHeap].size *= 2;
     }
-    runtime->VHeaps[runtime->VActiveHeap].begin = malloc(runtime->VHeaps[runtime->VActiveHeap].size);
+    size_t size = runtime->VHeaps[runtime->VActiveHeap].size;
+    runtime->VHeaps[runtime->VActiveHeap].begin = malloc(size);
+    if(!runtime->VHeaps[runtime->VActiveHeap].begin) {
+      fprintf(stderr, "failed to resize heap to size %zu\n", size);
+      VAbortC(NULL, VERROR);
+    }
     runtime->VHeaps[runtime->VActiveHeap].end = runtime->VHeaps[runtime->VActiveHeap].begin + runtime->VHeaps[runtime->VActiveHeap].size;
     runtime->VHeap = runtime->VHeaps[runtime->VActiveHeap].begin;
     runtime->VHeapPos = runtime->VHeap;
@@ -1290,7 +1368,12 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
         if(runtime->VHeaps[inactive].begin)
           free(runtime->VHeaps[inactive].begin);
         runtime->VHeaps[inactive].size *= 2;
-        runtime->VHeaps[inactive].begin = malloc(runtime->VHeaps[inactive].size);
+        size_t size = runtime->VHeaps[inactive].size;
+        runtime->VHeaps[inactive].begin = malloc(size);
+        if(!runtime->VHeaps[inactive].begin) {
+          fprintf(stderr, "failed to resize heap to size %zu\n", size);
+          VAbortC(NULL, VERROR);
+        }
         runtime->VHeaps[inactive].end = runtime->VHeaps[inactive].begin + runtime->VHeaps[inactive].size;
       }
     } else {
@@ -1316,7 +1399,12 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     if(grow_heap || (runtime->VHeapPos - runtime->VHeap) + runtime->public.VStackSize > runtime->VHeaps[!runtime->VActiveHeap].size) {
       free(runtime->VHeaps[!runtime->VActiveHeap].begin);
       runtime->VHeaps[!runtime->VActiveHeap].size *= 2;
-      runtime->VHeaps[!runtime->VActiveHeap].begin = malloc(runtime->VHeaps[!runtime->VActiveHeap].size);
+      size_t size = runtime->VHeaps[!runtime->VActiveHeap].size;
+      runtime->VHeaps[!runtime->VActiveHeap].begin = malloc(size);
+      if(!runtime->VHeaps[!runtime->VActiveHeap].begin) {
+        fprintf(stderr, "failed to resize heap to size %zu\n", size);
+        VAbortC(NULL, VERROR);
+      }
       runtime->VHeaps[!runtime->VActiveHeap].end = runtime->VHeaps[!runtime->VActiveHeap].begin + runtime->VHeaps[!runtime->VActiveHeap].size;
       //fprintf(stderr, "Growing heap!\n");
     }
@@ -1437,7 +1525,7 @@ static inline size_t VObjectSize(VObject const * o) {
       return sizeof(VFuture);
     default:
       fprintf(stderr, "Unknown object (tag: %hd) in heap.\n", o->tag);
-      abort();
+      VAbortC(NULL, VERROR);
       return 0;
   }
 }
@@ -1495,7 +1583,7 @@ static inline void VShiftVector(VObject * o, void const * old, void const * olde
 
 static inline void VShiftRuntime(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
   fprintf(stderr, "why is a runtime on the heap?\n");
-  abort();
+  VAbortC(NULL, VERROR);
 }
 
 static inline void VShiftHashTable(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
@@ -1554,7 +1642,7 @@ static inline void VShiftObject(VObject * o, void const * old, void const * olde
       return;
     default:
       fprintf(stderr, "Unknown object (tag: %hd) in heap.\n", o->tag);
-      abort();
+      VAbortC(NULL, VERROR);
       return;
   }
 }
@@ -1582,17 +1670,6 @@ void VCopyHeap(char * dst, char const * src, size_t len) {
 /////////////////////////////////////////////////////////////
 //                   END GARBAGE COLLECTOR                 //
 /////////////////////////////////////////////////////////////
-
-SYSV_CALL static void VPrintCallHistory(VRuntime * runtime) {
-  fprintf(stderr, "Call History (most recent to least recent)\n");
-  unsigned i;
-  for(i = 0; i < 32; i++) {
-    VDebugInfo * debug = runtime->public.VCallHistory[(runtime->public.VCallHistoryCursor - i) % V_CALL_HISTORY_LEN];
-    if(!debug) break;
-    fprintf(stderr, "%2u. %s\n", i, debug->name);
-  }
-  fprintf(stderr, "%2u. ...\n", i);
-}
 
 static V_BEGIN_FUNC_MIN(VNext2K, "next-k", 0)
   VLongJmp(runtime->VRoot, VJMP_FINISH);
@@ -1698,51 +1775,14 @@ V_BEGIN_FUNC_RANGE(VExit2, "exit", 1, 2, k, e)
   VGarbageCollect2((VFunc)VExitK, runtime, NULL, 1, &num_finalizers);
 V_END_FUNC
 
-static SYSV_CALL void VFPrintfC(VRuntime * runtime, VPort * p, char const * str, ...);
-
 V_BEGIN_FUNC_MIN(VAbort2, "abort", 0)
-  // Print the msg, attempt to start a debugger... but only if we're the main thread
-  // fibers should continue throwing through into the main thread.
-  // we might have more exception handlers in the main thread.
   VWORD err = VERROR;
   if(!runtime || VIsMain(runtime)) {
     if(argc) {
-#if 0
-      va_list args;
-      va_start(args, argc);
-      err = va_arg(args, VWORD);
-      va_end(args);
-#else
       err = self->vars[0];
-#endif
-#ifdef __linux__
-      if(isatty(fileno(stderr)))
-        VFPrintfC(NULL, (VPort[]){get_port_stderr()}, "\033[1;31munhandled exception:\033[0m ~A~N", err);
-      else
-#endif
-      VFPrintfC(NULL, (VPort[]){get_port_stderr()}, "unhandled exception: ~A~N", err);
     }
-
-    if(runtime)
-      VPrintCallHistory(runtime);
-    fflush(stderr);
-    fflush(stdout);
-    d_fflush(dstderr);
-    d_fflush(dstdout);
-#ifdef __linux__
-    raise(SIGTRAP);
-#endif
-#ifdef _WIN64
-    DebugBreak();
-#endif
   }
-
-  // TODO actually pass the error here
-
-  if(runtime)
-    VLongJmp(runtime->VRoot, VJMP_ERROR);
-  else
-    abort();
+  VAbortC(runtime, err);
 V_END_FUNC
 
 static SYSV_CALL void VVFPrintfC(VRuntime * runtime, VPort * p, char const * str, va_list args) {
@@ -1814,8 +1854,9 @@ static SYSV_CALL void VVFPrintfC(VRuntime * runtime, VPort * p, char const * str
             va_end(args);
             if(runtime)
               VErrorC(runtime, "Malformed format string\n");
-            else
-              abort();
+            else {
+              VAbortC(NULL, VERROR);
+            }
             break;
         }
         break;
@@ -2752,6 +2793,10 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   char * start;
   size_t stacksize;
   VGetStackInfo(&start, &stacksize);
+  if(stacksize < 2*V_STACK_MARGIN) {
+    fprintf(stderr, "stack size %zu is less than the minimum size %zu\n", stacksize, 2*(size_t)V_STACK_MARGIN);
+    VAbortC(NULL, VERROR);
+  }
 
   r->public.VStackStart = start;
   r->public.VStackLen = (ssize_t)stacksize - V_STACK_MARGIN;
@@ -2769,6 +2814,12 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   size_t size = r->public.VStackLen * 8;
   for(int i = 0; i < 2; i++) {
     r->VHeaps[i].begin = malloc(size);
+    if(!r->VHeaps[i].begin) {
+      fprintf(stderr, "failed to resize heap to size %zu\n", size);
+      fprintf(stderr, "--stacksize is %zu\n", r->public.VStackSize);
+      fprintf(stderr, "--stackstart is %zu\n", (uintptr_t)r->public.VStackStart);
+      VAbortC(NULL, VERROR);
+    }
     r->VHeaps[i].end = r->VHeaps[i].begin + size;
     r->VHeaps[i].size = size;
   }
@@ -2890,9 +2941,10 @@ end:
   return ret;
 }
 
-static SYSV_CALL void VResumeThunk(V_CORE_ARGS, ...) {
+static V_BEGIN_FUNC_MIN(VResumeThunk, "resume", 0)
+//static SYSV_CALL void VResumeThunk(V_CORE_ARGS, ...) {
   V_CALL(statics->vars[0], runtime, statics->vars[1]);
-}
+V_END_FUNC
 
 SYSV_CALL VWORD VStart3(VRuntime * runtime, int num_toplevels, VWORD const * toplevels) {
   if(!runtime->VGlobalTable)
