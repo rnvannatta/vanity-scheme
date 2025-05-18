@@ -29,11 +29,11 @@ Order is important. the `EM_CACHE` line must be last. validate success with `emc
 # At last, vanity
 
 ```
-git clone yada yada
-cd vanity scheme
+git clone https://github.com/rnvannatta/vanity-scheme.git
+cd vanity-scheme
 ./configure
 ```
-Make sure that the config.mk created has emscripten's path to some subfolder in `~/.emscripten_cache`
+Mash enter when configuring. Make sure that the config.mk created has emscripten's path to some subfolder in `~/.emscripten_cache`
 ```
 sudo make hatch -j
 sudo make clean
