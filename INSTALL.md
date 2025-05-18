@@ -5,7 +5,7 @@ Installation is tricky. Here's instructions for a clean install of debian.
 ```
 sudo dpkg --add-architecture i386
 sudo apt-get update
-usdo apt-get install wine wine32 wine64 libwine libwine:i386 fonts-wine
+sudo apt-get install wine wine32 wine64 libwine libwine:i386 fonts-wine
 sudo apt-get install git gcc mingw-w64 make clang rsync libsdl2-dev binutils vim flex bison
 ```
 
@@ -38,7 +38,7 @@ Mash enter when configuring. Make sure that the config.mk created has emscripten
 sudo make hatch -j
 sudo make clean
 make tests -j
-make install -j
+sudo make install -j
 ```
 
 validate success with
