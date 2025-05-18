@@ -1,4 +1,4 @@
-Installation is tricky:
+Installation is tricky. Here's instructions for a clean install of debian.
 
 # Basic Prereqs
 
@@ -25,8 +25,6 @@ source ~/emsdk/emsdk_env.sh
 export EM_CACHE=~/.emscripten_cache
 ```
 Order is important. the `EM_CACHE` line must be last. validate success with `emcc --version`
-
-DUBIOUS: in /usr/share/emscripten/.emscripten set `FROZEN_CACHE` from `True` to `False`, and ensure `$EM_CACHE` is set
 
 # At last, vanity
 
