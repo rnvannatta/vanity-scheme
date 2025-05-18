@@ -17,6 +17,8 @@ hatch :
 	mkdir -p bin
 	mkdir -p build
 	mkdir -p lib
+	cp -u vendor/lib/libdfile.so $(INSTALL_DIR)/lib/.
+	ldconfig
 	ln -sf "$(INSTALL_DIR)/lib/$(VSCHEME)" $(INSTALL_DIR)/lib/libvscheme.so
 	ln -sf "$(INSTALL_DIR)/bin/vsc-$(MAJOR)" $(INSTALL_DIR)/bin/vsc
 	cp -ar bootstrap/include/* $(INSTALL_DIR)/include/
