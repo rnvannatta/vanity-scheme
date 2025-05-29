@@ -215,6 +215,7 @@ bool is_typedef(char const * symbol) {
 int yylex(void);
 void yyerror(const char*);
 extern FILE * yyin;
+extern char * yytext;
 
 extern void yy_set_buffer(FILE * in);
 
@@ -239,7 +240,8 @@ extern void yy_set_buffer(FILE * in);
 
 %type <vword_val> start toplevel declaration declarator_list prefix_declarator postfix_declarator parameter_list abstract_prefix_declarator abstract_postfix_declarator param_prefix_declarator param_postfix_declarator qualified_type post_qualified_type enum_list expr specified_type post_specified_type plain_type identifier
 
-%define parse.error detailed
+%define parse.error verbose
+%define parse.lac full
 
 %%
 
