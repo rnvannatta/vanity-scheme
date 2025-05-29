@@ -128,7 +128,9 @@ int yywrap(void) {
   return 1;
 }
 void yyerror(const char * c) {
-  fprintf(stderr, "ffi: %s\n", c);
+  fprintf(stderr, "ffi: %s", c);
+  if(yytext) fprintf(stderr, " at '%s'", yytext);
+  fprintf(stderr, "\n");
 }
 
 void yy_set_buffer(FILE * in) {

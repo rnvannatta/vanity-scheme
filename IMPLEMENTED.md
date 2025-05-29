@@ -132,7 +132,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |denominator                    | Low Prio    |             |            |
 |digit-value                    |             |             |            |
 |display                        | Yes         |             |            |
-|do                             |             |             |            |
+|do                             | Yes         |             |            |
 |dynamic-wind                   | Never Ever  |             |            |
 |#e                             |             |             |            |
 |else                           | Yes         |             |            |
@@ -332,7 +332,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |truncate-remainder             |             |             |            |
 |truncate/                      |             |             |            |
 |u8-ready?                      |             |             |            |
-|unless                         |             |             |            |
+|unless                         | Yes         |             |            |
 |unquote                        | Yes         |             |            |
 |unquote-splicing               | Yes         |             |            |
 |utf->string                    |             |             |            |
@@ -350,7 +350,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |vector-ref                     | Yes         |             |            |
 |vector-set!                    | Yes         |             |            |
 |vector?                        | Yes         |             |            |
-|when                           |             |             |            |
+|when                           | Yes         |             |            |
 |with-exception-handler         | Yes         |             |            |
 |with-input-from-file           | Yes         |             |            |
 |with-output-to-file            | Yes         |             |            |

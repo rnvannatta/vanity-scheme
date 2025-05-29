@@ -642,9 +642,31 @@
       (('cut-iter xs args f x . rest) (expand-syntax `(cut-iter ,xs (,x . ,args) ,f . ,rest)))
       (('cut . noise) (compiler-error "malformed cut" `(cut . ,noise)))
 
-      #;(('set! y x)
-       (if (not (symbol? y)) (compiler-error "set!'s first argument is not a symbol" y))
-       `(set! ,y ,(expand-syntax x)))
+      (('do ((var init . step) ...)
+            (test ret ...)
+          body ...)
+        (let ((step (map (lambda (var step)
+                           (cond ((null? step) var)
+                                 ((null? (cdr step)) (car step))
+                                 (else (compiler-error "malformed do: only one step expression is permitted" var step))))
+                         var step))
+              (do-loop (gensym "do-loop")))
+          (expand-syntax
+            `(let ,do-loop ,(map list var init)
+              (if ,test
+                  (let () . ,(if (null? ret) '(#void) ret))
+                  (begin
+                    (let () . ,(if (null? body) '(#void) body))
+                    (,do-loop . ,step)))))))
+
+      (('when p . body)
+       (expand-syntax
+         `(if ,p (begin . ,body) #void)))
+      (('unless p . body)
+       (expand-syntax
+         `(if ,p #void (begin . ,body))))
+
+
       (('set! y x)
        (if (symbol? y)
            `(set! ,y ,(expand-syntax x))
