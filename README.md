@@ -115,18 +115,12 @@ There's also a bit of cool syntax in the compiler: pattern matching! Here's an e
 
 ## Roadmap
 
-A rough ordering of the next few improvements I'll be making:
+Currently I'm focused on improving Vanity's codegen, particularly for Webassembly. 
 
-1. DONE: Change the calling convention so arguments are passed by register.
-2. DONE: Implement a foreign function interface.
-3. DONE: Implement finalizers.
-4. DONE: Emit header files for compiled libraries.
-5. DONE: Windows cross compilation.
-6. DONE Implement Fibers.
-7. DONE Add a repl via bytecode
-8. Windows Compiler
-9. Polish
-10. Documentation
+1. Better wasm codegen
+2. More complete standard library
+3. Better struct support in C FFI
+4. Type inference based optimization
 
 Progress is very slow as I am moonlighting this project while daylighting as a graphics programmer.
 

@@ -351,30 +351,43 @@
               ,@(reverse defines)
               . ,(append (apply append expanded)
                          (list (make-library-output exports)))))))
-    (define free-vars
-      (free-variables basic-library))
-    #;(let ((unbound-vars (filter (lambda (var) (not (memv var imports))) free-vars)))
-      (if (not (null? unbound-vars))
-          (begin
-            (compiler-error "library has free variables" (cadr lib) unbound-vars))))
+    (define free-vars (free-variables basic-library))
 
     (define unbound-vars '())
     (define constant-vars '())
     (define imported-vars '())
 
+    (define (pretty-print-free-vars lib free-vars)
+      (let ((strport (open-output-string)))
+        (format strport "library ~A has free variables~N" lib)
+        (let loop ((free-vars free-vars))
+          (if (null? free-vars)
+              (begin
+                (display "context may not match source because of macro expansion" strport)
+                (let ((ret (get-output-string strport))) (close-port strport) ret))
+              (begin
+                (format strport "* ~A: ~S~N" (caar free-vars) (cdar free-vars))
+                (loop (cdr free-vars)))))
+        #;(do ((free-vars free-vars (cdr free-vars)))
+            ((null? free-vars)
+             (display "context may not match source because of macro expansion" strport)
+             (let ((ret (get-output-string strport))) (close-port strport) ret))
+          (format strport "* ~A: ~S~N" (caar free-vars) (cdar free-vars)))))
+
     (let loop ((free-vars free-vars))
       (if (null? free-vars)
           #f
           (begin
-            (cond ((assv (car free-vars) constant-imports)
+            (cond ((assv (caar free-vars) constant-imports)
                    => (lambda (lookup) (set! constant-vars (cons (cons 'define-constant lookup) constant-vars))))
-                  ((memv (car free-vars) imports)
-                   (set! imported-vars (cons (car free-vars) imported-vars)))
+                  ((memv (caar free-vars) imports)
+                   (set! imported-vars (cons (caar free-vars) imported-vars)))
                   (else (set! unbound-vars (cons (car free-vars) unbound-vars))))
             (loop (cdr free-vars)))))
     (if (not (null? unbound-vars))
         (begin
-          (compiler-error "library has free variables" (cadr lib) unbound-vars)))
+          (compiler-error (pretty-print-free-vars (cadr lib) unbound-vars))
+          #;(compiler-error "library has free variables" (cadr lib) unbound-vars)))
 
     (register-library-interface! (header-from-library lib))
     (let* ((libname (mangle-library (cadr lib))))
@@ -465,7 +478,7 @@
         (null? args)
         (and (pair? args)
              (if (memtail (car args) (cdr args))
-                 (compiler-error "duplicate in lambda" (car args))
+                 (compiler-error "duplicate variable in lambda args" (car args))
                  #t)
              (valid-args? (cdr args)))))
   (define (expand-lambda expr)
