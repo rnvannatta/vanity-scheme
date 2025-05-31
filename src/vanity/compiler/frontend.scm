@@ -170,7 +170,7 @@
 (define (handle-exception err)
   (parameterize ((current-output-port (current-error-port)))
     (display "vsc: ")
-    (write err)
+    (display err)
     (newline)
     (exit 1)))
 
