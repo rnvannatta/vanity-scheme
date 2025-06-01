@@ -285,11 +285,12 @@ bool is_typedef(char const * symbol) {
 int yylex(void);
 void yyerror(const char*);
 extern FILE * yyin;
+extern char * yytext;
 
 extern void yy_set_buffer(FILE * in);
 
 
-#line 293 "ffi.tab.c"
+#line 294 "ffi.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -561,30 +562,6 @@ typedef int yy_state_fast_t;
 
 /* The parser invokes alloca or malloc; define the necessary symbols.  */
 
-# ifdef YYSTACK_USE_ALLOCA
-#  if YYSTACK_USE_ALLOCA
-#   ifdef __GNUC__
-#    define YYSTACK_ALLOC __builtin_alloca
-#   elif defined __BUILTIN_VA_ARG_INCR
-#    include <alloca.h> /* INFRINGES ON USER NAME SPACE */
-#   elif defined _AIX
-#    define YYSTACK_ALLOC __alloca
-#   elif defined _MSC_VER
-#    include <malloc.h> /* INFRINGES ON USER NAME SPACE */
-#    define alloca _alloca
-#   else
-#    define YYSTACK_ALLOC alloca
-#    if ! defined _ALLOCA_H && ! defined EXIT_SUCCESS
-#     include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
-      /* Use EXIT_SUCCESS as a witness for stdlib.h.  */
-#     ifndef EXIT_SUCCESS
-#      define EXIT_SUCCESS 0
-#     endif
-#    endif
-#   endif
-#  endif
-# endif
-
 # ifdef YYSTACK_ALLOC
    /* Pacify GCC's 'empty if-body' warning.  */
 #  define YYSTACK_FREE(Ptr) do { /* empty */; } while (0)
@@ -622,6 +599,7 @@ void free (void *); /* INFRINGES ON USER NAME SPACE */
 #   endif
 #  endif
 # endif
+# define YYCOPY_NEEDED 1
 #endif /* 1 */
 
 #if (! defined yyoverflow \
@@ -746,14 +724,14 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   278,   278,   280,   282,   285,   285,   287,   289,   291,
-     294,   296,   300,   303,   309,   311,   313,   317,   319,   321,
-     323,   325,   327,   331,   333,   335,   337,   339,   341,   343,
-     345,   347,   349,   351,   355,   357,   359,   361,   363,   367,
-     369,   371,   375,   377,   379,   381,   383,   385,   387,   390,
-     392,   394,   396,   398,   400,   404,   406,   408,   410,   412,
-     414,   416,   418,   422,   424,   426,   430,   432,   436,   438,
-     440,   444,   446,   448,   450,   454,   456,   458,   460,   464
+       0,   280,   280,   282,   284,   287,   287,   289,   291,   293,
+     296,   298,   302,   305,   311,   313,   315,   319,   321,   323,
+     325,   327,   329,   333,   335,   337,   339,   341,   343,   345,
+     347,   349,   351,   353,   357,   359,   361,   363,   365,   369,
+     371,   373,   377,   379,   381,   383,   385,   387,   389,   392,
+     394,   396,   398,   400,   402,   406,   408,   410,   412,   414,
+     416,   418,   420,   424,   426,   428,   432,   434,   438,   440,
+     442,   446,   448,   450,   452,   456,   458,   460,   462,   466
 };
 #endif
 
@@ -765,12 +743,11 @@ static const yytype_int16 yyrline[] =
    YYSYMBOL.  No bounds checking.  */
 static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 
-static const char *
-yysymbol_name (yysymbol_kind_t yysymbol)
+/* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
+   First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
+static const char *const yytname[] =
 {
-  static const char *const yy_sname[] =
-  {
-  "end of file", "error", "invalid token", "T_STRUCT", "T_ENUM",
+  "\"end of file\"", "error", "\"invalid token\"", "T_STRUCT", "T_ENUM",
   "T_ERROR", "T_TYPE", "T_QUALIFIER", "T_FUNCTION_QUALIFIER", "T_STORAGE",
   "T_INTEGER", "T_TYPENAME", "T_VARIABLE", "';'", "','", "'*'", "'('",
   "')'", "'['", "']'", "'{'", "'}'", "'='", "$accept", "start",
@@ -780,8 +757,12 @@ yysymbol_name (yysymbol_kind_t yysymbol)
   "param_postfix_declarator", "parameter_list", "plain_type",
   "post_qualified_type", "qualified_type", "specified_type",
   "post_specified_type", "enum_list", "expr", YY_NULLPTR
-  };
-  return yy_sname[yysymbol];
+};
+
+static const char *
+yysymbol_name (yysymbol_kind_t yysymbol)
+{
+  return yytname[yysymbol];
 }
 #endif
 
@@ -962,6 +943,7 @@ enum { YYENOMEM = -2 };
         yylval = (Value);                                         \
         YYPOPSTACK (yylen);                                       \
         yystate = *yyssp;                                         \
+        YY_LAC_DISCARD ("YYBACKUP");                              \
         goto yybackup;                                            \
       }                                                           \
     else                                                          \
@@ -1120,10 +1102,256 @@ int yydebug;
 #endif
 
 
+/* Given a state stack such that *YYBOTTOM is its bottom, such that
+   *YYTOP is either its top or is YYTOP_EMPTY to indicate an empty
+   stack, and such that *YYCAPACITY is the maximum number of elements it
+   can hold without a reallocation, make sure there is enough room to
+   store YYADD more elements.  If not, allocate a new stack using
+   YYSTACK_ALLOC, copy the existing elements, and adjust *YYBOTTOM,
+   *YYTOP, and *YYCAPACITY to reflect the new capacity and memory
+   location.  If *YYBOTTOM != YYBOTTOM_NO_FREE, then free the old stack
+   using YYSTACK_FREE.  Return 0 if successful or if no reallocation is
+   required.  Return YYENOMEM if memory is exhausted.  */
+static int
+yy_lac_stack_realloc (YYPTRDIFF_T *yycapacity, YYPTRDIFF_T yyadd,
+#if YYDEBUG
+                      char const *yydebug_prefix,
+                      char const *yydebug_suffix,
+#endif
+                      yy_state_t **yybottom,
+                      yy_state_t *yybottom_no_free,
+                      yy_state_t **yytop, yy_state_t *yytop_empty)
+{
+  YYPTRDIFF_T yysize_old =
+    *yytop == yytop_empty ? 0 : *yytop - *yybottom + 1;
+  YYPTRDIFF_T yysize_new = yysize_old + yyadd;
+  if (*yycapacity < yysize_new)
+    {
+      YYPTRDIFF_T yyalloc = 2 * yysize_new;
+      yy_state_t *yybottom_new;
+      /* Use YYMAXDEPTH for maximum stack size given that the stack
+         should never need to grow larger than the main state stack
+         needs to grow without LAC.  */
+      if (YYMAXDEPTH < yysize_new)
+        {
+          YYDPRINTF ((stderr, "%smax size exceeded%s", yydebug_prefix,
+                      yydebug_suffix));
+          return YYENOMEM;
+        }
+      if (YYMAXDEPTH < yyalloc)
+        yyalloc = YYMAXDEPTH;
+      yybottom_new =
+        YY_CAST (yy_state_t *,
+                 YYSTACK_ALLOC (YY_CAST (YYSIZE_T,
+                                         yyalloc * YYSIZEOF (*yybottom_new))));
+      if (!yybottom_new)
+        {
+          YYDPRINTF ((stderr, "%srealloc failed%s", yydebug_prefix,
+                      yydebug_suffix));
+          return YYENOMEM;
+        }
+      if (*yytop != yytop_empty)
+        {
+          YYCOPY (yybottom_new, *yybottom, yysize_old);
+          *yytop = yybottom_new + (yysize_old - 1);
+        }
+      if (*yybottom != yybottom_no_free)
+        YYSTACK_FREE (*yybottom);
+      *yybottom = yybottom_new;
+      *yycapacity = yyalloc;
+    }
+  return 0;
+}
+
+/* Establish the initial context for the current lookahead if no initial
+   context is currently established.
+
+   We define a context as a snapshot of the parser stacks.  We define
+   the initial context for a lookahead as the context in which the
+   parser initially examines that lookahead in order to select a
+   syntactic action.  Thus, if the lookahead eventually proves
+   syntactically unacceptable (possibly in a later context reached via a
+   series of reductions), the initial context can be used to determine
+   the exact set of tokens that would be syntactically acceptable in the
+   lookahead's place.  Moreover, it is the context after which any
+   further semantic actions would be erroneous because they would be
+   determined by a syntactically unacceptable token.
+
+   YY_LAC_ESTABLISH should be invoked when a reduction is about to be
+   performed in an inconsistent state (which, for the purposes of LAC,
+   includes consistent states that don't know they're consistent because
+   their default reductions have been disabled).  Iff there is a
+   lookahead token, it should also be invoked before reporting a syntax
+   error.  This latter case is for the sake of the debugging output.
+
+   For parse.lac=full, the implementation of YY_LAC_ESTABLISH is as
+   follows.  If no initial context is currently established for the
+   current lookahead, then check if that lookahead can eventually be
+   shifted if syntactic actions continue from the current context.
+   Report a syntax error if it cannot.  */
+#define YY_LAC_ESTABLISH                                                \
+do {                                                                    \
+  if (!yy_lac_established)                                              \
+    {                                                                   \
+      YYDPRINTF ((stderr,                                               \
+                  "LAC: initial context established for %s\n",          \
+                  yysymbol_name (yytoken)));                            \
+      yy_lac_established = 1;                                           \
+      switch (yy_lac (yyesa, &yyes, &yyes_capacity, yyssp, yytoken))    \
+        {                                                               \
+        case YYENOMEM:                                                  \
+          YYNOMEM;                                                      \
+        case 1:                                                         \
+          goto yyerrlab;                                                \
+        }                                                               \
+    }                                                                   \
+} while (0)
+
+/* Discard any previous initial lookahead context because of Event,
+   which may be a lookahead change or an invalidation of the currently
+   established initial context for the current lookahead.
+
+   The most common example of a lookahead change is a shift.  An example
+   of both cases is syntax error recovery.  That is, a syntax error
+   occurs when the lookahead is syntactically erroneous for the
+   currently established initial context, so error recovery manipulates
+   the parser stacks to try to find a new initial context in which the
+   current lookahead is syntactically acceptable.  If it fails to find
+   such a context, it discards the lookahead.  */
+#if YYDEBUG
+# define YY_LAC_DISCARD(Event)                                           \
+do {                                                                     \
+  if (yy_lac_established)                                                \
+    {                                                                    \
+      YYDPRINTF ((stderr, "LAC: initial context discarded due to "       \
+                  Event "\n"));                                          \
+      yy_lac_established = 0;                                            \
+    }                                                                    \
+} while (0)
+#else
+# define YY_LAC_DISCARD(Event) yy_lac_established = 0
+#endif
+
+/* Given the stack whose top is *YYSSP, return 0 iff YYTOKEN can
+   eventually (after perhaps some reductions) be shifted, return 1 if
+   not, or return YYENOMEM if memory is exhausted.  As preconditions and
+   postconditions: *YYES_CAPACITY is the allocated size of the array to
+   which *YYES points, and either *YYES = YYESA or *YYES points to an
+   array allocated with YYSTACK_ALLOC.  yy_lac may overwrite the
+   contents of either array, alter *YYES and *YYES_CAPACITY, and free
+   any old *YYES other than YYESA.  */
+static int
+yy_lac (yy_state_t *yyesa, yy_state_t **yyes,
+        YYPTRDIFF_T *yyes_capacity, yy_state_t *yyssp, yysymbol_kind_t yytoken)
+{
+  yy_state_t *yyes_prev = yyssp;
+  yy_state_t *yyesp = yyes_prev;
+  /* Reduce until we encounter a shift and thereby accept the token.  */
+  YYDPRINTF ((stderr, "LAC: checking lookahead %s:", yysymbol_name (yytoken)));
+  if (yytoken == YYSYMBOL_YYUNDEF)
+    {
+      YYDPRINTF ((stderr, " Always Err\n"));
+      return 1;
+    }
+  while (1)
+    {
+      int yyrule = yypact[+*yyesp];
+      if (yypact_value_is_default (yyrule)
+          || (yyrule += yytoken) < 0 || YYLAST < yyrule
+          || yycheck[yyrule] != yytoken)
+        {
+          /* Use the default action.  */
+          yyrule = yydefact[+*yyesp];
+          if (yyrule == 0)
+            {
+              YYDPRINTF ((stderr, " Err\n"));
+              return 1;
+            }
+        }
+      else
+        {
+          /* Use the action from yytable.  */
+          yyrule = yytable[yyrule];
+          if (yytable_value_is_error (yyrule))
+            {
+              YYDPRINTF ((stderr, " Err\n"));
+              return 1;
+            }
+          if (0 < yyrule)
+            {
+              YYDPRINTF ((stderr, " S%d\n", yyrule));
+              return 0;
+            }
+          yyrule = -yyrule;
+        }
+      /* By now we know we have to simulate a reduce.  */
+      YYDPRINTF ((stderr, " R%d", yyrule - 1));
+      {
+        /* Pop the corresponding number of values from the stack.  */
+        YYPTRDIFF_T yylen = yyr2[yyrule];
+        /* First pop from the LAC stack as many tokens as possible.  */
+        if (yyesp != yyes_prev)
+          {
+            YYPTRDIFF_T yysize = yyesp - *yyes + 1;
+            if (yylen < yysize)
+              {
+                yyesp -= yylen;
+                yylen = 0;
+              }
+            else
+              {
+                yyesp = yyes_prev;
+                yylen -= yysize;
+              }
+          }
+        /* Only afterwards look at the main stack.  */
+        if (yylen)
+          yyesp = yyes_prev -= yylen;
+      }
+      /* Push the resulting state of the reduction.  */
+      {
+        yy_state_fast_t yystate;
+        {
+          const int yylhs = yyr1[yyrule] - YYNTOKENS;
+          const int yyi = yypgoto[yylhs] + *yyesp;
+          yystate = (0 <= yyi && yyi <= YYLAST && yycheck[yyi] == *yyesp
+                     ? yytable[yyi]
+                     : yydefgoto[yylhs]);
+        }
+        if (yyesp == yyes_prev)
+          {
+            yyesp = *yyes;
+            YY_IGNORE_USELESS_CAST_BEGIN
+            *yyesp = YY_CAST (yy_state_t, yystate);
+            YY_IGNORE_USELESS_CAST_END
+          }
+        else
+          {
+            if (yy_lac_stack_realloc (yyes_capacity, 1,
+#if YYDEBUG
+                                      " (", ")",
+#endif
+                                      yyes, yyesa, &yyesp, yyes_prev))
+              {
+                YYDPRINTF ((stderr, "\n"));
+                return YYENOMEM;
+              }
+            YY_IGNORE_USELESS_CAST_BEGIN
+            *++yyesp = YY_CAST (yy_state_t, yystate);
+            YY_IGNORE_USELESS_CAST_END
+          }
+        YYDPRINTF ((stderr, " G%d", yystate));
+      }
+    }
+}
+
 /* Context of a parse error.  */
 typedef struct
 {
   yy_state_t *yyssp;
+  yy_state_t *yyesa;
+  yy_state_t **yyes;
+  YYPTRDIFF_T *yyes_capacity;
   yysymbol_kind_t yytoken;
 } yypcontext_t;
 
@@ -1139,27 +1367,25 @@ yypcontext_expected_tokens (const yypcontext_t *yyctx,
 {
   /* Actual size of YYARG. */
   int yycount = 0;
-  int yyn = yypact[+*yyctx->yyssp];
-  if (!yypact_value_is_default (yyn))
+
+  int yyx;
+  for (yyx = 0; yyx < YYNTOKENS; ++yyx)
     {
-      /* Start YYX at -YYN if negative to avoid negative indexes in
-         YYCHECK.  In other words, skip the first -YYN actions for
-         this state because they are default actions.  */
-      int yyxbegin = yyn < 0 ? -yyn : 0;
-      /* Stay within bounds of both yycheck and yytname.  */
-      int yychecklim = YYLAST - yyn + 1;
-      int yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
-      int yyx;
-      for (yyx = yyxbegin; yyx < yyxend; ++yyx)
-        if (yycheck[yyx + yyn] == yyx && yyx != YYSYMBOL_YYerror
-            && !yytable_value_is_error (yytable[yyx + yyn]))
+      yysymbol_kind_t yysym = YY_CAST (yysymbol_kind_t, yyx);
+      if (yysym != YYSYMBOL_YYerror && yysym != YYSYMBOL_YYUNDEF)
+        switch (yy_lac (yyctx->yyesa, yyctx->yyes, yyctx->yyes_capacity, yyctx->yyssp, yysym))
           {
+          case YYENOMEM:
+            return YYENOMEM;
+          case 1:
+            continue;
+          default:
             if (!yyarg)
               ++yycount;
             else if (yycount == yyargn)
               return 0;
             else
-              yyarg[yycount++] = YY_CAST (yysymbol_kind_t, yyx);
+              yyarg[yycount++] = yysym;
           }
     }
   if (yyarg && yycount == 0 && 0 < yyargn)
@@ -1206,6 +1432,55 @@ yystpcpy (char *yydest, const char *yysrc)
 # endif
 #endif
 
+#ifndef yytnamerr
+/* Copy to YYRES the contents of YYSTR after stripping away unnecessary
+   quotes and backslashes, so that it's suitable for yyerror.  The
+   heuristic is that double-quoting is unnecessary unless the string
+   contains an apostrophe, a comma, or backslash (other than
+   backslash-backslash).  YYSTR is taken from yytname.  If YYRES is
+   null, do not copy; instead, return the length of what the result
+   would have been.  */
+static YYPTRDIFF_T
+yytnamerr (char *yyres, const char *yystr)
+{
+  if (*yystr == '"')
+    {
+      YYPTRDIFF_T yyn = 0;
+      char const *yyp = yystr;
+      for (;;)
+        switch (*++yyp)
+          {
+          case '\'':
+          case ',':
+            goto do_not_strip_quotes;
+
+          case '\\':
+            if (*++yyp != '\\')
+              goto do_not_strip_quotes;
+            else
+              goto append;
+
+          append:
+          default:
+            if (yyres)
+              yyres[yyn] = *yyp;
+            yyn++;
+            break;
+
+          case '"':
+            if (yyres)
+              yyres[yyn] = '\0';
+            return yyn;
+          }
+    do_not_strip_quotes: ;
+    }
+
+  if (yyres)
+    return yystpcpy (yyres, yystr) - yyres;
+  else
+    return yystrlen (yystr);
+}
+#endif
 
 
 static int
@@ -1228,18 +1503,16 @@ yy_syntax_error_arguments (const yypcontext_t *yyctx,
        consistent state with a default action.  There might have been a
        previous inconsistent state, consistent state with a non-default
        action, or user semantic action that manipulated yychar.
-     - Of course, the expected token list depends on states to have
-       correct lookahead information, and it depends on the parser not
-       to perform extra reductions after fetching a lookahead from the
-       scanner and before detecting a syntax error.  Thus, state merging
-       (from LALR or IELR) and default reductions corrupt the expected
-       token list.  However, the list is correct for canonical LR with
-       one exception: it will still contain any token that will not be
-       accepted due to an error action in a later state.
+       In the first two cases, it might appear that the current syntax
+       error should have been detected in the previous state when yy_lac
+       was invoked.  However, at that time, there might have been a
+       different syntax error that discarded a different initial context
+       during error recovery, leaving behind the current lookahead.
   */
   if (yyctx->yytoken != YYSYMBOL_YYEMPTY)
     {
       int yyn;
+      YYDPRINTF ((stderr, "Constructing syntax error message\n"));
       if (yyarg)
         yyarg[yycount] = yyctx->yytoken;
       ++yycount;
@@ -1247,6 +1520,8 @@ yy_syntax_error_arguments (const yypcontext_t *yyctx,
                                         yyarg ? yyarg + 1 : yyarg, yyargn - 1);
       if (yyn == YYENOMEM)
         return YYENOMEM;
+      else if (yyn == 0)
+        YYDPRINTF ((stderr, "No expected tokens.\n"));
       else
         yycount += yyn;
     }
@@ -1255,12 +1530,14 @@ yy_syntax_error_arguments (const yypcontext_t *yyctx,
 
 /* Copy into *YYMSG, which is of size *YYMSG_ALLOC, an error message
    about the unexpected token YYTOKEN for the state stack whose top is
-   YYSSP.
+   YYSSP.  In order to see if a particular token T is a
+   valid looakhead, invoke yy_lac (YYESA, YYES, YYES_CAPACITY, YYSSP, T).
 
    Return 0 if *YYMSG was successfully written.  Return -1 if *YYMSG is
    not large enough to hold the message.  In that case, also set
    *YYMSG_ALLOC to the required number of bytes.  Return YYENOMEM if the
-   required number of bytes is too large to store.  */
+   required number of bytes is too large to store or if
+   yy_lac returned YYENOMEM.  */
 static int
 yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
                 const yypcontext_t *yyctx)
@@ -1303,7 +1580,7 @@ yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
     for (yyi = 0; yyi < yycount; ++yyi)
       {
         YYPTRDIFF_T yysize1
-          = yysize + yystrlen (yysymbol_name (yyarg[yyi]));
+          = yysize + yytnamerr (YY_NULLPTR, yytname[yyarg[yyi]]);
         if (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM)
           yysize = yysize1;
         else
@@ -1329,7 +1606,7 @@ yysyntax_error (YYPTRDIFF_T *yymsg_alloc, char **yymsg,
     while ((*yyp = *yyformat) != '\0')
       if (*yyp == '%' && yyformat[1] == 's' && yyi < yycount)
         {
-          yyp = yystpcpy (yyp, yysymbol_name (yyarg[yyi++]));
+          yyp += yytnamerr (yyp, yytname[yyarg[yyi++]]);
           yyformat += 2;
         }
       else
@@ -1399,6 +1676,12 @@ yyparse (void)
     YYSTYPE *yyvs = yyvsa;
     YYSTYPE *yyvsp = yyvs;
 
+    yy_state_t yyesa[20];
+    yy_state_t *yyes = yyesa;
+    YYPTRDIFF_T yyes_capacity = 20 < YYMAXDEPTH ? 20 : YYMAXDEPTH;
+
+  /* Whether LAC context is established.  A Boolean.  */
+  int yy_lac_established = 0;
   int yyn;
   /* The return value of yyparse.  */
   int yyresult;
@@ -1563,13 +1846,17 @@ yybackup:
      detect an error, take that action.  */
   yyn += yytoken;
   if (yyn < 0 || YYLAST < yyn || yycheck[yyn] != yytoken)
-    goto yydefault;
+    {
+      YY_LAC_ESTABLISH;
+      goto yydefault;
+    }
   yyn = yytable[yyn];
   if (yyn <= 0)
     {
       if (yytable_value_is_error (yyn))
         goto yyerrlab;
       yyn = -yyn;
+      YY_LAC_ESTABLISH;
       goto yyreduce;
     }
 
@@ -1587,6 +1874,7 @@ yybackup:
 
   /* Discard the shifted token.  */
   yychar = YYEMPTY;
+  YY_LAC_DISCARD ("shift");
   goto yynewstate;
 
 
@@ -1619,472 +1907,477 @@ yyreduce:
 
 
   YY_REDUCE_PRINT (yyn);
-  switch (yyn)
-    {
+  {
+    int yychar_backup = yychar;
+    switch (yyn)
+      {
   case 2: /* start: toplevel  */
-#line 279 "src/ffi.y"
+#line 281 "src/ffi.y"
       { parse_ret = CONS("toplevel", reverse((yyvsp[0].vword_val))); }
-#line 1628 "ffi.tab.c"
+#line 1918 "ffi.tab.c"
     break;
 
   case 3: /* start: specified_type prefix_declarator  */
-#line 281 "src/ffi.y"
+#line 283 "src/ffi.y"
       { parse_ret = LIST("naked_declaration", (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1634 "ffi.tab.c"
+#line 1924 "ffi.tab.c"
     break;
 
   case 4: /* start: error  */
-#line 282 "src/ffi.y"
+#line 284 "src/ffi.y"
               { yyerrok; yyclearin; parse_error = true; YYACCEPT; }
-#line 1640 "ffi.tab.c"
+#line 1930 "ffi.tab.c"
     break;
 
   case 7: /* toplevel: declaration  */
-#line 288 "src/ffi.y"
+#line 290 "src/ffi.y"
          { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 1646 "ffi.tab.c"
+#line 1936 "ffi.tab.c"
     break;
 
   case 8: /* toplevel: toplevel declaration  */
-#line 290 "src/ffi.y"
+#line 292 "src/ffi.y"
          { (yyval.vword_val) = CONS((yyvsp[0].vword_val), (yyvsp[-1].vword_val)); }
-#line 1652 "ffi.tab.c"
+#line 1942 "ffi.tab.c"
     break;
 
   case 9: /* toplevel: toplevel error  */
-#line 291 "src/ffi.y"
+#line 293 "src/ffi.y"
                           { yyerrok; parse_error = true; }
-#line 1658 "ffi.tab.c"
+#line 1948 "ffi.tab.c"
     break;
 
   case 10: /* declaration: declarator_list ';'  */
-#line 295 "src/ffi.y"
+#line 297 "src/ffi.y"
             { VWORD v = (yyvsp[-1].vword_val); (yyval.vword_val) = CONS("declaration", CONS(CAR(v), reverse(CDR(v)))); }
-#line 1664 "ffi.tab.c"
+#line 1954 "ffi.tab.c"
     break;
 
   case 11: /* declaration: specified_type ';'  */
-#line 297 "src/ffi.y"
+#line 299 "src/ffi.y"
             { (yyval.vword_val) = LIST("declaration", (yyvsp[-1].vword_val)); }
-#line 1670 "ffi.tab.c"
+#line 1960 "ffi.tab.c"
     break;
 
   case 12: /* declarator_list: specified_type prefix_declarator  */
-#line 301 "src/ffi.y"
+#line 303 "src/ffi.y"
                 { register_typedef((yyvsp[-1].vword_val), (yyvsp[0].vword_val));
                   (yyval.vword_val) = CONS((yyvsp[-1].vword_val), LIST((yyvsp[0].vword_val))); }
-#line 1677 "ffi.tab.c"
-    break;
-
-  case 13: /* declarator_list: declarator_list ',' prefix_declarator  */
-#line 304 "src/ffi.y"
-                { VWORD v = (yyvsp[-2].vword_val);
-                  register_typedef(CAR(v), (yyvsp[0].vword_val));
-                  (yyval.vword_val) = CONS(CAR(v), CONS((yyvsp[0].vword_val), CDR(v))); }
-#line 1685 "ffi.tab.c"
-    break;
-
-  case 14: /* prefix_declarator: postfix_declarator  */
-#line 310 "src/ffi.y"
-                  { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1691 "ffi.tab.c"
-    break;
-
-  case 15: /* prefix_declarator: '*' prefix_declarator  */
-#line 312 "src/ffi.y"
-                  { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1697 "ffi.tab.c"
-    break;
-
-  case 16: /* prefix_declarator: '*' T_QUALIFIER prefix_declarator  */
-#line 314 "src/ffi.y"
-                  { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1703 "ffi.tab.c"
-    break;
-
-  case 17: /* postfix_declarator: identifier  */
-#line 318 "src/ffi.y"
-                   { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1709 "ffi.tab.c"
-    break;
-
-  case 18: /* postfix_declarator: postfix_declarator '(' ')'  */
-#line 320 "src/ffi.y"
-                   { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1715 "ffi.tab.c"
-    break;
-
-  case 19: /* postfix_declarator: postfix_declarator '[' ']'  */
-#line 322 "src/ffi.y"
-                   { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val), VFALSE); }
-#line 1721 "ffi.tab.c"
-    break;
-
-  case 20: /* postfix_declarator: postfix_declarator '[' expr ']'  */
-#line 324 "src/ffi.y"
-                   { (yyval.vword_val) = LIST("array", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val)); }
-#line 1727 "ffi.tab.c"
-    break;
-
-  case 21: /* postfix_declarator: postfix_declarator '(' parameter_list ')'  */
-#line 326 "src/ffi.y"
-                   { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1733 "ffi.tab.c"
-    break;
-
-  case 22: /* postfix_declarator: '(' prefix_declarator ')'  */
-#line 328 "src/ffi.y"
-                   { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1739 "ffi.tab.c"
-    break;
-
-  case 23: /* abstract_postfix_declarator: abstract_postfix_declarator '(' ')'  */
-#line 332 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1745 "ffi.tab.c"
-    break;
-
-  case 24: /* abstract_postfix_declarator: abstract_postfix_declarator '[' ']'  */
-#line 334 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val), VFALSE); }
-#line 1751 "ffi.tab.c"
-    break;
-
-  case 25: /* abstract_postfix_declarator: abstract_postfix_declarator '[' expr ']'  */
-#line 336 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("array", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val)); }
-#line 1757 "ffi.tab.c"
-    break;
-
-  case 26: /* abstract_postfix_declarator: abstract_postfix_declarator '[' T_STORAGE expr ']'  */
-#line 338 "src/ffi.y"
-                            { if((yyvsp[-2].keyword_val) != T_STATIC) YYERROR; (yyval.vword_val) = LIST("static-array", (yyvsp[-4].vword_val), (yyvsp[-1].vword_val)); }
-#line 1763 "ffi.tab.c"
-    break;
-
-  case 27: /* abstract_postfix_declarator: abstract_postfix_declarator '(' parameter_list ')'  */
-#line 340 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1769 "ffi.tab.c"
-    break;
-
-  case 28: /* abstract_postfix_declarator: '(' ')'  */
-#line 342 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", VFALSE); }
-#line 1775 "ffi.tab.c"
-    break;
-
-  case 29: /* abstract_postfix_declarator: '[' ']'  */
-#line 344 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("array", VFALSE, VFALSE); }
-#line 1781 "ffi.tab.c"
-    break;
-
-  case 30: /* abstract_postfix_declarator: '[' expr ']'  */
-#line 346 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("array", VFALSE, (yyvsp[-1].vword_val)); }
-#line 1787 "ffi.tab.c"
-    break;
-
-  case 31: /* abstract_postfix_declarator: '[' T_STORAGE expr ']'  */
-#line 348 "src/ffi.y"
-                            { if((yyvsp[-2].keyword_val) != T_STATIC) YYERROR; (yyval.vword_val) = LIST("static-array", VFALSE, (yyvsp[-1].vword_val)); }
-#line 1793 "ffi.tab.c"
-    break;
-
-  case 32: /* abstract_postfix_declarator: '(' parameter_list ')'  */
-#line 350 "src/ffi.y"
-                            { (yyval.vword_val) = LIST("function", VFALSE, detangle_params((yyvsp[-1].vword_val))); }
-#line 1799 "ffi.tab.c"
-    break;
-
-  case 33: /* abstract_postfix_declarator: '(' abstract_prefix_declarator ')'  */
-#line 352 "src/ffi.y"
-                            { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1805 "ffi.tab.c"
-    break;
-
-  case 34: /* abstract_prefix_declarator: abstract_postfix_declarator  */
-#line 356 "src/ffi.y"
-                           { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1811 "ffi.tab.c"
-    break;
-
-  case 35: /* abstract_prefix_declarator: '*'  */
-#line 358 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", VFALSE); }
-#line 1817 "ffi.tab.c"
-    break;
-
-  case 36: /* abstract_prefix_declarator: '*' T_QUALIFIER  */
-#line 360 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[0].keyword_val)), VFALSE)); }
-#line 1823 "ffi.tab.c"
-    break;
-
-  case 37: /* abstract_prefix_declarator: '*' abstract_prefix_declarator  */
-#line 362 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1829 "ffi.tab.c"
-    break;
-
-  case 38: /* abstract_prefix_declarator: '*' T_QUALIFIER abstract_prefix_declarator  */
-#line 364 "src/ffi.y"
-                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1835 "ffi.tab.c"
-    break;
-
-  case 39: /* param_prefix_declarator: param_postfix_declarator  */
-#line 368 "src/ffi.y"
-                        { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1841 "ffi.tab.c"
-    break;
-
-  case 40: /* param_prefix_declarator: '*' param_prefix_declarator  */
-#line 370 "src/ffi.y"
-                        { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
-#line 1847 "ffi.tab.c"
-    break;
-
-  case 41: /* param_prefix_declarator: '*' T_QUALIFIER param_prefix_declarator  */
-#line 372 "src/ffi.y"
-                        { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
-#line 1853 "ffi.tab.c"
-    break;
-
-  case 42: /* param_postfix_declarator: T_VARIABLE  */
-#line 376 "src/ffi.y"
-                         { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1859 "ffi.tab.c"
-    break;
-
-  case 43: /* param_postfix_declarator: param_postfix_declarator '(' ')'  */
-#line 378 "src/ffi.y"
-                         { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
-#line 1865 "ffi.tab.c"
-    break;
-
-  case 44: /* param_postfix_declarator: param_postfix_declarator '[' ']'  */
-#line 380 "src/ffi.y"
-                         { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val), VFALSE); }
-#line 1871 "ffi.tab.c"
-    break;
-
-  case 45: /* param_postfix_declarator: param_postfix_declarator '[' expr ']'  */
-#line 382 "src/ffi.y"
-                         { (yyval.vword_val) = LIST("array", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val)); }
-#line 1877 "ffi.tab.c"
-    break;
-
-  case 46: /* param_postfix_declarator: param_postfix_declarator '[' T_STORAGE expr ']'  */
-#line 384 "src/ffi.y"
-                         { if((yyvsp[-2].keyword_val) != T_STATIC) YYERROR; (yyval.vword_val) = LIST("static-array", (yyvsp[-4].vword_val), (yyvsp[-1].vword_val)); }
-#line 1883 "ffi.tab.c"
-    break;
-
-  case 47: /* param_postfix_declarator: param_postfix_declarator '(' parameter_list ')'  */
-#line 386 "src/ffi.y"
-                         { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
-#line 1889 "ffi.tab.c"
-    break;
-
-  case 48: /* param_postfix_declarator: '(' param_prefix_declarator ')'  */
-#line 388 "src/ffi.y"
-                         { (yyval.vword_val) = (yyvsp[-1].vword_val); }
-#line 1895 "ffi.tab.c"
-    break;
-
-  case 49: /* parameter_list: qualified_type  */
-#line 391 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[0].vword_val), VFALSE); }
-#line 1901 "ffi.tab.c"
-    break;
-
-  case 50: /* parameter_list: qualified_type abstract_prefix_declarator  */
-#line 393 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1907 "ffi.tab.c"
-    break;
-
-  case 51: /* parameter_list: qualified_type param_prefix_declarator  */
-#line 395 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1913 "ffi.tab.c"
-    break;
-
-  case 52: /* parameter_list: parameter_list ',' qualified_type  */
-#line 397 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", (yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
-#line 1919 "ffi.tab.c"
-    break;
-
-  case 53: /* parameter_list: parameter_list ',' qualified_type abstract_prefix_declarator  */
-#line 399 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1925 "ffi.tab.c"
-    break;
-
-  case 54: /* parameter_list: parameter_list ',' qualified_type param_prefix_declarator  */
-#line 401 "src/ffi.y"
-               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
-#line 1931 "ffi.tab.c"
-    break;
-
-  case 55: /* plain_type: T_TYPE  */
-#line 405 "src/ffi.y"
-           { (yyval.vword_val) = keyword_to_vword((yyvsp[0].keyword_val)); }
-#line 1937 "ffi.tab.c"
-    break;
-
-  case 56: /* plain_type: T_TYPENAME  */
-#line 407 "src/ffi.y"
-           { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 1943 "ffi.tab.c"
-    break;
-
-  case 57: /* plain_type: T_STRUCT identifier  */
-#line 409 "src/ffi.y"
-           { (yyval.vword_val) = LIST("struct", (yyvsp[0].vword_val)); }
-#line 1949 "ffi.tab.c"
-    break;
-
-  case 58: /* plain_type: T_ENUM identifier  */
-#line 411 "src/ffi.y"
-           { (yyval.vword_val) = LIST("enum", (yyvsp[0].vword_val), VFALSE); }
-#line 1955 "ffi.tab.c"
-    break;
-
-  case 59: /* plain_type: T_ENUM '{' enum_list '}'  */
-#line 413 "src/ffi.y"
-           { (yyval.vword_val) = LIST("enum", VFALSE, detangle_enums((yyvsp[-1].vword_val))); }
-#line 1961 "ffi.tab.c"
-    break;
-
-  case 60: /* plain_type: T_ENUM identifier '{' enum_list '}'  */
-#line 415 "src/ffi.y"
-           { (yyval.vword_val) = LIST("enum", (yyvsp[-3].vword_val), detangle_enums((yyvsp[-1].vword_val))); }
 #line 1967 "ffi.tab.c"
     break;
 
-  case 61: /* plain_type: T_ENUM '{' enum_list ',' '}'  */
+  case 13: /* declarator_list: declarator_list ',' prefix_declarator  */
+#line 306 "src/ffi.y"
+                { VWORD v = (yyvsp[-2].vword_val);
+                  register_typedef(CAR(v), (yyvsp[0].vword_val));
+                  (yyval.vword_val) = CONS(CAR(v), CONS((yyvsp[0].vword_val), CDR(v))); }
+#line 1975 "ffi.tab.c"
+    break;
+
+  case 14: /* prefix_declarator: postfix_declarator  */
+#line 312 "src/ffi.y"
+                  { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1981 "ffi.tab.c"
+    break;
+
+  case 15: /* prefix_declarator: '*' prefix_declarator  */
+#line 314 "src/ffi.y"
+                  { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
+#line 1987 "ffi.tab.c"
+    break;
+
+  case 16: /* prefix_declarator: '*' T_QUALIFIER prefix_declarator  */
+#line 316 "src/ffi.y"
+                  { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
+#line 1993 "ffi.tab.c"
+    break;
+
+  case 17: /* postfix_declarator: identifier  */
+#line 320 "src/ffi.y"
+                   { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 1999 "ffi.tab.c"
+    break;
+
+  case 18: /* postfix_declarator: postfix_declarator '(' ')'  */
+#line 322 "src/ffi.y"
+                   { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
+#line 2005 "ffi.tab.c"
+    break;
+
+  case 19: /* postfix_declarator: postfix_declarator '[' ']'  */
+#line 324 "src/ffi.y"
+                   { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val), VFALSE); }
+#line 2011 "ffi.tab.c"
+    break;
+
+  case 20: /* postfix_declarator: postfix_declarator '[' expr ']'  */
+#line 326 "src/ffi.y"
+                   { (yyval.vword_val) = LIST("array", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val)); }
+#line 2017 "ffi.tab.c"
+    break;
+
+  case 21: /* postfix_declarator: postfix_declarator '(' parameter_list ')'  */
+#line 328 "src/ffi.y"
+                   { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
+#line 2023 "ffi.tab.c"
+    break;
+
+  case 22: /* postfix_declarator: '(' prefix_declarator ')'  */
+#line 330 "src/ffi.y"
+                   { (yyval.vword_val) = (yyvsp[-1].vword_val); }
+#line 2029 "ffi.tab.c"
+    break;
+
+  case 23: /* abstract_postfix_declarator: abstract_postfix_declarator '(' ')'  */
+#line 334 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
+#line 2035 "ffi.tab.c"
+    break;
+
+  case 24: /* abstract_postfix_declarator: abstract_postfix_declarator '[' ']'  */
+#line 336 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val), VFALSE); }
+#line 2041 "ffi.tab.c"
+    break;
+
+  case 25: /* abstract_postfix_declarator: abstract_postfix_declarator '[' expr ']'  */
+#line 338 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("array", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val)); }
+#line 2047 "ffi.tab.c"
+    break;
+
+  case 26: /* abstract_postfix_declarator: abstract_postfix_declarator '[' T_STORAGE expr ']'  */
+#line 340 "src/ffi.y"
+                            { if((yyvsp[-2].keyword_val) != T_STATIC) YYERROR; (yyval.vword_val) = LIST("static-array", (yyvsp[-4].vword_val), (yyvsp[-1].vword_val)); }
+#line 2053 "ffi.tab.c"
+    break;
+
+  case 27: /* abstract_postfix_declarator: abstract_postfix_declarator '(' parameter_list ')'  */
+#line 342 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
+#line 2059 "ffi.tab.c"
+    break;
+
+  case 28: /* abstract_postfix_declarator: '(' ')'  */
+#line 344 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("function", VFALSE); }
+#line 2065 "ffi.tab.c"
+    break;
+
+  case 29: /* abstract_postfix_declarator: '[' ']'  */
+#line 346 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("array", VFALSE, VFALSE); }
+#line 2071 "ffi.tab.c"
+    break;
+
+  case 30: /* abstract_postfix_declarator: '[' expr ']'  */
+#line 348 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("array", VFALSE, (yyvsp[-1].vword_val)); }
+#line 2077 "ffi.tab.c"
+    break;
+
+  case 31: /* abstract_postfix_declarator: '[' T_STORAGE expr ']'  */
+#line 350 "src/ffi.y"
+                            { if((yyvsp[-2].keyword_val) != T_STATIC) YYERROR; (yyval.vword_val) = LIST("static-array", VFALSE, (yyvsp[-1].vword_val)); }
+#line 2083 "ffi.tab.c"
+    break;
+
+  case 32: /* abstract_postfix_declarator: '(' parameter_list ')'  */
+#line 352 "src/ffi.y"
+                            { (yyval.vword_val) = LIST("function", VFALSE, detangle_params((yyvsp[-1].vword_val))); }
+#line 2089 "ffi.tab.c"
+    break;
+
+  case 33: /* abstract_postfix_declarator: '(' abstract_prefix_declarator ')'  */
+#line 354 "src/ffi.y"
+                            { (yyval.vword_val) = (yyvsp[-1].vword_val); }
+#line 2095 "ffi.tab.c"
+    break;
+
+  case 34: /* abstract_prefix_declarator: abstract_postfix_declarator  */
+#line 358 "src/ffi.y"
+                           { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 2101 "ffi.tab.c"
+    break;
+
+  case 35: /* abstract_prefix_declarator: '*'  */
+#line 360 "src/ffi.y"
+                           { (yyval.vword_val) = LIST("pointer", VFALSE); }
+#line 2107 "ffi.tab.c"
+    break;
+
+  case 36: /* abstract_prefix_declarator: '*' T_QUALIFIER  */
+#line 362 "src/ffi.y"
+                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[0].keyword_val)), VFALSE)); }
+#line 2113 "ffi.tab.c"
+    break;
+
+  case 37: /* abstract_prefix_declarator: '*' abstract_prefix_declarator  */
+#line 364 "src/ffi.y"
+                           { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
+#line 2119 "ffi.tab.c"
+    break;
+
+  case 38: /* abstract_prefix_declarator: '*' T_QUALIFIER abstract_prefix_declarator  */
+#line 366 "src/ffi.y"
+                           { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
+#line 2125 "ffi.tab.c"
+    break;
+
+  case 39: /* param_prefix_declarator: param_postfix_declarator  */
+#line 370 "src/ffi.y"
+                        { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 2131 "ffi.tab.c"
+    break;
+
+  case 40: /* param_prefix_declarator: '*' param_prefix_declarator  */
+#line 372 "src/ffi.y"
+                        { (yyval.vword_val) = LIST("pointer", (yyvsp[0].vword_val)); }
+#line 2137 "ffi.tab.c"
+    break;
+
+  case 41: /* param_prefix_declarator: '*' T_QUALIFIER param_prefix_declarator  */
+#line 374 "src/ffi.y"
+                        { (yyval.vword_val) = LIST("pointer", LIST(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val))); }
+#line 2143 "ffi.tab.c"
+    break;
+
+  case 42: /* param_postfix_declarator: T_VARIABLE  */
+#line 378 "src/ffi.y"
+                         { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 2149 "ffi.tab.c"
+    break;
+
+  case 43: /* param_postfix_declarator: param_postfix_declarator '(' ')'  */
+#line 380 "src/ffi.y"
+                         { (yyval.vword_val) = LIST("function", (yyvsp[-2].vword_val)); }
+#line 2155 "ffi.tab.c"
+    break;
+
+  case 44: /* param_postfix_declarator: param_postfix_declarator '[' ']'  */
+#line 382 "src/ffi.y"
+                         { (yyval.vword_val) = LIST("array", (yyvsp[-2].vword_val), VFALSE); }
+#line 2161 "ffi.tab.c"
+    break;
+
+  case 45: /* param_postfix_declarator: param_postfix_declarator '[' expr ']'  */
+#line 384 "src/ffi.y"
+                         { (yyval.vword_val) = LIST("array", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val)); }
+#line 2167 "ffi.tab.c"
+    break;
+
+  case 46: /* param_postfix_declarator: param_postfix_declarator '[' T_STORAGE expr ']'  */
+#line 386 "src/ffi.y"
+                         { if((yyvsp[-2].keyword_val) != T_STATIC) YYERROR; (yyval.vword_val) = LIST("static-array", (yyvsp[-4].vword_val), (yyvsp[-1].vword_val)); }
+#line 2173 "ffi.tab.c"
+    break;
+
+  case 47: /* param_postfix_declarator: param_postfix_declarator '(' parameter_list ')'  */
+#line 388 "src/ffi.y"
+                         { (yyval.vword_val) = LIST("function", (yyvsp[-3].vword_val), detangle_params((yyvsp[-1].vword_val))); }
+#line 2179 "ffi.tab.c"
+    break;
+
+  case 48: /* param_postfix_declarator: '(' param_prefix_declarator ')'  */
+#line 390 "src/ffi.y"
+                         { (yyval.vword_val) = (yyvsp[-1].vword_val); }
+#line 2185 "ffi.tab.c"
+    break;
+
+  case 49: /* parameter_list: qualified_type  */
+#line 393 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[0].vword_val), VFALSE); }
+#line 2191 "ffi.tab.c"
+    break;
+
+  case 50: /* parameter_list: qualified_type abstract_prefix_declarator  */
+#line 395 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 2197 "ffi.tab.c"
+    break;
+
+  case 51: /* parameter_list: qualified_type param_prefix_declarator  */
+#line 397 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", VNULL, (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 2203 "ffi.tab.c"
+    break;
+
+  case 52: /* parameter_list: parameter_list ',' qualified_type  */
+#line 399 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", (yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
+#line 2209 "ffi.tab.c"
+    break;
+
+  case 53: /* parameter_list: parameter_list ',' qualified_type abstract_prefix_declarator  */
+#line 401 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 2215 "ffi.tab.c"
+    break;
+
+  case 54: /* parameter_list: parameter_list ',' qualified_type param_prefix_declarator  */
+#line 403 "src/ffi.y"
+               { (yyval.vword_val) = LIST("param", (yyvsp[-3].vword_val), (yyvsp[-1].vword_val), (yyvsp[0].vword_val)); }
+#line 2221 "ffi.tab.c"
+    break;
+
+  case 55: /* plain_type: T_TYPE  */
+#line 407 "src/ffi.y"
+           { (yyval.vword_val) = keyword_to_vword((yyvsp[0].keyword_val)); }
+#line 2227 "ffi.tab.c"
+    break;
+
+  case 56: /* plain_type: T_TYPENAME  */
+#line 409 "src/ffi.y"
+           { (yyval.vword_val) = (yyvsp[0].vword_val); }
+#line 2233 "ffi.tab.c"
+    break;
+
+  case 57: /* plain_type: T_STRUCT identifier  */
+#line 411 "src/ffi.y"
+           { (yyval.vword_val) = LIST("struct", (yyvsp[0].vword_val)); }
+#line 2239 "ffi.tab.c"
+    break;
+
+  case 58: /* plain_type: T_ENUM identifier  */
+#line 413 "src/ffi.y"
+           { (yyval.vword_val) = LIST("enum", (yyvsp[0].vword_val), VFALSE); }
+#line 2245 "ffi.tab.c"
+    break;
+
+  case 59: /* plain_type: T_ENUM '{' enum_list '}'  */
+#line 415 "src/ffi.y"
+           { (yyval.vword_val) = LIST("enum", VFALSE, detangle_enums((yyvsp[-1].vword_val))); }
+#line 2251 "ffi.tab.c"
+    break;
+
+  case 60: /* plain_type: T_ENUM identifier '{' enum_list '}'  */
 #line 417 "src/ffi.y"
+           { (yyval.vword_val) = LIST("enum", (yyvsp[-3].vword_val), detangle_enums((yyvsp[-1].vword_val))); }
+#line 2257 "ffi.tab.c"
+    break;
+
+  case 61: /* plain_type: T_ENUM '{' enum_list ',' '}'  */
+#line 419 "src/ffi.y"
            { (yyval.vword_val) = LIST("enum", VFALSE, detangle_enums((yyvsp[-2].vword_val))); }
-#line 1973 "ffi.tab.c"
+#line 2263 "ffi.tab.c"
     break;
 
   case 62: /* plain_type: T_ENUM identifier '{' enum_list ',' '}'  */
-#line 419 "src/ffi.y"
+#line 421 "src/ffi.y"
            { (yyval.vword_val) = LIST("enum", (yyvsp[-4].vword_val), detangle_enums((yyvsp[-2].vword_val))); }
-#line 1979 "ffi.tab.c"
+#line 2269 "ffi.tab.c"
     break;
 
   case 63: /* post_qualified_type: plain_type  */
-#line 423 "src/ffi.y"
+#line 425 "src/ffi.y"
                { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 1985 "ffi.tab.c"
+#line 2275 "ffi.tab.c"
     break;
 
   case 64: /* post_qualified_type: post_qualified_type T_QUALIFIER  */
-#line 425 "src/ffi.y"
+#line 427 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1991 "ffi.tab.c"
+#line 2281 "ffi.tab.c"
     break;
 
   case 65: /* post_qualified_type: post_qualified_type T_TYPE  */
-#line 427 "src/ffi.y"
+#line 429 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 1997 "ffi.tab.c"
+#line 2287 "ffi.tab.c"
     break;
 
   case 66: /* qualified_type: post_qualified_type  */
-#line 431 "src/ffi.y"
+#line 433 "src/ffi.y"
                { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 2003 "ffi.tab.c"
+#line 2293 "ffi.tab.c"
     break;
 
   case 67: /* qualified_type: T_QUALIFIER qualified_type  */
-#line 433 "src/ffi.y"
+#line 435 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 2009 "ffi.tab.c"
+#line 2299 "ffi.tab.c"
     break;
 
   case 68: /* specified_type: post_specified_type  */
-#line 437 "src/ffi.y"
+#line 439 "src/ffi.y"
                { (yyval.vword_val) = (yyvsp[0].vword_val); }
-#line 2015 "ffi.tab.c"
+#line 2305 "ffi.tab.c"
     break;
 
   case 69: /* specified_type: T_QUALIFIER specified_type  */
-#line 439 "src/ffi.y"
+#line 441 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 2021 "ffi.tab.c"
+#line 2311 "ffi.tab.c"
     break;
 
   case 70: /* specified_type: T_STORAGE specified_type  */
-#line 441 "src/ffi.y"
+#line 443 "src/ffi.y"
                { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[-1].keyword_val)), (yyvsp[0].vword_val)); }
-#line 2027 "ffi.tab.c"
+#line 2317 "ffi.tab.c"
     break;
 
   case 71: /* post_specified_type: plain_type  */
-#line 445 "src/ffi.y"
+#line 447 "src/ffi.y"
                     { (yyval.vword_val) = LIST((yyvsp[0].vword_val)); }
-#line 2033 "ffi.tab.c"
+#line 2323 "ffi.tab.c"
     break;
 
   case 72: /* post_specified_type: post_specified_type T_QUALIFIER  */
-#line 447 "src/ffi.y"
+#line 449 "src/ffi.y"
                     { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 2039 "ffi.tab.c"
+#line 2329 "ffi.tab.c"
     break;
 
   case 73: /* post_specified_type: post_specified_type T_TYPE  */
-#line 449 "src/ffi.y"
+#line 451 "src/ffi.y"
                     { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 2045 "ffi.tab.c"
+#line 2335 "ffi.tab.c"
     break;
 
   case 74: /* post_specified_type: post_specified_type T_STORAGE  */
-#line 451 "src/ffi.y"
+#line 453 "src/ffi.y"
                     { (yyval.vword_val) = CONS(keyword_to_vword((yyvsp[0].keyword_val)), (yyvsp[-1].vword_val)); }
-#line 2051 "ffi.tab.c"
+#line 2341 "ffi.tab.c"
     break;
 
   case 75: /* enum_list: T_VARIABLE  */
-#line 455 "src/ffi.y"
+#line 457 "src/ffi.y"
           { (yyval.vword_val) = LIST(VNULL, (yyvsp[0].vword_val), VFALSE); }
-#line 2057 "ffi.tab.c"
+#line 2347 "ffi.tab.c"
     break;
 
   case 76: /* enum_list: T_VARIABLE '=' expr  */
-#line 457 "src/ffi.y"
+#line 459 "src/ffi.y"
           { (yyval.vword_val) = LIST(VNULL, (yyvsp[-2].vword_val), (yyvsp[0].vword_val)); }
-#line 2063 "ffi.tab.c"
+#line 2353 "ffi.tab.c"
     break;
 
   case 77: /* enum_list: enum_list ',' T_VARIABLE  */
-#line 459 "src/ffi.y"
+#line 461 "src/ffi.y"
           { (yyval.vword_val) = LIST((yyvsp[-2].vword_val), (yyvsp[0].vword_val), VFALSE); }
-#line 2069 "ffi.tab.c"
+#line 2359 "ffi.tab.c"
     break;
 
   case 78: /* enum_list: enum_list ',' T_VARIABLE '=' expr  */
-#line 461 "src/ffi.y"
+#line 463 "src/ffi.y"
           { (yyval.vword_val) = LIST((yyvsp[-4].vword_val), (yyvsp[-2].vword_val), (yyvsp[0].vword_val)); }
-#line 2075 "ffi.tab.c"
+#line 2365 "ffi.tab.c"
     break;
 
   case 79: /* expr: T_INTEGER  */
-#line 465 "src/ffi.y"
+#line 467 "src/ffi.y"
      { if((yyvsp[0].int_val) > INT_MAX) VErrorC(global_runtime, "foreign-prase-header-c: failed to parse, integer exceeds 31 bit limit %llu", (yyvsp[0].int_val)); (yyval.vword_val) = VEncodeInt((yyvsp[0].int_val)); }
-#line 2081 "ffi.tab.c"
+#line 2371 "ffi.tab.c"
     break;
 
 
-#line 2085 "ffi.tab.c"
+#line 2375 "ffi.tab.c"
 
-      default: break;
-    }
+        default: break;
+      }
+    if (yychar_backup != yychar)
+      YY_LAC_DISCARD ("yychar change");
+  }
   /* User semantic actions sometimes alter yychar, and that requires
      that yytoken be updated with the new translation.  We take the
      approach of translating immediately before every use of yytoken.
@@ -2130,9 +2423,11 @@ yyerrlab:
       ++yynerrs;
       {
         yypcontext_t yyctx
-          = {yyssp, yytoken};
+          = {yyssp, yyesa, &yyes, &yyes_capacity, yytoken};
         char const *yymsgp = YY_("syntax error");
         int yysyntax_error_status;
+        if (yychar != YYEMPTY)
+          YY_LAC_ESTABLISH;
         yysyntax_error_status = yysyntax_error (&yymsg_alloc, &yymsg, &yyctx);
         if (yysyntax_error_status == 0)
           yymsgp = yymsg;
@@ -2237,6 +2532,10 @@ yyerrlab1:
       YY_STACK_PRINT (yyss, yyssp);
     }
 
+  /* If the stack popping above didn't lose the initial context for the
+     current lookahead token, the shift below will for sure.  */
+  YY_LAC_DISCARD ("error recovery");
+
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   *++yyvsp = yylval;
   YY_IGNORE_MAYBE_UNINITIALIZED_END
@@ -2300,12 +2599,14 @@ yyreturnlab:
   if (yyss != yyssa)
     YYSTACK_FREE (yyss);
 #endif
+  if (yyes != yyesa)
+    YYSTACK_FREE (yyes);
   if (yymsg != yymsgbuf)
     YYSTACK_FREE (yymsg);
   return yyresult;
 }
 
-#line 507 "src/ffi.y"
+#line 509 "src/ffi.y"
 
 
 bool parse_error = false;

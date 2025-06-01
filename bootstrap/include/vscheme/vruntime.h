@@ -415,7 +415,8 @@ enum PORT_FLAG_T {
 
 typedef struct DFILE DFILE;
 typedef struct VPort {
-  VObject base;
+  VSmallObject base;
+  int line;
   union {
     FILE * stream;
     DFILE * dstream;
@@ -972,10 +973,10 @@ ALWAYS_INLINE static inline void VInitEnv(VEnv * env, unsigned short num_vars, u
 }
 
 ALWAYS_INLINE static inline VPort VMakePortStream(FILE * stream, unsigned flags) {
-  return (VPort) { .base = VMakeObject(VPORT), .stream = stream, .flags = flags };
+  return (VPort) { .base = VMakeSmallObject(VPORT), .stream = stream, .flags = flags };
 }
 ALWAYS_INLINE static inline VPort VMakePortStream2(DFILE * dstream, unsigned flags) {
-  return (VPort) { .base = VMakeObject(VPORT), .dstream = dstream, .flags = flags | PFLAG_DFILE };
+  return (VPort) { .base = VMakeSmallObject(VPORT), .dstream = dstream, .flags = flags | PFLAG_DFILE };
 }
 
 ALWAYS_INLINE static inline VClosure VMakeClosure2(VFunc f, VEnv * env) {
@@ -994,7 +995,8 @@ ALWAYS_INLINE static inline VPair VMakePair(VWORD a, VWORD b) {
 #define VMakeSmallObject(_tag) ((VSmallObject) { .tag = _tag, .flags = 0, .pincount = 0 })
 #define VInitEnv(_env, _num_vars, _var_len, _upenv) \
   do { *_env = (VEnv) { .base = VMakeSmallObject(VENV), .num_vars = _num_vars, .var_len = _var_len, .up = _upenv }; } while(0)
-#define VMakePortStream(_stream, _flags) ((VPort) { .base = VMakeObject(VPORT), .stream = _stream, .flags = _flags })
+#define VMakePortStream(_stream, _flags) ((VPort) { .base = VMakeSmallObject(VPORT), .stream = _stream, .flags = _flags })
+#define VMakePortStream2(_stream, _flags) ((VPort) { .base = VMakeSmallObject(VPORT), .dstream = _stream, .flags = _flags })
 #define VMakeClosure2(_f, _env) ((VClosure) { .base = VMakeObject(VCLOSURE), .func = _f, .env = _env }) 
 #define VMakePair(_a, _b) ((VPair) { .base = VMakeObject(VPAIR), .first = _a, .rest = _b })
 #endif

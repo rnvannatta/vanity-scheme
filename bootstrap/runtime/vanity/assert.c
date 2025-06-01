@@ -29,14 +29,14 @@
 #include <stdarg.h>
 static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D37 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
 static struct { VBlob sym; char bytes[23]; } _V10_Dstring_D36 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 23 }, "_V0vanity_V0assert_V20" };
-VWEAK VWORD _V0format;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0format = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "format" };
 VWEAK VWORD _V0current__error__port;VWEAK struct { VBlob sym; char bytes[19]; } _VW_V0current__error__port = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 19 }, "current-error-port" };
+VWEAK VWORD _V0format;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0format = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "format" };
 VWEAK VWORD _V0equal_Q;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0equal_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "equal\?" };
 VWEAK VWORD _V0assert__equal;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0assert__equal = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "assert-equal" };
 static struct { VBlob sym; char bytes[41]; } _V10_Dstring_D35 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 41 }, "Assertion failed: ~A is not equal to ~A\n" };
 static __attribute__((constructor)) void VDllMain1() {
-  _V0format = VEncodePointer(VLookupConstant("_V0format", &_VW_V0format), VPOINTER_OTHER);
   _V0current__error__port = VEncodePointer(VLookupConstant("_V0current__error__port", &_VW_V0current__error__port), VPOINTER_OTHER);
+  _V0format = VEncodePointer(VLookupConstant("_V0format", &_VW_V0format), VPOINTER_OTHER);
   _V0equal_Q = VEncodePointer(VLookupConstant("_V0equal_Q", &_VW_V0equal_Q), VPOINTER_OTHER);
   _V0assert__equal = VEncodePointer(VLookupConstant("_V0assert__equal", &_VW_V0assert__equal), VPOINTER_OTHER);
 }
@@ -61,8 +61,8 @@ static void _V10_Dassert__equal_D9_k7(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.18 6 0) (close _V10_Dassert__equal_D9_k8) (bruijn ##.x.24 0 0) (##string ##.string.35) (bruijn ##.x.10 2 1) (bruijn ##.y.11 2 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 5,
+  // ((bruijn ##.x.19 5 0) (close _V10_Dassert__equal_D9_k8) (bruijn ##.x.24 0 0) (##string ##.string.35) (bruijn ##.x.10 2 1) (bruijn ##.y.11 2 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 5,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassert__equal_D9_k8, self)})),
       _var0,
       VEncodePointer(&_V10_Dstring_D35.sym, VPOINTER_OTHER),
@@ -79,11 +79,11 @@ static void _V10_Dassert__equal_D9_k6(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (bruijn ##.x.25 0 0)) ((bruijn ##.x.19 4 0) (close _V10_Dassert__equal_D9_k7)) ((bruijn ##.k.21 1 0) #f))
+  // (if (##inline ##vcore.not (bruijn ##.x.25 0 0)) ((bruijn ##.x.18 5 0) (close _V10_Dassert__equal_D9_k7)) ((bruijn ##.k.21 1 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         _var0))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassert__equal_D9_k7, self)})));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
@@ -232,10 +232,10 @@ static void _V0vanity_V0assert_V20_k3(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 1 0) (close _V0vanity_V0assert_V20_k4) 'current-error-port)
+  // ((bruijn ##..vcore.import.0 1 0) (close _V0vanity_V0assert_V20_k4) 'format)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k4, self)})),
-      _V0current__error__port);
+      _V0format);
 }
 static void _V0vanity_V0assert_V20_k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -247,10 +247,10 @@ static void _V0vanity_V0assert_V20_k2(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 0 0) (close _V0vanity_V0assert_V20_k3) 'format)
+  // ((bruijn ##..vcore.import.0 0 0) (close _V0vanity_V0assert_V20_k3) 'current-error-port)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0assert_V20_k3, self)})),
-      _V0format);
+      _V0current__error__port);
 }
 static void _V0vanity_V0assert_V20_k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
