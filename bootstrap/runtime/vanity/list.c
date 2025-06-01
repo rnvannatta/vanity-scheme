@@ -29,16 +29,16 @@
 #include <stdarg.h>
 static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D457 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
 static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D456 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0list_V20" };
-VWEAK VWORD _V0equal_Q;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0equal_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "equal\?" };
-VWEAK VWORD _V0caar;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0caar = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "caar" };
-VWEAK VWORD _V0_E;VWEAK struct { VBlob sym; char bytes[2]; } _VW_V0_E = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 2 }, "=" };
 VWEAK VWORD _V0values;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0values = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "values" };
-VWEAK VWORD _V0map;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0map = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "map" };
-VWEAK VWORD _V0cadddr;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0cadddr = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "cadddr" };
-VWEAK VWORD _V0caddr;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0caddr = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "caddr" };
-VWEAK VWORD _V0cadr;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0cadr = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "cadr" };
-VWEAK VWORD _V0list;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0list = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "list" };
 VWEAK VWORD _V0append;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0append = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "append" };
+VWEAK VWORD _V0map;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0map = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "map" };
+VWEAK VWORD _V0list;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0list = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "list" };
+VWEAK VWORD _V0cadr;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0cadr = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "cadr" };
+VWEAK VWORD _V0caddr;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0caddr = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "caddr" };
+VWEAK VWORD _V0cadddr;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0cadddr = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "cadddr" };
+VWEAK VWORD _V0_E;VWEAK struct { VBlob sym; char bytes[2]; } _VW_V0_E = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 2 }, "=" };
+VWEAK VWORD _V0caar;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0caar = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "caar" };
+VWEAK VWORD _V0equal_Q;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0equal_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "equal\?" };
 VWEAK VWORD _V0assoc__update;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0assoc__update = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "assoc-update" };
 VWEAK VWORD _V0assv__update;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0assv__update = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "assv-update" };
 VWEAK VWORD _V0assq__update;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0assq__update = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "assq-update" };
@@ -71,16 +71,16 @@ VWEAK VWORD _V0list__tabulate;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V0
 VWEAK VWORD _V0iota;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0iota = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "iota" };
 VWEAK VWORD _V40_V10vcore_Dcar;VWEAK VClosure _VW_V40_V10vcore_Dcar = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCar2, NULL };
 static __attribute__((constructor)) void VDllMain1() {
-  _V0equal_Q = VEncodePointer(VLookupConstant("_V0equal_Q", &_VW_V0equal_Q), VPOINTER_OTHER);
-  _V0caar = VEncodePointer(VLookupConstant("_V0caar", &_VW_V0caar), VPOINTER_OTHER);
-  _V0_E = VEncodePointer(VLookupConstant("_V0_E", &_VW_V0_E), VPOINTER_OTHER);
   _V0values = VEncodePointer(VLookupConstant("_V0values", &_VW_V0values), VPOINTER_OTHER);
-  _V0map = VEncodePointer(VLookupConstant("_V0map", &_VW_V0map), VPOINTER_OTHER);
-  _V0cadddr = VEncodePointer(VLookupConstant("_V0cadddr", &_VW_V0cadddr), VPOINTER_OTHER);
-  _V0caddr = VEncodePointer(VLookupConstant("_V0caddr", &_VW_V0caddr), VPOINTER_OTHER);
-  _V0cadr = VEncodePointer(VLookupConstant("_V0cadr", &_VW_V0cadr), VPOINTER_OTHER);
-  _V0list = VEncodePointer(VLookupConstant("_V0list", &_VW_V0list), VPOINTER_OTHER);
   _V0append = VEncodePointer(VLookupConstant("_V0append", &_VW_V0append), VPOINTER_OTHER);
+  _V0map = VEncodePointer(VLookupConstant("_V0map", &_VW_V0map), VPOINTER_OTHER);
+  _V0list = VEncodePointer(VLookupConstant("_V0list", &_VW_V0list), VPOINTER_OTHER);
+  _V0cadr = VEncodePointer(VLookupConstant("_V0cadr", &_VW_V0cadr), VPOINTER_OTHER);
+  _V0caddr = VEncodePointer(VLookupConstant("_V0caddr", &_VW_V0caddr), VPOINTER_OTHER);
+  _V0cadddr = VEncodePointer(VLookupConstant("_V0cadddr", &_VW_V0cadddr), VPOINTER_OTHER);
+  _V0_E = VEncodePointer(VLookupConstant("_V0_E", &_VW_V0_E), VPOINTER_OTHER);
+  _V0caar = VEncodePointer(VLookupConstant("_V0caar", &_VW_V0caar), VPOINTER_OTHER);
+  _V0equal_Q = VEncodePointer(VLookupConstant("_V0equal_Q", &_VW_V0equal_Q), VPOINTER_OTHER);
   _V0assoc__update = VEncodePointer(VLookupConstant("_V0assoc__update", &_VW_V0assoc__update), VPOINTER_OTHER);
   _V0assv__update = VEncodePointer(VLookupConstant("_V0assv__update", &_VW_V0assv__update), VPOINTER_OTHER);
   _V0assq__update = VEncodePointer(VLookupConstant("_V0assq__update", &_VW_V0assq__update), VPOINTER_OTHER);
@@ -754,8 +754,8 @@ static void _V10_Dsplit__at_D31_lambda18(VRuntime * runtime, VEnv * statics, int
   "-- expected 3~N"
   , argc);
  }
-  // ((bruijn ##.x.160 9 0) (bruijn ##.k.225 0 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.lst.89 1 1)) (bruijn ##.t.91 0 1)) (bruijn ##.d.92 0 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
+  // ((bruijn ##.x.157 12 0) (bruijn ##.k.225 0 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.lst.89 1 1)) (bruijn ##.t.91 0 1)) (bruijn ##.d.92 0 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 3,
       _var0,
       VInlineCons2(runtime,
         VInlineCar2(runtime,
@@ -775,12 +775,12 @@ static void _V10_Dsplit__at_D31_lambda16(VRuntime * runtime, VEnv * statics, int
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (if (##inline ##vcore.eq? (bruijn ##.i.90 0 2) 0) ((bruijn ##.x.160 8 0) (bruijn ##.k.220 0 0) '() (bruijn ##.lst.89 0 1)) (##vcore.call-with-values (bruijn ##.k.220 0 0) (close _V10_Dsplit__at_D31_lambda17) (close _V10_Dsplit__at_D31_lambda18)))
+  // (if (##inline ##vcore.eq? (bruijn ##.i.90 0 2) 0) ((bruijn ##.x.157 11 0) (bruijn ##.k.220 0 0) '() (bruijn ##.lst.89 0 1)) (##vcore.call-with-values (bruijn ##.k.220 0 0) (close _V10_Dsplit__at_D31_lambda17) (close _V10_Dsplit__at_D31_lambda18)))
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var2,
         VEncodeInt(0l)))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
       _var0,
       VNULL,
       _var1);
@@ -879,8 +879,8 @@ static void _V10_Dconcatenate_D34_k24(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.166 3 0) (bruijn ##.k.238 1 0) (##inline ##vcore.car (bruijn ##.lst-of-lsts.99 1 1)) (bruijn ##.x.241 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 3,
+  // ((bruijn ##.x.158 11 0) (bruijn ##.k.238 1 0) (##inline ##vcore.car (bruijn ##.lst-of-lsts.99 1 1)) (bruijn ##.x.241 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
       statics->vars[0],
       VInlineCar2(runtime,
         statics->vars[1]),
@@ -918,11 +918,11 @@ static void _V10_Dzip_D35_lambda22(VRuntime * runtime, VEnv * statics, int argc,
  }
  VWORD _varargs = VNULL;
  V_GATHER_VARARGS_VARIADIC(&_varargs, 1, argc, _var0);
-  // (##vcore.apply (bruijn ##.k.243 0 0) (bruijn ##.x.161 7 0) (bruijn ##.x.165 3 0) (bruijn ##.lsts.100 0 1))
+  // (##vcore.apply (bruijn ##.k.243 0 0) (bruijn ##.x.159 9 0) (bruijn ##.x.160 8 0) (bruijn ##.lsts.100 0 1))
     VCallFuncWithGC(runtime, (VFunc)VApply2, 4,
       _var0,
-      VGetArg(statics, 7-1, 0),
-      statics->up->up->vars[0],
+      VGetArg(statics, 9-1, 0),
+      VGetArg(statics, 8-1, 0),
       _varargs);
 }
 static void _V10_Dunzip1_D36_lambda23(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
@@ -931,8 +931,8 @@ static void _V10_Dunzip1_D36_lambda23(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 2~N"
   , argc);
  }
-  // ((bruijn ##.x.161 7 0) (bruijn ##.k.244 0 0) (##intrinsic ##vcore.car) (bruijn ##.lst.101 0 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
+  // ((bruijn ##.x.159 9 0) (bruijn ##.k.244 0 0) (##intrinsic ##vcore.car) (bruijn ##.lst.101 0 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
       _var0,
       _V40_V10vcore_Dcar,
       _var1);
@@ -943,8 +943,8 @@ static void _V10_Dunzip2_D37_k26(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.160 10 0) (bruijn ##.k.245 2 0) (bruijn ##.x.246 1 0) (bruijn ##.x.247 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
+  // ((bruijn ##.x.157 13 0) (bruijn ##.k.245 2 0) (bruijn ##.x.246 1 0) (bruijn ##.x.247 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 3,
       statics->up->vars[0],
       statics->vars[0],
       _var0);
@@ -959,10 +959,10 @@ static void _V10_Dunzip2_D37_k25(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.161 8 0) (close _V10_Dunzip2_D37_k26) (bruijn ##.x.164 5 0) (bruijn ##.lst.102 1 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
+  // ((bruijn ##.x.159 10 0) (close _V10_Dunzip2_D37_k26) (bruijn ##.x.161 8 0) (bruijn ##.lst.102 1 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip2_D37_k26, self)})),
-      VGetArg(statics, 5-1, 0),
+      VGetArg(statics, 8-1, 0),
       statics->vars[1]);
 }
 static void _V10_Dunzip2_D37_lambda24(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
@@ -976,8 +976,8 @@ static void _V10_Dunzip2_D37_lambda24(VRuntime * runtime, VEnv * statics, int ar
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.161 7 0) (close _V10_Dunzip2_D37_k25) (##intrinsic ##vcore.car) (bruijn ##.lst.102 0 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
+  // ((bruijn ##.x.159 9 0) (close _V10_Dunzip2_D37_k25) (##intrinsic ##vcore.car) (bruijn ##.lst.102 0 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip2_D37_k25, self)})),
       _V40_V10vcore_Dcar,
       _var1);
@@ -988,8 +988,8 @@ static void _V10_Dunzip3_D38_k29(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.160 11 0) (bruijn ##.k.248 3 0) (bruijn ##.x.249 2 0) (bruijn ##.x.250 1 0) (bruijn ##.x.251 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 4,
+  // ((bruijn ##.x.157 14 0) (bruijn ##.k.248 3 0) (bruijn ##.x.249 2 0) (bruijn ##.x.250 1 0) (bruijn ##.x.251 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 4,
       statics->up->up->vars[0],
       statics->up->vars[0],
       statics->vars[0],
@@ -1005,10 +1005,10 @@ static void _V10_Dunzip3_D38_k28(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.161 9 0) (close _V10_Dunzip3_D38_k29) (bruijn ##.x.163 7 0) (bruijn ##.lst.103 2 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
+  // ((bruijn ##.x.159 11 0) (close _V10_Dunzip3_D38_k29) (bruijn ##.x.162 8 0) (bruijn ##.lst.103 2 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip3_D38_k29, self)})),
-      VGetArg(statics, 7-1, 0),
+      VGetArg(statics, 8-1, 0),
       statics->up->vars[1]);
 }
 static void _V10_Dunzip3_D38_k27(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -1021,10 +1021,10 @@ static void _V10_Dunzip3_D38_k27(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.161 8 0) (close _V10_Dunzip3_D38_k28) (bruijn ##.x.164 5 0) (bruijn ##.lst.103 1 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
+  // ((bruijn ##.x.159 10 0) (close _V10_Dunzip3_D38_k28) (bruijn ##.x.161 8 0) (bruijn ##.lst.103 1 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip3_D38_k28, self)})),
-      VGetArg(statics, 5-1, 0),
+      VGetArg(statics, 8-1, 0),
       statics->vars[1]);
 }
 static void _V10_Dunzip3_D38_lambda25(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
@@ -1038,8 +1038,8 @@ static void _V10_Dunzip3_D38_lambda25(VRuntime * runtime, VEnv * statics, int ar
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.161 7 0) (close _V10_Dunzip3_D38_k27) (##intrinsic ##vcore.car) (bruijn ##.lst.103 0 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
+  // ((bruijn ##.x.159 9 0) (close _V10_Dunzip3_D38_k27) (##intrinsic ##vcore.car) (bruijn ##.lst.103 0 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip3_D38_k27, self)})),
       _V40_V10vcore_Dcar,
       _var1);
@@ -1050,8 +1050,8 @@ static void _V10_Dunzip4_D39_k33(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.160 12 0) (bruijn ##.k.252 4 0) (bruijn ##.x.253 3 0) (bruijn ##.x.254 2 0) (bruijn ##.x.255 1 0) (bruijn ##.x.256 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 5,
+  // ((bruijn ##.x.157 15 0) (bruijn ##.k.252 4 0) (bruijn ##.x.253 3 0) (bruijn ##.x.254 2 0) (bruijn ##.x.255 1 0) (bruijn ##.x.256 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 0)), 5,
       statics->up->up->up->vars[0],
       statics->up->up->vars[0],
       statics->up->vars[0],
@@ -1068,10 +1068,10 @@ static void _V10_Dunzip4_D39_k32(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.161 10 0) (close _V10_Dunzip4_D39_k33) (bruijn ##.x.162 9 0) (bruijn ##.lst.104 3 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
+  // ((bruijn ##.x.159 12 0) (close _V10_Dunzip4_D39_k33) (bruijn ##.x.163 8 0) (bruijn ##.lst.104 3 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip4_D39_k33, self)})),
-      VGetArg(statics, 9-1, 0),
+      VGetArg(statics, 8-1, 0),
       statics->up->up->vars[1]);
 }
 static void _V10_Dunzip4_D39_k31(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -1084,10 +1084,10 @@ static void _V10_Dunzip4_D39_k31(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.161 9 0) (close _V10_Dunzip4_D39_k32) (bruijn ##.x.163 7 0) (bruijn ##.lst.104 2 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
+  // ((bruijn ##.x.159 11 0) (close _V10_Dunzip4_D39_k32) (bruijn ##.x.162 8 0) (bruijn ##.lst.104 2 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip4_D39_k32, self)})),
-      VGetArg(statics, 7-1, 0),
+      VGetArg(statics, 8-1, 0),
       statics->up->vars[1]);
 }
 static void _V10_Dunzip4_D39_k30(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -1100,10 +1100,10 @@ static void _V10_Dunzip4_D39_k30(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.161 8 0) (close _V10_Dunzip4_D39_k31) (bruijn ##.x.164 5 0) (bruijn ##.lst.104 1 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
+  // ((bruijn ##.x.159 10 0) (close _V10_Dunzip4_D39_k31) (bruijn ##.x.161 8 0) (bruijn ##.lst.104 1 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip4_D39_k31, self)})),
-      VGetArg(statics, 5-1, 0),
+      VGetArg(statics, 8-1, 0),
       statics->vars[1]);
 }
 static void _V10_Dunzip4_D39_lambda26(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
@@ -1117,8 +1117,8 @@ static void _V10_Dunzip4_D39_lambda26(VRuntime * runtime, VEnv * statics, int ar
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.161 7 0) (close _V10_Dunzip4_D39_k30) (##intrinsic ##vcore.car) (bruijn ##.lst.104 0 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
+  // ((bruijn ##.x.159 9 0) (close _V10_Dunzip4_D39_k30) (##intrinsic ##vcore.car) (bruijn ##.lst.104 0 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip4_D39_k30, self)})),
       _V40_V10vcore_Dcar,
       _var1);
@@ -1129,8 +1129,8 @@ static void _V10_Dunzip5_D40_k38(VRuntime * runtime, VEnv * statics, int argc, V
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.160 13 0) (bruijn ##.k.257 5 0) (bruijn ##.x.258 4 0) (bruijn ##.x.259 3 0) (bruijn ##.x.260 2 0) (bruijn ##.x.261 1 0) (bruijn ##.x.262 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 6,
+  // ((bruijn ##.x.157 16 0) (bruijn ##.k.257 5 0) (bruijn ##.x.258 4 0) (bruijn ##.x.259 3 0) (bruijn ##.x.260 2 0) (bruijn ##.x.261 1 0) (bruijn ##.x.262 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 0)), 6,
       VGetArg(statics, 5-1, 0),
       statics->up->up->up->vars[0],
       statics->up->up->vars[0],
@@ -1144,8 +1144,8 @@ static void _V10_Dunzip5_D40_lambda28(VRuntime * runtime, VEnv * statics, int ar
   "-- expected 2~N"
   , argc);
  }
-  // ((bruijn ##.x.162 11 0) (bruijn ##.k.263 0 0) (##inline ##vcore.cdr (bruijn ##.e.106 0 1)))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 2,
+  // ((bruijn ##.x.163 10 0) (bruijn ##.k.263 0 0) (##inline ##vcore.cdr (bruijn ##.e.106 0 1)))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 2,
       _var0,
       VInlineCdr2(runtime,
         _var1));
@@ -1160,8 +1160,8 @@ static void _V10_Dunzip5_D40_k37(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.161 11 0) (close _V10_Dunzip5_D40_k38) (close _V10_Dunzip5_D40_lambda28) (bruijn ##.lst.105 4 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
+  // ((bruijn ##.x.159 13 0) (close _V10_Dunzip5_D40_k38) (close _V10_Dunzip5_D40_lambda28) (bruijn ##.lst.105 4 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip5_D40_k38, self)})),
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip5_D40_lambda28, self)})),
       statics->up->up->up->vars[1]);
@@ -1176,10 +1176,10 @@ static void _V10_Dunzip5_D40_k36(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.161 10 0) (close _V10_Dunzip5_D40_k37) (bruijn ##.x.162 9 0) (bruijn ##.lst.105 3 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
+  // ((bruijn ##.x.159 12 0) (close _V10_Dunzip5_D40_k37) (bruijn ##.x.163 8 0) (bruijn ##.lst.105 3 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip5_D40_k37, self)})),
-      VGetArg(statics, 9-1, 0),
+      VGetArg(statics, 8-1, 0),
       statics->up->up->vars[1]);
 }
 static void _V10_Dunzip5_D40_k35(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -1192,10 +1192,10 @@ static void _V10_Dunzip5_D40_k35(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.161 9 0) (close _V10_Dunzip5_D40_k36) (bruijn ##.x.163 7 0) (bruijn ##.lst.105 2 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
+  // ((bruijn ##.x.159 11 0) (close _V10_Dunzip5_D40_k36) (bruijn ##.x.162 8 0) (bruijn ##.lst.105 2 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip5_D40_k36, self)})),
-      VGetArg(statics, 7-1, 0),
+      VGetArg(statics, 8-1, 0),
       statics->up->vars[1]);
 }
 static void _V10_Dunzip5_D40_k34(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -1208,10 +1208,10 @@ static void _V10_Dunzip5_D40_k34(VRuntime * runtime, VEnv * statics, int argc, V
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.161 8 0) (close _V10_Dunzip5_D40_k35) (bruijn ##.x.164 5 0) (bruijn ##.lst.105 1 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
+  // ((bruijn ##.x.159 10 0) (close _V10_Dunzip5_D40_k35) (bruijn ##.x.161 8 0) (bruijn ##.lst.105 1 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip5_D40_k35, self)})),
-      VGetArg(statics, 5-1, 0),
+      VGetArg(statics, 8-1, 0),
       statics->vars[1]);
 }
 static void _V10_Dunzip5_D40_lambda27(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
@@ -1225,8 +1225,8 @@ static void _V10_Dunzip5_D40_lambda27(VRuntime * runtime, VEnv * statics, int ar
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.161 7 0) (close _V10_Dunzip5_D40_k34) (##intrinsic ##vcore.car) (bruijn ##.lst.105 0 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 3,
+  // ((bruijn ##.x.159 9 0) (close _V10_Dunzip5_D40_k34) (##intrinsic ##vcore.car) (bruijn ##.lst.105 0 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dunzip5_D40_k34, self)})),
       _V40_V10vcore_Dcar,
       _var1);
@@ -1423,10 +1423,10 @@ static void _V10_Dpartition_D43_k44(VRuntime * runtime, VEnv * statics, int argc
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.287 0 0) ((bruijn ##.x.160 10 0) (bruijn ##.k.286 1 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.lst.116 2 2)) (bruijn ##.l.117 1 1)) (bruijn ##.r.118 1 2)) ((bruijn ##.x.160 10 0) (bruijn ##.k.286 1 0) (bruijn ##.l.117 1 1) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.lst.116 2 2)) (bruijn ##.r.118 1 2))))
+  // (if (bruijn ##.p.287 0 0) ((bruijn ##.x.157 13 0) (bruijn ##.k.286 1 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.lst.116 2 2)) (bruijn ##.l.117 1 1)) (bruijn ##.r.118 1 2)) ((bruijn ##.x.157 13 0) (bruijn ##.k.286 1 0) (bruijn ##.l.117 1 1) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.lst.116 2 2)) (bruijn ##.r.118 1 2))))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 3,
       statics->vars[0],
       VInlineCons2(runtime,
         VInlineCar2(runtime,
@@ -1434,7 +1434,7 @@ _var0)) {
         statics->vars[1]),
       statics->vars[2]);
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 3,
       statics->vars[0],
       statics->vars[1],
       VInlineCons2(runtime,
@@ -1473,11 +1473,11 @@ static void _V10_Dpartition_D43_lambda32(VRuntime * runtime, VEnv * statics, int
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (if (##inline ##vcore.null? (bruijn ##.lst.116 0 2)) ((bruijn ##.x.160 8 0) (bruijn ##.k.282 0 0) '() '()) (##vcore.call-with-values (bruijn ##.k.282 0 0) (close _V10_Dpartition_D43_lambda33) (close _V10_Dpartition_D43_lambda34)))
+  // (if (##inline ##vcore.null? (bruijn ##.lst.116 0 2)) ((bruijn ##.x.157 11 0) (bruijn ##.k.282 0 0) '() '()) (##vcore.call-with-values (bruijn ##.k.282 0 0) (close _V10_Dpartition_D43_lambda33) (close _V10_Dpartition_D43_lambda34)))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var2))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 3,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
       _var0,
       VNULL,
       VNULL);
@@ -1723,8 +1723,8 @@ static void _V10_Dsplit__while_D46_lambda39(VRuntime * runtime, VEnv * statics, 
   "-- expected 3~N"
   , argc);
  }
-  // ((bruijn ##.x.160 11 0) (bruijn ##.k.313 0 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.lst.124 3 2)) (bruijn ##.t.125 0 1)) (bruijn ##.d.126 0 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 3,
+  // ((bruijn ##.x.157 14 0) (bruijn ##.k.313 0 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.lst.124 3 2)) (bruijn ##.t.125 0 1)) (bruijn ##.d.126 0 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 3,
       _var0,
       VInlineCons2(runtime,
         VInlineCar2(runtime,
@@ -1742,10 +1742,10 @@ static void _V10_Dsplit__while_D46_k57(VRuntime * runtime, VEnv * statics, int a
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.310 0 0) ((bruijn ##.x.160 10 0) (bruijn ##.k.309 2 0) '() (bruijn ##.lst.124 2 2)) (##vcore.call-with-values (bruijn ##.k.309 2 0) (close _V10_Dsplit__while_D46_lambda38) (close _V10_Dsplit__while_D46_lambda39)))
+  // (if (bruijn ##.p.310 0 0) ((bruijn ##.x.157 13 0) (bruijn ##.k.309 2 0) '() (bruijn ##.lst.124 2 2)) (##vcore.call-with-values (bruijn ##.k.309 2 0) (close _V10_Dsplit__while_D46_lambda38) (close _V10_Dsplit__while_D46_lambda39)))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 3,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 3,
       statics->up->vars[0],
       VNULL,
       statics->up->vars[2]);
@@ -2030,8 +2030,8 @@ static void _V10_Dinsert_D50_lambda45(VRuntime * runtime, VEnv * statics, int ar
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // ((bruijn ##.x.159 9 0) (close _V10_Dinsert_D50_k62) (bruijn ##.i.138 0 2) 0)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
+  // ((bruijn ##.x.164 4 0) (close _V10_Dinsert_D50_k62) (bruijn ##.i.138 0 2) 0)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dinsert_D50_k62, self)})),
       _var2,
       VEncodeInt(0l));
@@ -2094,8 +2094,8 @@ static void _V10_Ddelete_D51_lambda46(VRuntime * runtime, VEnv * statics, int ar
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((bruijn ##.x.159 9 0) (close _V10_Ddelete_D51_k64) (bruijn ##.i.141 0 2) 0)
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 3,
+  // ((bruijn ##.x.164 4 0) (close _V10_Ddelete_D51_k64) (bruijn ##.i.141 0 2) 0)
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 3,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Ddelete_D51_k64, self)})),
       _var2,
       VEncodeInt(0l));
@@ -2157,7 +2157,7 @@ static void _V10_Dassq__update_D52_lambda47(VRuntime * runtime, VEnv * statics, 
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // (if (##inline ##vcore.null? (bruijn ##.lst.142 0 1)) ((bruijn ##.k.348 0 0) (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.143 0 2) (bruijn ##.val.144 0 3)) '())) ((bruijn ##.x.158 10 0) (close _V10_Dassq__update_D52_k66) (bruijn ##.lst.142 0 1)))
+  // (if (##inline ##vcore.null? (bruijn ##.lst.142 0 1)) ((bruijn ##.k.348 0 0) (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.143 0 2) (bruijn ##.val.144 0 3)) '())) ((bruijn ##.x.165 3 0) (close _V10_Dassq__update_D52_k66) (bruijn ##.lst.142 0 1)))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
@@ -2168,7 +2168,7 @@ VInlineNullP2(runtime,
         _var3),
         VNULL));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassq__update_D52_k66, self)})),
       _var1);
 }
@@ -2244,7 +2244,7 @@ static void _V10_Dassv__update_D53_lambda48(VRuntime * runtime, VEnv * statics, 
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // (if (##inline ##vcore.null? (bruijn ##.lst.145 0 1)) ((bruijn ##.k.358 0 0) (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.146 0 2) (bruijn ##.val.147 0 3)) '())) ((bruijn ##.x.158 10 0) (close _V10_Dassv__update_D53_k68) (bruijn ##.lst.145 0 1)))
+  // (if (##inline ##vcore.null? (bruijn ##.lst.145 0 1)) ((bruijn ##.k.358 0 0) (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.146 0 2) (bruijn ##.val.147 0 3)) '())) ((bruijn ##.x.165 3 0) (close _V10_Dassv__update_D53_k68) (bruijn ##.lst.145 0 1)))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
@@ -2255,7 +2255,7 @@ VInlineNullP2(runtime,
         _var3),
         VNULL));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassv__update_D53_k68, self)})),
       _var1);
 }
@@ -2319,20 +2319,20 @@ static void _V10_Dassoc__update_D54_k71(VRuntime * runtime, VEnv * statics, int 
       _var0);
 }
 __attribute__((used)) static void _V20CaseError__V10_Dassoc__update_D54_lambda49(VRuntime * runtime, VEnv * statics, int argc, ...) {
- // (_V10_Dassoc__update_D54_lambda49 #t (4 ((bruijn ##.assoc-update.54 1 30) (bruijn ##.k.368 0 0) (bruijn ##.lst.148 0 1) (bruijn ##.x.149 0 2) (bruijn ##.val.150 0 3) (bruijn ##.x.157 11 0))) (5 (if (##inline ##vcore.null? (bruijn ##.lst.151 0 1)) ((bruijn ##.k.369 0 0) (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.152 0 2) (bruijn ##.val.153 0 3)) '())) ((bruijn ##.x.158 10 0) (close _V10_Dassoc__update_D54_k71) (bruijn ##.lst.151 0 1)))))
+ // (_V10_Dassoc__update_D54_lambda49 #t (4 ((bruijn ##.assoc-update.54 1 30) (bruijn ##.k.368 0 0) (bruijn ##.lst.148 0 1) (bruijn ##.x.149 0 2) (bruijn ##.val.150 0 3) (bruijn ##.x.166 2 0))) (5 (if (##inline ##vcore.null? (bruijn ##.lst.151 0 1)) ((bruijn ##.k.369 0 0) (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.152 0 2) (bruijn ##.val.153 0 3)) '())) ((bruijn ##.x.165 3 0) (close _V10_Dassoc__update_D54_k71) (bruijn ##.lst.151 0 1)))))
  VErrorC(runtime, "Not enough arguments to _V10_Dassoc__update_D54_lambda49, got ~D~N"
  "-- expected 4~N"
  "-- expected 5~N"
  , argc);
 }
 __attribute__((used)) static void _V20Case0__V10_Dassoc__update_D54_lambda49(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3) {
-  // ((bruijn ##.assoc-update.54 1 30) (bruijn ##.k.368 0 0) (bruijn ##.lst.148 0 1) (bruijn ##.x.149 0 2) (bruijn ##.val.150 0 3) (bruijn ##.x.157 11 0))
+  // ((bruijn ##.assoc-update.54 1 30) (bruijn ##.k.368 0 0) (bruijn ##.lst.148 0 1) (bruijn ##.x.149 0 2) (bruijn ##.val.150 0 3) (bruijn ##.x.166 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[30]), 5,
       _var0,
       _var1,
       _var2,
       _var3,
-      VGetArg(statics, 11-1, 0));
+      statics->up->vars[0]);
 }
 __attribute__((used)) static void _V20Case1__V10_Dassoc__update_D54_lambda49(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4) {
   struct { VEnv self; VWORD argv[5]; } container;
@@ -2343,7 +2343,7 @@ __attribute__((used)) static void _V20Case1__V10_Dassoc__update_D54_lambda49(VRu
   self->vars[2] = _var2;
   self->vars[3] = _var3;
   self->vars[4] = _var4;
-  // (if (##inline ##vcore.null? (bruijn ##.lst.151 0 1)) ((bruijn ##.k.369 0 0) (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.152 0 2) (bruijn ##.val.153 0 3)) '())) ((bruijn ##.x.158 10 0) (close _V10_Dassoc__update_D54_k71) (bruijn ##.lst.151 0 1)))
+  // (if (##inline ##vcore.null? (bruijn ##.lst.151 0 1)) ((bruijn ##.k.369 0 0) (##inline ##vcore.cons (##inline ##vcore.cons (bruijn ##.x.152 0 2) (bruijn ##.val.153 0 3)) '())) ((bruijn ##.x.165 3 0) (close _V10_Dassoc__update_D54_k71) (bruijn ##.lst.151 0 1)))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
@@ -2354,7 +2354,7 @@ VInlineNullP2(runtime,
         _var3),
         VNULL));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dassoc__update_D54_k71, self)})),
       _var1);
 }
@@ -2553,10 +2553,10 @@ static void _V0vanity_V0list_V20_k11(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 9 0) (close _V0vanity_V0list_V20_k12) 'append)
+  // ((bruijn ##..vcore.import.0 9 0) (close _V0vanity_V0list_V20_k12) 'equal?)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k12, self)})),
-      _V0append);
+      _V0equal_Q);
 }
 static void _V0vanity_V0list_V20_k10(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -2568,10 +2568,10 @@ static void _V0vanity_V0list_V20_k10(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 8 0) (close _V0vanity_V0list_V20_k11) 'list)
+  // ((bruijn ##..vcore.import.0 8 0) (close _V0vanity_V0list_V20_k11) 'caar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k11, self)})),
-      _V0list);
+      _V0caar);
 }
 static void _V0vanity_V0list_V20_k9(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -2583,10 +2583,10 @@ static void _V0vanity_V0list_V20_k9(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 7 0) (close _V0vanity_V0list_V20_k10) 'cadr)
+  // ((bruijn ##..vcore.import.0 7 0) (close _V0vanity_V0list_V20_k10) '=)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k10, self)})),
-      _V0cadr);
+      _V0_E);
 }
 static void _V0vanity_V0list_V20_k8(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -2598,10 +2598,10 @@ static void _V0vanity_V0list_V20_k8(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 6 0) (close _V0vanity_V0list_V20_k9) 'caddr)
+  // ((bruijn ##..vcore.import.0 6 0) (close _V0vanity_V0list_V20_k9) 'cadddr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k9, self)})),
-      _V0caddr);
+      _V0cadddr);
 }
 static void _V0vanity_V0list_V20_k7(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -2613,10 +2613,10 @@ static void _V0vanity_V0list_V20_k7(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 5 0) (close _V0vanity_V0list_V20_k8) 'cadddr)
+  // ((bruijn ##..vcore.import.0 5 0) (close _V0vanity_V0list_V20_k8) 'caddr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k8, self)})),
-      _V0cadddr);
+      _V0caddr);
 }
 static void _V0vanity_V0list_V20_k6(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -2628,10 +2628,10 @@ static void _V0vanity_V0list_V20_k6(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 4 0) (close _V0vanity_V0list_V20_k7) 'map)
+  // ((bruijn ##..vcore.import.0 4 0) (close _V0vanity_V0list_V20_k7) 'cadr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k7, self)})),
-      _V0map);
+      _V0cadr);
 }
 static void _V0vanity_V0list_V20_k5(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -2643,10 +2643,10 @@ static void _V0vanity_V0list_V20_k5(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 3 0) (close _V0vanity_V0list_V20_k6) 'values)
+  // ((bruijn ##..vcore.import.0 3 0) (close _V0vanity_V0list_V20_k6) 'list)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k6, self)})),
-      _V0values);
+      _V0list);
 }
 static void _V0vanity_V0list_V20_k4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -2658,10 +2658,10 @@ static void _V0vanity_V0list_V20_k4(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 2 0) (close _V0vanity_V0list_V20_k5) '=)
+  // ((bruijn ##..vcore.import.0 2 0) (close _V0vanity_V0list_V20_k5) 'map)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k5, self)})),
-      _V0_E);
+      _V0map);
 }
 static void _V0vanity_V0list_V20_k3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -2673,10 +2673,10 @@ static void _V0vanity_V0list_V20_k3(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 1 0) (close _V0vanity_V0list_V20_k4) 'caar)
+  // ((bruijn ##..vcore.import.0 1 0) (close _V0vanity_V0list_V20_k4) 'append)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k4, self)})),
-      _V0caar);
+      _V0append);
 }
 static void _V0vanity_V0list_V20_k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -2688,10 +2688,10 @@ static void _V0vanity_V0list_V20_k2(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 0 0) (close _V0vanity_V0list_V20_k3) 'equal?)
+  // ((bruijn ##..vcore.import.0 0 0) (close _V0vanity_V0list_V20_k3) 'values)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0list_V20_k3, self)})),
-      _V0equal_Q);
+      _V0values);
 }
 static void _V0vanity_V0list_V20_k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {

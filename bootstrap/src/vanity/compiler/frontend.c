@@ -3875,8 +3875,8 @@ static void _V0handle__exception_k151(VRuntime * runtime, VEnv * statics, int ar
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (write (close _V0handle__exception_k152) (bruijn ##.err.43 3 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "write")), 2,
+  // (display (close _V0handle__exception_k152) (bruijn ##.err.43 3 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VLookupGlobalVarFast2(runtime, "display")), 2,
       (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0handle__exception_k152, self)})),
       statics->up->up->vars[1]);
 }
