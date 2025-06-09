@@ -86,7 +86,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |cdr                            | Yes         |             |            |
 |ceiling                        | Yes         |             |            |
 |char->integer                  | Yes         |             |            |
-|char-alphabetic?               |             |             |            |
+|char-alphabetic?               | Yes         |             |            |
 |char-ci<=?                     |             |             |            |
 |char-ci<?                      |             |             |            |
 |char-ci=?                      |             |             |            |
@@ -95,7 +95,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |char-downcase                  |             |             |            |
 |char-foldcase                  |             |             |            |
 |char-lower-case?               |             |             |            |
-|char-numeric?                  |             |             |            |
+|char-numeric?                  | Yes         |             |            |
 |char-ready?                    |             |             |            |
 |char-upcase                    |             |             |            |
 |char-upper-case?               |             |             |            |
@@ -105,7 +105,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |char=?                         |             |             |            |
 |char>=?                        |             |             |            |
 |char>?                         |             |             |            |
-|char?                          |             |             |            |
+|char?                          | Yes         |             |            |
 |close-input-port               |             |             |            |
 |close-output-port              |             |             |            |
 |close-port                     | Yes         |             |            |
@@ -214,14 +214,14 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |load                           | Yes*        |             |            |
 |log                            | Yes         |             |            |
 |magnitude                      | Low Prio    |             |            |
-|make-bytevector                |             |             |            |
+|make-bytevector                | Yes         |             |            |
 |make-list                      | Yes         |             |            |
 |make-parameter                 | Yes         |             |            |
 |make-polar                     | Low Prio    |             |            |
 |make-promise                   |             |             |            |
 |make-rectangular               | Low Prio    |             |            |
 |make-string                    | Yes         | ?           |            |
-|make-vector                    |             |             |            |
+|make-vector                    | Yes         |             |            |
 |map                            | Yes         |             |            |
 |max                            | Yes         |             |            |
 |member                         | Yes         |             |            |
@@ -235,7 +235,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |not                            | Yes         |             |            |
 |null-environment               | Low Prio    |             |            |
 |null?                          | Yes         |             |            |
-|number->string                 |             |             |            |
+|number->string                 | Yes         |             |            |
 |number?                        | Yes         |             |            |
 |numerator                      | Low Prio    |             |            |
 |#o                             |             |             |            |
@@ -407,17 +407,17 @@ Maximum number of function arguments is 65535, including the hidden continuation
 |cdr                            | Yes         |             |            |
 |cxr                            | Yes         |             |            |
 |list-ref                       | Yes         |             |            |
-|first                          |             |             |            |
-|second                         |             |             |            |
-|third                          |             |             |            |
-|fourth                         |             |             |            |
-|fifth                          |             |             |            |
-|sixth                          |             |             |            |
-|seventh                        |             |             |            |
-|eighth                         |             |             |            |
-|ninth                          |             |             |            |
-|tenth                          |             |             |            |
-|car+cdr                        |             |             |            |
+|first                          | Yes         |             |            |
+|second                         | Yes         |             |            |
+|third                          | Yes         |             |            |
+|fourth                         | Yes         |             |            |
+|fifth                          | Yes         |             |            |
+|sixth                          | Yes         |             |            |
+|seventh                        | Yes         |             |            |
+|eighth                         | Yes         |             |            |
+|ninth                          | Yes         |             |            |
+|tenth                          | Yes         |             |            |
+|car+cdr                        | Yes         |             |            |
 |take                           | Yes         |             |            |
 |drop                           | Yes         |             |            |
 |take-right                     | Yes         |             |            |
@@ -433,7 +433,7 @@ Maximum number of function arguments is 65535, including the hidden continuation
 |append                         | Yes         |             |            |
 |concatenate                    |             |             |            |
 |reverse                        | Yes         |             |            |
-|append!                        |             |             |            |
+|append!                        | Yes         |             |            |
 |concatenate!                   |             |             |            |
 |reverse!                       |             |             |            |
 |append-reverse                 |             |             |            |
@@ -455,8 +455,8 @@ Maximum number of function arguments is 65535, including the hidden continuation
 |unfold-right                   |             |             |            |
 |pair-fold-right                |             |             |            |
 |reduce-right                   |             |             |            |
-|append-map                     |             |             |            |
-|append-map!                    |             |             |            |
+|append-map                     | Yes         |             |            |
+|append-map!                    | Yes         |             |            |
 |map!                           |             |             |            |
 |pair-for-each                  |             |             |            |
 |filter-map                     |             |             |            |
