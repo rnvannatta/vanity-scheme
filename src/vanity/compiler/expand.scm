@@ -172,9 +172,10 @@
     (let loop ((defines '()) (constants '()) (body full-body))
       (match body
         ((('define (f . xs) . body) . rest)
+         (sanitize-define-procedure f xs body)
          (loop (cons `(define ,f (lambda ,xs . ,body)) defines) constants rest))
         ((('define x body) . rest)
-         (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
+         (sanitize-define x body)
          (loop (cons `(define ,x ,body) defines) constants rest))
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
 
@@ -188,6 +189,7 @@
         (('define-constant . noise) (compiler-error "malformed define-constant" `(define . ,noise)))
 
         ((('define-values formals body) . rest)
+         (sanitize-define-values formals body)
          (let* ((names (undot formals))
                 (mangles (map gensym names)))
            (loop
@@ -298,19 +300,21 @@
          (set! mangled-imports (append (map mangle-library libs) mangled-imports))
          (list))
         (('define (f . xs) . body)
-         (if (not (symbol? f)) (compiler-error "define's first argument is not a symbol" f))
+         (sanitize-define-procedure f xs body)
          (set! defines (cons `(define ,f ,(expand-syntax `(lambda ,xs . ,body))) defines))
          (list))
+        ; TODO this case necessary still?
         (('define f ('lambda . body))
-         (if (not (symbol? f)) (compiler-error "define's first argument is not a symbol" f))
+         (sanitize-define f `(lambda . ,body))
          (set! defines (cons `(define ,f ,(expand-syntax `(lambda . ,body))) defines))
          (list))
+        ; TODO this case necessary still?
         (('define f ('case-lambda . body))
-         (if (not (symbol? f)) (compiler-error "define's first argument is not a symbol" f))
+         (sanitize-define f `(case-lambda . ,body))
          (set! defines (cons `(define ,f ,(expand-syntax `(case-lambda . ,body))) defines))
          (list))
         (('define x y)
-         (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
+         (sanitize-define x y)
          (if just-defines
              (begin
                (set! defines (cons `(define ,x ,(expand-syntax y)) defines))
@@ -473,30 +477,77 @@
     (if (pair? args)
         (or (eqv? x (car args)) (memtail x (cdr args)))
         (eqv? x args)))
-  (define (valid-args? args)
-    (or (symbol? args)
-        (null? args)
-        (and (pair? args)
-             (if (memtail (car args) (cdr args))
-                 (compiler-error "duplicate variable in lambda args" (car args))
-                 #t)
-             (valid-args? (cdr args)))))
+  (define (invalid-args? args)
+    (cond ((symbol? args) #f)
+          ((null? args) #f)
+          ((pair? args)
+           (if (memtail (car args) (cdr args))
+               (cons "duplicate variable in arg list:" (car args))
+               (invalid-args? (cdr args))))
+          (else
+            (cons "argument is not a symbol:" args))))
+  (define (sanitize-define x val)
+    (if (not (symbol? x)) (compiler-error "define must define a symbol" `(define ,x ,val))))
+  (define (sanitize-define-values xs val)
+    (cond ((invalid-args? xs) =>
+           (lambda (e)
+             (compiler-error
+               "invalid define-values"
+               (car e)
+               (cdr e)
+               `(define-values ,xs ...))))
+          (else #f)))
+  (define (sanitize-define-procedure f xs body)
+    (if (not (symbol? f)) (compiler-error "define must define a symbol" `(define (,f . ,xs) ...)))
+    (if (null? body) (compiler-error "empty define body" `(define (,f . ,xs))))
+    (cond ((invalid-args? xs) =>
+           (lambda (e)
+             (compiler-error
+               "invalid define"
+               (car e)
+               (cdr e)
+               `(define (,f . ,xs) ...))))
+          (else #f)))
+
   (define (expand-lambda expr)
     (match expr
       ((args . body)
-       (if (not (valid-args? args)) (compiler-error "invalid lambda args" args))
+       #;(if (not (valid-args? args)) (compiler-error "invalid lambda args" args))
+       (cond ((invalid-args? args) =>
+              (lambda (e)
+                (compiler-error
+                  "invalid lambda"
+                  (car e)
+                  (cdr e)
+                  `(lambda ,args ...))))
+             (else #f))
+       (if (null? body) (compiler-error "empty lambda body" (cons 'lambda expr)))
        `(,args ,(expand-body body)))
       (_ (compiler-error "invalid lambda" `(lambda . ,expr)))))
   (define (expand-let expr)
     (match expr
-      ((((xs vals) ...) . body) (expand-syntax `((lambda ,xs . ,body) . ,vals)))
-      ((loop ((xs vals) ...) . body) (expand-syntax `(letrec ((,loop (lambda ,xs . ,body))) (,loop . ,vals))))
+      ((((xs vals) ...) . body)
+       (if (null? body) (compiler-error "empty let body" (cons 'let expr)))
+       (cond ((invalid-args? xs) =>
+              (lambda (e)
+                (compiler-error
+                  "invalid let"
+                  (car e)
+                  (cdr e)
+                  `(let ,(map list xs vals) ...))))
+             (else #f))
+       (expand-syntax `((lambda ,xs . ,body) . ,vals)))
+      ((loop ((xs vals) ...) . body)
+       (if (null? body) (compiler-error "empty let body" (cons 'let expr)))
+       (expand-syntax `(letrec ((,loop (lambda ,xs . ,body))) (,loop . ,vals))))
+      ((args . body)
+       (compiler-error "malformed let arguments" `(let ,args ...)))
       (_ (compiler-error "malformed let" `(let . ,expr)))))
 
   (define (expand-define expr)
     (match expr
       (('define x body)
-       (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
+       (sanitize-define x body)
        (list `(define ,x ,(expand-syntax body))))
       (else (compiler-error "malformed define" expr))))
 
@@ -518,13 +569,16 @@
       (('unload-library lib)
        (list `(##vcore.unload-library ,(mangle-library lib))))
 
-      (('define (f . xs) . body) (expand-define `(define ,f (lambda ,xs . ,body))))
+      (('define (f . xs) . body)
+       (sanitize-define-procedure f xs body)
+       (expand-define `(define ,f (lambda ,xs . ,body))))
       (('define x body)
-       (if (not (symbol? x)) (compiler-error "define's first argument is not a symbol" x))
-       (list `(define ,x ,(expand-syntax body))))
+       (sanitize-define x body)
+       (expand-define expr))
       (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
 
       (('define-values formals body)
+       (sanitize-define-values formals body)
        (let* ((names (undot formals))
               (mangles (map gensym names)))
          (expand-toplevel
@@ -543,6 +597,7 @@
                    ,@(map (lambda (name mangle) `(set! ,name ,mangle)) names mangles)))))
            paths
            architecture)))
+      (('define-values . noise) (compiler-error "malformed define-values" `(define-values . ,noise)))
 
       (('##vcore.declare f l)
        (if (not (string? f)) (compiler-error "##vcore.declare's first argument is not a string" f))
@@ -636,15 +691,25 @@
       (('or x y) `(or ,(expand-syntax x) ,(expand-syntax y)))
       (('or x . y) (expand-syntax `(or ,x (or . ,y))))
 
-      (('cond ('else . body)) (expand-syntax `(begin . ,body)))
-      (('cond (p '=> f) . rest) (let ((foobar (gensym "x"))) (expand-syntax `(let ((,foobar ,p)) (if ,foobar (,f ,foobar) (cond . ,rest))))))
-      (('cond (p . body) . rest) (expand-syntax `(if ,p (begin . ,body) (cond . ,rest))))
+      (('cond ('else . body))
+       (expand-syntax `(let () . ,body)))
+      (('cond (p '=> f) . rest)
+       (let ((foobar (gensym "x")))
+         (expand-syntax
+           `(let ((,foobar ,p))
+             (if ,foobar (,f ,foobar) (cond . ,rest))))))
+      (('cond (p . body) . rest)
+       (expand-syntax `(if ,p (let () . ,body) (cond . ,rest))))
       (('cond) `(error "exhausted cond statement"))
       (('cond . noise) (compiler-error "malformed cond" `(cond . ,noise)))
 
       (('case x . rest) (let ((foobar (gensym "x"))) (expand-syntax `(let ((,foobar ,x)) (case-iter ,foobar . ,rest)))))
-      (('case-iter x ('else . body)) (expand-syntax `(begin . ,body)))
-      (('case-iter x ((toks ...) . body) . rest) (expand-syntax `(if (or . ,(map (lambda (y) `(eqv? ,x (quote ,y))) toks)) (begin . ,body) (case-iter ,x . ,rest))))
+      (('case-iter x ('else . body)) (expand-syntax `(let () . ,body)))
+      (('case-iter x ((toks ...) . body) . rest)
+       (expand-syntax
+         `(if (or . ,(map (lambda (y) `(eqv? ,x (quote ,y))) toks))
+              (let () . ,body)
+              (case-iter ,x . ,rest))))
       (('case-iter x) `(error "exhausted case statement"))
       ; FIXME don't expose case iteration like this - should probably compile to hash table or memv?
 
@@ -674,10 +739,10 @@
 
       (('when p . body)
        (expand-syntax
-         `(if ,p (begin . ,body) #void)))
+         `(if ,p (let () . ,body) #void)))
       (('unless p . body)
        (expand-syntax
-         `(if ,p #void (begin . ,body))))
+         `(if ,p #void (let () . ,body))))
 
 
       (('set! y x)

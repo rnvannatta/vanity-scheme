@@ -28,14 +28,19 @@
   (export
     iota
     list-tabulate
+    first second third fourth fifth sixth seventh eighth ninth tenth
+    car+cdr
     take drop
     take-right drop-right
     split-at
-    fold fold-right
+    append!
     concatenate
     zip
     unzip1 unzip2 unzip3 unzip4 unzip5
-    count filter partition
+    count
+    fold fold-right
+    append-map append-map!
+    filter partition
     take-while drop-while split-while
     any? every?
     list-index
@@ -74,6 +79,18 @@
           (cons (proc i)
                 (loop (+ i 1))))))
 
+  (define first car)
+  (define second cadr)
+  (define third caddr)
+  (define fourth cadddr)
+  (define (fifth x) (list-ref x 4))
+  (define (sixth x) (list-ref x 5))
+  (define (seventh x) (list-ref x 6))
+  (define (eighth x) (list-ref x 7))
+  (define (ninth x) (list-ref x 8))
+  (define (tenth x) (list-ref x 9))
+  (define (car+cdr x) (values (car x) (cdr x)))
+
   (define (take lst i)
     (if (eq? i 0) '()
         (cons (car lst) 
@@ -98,16 +115,26 @@
             (values
               (cons (car lst) t) d)))))
 
-  (define fold
+  (define append!
     (case-lambda
-      ((kons knil ks)
-       (if (null? ks) knil
-           (fold kons (kons (car ks) knil) (cdr ks))))))
-  (define fold-right
-    (case-lambda
-      ((kons knil ks)
-       (if (null? ks) knil
-           (kons (car ks) (fold-right kons knil (cdr ks)))))))
+      (() '())
+      ((x) x)
+      ((x y)
+       (if (null? x)
+           y
+           (begin
+             (let loop ((x x))
+               (if (null? (cdr x))
+                   (set-cdr! x y)
+                   (loop (cdr x))))
+             x)))
+      ((x y z)
+       (append! x (append! y z)))
+      ((x y z w)
+       (append! x (append! y (append! z w))))
+      (lsts
+       (fold-right append! '() lsts))))
+
   (define (concatenate lst-of-lsts)
     (if (null? lst-of-lsts)
         '()
@@ -145,6 +172,61 @@
       (if (null? lst) n
           (loop (+ n (if (pred (car lst)) 1 0)) pred (cdr lst)))))
 
+  (define fold
+    (case-lambda
+      ((kons knil ks)
+       (if (null? ks) knil
+           (fold kons (kons (car ks) knil) (cdr ks))))))
+  (define fold-right
+    (case-lambda
+      ((kons knil ks)
+       (if (null? ks) knil
+           (kons (car ks) (fold-right kons knil (cdr ks)))))))
+
+  (define append-map
+    (case-lambda 
+      ((f xs)
+       (let loop ((xs xs))
+         (if (null? xs)
+             '()
+             (append (f (car xs)) (loop (cdr xs))))))
+      ((f xs ys)
+       (let loop ((xs xs) (ys ys))
+         (if (or (null? xs) (null? ys))
+             '()
+             (append (f (car xs) (car ys)) (loop (cdr xs) (cdr ys))))))
+      ((f xs ys zs)
+       (let loop ((xs xs) (ys ys) (zs zs))
+         (if (or (null? xs) (null? ys) (null? zs))
+             '()
+             (append (f (car xs) (car ys) (car zs)) (loop (cdr xs) (cdr ys) (cdr zs))))))
+      ((f . lsts)
+       (let loop ((lsts lsts))
+        (if (any? null? lsts)
+            '()
+            (append (apply f (map car lsts)) (loop (map cdr lsts))))))))
+  (define append-map!
+    (case-lambda 
+      ((f xs)
+       (let loop ((xs xs))
+         (if (null? xs)
+             '()
+             (append! (f (car xs)) (loop (cdr xs))))))
+      ((f xs ys)
+       (let loop ((xs xs) (ys ys))
+         (if (or (null? xs) (null? ys))
+             '()
+             (append! (f (car xs) (car ys)) (loop (cdr xs) (cdr ys))))))
+      ((f xs ys zs)
+       (let loop ((xs xs) (ys ys) (zs zs))
+         (if (or (null? xs) (null? ys) (null? zs))
+             '()
+             (append! (f (car xs) (car ys) (car zs)) (loop (cdr xs) (cdr ys) (cdr zs))))))
+      ((f . lsts)
+       (let loop ((lsts lsts))
+        (if (any? null? lsts)
+            '()
+            (append! (apply f (map car lsts)) (loop (map cdr lsts))))))))
   (define (filter pred lst)
     (cond ((null? lst) lst)
           ((pred (car lst)) (cons (car lst) (filter pred (cdr lst))))
@@ -174,11 +256,13 @@
               (cons (car lst) t) d)))))
 
   (define (any? p lst)
-    (cond ((null? p) #f)
+    (cond ((null? lst) #f)
           ((p (car lst)) #t)
           (else (any? p (cdr lst)))))
   (define (every? p lst)
-    (not (any? (lambda (e) (not (p e))) lst)))
+    (cond ((null? lst) #f)
+          ((p (car lst)) (every? p (cdr lst)))
+          (else #f)))
 
   (define (list-index p lst)
     (let loop ((i 0) (lst lst))
