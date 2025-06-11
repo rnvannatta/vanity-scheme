@@ -121,7 +121,7 @@ static inline int port_ferror(VPort * p) {
 static inline int port_fputd(double d, VPort * p) {
   // longest double is the smallest double, around 1080 digits
   char buf[1536];
-  snprintf(buf, sizeof buf, "%f", d);
+  d_snprintf(buf, sizeof buf, "%r.1f", d);
   return port_fputs(buf, p);
 }
 static inline int port_fputli(long i, VPort * p) {
