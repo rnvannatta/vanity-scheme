@@ -52,7 +52,13 @@
          ((##vcore.-) "VSub2")
          ((##vcore.*) "VMul2")
          ((##vcore./) "VDiv2")
+
          ((##vcore.cmp) "VCmp2")
+         ((##vcore.<=) "VCmpLe")
+         ((##vcore.<) "VCmpLt")
+         ((##vcore.=) "VCmpEq")
+         ((##vcore.>=) "VCmpGe")
+         ((##vcore.>) "VCmpGt")
 
          ((##vcore.quotient) "VQuot2")
          ((##vcore.remainder) "VRem2")
@@ -411,7 +417,13 @@
          ((##vcore.-) ##vcore.-)
          ((##vcore.*) ##vcore.*)
          ((##vcore./) ##vcore./)
+
          ((##vcore.cmp) ##vcore.cmp)
+         ((##vcore.<=) ##vcore.<=)
+         ((##vcore.<) ##vcore.<)
+         ((##vcore.=) ##vcore.=)
+         ((##vcore.>=) ##vcore.>=)
+         ((##vcore.>) ##vcore.>)
 
          ((##vcore.quotient) ##vcore.quotient)
          ((##vcore.remainder) ##vcore.remainder)

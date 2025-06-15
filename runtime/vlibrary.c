@@ -572,6 +572,100 @@ V_BEGIN_FUNC(VCmp2, "cmp", 3, k, x, y)
   V_CALL(k, runtime, VEncodeInt(ret));
 V_END_FUNC
 
+//VWORD _VBasic_VAdd_Binary(VRuntime * runtime, VEnv * statics, VWORD a, VWORD b) {
+#define V_IMPLEMENT_COMPARE_BASIC_BINARY(op, Name, scm_name) \
+  VWORD _VBasic_ ## Name ## _Binary(VRuntime * runtime, VEnv * statics, VWORD _a, VWORD _b) { \
+    double a, b; \
+    if(VIsDouble(_a)) a = VDecodeNumber(_a); \
+    else if(VWordType(_a) == VIMM_INT) a = (double)VDecodeInt(_a); \
+    else a = 0, VErrorC(runtime, scm_name ": not a number ~A", _a); \
+    \
+    if(VIsDouble(_b)) b = VDecodeNumber(_b); \
+    else if(VWordType(_b) == VIMM_INT) b = (double)VDecodeInt(_b); \
+    else b = 0, VErrorC(runtime, scm_name ": not a number ~A", _b); \
+    return VEncodeBool((a op b)); \
+  }
+#define V_IMPLEMENT_COMPARE_PUREC(op, Name, scm_name) \
+  V_BEGIN_FUNC_MIN(Name, scm_name, 3, k, _a, _b) \
+    double a, b; \
+    if(VIsDouble(_a)) a = VDecodeNumber(_a); \
+    else if(VWordType(_a) == VIMM_INT) a = (double)VDecodeInt(_a); \
+    else a = 0, VErrorC(runtime, scm_name ": arg 1 not a number ~A", _a); \
+    \
+    if(VIsDouble(_b)) b = VDecodeNumber(_b); \
+    else if(VWordType(_b) == VIMM_INT) b = (double)VDecodeInt(_b); \
+    else b = 0, VErrorC(runtime, scm_name ": arg 2 not a number ~A", _b); \
+    \
+    if(!(a op b)) V_CALL(k, runtime, VFALSE); \
+    \
+    for(int i = 3; i < argc; i++) { \
+      a = b; \
+      _b = self->vars[i]; \
+      if(VIsDouble(_b)) b = VDecodeNumber(_b); \
+      else if(VWordType(_b) == VIMM_INT) b = (double)VDecodeInt(_b); \
+      else VErrorC(runtime, scm_name ": arg ~D not a number ~A", argc - 1, _b); \
+      if(!(a op b)) V_CALL(k, runtime, VFALSE); \
+    } \
+    V_CALL(k, runtime, VTRUE); \
+  V_END_FUNC
+#define V_IMPLEMENT_COMPARE_FAST_BINARY(op, Name, scm_name) \
+  SYSV_CALL __attribute__((used)) static void Name ## _Binary(V_CORE_ARGS, VWORD k, VWORD a, VWORD b) { \
+    VWORD ret = _VBasic_ ## Name ## _Binary(runtime, statics, a, b); \
+    V_CALL(k, runtime, ret); \
+  } \
+
+#define V_IMPLEMENT_COMPARE_FAST_SYSV_X64(op, Name, scm_name) \
+  SYSV_CALL void Name(V_CORE_ARGS, VWORD k, VWORD a, VWORD b, ...); \
+  asm( \
+  ".intel_syntax noprefix\n" \
+  ".globl " # Name "\n" \
+  ".type " # Name ", @function\n" \
+  # Name ":\n" \
+  " cmp " ARGC_REG ", 3\n" \
+  " je " # Name "_Binary\n" \
+  " jmp " # Name "_Varargs\n" \
+  );
+#define V_IMPLEMENT_COMPARE_FAST_WINDOWS_X64(op, Name, scm_name) \
+  SYSV_CALL void Name(V_CORE_ARGS, VWORD k, VWORD a, VWORD b, ...); \
+  asm( \
+  ".intel_syntax noprefix\n" \
+  ".globl " # Name "\n" \
+  # Name ":\n" \
+  " cmp " ARGC_REG ", 3\n" \
+  " je " # Name "_Binary\n" \
+  " jmp " # Name "_Varargs\n" \
+  );
+
+#ifdef VANITY_PURE_C
+
+#define V_IMPLEMENT_COMPARE(op, Name, scm_name) \
+  V_IMPLEMENT_COMPARE_BASIC_BINARY(op, Name, scm_name) \
+  V_IMPLEMENT_COMPARE_PUREC(op, Name, scm_name)
+
+#elif defined(__linux__)
+
+#define V_IMPLEMENT_COMPARE(op, Name, scm_name) \
+  V_IMPLEMENT_COMPARE_BASIC_BINARY(op, Name, scm_name) \
+  V_IMPLEMENT_COMPARE_FAST_BINARY(op, Name, scm_name) \
+  SYSV_CALL __attribute__((used)) static V_IMPLEMENT_COMPARE_PUREC(op, Name ## _Varargs, scm_name) \
+  V_IMPLEMENT_COMPARE_FAST_SYSV_X64(op, Name, scm_name) \
+
+#elif defined(_WIN64)
+
+#define V_IMPLEMENT_COMPARE(op, Name, scm_name) \
+  V_IMPLEMENT_COMPARE_BASIC_BINARY(op, Name, scm_name) \
+  V_IMPLEMENT_COMPARE_FAST_BINARY(op, Name, scm_name) \
+  SYSV_CALL __attribute__((used)) static V_IMPLEMENT_COMPARE_PUREC(op, Name ## _Varargs, scm_name) \
+  V_IMPLEMENT_COMPARE_FAST_WINDOWS_X64(op, Name, scm_name) \
+
+#endif
+
+V_IMPLEMENT_COMPARE(<, VCmpLt, "<")
+V_IMPLEMENT_COMPARE(<=, VCmpLe, "<=")
+V_IMPLEMENT_COMPARE(==, VCmpEq, "=")
+V_IMPLEMENT_COMPARE(>=, VCmpGe, ">=")
+V_IMPLEMENT_COMPARE(>, VCmpGt, ">")
+
 // type predicates
 V_BEGIN_FUNC_BASIC(VNullP2, "null?", 1, x)
   return VEncodeBool(VBits(x) == VBits(VNULL));
@@ -1045,6 +1139,17 @@ V_BEGIN_FUNC(VHashTableDelete, "hash-table-delete!", 3, k, _table, key)
 
   assert((table->flags & HFLAG_EQ) || (table->flags & HFLAG_EQV));
   uint64_t capacity = vec->len / 3;
+
+  // shrinkage. with a bit of histerisis
+  if(table->occupancy < 0.9 * table->load_factor * (capacity / 2)) {
+    VVector * newvec = V_ALLOCA_VECTOR(3 * (capacity / 2));
+    VGrowHashTable(runtime, table, capacity / 2, newvec);
+
+    vec = newvec;
+    capacity = vec->len / 3;
+  }
+
+try_again: ;
   uint64_t tries = 0;
   uint64_t hash = (table->flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
   uint64_t index = hash & (capacity-1);
@@ -1068,6 +1173,13 @@ V_BEGIN_FUNC(VHashTableDelete, "hash-table-delete!", 3, k, _table, key)
     }
     index = (index + 1) & (capacity-1);
     tries++;
+  }
+  if(!found && (table->flags & HFLAG_DIRTY)) {
+    table->flags ^= HFLAG_DIRTY;
+    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
+    VGrowHashTable(runtime, table, capacity, newvec);
+    vec = newvec;
+    goto try_again;
   }
   if(!found) {
     V_CALL(k, runtime, VVOID);
@@ -1393,6 +1505,7 @@ V_BEGIN_FUNC(VOpenOutputString2, "open-output-string", 1, k)
 #ifdef USE_DFILE_OSTREAM
   VPort port = {
     .base.tag = VPORT,
+    .line = 1,
     .dstream = f,
     .flags = PFLAG_WRITE | PFLAG_OSTRING | PFLAG_DFILE,
   };

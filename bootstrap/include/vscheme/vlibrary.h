@@ -34,7 +34,13 @@ V_DECLARE_FUNC_MIN(VAdd2, k);
 V_DECLARE_FUNC_MIN(VSub2, k, x);
 
 V_DECLARE_FUNC_MIN(VMul2, k);
+
 V_DECLARE_FUNC(VCmp2, k, a, b);
+V_DECLARE_FUNC_MIN(VCmpLt, k, a, b);
+V_DECLARE_FUNC_MIN(VCmpLe, k, a, b);
+V_DECLARE_FUNC_MIN(VCmpEq, k, a, b);
+V_DECLARE_FUNC_MIN(VCmpGe, k, a, b);
+V_DECLARE_FUNC_MIN(VCmpGt, k, a, b);
 
 V_DECLARE_FUNC(VQuot2, k, x, y);
 V_DECLARE_FUNC(VRem2, k, x, y);
