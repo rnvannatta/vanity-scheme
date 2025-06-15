@@ -667,6 +667,7 @@ SYSV_CALL void VErrorC(VRuntime * runtime, const char * str, ...) {
 #ifdef ERROR_USE_DFILE
     VPort p = {
       .base.tag = VPORT,
+      .line = 1,
       .dstream = f,
       .flags = PFLAG_WRITE | PFLAG_READ | PFLAG_DFILE,
     };
