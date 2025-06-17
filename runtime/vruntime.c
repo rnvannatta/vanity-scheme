@@ -1219,7 +1219,15 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   if(!is_major) {
     // tracked mutations can be ignored during major gcs
     // because the issue was heap pointing to stack
-    // but we're crawling heap and stack this gc
+    // but we're crawling heap and stack in a major gc
+
+    // for the same reason, we can ignore hash table tracking during major gcs
+    // have to do this first before any forwarding
+    if(runtime->num_tracked_hash_tables) {
+      for(unsigned i = 0; i < runtime->num_tracked_hash_tables; i++) {
+        runtime->tracked_hash_tables[i]->flags |= HFLAG_DIRTY;
+      }
+    }
     if(runtime->VTrackedMutations) {
       for(unsigned i = 0; i < runtime->VNumTrackedMutations; i++) {
         // of interest is that because container is in the heap
@@ -1236,12 +1244,6 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
         }
 
         *slot = VMoveDispatch(runtime, *slot);
-      }
-    }
-    // for the same reason, we can ignore hash table tracking during major gcs
-    if(runtime->num_tracked_hash_tables) {
-      for(unsigned i = 0; i < runtime->num_tracked_hash_tables; i++) {
-        runtime->tracked_hash_tables[i]->flags |= HFLAG_DIRTY;
       }
     }
 
@@ -1914,6 +1916,8 @@ void VTrackHashTable(VRuntime * runtime, VHashTable * table, VWORD key) {
     runtime->tracked_hash_tables_size *= 2;
     runtime->tracked_hash_tables = realloc(runtime->tracked_hash_tables, sizeof(VHashTable*)*runtime->tracked_hash_tables_size);
   }
+  // eww what in the fuck was I thinking
+  // this results in catastrophe
   if(VIsPointer(key)) {
     void *keyptr = VDecodePointer(key);
     // also check for correct hash table type
