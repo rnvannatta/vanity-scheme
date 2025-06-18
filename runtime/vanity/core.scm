@@ -78,7 +78,7 @@
     ; hash table
     make-hash-table hash-table-ref hash-table-set! hash-table-delete! hash-table->alist
     ; chars
-    char->integer number->string
+    char->integer integer->char number->string
     char-numeric? char-alphabetic?
     ; io
     current-output-port current-error-port current-input-port open-input-file open-output-file close-port
@@ -917,6 +917,7 @@
   ; chars
 
   (define-constant char->integer ##vcore.char-integer)
+  (define-constant integer->char ##vcore.integer->char)
   ; lol horrendous
   (define (number->string x) (sprintf "~A" x))
   (define (char-numeric? x)
