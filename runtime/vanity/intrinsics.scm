@@ -218,6 +218,7 @@
          ; Characters
 
          ((##vcore.char-integer) "VCharInt2")
+         ((##vcore.integer->char) "VIntChar")
          
          ; IO
          ((##vcore.stdin->port) "VStdinPort")
@@ -588,6 +589,7 @@
          ; Characters
 
          ((##vcore.char-integer) ##vcore.char-integer)
+         ((##vcore.integer->char) ##vcore.integer->char)
          
          ; IO
          ((##vcore.stdin->port) ##vcore.stdin->port)

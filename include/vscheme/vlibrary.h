@@ -138,7 +138,7 @@ V_DECLARE_FUNC(VSymbolString2, k, sym);
 // chars
 
 V_DECLARE_FUNC_BASIC(VCharInt2, c);
-//void VIntChar2(V_CORE_ARGS, VWORD k, VWORD int);
+V_DECLARE_FUNC_BASIC(VIntChar, i);
 
 // ports
 V_DECLARE_FUNC(VStdinPort, k);
