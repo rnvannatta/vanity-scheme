@@ -985,7 +985,16 @@ SYSV_CALL static void VCheneyHashTable(VRuntime * runtime, VHashTable * table) {
   // FIXME: this should be done in a VMoveHashTable
   // and the storage type of hash table's vector
   // should be something other than an actual vector
-  // so as to allow us to skip scanning the vector twice
+  // so as to allow us to skip scanning the vector twice during major gcs
+
+  // keys pointing to STACK mem cause their tables to always be marked dirty during a minor gc.
+  // and minor gcs only move STACK.
+  // fibers reaps also always mark their tables dirty.
+  // so we need to consider major gcs. any key pointing to HEAP during a major GC has been moved.
+  bool major = runtime->VIsMajorGC;
+  if(!major)
+    return;
+
   VVector * vec = VCheckedDecodeVector2(runtime, _vec, "garbage-collect/hash-table");
   for(int i = 0; i < vec->len/3; i++) {
 
@@ -995,7 +1004,7 @@ SYSV_CALL static void VCheneyHashTable(VRuntime * runtime, VHashTable * table) {
     vec->arr[3*i+2] = VMoveDispatch(runtime, vec->arr[3*i+2]);
 
     VWORD key_mov = VMoveDispatch(runtime, key);
-    if(VBits(key_mov) != VBits(key))
+    if(major && VIsPointer(key_mov) && VMemLocation(runtime, VDecodePointer(key_mov)) == HEAP_MEM)
       table->flags |= HFLAG_DIRTY;
     vec->arr[3*i+0] = key_mov;
   }
@@ -1173,6 +1182,7 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   size_t after_gc_size = runtime->VHeapPos - runtime->VHeap + stack_len + fiber_size;
   bool is_unplanned_major = runtime->VHeap + after_gc_size >= runtime->VHeapEnd - runtime->public.VStackSize;
   bool is_major = runtime->VForceMajorGC || is_unplanned_major;
+  runtime->VIsMajorGC = is_major;
   static VDebugInfo major_info = { "Garbage Collection (major)" };
   static VDebugInfo minor_info = { "Garbage Collection (minor)" };
   VRecordCallNoInline(runtime, is_major ? &major_info : &minor_info);
@@ -1920,7 +1930,6 @@ void VTrackHashTable(VRuntime * runtime, VHashTable * table, VWORD key) {
   // this results in catastrophe
   if(VIsPointer(key)) {
     void *keyptr = VDecodePointer(key);
-    // also check for correct hash table type
     if(VMemLocation(runtime, keyptr) == STACK_MEM)
       runtime->tracked_hash_tables[runtime->num_tracked_hash_tables++] = table;
   }

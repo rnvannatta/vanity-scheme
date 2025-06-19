@@ -879,6 +879,8 @@ SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VHashTable * table, 
   uint64_t poverty = 0;
   bool found = false;
 
+  VTrackHashTable(runtime, table, key);
+
   while(tries <= capacity) {
     VWORD test = vec->arr[3*index+0];
 
@@ -919,8 +921,6 @@ SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VHashTable * table, 
     poverty++;
   }
 
-  VTrackHashTable(runtime, table, key);
-
   vec->arr[3*index+0] = key;
   vec->arr[3*index+1] = VEncodeInt(poverty);
   vec->arr[3*index+2] = val;
@@ -958,6 +958,7 @@ SYSV_CALL static void VGrowHashTable(VRuntime * runtime, VHashTable * table, int
     VWORD val = oldvec->arr[3*i+2];
     assert(!VHashTableSetImpl(runtime, table, vec, key, val, table->flags));
   }
+  table->flags &= ~HFLAG_DIRTY;
 }
 
 V_BEGIN_FUNC(VMakeHashTable, "make-hash-table", 4, k, eq, hash, _len)
@@ -1034,7 +1035,6 @@ try_again: ;
     tries++;
   }
   if(!found && (table->flags & HFLAG_DIRTY)) {
-    table->flags ^= HFLAG_DIRTY;
     VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
     VGrowHashTable(runtime, table, capacity, newvec);
     vec = newvec;
@@ -1063,7 +1063,29 @@ V_BEGIN_FUNC(VHashTableSet, "hash-table-set!", 4, k, _table, key, val)
     capacity = vec->len / 3;
   }
 
-try_again: ;
+  // have to always clean dirty tables for assignment
+  // because otherwise the poverty metrics are
+  // wrong and can cause duplicate keys
+  // this is probably a hair pessimistic but omg idk
+  // im tearing my hair out on these tables
+  // 
+  // ok i think the repro is this:
+  // hashing pointer A into table like so:
+  // - - D C - A
+  // - - 0 0 - 0
+  // where it's scrambled
+  // and say A's new hash lands at D
+  // then the bug is that A tests against D
+  // fails, then tests against C, it has a greater povery
+  // so it swaps with C!!!
+  // the bug was that I need to consider a poverty swap a
+  // opportunity to check for rehashing!!!
+  if(table->flags & HFLAG_DIRTY) {
+    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
+    VGrowHashTable(runtime, table, capacity, newvec);
+    vec = newvec;
+  }
+
   uint64_t tries = 0;
   uint64_t hash = (table->flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
   uint64_t index = hash & (capacity-1);
@@ -1071,6 +1093,8 @@ try_again: ;
   uint64_t poverty = 0;
 
   bool found = false;
+
+  VTrackHashTable(runtime, table, key);
 
   while(tries <= capacity) {
     VWORD test = vec->arr[3*index+0];
@@ -1111,17 +1135,8 @@ try_again: ;
     tries++;
     poverty++;
   }
-  if(!found && (table->flags & HFLAG_DIRTY)) {
-    table->flags ^= HFLAG_DIRTY;
-    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
-    VGrowHashTable(runtime, table, capacity, newvec);
-    vec = newvec;
-    goto try_again;
-  }
   if(!found)
     table->occupancy++;
-
-  VTrackHashTable(runtime, table, key);
 
   vec->arr[3*index+0] = key;
   vec->arr[3*index+1] = VEncodeInt(poverty);
@@ -1149,7 +1164,17 @@ V_BEGIN_FUNC(VHashTableDelete, "hash-table-delete!", 3, k, _table, key)
     capacity = vec->len / 3;
   }
 
-try_again: ;
+  // have to always clean dirty tables for deleting
+  // because otherwise the poverty metrics are
+  // wrong and can cause failure to delete keys
+  //
+  // I think if I'm correct the bug shouldn't be here.
+  if(table->flags & HFLAG_DIRTY) {
+    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
+    VGrowHashTable(runtime, table, capacity, newvec);
+    vec = newvec;
+  }
+
   uint64_t tries = 0;
   uint64_t hash = (table->flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
   uint64_t index = hash & (capacity-1);
@@ -1174,13 +1199,6 @@ try_again: ;
     index = (index + 1) & (capacity-1);
     tries++;
   }
-  if(!found && (table->flags & HFLAG_DIRTY)) {
-    table->flags ^= HFLAG_DIRTY;
-    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
-    VGrowHashTable(runtime, table, capacity, newvec);
-    vec = newvec;
-    goto try_again;
-  }
   if(!found) {
     V_CALL(k, runtime, VVOID);
     return;
@@ -1203,6 +1221,10 @@ try_again: ;
     vec->arr[3*oldindex+0] = vec->arr[3*index+0];
     vec->arr[3*oldindex+1] = VEncodeInt(poverty-1);
     vec->arr[3*oldindex+2] = vec->arr[3*index+2];
+
+    VTrackMutation(runtime, vec, &vec->arr[3*oldindex+0], vec->arr[3*oldindex+0]);
+    VTrackMutation(runtime, vec, &vec->arr[3*oldindex+2], vec->arr[3*oldindex+2]);
+
     vec->arr[3*index+0] = VVOID;
     vec->arr[3*index+1] = VEncodeInt(0);
     vec->arr[3*index+2] = VVOID;
