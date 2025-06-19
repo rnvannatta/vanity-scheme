@@ -66,6 +66,7 @@ typedef struct VRuntime {
   bool VForceMajorGC;
   bool VActiveHeap;
   bool VYield;
+  bool VIsMajorGC;
   unsigned VGCsSinceMajor;
   void * VHeap;
   void * VHeapPos;
