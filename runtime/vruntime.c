@@ -148,6 +148,22 @@ SYSV_CALL static void VPrintCallHistory(VRuntime * runtime) {
   fprintf(stderr, "%2u. ...\n", i);
 }
 
+__attribute__((noreturn))
+void VReallyExit(int ret) {
+#ifdef __EMSCRIPTEN__
+  emscripten_cancel_main_loop();
+#endif
+  exit(ret);
+}
+
+__attribute__((noreturn))
+void VReallyAbort() {
+#ifdef __EMSCRIPTEN__
+  emscripten_cancel_main_loop();
+#endif
+  abort();
+}
+
 static SYSV_CALL void VFPrintfC(VRuntime * runtime, VPort * p, char const * str, ...);
 
 __attribute__((noreturn))
@@ -184,7 +200,7 @@ static void VAbortC(VRuntime * runtime, VWORD err) {
 
   if(runtime)
     VLongJmp(runtime->VRoot, VJMP_ERROR);
-  abort();
+  VReallyAbort();
 }
 
 #define FORWARDED ULLONG_MAX
@@ -2818,7 +2834,7 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
 #ifdef __EMSCRIPTEN__
   // FIXME actually query and pass this somehow
   // it's really, really low on iOS :/
-  r->public.callgas = r->public.max_callgas = 1024;
+  r->public.callgas = r->public.max_callgas = 512;
 #endif
 
   r->VActiveHeap = true;

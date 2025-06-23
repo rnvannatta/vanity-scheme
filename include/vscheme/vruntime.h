@@ -1240,6 +1240,12 @@ static inline void VSetRest(VRuntime * runtime, VPair * p, VWORD w) {
   p->rest = w;
 }
 
+__attribute__((noreturn))
+void VReallyExit(int ret);
+
+__attribute__((noreturn))
+void VReallyAbort();
+
 /* ======================== Core Functions ======================= */
 
 // Root level continuation

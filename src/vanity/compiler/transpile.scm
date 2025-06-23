@@ -519,7 +519,7 @@
       (displayln "  if(VanityStatus == VEXITED) {")
       (displayln "    int ret = VDecodeExitCode(VGetExitCode(VanityRuntime));")
       (displayln "    VDestroyRuntime(VanityRuntime);")
-      (displayln "    exit(ret);")
+      (displayln "    VReallyExit(ret);")
       (displayln "  }")
       (displayln "  if(VanityStatus == VFINISHED)")
       (displayln "    VanityCurToplevel++;")
