@@ -28,12 +28,15 @@
 ;          _V20 a library
 ;          _V30 a shim function for a ffi
 ;          _V40 an intrinsic
+;          _V50 a qualified function
 ;          _VW  an interned value
 
 (define-library (vanity compiler variables)
-  (export mangle-symbol mangle-library free-variables)
+  (export mangle-symbol mangle-library mangle-qualified-function free-variables)
   (import (vanity core) (vanity list) (vanity intrinsics) (vanity compiler utils))
 
+  (define (mangle-qualified-function name)
+    (string-append "_V50" (fold-right string-append "" (map symbol->string (map mangle-symbol name)))))
   ; why does this return another symbol? should return a string? maybe I want eqv? that bad
   (define (mangle-symbol sym)
     (let* ((str (symbol->string sym))
@@ -157,8 +160,15 @@
              (merge (loop bound (cadr expr) expr) (loop bound (caddr expr) expr)))
             ((eqv? (car expr) 'lambda)
              (loop (append-improper (cadr expr) bound) (cddr expr) expr))
+            ((eqv? (car expr) '##qualified-lambda)
+             (loop (append-improper (caddr expr) bound) (cdddr expr) expr))
             ((eqv? (car expr) 'case-lambda)
              (let loop2 ((cases (cdr expr)))
+              (if (null? cases)
+                  '()
+                  (merge (loop (append-improper (caar cases) bound) (cdar cases) (car cases)) (loop2 (cdr cases))))))
+            ((eqv? (car expr) '##qualified-case-lambda)
+             (let loop2 ((cases (cddr expr)))
               (if (null? cases)
                   '()
                   (merge (loop (append-improper (caar cases) bound) (cdar cases) (car cases)) (loop2 (cdr cases))))))
