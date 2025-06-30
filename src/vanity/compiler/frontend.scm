@@ -172,7 +172,7 @@
     (display "vsc: ")
     (display err)
     (newline)
-    (exit 1)))
+    #;(exit 1)))
 
 (with-exception-handler handle-exception
   (lambda ()
