@@ -26,24 +26,56 @@
 (define-library (vanity compiler optimize)
   (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity intrinsics) (vanity pretty-print))
   (export qualify-callsites)
+  (define (append-qualified-funcs qualified-funcs xs vals)
+    (match vals
+      ((('##qualified-lambda name . _) . rest)
+       (append-qualified-funcs
+         (cons (cons (car xs) name) qualified-funcs)
+         (cdr xs)
+         (cdr vals)))
+      ((('##qualified-case-lambda name . _) . rest)
+       (append-qualified-funcs
+         (cons (cons (car xs) name) qualified-funcs)
+         (cdr xs)
+         (cdr vals)))
+      ((_ . _) (append-qualified-funcs qualified-funcs (cdr xs) (cdr vals)))
+      (() qualified-funcs)))
+  (define (scan-bindings qualified-funcs xs vals letrec?)
+    (let scan-bindings-loop ((qualified-funcs qualified-funcs)
+                             (new-vals '())
+                             (xs xs)
+                             (rest-vals vals))
+      (match rest-vals
+        ((('##qualified-lambda name . _) . rest)
+         (scan-bindings-loop
+           (cons (cons (car xs) name) qualified-funcs)
+           (cons (car rest-vals) new-vals)
+           (cdr xs)
+           (cdr rest-vals)))
+        ((('##qualified-case-lambda name . _) . rest)
+         (scan-bindings-loop
+           (cons (cons (car xs) name) qualified-funcs)
+           (cons (car rest-vals) new-vals)
+           (cdr xs)
+           (cdr rest-vals)))
+        ((_ . _)
+         (scan-bindings-loop
+           qualified-funcs
+           (cons (car rest-vals) new-vals)
+           (cdr xs)
+           (cdr rest-vals)))
+        (()
+         (values
+           (reverse new-vals)
+           qualified-funcs))
+        (_
+         (values
+           (fold cons rest-vals new-vals)
+           qualified-funcs)))))
   ; changes (f x y) into (##qualified-call (vanity core map) f x y) if say f is bound to map.
   ; and this is possible because the whole idea of qualified functions is they're bound in a way that
   ; makes them well known
   (define (qualify-callsites expr)
-    (define (append-qualified-funcs qualified-funcs xs vals)
-      (match vals
-        ((('##qualified-lambda name . _) . rest)
-         (append-qualified-funcs
-           (cons (cons (car xs) name) qualified-funcs)
-           (cdr xs)
-           (cdr vals)))
-        ((('##qualified-case-lambda name . _) . rest)
-         (append-qualified-funcs
-           (cons (cons (car xs) name) qualified-funcs)
-           (cdr xs)
-           (cdr vals)))
-        ((_ . _) (append-qualified-funcs qualified-funcs (cdr xs) (cdr vals)))
-        (() qualified-funcs)))
     (define (qualify-iter qualified-funcs expr)
       (match expr
         (('lambda xs body)
@@ -56,15 +88,34 @@
          `(##qualified-case-lambda ,name . ,(map (lambda (cases) `(,(car cases) ,(qualify-iter qualified-funcs (cadr cases)))) cases)))
         (('continuation xs body)
          `(continuation ,xs ,(qualify-iter qualified-funcs body)))
+
+        ; let bindings: let's get scanning
+
+        ; FIXME: miscompiles with set!!!
+        ; NO IT DOESNT: because it'll only qualify if x is pure
+        ; but it isn't pure
+        ; e.g. ((lambda (x) (set! x (lambda (x) x)) (x 9)) (lambda (x) (x x)))
         ((('lambda xs body) vals ...)
-         `((lambda ,xs ,(qualify-iter (append-qualified-funcs qualified-funcs xs vals) body)) . ,(qualify-iter qualified-funcs vals)))
+         (call-with-values
+          (lambda () (append-qualified-funcs qualified-funcs xs vals))
+          (lambda (new-qualified-funcs)
+            `((lambda ,xs ,(qualify-iter new-qualified-funcs body)) . ,(qualify-iter qualified-funcs vals)))))
         ((('continuation xs body) vals ...)
-         `((continuation ,xs ,(qualify-iter (append-qualified-funcs qualified-funcs xs vals) body)) . ,(qualify-iter qualified-funcs vals)))
+         (call-with-values
+          (lambda () (append-qualified-funcs qualified-funcs xs vals))
+          (lambda (new-qualified-funcs)
+            `((continuation ,xs ,(qualify-iter new-qualified-funcs body)) . ,(qualify-iter qualified-funcs vals)))))
         ((('##qualified-lambda name xs body) vals ...)
-         `((##qualified-lambda ,name ,xs ,(qualify-iter (append-qualified-funcs qualified-funcs xs vals) body)) . ,(qualify-iter qualified-funcs vals)))
+         (call-with-values
+          (lambda () (append-qualified-funcs qualified-funcs xs vals))
+          (lambda (new-qualified-funcs)
+            `((##qualified-lambda ,name ,xs ,(qualify-iter new-qualified-funcs body)) . ,(qualify-iter qualified-funcs vals)))))
         (('letrec ((xs vals) ...) body)
-         (let ((new-qualified-funcs (append-qualified-funcs qualified-funcs xs vals)))
-           `(letrec ,(map (lambda (x val) (list x (qualify-iter new-qualified-funcs val))) xs vals) ,(qualify-iter new-qualified-funcs body))))
+         (call-with-values
+          (lambda () (append-qualified-funcs qualified-funcs xs vals))
+          (lambda (new-qualified-funcs)
+            `(letrec ,(map (lambda (x val) (list x (qualify-iter new-qualified-funcs val))) xs vals) ,(qualify-iter new-qualified-funcs body)))))
+
         (('basic-block cost xs-vals ... appl)
          `(basic-block ,cost . ,(append xs-vals (list (qualify-iter qualified-funcs appl)))))
         (('##foreign.function . _) expr)
