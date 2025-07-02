@@ -264,7 +264,7 @@
           ((p (car lst)) #t)
           (else (any? p (cdr lst)))))
   (define (every? p lst)
-    (cond ((null? lst) #f)
+    (cond ((null? lst) #t)
           ((p (car lst)) (every? p (cdr lst)))
           (else #f)))
 
