@@ -31,7 +31,7 @@
       (lambda ()
         (set! x (+ x 1))
         (sprintf "VDllMain~A" x))))
-  (define (printout2 main purec? debug? shared? literal-table foreign-functions functions declares toplevels)
+  (define (printout2 main purec? debug? shared? literal-table foreign-functions functions qualified-functions declares toplevels)
     (define (print-global sym)
       (let ((builtin (lookup-intrinsic-name sym)))
         (if builtin
@@ -143,6 +143,8 @@
         (('letrec . _) #t)
         ; FIXME!!! not always true
         (('basic-block . _) #t)
+        (('##qualified-call _ f . xs)
+         (or (closes? f) (closes? xs)))
         ((f) (closes? f))
         ((f . xs)
          (or (closes? f) (closes? xs)))
@@ -194,6 +196,49 @@
            (print-expr x args))
           xs)
         (printf ");~N"))
+      (define (print-qualified-apply name f xs tail-call?)
+        (printf "  {~N")
+        (let ((func (mangle-qualified-function name))
+              (len (length xs)))
+          (printf "    VClosure * _closure = ")
+          (match f
+            (('close fun)
+             (printf "(VClosure[]){ { .func = (VFunc)~A, .env = self }, }" func))
+            (else
+             (printf "VDecodeClosure(")
+             (print-expr f args)
+             (printf ")")))
+          (printf ";~N")
+          (for-each
+            (lambda (x i)
+             (printf "    VWORD _arg~A = ~N      " i)
+             (print-expr x args)
+             (printf ";~N"))
+            xs
+            (iota len))
+          (if purec?
+              (begin
+                (printf "    V_CALL_FUNC(~A, _closure->env, runtime" func)
+                (for-each
+                  (lambda (i) (printf ", _arg~A" i))
+                  (iota len))
+                (printf ");~N"))
+              (begin
+                (printf "    if(VStackOverflow(runtime)){~N")
+                (printf "      VGarbageCollect2Closure(runtime, _closure, ~A" len)
+                (for-each
+                  (lambda (i) (printf ", _arg~A" i))
+                  (iota len))
+                (printf ");~N")
+                (printf "    } else {~N")
+                (printf "       ~A(runtime, _closure->env, ~A" func len)
+                (for-each
+                  (lambda (i) (printf ", _arg~A" i))
+                  (iota len))
+                (printf ");~N")
+                (printf "    }~N")
+                )))
+        (printf "  }~N"))
       (define (print-letrec n xs body args)
         (displayln "    {")
         (displayln "    VEnv * statics = self;")
@@ -316,7 +361,9 @@
          (print-letrec n xs body args))
         (('basic-block cost n xs vals body)
          (print-basic-block cost n xs vals body))
-        ((f xs ...)
+        (('##qualified-call name f . xs)
+         (print-qualified-apply name f xs #f))
+        ((f . xs)
          (cond ((lookup-intrinsic-name f) (print-builtin-apply f xs #f))
                ((and (pair? f) (eqv? (car f) '##intrinsic))
                 (print-builtin-apply (cadr f) xs #f))
@@ -326,15 +373,19 @@
      (define (print-fun-single name check-args? num variadic? body needs-used?)
       (define (gen-args num)
         (map (lambda (e) (sprintf "_var~A" e)) (iota num)))
+      (define is-static
+        (let ((str (if (string? name) name (symbol->string name))))
+          (not (and (>= (string-length str) 4) (equal? (substring str 0 4) "_V50")))))
       (let ((args (gen-args num)))
         (if needs-used? (printf "__attribute__((used)) "))
+        (if is-static (printf "static "))
         (if purec?
             (begin
-              (printf "static V_BEGIN_FUNC~A(~A, \"~A\", ~A" (if variadic? "_MIN" "") name name num)
+              (printf "V_BEGIN_FUNC~A(~A, \"~A\", ~A" (if variadic? "_MIN" "") name name num)
               (for-each (lambda (arg) (printf ", ~A" arg)) args)
               (printf ")~N"))
             (begin
-              (printf "static void ~A(VRuntime * runtime, VEnv * statics, int argc" name)
+              (printf "void ~A(VRuntime * runtime, VEnv * statics, int argc" name)
               (for-each (lambda (arg) (printf ", VWORD ~A" arg)) args)
               (if variadic? (printf ", ..."))
               (printf ") {~N")))
@@ -385,6 +436,9 @@
       (let* ((name (car fun))
              (cases (cddr fun))
              (cases (map (lambda (i e) `(,(sprintf "_V20Case~A_~A" i name) #f ,e)) (iota (length cases)) cases)))
+       (define is-static
+        (let ((str (if (string? name) name (symbol->string name))))
+          (not (and (>= (string-length str) 4) (equal? (substring str 0 4) "_V50")))))
        (if purec?
            (printf "__attribute__((used)) static V_BEGIN_FUNC_MIN(_V20CaseError_~A, \"_V20CaseError_~A\", 0)~N" name name)
            (printf "__attribute__((used)) static void _V20CaseError_~A(VRuntime * runtime, VEnv * statics, int argc, ...) {~N" name))
@@ -439,6 +493,7 @@
              (printf "\".type ~A, @function\\n\"~N" name)
              (printf "#endif~N")
 
+             (if (not is-static) (printf "\".globl ~A\\n\"~N" name))
              (printf "\"~A:\\n\"~N" name)
              (for-each
                (lambda (e)
@@ -472,6 +527,19 @@
             (displayln "    VEnv * self = NULL;")
             (print-expr `(,expr (bruijn k 0 0)) '("_k"))
             (displayln "}"))))
+
+    (define (print-qualified-declaration purec? decl)
+      (match decl
+        ((lamb n variadic?)
+         (if variadic?
+             (printf "V_DECLARE_FUNC_MIN(~A" lamb)
+             (printf "V_DECLARE_FUNC(~A" lamb))
+         (for-each
+           (lambda (i)
+             (printf ", _var~A" i))
+           (iota n))
+         (printf ");~N"))
+        (else (compiler-error "print-qualified-declaration: unknown form" decl))))
 
     ; Kind of gross to do it this way but whatever
     (define (print-foreign-declare declare)
@@ -554,6 +622,7 @@
       (for-each print-literal-declaration literal-table)
       (print-dllmain literal-table)
       (for-each print-foreign-declare declares)
+      (for-each (lambda (e) (print-qualified-declaration purec? e)) qualified-functions)
       (for-each (lambda (e) (print-foreign-function purec? e)) foreign-functions)
       (for-each print-fun functions)
       (for-each print-declare declares)

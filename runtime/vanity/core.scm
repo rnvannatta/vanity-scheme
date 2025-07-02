@@ -464,11 +464,11 @@
              (begin (apply f (map ##vcore.car lsts)) (loop (map ##vcore.cdr lsts))))))))
 
   (define fold-right
-    (case-lambda
-      ((kons knil ks)
+    (lambda
+      (kons knil ks)
        (let loop ((ks ks))
          (if (null? ks) knil
-             (kons (car ks) (loop (cdr ks))))))))
+             (kons (car ks) (loop (cdr ks)))))))
   (define append
     (case-lambda
       (() '())

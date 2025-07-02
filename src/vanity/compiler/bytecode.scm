@@ -201,7 +201,7 @@
               (loop (+ i 1))
             ))))
     (displayln ")"))
-  (define (to-bytecode debug? shared? literal-table foreign-functions functions declares toplevels)
+  (define (to-bytecode debug? shared? literal-table foreign-functions functions qualified-functions declares toplevels)
     (let ((print-main? (not (null? toplevels)))
           (functions (reverse functions)))
       (if shared? (compiler-error "bytecode shared libraries not supported yet"))
