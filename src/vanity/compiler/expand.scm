@@ -149,11 +149,11 @@
     (or (and (symbol? expr) (lookup-intrinsic-name expr))
         (and (not (pair? expr)) (not (symbol? expr)))
         #;(and (pair? expr) (eqv? (car expr) 'lambda) (null? (free-variables expr)))))
-  (define (variable-pure-body? k xs body)
+  #;(define (variable-pure-body? k xs body)
     (if (memtail k xs)
         #t
         (variable-pure? k body)))
-  (define (variable-pure? k expr)
+  #;(define (variable-pure? k expr)
     (match expr
       (('quote . _) #t)
       (('##foreign.function . _) #t)

@@ -32,7 +32,7 @@
 ;          _VW  an interned value
 
 (define-library (vanity compiler variables)
-  (export mangle-symbol mangle-library mangle-qualified-function free-variables)
+  (export mangle-symbol mangle-library mangle-qualified-function free-variables variable-pure?)
   (import (vanity core) (vanity list) (vanity intrinsics) (vanity compiler utils))
 
   (define (mangle-qualified-function name)
@@ -137,6 +137,43 @@
         (merge (extract-exports (find-library-interface! lib paths) bound))))
       (('##vcore.declare . _) (values '() bound))
       (else (values (loop bound expr) bound))))
+
+  (define (memtail x args)
+    (if (pair? args)
+        (or (eqv? x (car args)) (memtail x (cdr args)))
+        (eqv? x args)))
+  (define (variable-pure-body? k xs body)
+    (if (memtail k xs)
+        #t
+        (variable-pure? k body)))
+  (define (variable-pure? k expr)
+    (match expr
+      (('quote . _) #t)
+      (('##foreign.function . _) #t)
+      (('lambda xs body)
+       (variable-pure-body? k xs body))
+      (('case-lambda . bodies)
+       (fold (lambda (body p) (and p (variable-pure-body? k (car body) (cadr body)))) #t bodies))
+      (('##qualified-lambda name xs body)
+       (variable-pure-body? k xs body))
+      (('##qualified-case-lambda name . bodies)
+       (fold (lambda (body p) (and p (variable-pure-body? k (car body) (cadr body)))) #t bodies))
+      (('set! x val)
+       (and (not (eqv? x k)) (variable-pure? k val)))
+      (('define x val)
+       (or (eqv? x k) (variable-pure? k val)))
+      (('letrec ((xs vals) ...) body)
+       ; a bit of a hack.
+       ; but if k is in the xs, it's shadowed
+       ; and such doesn't matter for the vals and the body
+       ; otherwise we need to check the vals and the body for a set! expr
+       (variable-pure-body? k xs (cons 'begin (cons body vals))))
+      ; if, begin, and or can be handled by this case as the 3 each contain a harmless keyword
+      ; and a sequence of plain statements
+      ((xs ...)
+       (fold (lambda (x p) (and p (variable-pure? k x))) #t xs))
+      (else #t)))
+
   (define (free-variables expr)
     (define (merge a b)
       (cond ((null? a) b)
