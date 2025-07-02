@@ -1074,7 +1074,6 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
           while(p) {
             if(p->base.tag == VCONST_PAIR) {
               if(VWordType(p->first) == VIMM_INT) {
-                fprintf(stderr, "openparen!\n");
                 if(d2) {
                   d2--;
                 } else {
@@ -1082,7 +1081,6 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
                   break;
                 }
               } else if(VIsToken(p->first, VTOK_LEX_CLOSEPAREN)) {
-                fprintf(stderr, "closeparen!\n");
                 d2++;
               } else if(VIsToken(p->first, VTOK_LEX_COMMENT) ||
                         VIsToken(p->first, VTOK_LEX_DOT) ||
