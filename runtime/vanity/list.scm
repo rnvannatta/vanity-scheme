@@ -173,15 +173,19 @@
           (loop (+ n (if (pred (car lst)) 1 0)) pred (cdr lst)))))
 
   (define fold
-    (case-lambda
+    (lambda
+      (kons knil ks)
+       (if (null? ks) knil
+           (fold kons (kons (car ks) knil) (cdr ks))))
+    #;(case-lambda
       ((kons knil ks)
        (if (null? ks) knil
            (fold kons (kons (car ks) knil) (cdr ks))))))
   (define fold-right
-    (case-lambda
-      ((kons knil ks)
+    (lambda
+      (kons knil ks)
        (if (null? ks) knil
-           (kons (car ks) (fold-right kons knil (cdr ks)))))))
+           (kons (car ks) (fold-right kons knil (cdr ks))))))
 
   (define append-map
     (case-lambda 

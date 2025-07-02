@@ -83,7 +83,7 @@ tests_linux : compiler runtime
     ( EXE=`mktemp` ; \
 		echo "bin/vsc $$test && ./a.out" ; \
     OVERRIDE=`realpath lib/` ; \
-		if ! ($(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Llib -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
+		if ! ($(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -O2 -Wc,-Llib -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
 			echo "COMPILE FAILURE: $$test"; \
       \rm -f $$EXE ; \
 			exit 1; \

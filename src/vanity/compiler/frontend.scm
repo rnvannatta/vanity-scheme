@@ -23,7 +23,7 @@
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
-(import (vanity core) (vanity list) (vanity pretty-print) (vanity compiler utils) (vanity compiler variables) (vanity compiler match) (vanity compiler getopt) (vanity compiler expand) (vanity compiler cps) (vanity compiler lower) (vanity compiler transpile) (vanity compiler bytecode) (vanity compiler library) (vanity compiler config) (vanity compiler alpha-convert))
+(import (vanity core) (vanity list) (vanity pretty-print) (vanity compiler utils) (vanity compiler variables) (vanity compiler match) (vanity compiler getopt) (vanity compiler expand) (vanity compiler cps) (vanity compiler lower) (vanity compiler transpile) (vanity compiler bytecode) (vanity compiler library) (vanity compiler config) (vanity compiler alpha-convert) (vanity compiler optimize))
 
 (define scm-files '())
 (define obj-files '())
@@ -36,7 +36,7 @@
 (define object? #f)
 (define debug? #f)
 (define verbose? #f)
-(define optimization 1)
+(define optimization 0)
 (define api 1)
 (define out-file #f)
 (define platform "linux")
@@ -292,6 +292,7 @@
         (if shared? " -fPIC" "")))
     (define cc-command (apply string-append cc-command-flags c-options))
 
+    (define (id x) x)
     (define architecture (if (equal? platform "windows") "windows_amd64" "sysv_amd64"))
     (define stdout (current-output-port))
     ; 1. transpile
@@ -321,7 +322,11 @@
                     (if (eq? expand? 0) (for-each pretty-print expanded)
                         (let ((cps (benchmark "cps" (lambda () (map (lambda (expr) (to-cps expr)) (apply append expanded))))))
                          (if (eq? expand? 1) (for-each pretty-print cps)
-                             (let ((opt (benchmark "optimize" (lambda () (map (lambda (expr) (optimize expr (not bytecode?))) cps)))))
+                             (let ((opt (benchmark "optimize"
+                                          (lambda ()
+                                            (map (lambda (expr)
+                                                   ((if (> optimization 0) qualify-callsites id)
+                                                    (optimize expr (not bytecode?)))) cps)))))
                               (if (eq? expand? 2) (for-each pretty-print opt)
                                   (let* ((funs (benchmark "extract" (lambda () (to-functions (map bruijn-ify opt) (not bytecode?))))))
                                     (benchmark "transpile"
