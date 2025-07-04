@@ -379,9 +379,9 @@ static __attribute__((constructor)) void VDllMain1() {
   _V40_V10vcore_Dnull_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnull_Q", &_VW_V40_V10vcore_Dnull_Q), VPOINTER_CLOSURE);
   _V0null_Q = VEncodePointer(VLookupConstant("_V0null_Q", &_VW_V0null_Q), VPOINTER_OTHER);
 }
-static void _V0scheme_V0r7rs_V20_k73(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k73(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k73, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k73, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -893,9 +893,9 @@ static void _V0scheme_V0r7rs_V20_k73(VRuntime * runtime, VEnv * statics, int arg
         VGetArg(statics, 38-1, 0)),
         VNULL)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
 }
-static void _V0scheme_V0r7rs_V20_k72(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k72(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k72, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k72, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -903,14 +903,14 @@ static void _V0scheme_V0r7rs_V20_k72(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 70 0) (close _V0scheme_V0r7rs_V20_k73) 'boolean?)
+  // ((bruijn ##..vcore.import.0 70 0) (close _V0scheme_V0r7rs_V20_V0k73) 'boolean?)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 70-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k73, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k73, self)))),
       _V0boolean_Q);
 }
-static void _V0scheme_V0r7rs_V20_k71(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k71(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k71, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k71, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -918,14 +918,14 @@ static void _V0scheme_V0r7rs_V20_k71(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 69 0) (close _V0scheme_V0r7rs_V20_k72) 'symbol=?)
+  // ((bruijn ##..vcore.import.0 69 0) (close _V0scheme_V0r7rs_V20_V0k72) 'symbol=?)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 69-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k72, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k72, self)))),
       _V0symbol_E_Q);
 }
-static void _V0scheme_V0r7rs_V20_k70(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k70(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k70, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k70, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -933,14 +933,14 @@ static void _V0scheme_V0r7rs_V20_k70(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 68 0) (close _V0scheme_V0r7rs_V20_k71) 'equal?)
+  // ((bruijn ##..vcore.import.0 68 0) (close _V0scheme_V0r7rs_V20_V0k71) 'equal?)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 68-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k71, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k71, self)))),
       _V0equal_Q);
 }
-static void _V0scheme_V0r7rs_V20_k69(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k69(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k69, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k69, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -948,14 +948,14 @@ static void _V0scheme_V0r7rs_V20_k69(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 67 0) (close _V0scheme_V0r7rs_V20_k70) 'complex?)
+  // ((bruijn ##..vcore.import.0 67 0) (close _V0scheme_V0r7rs_V20_V0k70) 'complex?)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 67-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k70, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k70, self)))),
       _V0complex_Q);
 }
-static void _V0scheme_V0r7rs_V20_k68(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k68(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k68, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k68, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -963,14 +963,14 @@ static void _V0scheme_V0r7rs_V20_k68(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 66 0) (close _V0scheme_V0r7rs_V20_k69) 'min)
+  // ((bruijn ##..vcore.import.0 66 0) (close _V0scheme_V0r7rs_V20_V0k69) 'min)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 66-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k69, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k69, self)))),
       _V0min);
 }
-static void _V0scheme_V0r7rs_V20_k67(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k67(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k67, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k67, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -978,14 +978,14 @@ static void _V0scheme_V0r7rs_V20_k67(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 65 0) (close _V0scheme_V0r7rs_V20_k68) 'caar)
+  // ((bruijn ##..vcore.import.0 65 0) (close _V0scheme_V0r7rs_V20_V0k68) 'caar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 65-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k68, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k68, self)))),
       _V0caar);
 }
-static void _V0scheme_V0r7rs_V20_k66(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k66(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k66, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k66, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -993,14 +993,14 @@ static void _V0scheme_V0r7rs_V20_k66(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 64 0) (close _V0scheme_V0r7rs_V20_k67) 'cdar)
+  // ((bruijn ##..vcore.import.0 64 0) (close _V0scheme_V0r7rs_V20_V0k67) 'cdar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 64-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k67, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k67, self)))),
       _V0cdar);
 }
-static void _V0scheme_V0r7rs_V20_k65(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k65(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k65, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k65, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1008,14 +1008,14 @@ static void _V0scheme_V0r7rs_V20_k65(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 63 0) (close _V0scheme_V0r7rs_V20_k66) 'caaar)
+  // ((bruijn ##..vcore.import.0 63 0) (close _V0scheme_V0r7rs_V20_V0k66) 'caaar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 63-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k66, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k66, self)))),
       _V0caaar);
 }
-static void _V0scheme_V0r7rs_V20_k64(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k64(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k64, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k64, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1023,14 +1023,14 @@ static void _V0scheme_V0r7rs_V20_k64(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 62 0) (close _V0scheme_V0r7rs_V20_k65) 'cadar)
+  // ((bruijn ##..vcore.import.0 62 0) (close _V0scheme_V0r7rs_V20_V0k65) 'cadar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 62-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k65, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k65, self)))),
       _V0cadar);
 }
-static void _V0scheme_V0r7rs_V20_k63(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k63(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k63, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k63, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1038,14 +1038,14 @@ static void _V0scheme_V0r7rs_V20_k63(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 61 0) (close _V0scheme_V0r7rs_V20_k64) 'cdaar)
+  // ((bruijn ##..vcore.import.0 61 0) (close _V0scheme_V0r7rs_V20_V0k64) 'cdaar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 61-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k64, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k64, self)))),
       _V0cdaar);
 }
-static void _V0scheme_V0r7rs_V20_k62(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k62(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k62, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k62, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1053,14 +1053,14 @@ static void _V0scheme_V0r7rs_V20_k62(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 60 0) (close _V0scheme_V0r7rs_V20_k63) 'cddar)
+  // ((bruijn ##..vcore.import.0 60 0) (close _V0scheme_V0r7rs_V20_V0k63) 'cddar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 60-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k63, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k63, self)))),
       _V0cddar);
 }
-static void _V0scheme_V0r7rs_V20_k61(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k61(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k61, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k61, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1068,14 +1068,14 @@ static void _V0scheme_V0r7rs_V20_k61(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 59 0) (close _V0scheme_V0r7rs_V20_k62) 'caaaar)
+  // ((bruijn ##..vcore.import.0 59 0) (close _V0scheme_V0r7rs_V20_V0k62) 'caaaar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 59-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k62, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k62, self)))),
       _V0caaaar);
 }
-static void _V0scheme_V0r7rs_V20_k60(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k60(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k60, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k60, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1083,14 +1083,14 @@ static void _V0scheme_V0r7rs_V20_k60(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 58 0) (close _V0scheme_V0r7rs_V20_k61) 'caadar)
+  // ((bruijn ##..vcore.import.0 58 0) (close _V0scheme_V0r7rs_V20_V0k61) 'caadar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 58-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k61, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k61, self)))),
       _V0caadar);
 }
-static void _V0scheme_V0r7rs_V20_k59(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k59(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k59, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k59, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1098,14 +1098,14 @@ static void _V0scheme_V0r7rs_V20_k59(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 57 0) (close _V0scheme_V0r7rs_V20_k60) 'cadaar)
+  // ((bruijn ##..vcore.import.0 57 0) (close _V0scheme_V0r7rs_V20_V0k60) 'cadaar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 57-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k60, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k60, self)))),
       _V0cadaar);
 }
-static void _V0scheme_V0r7rs_V20_k58(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k58(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k58, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k58, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1113,14 +1113,14 @@ static void _V0scheme_V0r7rs_V20_k58(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 56 0) (close _V0scheme_V0r7rs_V20_k59) 'caddar)
+  // ((bruijn ##..vcore.import.0 56 0) (close _V0scheme_V0r7rs_V20_V0k59) 'caddar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 56-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k59, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k59, self)))),
       _V0caddar);
 }
-static void _V0scheme_V0r7rs_V20_k57(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k57(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k57, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k57, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1128,14 +1128,14 @@ static void _V0scheme_V0r7rs_V20_k57(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 55 0) (close _V0scheme_V0r7rs_V20_k58) 'cdaaar)
+  // ((bruijn ##..vcore.import.0 55 0) (close _V0scheme_V0r7rs_V20_V0k58) 'cdaaar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 55-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k58, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k58, self)))),
       _V0cdaaar);
 }
-static void _V0scheme_V0r7rs_V20_k56(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k56(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k56, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k56, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1143,14 +1143,14 @@ static void _V0scheme_V0r7rs_V20_k56(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 54 0) (close _V0scheme_V0r7rs_V20_k57) 'cdadar)
+  // ((bruijn ##..vcore.import.0 54 0) (close _V0scheme_V0r7rs_V20_V0k57) 'cdadar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 54-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k57, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k57, self)))),
       _V0cdadar);
 }
-static void _V0scheme_V0r7rs_V20_k55(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k55(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k55, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k55, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1158,14 +1158,14 @@ static void _V0scheme_V0r7rs_V20_k55(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 53 0) (close _V0scheme_V0r7rs_V20_k56) 'cddaar)
+  // ((bruijn ##..vcore.import.0 53 0) (close _V0scheme_V0r7rs_V20_V0k56) 'cddaar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 53-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k56, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k56, self)))),
       _V0cddaar);
 }
-static void _V0scheme_V0r7rs_V20_k54(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k54(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k54, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k54, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1173,14 +1173,14 @@ static void _V0scheme_V0r7rs_V20_k54(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 52 0) (close _V0scheme_V0r7rs_V20_k55) 'cdddar)
+  // ((bruijn ##..vcore.import.0 52 0) (close _V0scheme_V0r7rs_V20_V0k55) 'cdddar)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 52-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k55, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k55, self)))),
       _V0cdddar);
 }
-static void _V0scheme_V0r7rs_V20_k53(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k53(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k53, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k53, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1188,14 +1188,14 @@ static void _V0scheme_V0r7rs_V20_k53(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 51 0) (close _V0scheme_V0r7rs_V20_k54) 'list)
+  // ((bruijn ##..vcore.import.0 51 0) (close _V0scheme_V0r7rs_V20_V0k54) 'list)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 51-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k54, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k54, self)))),
       _V0list);
 }
-static void _V0scheme_V0r7rs_V20_k52(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k52(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k52, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k52, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1203,14 +1203,14 @@ static void _V0scheme_V0r7rs_V20_k52(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 50 0) (close _V0scheme_V0r7rs_V20_k53) 'list-ref)
+  // ((bruijn ##..vcore.import.0 50 0) (close _V0scheme_V0r7rs_V20_V0k53) 'list-ref)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 50-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k53, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k53, self)))),
       _V0list__ref);
 }
-static void _V0scheme_V0r7rs_V20_k51(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k51(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k51, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k51, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1218,14 +1218,14 @@ static void _V0scheme_V0r7rs_V20_k51(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 49 0) (close _V0scheme_V0r7rs_V20_k52) 'for-each)
+  // ((bruijn ##..vcore.import.0 49 0) (close _V0scheme_V0r7rs_V20_V0k52) 'for-each)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 49-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k52, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k52, self)))),
       _V0for__each);
 }
-static void _V0scheme_V0r7rs_V20_k50(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k50(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k50, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k50, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1233,14 +1233,14 @@ static void _V0scheme_V0r7rs_V20_k50(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 48 0) (close _V0scheme_V0r7rs_V20_k51) 'reverse)
+  // ((bruijn ##..vcore.import.0 48 0) (close _V0scheme_V0r7rs_V20_V0k51) 'reverse)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 48-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k51, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k51, self)))),
       _V0reverse);
 }
-static void _V0scheme_V0r7rs_V20_k49(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k49(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k49, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k49, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1248,14 +1248,14 @@ static void _V0scheme_V0r7rs_V20_k49(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 47 0) (close _V0scheme_V0r7rs_V20_k50) 'memv)
+  // ((bruijn ##..vcore.import.0 47 0) (close _V0scheme_V0r7rs_V20_V0k50) 'memv)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 47-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k50, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k50, self)))),
       _V0memv);
 }
-static void _V0scheme_V0r7rs_V20_k48(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k48(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k48, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k48, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1263,14 +1263,14 @@ static void _V0scheme_V0r7rs_V20_k48(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 46 0) (close _V0scheme_V0r7rs_V20_k49) 'assq)
+  // ((bruijn ##..vcore.import.0 46 0) (close _V0scheme_V0r7rs_V20_V0k49) 'assq)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 46-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k49, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k49, self)))),
       _V0assq);
 }
-static void _V0scheme_V0r7rs_V20_k47(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k47(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k47, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k47, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1278,14 +1278,14 @@ static void _V0scheme_V0r7rs_V20_k47(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 45 0) (close _V0scheme_V0r7rs_V20_k48) 'assoc)
+  // ((bruijn ##..vcore.import.0 45 0) (close _V0scheme_V0r7rs_V20_V0k48) 'assoc)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 45-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k48, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k48, self)))),
       _V0assoc);
 }
-static void _V0scheme_V0r7rs_V20_k46(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k46(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k46, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k46, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1293,14 +1293,14 @@ static void _V0scheme_V0r7rs_V20_k46(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 44 0) (close _V0scheme_V0r7rs_V20_k47) 'list->string)
+  // ((bruijn ##..vcore.import.0 44 0) (close _V0scheme_V0r7rs_V20_V0k47) 'list->string)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 44-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k47, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k47, self)))),
       _V0list___Gstring);
 }
-static void _V0scheme_V0r7rs_V20_k45(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k45(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k45, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k45, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1308,14 +1308,14 @@ static void _V0scheme_V0r7rs_V20_k45(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 43 0) (close _V0scheme_V0r7rs_V20_k46) 'vector)
+  // ((bruijn ##..vcore.import.0 43 0) (close _V0scheme_V0r7rs_V20_V0k46) 'vector)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 43-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k46, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k46, self)))),
       _V0vector);
 }
-static void _V0scheme_V0r7rs_V20_k44(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k44(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k44, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k44, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1323,14 +1323,14 @@ static void _V0scheme_V0r7rs_V20_k44(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 42 0) (close _V0scheme_V0r7rs_V20_k45) 'vector-for-each)
+  // ((bruijn ##..vcore.import.0 42 0) (close _V0scheme_V0r7rs_V20_V0k45) 'vector-for-each)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k45, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k45, self)))),
       _V0vector__for__each);
 }
-static void _V0scheme_V0r7rs_V20_k43(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k43(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k43, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k43, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1338,14 +1338,14 @@ static void _V0scheme_V0r7rs_V20_k43(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 41 0) (close _V0scheme_V0r7rs_V20_k44) 'current-output-port)
+  // ((bruijn ##..vcore.import.0 41 0) (close _V0scheme_V0r7rs_V20_V0k44) 'current-output-port)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k44, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k44, self)))),
       _V0current__output__port);
 }
-static void _V0scheme_V0r7rs_V20_k42(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k42(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k42, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k42, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1353,14 +1353,14 @@ static void _V0scheme_V0r7rs_V20_k42(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 40 0) (close _V0scheme_V0r7rs_V20_k43) 'current-input-port)
+  // ((bruijn ##..vcore.import.0 40 0) (close _V0scheme_V0r7rs_V20_V0k43) 'current-input-port)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k43, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k43, self)))),
       _V0current__input__port);
 }
-static void _V0scheme_V0r7rs_V20_k41(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k41(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k41, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k41, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1368,14 +1368,14 @@ static void _V0scheme_V0r7rs_V20_k41(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 39 0) (close _V0scheme_V0r7rs_V20_k42) 'open-output-file)
+  // ((bruijn ##..vcore.import.0 39 0) (close _V0scheme_V0r7rs_V20_V0k42) 'open-output-file)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k42, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k42, self)))),
       _V0open__output__file);
 }
-static void _V0scheme_V0r7rs_V20_k40(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k40(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k40, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k40, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1383,14 +1383,14 @@ static void _V0scheme_V0r7rs_V20_k40(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 38 0) (close _V0scheme_V0r7rs_V20_k41) 'open-output-string)
+  // ((bruijn ##..vcore.import.0 38 0) (close _V0scheme_V0r7rs_V20_V0k41) 'open-output-string)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k41, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k41, self)))),
       _V0open__output__string);
 }
-static void _V0scheme_V0r7rs_V20_k39(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k39(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k39, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k39, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1398,14 +1398,14 @@ static void _V0scheme_V0r7rs_V20_k39(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 37 0) (close _V0scheme_V0r7rs_V20_k40) 'with-output-to-file)
+  // ((bruijn ##..vcore.import.0 37 0) (close _V0scheme_V0r7rs_V20_V0k40) 'with-output-to-file)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 37-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k40, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k40, self)))),
       _V0with__output__to__file);
 }
-static void _V0scheme_V0r7rs_V20_k38(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k38(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k38, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k38, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1413,14 +1413,14 @@ static void _V0scheme_V0r7rs_V20_k38(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 36 0) (close _V0scheme_V0r7rs_V20_k39) 'read-char)
+  // ((bruijn ##..vcore.import.0 36 0) (close _V0scheme_V0r7rs_V20_V0k39) 'read-char)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 36-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k39, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k39, self)))),
       _V0read__char);
 }
-static void _V0scheme_V0r7rs_V20_k37(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k37(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k37, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k37, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1428,14 +1428,14 @@ static void _V0scheme_V0r7rs_V20_k37(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 35 0) (close _V0scheme_V0r7rs_V20_k38) 'read)
+  // ((bruijn ##..vcore.import.0 35 0) (close _V0scheme_V0r7rs_V20_V0k38) 'read)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k38, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k38, self)))),
       _V0read);
 }
-static void _V0scheme_V0r7rs_V20_k36(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k36(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k36, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k36, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1443,14 +1443,14 @@ static void _V0scheme_V0r7rs_V20_k36(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 34 0) (close _V0scheme_V0r7rs_V20_k37) 'display)
+  // ((bruijn ##..vcore.import.0 34 0) (close _V0scheme_V0r7rs_V20_V0k37) 'display)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k37, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k37, self)))),
       _V0display);
 }
-static void _V0scheme_V0r7rs_V20_k35(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k35(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k35, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k35, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1458,14 +1458,14 @@ static void _V0scheme_V0r7rs_V20_k35(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 33 0) (close _V0scheme_V0r7rs_V20_k36) 'values)
+  // ((bruijn ##..vcore.import.0 33 0) (close _V0scheme_V0r7rs_V20_V0k36) 'values)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k36, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k36, self)))),
       _V0values);
 }
-static void _V0scheme_V0r7rs_V20_k34(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k34(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k34, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k34, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1473,14 +1473,14 @@ static void _V0scheme_V0r7rs_V20_k34(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 32 0) (close _V0scheme_V0r7rs_V20_k35) 'error)
+  // ((bruijn ##..vcore.import.0 32 0) (close _V0scheme_V0r7rs_V20_V0k35) 'error)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k35, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k35, self)))),
       _V0error);
 }
-static void _V0scheme_V0r7rs_V20_k33(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k33(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k33, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k33, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1488,14 +1488,14 @@ static void _V0scheme_V0r7rs_V20_k33(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 31 0) (close _V0scheme_V0r7rs_V20_k34) 'write)
+  // ((bruijn ##..vcore.import.0 31 0) (close _V0scheme_V0r7rs_V20_V0k34) 'write)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k34, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k34, self)))),
       _V0write);
 }
-static void _V0scheme_V0r7rs_V20_k32(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k32(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k32, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k32, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1503,14 +1503,14 @@ static void _V0scheme_V0r7rs_V20_k32(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 30 0) (close _V0scheme_V0r7rs_V20_k33) 'newline)
+  // ((bruijn ##..vcore.import.0 30 0) (close _V0scheme_V0r7rs_V20_V0k33) 'newline)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k33, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k33, self)))),
       _V0newline);
 }
-static void _V0scheme_V0r7rs_V20_k31(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k31(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k31, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k31, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1518,14 +1518,14 @@ static void _V0scheme_V0r7rs_V20_k31(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 29 0) (close _V0scheme_V0r7rs_V20_k32) 'read-line)
+  // ((bruijn ##..vcore.import.0 29 0) (close _V0scheme_V0r7rs_V20_V0k32) 'read-line)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k32, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k32, self)))),
       _V0read__line);
 }
-static void _V0scheme_V0r7rs_V20_k30(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k30(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k30, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k30, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1533,14 +1533,14 @@ static void _V0scheme_V0r7rs_V20_k30(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 28 0) (close _V0scheme_V0r7rs_V20_k31) 'with-input-from-file)
+  // ((bruijn ##..vcore.import.0 28 0) (close _V0scheme_V0r7rs_V20_V0k31) 'with-input-from-file)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k31, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k31, self)))),
       _V0with__input__from__file);
 }
-static void _V0scheme_V0r7rs_V20_k29(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k29(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k29, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k29, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1548,14 +1548,14 @@ static void _V0scheme_V0r7rs_V20_k29(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 27 0) (close _V0scheme_V0r7rs_V20_k30) 'get-output-string)
+  // ((bruijn ##..vcore.import.0 27 0) (close _V0scheme_V0r7rs_V20_V0k30) 'get-output-string)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k30, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k30, self)))),
       _V0get__output__string);
 }
-static void _V0scheme_V0r7rs_V20_k28(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k28(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k28, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k28, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1563,14 +1563,14 @@ static void _V0scheme_V0r7rs_V20_k28(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 26 0) (close _V0scheme_V0r7rs_V20_k29) 'close-port)
+  // ((bruijn ##..vcore.import.0 26 0) (close _V0scheme_V0r7rs_V20_V0k29) 'close-port)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k29, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k29, self)))),
       _V0close__port);
 }
-static void _V0scheme_V0r7rs_V20_k27(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k27(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k27, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k27, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1578,14 +1578,14 @@ static void _V0scheme_V0r7rs_V20_k27(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 25 0) (close _V0scheme_V0r7rs_V20_k28) 'open-input-file)
+  // ((bruijn ##..vcore.import.0 25 0) (close _V0scheme_V0r7rs_V20_V0k28) 'open-input-file)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k28, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k28, self)))),
       _V0open__input__file);
 }
-static void _V0scheme_V0r7rs_V20_k26(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k26(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k26, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k26, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1593,14 +1593,14 @@ static void _V0scheme_V0r7rs_V20_k26(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 24 0) (close _V0scheme_V0r7rs_V20_k27) 'current-error-port)
+  // ((bruijn ##..vcore.import.0 24 0) (close _V0scheme_V0r7rs_V20_V0k27) 'current-error-port)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k27, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k27, self)))),
       _V0current__error__port);
 }
-static void _V0scheme_V0r7rs_V20_k25(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k25(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k25, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k25, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1608,14 +1608,14 @@ static void _V0scheme_V0r7rs_V20_k25(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 23 0) (close _V0scheme_V0r7rs_V20_k26) 'string-append)
+  // ((bruijn ##..vcore.import.0 23 0) (close _V0scheme_V0r7rs_V20_V0k26) 'string-append)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k26, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k26, self)))),
       _V0string__append);
 }
-static void _V0scheme_V0r7rs_V20_k24(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k24(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k24, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k24, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1623,14 +1623,14 @@ static void _V0scheme_V0r7rs_V20_k24(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 22 0) (close _V0scheme_V0r7rs_V20_k25) 'string->list)
+  // ((bruijn ##..vcore.import.0 22 0) (close _V0scheme_V0r7rs_V20_V0k25) 'string->list)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k25, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k25, self)))),
       _V0string___Glist);
 }
-static void _V0scheme_V0r7rs_V20_k23(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k23(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k23, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k23, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1638,14 +1638,14 @@ static void _V0scheme_V0r7rs_V20_k23(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 21 0) (close _V0scheme_V0r7rs_V20_k24) 'assv)
+  // ((bruijn ##..vcore.import.0 21 0) (close _V0scheme_V0r7rs_V20_V0k24) 'assv)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 21-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k24, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k24, self)))),
       _V0assv);
 }
-static void _V0scheme_V0r7rs_V20_k22(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k22(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k22, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k22, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1653,14 +1653,14 @@ static void _V0scheme_V0r7rs_V20_k22(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 20 0) (close _V0scheme_V0r7rs_V20_k23) 'member)
+  // ((bruijn ##..vcore.import.0 20 0) (close _V0scheme_V0r7rs_V20_V0k23) 'member)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k23, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k23, self)))),
       _V0member);
 }
-static void _V0scheme_V0r7rs_V20_k21(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k21(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k21, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k21, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1668,14 +1668,14 @@ static void _V0scheme_V0r7rs_V20_k21(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 19 0) (close _V0scheme_V0r7rs_V20_k22) 'memq)
+  // ((bruijn ##..vcore.import.0 19 0) (close _V0scheme_V0r7rs_V20_V0k22) 'memq)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k22, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k22, self)))),
       _V0memq);
 }
-static void _V0scheme_V0r7rs_V20_k20(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k20(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k20, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k20, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1683,14 +1683,14 @@ static void _V0scheme_V0r7rs_V20_k20(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 18 0) (close _V0scheme_V0r7rs_V20_k21) 'append)
+  // ((bruijn ##..vcore.import.0 18 0) (close _V0scheme_V0r7rs_V20_V0k21) 'append)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k21, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k21, self)))),
       _V0append);
 }
-static void _V0scheme_V0r7rs_V20_k19(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k19(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k19, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k19, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1698,14 +1698,14 @@ static void _V0scheme_V0r7rs_V20_k19(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 17 0) (close _V0scheme_V0r7rs_V20_k20) 'map)
+  // ((bruijn ##..vcore.import.0 17 0) (close _V0scheme_V0r7rs_V20_V0k20) 'map)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k20, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k20, self)))),
       _V0map);
 }
-static void _V0scheme_V0r7rs_V20_k18(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k18(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k18, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k18, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1713,14 +1713,14 @@ static void _V0scheme_V0r7rs_V20_k18(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 16 0) (close _V0scheme_V0r7rs_V20_k19) 'length)
+  // ((bruijn ##..vcore.import.0 16 0) (close _V0scheme_V0r7rs_V20_V0k19) 'length)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k19, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k19, self)))),
       _V0length);
 }
-static void _V0scheme_V0r7rs_V20_k17(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k17(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k17, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k17, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1728,14 +1728,14 @@ static void _V0scheme_V0r7rs_V20_k17(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 15 0) (close _V0scheme_V0r7rs_V20_k18) 'cddddr)
+  // ((bruijn ##..vcore.import.0 15 0) (close _V0scheme_V0r7rs_V20_V0k18) 'cddddr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k18, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k18, self)))),
       _V0cddddr);
 }
-static void _V0scheme_V0r7rs_V20_k16(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k16(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k16, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k16, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1743,14 +1743,14 @@ static void _V0scheme_V0r7rs_V20_k16(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 14 0) (close _V0scheme_V0r7rs_V20_k17) 'cddadr)
+  // ((bruijn ##..vcore.import.0 14 0) (close _V0scheme_V0r7rs_V20_V0k17) 'cddadr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k17, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k17, self)))),
       _V0cddadr);
 }
-static void _V0scheme_V0r7rs_V20_k15(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k15(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k15, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k15, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1758,14 +1758,14 @@ static void _V0scheme_V0r7rs_V20_k15(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 13 0) (close _V0scheme_V0r7rs_V20_k16) 'cdaddr)
+  // ((bruijn ##..vcore.import.0 13 0) (close _V0scheme_V0r7rs_V20_V0k16) 'cdaddr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k16, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k16, self)))),
       _V0cdaddr);
 }
-static void _V0scheme_V0r7rs_V20_k14(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k14(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k14, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k14, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1773,14 +1773,14 @@ static void _V0scheme_V0r7rs_V20_k14(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 12 0) (close _V0scheme_V0r7rs_V20_k15) 'cdaadr)
+  // ((bruijn ##..vcore.import.0 12 0) (close _V0scheme_V0r7rs_V20_V0k15) 'cdaadr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k15, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k15, self)))),
       _V0cdaadr);
 }
-static void _V0scheme_V0r7rs_V20_k13(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k13(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k13, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k13, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1788,14 +1788,14 @@ static void _V0scheme_V0r7rs_V20_k13(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 11 0) (close _V0scheme_V0r7rs_V20_k14) 'cadddr)
+  // ((bruijn ##..vcore.import.0 11 0) (close _V0scheme_V0r7rs_V20_V0k14) 'cadddr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k14, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k14, self)))),
       _V0cadddr);
 }
-static void _V0scheme_V0r7rs_V20_k12(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k12(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k12, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k12, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1803,14 +1803,14 @@ static void _V0scheme_V0r7rs_V20_k12(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 10 0) (close _V0scheme_V0r7rs_V20_k13) 'cadadr)
+  // ((bruijn ##..vcore.import.0 10 0) (close _V0scheme_V0r7rs_V20_V0k13) 'cadadr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k13, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k13, self)))),
       _V0cadadr);
 }
-static void _V0scheme_V0r7rs_V20_k11(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k11(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k11, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k11, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1818,14 +1818,14 @@ static void _V0scheme_V0r7rs_V20_k11(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 9 0) (close _V0scheme_V0r7rs_V20_k12) 'caaddr)
+  // ((bruijn ##..vcore.import.0 9 0) (close _V0scheme_V0r7rs_V20_V0k12) 'caaddr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k12, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k12, self)))),
       _V0caaddr);
 }
-static void _V0scheme_V0r7rs_V20_k10(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k10(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k10, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k10, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1833,14 +1833,14 @@ static void _V0scheme_V0r7rs_V20_k10(VRuntime * runtime, VEnv * statics, int arg
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 8 0) (close _V0scheme_V0r7rs_V20_k11) 'caaadr)
+  // ((bruijn ##..vcore.import.0 8 0) (close _V0scheme_V0r7rs_V20_V0k11) 'caaadr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k11, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k11, self)))),
       _V0caaadr);
 }
-static void _V0scheme_V0r7rs_V20_k9(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k9(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k9, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k9, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1848,14 +1848,14 @@ static void _V0scheme_V0r7rs_V20_k9(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 7 0) (close _V0scheme_V0r7rs_V20_k10) 'cdddr)
+  // ((bruijn ##..vcore.import.0 7 0) (close _V0scheme_V0r7rs_V20_V0k10) 'cdddr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k10, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k10, self)))),
       _V0cdddr);
 }
-static void _V0scheme_V0r7rs_V20_k8(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k8(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k8, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k8, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1863,14 +1863,14 @@ static void _V0scheme_V0r7rs_V20_k8(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 6 0) (close _V0scheme_V0r7rs_V20_k9) 'cdadr)
+  // ((bruijn ##..vcore.import.0 6 0) (close _V0scheme_V0r7rs_V20_V0k9) 'cdadr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k9, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k9, self)))),
       _V0cdadr);
 }
-static void _V0scheme_V0r7rs_V20_k7(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k7(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k7, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k7, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1878,14 +1878,14 @@ static void _V0scheme_V0r7rs_V20_k7(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 5 0) (close _V0scheme_V0r7rs_V20_k8) 'caddr)
+  // ((bruijn ##..vcore.import.0 5 0) (close _V0scheme_V0r7rs_V20_V0k8) 'caddr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k8, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k8, self)))),
       _V0caddr);
 }
-static void _V0scheme_V0r7rs_V20_k6(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k6(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k6, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k6, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1893,14 +1893,14 @@ static void _V0scheme_V0r7rs_V20_k6(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 4 0) (close _V0scheme_V0r7rs_V20_k7) 'caadr)
+  // ((bruijn ##..vcore.import.0 4 0) (close _V0scheme_V0r7rs_V20_V0k7) 'caadr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k7, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k7, self)))),
       _V0caadr);
 }
-static void _V0scheme_V0r7rs_V20_k5(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k5(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k5, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k5, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1908,14 +1908,14 @@ static void _V0scheme_V0r7rs_V20_k5(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 3 0) (close _V0scheme_V0r7rs_V20_k6) 'cddr)
+  // ((bruijn ##..vcore.import.0 3 0) (close _V0scheme_V0r7rs_V20_V0k6) 'cddr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k6, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k6, self)))),
       _V0cddr);
 }
-static void _V0scheme_V0r7rs_V20_k4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k4, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k4, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1923,14 +1923,14 @@ static void _V0scheme_V0r7rs_V20_k4(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 2 0) (close _V0scheme_V0r7rs_V20_k5) 'cadr)
+  // ((bruijn ##..vcore.import.0 2 0) (close _V0scheme_V0r7rs_V20_V0k5) 'cadr)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k5, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k5, self)))),
       _V0cadr);
 }
-static void _V0scheme_V0r7rs_V20_k3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k3, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k3, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1938,14 +1938,14 @@ static void _V0scheme_V0r7rs_V20_k3(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 1 0) (close _V0scheme_V0r7rs_V20_k4) 'max)
+  // ((bruijn ##..vcore.import.0 1 0) (close _V0scheme_V0r7rs_V20_V0k4) 'max)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k4, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k4, self)))),
       _V0max);
 }
-static void _V0scheme_V0r7rs_V20_k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k2, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k2, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1953,14 +1953,14 @@ static void _V0scheme_V0r7rs_V20_k2(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##..vcore.import.0 0 0) (close _V0scheme_V0r7rs_V20_k3) 'number?)
+  // ((bruijn ##..vcore.import.0 0 0) (close _V0scheme_V0r7rs_V20_V0k3) 'number?)
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k3, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k3, self)))),
       _V0number_Q);
 }
-static void _V0scheme_V0r7rs_V20_k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_k1, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0k1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1968,15 +1968,15 @@ static void _V0scheme_V0r7rs_V20_k1(VRuntime * runtime, VEnv * statics, int argc
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.make-import (close _V0scheme_V0r7rs_V20_k2) (##string ##.string.451) (bruijn ##.x.450 0 0))
+  // (##vcore.make-import (close _V0scheme_V0r7rs_V20_V0k2) (##string ##.string.451) (bruijn ##.x.450 0 0))
     VCallFuncWithGC(runtime, (VFunc)VMakeImport2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k2, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k2, self)))),
       VEncodePointer(&_V10_Dstring_D451.sym, VPOINTER_OTHER),
       _var0);
 }
-static void _V0scheme_V0r7rs_V20_lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0scheme_V0r7rs_V20_V0lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_lambda1, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0scheme_V0r7rs_V20_V0lambda1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1984,9 +1984,9 @@ static void _V0scheme_V0r7rs_V20_lambda1(VRuntime * runtime, VEnv * statics, int
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0scheme_V0r7rs_V20_k1) (##string ##.string.452))
+  // (##vcore.load-library (close _V0scheme_V0r7rs_V20_V0k1) (##string ##.string.452))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_k1, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0scheme_V0r7rs_V20_V0k1, self)))),
       VEncodePointer(&_V10_Dstring_D452.sym, VPOINTER_OTHER));
 }
-VFunc _V0scheme_V0r7rs_V20 = (VFunc)_V0scheme_V0r7rs_V20_lambda1;
+VFunc _V0scheme_V0r7rs_V20 = (VFunc)_V0scheme_V0r7rs_V20_V0lambda1;

@@ -36,7 +36,7 @@
       (let ((builtin (lookup-intrinsic-name sym)))
         (if builtin
             ; thank u for the parens clang
-            (printf "(VEncodeClosure(((VClosure[]){VMakeClosure2((VFunc)~A,NULL)})))" builtin)
+            (printf "(VEncodeClosure((V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A,NULL)))))" builtin)
             (printf "VLookupGlobalVarFast2(runtime, \"~A\")" sym))))
     (define (escape-octal-char c)
       (let ((i (char->integer c)))
@@ -163,7 +163,7 @@
     (define (print-expr expr args)
       (define (print-builtin-apply f xs tail-call?)
         (if purec?
-            (printf "    V_CALL_FUNC((VFunc)~A, self, runtime" (lookup-intrinsic-name f))
+            (printf "    V_BOUNCE_FUNC((VFunc)~A, self, runtime" (lookup-intrinsic-name f))
             (printf "    VCallFuncWithGC(runtime, (VFunc)~A, ~A" (lookup-intrinsic-name f) (length xs)))
         (for-each
           (lambda (x)
@@ -175,14 +175,14 @@
         (match f
           (('close fun)
            (if purec?
-               (printf "    V_CALL_FUNC((VFunc)~A, self, runtime" fun)
+               (printf "    V_BOUNCE_FUNC((VFunc)~A, self, runtime" fun)
                ; FIXME yucky! let's find a way to avoid creating this stack data
-               (printf "    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)~A, .env = self }, }, ~A" fun (length xs)))
+               (printf "    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self)), ~A" fun (length xs)))
            )
           (else
             (if purec?
                 (begin
-                  (display "    V_CALL(")
+                  (display "    V_BOUNCE(")
                   (print-expr f args)
                   (printf ", runtime")
                 )
@@ -203,7 +203,7 @@
           (printf "    VClosure * _closure = ")
           (match f
             (('close fun)
-             (printf "(VClosure[]){ { .func = (VFunc)~A, .env = self }, }" func))
+             (printf "V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self))" func))
             (else
              (printf "VDecodeClosure(")
              (print-expr f args)
@@ -218,7 +218,7 @@
             (iota len))
           (if purec?
               (begin
-                (printf "    V_CALL_FUNC(~A, _closure->env, runtime" func)
+                (printf "    V_BOUNCE_FUNC(~A, _closure->env, runtime" func)
                 (for-each
                   (lambda (i) (printf ", _arg~A" i))
                   (iota len))
@@ -242,8 +242,8 @@
       (define (print-letrec n xs body args)
         (displayln "    {")
         (displayln "    VEnv * statics = self;")
-        (if purec? ; bug in emscripten
-          (printf  "    self = alloca(sizeof(VEnv)+sizeof(VWORD[~A]));~N" n)
+        (if purec?
+          (printf  "    self = VAlloca(runtime, sizeof(VEnv)+sizeof(VWORD[~A]));~N" n)
           (begin
             (printf "    struct { VEnv self; VWORD argv[~A]; } container;~N" n)
             (printf "    self = &container.self;~N")))
@@ -261,8 +261,8 @@
       (define (print-basic-block cost n xs vals body)
         (displayln "    {")
         (displayln "    VEnv * statics = self;")
-        (if purec? ; bug in emscripten
-          (printf  "    self = alloca(sizeof(VEnv)+sizeof(VWORD[~A]));~N" n)
+        (if purec?
+          (printf  "    self = VAlloca(runtime, sizeof(VEnv)+sizeof(VWORD[~A]));~N" n)
           (begin
             (printf "    struct { VEnv self; VWORD argv[~A]; } container;~N" n)
             (printf "    self = &container.self;~N")))
@@ -280,7 +280,7 @@
       
       (define (print-define-global k y x tail-call?)
         (if purec?
-            (printf "    V_CALL_FUNC(VDefineGlobalVar2, NULL, runtime,~N      ")
+            (printf "    V_BOUNCE_FUNC(VDefineGlobalVar2, NULL, runtime,~N      ")
             (printf "    VCallFuncWithGC(runtime, (VFunc)VDefineGlobalVar2, 3,~N      "))
         (print-expr k args)
         (printf ",~N      ")
@@ -292,8 +292,8 @@
         (match y
           (('bruijn name up right)
            (if purec?
-               (printf "    V_CALL((VEncodeClosure(((VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }))), runtime,~N      ")
-               (printf "    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)VSetEnvVar2, .env = self }, }, 4,~N      "))
+               (printf "    V_BOUNCE((VEncodeClosure((V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)VSetEnvVar2, self))))), runtime,~N      ")
+               (printf "    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)VSetEnvVar2, self)), 4,~N      "))
            (print-expr k args)
            (printf ",~N      VEncodeInt(~Al), VEncodeInt(~Al),~N      " up right)
            (print-expr x args)
@@ -302,7 +302,7 @@
            (if (symbol? sym)
                (begin
                  (if purec?
-                     (printf "    V_CALL_FUNC(VSetGlobalVar2, NULL, runtime,~N      ")
+                     (printf "    V_BOUNCE_FUNC(VSetGlobalVar2, NULL, runtime,~N      ")
                      (printf "    VCallFuncWithGC(runtime, (VFunc)VSetGlobalVar2, 3,~N      "))
                  (print-expr k args)
                  (printf ",~N      ")
@@ -331,7 +331,7 @@
         ; FIXME
         (('quote ('##string x)) (print-literal-string x))
         (('quote x) (print-literal x))
-        (('close fun) (printf "(VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)~A, self)}))" fun))
+        (('close fun) (printf "(VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self))))" fun))
         (('bruijn name up right)
          (cond ((= up 0) (display (list-ref args right)))
                ((= up 1) (printf "statics->vars[~A]" right))
@@ -356,7 +356,7 @@
         (('##intrinsic x)
          (print-intrinsic x))
         (('##foreign.function x)
-         (printf "(VEncodeClosure(((VClosure[]){VMakeClosure2((VFunc)~A, NULL)})))" x))
+         (printf "(VEncodeClosure((V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, NULL)))))" x))
         (('letrec n xs body)
          (print-letrec n xs body args))
         (('basic-block cost n xs vals body)
@@ -467,7 +467,6 @@
        (if purec?
            (begin
              (printf "V_BEGIN_FUNC_MIN(~A, \"~A\", 0)~N" name name)
-             (printf "  VFunc func = (VFunc)_V20CaseError_~A;~N" name)
              (printf "  if(0)~N")
              (printf "    /*dummy*/;~N")
              (for-each
@@ -475,12 +474,13 @@
                 (match e
                   ((name _ (num '+ _))
                    (printf "  else if(argc >= ~A)~N" num)
-                   (printf "    func = (VFunc)~A;~N" name))
+                   (printf "    ~A(runtime, statics, argc, self);~N" name))
                   ((name _ (num _))
                    (printf "  else if(argc == ~A)~N" num)
-                   (printf "    func = (VFunc)~A;~N" name))))
+                   (printf "    ~A(runtime, statics, argc, self);~N" name))))
                cases)
-             (printf "  func(runtime, statics, argc, self);~N")
+             (printf "  else~N")
+             (printf "    _V20CaseError_~A(runtime, statics, argc, self);~N" name)
              (printf "}~N"))
            (begin
              ; while this declaration is nonstatic, the definition lacks the .globl directive so it's still a static function

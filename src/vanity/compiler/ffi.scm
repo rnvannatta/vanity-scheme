@@ -438,6 +438,6 @@
                  (cdr names))))
          (printf "));~N")
          (if (eqv? ret 'void)
-             (printf "  V_CALL(_k, runtime, VVOID);~N")
-             (printf "  V_CALL(_k, runtime, _ret);~N"))
+             (printf "  V_BOUNCE(_k, runtime, VVOID);~N")
+             (printf "  V_BOUNCE(_k, runtime, _ret);~N"))
          (printf "  }~N}~N"))))))

@@ -148,6 +148,22 @@ SYSV_CALL static void VPrintCallHistory(VRuntime * runtime) {
   fprintf(stderr, "%2u. ...\n", i);
 }
 
+__attribute__((noreturn))
+void VReallyExit(int ret) {
+#ifdef __EMSCRIPTEN__
+  emscripten_cancel_main_loop();
+#endif
+  exit(ret);
+}
+
+__attribute__((noreturn))
+void VReallyAbort() {
+#ifdef __EMSCRIPTEN__
+  emscripten_cancel_main_loop();
+#endif
+  abort();
+}
+
 static SYSV_CALL void VFPrintfC(VRuntime * runtime, VPort * p, char const * str, ...);
 
 __attribute__((noreturn))
@@ -184,7 +200,7 @@ static void VAbortC(VRuntime * runtime, VWORD err) {
 
   if(runtime)
     VLongJmp(runtime->VRoot, VJMP_ERROR);
-  abort();
+  VReallyAbort();
 }
 
 #define FORWARDED ULLONG_MAX
@@ -223,6 +239,10 @@ SYSV_CALL static unsigned VMemLocation(VRuntime * runtime, void * obj) {
   if(((VObject*)obj)->flags & VFLAG_STATIC)
     return STATIC_MEM;
 
+#ifdef VANITY_PURE_C
+  if(runtime->public.VSecondStackStart <= (char*)obj && (char*)obj < runtime->public.VSecondStackStart + runtime->public.VSecondStackSize)
+    return STACK_MEM;
+#endif
   if(runtime->public.VStackStart - runtime->public.VStackSize <= (char*)obj && (char*)obj < runtime->public.VStackStart)
     return STACK_MEM;
   if(runtime->VHeaps[runtime->VActiveHeap].begin <= obj && obj < runtime->VHeaps[runtime->VActiveHeap].end)
@@ -488,7 +508,7 @@ V_BEGIN_FUNC(VSetFinalizer, "set-finalizer!", 3, k, mem, finalizer)
   // we also can't drop mem until the finalizer is run ofc
 
   VSetFinalizerImpl(runtime, &runtime->VHeapFinalizers[runtime->VActiveHeap], mem, finalizer);
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 V_END_FUNC
 
 V_BEGIN_FUNC(VFinalize, "finalize!", 2, k, mem)
@@ -503,14 +523,14 @@ V_BEGIN_FUNC(VFinalize, "finalize!", 2, k, mem)
     if(!VDecodeBool(final)) VErrorC(runtime, "finalize!: double finalize at address of ~S\n", mem);
     finalizer->mem = VFALSE;
     finalizer->finalizer = VFALSE;
-    V_CALL(final, runtime, k, mem);
+    V_BOUNCE(final, runtime, k, mem);
   }
 V_END_FUNC
 
 V_BEGIN_FUNC(VHasFinalizer, "has-finalizer?", 2, k, mem)
   if(!(VIsPointer(mem) || VIsForeignPointer(mem)))
     VErrorC(runtime, "has-finalizer?: Not an address ~S\n", mem);
-  V_CALL(k, runtime, VEncodeBool(VGetFinalizer(runtime, mem, true)));
+  V_BOUNCE(k, runtime, VEncodeBool(VGetFinalizer(runtime, mem, true)));
 V_END_FUNC
 
 V_BEGIN_FUNC(VGarbageCollect, "garbage-collect", 2, k, major)
@@ -526,7 +546,7 @@ V_BEGIN_FUNC_MIN(VApplyFinalizer, "apply-finalizer!", 0)
   VWORD k = statics->vars[0];
   VWORD mem = statics->vars[1];
 
-  V_CALL_FUNC(VFinalize, NULL, runtime, k, mem);
+  V_BOUNCE_FUNC(VFinalize, NULL, runtime, k, mem);
 V_END_FUNC
 
 SYSV_CALL void * VForwarded(void * address) {
@@ -537,7 +557,7 @@ SYSV_CALL void * VForwarded(void * address) {
 }
 
 V_BEGIN_FUNC(VGetDynamics, "get-dynamics", 1, k)
-  V_CALL(k, runtime, runtime->dynamics);
+  V_BOUNCE(k, runtime, runtime->dynamics);
 V_END_FUNC
 
 V_BEGIN_FUNC(VPushDynamic, "push-dynamic", 3, k, key, val)
@@ -557,15 +577,15 @@ V_BEGIN_FUNC(VPopDynamic, "pop-dynamic", 2, k, keyval)
   }
   runtime->dynamics = top->rest;
 
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 V_END_FUNC
 
 V_BEGIN_FUNC(VGetExceptionHandlers, "get-exception-handlers", 1, k)
-  V_CALL(k, runtime, runtime->exception_handlers);
+  V_BOUNCE(k, runtime, runtime->exception_handlers);
 V_END_FUNC
 
 static V_BEGIN_FUNC(VDefaultExceptionHandler, "default-exception-handler", 2, k, err)
-  V_CALL_FUNC(VAbort2, NULL, runtime, err);
+  V_BOUNCE_FUNC(VAbort2, NULL, runtime, err);
 V_END_FUNC
 
 static VClosure default_exception_handler = { .base = { .tag = VCLOSURE }, .func = (VFunc)VDefaultExceptionHandler, .env = NULL };
@@ -579,7 +599,7 @@ static SYSV_CALL VWORD VGetExceptionHandlerImpl(VRuntime * runtime) {
   }
 }
 V_BEGIN_FUNC(VGetExceptionHandler, "get-exception-handler", 1, k)
-  V_CALL(k, runtime, VGetExceptionHandlerImpl(runtime));
+  V_BOUNCE(k, runtime, VGetExceptionHandlerImpl(runtime));
 V_END_FUNC
 
 V_BEGIN_FUNC(VPushExceptionHandler, "push-exception-hander", 2, k, handler)
@@ -602,12 +622,12 @@ V_BEGIN_FUNC(VPopExceptionHandler, "pop-exception-handler", 2, k, handler)
   }
   runtime->exception_handlers = top->rest;
 
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 V_END_FUNC
 
 static V_BEGIN_FUNC_MIN(VRaiseK, "raise-k", 0)
   VWORD x = statics->vars[0];
-  V_CALL_FUNC(VRaise, NULL, runtime, VFALSE, x);
+  V_BOUNCE_FUNC(VRaise, NULL, runtime, VFALSE, x);
 V_END_FUNC
 
 V_BEGIN_FUNC(VRaise, "raise", 2, _, x)
@@ -706,7 +726,7 @@ static V_BEGIN_FUNC(VHugeFree, "huge-free", 2, k, mem)
   if(VMemLocation(runtime, ptr) != STATIC_MEM)
     VErrorC(runtime, "huge-free: not huge memory");
   free(ptr);
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 V_END_FUNC
 static VClosure VHugeFreeClosure = {
   .base = {
@@ -1171,6 +1191,9 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   if(stack_len < 0) stack_len = -stack_len;
   size_t environ_size = sizeof(VEnvironment) + sizeof(VWORD[argc]);
   stack_len += environ_size;
+#ifdef VANITY_PURE_C
+  stack_len += runtime->public.VSecondStackCursor;
+#endif
 
   size_t fiber_size = 0;
   if(runtime->num_half_reaped_fibers) {
@@ -1179,8 +1202,13 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     }
   }
 
+  size_t total_stack_size = runtime->public.VStackSize;
+#ifdef VANITY_PURE_C
+  total_stack_size += runtime->public.VSecondStackSize;
+#endif
+
   size_t after_gc_size = runtime->VHeapPos - runtime->VHeap + stack_len + fiber_size;
-  bool is_unplanned_major = runtime->VHeap + after_gc_size >= runtime->VHeapEnd - runtime->public.VStackSize;
+  bool is_unplanned_major = runtime->VHeap + after_gc_size >= runtime->VHeapEnd - total_stack_size;
   bool is_major = runtime->VForceMajorGC || is_unplanned_major;
   runtime->VIsMajorGC = is_major;
   static VDebugInfo major_info = { "Garbage Collection (major)" };
@@ -1409,7 +1437,7 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
       runtime->VGCsSinceMajor++;
     }
 
-    if(grow_heap || (runtime->VHeapPos - runtime->VHeap) + runtime->public.VStackSize > runtime->VHeaps[!runtime->VActiveHeap].size) {
+    if(grow_heap || (runtime->VHeapPos - runtime->VHeap) + total_stack_size > runtime->VHeaps[!runtime->VActiveHeap].size) {
       free(runtime->VHeaps[!runtime->VActiveHeap].begin);
       runtime->VHeaps[!runtime->VActiveHeap].size *= 2;
       size_t size = runtime->VHeaps[!runtime->VActiveHeap].size;
@@ -1433,6 +1461,10 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   else
     runtime->VMinorGCTime += diff_nsec;
 #else
+#endif
+
+#ifdef VANITY_PURE_C
+  runtime->public.VSecondStackCursor = 0;
 #endif
 
   bool yield = runtime->VYield;
@@ -1949,7 +1981,7 @@ static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val)
       p->first = val;
     else
       p->rest = val;
-    V_CALL(k, runtime, VVOID);
+    V_BOUNCE(k, runtime, VVOID);
   }
 }
 V_BEGIN_FUNC(VSetCar2, "set-car!", 3, k, pair, val)
@@ -1964,7 +1996,7 @@ static void VVectorSetImpl(VRuntime * runtime, VWORD k, VVector * vector, int in
   VTrackMutation(runtime, vector, vector->arr + index, val);
   vector->arr[index] = val;
 
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 }
 
 V_BEGIN_FUNC(VVectorSet2, "vector-set!", 4, k, v, i, val)
@@ -2010,7 +2042,7 @@ V_BEGIN_FUNC(VSetEnvVar2, "set-env-var!", 4, k, _up, _var, val)
     statics->vars[var] = val;
 
     VTrackMutation(runtime, statics, &statics->vars[var], val);
-    V_CALL(k, runtime, VVOID);
+    V_BOUNCE(k, runtime, VVOID);
   }
 V_END_FUNC
 
@@ -2043,7 +2075,7 @@ V_BEGIN_FUNC(VSetGlobalVar2, "set!", 3, k, sym, val)
 
   if(!VDefineImpl(runtime, sym, val, true))
     VErrorC(runtime, "set!: Symbol not found: ~a\n", sym);
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 V_END_FUNC
 
 
@@ -2052,7 +2084,7 @@ V_BEGIN_FUNC(VDefineGlobalVar2, "define", 3, k, sym, val)
     VGarbageCollect2Args((VFunc)VDefineGlobalVar2, runtime, statics, 3, argc, k, sym, val);
 
   VDefineImpl(runtime, sym, val, false);
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 V_END_FUNC
 
 V_BEGIN_FUNC(VMultiDefine2, "multidefine", 2, k, defines)
@@ -2079,7 +2111,7 @@ V_BEGIN_FUNC(VMultiDefine2, "multidefine", 2, k, defines)
     
     defines = VDecodePair(defines)->rest;
   }
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 V_END_FUNC
 
 V_BEGIN_FUNC(VLookupLibrary2, "lookup-library", 2, k, name)
@@ -2134,7 +2166,7 @@ static V_BEGIN_FUNC(VMakeImportLambda, "make-import-lambda", 2, k, x)
     }
     VWORD arg = VInlineCar2(runtime, args);
     if(VDecodeBool(VInlineEqv2(runtime, VInlineCar2(runtime, arg), x))) {
-      V_CALL(k, runtime, VInlineCdr2(runtime, arg));
+      V_BOUNCE(k, runtime, VInlineCdr2(runtime, arg));
       break;
     } else {
       args = VInlineCdr2(runtime, args);
@@ -2269,7 +2301,7 @@ V_BEGIN_FUNC(VDlopenLibraryImpl, "dlopen-library!", 2, k, _string)
 #endif
   );
 #endif
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 V_END_FUNC
 
 VFunc VDlopenLibrary = (VFunc)VDlopenLibraryImpl;
@@ -2818,7 +2850,14 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
 #ifdef __EMSCRIPTEN__
   // FIXME actually query and pass this somehow
   // it's really, really low on iOS :/
-  r->public.callgas = r->public.max_callgas = 1024;
+  r->public.callgas = r->public.max_callgas = 512;
+#endif
+#ifdef VANITY_PURE_C
+  r->public.VSecondStackStart = malloc(V_SECOND_STACK_SIZE);
+  printf("second stack start %p\n", r->public.VSecondStackStart);
+  r->public.VSecondStackLen = V_SECOND_STACK_SIZE - V_STACK_MARGIN;
+  r->public.VSecondStackSize = V_SECOND_STACK_SIZE;
+  r->public.VSecondStackCursor = 0;
 #endif
 
   r->VActiveHeap = true;
@@ -2916,6 +2955,7 @@ SYSV_CALL VWORD VStart2(VRuntime * runtime, int num_toplevels, VThunk const * to
     int which = VSetJmp(runtime->VRoot);
 #ifdef __EMSCRIPTEN__
     runtime->public.callgas = runtime->public.max_callgas;
+    runtime->public.bounceheight = 0;
 #endif
     switch(which) {
       case 0:
@@ -2957,7 +2997,7 @@ end:
 
 static V_BEGIN_FUNC_MIN(VResumeThunk, "resume", 0)
 //static SYSV_CALL void VResumeThunk(V_CORE_ARGS, ...) {
-  V_CALL(statics->vars[0], runtime, statics->vars[1]);
+  V_BOUNCE(statics->vars[0], runtime, statics->vars[1]);
 V_END_FUNC
 
 SYSV_CALL VWORD VStart3(VRuntime * runtime, int num_toplevels, VWORD const * toplevels) {
@@ -3161,7 +3201,15 @@ SYSV_CALL bool __attribute__((noinline)) VStackOverflowNoInline(VRuntime * runti
   ptrdiff_t size = runtime->public.VStackStart - VStackStop;
   bool has_gas = true;
 #ifdef __EMSCRIPTEN__
-  has_gas = runtime->public.callgas > 0;
+  int min_callgas = 0;
+#ifdef VANITY_PURE_C
+  min_callgas = runtime->public.bounceheight;
+#endif
+  has_gas = runtime->public.callgas > min_callgas;
+#endif
+#ifdef VANITY_PURE_C
+  if(runtime->public.VSecondStackCursor > runtime->public.VSecondStackLen)
+    return true;
 #endif
   return size > runtime->public.VStackLen || !has_gas;
 }
@@ -3169,7 +3217,15 @@ SYSV_CALL bool __attribute__((noinline)) VStackOverflowNoInline2(VRuntime * runt
   ptrdiff_t size = runtime->public.VStackStart - VStackStop;
   bool has_gas = true;
 #ifdef __EMSCRIPTEN__
-  has_gas = runtime->public.callgas > 0;
+  int min_callgas = 0;
+#ifdef VANITY_PURE_C
+  min_callgas = runtime->public.bounceheight;
+#endif
+  has_gas = runtime->public.callgas > min_callgas;
+#endif
+#ifdef VANITY_PURE_C
+  if(runtime->public.VSecondStackCursor > runtime->public.VSecondStackLen)
+    return true;
 #endif
   return size > runtime->public.VStackLen || !has_gas;
 }
@@ -3657,7 +3713,7 @@ static void sigint_handler(int i) {
 
 V_BEGIN_FUNC(VRegisterSigint, "register-sigint", 1, k)
   signal(SIGINT, sigint_handler);
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 V_END_FUNC
 
 static bool jiffy_epoch_set;

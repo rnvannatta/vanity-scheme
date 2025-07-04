@@ -481,11 +481,50 @@ typedef struct VPublicRuntime {
   int max_callgas;
   int callgas;
 #endif
+#ifdef VANITY_PURE_C
+  // counts against callgas
+  // can be reclaimed by coming back down
+  // on the trampoline.
+  // or lost when a new trampoline is placed at the current height,
+  // ie someone makes a V_CALL instead of a V_BOUNCE
+  int bounceheight;
+
+  VFunc trampoline_func;
+  VEnv * trampoline_env;
+  int trampoline_argc;
+  VEnv * trampoline_args;
+
+  // Now we have THREE stacks on emscripten! Ah Ah Ah!
+  // Trampolining functions store their allocations here.
+  char * VSecondStackStart;
+  int VSecondStackLen;
+  int VSecondStackSize;
+  int VSecondStackCursor;
+#endif
 } VPublicRuntime;
 typedef struct VRuntime VRuntime;
 
 #ifdef __EMSCRIPTEN__
-#define VSpendCallgas(runtime) (((VPublicRuntime*)runtime)->callgas--)
+//#define VSpendCallgas(runtime) (((VPublicRuntime*)runtime)->callgas--)
+static inline void VSpendCallgas(VRuntime * runtime) {
+  VPublicRuntime * pub = ((VPublicRuntime*)runtime);
+  pub->callgas--;
+#ifdef VANITY_PURE_C
+  pub->callgas -= pub->bounceheight;
+  pub->bounceheight = 0;
+#endif
+}
+#ifdef VANITY_PURE_C
+static inline void VRecordBounce(VRuntime * runtime) {
+  VPublicRuntime * pub = ((VPublicRuntime*)runtime);
+  pub->bounceheight++;
+}
+static inline bool VNeedsBounce(VRuntime * runtime) {
+  VPublicRuntime * pub = ((VPublicRuntime*)runtime);
+  return pub->callgas <= pub->bounceheight;
+}
+#endif
+
 #else
 #define VSpendCallgas(runtime)
 #endif
@@ -947,6 +986,27 @@ IMPLEMENT_DECODE_BUFFER(S8, int8_t)
 
 /* ======================== Construction ======================= */
 
+enum { V_HUGE_ALLOC_THRESHOLD = 128 * 1024 };
+void * VHugeAlloc(VRuntime * runtime, size_t size, bool plain_old_data);
+
+#ifdef VANITY_PURE_C
+static inline void * VAlloca(VRuntime * runtime, int size) {
+  VPublicRuntime * pub = (VPublicRuntime*)runtime;
+  size = (size + 15)/16*16;
+  int offset = pub->VSecondStackCursor;
+  pub->VSecondStackCursor += size;
+  return pub->VSecondStackStart + offset;
+}
+#else
+#define VAlloca(runtime, size) alloca(size)
+#endif
+
+#ifdef VANITY_PURE_C
+#define V_EDEN_INIT(runtime, type, fill) memcpy(VAlloca(runtime, sizeof(type)), (type[]){fill}, sizeof(type))
+#else
+#define V_EDEN_INIT(runtime, type, fill) ((type[]){ fill })
+#endif
+
 #ifdef DONT_INLINE
 
 //#define ALWAYS_INLINE __attribute__((always_inline))
@@ -1015,9 +1075,6 @@ static inline VWORD VFillEncodePair(VPair * pair, VWORD a, VWORD b) {
   pair->rest = b;
   return VEncodePair(pair);
 }
-
-enum { V_HUGE_ALLOC_THRESHOLD = 128 * 1024 };
-void * VHugeAlloc(VRuntime * runtime, size_t size, bool plain_old_data);
 
 #define V_ALLOCA_BLOB(len) alloca(sizeof(VBlob) + len);
 static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned len, char const * dat) {
@@ -1124,7 +1181,7 @@ static inline void VRecordCall2(VRuntime * _runtime, VDebugInfo * debug) {
   VPair _root_pair = VMakePair(VVOID, VNULL); \
   VPair * _cur = &_root_pair; \
   for(int i = numfixed; i < argc; i++) { \
-    VPair * p = alloca(sizeof(VPair)); \
+    VPair * p = VAlloca(runtime, sizeof(VPair)); \
     *p = VMakePair(self->vars[i], VNULL); \
     _cur->rest = VEncodePair(p); \
     _cur = p; \
@@ -1151,7 +1208,11 @@ void VCallDecodedWithGC(VRuntime* runtime, VClosure * closure, int argc, ...);
     }; \
     VSpendCallgas(runtime); \
     V_GC_CHECK2(fnc, runtime, nv, _argcount, _arguments.args) { \
-      (fnc)(runtime, _upenv, _argcount, &_arguments.env); \
+    } \
+    (fnc)(runtime, _upenv, _argcount, &_arguments.env); \
+    while(1) { \
+      VPublicRuntime * _pub = (VPublicRuntime *)runtime; \
+      _pub->trampoline_func(runtime, _pub->trampoline_env, _pub->trampoline_argc, _pub->trampoline_args); \
     } \
   } while(0)
 #define V_CALL(closure, runtime, ...) \
@@ -1160,21 +1221,67 @@ void VCallDecodedWithGC(VRuntime* runtime, VClosure * closure, int argc, ...);
     V_CALL_FUNC(_closure->func, _closure->env, runtime __VA_OPT__(,) __VA_ARGS__); \
   } while(0)
 
+// Try to use trampolines instead of longjmping? Good idea on platforms like emscripten
+// where longjmp unwinds the stack frame by frame
+#define VANITY_ENABLE_BOUNCING
+#ifdef VANITY_ENABLE_BOUNCING
+#define V_BOUNCE_FUNC(fnc, nv, runtime, ...) \
+  do { \
+    VEnv * _upenv = nv; \
+    enum { _argcount = VARG_COUNT(__VA_ARGS__) }; \
+    VWORD _argument_array[_argcount] = { __VA_ARGS__ }; \
+    VEnv * _arguments = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[_argcount])); \
+    *_arguments = (VEnv) { \
+      .base = VMakeSmallObject(VENV), \
+      .num_vars = _argcount, \
+      .var_len = _argcount, \
+      .up = _upenv, \
+    }; \
+    for(int i = 0; i < _argcount; i++) \
+      _arguments->vars[i] = _argument_array[i]; \
+    VRecordBounce(runtime); \
+    if(V_UNLIKELY(VStackOverflowBounce(runtime))) { \
+      VGarbageCollect2(fnc, runtime, _upenv, _argcount, _arguments->vars); \
+      return; \
+    } \
+    if(V_UNLIKELY(VNeedsBounce(runtime))) { \
+      ((VPublicRuntime*)runtime)->bounceheight = 0; \
+      VPublicRuntime * _pub = (VPublicRuntime *)runtime; \
+      _pub->trampoline_func = fnc; \
+      _pub->trampoline_env = _upenv; \
+      _pub->trampoline_argc = _argcount; \
+      _pub->trampoline_args = _arguments; \
+      return; \
+    } else { \
+      (fnc)(runtime, _upenv, _argcount, _arguments); \
+      return; \
+    } \
+  } while(0)
+#define V_BOUNCE(closure, runtime, ...) \
+  do { \
+    VClosure * _closure = VDecodeClosureApply2(runtime, closure); \
+    V_BOUNCE_FUNC(_closure->func, _closure->env, runtime __VA_OPT__(,) __VA_ARGS__); \
+  } while(0)
+#else
+#define V_BOUNCE_FUNC(...) V_CALL_FUNC(__VA_ARGS__)
+#define V_BOUNCE(...) V_CALL(__VA_ARGS__)
+#endif
+
 #else
 #define V_CALL_FUNC(fnc, nv, runtime, ...) \
  do { \
     VSpendCallgas(runtime); \
    VCallDecodedWithGC(runtime, (VClosure[]){{ .func = (VFunc)fnc, .env = nv }}, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
-   /*(fnc)(runtime, nv, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__);*/ \
  } while(0)
 
 #define V_CALL(closure, runtime, ...) \
   do { \
     VSpendCallgas(runtime); \
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, closure), sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__); \
-    /*VClosure * _closure = VDecodeClosureApply2(runtime, closure);*/ \
-    /*(_closure->func)(runtime, _closure->env, sizeof (VWORD[]){ __VA_ARGS__ } / sizeof(VWORD) __VA_OPT__(,) __VA_ARGS__);*/ \
   } while(0)
+
+#define V_BOUNCE_FUNC(...) V_CALL_FUNC(__VA_ARGS__)
+#define V_BOUNCE(...) V_CALL(__VA_ARGS__)
 
 #endif
 
@@ -1184,6 +1291,9 @@ void VCallDecodedWithGC(VRuntime* runtime, VClosure * closure, int argc, ...);
 // It is the stack margin plus how much the GC expects plus safety
 // padding.
 #define V_STACK_MARGIN (1024*1024)
+#ifdef VANITY_PURE_C
+enum { V_SECOND_STACK_SIZE = 8 * 1024 * 1024 };
+#endif
 
 static inline bool VStackOverflow(VRuntime * _runtime) {
   VPublicRuntime * runtime = (VPublicRuntime*)_runtime;
@@ -1195,13 +1305,46 @@ static inline bool VStackOverflow(VRuntime * _runtime) {
 #endif
   bool has_gas = true;
 #ifdef __EMSCRIPTEN__
-  has_gas = runtime->callgas > 0;
+  int min_gas = 0;
+#ifdef VANITY_PURE_C
+  min_gas = runtime->bounceheight;
+#endif
+  has_gas = runtime->callgas > min_gas;
   if(!has_gas) {
     //printf("out of gas!\n");
   }
+
+#endif
+#ifdef VANITY_PURE_C
+  if(runtime->VSecondStackCursor > runtime->VSecondStackLen)
+    return true;
 #endif
   return size > runtime->VStackLen || !has_gas;
 }
+static inline bool VStackOverflowBounce(VRuntime * _runtime) {
+  VPublicRuntime * runtime = (VPublicRuntime*)_runtime;
+  char * VStackStop = (char*)&runtime; 
+  ptrdiff_t size = runtime->VStackStart - VStackStop;
+#if !defined(__x86_64__) && !defined(__EMSCRIPTEN__)
+  // stack may grow upwards on some platforms
+  static_assert(0, "");
+#endif
+  bool has_gas = true;
+#ifdef __EMSCRIPTEN__
+  int min_gas = 0;
+  has_gas = runtime->callgas > min_gas;
+  if(!has_gas) {
+    //printf("out of gas!\n");
+  }
+
+#endif
+#ifdef VANITY_PURE_C
+  if(runtime->VSecondStackCursor > runtime->VSecondStackLen)
+    return true;
+#endif
+  return size > runtime->VStackLen || !has_gas;
+}
+
 bool VStackOverflowNoInline(VRuntime * runtime);
 bool VStackOverflowNoInline2(VRuntime * runtime, char * VStackStop);
 
@@ -1239,6 +1382,12 @@ static inline void VSetRest(VRuntime * runtime, VPair * p, VWORD w) {
   VTrackMutation(runtime, p, &p->rest, w);
   p->rest = w;
 }
+
+__attribute__((noreturn))
+void VReallyExit(int ret);
+
+__attribute__((noreturn))
+void VReallyAbort();
 
 /* ======================== Core Functions ======================= */
 

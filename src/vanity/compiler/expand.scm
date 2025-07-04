@@ -25,7 +25,7 @@
 
 (define-library (vanity compiler expand)
   (import (vanity core) (vanity pretty-print) (vanity intrinsics) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi) (vanity compiler library))
-  (export expand-toplevel free-variables-toplevel)
+  (export expand-toplevel free-variables-toplevel expand-library-simple)
   ; TODO
 
   ; garbage collect strings and pairs - DONE
@@ -279,6 +279,98 @@
              ((s8vector? x) `(##vcore.list->s8vector ,(expand-quasiquote quotation (s8vector->list x))))
              (else `',x)))))
 
+  (define (expand-library-simple lib paths)
+    (define exports '())
+    (define imports '())
+
+    (define declares '())
+    (define defines '())
+    (define constants '())
+    (define just-defines #t)
+
+    (define (expand-library-expr expr)
+      (match expr
+        (('export . syms)
+         (set! exports (append syms exports))
+         (list))
+        (('import . libs)
+         (set! imports (append libs imports))
+         (list))
+        (('define (f . xs) . body)
+         (sanitize-define-procedure f xs body)
+         (set! defines (cons `(define ,f ,(expand-syntax `(lambda ,xs . ,body))) defines))
+         (list))
+        (('define f ('lambda . body))
+         (sanitize-define f `(lambda . ,body))
+         (set! defines (cons `(define ,f ,(expand-syntax `(lambda . ,body))) defines))
+         (list))
+        (('define f ('case-lambda . body))
+         (sanitize-define f `(case-lambda . ,body))
+         (set! defines (cons `(define ,f ,(expand-syntax `(case-lambda . ,body))) defines))
+         (list))
+        (('define x y)
+         (sanitize-define x y)
+         (if just-defines
+             (begin
+               (set! defines (cons `(define ,x ,(expand-syntax y)) defines))
+               (list))
+             (begin
+               (set! defines (cons `(define ,x #f) defines))
+               (list `(set! ,x ,(expand-syntax y))))))
+        (('define-constant (f . xs) . body)
+         (compiler-error "define-constant does not support trivial lambdas yet" `(define-constant (,f . ,xs) ,body)))
+        (('define-constant x body)
+         (if (not (constant-expr? body)) (compiler-error "define-constant does not define a constant expression" `(define-constant ,x ,body)))
+         (if (not (symbol? x)) (compiler-error "define-constant's first argument is not a symbol" x))
+         (begin
+           (set! constants (cons `(define-constant ,x ,body) constants))
+           (list)))
+        (('define-constant . noise) (compiler-error "malformed define-constant" `(define . ,noise)))
+        (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
+        (('begin x) (expand-library-expr x))
+        (('begin . xs) (apply append (map expand-library-expr xs)))
+        (('define-record-type . rest)
+         (expand-library-expr (expand-define-record-type expr)))
+        ; resolve-foreign-import also inserts a foreign-declare which we need to lift to the toplevel
+        (('foreign-import lang str)
+         (expand-library-expr `(##foreign.import ,lang ,str)))
+        (('##foreign.import lang str)
+         (let ((decl-defines (resolve-foreign-import expr paths "sysv_amd64")))
+          (set! declares (cons (car decl-defines) declares))
+          (apply append (map expand-library-expr (cdr decl-defines)))))
+        (else
+          (set! just-defines #f)
+          (list expr))))
+    ; still has free variables
+    (define (qualify defines all-defines body)
+      (match defines
+        (() '())
+        ((('define f ('lambda xs . lambda-body)) . rest)
+         (if (and (variable-pure? f `(lambda ,xs . ,lambda-body)) (variable-pure? f all-defines) (variable-pure? f body))
+             (cons `(define ,f (##qualified-lambda (,@(cadr lib) ,f) ,xs . ,lambda-body)) (qualify (cdr defines) all-defines body))
+             (cons (car defines) (qualify (cdr defines) all-defines body))))
+        ((('define f ('case-lambda (xses . lambda-bodies) ...)) . rest)
+         (if (and
+                (map (lambda (xs lambda-body) (variable-pure? f `(lambda ,xs . ,lambda-body))) xses lambda-bodies)
+                (variable-pure? f all-defines)
+                (variable-pure? f body))
+             (cons
+               `(define ,f (##qualified-case-lambda (,@(cadr lib) ,f) . ,(map (lambda (xs lambda-body) `(,xs . ,lambda-body)) xses lambda-bodies)))
+               (qualify (cdr defines) all-defines body))
+             (cons (car defines) (qualify (cdr defines) all-defines body))))
+        (else
+          (cons (car defines) (qualify (cdr defines) all-defines body)))))
+
+    (let* ((expanded (map expand-library-expr (cddr lib)))
+           (body (apply append expanded))
+           (defines (qualify defines defines body)))
+      `(define-library ,(cadr lib)
+         (export . ,exports)
+         (import . ,imports)
+         ,@(reverse declares)
+         ,@(reverse constants)
+         ,@(reverse defines)
+         . ,body)))
   ; pretty ugly code
   (define (expand-library lib paths)
     (define (make-library-output exports)
@@ -325,6 +417,7 @@
          (sanitize-define f `(case-lambda . ,body))
          (set! defines (cons `(define ,f ,(expand-syntax `(case-lambda . ,body))) defines))
          (list))
+        ; TODO don't forget about ##qualified-lambda and ##qualified-case-lambda
         (('define x y)
          (sanitize-define x y)
          (if just-defines

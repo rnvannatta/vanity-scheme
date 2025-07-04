@@ -1,0 +1,11 @@
+(define-library (acker)
+  (begin
+    (export ack)
+    (define (ack m n)
+      (cond ((##vcore.eq? m 0) (##vcore.+ n 1))
+            ((##vcore.eq? n 0) (ack (##vcore.- m 1) 1))
+            (else (ack (##vcore.- m 1) (ack m (##vcore.- n 1))))))))
+(import (acker) (vanity core))
+(let ((start (current-jiffy)))
+  (displayln (ack 3 10))
+  (displayln (/ (- (current-jiffy) start) (jiffies-per-second))))

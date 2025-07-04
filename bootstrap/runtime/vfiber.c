@@ -768,7 +768,7 @@ VSleeperFiberMain(void * _data) {
   if(ret) {
     fprintf(stderr, "Couldn't block signals on fiber threads. Goodbye!\n");
     fflush(stderr);
-    abort();
+    VReallyAbort();
   }
 
   int exit = 0;
@@ -870,7 +870,7 @@ VFiber * VLaunchFiberWorkers(VFiberContext ** context_out, int numthreads, size_
     if(!ok) {
       fprintf(stderr, "Couldn't create requested number of fiber works. Time to die!\n");
       fflush(stderr);
-      abort();
+      VReallyAbort();
     }
   }
   return &main_fiber->me;

@@ -54,7 +54,7 @@
   VWORD _VBasic_ ## name(VRuntime * runtime, VEnv * statics __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__))); \
   V_BEGIN_FUNC(name, scmname, (nargs)+1, k __VA_OPT__(,) __VA_ARGS__) \
     VWORD ret = _VBasic_ ## name(runtime, statics __VA_OPT__(,) __VA_ARGS__); \
-    V_CALL(k, runtime, ret); \
+    V_BOUNCE(k, runtime, ret); \
   V_END_FUNC \
   void _VBasic_ ## name(VRuntime * runtime, VEnv * statics __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__))) {
 #endif
@@ -65,9 +65,9 @@
 V_BEGIN_FUNC(VExact, "exact", 2, k, x)
   uint64_t type = VWordType(x);
   if(type == VIMM_INT) {
-    V_CALL(k, runtime, x);
+    V_BOUNCE(k, runtime, x);
   } else if(type == VIMM_NUMBER) {
-    V_CALL(k, runtime, VEncodeInt((int)VDecodeNumber(x)));
+    V_BOUNCE(k, runtime, VEncodeInt((int)VDecodeNumber(x)));
   } else {
     VErrorC(runtime, "exact: not a number: ~S", x);
   }
@@ -76,9 +76,9 @@ V_END_FUNC
 V_BEGIN_FUNC(VInexact, "inexact", 2, k, x)
   uint64_t type = VWordType(x);
   if(type == VIMM_INT) {
-    V_CALL(k, runtime, VEncodeNumber((double)VDecodeInt(x)));
+    V_BOUNCE(k, runtime, VEncodeNumber((double)VDecodeInt(x)));
   } else if(type == VIMM_NUMBER) {
-    V_CALL(k, runtime, x);
+    V_BOUNCE(k, runtime, x);
   } else {
     VErrorC(runtime, "exact: not a number: ~S", x);
   }
@@ -319,13 +319,13 @@ SYSV_CALL __attribute__((used)) static V_BEGIN_FUNC_MIN(VAdd2CaseVarargs, "+", 1
     ret = VEncodeInt(iacc);
   else
     ret = VEncodeNumber(iacc+dacc);
-  V_CALL(k, runtime, ret);
+  V_BOUNCE(k, runtime, ret);
 V_END_FUNC
 
 #ifndef VANITY_PURE_C
 SYSV_CALL __attribute__((used)) static void VAddBinary(V_CORE_ARGS, VWORD k, VWORD a, VWORD b) {
   VWORD ret = _VBasic_VAdd_Binary(runtime, statics, a, b);
-  V_CALL(k, runtime, ret);
+  V_BOUNCE(k, runtime, ret);
 }
 
 SYSV_CALL void VAdd2(V_CORE_ARGS, VWORD k, ...);
@@ -391,7 +391,7 @@ end:
       ret = VEncodeInt(iacc);
     else
       ret = VEncodeNumber(iacc+dacc);
-    V_CALL(k, runtime, ret);
+    V_BOUNCE(k, runtime, ret);
   }
 V_END_FUNC
 
@@ -431,7 +431,7 @@ SYSV_CALL __attribute__((used)) static void VSub2Case2(V_CORE_ARGS, VWORD k, VWO
       ret = VEncodeInt(iacc);
     else
       ret = VEncodeNumber(iacc+dacc);
-    V_CALL(k, runtime, ret);
+    V_BOUNCE(k, runtime, ret);
 }
 
 SYSV_CALL void VSub2(V_CORE_ARGS, VWORD k, VWORD x, ...);
@@ -480,7 +480,7 @@ V_BEGIN_FUNC_MIN(VMul2, "*", 1, k)
       ret = VEncodeInt(iacc);
     else
       ret = VEncodeNumber(iacc*dacc);
-    V_CALL(k, runtime, ret);
+    V_BOUNCE(k, runtime, ret);
 V_END_FUNC
 
 V_BEGIN_FUNC_MIN(VDiv2, "/", 2, k, x)
@@ -538,16 +538,16 @@ end:
         ret = VEncodeInt(iacc);
       else
         ret = VEncodeNumber(iacc*dacc);
-      V_CALL(k, runtime, ret);
+      V_BOUNCE(k, runtime, ret);
     }
 V_END_FUNC
 
 V_BEGIN_FUNC(VQuot2, "quotient", 3, k, x, y)
-    V_CALL(k, runtime, VEncodeInt(VCheckedDecodeInt2(runtime, x, "quotient") / VCheckedDecodeInt2(runtime, y, "quotient")));
+    V_BOUNCE(k, runtime, VEncodeInt(VCheckedDecodeInt2(runtime, x, "quotient") / VCheckedDecodeInt2(runtime, y, "quotient")));
 V_END_FUNC
 
 V_BEGIN_FUNC(VRem2, "remainder", 3, k, x, y)
-    V_CALL(k, runtime, VEncodeInt(VCheckedDecodeInt2(runtime, x, "remainder") % VCheckedDecodeInt2(runtime, y, "remainder")));
+    V_BOUNCE(k, runtime, VEncodeInt(VCheckedDecodeInt2(runtime, x, "remainder") % VCheckedDecodeInt2(runtime, y, "remainder")));
 V_END_FUNC
 
 // This feels fucking idiotic.
@@ -569,7 +569,7 @@ V_BEGIN_FUNC(VCmp2, "cmp", 3, k, x, y)
           : diff == 0.0 ? 0
           : -1 ;
 
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 V_END_FUNC
 
 //VWORD _VBasic_VAdd_Binary(VRuntime * runtime, VEnv * statics, VWORD a, VWORD b) {
@@ -596,7 +596,7 @@ V_END_FUNC
     else if(VWordType(_b) == VIMM_INT) b = (double)VDecodeInt(_b); \
     else b = 0, VErrorC(runtime, scm_name ": arg 2 not a number ~A", _b); \
     \
-    if(!(a op b)) V_CALL(k, runtime, VFALSE); \
+    if(!(a op b)) V_BOUNCE(k, runtime, VFALSE); \
     \
     for(int i = 3; i < argc; i++) { \
       a = b; \
@@ -604,14 +604,14 @@ V_END_FUNC
       if(VIsDouble(_b)) b = VDecodeNumber(_b); \
       else if(VWordType(_b) == VIMM_INT) b = (double)VDecodeInt(_b); \
       else VErrorC(runtime, scm_name ": arg ~D not a number ~A", argc - 1, _b); \
-      if(!(a op b)) V_CALL(k, runtime, VFALSE); \
+      if(!(a op b)) V_BOUNCE(k, runtime, VFALSE); \
     } \
-    V_CALL(k, runtime, VTRUE); \
+    V_BOUNCE(k, runtime, VTRUE); \
   V_END_FUNC
 #define V_IMPLEMENT_COMPARE_FAST_BINARY(op, Name, scm_name) \
   SYSV_CALL __attribute__((used)) static void Name ## _Binary(V_CORE_ARGS, VWORD k, VWORD a, VWORD b) { \
     VWORD ret = _VBasic_ ## Name ## _Binary(runtime, statics, a, b); \
-    V_CALL(k, runtime, ret); \
+    V_BOUNCE(k, runtime, ret); \
   } \
 
 #define V_IMPLEMENT_COMPARE_FAST_SYSV_X64(op, Name, scm_name) \
@@ -734,11 +734,11 @@ V_END_FUNC
 
 // equality
 V_BEGIN_FUNC(VEq2, "eq?", 3, k, x, y)
-  V_CALL(k, runtime, VInlineEq2(runtime, x, y));
+  V_BOUNCE(k, runtime, VInlineEq2(runtime, x, y));
 V_END_FUNC
 
 V_BEGIN_FUNC(VSymbolEqv2, "symbol=?", 3, k, x, y)
-  V_CALL(k, runtime, VInlineSymbolEqv2(runtime, x, y));
+  V_BOUNCE(k, runtime, VInlineSymbolEqv2(runtime, x, y));
 V_END_FUNC
 
 V_BEGIN_FUNC(VBlobEqv2, "blob=?", 3, k, x, y)
@@ -751,11 +751,11 @@ V_BEGIN_FUNC(VBlobEqv2, "blob=?", 3, k, x, y)
     if(blob_a->len == blob_b->len)
       ret = blob_a->base.tag == blob_b->base.tag && !memcmp(blob_a->buf, blob_b->buf, blob_a->len);
   }
-  V_CALL(k, runtime, VEncodeBool(ret));
+  V_BOUNCE(k, runtime, VEncodeBool(ret));
 V_END_FUNC
 
 V_BEGIN_FUNC(VEqv, "eqv?", 3, k, x, y)
-  V_CALL(k, runtime, VInlineEqv2(runtime, x, y));
+  V_BOUNCE(k, runtime, VInlineEqv2(runtime, x, y));
 V_END_FUNC
 
 // logic
@@ -767,16 +767,16 @@ V_END_FUNC
 // pairs
 
 V_BEGIN_FUNC(VCons2, "cons", 3, k, x, y)
-    V_CALL(k, runtime, VInlineCons2(runtime, x, y));
+    V_BOUNCE(k, runtime, VInlineCons2(runtime, x, y));
 }
 
 V_BEGIN_FUNC(VCar2, "car", 2, k, x)
-    V_CALL(k, runtime, VInlineCar2(runtime, x));
+    V_BOUNCE(k, runtime, VInlineCar2(runtime, x));
 V_END_FUNC
 
 
 V_BEGIN_FUNC(VCdr2, "cdr", 2, k, x)
-    V_CALL(k, runtime, VInlineCdr2(runtime, x));
+    V_BOUNCE(k, runtime, VInlineCdr2(runtime, x));
 V_END_FUNC
 
 
@@ -992,15 +992,15 @@ V_BEGIN_FUNC(VMakeHashTable, "make-hash-table", 4, k, eq, hash, _len)
 
 V_BEGIN_FUNC(VHashTableEqvFunc, "hash-table-equivalence-function", 2, k, _table)
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-equivalence-function");
-  V_CALL(k, runtime, table->eq);
+  V_BOUNCE(k, runtime, table->eq);
 }
 V_BEGIN_FUNC(VHashTableHashFunc, "hash-table-hash-function", 2, k, _table)
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-hash-function");
-  V_CALL(k, runtime, table->hash);
+  V_BOUNCE(k, runtime, table->hash);
 }
 V_BEGIN_FUNC(VHashTableVector, "hash-table-vector", 2, k, _table)
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-vector");
-  V_CALL(k, runtime, table->vec);
+  V_BOUNCE(k, runtime, table->vec);
 }
 V_BEGIN_FUNC(VHashTableRef, "hash-table-ref", 4, k, _table, key, thunk)
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-ref");
@@ -1676,10 +1676,10 @@ static V_BEGIN_FUNC_MIN(VCallCCLambda2, "call/cc-lambda", 1, k)
     //va_start(args, k);
     //VWORD ret = va_arg(args, VWORD);
     //va_end(args);
-    V_CALL(realk, runtime, self->vars[1]);
+    V_BOUNCE(realk, runtime, self->vars[1]);
   } else if(argc == 1) {
     // call/cc in a (begin)
-    V_CALL(realk, runtime);
+    V_BOUNCE(realk, runtime);
   } else {
     // nested call-with-values evil
     VClosure * realk_real = VDecodeClosureApply2(runtime, realk);
@@ -1828,7 +1828,7 @@ V_BEGIN_FUNC(VSystem2, "system", 2, k, cmd)
 
   int ret = system(blob->buf);
 
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 }
 
 SYSV_CALL static void VOpenProcess2(V_CORE_ARGS, VWORD k, VWORD cmd, char const * mode, unsigned flags) {
@@ -1913,7 +1913,7 @@ V_BEGIN_FUNC(VRandomSample, "random-sample", 2, k, rng)
   VBlob * buf = VCheckedDecodePointer2(runtime, rng, VRNG_STATE, "random-sample");
   int i = (unsigned)vrandom((vrandom_state*)buf->buf);
 
-  V_CALL(k, runtime, VEncodeInt(i));
+  V_BOUNCE(k, runtime, VEncodeInt(i));
 }
 V_BEGIN_FUNC(VRandomSampleBounded, "random-sample-bounded", 3, k, rng, _bounds)
   VBlob * buf = VCheckedDecodePointer2(runtime, rng, VRNG_STATE, "random-sample-bounded");
@@ -1921,13 +1921,13 @@ V_BEGIN_FUNC(VRandomSampleBounded, "random-sample-bounded", 3, k, rng, _bounds)
   if(bounds <= 0) VErrorC(runtime, "random-sample-bounded: bounds must be positive ~D\n", bounds);
   int i = (unsigned)vrandom_bounded((vrandom_state*)buf->buf, bounds);
 
-  V_CALL(k, runtime, VEncodeInt(i));
+  V_BOUNCE(k, runtime, VEncodeInt(i));
 }
 V_BEGIN_FUNC(VRandomSampleFloat, "random-sample-float", 2, k, rng)
   VBlob * buf = VCheckedDecodePointer2(runtime, rng, VRNG_STATE, "random-sample-float");
   double d = vrandom_double((vrandom_state*)buf->buf);
 
-  V_CALL(k, runtime, VEncodeNumber(d));
+  V_BOUNCE(k, runtime, VEncodeNumber(d));
 }
 
 V_BEGIN_FUNC(VRandomAdvance, "random-advance", 3, k, rng, _n)
@@ -1935,7 +1935,7 @@ V_BEGIN_FUNC(VRandomAdvance, "random-advance", 3, k, rng, _n)
   int n = VCheckedDecodeInt2(runtime, _n, "random-advance");
   vrandom_advance((vrandom_state*)buf->buf, n);
 
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 }
 
 V_BEGIN_FUNC(VRealpath, "realpath", 2, k, _relpath)
@@ -1972,7 +1972,7 @@ V_BEGIN_FUNC(VAccess, "access", 3, k, _path, _mode)
 #endif
 
   int ret = access(path->buf, mode);
-  V_CALL(k, runtime, VEncodeBool(!ret));
+  V_BOUNCE(k, runtime, VEncodeBool(!ret));
 }
 
 //
@@ -2182,14 +2182,14 @@ uint64_t VJiffiesPerSecondImpl();
 V_BEGIN_FUNC(VCurrentJiffy, "current-jiffy", 1, k)
 #if defined(__linux) || defined(_WIN64) || defined(__EMSCRIPTEN__)
   uint64_t ret = VCurrentJiffyImpl();
-  V_CALL(k, runtime, VEncodeNumber(ret));
+  V_BOUNCE(k, runtime, VEncodeNumber(ret));
 #endif
   VErrorC(runtime, "current-jiffy: unsupported platform");
 }
 
 V_BEGIN_FUNC(VJiffiesPerSecond, "jiffies-per-second", 1, k)
 #if defined(__linux) || defined(_WIN64) || defined(__EMSCRIPTEN__)
-  V_CALL(k, runtime, VEncodeNumber(VJiffiesPerSecondImpl()));
+  V_BOUNCE(k, runtime, VEncodeNumber(VJiffiesPerSecondImpl()));
 #endif
   VErrorC(runtime, "jiffies-per-second: unsupported platform");
 }
@@ -2200,7 +2200,7 @@ V_BEGIN_FUNC(VBitwiseNot, "bitwise-not", 2, k, _x)
 #define NAME "bitwise-not"
   int x = VCheckedDecodeInt2(runtime, _x, NAME);
   int ret = ~x;
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VBitwiseIor, "bitwise-ior", 3, k, _a, _b)
@@ -2208,7 +2208,7 @@ V_BEGIN_FUNC(VBitwiseIor, "bitwise-ior", 3, k, _a, _b)
   int a = VCheckedDecodeInt2(runtime, _a, NAME);
   int b = VCheckedDecodeInt2(runtime, _b, NAME);
   int ret = a | b;
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VBitwiseXor, "bitwise-xor", 3, k, _a, _b)
@@ -2216,7 +2216,7 @@ V_BEGIN_FUNC(VBitwiseXor, "bitwise-xor", 3, k, _a, _b)
   int a = VCheckedDecodeInt2(runtime, _a, NAME);
   int b = VCheckedDecodeInt2(runtime, _b, NAME);
   int ret = a ^ b;
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VBitwiseAnd, "bitwise-and", 3, k, _a, _b)
@@ -2224,7 +2224,7 @@ V_BEGIN_FUNC(VBitwiseAnd, "bitwise-and", 3, k, _a, _b)
   int a = VCheckedDecodeInt2(runtime, _a, NAME);
   int b = VCheckedDecodeInt2(runtime, _b, NAME);
   int ret = a & b;
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VBitwiseXnor, "bitwise-xnor", 3, k, _a, _b)
@@ -2232,7 +2232,7 @@ V_BEGIN_FUNC(VBitwiseXnor, "bitwise-xnor", 3, k, _a, _b)
   int a = VCheckedDecodeInt2(runtime, _a, NAME);
   int b = VCheckedDecodeInt2(runtime, _b, NAME);
   int ret = ~(a ^ b);
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VBitwiseNand, "bitwise-nand", 3, k, _a, _b)
@@ -2240,7 +2240,7 @@ V_BEGIN_FUNC(VBitwiseNand, "bitwise-nand", 3, k, _a, _b)
   int a = VCheckedDecodeInt2(runtime, _a, NAME);
   int b = VCheckedDecodeInt2(runtime, _b, NAME);
   int ret = ~(a & b);
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VBitwiseNor, "bitwise-nor", 3, k, _a, _b)
@@ -2248,7 +2248,7 @@ V_BEGIN_FUNC(VBitwiseNor, "bitwise-nor", 3, k, _a, _b)
   int a = VCheckedDecodeInt2(runtime, _a, NAME);
   int b = VCheckedDecodeInt2(runtime, _b, NAME);
   int ret = ~(a | b);
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VBitwiseAndC1, "bitwise-andc1", 3, k, _a, _b)
@@ -2256,7 +2256,7 @@ V_BEGIN_FUNC(VBitwiseAndC1, "bitwise-andc1", 3, k, _a, _b)
   int a = VCheckedDecodeInt2(runtime, _a, NAME);
   int b = VCheckedDecodeInt2(runtime, _b, NAME);
   int ret = (~a & b);
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VBitwiseAndC2, "bitwise-andc1", 3, k, _a, _b)
@@ -2264,7 +2264,7 @@ V_BEGIN_FUNC(VBitwiseAndC2, "bitwise-andc1", 3, k, _a, _b)
   int a = VCheckedDecodeInt2(runtime, _a, NAME);
   int b = VCheckedDecodeInt2(runtime, _b, NAME);
   int ret = (a & ~b);
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VBitwiseOrC1, "bitwise-orc1", 3, k, _a, _b)
@@ -2272,7 +2272,7 @@ V_BEGIN_FUNC(VBitwiseOrC1, "bitwise-orc1", 3, k, _a, _b)
   int a = VCheckedDecodeInt2(runtime, _a, NAME);
   int b = VCheckedDecodeInt2(runtime, _b, NAME);
   int ret = (~a & b);
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VBitwiseOrC2, "bitwise-orc2", 3, k, _a, _b)
@@ -2280,7 +2280,7 @@ V_BEGIN_FUNC(VBitwiseOrC2, "bitwise-orc2", 3, k, _a, _b)
   int a = VCheckedDecodeInt2(runtime, _a, NAME);
   int b = VCheckedDecodeInt2(runtime, _b, NAME);
   int ret = (a & ~b);
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VArithmeticShift, "arithmetic-shift", 3, k, _a, _b)
@@ -2292,7 +2292,7 @@ V_BEGIN_FUNC(VArithmeticShift, "arithmetic-shift", 3, k, _a, _b)
     ret = a << b;
   else
     ret = a >> -b;
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
 V_BEGIN_FUNC(VBitCount, "bit-count", 2, k, _a)
@@ -2304,6 +2304,6 @@ V_BEGIN_FUNC(VBitCount, "bit-count", 2, k, _a)
   for (ret = 0; a; ret++)
     a &= a - 1;
 
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }

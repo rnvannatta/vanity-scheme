@@ -122,7 +122,7 @@ static inline VWORD VInlineEqv2(VRuntime * runtime, VWORD a, VWORD b) {
 }
 
 // lists
-#define VInlineCons2(runtime, a, b) VFillEncodePair(alloca(sizeof(VPair)), a, b)
+#define VInlineCons2(runtime, a, b) VFillEncodePair(VAlloca(runtime, sizeof(VPair)), a, b)
 
 static inline VWORD VInlineCar2(VRuntime * runtime, VWORD v) {
     if(VWordType(v) != VPOINTER_PAIR) VErrorC(runtime, "car: not a pair ~S\n", v);

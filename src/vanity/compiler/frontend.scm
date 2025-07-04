@@ -106,6 +106,19 @@
     (if (null? args) ct
         (loop (cdr args) (+ ct (if (car args) 1 0))))))
 (define (delete-file f)  (system (sprintf "/bin/rm ~A" f)))
+(define (gen-header2)
+  (let* ((file (read-all (open-input-file (car scm-files))))
+         (filtered (filter (lambda (x) (and (pair? x) (eqv? (car x) 'define-library))) file))
+         (expanded (map (cut expand-library-simple <> (cons (realbasepath (car scm-files)) paths)) filtered))
+         #;(headers (filter (lambda (x) x) (map header-from-library filtered))))
+    #;(if (> (length headers) 1) (compiler-error "Only one statement permitted in header generation"))
+    #;(if (not (or (null? headers) (car headers))) (compiler-error "File did not produce a valid header"))
+    (with-output-to-file
+      out-file
+      (lambda ()
+        (for-each pretty-print expanded)
+        ;(if (not (null? headers)) (write (car headers)))
+        (newline)))))
 (define (gen-header)
   (let* ((file (read-all (open-input-file (car scm-files))))
          (headers (filter (lambda (x) x) (map header-from-library file))))
@@ -172,7 +185,7 @@
     (display "vsc: ")
     (display err)
     (newline)
-    #;(exit 1)))
+    (exit 1)))
 
 (with-exception-handler handle-exception
   (lambda ()
@@ -204,7 +217,7 @@
                    (compiler-error "Optimization flag -O expects integer between 0 and 3 inclusive" (cdar args))))
               ((#\E)
                (set! expand? (string->number (cdar args)))
-               (if (not (and expand? (integer? expand?) (<= 0 expand? 2)))
+               (if (not (and expand? (integer? expand?) (or (eq? expand? 9) (<= 0 expand? 2))))
                    (compiler-error "Expand flag -E expects integer between 0 and 2 inclusive" (cdar args))))
               ((#\W)
                (cond ((equal? (cdar args) "unbound") (set! w-unbound-variables #t))
@@ -263,6 +276,7 @@
                 (makefile? out-file)
                 (else #f))))
 
+    (if (eq? expand? 9) (begin (gen-header2) (exit)))
     (if header? (begin (gen-header) (exit)))
     (if makefile? (begin (gen-makefile) (exit)))))
 
