@@ -1013,9 +1013,13 @@ static __attribute__((constructor)) void VDllMain1() {
   _V10vcore_Dcdr = VEncodePointer(VLookupConstant("_V10vcore_Dcdr", &_VW_V10vcore_Dcdr), VPOINTER_OTHER);
   _V10vcore_Dqcons = VEncodePointer(VLookupConstant("_V10vcore_Dqcons", &_VW_V10vcore_Dqcons), VPOINTER_OTHER);
 }
-static void _V10_Dlookup__inline__name_D6_k8(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+V_DECLARE_FUNC(_V50_V0vanity_V0intrinsics_V0lookup__intrinsic, _var0, _var1);
+V_DECLARE_FUNC(_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q, _var0, _var1);
+V_DECLARE_FUNC(_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name, _var0, _var1);
+V_DECLARE_FUNC(_V50_V0vanity_V0intrinsics_V0lookup__inline__name, _var0, _var1);
+void _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k8(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__inline__name_D6_k8, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k8, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1031,9 +1035,9 @@ statics->vars[0])) {
       _V10vcore_Dqcons);
 }
 }
-static void _V10_Dlookup__inline__name_D6_k11(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k11(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__inline__name_D6_k11, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k11, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1047,9 +1051,9 @@ _var0)) {
       VEncodeBool(false));
 }
 }
-static void _V10_Dlookup__inline__name_D6_k10(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k10(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__inline__name_D6_k10, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k10, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1057,21 +1061,21 @@ static void _V10_Dlookup__inline__name_D6_k10(VRuntime * runtime, VEnv * statics
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.26 0 0) ((bruijn ##.k.20 7 0) (##string ##.string.505)) (##vcore.eqv? (close _V10_Dlookup__inline__name_D6_k11) (bruijn ##.sym.10 7 1) '##vcore.cdr))
+  // (if (bruijn ##.p.26 0 0) ((bruijn ##.k.20 7 0) (##string ##.string.505)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k11) (bruijn ##.sym.10 7 1) '##vcore.cdr))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D505.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D6_k11, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k11, self)))),
       VGetArg(statics, 7-1, 1),
       _V10vcore_Dcdr);
 }
 }
-static void _V10_Dlookup__inline__name_D6_k9(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k9(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__inline__name_D6_k9, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k9, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1079,21 +1083,21 @@ static void _V10_Dlookup__inline__name_D6_k9(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.25 0 0) ((bruijn ##.k.20 6 0) (##string ##.string.504)) (##vcore.eqv? (close _V10_Dlookup__inline__name_D6_k10) (bruijn ##.sym.10 6 1) '##vcore.car))
+  // (if (bruijn ##.p.25 0 0) ((bruijn ##.k.20 6 0) (##string ##.string.504)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k10) (bruijn ##.sym.10 6 1) '##vcore.car))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D504.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D6_k10, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k10, self)))),
       VGetArg(statics, 6-1, 1),
       _V10vcore_Dcar);
 }
 }
-static void _V10_Dlookup__inline__name_D6_k7(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k7(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__inline__name_D6_k7, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k7, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1101,13 +1105,13 @@ static void _V10_Dlookup__inline__name_D6_k7(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Dlookup__inline__name_D6_k8) (close _V10_Dlookup__inline__name_D6_k9))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dlookup__inline__name_D6_k8, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D6_k9, self)})));
+  // ((close _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k8) (close _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k9))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k8, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k9, self)))));
 }
-static void _V10_Dlookup__inline__name_D6_k6(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k6(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__inline__name_D6_k6, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k6, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1115,21 +1119,21 @@ static void _V10_Dlookup__inline__name_D6_k6(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.24 0 0) ((bruijn ##.k.20 4 0) (##string ##.string.503)) (##vcore.eqv? (close _V10_Dlookup__inline__name_D6_k7) (bruijn ##.sym.10 4 1) '##vcore.cons))
+  // (if (bruijn ##.p.24 0 0) ((bruijn ##.k.20 4 0) (##string ##.string.503)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k7) (bruijn ##.sym.10 4 1) '##vcore.cons))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D503.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D6_k7, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k7, self)))),
       statics->up->up->up->vars[1],
       _V10vcore_Dcons);
 }
 }
-static void _V10_Dlookup__inline__name_D6_k5(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k5(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__inline__name_D6_k5, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k5, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1137,21 +1141,21 @@ static void _V10_Dlookup__inline__name_D6_k5(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.23 0 0) ((bruijn ##.k.20 3 0) (##string ##.string.502)) (##vcore.eqv? (close _V10_Dlookup__inline__name_D6_k6) (bruijn ##.sym.10 3 1) '##vcore.eq?))
+  // (if (bruijn ##.p.23 0 0) ((bruijn ##.k.20 3 0) (##string ##.string.502)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k6) (bruijn ##.sym.10 3 1) '##vcore.eq?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D502.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D6_k6, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k6, self)))),
       statics->up->up->vars[1],
       _V10vcore_Deq_Q);
 }
 }
-static void _V10_Dlookup__inline__name_D6_k4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__inline__name_D6_k4, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k4, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1159,21 +1163,21 @@ static void _V10_Dlookup__inline__name_D6_k4(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.22 0 0) ((bruijn ##.k.20 2 0) (##string ##.string.501)) (##vcore.eqv? (close _V10_Dlookup__inline__name_D6_k5) (bruijn ##.sym.10 2 1) '##vcore.not))
+  // (if (bruijn ##.p.22 0 0) ((bruijn ##.k.20 2 0) (##string ##.string.501)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k5) (bruijn ##.sym.10 2 1) '##vcore.not))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D501.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D6_k5, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k5, self)))),
       statics->up->vars[1],
       _V10vcore_Dnot);
 }
 }
-static void _V10_Dlookup__inline__name_D6_k3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__inline__name_D6_k3, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k3, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1181,21 +1185,21 @@ static void _V10_Dlookup__inline__name_D6_k3(VRuntime * runtime, VEnv * statics,
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.21 0 0) ((bruijn ##.k.20 1 0) (##string ##.string.500)) (##vcore.eqv? (close _V10_Dlookup__inline__name_D6_k4) (bruijn ##.sym.10 1 1) '##vcore.pair?))
+  // (if (bruijn ##.p.21 0 0) ((bruijn ##.k.20 1 0) (##string ##.string.500)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k4) (bruijn ##.sym.10 1 1) '##vcore.pair?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D500.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D6_k4, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k4, self)))),
       statics->vars[1],
       _V10vcore_Dpair_Q);
 }
 }
-static void _V10_Dlookup__inline__name_D6_lambda2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+void _V50_V0vanity_V0intrinsics_V0lookup__inline__name(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__inline__name_D6_lambda2, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__inline__name, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -1204,15 +1208,15 @@ static void _V10_Dlookup__inline__name_D6_lambda2(VRuntime * runtime, VEnv * sta
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (##vcore.eqv? (close _V10_Dlookup__inline__name_D6_k3) (bruijn ##.sym.10 0 1) '##vcore.null?)
+  // (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k3) (bruijn ##.sym.10 0 1) '##vcore.null?)
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D6_k3, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k3, self)))),
       _var1,
       _V10vcore_Dnull_Q);
 }
-static void _V10_Dlookup__intrinsic__name_D7_k71(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k71(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k71, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k71, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1228,9 +1232,9 @@ statics->vars[0])) {
       _V10vcore_Dqcons);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k207(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k207(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k207, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k207, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1244,9 +1248,9 @@ _var0)) {
       VEncodeBool(false));
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k206(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k206(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k206, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k206, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1254,21 +1258,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k206(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.223 0 0) ((bruijn ##.k.30 194 0) (##string ##.string.698)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k207) (bruijn ##.sym.12 194 1) '##vcore.bit-count))
+  // (if (bruijn ##.p.223 0 0) ((bruijn ##.k.30 194 0) (##string ##.string.698)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k207) (bruijn ##.sym.12 194 1) '##vcore.bit-count))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 194-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D698.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k207, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k207, self)))),
       VGetArg(statics, 194-1, 1),
       _V10vcore_Dbit__count);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k205(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k205(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k205, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k205, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1276,21 +1280,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k205(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.222 0 0) ((bruijn ##.k.30 193 0) (##string ##.string.697)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k206) (bruijn ##.sym.12 193 1) '##vcore.arithmetic-shift))
+  // (if (bruijn ##.p.222 0 0) ((bruijn ##.k.30 193 0) (##string ##.string.697)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k206) (bruijn ##.sym.12 193 1) '##vcore.arithmetic-shift))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 193-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D697.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k206, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k206, self)))),
       VGetArg(statics, 193-1, 1),
       _V10vcore_Darithmetic__shift);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k204(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k204(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k204, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k204, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1298,21 +1302,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k204(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.221 0 0) ((bruijn ##.k.30 192 0) (##string ##.string.696)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k205) (bruijn ##.sym.12 192 1) '##vcore.bitwise-orc2))
+  // (if (bruijn ##.p.221 0 0) ((bruijn ##.k.30 192 0) (##string ##.string.696)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k205) (bruijn ##.sym.12 192 1) '##vcore.bitwise-orc2))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 192-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D696.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k205, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k205, self)))),
       VGetArg(statics, 192-1, 1),
       _V10vcore_Dbitwise__orc2);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k203(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k203(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k203, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k203, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1320,21 +1324,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k203(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.220 0 0) ((bruijn ##.k.30 191 0) (##string ##.string.695)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k204) (bruijn ##.sym.12 191 1) '##vcore.bitwise-orc1))
+  // (if (bruijn ##.p.220 0 0) ((bruijn ##.k.30 191 0) (##string ##.string.695)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k204) (bruijn ##.sym.12 191 1) '##vcore.bitwise-orc1))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 191-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D695.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k204, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k204, self)))),
       VGetArg(statics, 191-1, 1),
       _V10vcore_Dbitwise__orc1);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k202(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k202(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k202, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k202, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1342,21 +1346,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k202(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.219 0 0) ((bruijn ##.k.30 190 0) (##string ##.string.694)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k203) (bruijn ##.sym.12 190 1) '##vcore.bitwise-andc2))
+  // (if (bruijn ##.p.219 0 0) ((bruijn ##.k.30 190 0) (##string ##.string.694)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k203) (bruijn ##.sym.12 190 1) '##vcore.bitwise-andc2))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 190-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D694.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k203, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k203, self)))),
       VGetArg(statics, 190-1, 1),
       _V10vcore_Dbitwise__andc2);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k201(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k201(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k201, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k201, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1364,21 +1368,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k201(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.218 0 0) ((bruijn ##.k.30 189 0) (##string ##.string.693)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k202) (bruijn ##.sym.12 189 1) '##vcore.bitwise-andc1))
+  // (if (bruijn ##.p.218 0 0) ((bruijn ##.k.30 189 0) (##string ##.string.693)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k202) (bruijn ##.sym.12 189 1) '##vcore.bitwise-andc1))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 189-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D693.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k202, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k202, self)))),
       VGetArg(statics, 189-1, 1),
       _V10vcore_Dbitwise__andc1);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k200(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k200(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k200, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k200, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1386,21 +1390,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k200(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.217 0 0) ((bruijn ##.k.30 188 0) (##string ##.string.692)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k201) (bruijn ##.sym.12 188 1) '##vcore.bitwise-nor))
+  // (if (bruijn ##.p.217 0 0) ((bruijn ##.k.30 188 0) (##string ##.string.692)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k201) (bruijn ##.sym.12 188 1) '##vcore.bitwise-nor))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 188-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D692.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k201, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k201, self)))),
       VGetArg(statics, 188-1, 1),
       _V10vcore_Dbitwise__nor);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k199(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k199(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k199, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k199, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1408,21 +1412,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k199(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.216 0 0) ((bruijn ##.k.30 187 0) (##string ##.string.691)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k200) (bruijn ##.sym.12 187 1) '##vcore.bitwise-nand))
+  // (if (bruijn ##.p.216 0 0) ((bruijn ##.k.30 187 0) (##string ##.string.691)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k200) (bruijn ##.sym.12 187 1) '##vcore.bitwise-nand))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 187-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D691.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k200, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k200, self)))),
       VGetArg(statics, 187-1, 1),
       _V10vcore_Dbitwise__nand);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k198(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k198(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k198, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k198, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1430,21 +1434,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k198(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.215 0 0) ((bruijn ##.k.30 186 0) (##string ##.string.690)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k199) (bruijn ##.sym.12 186 1) '##vcore.bitwise-xnor))
+  // (if (bruijn ##.p.215 0 0) ((bruijn ##.k.30 186 0) (##string ##.string.690)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k199) (bruijn ##.sym.12 186 1) '##vcore.bitwise-xnor))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 186-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D690.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k199, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k199, self)))),
       VGetArg(statics, 186-1, 1),
       _V10vcore_Dbitwise__xnor);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k197(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k197(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k197, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k197, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1452,21 +1456,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k197(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.214 0 0) ((bruijn ##.k.30 185 0) (##string ##.string.689)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k198) (bruijn ##.sym.12 185 1) '##vcore.bitwise-and))
+  // (if (bruijn ##.p.214 0 0) ((bruijn ##.k.30 185 0) (##string ##.string.689)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k198) (bruijn ##.sym.12 185 1) '##vcore.bitwise-and))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 185-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D689.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k198, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k198, self)))),
       VGetArg(statics, 185-1, 1),
       _V10vcore_Dbitwise__and);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k196(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k196(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k196, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k196, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1474,21 +1478,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k196(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.213 0 0) ((bruijn ##.k.30 184 0) (##string ##.string.688)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k197) (bruijn ##.sym.12 184 1) '##vcore.bitwise-xor))
+  // (if (bruijn ##.p.213 0 0) ((bruijn ##.k.30 184 0) (##string ##.string.688)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k197) (bruijn ##.sym.12 184 1) '##vcore.bitwise-xor))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 184-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D688.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k197, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k197, self)))),
       VGetArg(statics, 184-1, 1),
       _V10vcore_Dbitwise__xor);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k195(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k195(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k195, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k195, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1496,21 +1500,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k195(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.212 0 0) ((bruijn ##.k.30 183 0) (##string ##.string.687)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k196) (bruijn ##.sym.12 183 1) '##vcore.bitwise-ior))
+  // (if (bruijn ##.p.212 0 0) ((bruijn ##.k.30 183 0) (##string ##.string.687)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k196) (bruijn ##.sym.12 183 1) '##vcore.bitwise-ior))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 183-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D687.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k196, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k196, self)))),
       VGetArg(statics, 183-1, 1),
       _V10vcore_Dbitwise__ior);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k194(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k194(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k194, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k194, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1518,21 +1522,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k194(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.211 0 0) ((bruijn ##.k.30 182 0) (##string ##.string.686)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k195) (bruijn ##.sym.12 182 1) '##vcore.bitwise-not))
+  // (if (bruijn ##.p.211 0 0) ((bruijn ##.k.30 182 0) (##string ##.string.686)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k195) (bruijn ##.sym.12 182 1) '##vcore.bitwise-not))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 182-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D686.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k195, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k195, self)))),
       VGetArg(statics, 182-1, 1),
       _V10vcore_Dbitwise__not);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k193(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k193(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k193, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k193, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1540,21 +1544,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k193(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.210 0 0) ((bruijn ##.k.30 181 0) (##string ##.string.685)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k194) (bruijn ##.sym.12 181 1) '##vcore.jiffies-per-second))
+  // (if (bruijn ##.p.210 0 0) ((bruijn ##.k.30 181 0) (##string ##.string.685)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k194) (bruijn ##.sym.12 181 1) '##vcore.jiffies-per-second))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 181-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D685.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k194, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k194, self)))),
       VGetArg(statics, 181-1, 1),
       _V10vcore_Djiffies__per__second);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k192(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k192(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k192, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k192, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1562,21 +1566,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k192(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.209 0 0) ((bruijn ##.k.30 180 0) (##string ##.string.684)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k193) (bruijn ##.sym.12 180 1) '##vcore.current-jiffy))
+  // (if (bruijn ##.p.209 0 0) ((bruijn ##.k.30 180 0) (##string ##.string.684)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k193) (bruijn ##.sym.12 180 1) '##vcore.current-jiffy))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 180-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D684.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k193, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k193, self)))),
       VGetArg(statics, 180-1, 1),
       _V10vcore_Dcurrent__jiffy);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k191(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k191(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k191, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k191, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1584,21 +1588,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k191(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.208 0 0) ((bruijn ##.k.30 179 0) (##string ##.string.683)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k192) (bruijn ##.sym.12 179 1) '##vcore.access))
+  // (if (bruijn ##.p.208 0 0) ((bruijn ##.k.30 179 0) (##string ##.string.683)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k192) (bruijn ##.sym.12 179 1) '##vcore.access))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 179-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D683.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k192, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k192, self)))),
       VGetArg(statics, 179-1, 1),
       _V10vcore_Daccess);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k190(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k190(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k190, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k190, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1606,21 +1610,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k190(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.207 0 0) ((bruijn ##.k.30 178 0) (##string ##.string.682)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k191) (bruijn ##.sym.12 178 1) '##vcore.make-temporary-file))
+  // (if (bruijn ##.p.207 0 0) ((bruijn ##.k.30 178 0) (##string ##.string.682)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k191) (bruijn ##.sym.12 178 1) '##vcore.make-temporary-file))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 178-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D682.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k191, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k191, self)))),
       VGetArg(statics, 178-1, 1),
       _V10vcore_Dmake__temporary__file);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k189(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k189(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k189, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k189, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1628,21 +1632,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k189(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.206 0 0) ((bruijn ##.k.30 177 0) (##string ##.string.681)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k190) (bruijn ##.sym.12 177 1) '##vcore.realpath))
+  // (if (bruijn ##.p.206 0 0) ((bruijn ##.k.30 177 0) (##string ##.string.681)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k190) (bruijn ##.sym.12 177 1) '##vcore.realpath))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 177-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D681.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k190, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k190, self)))),
       VGetArg(statics, 177-1, 1),
       _V10vcore_Drealpath);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k188(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k188(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k188, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k188, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1650,21 +1654,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k188(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.205 0 0) ((bruijn ##.k.30 176 0) (##string ##.string.680)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k189) (bruijn ##.sym.12 176 1) '##vcore.await))
+  // (if (bruijn ##.p.205 0 0) ((bruijn ##.k.30 176 0) (##string ##.string.680)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k189) (bruijn ##.sym.12 176 1) '##vcore.await))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 176-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D680.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k189, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k189, self)))),
       VGetArg(statics, 176-1, 1),
       _V10vcore_Dawait);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k187(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k187(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k187, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k187, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1672,21 +1676,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k187(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.204 0 0) ((bruijn ##.k.30 175 0) (##string ##.string.679)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k188) (bruijn ##.sym.12 175 1) '##vcore.async))
+  // (if (bruijn ##.p.204 0 0) ((bruijn ##.k.30 175 0) (##string ##.string.679)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k188) (bruijn ##.sym.12 175 1) '##vcore.async))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 175-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D679.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k188, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k188, self)))),
       VGetArg(statics, 175-1, 1),
       _V10vcore_Dasync);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k186(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k186(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k186, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k186, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1694,21 +1698,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k186(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.203 0 0) ((bruijn ##.k.30 174 0) (##string ##.string.678)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k187) (bruijn ##.sym.12 174 1) '##vcore.fiber-fork-list))
+  // (if (bruijn ##.p.203 0 0) ((bruijn ##.k.30 174 0) (##string ##.string.678)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k187) (bruijn ##.sym.12 174 1) '##vcore.fiber-fork-list))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 174-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D678.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k187, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k187, self)))),
       VGetArg(statics, 174-1, 1),
       _V10vcore_Dfiber__fork__list);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k185(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k185(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k185, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k185, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1716,21 +1720,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k185(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.202 0 0) ((bruijn ##.k.30 173 0) (##string ##.string.677)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k186) (bruijn ##.sym.12 173 1) '##vcore.random-advance!))
+  // (if (bruijn ##.p.202 0 0) ((bruijn ##.k.30 173 0) (##string ##.string.677)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k186) (bruijn ##.sym.12 173 1) '##vcore.random-advance!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 173-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D677.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k186, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k186, self)))),
       VGetArg(statics, 173-1, 1),
       _V10vcore_Drandom__advance_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k184(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k184(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k184, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k184, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1738,21 +1742,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k184(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.201 0 0) ((bruijn ##.k.30 172 0) (##string ##.string.676)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k185) (bruijn ##.sym.12 172 1) '##vcore.random-sample-float!))
+  // (if (bruijn ##.p.201 0 0) ((bruijn ##.k.30 172 0) (##string ##.string.676)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k185) (bruijn ##.sym.12 172 1) '##vcore.random-sample-float!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 172-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D676.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k185, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k185, self)))),
       VGetArg(statics, 172-1, 1),
       _V10vcore_Drandom__sample__float_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k183(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k183(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k183, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k183, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1760,21 +1764,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k183(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.200 0 0) ((bruijn ##.k.30 171 0) (##string ##.string.675)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k184) (bruijn ##.sym.12 171 1) '##vcore.random-sample-bounded!))
+  // (if (bruijn ##.p.200 0 0) ((bruijn ##.k.30 171 0) (##string ##.string.675)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k184) (bruijn ##.sym.12 171 1) '##vcore.random-sample-bounded!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 171-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D675.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k184, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k184, self)))),
       VGetArg(statics, 171-1, 1),
       _V10vcore_Drandom__sample__bounded_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k182(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k182(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k182, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k182, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1782,21 +1786,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k182(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.199 0 0) ((bruijn ##.k.30 170 0) (##string ##.string.674)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k183) (bruijn ##.sym.12 170 1) '##vcore.random-sample!))
+  // (if (bruijn ##.p.199 0 0) ((bruijn ##.k.30 170 0) (##string ##.string.674)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k183) (bruijn ##.sym.12 170 1) '##vcore.random-sample!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 170-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D674.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k183, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k183, self)))),
       VGetArg(statics, 170-1, 1),
       _V10vcore_Drandom__sample_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k181(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k181(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k181, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k181, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1804,21 +1808,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k181(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.198 0 0) ((bruijn ##.k.30 169 0) (##string ##.string.673)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k182) (bruijn ##.sym.12 169 1) '##vcore.random-copy))
+  // (if (bruijn ##.p.198 0 0) ((bruijn ##.k.30 169 0) (##string ##.string.673)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k182) (bruijn ##.sym.12 169 1) '##vcore.random-copy))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 169-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D673.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k182, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k182, self)))),
       VGetArg(statics, 169-1, 1),
       _V10vcore_Drandom__copy);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k180(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k180(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k180, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k180, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1826,21 +1830,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k180(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.197 0 0) ((bruijn ##.k.30 168 0) (##string ##.string.672)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k181) (bruijn ##.sym.12 168 1) '##vcore.make-random))
+  // (if (bruijn ##.p.197 0 0) ((bruijn ##.k.30 168 0) (##string ##.string.672)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k181) (bruijn ##.sym.12 168 1) '##vcore.make-random))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 168-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D672.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k181, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k181, self)))),
       VGetArg(statics, 168-1, 1),
       _V10vcore_Dmake__random);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k179(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k179(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k179, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k179, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1848,21 +1852,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k179(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.196 0 0) ((bruijn ##.k.30 167 0) (##string ##.string.671)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k180) (bruijn ##.sym.12 167 1) '##vcore.register-sigint))
+  // (if (bruijn ##.p.196 0 0) ((bruijn ##.k.30 167 0) (##string ##.string.671)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k180) (bruijn ##.sym.12 167 1) '##vcore.register-sigint))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 167-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D671.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k180, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k180, self)))),
       VGetArg(statics, 167-1, 1),
       _V10vcore_Dregister__sigint);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k178(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k178(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k178, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k178, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1870,21 +1874,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k178(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.195 0 0) ((bruijn ##.k.30 166 0) (##string ##.string.670)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k179) (bruijn ##.sym.12 166 1) '##vcore.command-line))
+  // (if (bruijn ##.p.195 0 0) ((bruijn ##.k.30 166 0) (##string ##.string.670)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k179) (bruijn ##.sym.12 166 1) '##vcore.command-line))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 166-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D670.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k179, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k179, self)))),
       VGetArg(statics, 166-1, 1),
       _V10vcore_Dcommand__line);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k177(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k177(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k177, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k177, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1892,21 +1896,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k177(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.194 0 0) ((bruijn ##.k.30 165 0) (##string ##.string.669)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k178) (bruijn ##.sym.12 165 1) '##vcore.open-output-process))
+  // (if (bruijn ##.p.194 0 0) ((bruijn ##.k.30 165 0) (##string ##.string.669)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k178) (bruijn ##.sym.12 165 1) '##vcore.open-output-process))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 165-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D669.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k178, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k178, self)))),
       VGetArg(statics, 165-1, 1),
       _V10vcore_Dopen__output__process);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k176(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k176(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k176, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k176, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1914,21 +1918,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k176(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.193 0 0) ((bruijn ##.k.30 164 0) (##string ##.string.668)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k177) (bruijn ##.sym.12 164 1) '##vcore.open-input-process))
+  // (if (bruijn ##.p.193 0 0) ((bruijn ##.k.30 164 0) (##string ##.string.668)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k177) (bruijn ##.sym.12 164 1) '##vcore.open-input-process))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 164-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D668.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k177, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k177, self)))),
       VGetArg(statics, 164-1, 1),
       _V10vcore_Dopen__input__process);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k175(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k175(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k175, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k175, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1936,21 +1940,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k175(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.192 0 0) ((bruijn ##.k.30 163 0) (##string ##.string.667)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k176) (bruijn ##.sym.12 163 1) '##vcore.system))
+  // (if (bruijn ##.p.192 0 0) ((bruijn ##.k.30 163 0) (##string ##.string.667)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k176) (bruijn ##.sym.12 163 1) '##vcore.system))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 163-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D667.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k176, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k176, self)))),
       VGetArg(statics, 163-1, 1),
       _V10vcore_Dsystem);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k174(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k174(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k174, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k174, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1958,21 +1962,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k174(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.191 0 0) ((bruijn ##.k.30 162 0) (##string ##.string.666)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k175) (bruijn ##.sym.12 162 1) '##vcore.yield-to-host-major))
+  // (if (bruijn ##.p.191 0 0) ((bruijn ##.k.30 162 0) (##string ##.string.666)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k175) (bruijn ##.sym.12 162 1) '##vcore.yield-to-host-major))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 162-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D666.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k175, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k175, self)))),
       VGetArg(statics, 162-1, 1),
       _V10vcore_Dyield__to__host__major);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k173(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k173(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k173, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k173, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -1980,21 +1984,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k173(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.190 0 0) ((bruijn ##.k.30 161 0) (##string ##.string.665)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k174) (bruijn ##.sym.12 161 1) '##vcore.yield-to-host))
+  // (if (bruijn ##.p.190 0 0) ((bruijn ##.k.30 161 0) (##string ##.string.665)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k174) (bruijn ##.sym.12 161 1) '##vcore.yield-to-host))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 161-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D665.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k174, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k174, self)))),
       VGetArg(statics, 161-1, 1),
       _V10vcore_Dyield__to__host);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k172(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k172(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k172, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k172, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2002,21 +2006,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k172(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.189 0 0) ((bruijn ##.k.30 160 0) (##string ##.string.664)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k173) (bruijn ##.sym.12 160 1) '##vcore.garbage-collect))
+  // (if (bruijn ##.p.189 0 0) ((bruijn ##.k.30 160 0) (##string ##.string.664)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k173) (bruijn ##.sym.12 160 1) '##vcore.garbage-collect))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 160-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D664.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k173, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k173, self)))),
       VGetArg(statics, 160-1, 1),
       _V10vcore_Dgarbage__collect);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k171(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k171(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k171, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k171, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2024,21 +2028,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k171(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.188 0 0) ((bruijn ##.k.30 159 0) (##string ##.string.663)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k172) (bruijn ##.sym.12 159 1) '##vcore.finalize!))
+  // (if (bruijn ##.p.188 0 0) ((bruijn ##.k.30 159 0) (##string ##.string.663)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k172) (bruijn ##.sym.12 159 1) '##vcore.finalize!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 159-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D663.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k172, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k172, self)))),
       VGetArg(statics, 159-1, 1),
       _V10vcore_Dfinalize_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k170(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k170(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k170, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k170, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2046,21 +2050,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k170(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.187 0 0) ((bruijn ##.k.30 158 0) (##string ##.string.662)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k171) (bruijn ##.sym.12 158 1) '##vcore.has-finalizer?))
+  // (if (bruijn ##.p.187 0 0) ((bruijn ##.k.30 158 0) (##string ##.string.662)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k171) (bruijn ##.sym.12 158 1) '##vcore.has-finalizer?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 158-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D662.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k171, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k171, self)))),
       VGetArg(statics, 158-1, 1),
       _V10vcore_Dhas__finalizer_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k169(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k169(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k169, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k169, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2068,21 +2072,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k169(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.186 0 0) ((bruijn ##.k.30 157 0) (##string ##.string.661)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k170) (bruijn ##.sym.12 157 1) '##vcore.set-finalizer!))
+  // (if (bruijn ##.p.186 0 0) ((bruijn ##.k.30 157 0) (##string ##.string.661)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k170) (bruijn ##.sym.12 157 1) '##vcore.set-finalizer!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 157-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D661.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k170, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k170, self)))),
       VGetArg(statics, 157-1, 1),
       _V10vcore_Dset__finalizer_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k168(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k168(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k168, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k168, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2090,21 +2094,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k168(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.185 0 0) ((bruijn ##.k.30 156 0) (##string ##.string.660)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k169) (bruijn ##.sym.12 156 1) '##vcore.newline-stdout))
+  // (if (bruijn ##.p.185 0 0) ((bruijn ##.k.30 156 0) (##string ##.string.660)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k169) (bruijn ##.sym.12 156 1) '##vcore.newline-stdout))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 156-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D660.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k169, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k169, self)))),
       VGetArg(statics, 156-1, 1),
       _V10vcore_Dnewline__stdout);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k167(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k167(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k167, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k167, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2112,21 +2116,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k167(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.184 0 0) ((bruijn ##.k.30 155 0) (##string ##.string.659)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k168) (bruijn ##.sym.12 155 1) '##vcore.write-stdout))
+  // (if (bruijn ##.p.184 0 0) ((bruijn ##.k.30 155 0) (##string ##.string.659)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k168) (bruijn ##.sym.12 155 1) '##vcore.write-stdout))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 155-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D659.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k168, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k168, self)))),
       VGetArg(statics, 155-1, 1),
       _V10vcore_Dwrite__stdout);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k166(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k166(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k166, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k166, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2134,21 +2138,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k166(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.183 0 0) ((bruijn ##.k.30 154 0) (##string ##.string.658)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k167) (bruijn ##.sym.12 154 1) '##vcore.display-stdout))
+  // (if (bruijn ##.p.183 0 0) ((bruijn ##.k.30 154 0) (##string ##.string.658)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k167) (bruijn ##.sym.12 154 1) '##vcore.display-stdout))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 154-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D658.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k167, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k167, self)))),
       VGetArg(statics, 154-1, 1),
       _V10vcore_Ddisplay__stdout);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k165(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k165(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k165, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k165, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2156,21 +2160,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k165(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.182 0 0) ((bruijn ##.k.30 153 0) (##string ##.string.657)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k166) (bruijn ##.sym.12 153 1) '##vcore.newline))
+  // (if (bruijn ##.p.182 0 0) ((bruijn ##.k.30 153 0) (##string ##.string.657)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k166) (bruijn ##.sym.12 153 1) '##vcore.newline))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 153-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D657.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k166, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k166, self)))),
       VGetArg(statics, 153-1, 1),
       _V10vcore_Dnewline);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k164(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k164(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k164, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k164, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2178,21 +2182,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k164(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.181 0 0) ((bruijn ##.k.30 152 0) (##string ##.string.656)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k165) (bruijn ##.sym.12 152 1) '##vcore.write))
+  // (if (bruijn ##.p.181 0 0) ((bruijn ##.k.30 152 0) (##string ##.string.656)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k165) (bruijn ##.sym.12 152 1) '##vcore.write))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 152-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D656.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k165, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k165, self)))),
       VGetArg(statics, 152-1, 1),
       _V10vcore_Dwrite);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k163(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k163(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k163, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k163, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2200,21 +2204,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k163(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.180 0 0) ((bruijn ##.k.30 151 0) (##string ##.string.655)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k164) (bruijn ##.sym.12 151 1) '##vcore.display-word))
+  // (if (bruijn ##.p.180 0 0) ((bruijn ##.k.30 151 0) (##string ##.string.655)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k164) (bruijn ##.sym.12 151 1) '##vcore.display-word))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 151-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D655.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k164, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k164, self)))),
       VGetArg(statics, 151-1, 1),
       _V10vcore_Ddisplay__word);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k162(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k162(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k162, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k162, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2222,21 +2226,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k162(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.179 0 0) ((bruijn ##.k.30 150 0) (##string ##.string.654)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k163) (bruijn ##.sym.12 150 1) '##vcore.read))
+  // (if (bruijn ##.p.179 0 0) ((bruijn ##.k.30 150 0) (##string ##.string.654)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k163) (bruijn ##.sym.12 150 1) '##vcore.read))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 150-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D654.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k163, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k163, self)))),
       VGetArg(statics, 150-1, 1),
       _V10vcore_Dread);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k161(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k161(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k161, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k161, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2244,21 +2248,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k161(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.178 0 0) ((bruijn ##.k.30 149 0) (##string ##.string.653)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k162) (bruijn ##.sym.12 149 1) '##vcore.read-line2))
+  // (if (bruijn ##.p.178 0 0) ((bruijn ##.k.30 149 0) (##string ##.string.653)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k162) (bruijn ##.sym.12 149 1) '##vcore.read-line2))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 149-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D653.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k162, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k162, self)))),
       VGetArg(statics, 149-1, 1),
       _V10vcore_Dread__line2);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k160(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k160(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k160, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k160, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2266,21 +2270,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k160(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.177 0 0) ((bruijn ##.k.30 148 0) (##string ##.string.652)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k161) (bruijn ##.sym.12 148 1) '##vcore.read-line))
+  // (if (bruijn ##.p.177 0 0) ((bruijn ##.k.30 148 0) (##string ##.string.652)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k161) (bruijn ##.sym.12 148 1) '##vcore.read-line))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 148-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D652.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k161, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k161, self)))),
       VGetArg(statics, 148-1, 1),
       _V10vcore_Dread__line);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k159(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k159(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k159, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k159, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2288,21 +2292,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k159(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.176 0 0) ((bruijn ##.k.30 147 0) (##string ##.string.651)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k160) (bruijn ##.sym.12 147 1) '##vcore.read-char))
+  // (if (bruijn ##.p.176 0 0) ((bruijn ##.k.30 147 0) (##string ##.string.651)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k160) (bruijn ##.sym.12 147 1) '##vcore.read-char))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 147-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D651.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k160, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k160, self)))),
       VGetArg(statics, 147-1, 1),
       _V10vcore_Dread__char);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k158(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k158(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k158, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k158, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2310,21 +2314,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k158(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.175 0 0) ((bruijn ##.k.30 146 0) (##string ##.string.650)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k159) (bruijn ##.sym.12 146 1) '##vcore.eof-object?))
+  // (if (bruijn ##.p.175 0 0) ((bruijn ##.k.30 146 0) (##string ##.string.650)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k159) (bruijn ##.sym.12 146 1) '##vcore.eof-object?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 146-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D650.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k159, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k159, self)))),
       VGetArg(statics, 146-1, 1),
       _V10vcore_Deof__object_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k157(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k157(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k157, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k157, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2332,21 +2336,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k157(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.174 0 0) ((bruijn ##.k.30 145 0) (##string ##.string.649)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k158) (bruijn ##.sym.12 145 1) '##vcore.get-output-string))
+  // (if (bruijn ##.p.174 0 0) ((bruijn ##.k.30 145 0) (##string ##.string.649)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k158) (bruijn ##.sym.12 145 1) '##vcore.get-output-string))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 145-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D649.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k158, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k158, self)))),
       VGetArg(statics, 145-1, 1),
       _V10vcore_Dget__output__string);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k156(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k156(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k156, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k156, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2354,21 +2358,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k156(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.173 0 0) ((bruijn ##.k.30 144 0) (##string ##.string.648)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k157) (bruijn ##.sym.12 144 1) '##vcore.open-output-string))
+  // (if (bruijn ##.p.173 0 0) ((bruijn ##.k.30 144 0) (##string ##.string.648)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k157) (bruijn ##.sym.12 144 1) '##vcore.open-output-string))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 144-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D648.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k157, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k157, self)))),
       VGetArg(statics, 144-1, 1),
       _V10vcore_Dopen__output__string);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k155(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k155(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k155, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k155, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2376,21 +2380,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k155(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.172 0 0) ((bruijn ##.k.30 143 0) (##string ##.string.647)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k156) (bruijn ##.sym.12 143 1) '##vcore.tty-port?))
+  // (if (bruijn ##.p.172 0 0) ((bruijn ##.k.30 143 0) (##string ##.string.647)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k156) (bruijn ##.sym.12 143 1) '##vcore.tty-port?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 143-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D647.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k156, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k156, self)))),
       VGetArg(statics, 143-1, 1),
       _V10vcore_Dtty__port_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k154(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k154(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k154, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k154, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2398,21 +2402,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k154(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.171 0 0) ((bruijn ##.k.30 142 0) (##string ##.string.646)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k155) (bruijn ##.sym.12 142 1) '##vcore.close-stream))
+  // (if (bruijn ##.p.171 0 0) ((bruijn ##.k.30 142 0) (##string ##.string.646)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k155) (bruijn ##.sym.12 142 1) '##vcore.close-stream))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 142-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D646.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k155, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k155, self)))),
       VGetArg(statics, 142-1, 1),
       _V10vcore_Dclose__stream);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k153(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k153(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k153, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k153, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2420,21 +2424,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k153(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.170 0 0) ((bruijn ##.k.30 141 0) (##string ##.string.645)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k154) (bruijn ##.sym.12 141 1) '##vcore.open-output-stream))
+  // (if (bruijn ##.p.170 0 0) ((bruijn ##.k.30 141 0) (##string ##.string.645)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k154) (bruijn ##.sym.12 141 1) '##vcore.open-output-stream))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 141-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D645.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k154, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k154, self)))),
       VGetArg(statics, 141-1, 1),
       _V10vcore_Dopen__output__stream);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k152(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k152(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k152, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k152, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2442,21 +2446,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k152(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.169 0 0) ((bruijn ##.k.30 140 0) (##string ##.string.644)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k153) (bruijn ##.sym.12 140 1) '##vcore.open-input-stream))
+  // (if (bruijn ##.p.169 0 0) ((bruijn ##.k.30 140 0) (##string ##.string.644)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k153) (bruijn ##.sym.12 140 1) '##vcore.open-input-stream))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 140-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D644.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k153, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k153, self)))),
       VGetArg(statics, 140-1, 1),
       _V10vcore_Dopen__input__stream);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k151(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k151(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k151, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k151, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2464,21 +2468,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k151(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.168 0 0) ((bruijn ##.k.30 139 0) (##string ##.string.643)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k152) (bruijn ##.sym.12 139 1) '##vcore.dup-stderr))
+  // (if (bruijn ##.p.168 0 0) ((bruijn ##.k.30 139 0) (##string ##.string.643)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k152) (bruijn ##.sym.12 139 1) '##vcore.dup-stderr))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 139-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D643.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k152, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k152, self)))),
       VGetArg(statics, 139-1, 1),
       _V10vcore_Ddup__stderr);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k150(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k150(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k150, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k150, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2486,21 +2490,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k150(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.167 0 0) ((bruijn ##.k.30 138 0) (##string ##.string.642)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k151) (bruijn ##.sym.12 138 1) '##vcore.dup-stdout))
+  // (if (bruijn ##.p.167 0 0) ((bruijn ##.k.30 138 0) (##string ##.string.642)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k151) (bruijn ##.sym.12 138 1) '##vcore.dup-stdout))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 138-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D642.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k151, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k151, self)))),
       VGetArg(statics, 138-1, 1),
       _V10vcore_Ddup__stdout);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k149(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k149(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k149, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k149, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2508,21 +2512,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k149(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.166 0 0) ((bruijn ##.k.30 137 0) (##string ##.string.641)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k150) (bruijn ##.sym.12 137 1) '##vcore.dup-stdin))
+  // (if (bruijn ##.p.166 0 0) ((bruijn ##.k.30 137 0) (##string ##.string.641)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k150) (bruijn ##.sym.12 137 1) '##vcore.dup-stdin))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 137-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D641.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k150, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k150, self)))),
       VGetArg(statics, 137-1, 1),
       _V10vcore_Ddup__stdin);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k148(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k148(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k148, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k148, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2530,21 +2534,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k148(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.165 0 0) ((bruijn ##.k.30 136 0) (##string ##.string.640)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k149) (bruijn ##.sym.12 136 1) '##vcore.stderr->port))
+  // (if (bruijn ##.p.165 0 0) ((bruijn ##.k.30 136 0) (##string ##.string.640)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k149) (bruijn ##.sym.12 136 1) '##vcore.stderr->port))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 136-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D640.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k149, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k149, self)))),
       VGetArg(statics, 136-1, 1),
       _V10vcore_Dstderr___Gport);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k147(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k147(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k147, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k147, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2552,21 +2556,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k147(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.164 0 0) ((bruijn ##.k.30 135 0) (##string ##.string.639)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k148) (bruijn ##.sym.12 135 1) '##vcore.stdout->port))
+  // (if (bruijn ##.p.164 0 0) ((bruijn ##.k.30 135 0) (##string ##.string.639)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k148) (bruijn ##.sym.12 135 1) '##vcore.stdout->port))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 135-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D639.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k148, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k148, self)))),
       VGetArg(statics, 135-1, 1),
       _V10vcore_Dstdout___Gport);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k146(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k146(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k146, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k146, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2574,21 +2578,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k146(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.163 0 0) ((bruijn ##.k.30 134 0) (##string ##.string.638)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k147) (bruijn ##.sym.12 134 1) '##vcore.stdin->port))
+  // (if (bruijn ##.p.163 0 0) ((bruijn ##.k.30 134 0) (##string ##.string.638)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k147) (bruijn ##.sym.12 134 1) '##vcore.stdin->port))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 134-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D638.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k147, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k147, self)))),
       VGetArg(statics, 134-1, 1),
       _V10vcore_Dstdin___Gport);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k145(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k145(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k145, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k145, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2596,21 +2600,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k145(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.162 0 0) ((bruijn ##.k.30 133 0) (##string ##.string.637)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k146) (bruijn ##.sym.12 133 1) '##vcore.integer->char))
+  // (if (bruijn ##.p.162 0 0) ((bruijn ##.k.30 133 0) (##string ##.string.637)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k146) (bruijn ##.sym.12 133 1) '##vcore.integer->char))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 133-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D637.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k146, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k146, self)))),
       VGetArg(statics, 133-1, 1),
       _V10vcore_Dinteger___Gchar);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k144(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k144(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k144, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k144, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2618,21 +2622,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k144(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.161 0 0) ((bruijn ##.k.30 132 0) (##string ##.string.636)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k145) (bruijn ##.sym.12 132 1) '##vcore.char-integer))
+  // (if (bruijn ##.p.161 0 0) ((bruijn ##.k.30 132 0) (##string ##.string.636)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k145) (bruijn ##.sym.12 132 1) '##vcore.char-integer))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 132-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D636.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k145, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k145, self)))),
       VGetArg(statics, 132-1, 1),
       _V10vcore_Dchar__integer);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k143(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k143(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k143, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k143, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2640,21 +2644,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k143(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.160 0 0) ((bruijn ##.k.30 131 0) (##string ##.string.635)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k144) (bruijn ##.sym.12 131 1) '##vcore.gensym))
+  // (if (bruijn ##.p.160 0 0) ((bruijn ##.k.30 131 0) (##string ##.string.635)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k144) (bruijn ##.sym.12 131 1) '##vcore.gensym))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 131-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D635.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k144, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k144, self)))),
       VGetArg(statics, 131-1, 1),
       _V10vcore_Dgensym);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k142(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k142(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k142, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k142, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2662,21 +2666,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k142(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.159 0 0) ((bruijn ##.k.30 130 0) (##string ##.string.634)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k143) (bruijn ##.sym.12 130 1) '##vcore.symbol->string))
+  // (if (bruijn ##.p.159 0 0) ((bruijn ##.k.30 130 0) (##string ##.string.634)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k143) (bruijn ##.sym.12 130 1) '##vcore.symbol->string))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 130-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D634.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k143, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k143, self)))),
       VGetArg(statics, 130-1, 1),
       _V10vcore_Dsymbol___Gstring);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k141(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k141(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k141, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k141, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2684,21 +2688,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k141(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.158 0 0) ((bruijn ##.k.30 129 0) (##string ##.string.633)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k142) (bruijn ##.sym.12 129 1) '##vcore.string->number))
+  // (if (bruijn ##.p.158 0 0) ((bruijn ##.k.30 129 0) (##string ##.string.633)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k142) (bruijn ##.sym.12 129 1) '##vcore.string->number))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 129-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D633.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k142, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k142, self)))),
       VGetArg(statics, 129-1, 1),
       _V10vcore_Dstring___Gnumber);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k140(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k140(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k140, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k140, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2706,21 +2710,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k140(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.157 0 0) ((bruijn ##.k.30 128 0) (##string ##.string.632)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k141) (bruijn ##.sym.12 128 1) '##vcore.string->symbol))
+  // (if (bruijn ##.p.157 0 0) ((bruijn ##.k.30 128 0) (##string ##.string.632)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k141) (bruijn ##.sym.12 128 1) '##vcore.string->symbol))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 128-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D632.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k141, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k141, self)))),
       VGetArg(statics, 128-1, 1),
       _V10vcore_Dstring___Gsymbol);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k139(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k139(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k139, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k139, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2728,21 +2732,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k139(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.156 0 0) ((bruijn ##.k.30 127 0) (##string ##.string.631)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k140) (bruijn ##.sym.12 127 1) '##vcore.string-length))
+  // (if (bruijn ##.p.156 0 0) ((bruijn ##.k.30 127 0) (##string ##.string.631)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k140) (bruijn ##.sym.12 127 1) '##vcore.string-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 127-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D631.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k140, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k140, self)))),
       VGetArg(statics, 127-1, 1),
       _V10vcore_Dstring__length);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k138(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k138(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k138, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k138, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2750,21 +2754,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k138(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.155 0 0) ((bruijn ##.k.30 126 0) (##string ##.string.630)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k139) (bruijn ##.sym.12 126 1) '##vcore.string-set!))
+  // (if (bruijn ##.p.155 0 0) ((bruijn ##.k.30 126 0) (##string ##.string.630)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k139) (bruijn ##.sym.12 126 1) '##vcore.string-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 126-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D630.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k139, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k139, self)))),
       VGetArg(statics, 126-1, 1),
       _V10vcore_Dstring__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k137(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k137(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k137, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k137, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2772,21 +2776,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k137(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.154 0 0) ((bruijn ##.k.30 125 0) (##string ##.string.629)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k138) (bruijn ##.sym.12 125 1) '##vcore.string-ref))
+  // (if (bruijn ##.p.154 0 0) ((bruijn ##.k.30 125 0) (##string ##.string.629)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k138) (bruijn ##.sym.12 125 1) '##vcore.string-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 125-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D629.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k138, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k138, self)))),
       VGetArg(statics, 125-1, 1),
       _V10vcore_Dstring__ref);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k136(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k136(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k136, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k136, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2794,21 +2798,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k136(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.153 0 0) ((bruijn ##.k.30 124 0) (##string ##.string.628)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k137) (bruijn ##.sym.12 124 1) '##vcore.string-copy!))
+  // (if (bruijn ##.p.153 0 0) ((bruijn ##.k.30 124 0) (##string ##.string.628)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k137) (bruijn ##.sym.12 124 1) '##vcore.string-copy!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 124-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D628.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k137, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k137, self)))),
       VGetArg(statics, 124-1, 1),
       _V10vcore_Dstring__copy_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k135(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k135(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k135, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k135, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2816,21 +2820,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k135(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.152 0 0) ((bruijn ##.k.30 123 0) (##string ##.string.627)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k136) (bruijn ##.sym.12 123 1) '##vcore.substring))
+  // (if (bruijn ##.p.152 0 0) ((bruijn ##.k.30 123 0) (##string ##.string.627)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k136) (bruijn ##.sym.12 123 1) '##vcore.substring))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 123-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D627.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k136, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k136, self)))),
       VGetArg(statics, 123-1, 1),
       _V10vcore_Dsubstring);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k134(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k134(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k134, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k134, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2838,21 +2842,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k134(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.151 0 0) ((bruijn ##.k.30 122 0) (##string ##.string.626)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k135) (bruijn ##.sym.12 122 1) '##vcore.make-string))
+  // (if (bruijn ##.p.151 0 0) ((bruijn ##.k.30 122 0) (##string ##.string.626)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k135) (bruijn ##.sym.12 122 1) '##vcore.make-string))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 122-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D626.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k135, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k135, self)))),
       VGetArg(statics, 122-1, 1),
       _V10vcore_Dmake__string);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k133(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k133(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k133, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k133, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2860,21 +2864,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k133(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.150 0 0) ((bruijn ##.k.30 121 0) (##string ##.string.625)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k134) (bruijn ##.sym.12 121 1) '##vcore.hash-table-delete!))
+  // (if (bruijn ##.p.150 0 0) ((bruijn ##.k.30 121 0) (##string ##.string.625)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k134) (bruijn ##.sym.12 121 1) '##vcore.hash-table-delete!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 121-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D625.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k134, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k134, self)))),
       VGetArg(statics, 121-1, 1),
       _V10vcore_Dhash__table__delete_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k132(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k132(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k132, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k132, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2882,21 +2886,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k132(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.149 0 0) ((bruijn ##.k.30 120 0) (##string ##.string.624)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k133) (bruijn ##.sym.12 120 1) '##vcore.hash-table-set!))
+  // (if (bruijn ##.p.149 0 0) ((bruijn ##.k.30 120 0) (##string ##.string.624)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k133) (bruijn ##.sym.12 120 1) '##vcore.hash-table-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 120-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D624.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k133, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k133, self)))),
       VGetArg(statics, 120-1, 1),
       _V10vcore_Dhash__table__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k131(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k131(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k131, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k131, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2904,21 +2908,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k131(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.148 0 0) ((bruijn ##.k.30 119 0) (##string ##.string.623)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k132) (bruijn ##.sym.12 119 1) '##vcore.hash-table-ref))
+  // (if (bruijn ##.p.148 0 0) ((bruijn ##.k.30 119 0) (##string ##.string.623)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k132) (bruijn ##.sym.12 119 1) '##vcore.hash-table-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 119-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D623.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k132, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k132, self)))),
       VGetArg(statics, 119-1, 1),
       _V10vcore_Dhash__table__ref);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k130(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k130(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k130, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k130, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2926,21 +2930,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k130(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.147 0 0) ((bruijn ##.k.30 118 0) (##string ##.string.622)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k131) (bruijn ##.sym.12 118 1) '##vcore.hash-table-vector))
+  // (if (bruijn ##.p.147 0 0) ((bruijn ##.k.30 118 0) (##string ##.string.622)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k131) (bruijn ##.sym.12 118 1) '##vcore.hash-table-vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 118-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D622.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k131, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k131, self)))),
       VGetArg(statics, 118-1, 1),
       _V10vcore_Dhash__table__vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k129(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k129(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k129, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k129, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2948,21 +2952,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k129(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.146 0 0) ((bruijn ##.k.30 117 0) (##string ##.string.621)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k130) (bruijn ##.sym.12 117 1) '##vcore.hash-table-hash-function))
+  // (if (bruijn ##.p.146 0 0) ((bruijn ##.k.30 117 0) (##string ##.string.621)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k130) (bruijn ##.sym.12 117 1) '##vcore.hash-table-hash-function))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 117-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D621.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k130, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k130, self)))),
       VGetArg(statics, 117-1, 1),
       _V10vcore_Dhash__table__hash__function);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k128(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k128(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k128, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k128, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2970,21 +2974,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k128(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.145 0 0) ((bruijn ##.k.30 116 0) (##string ##.string.620)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k129) (bruijn ##.sym.12 116 1) '##vcore.hash-table-equivalence-function))
+  // (if (bruijn ##.p.145 0 0) ((bruijn ##.k.30 116 0) (##string ##.string.620)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k129) (bruijn ##.sym.12 116 1) '##vcore.hash-table-equivalence-function))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 116-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D620.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k129, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k129, self)))),
       VGetArg(statics, 116-1, 1),
       _V10vcore_Dhash__table__equivalence__function);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k127(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k127(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k127, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k127, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -2992,21 +2996,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k127(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.144 0 0) ((bruijn ##.k.30 115 0) (##string ##.string.619)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k128) (bruijn ##.sym.12 115 1) '##vcore.make-hash-table))
+  // (if (bruijn ##.p.144 0 0) ((bruijn ##.k.30 115 0) (##string ##.string.619)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k128) (bruijn ##.sym.12 115 1) '##vcore.make-hash-table))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 115-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D619.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k128, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k128, self)))),
       VGetArg(statics, 115-1, 1),
       _V10vcore_Dmake__hash__table);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k126(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k126(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k126, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k126, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3014,21 +3018,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k126(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.143 0 0) ((bruijn ##.k.30 114 0) (##string ##.string.618)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k127) (bruijn ##.sym.12 114 1) '##vcore.record-length))
+  // (if (bruijn ##.p.143 0 0) ((bruijn ##.k.30 114 0) (##string ##.string.618)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k127) (bruijn ##.sym.12 114 1) '##vcore.record-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 114-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D618.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k127, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k127, self)))),
       VGetArg(statics, 114-1, 1),
       _V10vcore_Drecord__length);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k125(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k125(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k125, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k125, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3036,21 +3040,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k125(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.142 0 0) ((bruijn ##.k.30 113 0) (##string ##.string.617)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k126) (bruijn ##.sym.12 113 1) '##vcore.record-set!))
+  // (if (bruijn ##.p.142 0 0) ((bruijn ##.k.30 113 0) (##string ##.string.617)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k126) (bruijn ##.sym.12 113 1) '##vcore.record-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 113-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D617.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k126, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k126, self)))),
       VGetArg(statics, 113-1, 1),
       _V10vcore_Drecord__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k124(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k124(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k124, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k124, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3058,21 +3062,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k124(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.141 0 0) ((bruijn ##.k.30 112 0) (##string ##.string.616)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k125) (bruijn ##.sym.12 112 1) '##vcore.record-ref))
+  // (if (bruijn ##.p.141 0 0) ((bruijn ##.k.30 112 0) (##string ##.string.616)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k125) (bruijn ##.sym.12 112 1) '##vcore.record-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 112-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D616.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k125, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k125, self)))),
       VGetArg(statics, 112-1, 1),
       _V10vcore_Drecord__ref);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k123(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k123(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k123, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k123, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3080,21 +3084,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k123(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.140 0 0) ((bruijn ##.k.30 111 0) (##string ##.string.615)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k124) (bruijn ##.sym.12 111 1) '##vcore.record))
+  // (if (bruijn ##.p.140 0 0) ((bruijn ##.k.30 111 0) (##string ##.string.615)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k124) (bruijn ##.sym.12 111 1) '##vcore.record))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 111-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D615.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k124, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k124, self)))),
       VGetArg(statics, 111-1, 1),
       _V10vcore_Drecord);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k122(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k122(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k122, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k122, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3102,21 +3106,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k122(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.139 0 0) ((bruijn ##.k.30 110 0) (##string ##.string.614)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k123) (bruijn ##.sym.12 110 1) '##vcore.read-u8vector))
+  // (if (bruijn ##.p.139 0 0) ((bruijn ##.k.30 110 0) (##string ##.string.614)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k123) (bruijn ##.sym.12 110 1) '##vcore.read-u8vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 110-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D614.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k123, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k123, self)))),
       VGetArg(statics, 110-1, 1),
       _V10vcore_Dread__u8vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k121(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k121(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k121, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k121, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3124,21 +3128,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k121(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.138 0 0) ((bruijn ##.k.30 109 0) (##string ##.string.613)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k122) (bruijn ##.sym.12 109 1) '##vcore.s8vector-length))
+  // (if (bruijn ##.p.138 0 0) ((bruijn ##.k.30 109 0) (##string ##.string.613)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k122) (bruijn ##.sym.12 109 1) '##vcore.s8vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 109-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D613.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k122, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k122, self)))),
       VGetArg(statics, 109-1, 1),
       _V10vcore_Ds8vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k120(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k120(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k120, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k120, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3146,21 +3150,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k120(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.137 0 0) ((bruijn ##.k.30 108 0) (##string ##.string.612)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k121) (bruijn ##.sym.12 108 1) '##vcore.s8vector-set!))
+  // (if (bruijn ##.p.137 0 0) ((bruijn ##.k.30 108 0) (##string ##.string.612)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k121) (bruijn ##.sym.12 108 1) '##vcore.s8vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 108-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D612.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k121, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k121, self)))),
       VGetArg(statics, 108-1, 1),
       _V10vcore_Ds8vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k119(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k119(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k119, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k119, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3168,21 +3172,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k119(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.136 0 0) ((bruijn ##.k.30 107 0) (##string ##.string.611)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k120) (bruijn ##.sym.12 107 1) '##vcore.s8vector-ref))
+  // (if (bruijn ##.p.136 0 0) ((bruijn ##.k.30 107 0) (##string ##.string.611)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k120) (bruijn ##.sym.12 107 1) '##vcore.s8vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 107-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D611.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k120, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k120, self)))),
       VGetArg(statics, 107-1, 1),
       _V10vcore_Ds8vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k118(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k118(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k118, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k118, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3190,21 +3194,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k118(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.135 0 0) ((bruijn ##.k.30 106 0) (##string ##.string.610)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k119) (bruijn ##.sym.12 106 1) '##vcore.list->s8vector))
+  // (if (bruijn ##.p.135 0 0) ((bruijn ##.k.30 106 0) (##string ##.string.610)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k119) (bruijn ##.sym.12 106 1) '##vcore.list->s8vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 106-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D610.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k119, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k119, self)))),
       VGetArg(statics, 106-1, 1),
       _V10vcore_Dlist___Gs8vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k117(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k117(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k117, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k117, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3212,21 +3216,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k117(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.134 0 0) ((bruijn ##.k.30 105 0) (##string ##.string.609)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k118) (bruijn ##.sym.12 105 1) '##vcore.make-s8vector))
+  // (if (bruijn ##.p.134 0 0) ((bruijn ##.k.30 105 0) (##string ##.string.609)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k118) (bruijn ##.sym.12 105 1) '##vcore.make-s8vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 105-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D609.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k118, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k118, self)))),
       VGetArg(statics, 105-1, 1),
       _V10vcore_Dmake__s8vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k116(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k116(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k116, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k116, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3234,21 +3238,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k116(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.133 0 0) ((bruijn ##.k.30 104 0) (##string ##.string.608)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k117) (bruijn ##.sym.12 104 1) '##vcore.s8vector?))
+  // (if (bruijn ##.p.133 0 0) ((bruijn ##.k.30 104 0) (##string ##.string.608)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k117) (bruijn ##.sym.12 104 1) '##vcore.s8vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 104-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D608.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k117, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k117, self)))),
       VGetArg(statics, 104-1, 1),
       _V10vcore_Ds8vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k115(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k115(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k115, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k115, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3256,21 +3260,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k115(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.132 0 0) ((bruijn ##.k.30 103 0) (##string ##.string.607)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k116) (bruijn ##.sym.12 103 1) '##vcore.u8vector-length))
+  // (if (bruijn ##.p.132 0 0) ((bruijn ##.k.30 103 0) (##string ##.string.607)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k116) (bruijn ##.sym.12 103 1) '##vcore.u8vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 103-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D607.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k116, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k116, self)))),
       VGetArg(statics, 103-1, 1),
       _V10vcore_Du8vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k114(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k114(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k114, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k114, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3278,21 +3282,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k114(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.131 0 0) ((bruijn ##.k.30 102 0) (##string ##.string.606)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k115) (bruijn ##.sym.12 102 1) '##vcore.u8vector-set!))
+  // (if (bruijn ##.p.131 0 0) ((bruijn ##.k.30 102 0) (##string ##.string.606)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k115) (bruijn ##.sym.12 102 1) '##vcore.u8vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 102-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D606.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k115, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k115, self)))),
       VGetArg(statics, 102-1, 1),
       _V10vcore_Du8vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k113(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k113(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k113, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k113, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3300,21 +3304,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k113(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.130 0 0) ((bruijn ##.k.30 101 0) (##string ##.string.605)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k114) (bruijn ##.sym.12 101 1) '##vcore.u8vector-ref))
+  // (if (bruijn ##.p.130 0 0) ((bruijn ##.k.30 101 0) (##string ##.string.605)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k114) (bruijn ##.sym.12 101 1) '##vcore.u8vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 101-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D605.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k114, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k114, self)))),
       VGetArg(statics, 101-1, 1),
       _V10vcore_Du8vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k112(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k112(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k112, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k112, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3322,21 +3326,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k112(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.129 0 0) ((bruijn ##.k.30 100 0) (##string ##.string.604)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k113) (bruijn ##.sym.12 100 1) '##vcore.list->u8vector))
+  // (if (bruijn ##.p.129 0 0) ((bruijn ##.k.30 100 0) (##string ##.string.604)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k113) (bruijn ##.sym.12 100 1) '##vcore.list->u8vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 100-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D604.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k113, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k113, self)))),
       VGetArg(statics, 100-1, 1),
       _V10vcore_Dlist___Gu8vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k111(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k111(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k111, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k111, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3344,21 +3348,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k111(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.128 0 0) ((bruijn ##.k.30 99 0) (##string ##.string.603)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k112) (bruijn ##.sym.12 99 1) '##vcore.make-u8vector))
+  // (if (bruijn ##.p.128 0 0) ((bruijn ##.k.30 99 0) (##string ##.string.603)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k112) (bruijn ##.sym.12 99 1) '##vcore.make-u8vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 99-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D603.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k112, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k112, self)))),
       VGetArg(statics, 99-1, 1),
       _V10vcore_Dmake__u8vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k110(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k110(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k110, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k110, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3366,21 +3370,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k110(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.127 0 0) ((bruijn ##.k.30 98 0) (##string ##.string.602)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k111) (bruijn ##.sym.12 98 1) '##vcore.u8vector?))
+  // (if (bruijn ##.p.127 0 0) ((bruijn ##.k.30 98 0) (##string ##.string.602)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k111) (bruijn ##.sym.12 98 1) '##vcore.u8vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 98-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D602.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k111, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k111, self)))),
       VGetArg(statics, 98-1, 1),
       _V10vcore_Du8vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k109(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k109(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k109, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k109, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3388,21 +3392,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k109(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.126 0 0) ((bruijn ##.k.30 97 0) (##string ##.string.601)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k110) (bruijn ##.sym.12 97 1) '##vcore.s16vector-length))
+  // (if (bruijn ##.p.126 0 0) ((bruijn ##.k.30 97 0) (##string ##.string.601)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k110) (bruijn ##.sym.12 97 1) '##vcore.s16vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 97-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D601.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k110, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k110, self)))),
       VGetArg(statics, 97-1, 1),
       _V10vcore_Ds16vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k108(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k108(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k108, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k108, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3410,21 +3414,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k108(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.125 0 0) ((bruijn ##.k.30 96 0) (##string ##.string.600)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k109) (bruijn ##.sym.12 96 1) '##vcore.s16vector-set!))
+  // (if (bruijn ##.p.125 0 0) ((bruijn ##.k.30 96 0) (##string ##.string.600)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k109) (bruijn ##.sym.12 96 1) '##vcore.s16vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 96-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D600.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k109, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k109, self)))),
       VGetArg(statics, 96-1, 1),
       _V10vcore_Ds16vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k107(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k107(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k107, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k107, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3432,21 +3436,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k107(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.124 0 0) ((bruijn ##.k.30 95 0) (##string ##.string.599)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k108) (bruijn ##.sym.12 95 1) '##vcore.s16vector-ref))
+  // (if (bruijn ##.p.124 0 0) ((bruijn ##.k.30 95 0) (##string ##.string.599)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k108) (bruijn ##.sym.12 95 1) '##vcore.s16vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 95-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D599.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k108, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k108, self)))),
       VGetArg(statics, 95-1, 1),
       _V10vcore_Ds16vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k106(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k106(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k106, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k106, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3454,21 +3458,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k106(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.123 0 0) ((bruijn ##.k.30 94 0) (##string ##.string.598)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k107) (bruijn ##.sym.12 94 1) '##vcore.list->s16vector))
+  // (if (bruijn ##.p.123 0 0) ((bruijn ##.k.30 94 0) (##string ##.string.598)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k107) (bruijn ##.sym.12 94 1) '##vcore.list->s16vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 94-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D598.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k107, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k107, self)))),
       VGetArg(statics, 94-1, 1),
       _V10vcore_Dlist___Gs16vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k105(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k105(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k105, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k105, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3476,21 +3480,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k105(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.122 0 0) ((bruijn ##.k.30 93 0) (##string ##.string.597)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k106) (bruijn ##.sym.12 93 1) '##vcore.make-s16vector))
+  // (if (bruijn ##.p.122 0 0) ((bruijn ##.k.30 93 0) (##string ##.string.597)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k106) (bruijn ##.sym.12 93 1) '##vcore.make-s16vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 93-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D597.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k106, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k106, self)))),
       VGetArg(statics, 93-1, 1),
       _V10vcore_Dmake__s16vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k104(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k104(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k104, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k104, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3498,21 +3502,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k104(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.121 0 0) ((bruijn ##.k.30 92 0) (##string ##.string.596)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k105) (bruijn ##.sym.12 92 1) '##vcore.s16vector?))
+  // (if (bruijn ##.p.121 0 0) ((bruijn ##.k.30 92 0) (##string ##.string.596)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k105) (bruijn ##.sym.12 92 1) '##vcore.s16vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 92-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D596.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k105, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k105, self)))),
       VGetArg(statics, 92-1, 1),
       _V10vcore_Ds16vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k103(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k103(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k103, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k103, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3520,21 +3524,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k103(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.120 0 0) ((bruijn ##.k.30 91 0) (##string ##.string.595)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k104) (bruijn ##.sym.12 91 1) '##vcore.u16vector-length))
+  // (if (bruijn ##.p.120 0 0) ((bruijn ##.k.30 91 0) (##string ##.string.595)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k104) (bruijn ##.sym.12 91 1) '##vcore.u16vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 91-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D595.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k104, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k104, self)))),
       VGetArg(statics, 91-1, 1),
       _V10vcore_Du16vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k102(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k102(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k102, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k102, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3542,21 +3546,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k102(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.119 0 0) ((bruijn ##.k.30 90 0) (##string ##.string.594)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k103) (bruijn ##.sym.12 90 1) '##vcore.u16vector-set!))
+  // (if (bruijn ##.p.119 0 0) ((bruijn ##.k.30 90 0) (##string ##.string.594)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k103) (bruijn ##.sym.12 90 1) '##vcore.u16vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 90-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D594.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k103, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k103, self)))),
       VGetArg(statics, 90-1, 1),
       _V10vcore_Du16vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k101(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k101(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k101, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k101, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3564,21 +3568,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k101(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.118 0 0) ((bruijn ##.k.30 89 0) (##string ##.string.593)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k102) (bruijn ##.sym.12 89 1) '##vcore.u16vector-ref))
+  // (if (bruijn ##.p.118 0 0) ((bruijn ##.k.30 89 0) (##string ##.string.593)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k102) (bruijn ##.sym.12 89 1) '##vcore.u16vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 89-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D593.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k102, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k102, self)))),
       VGetArg(statics, 89-1, 1),
       _V10vcore_Du16vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k100(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k100(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k100, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k100, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3586,21 +3590,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k100(VRuntime * runtime, VEnv * sta
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.117 0 0) ((bruijn ##.k.30 88 0) (##string ##.string.592)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k101) (bruijn ##.sym.12 88 1) '##vcore.list->u16vector))
+  // (if (bruijn ##.p.117 0 0) ((bruijn ##.k.30 88 0) (##string ##.string.592)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k101) (bruijn ##.sym.12 88 1) '##vcore.list->u16vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 88-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D592.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k101, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k101, self)))),
       VGetArg(statics, 88-1, 1),
       _V10vcore_Dlist___Gu16vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k99(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k99(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k99, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k99, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3608,21 +3612,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k99(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.116 0 0) ((bruijn ##.k.30 87 0) (##string ##.string.591)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k100) (bruijn ##.sym.12 87 1) '##vcore.make-u16vector))
+  // (if (bruijn ##.p.116 0 0) ((bruijn ##.k.30 87 0) (##string ##.string.591)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k100) (bruijn ##.sym.12 87 1) '##vcore.make-u16vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 87-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D591.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k100, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k100, self)))),
       VGetArg(statics, 87-1, 1),
       _V10vcore_Dmake__u16vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k98(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k98(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k98, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k98, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3630,21 +3634,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k98(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.115 0 0) ((bruijn ##.k.30 86 0) (##string ##.string.590)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k99) (bruijn ##.sym.12 86 1) '##vcore.u16vector?))
+  // (if (bruijn ##.p.115 0 0) ((bruijn ##.k.30 86 0) (##string ##.string.590)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k99) (bruijn ##.sym.12 86 1) '##vcore.u16vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 86-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D590.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k99, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k99, self)))),
       VGetArg(statics, 86-1, 1),
       _V10vcore_Du16vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k97(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k97(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k97, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k97, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3652,21 +3656,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k97(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.114 0 0) ((bruijn ##.k.30 85 0) (##string ##.string.589)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k98) (bruijn ##.sym.12 85 1) '##vcore.s32vector-length))
+  // (if (bruijn ##.p.114 0 0) ((bruijn ##.k.30 85 0) (##string ##.string.589)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k98) (bruijn ##.sym.12 85 1) '##vcore.s32vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 85-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D589.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k98, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k98, self)))),
       VGetArg(statics, 85-1, 1),
       _V10vcore_Ds32vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k96(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k96(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k96, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k96, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3674,21 +3678,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k96(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.113 0 0) ((bruijn ##.k.30 84 0) (##string ##.string.588)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k97) (bruijn ##.sym.12 84 1) '##vcore.s32vector-set!))
+  // (if (bruijn ##.p.113 0 0) ((bruijn ##.k.30 84 0) (##string ##.string.588)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k97) (bruijn ##.sym.12 84 1) '##vcore.s32vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 84-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D588.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k97, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k97, self)))),
       VGetArg(statics, 84-1, 1),
       _V10vcore_Ds32vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k95(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k95(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k95, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k95, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3696,21 +3700,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k95(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.112 0 0) ((bruijn ##.k.30 83 0) (##string ##.string.587)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k96) (bruijn ##.sym.12 83 1) '##vcore.s32vector-ref))
+  // (if (bruijn ##.p.112 0 0) ((bruijn ##.k.30 83 0) (##string ##.string.587)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k96) (bruijn ##.sym.12 83 1) '##vcore.s32vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 83-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D587.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k96, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k96, self)))),
       VGetArg(statics, 83-1, 1),
       _V10vcore_Ds32vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k94(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k94(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k94, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k94, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3718,21 +3722,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k94(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.111 0 0) ((bruijn ##.k.30 82 0) (##string ##.string.586)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k95) (bruijn ##.sym.12 82 1) '##vcore.list->s32vector))
+  // (if (bruijn ##.p.111 0 0) ((bruijn ##.k.30 82 0) (##string ##.string.586)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k95) (bruijn ##.sym.12 82 1) '##vcore.list->s32vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 82-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D586.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k95, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k95, self)))),
       VGetArg(statics, 82-1, 1),
       _V10vcore_Dlist___Gs32vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k93(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k93(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k93, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k93, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3740,21 +3744,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k93(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.110 0 0) ((bruijn ##.k.30 81 0) (##string ##.string.585)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k94) (bruijn ##.sym.12 81 1) '##vcore.make-s32vector))
+  // (if (bruijn ##.p.110 0 0) ((bruijn ##.k.30 81 0) (##string ##.string.585)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k94) (bruijn ##.sym.12 81 1) '##vcore.make-s32vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 81-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D585.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k94, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k94, self)))),
       VGetArg(statics, 81-1, 1),
       _V10vcore_Dmake__s32vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k92(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k92(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k92, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k92, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3762,21 +3766,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k92(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.109 0 0) ((bruijn ##.k.30 80 0) (##string ##.string.584)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k93) (bruijn ##.sym.12 80 1) '##vcore.s32vector?))
+  // (if (bruijn ##.p.109 0 0) ((bruijn ##.k.30 80 0) (##string ##.string.584)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k93) (bruijn ##.sym.12 80 1) '##vcore.s32vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 80-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D584.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k93, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k93, self)))),
       VGetArg(statics, 80-1, 1),
       _V10vcore_Ds32vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k91(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k91(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k91, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k91, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3784,21 +3788,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k91(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.108 0 0) ((bruijn ##.k.30 79 0) (##string ##.string.583)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k92) (bruijn ##.sym.12 79 1) '##vcore.f32vector-length))
+  // (if (bruijn ##.p.108 0 0) ((bruijn ##.k.30 79 0) (##string ##.string.583)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k92) (bruijn ##.sym.12 79 1) '##vcore.f32vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 79-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D583.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k92, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k92, self)))),
       VGetArg(statics, 79-1, 1),
       _V10vcore_Df32vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k90(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k90(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k90, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k90, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3806,21 +3810,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k90(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.107 0 0) ((bruijn ##.k.30 78 0) (##string ##.string.582)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k91) (bruijn ##.sym.12 78 1) '##vcore.f32vector-set!))
+  // (if (bruijn ##.p.107 0 0) ((bruijn ##.k.30 78 0) (##string ##.string.582)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k91) (bruijn ##.sym.12 78 1) '##vcore.f32vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 78-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D582.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k91, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k91, self)))),
       VGetArg(statics, 78-1, 1),
       _V10vcore_Df32vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k89(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k89(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k89, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k89, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3828,21 +3832,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k89(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.106 0 0) ((bruijn ##.k.30 77 0) (##string ##.string.581)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k90) (bruijn ##.sym.12 77 1) '##vcore.f32vector-ref))
+  // (if (bruijn ##.p.106 0 0) ((bruijn ##.k.30 77 0) (##string ##.string.581)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k90) (bruijn ##.sym.12 77 1) '##vcore.f32vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 77-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D581.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k90, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k90, self)))),
       VGetArg(statics, 77-1, 1),
       _V10vcore_Df32vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k88(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k88(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k88, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k88, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3850,21 +3854,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k88(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.105 0 0) ((bruijn ##.k.30 76 0) (##string ##.string.580)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k89) (bruijn ##.sym.12 76 1) '##vcore.list->f32vector))
+  // (if (bruijn ##.p.105 0 0) ((bruijn ##.k.30 76 0) (##string ##.string.580)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k89) (bruijn ##.sym.12 76 1) '##vcore.list->f32vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 76-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D580.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k89, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k89, self)))),
       VGetArg(statics, 76-1, 1),
       _V10vcore_Dlist___Gf32vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k87(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k87(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k87, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k87, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3872,21 +3876,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k87(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.104 0 0) ((bruijn ##.k.30 75 0) (##string ##.string.579)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k88) (bruijn ##.sym.12 75 1) '##vcore.make-f32vector))
+  // (if (bruijn ##.p.104 0 0) ((bruijn ##.k.30 75 0) (##string ##.string.579)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k88) (bruijn ##.sym.12 75 1) '##vcore.make-f32vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 75-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D579.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k88, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k88, self)))),
       VGetArg(statics, 75-1, 1),
       _V10vcore_Dmake__f32vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k86(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k86(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k86, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k86, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3894,21 +3898,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k86(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.103 0 0) ((bruijn ##.k.30 74 0) (##string ##.string.578)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k87) (bruijn ##.sym.12 74 1) '##vcore.f32vector?))
+  // (if (bruijn ##.p.103 0 0) ((bruijn ##.k.30 74 0) (##string ##.string.578)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k87) (bruijn ##.sym.12 74 1) '##vcore.f32vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 74-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D578.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k87, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k87, self)))),
       VGetArg(statics, 74-1, 1),
       _V10vcore_Df32vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k85(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k85(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k85, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k85, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3916,21 +3920,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k85(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.102 0 0) ((bruijn ##.k.30 73 0) (##string ##.string.577)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k86) (bruijn ##.sym.12 73 1) '##vcore.f64vector-length))
+  // (if (bruijn ##.p.102 0 0) ((bruijn ##.k.30 73 0) (##string ##.string.577)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k86) (bruijn ##.sym.12 73 1) '##vcore.f64vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 73-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D577.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k86, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k86, self)))),
       VGetArg(statics, 73-1, 1),
       _V10vcore_Df64vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k84(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k84(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k84, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k84, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3938,21 +3942,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k84(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.101 0 0) ((bruijn ##.k.30 72 0) (##string ##.string.576)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k85) (bruijn ##.sym.12 72 1) '##vcore.f64vector-set!))
+  // (if (bruijn ##.p.101 0 0) ((bruijn ##.k.30 72 0) (##string ##.string.576)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k85) (bruijn ##.sym.12 72 1) '##vcore.f64vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 72-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D576.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k85, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k85, self)))),
       VGetArg(statics, 72-1, 1),
       _V10vcore_Df64vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k83(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k83(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k83, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k83, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3960,21 +3964,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k83(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.100 0 0) ((bruijn ##.k.30 71 0) (##string ##.string.575)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k84) (bruijn ##.sym.12 71 1) '##vcore.f64vector-ref))
+  // (if (bruijn ##.p.100 0 0) ((bruijn ##.k.30 71 0) (##string ##.string.575)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k84) (bruijn ##.sym.12 71 1) '##vcore.f64vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 71-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D575.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k84, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k84, self)))),
       VGetArg(statics, 71-1, 1),
       _V10vcore_Df64vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k82(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k82(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k82, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k82, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3982,21 +3986,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k82(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.99 0 0) ((bruijn ##.k.30 70 0) (##string ##.string.574)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k83) (bruijn ##.sym.12 70 1) '##vcore.list->f64vector))
+  // (if (bruijn ##.p.99 0 0) ((bruijn ##.k.30 70 0) (##string ##.string.574)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k83) (bruijn ##.sym.12 70 1) '##vcore.list->f64vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 70-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D574.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k83, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k83, self)))),
       VGetArg(statics, 70-1, 1),
       _V10vcore_Dlist___Gf64vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k81(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k81(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k81, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k81, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4004,21 +4008,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k81(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.98 0 0) ((bruijn ##.k.30 69 0) (##string ##.string.573)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k82) (bruijn ##.sym.12 69 1) '##vcore.make-f64vector))
+  // (if (bruijn ##.p.98 0 0) ((bruijn ##.k.30 69 0) (##string ##.string.573)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k82) (bruijn ##.sym.12 69 1) '##vcore.make-f64vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 69-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D573.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k82, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k82, self)))),
       VGetArg(statics, 69-1, 1),
       _V10vcore_Dmake__f64vector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k80(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k80(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k80, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k80, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4026,21 +4030,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k80(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.97 0 0) ((bruijn ##.k.30 68 0) (##string ##.string.572)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k81) (bruijn ##.sym.12 68 1) '##vcore.f64vector?))
+  // (if (bruijn ##.p.97 0 0) ((bruijn ##.k.30 68 0) (##string ##.string.572)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k81) (bruijn ##.sym.12 68 1) '##vcore.f64vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 68-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D572.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k81, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k81, self)))),
       VGetArg(statics, 68-1, 1),
       _V10vcore_Df64vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k79(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k79(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k79, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k79, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4048,21 +4052,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k79(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.96 0 0) ((bruijn ##.k.30 67 0) (##string ##.string.571)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k80) (bruijn ##.sym.12 67 1) '##vcore.vector-length))
+  // (if (bruijn ##.p.96 0 0) ((bruijn ##.k.30 67 0) (##string ##.string.571)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k80) (bruijn ##.sym.12 67 1) '##vcore.vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 67-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D571.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k80, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k80, self)))),
       VGetArg(statics, 67-1, 1),
       _V10vcore_Dvector__length);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k78(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k78(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k78, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k78, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4070,21 +4074,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k78(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.95 0 0) ((bruijn ##.k.30 66 0) (##string ##.string.570)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k79) (bruijn ##.sym.12 66 1) '##vcore.vector-set!))
+  // (if (bruijn ##.p.95 0 0) ((bruijn ##.k.30 66 0) (##string ##.string.570)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k79) (bruijn ##.sym.12 66 1) '##vcore.vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 66-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D570.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k79, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k79, self)))),
       VGetArg(statics, 66-1, 1),
       _V10vcore_Dvector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k77(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k77(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k77, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k77, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4092,21 +4096,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k77(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.94 0 0) ((bruijn ##.k.30 65 0) (##string ##.string.569)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k78) (bruijn ##.sym.12 65 1) '##vcore.vector-ref))
+  // (if (bruijn ##.p.94 0 0) ((bruijn ##.k.30 65 0) (##string ##.string.569)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k78) (bruijn ##.sym.12 65 1) '##vcore.vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 65-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D569.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k78, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k78, self)))),
       VGetArg(statics, 65-1, 1),
       _V10vcore_Dvector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k76(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k76(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k76, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k76, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4114,21 +4118,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k76(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.93 0 0) ((bruijn ##.k.30 64 0) (##string ##.string.568)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k77) (bruijn ##.sym.12 64 1) '##vcore.list->vector))
+  // (if (bruijn ##.p.93 0 0) ((bruijn ##.k.30 64 0) (##string ##.string.568)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k77) (bruijn ##.sym.12 64 1) '##vcore.list->vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 64-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D568.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k77, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k77, self)))),
       VGetArg(statics, 64-1, 1),
       _V10vcore_Dlist___Gvector);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k75(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k75(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k75, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k75, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4136,21 +4140,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k75(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.92 0 0) ((bruijn ##.k.30 63 0) (##string ##.string.567)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k76) (bruijn ##.sym.12 63 1) '##vcore.set-cdr!))
+  // (if (bruijn ##.p.92 0 0) ((bruijn ##.k.30 63 0) (##string ##.string.567)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k76) (bruijn ##.sym.12 63 1) '##vcore.set-cdr!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 63-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D567.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k76, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k76, self)))),
       VGetArg(statics, 63-1, 1),
       _V10vcore_Dset__cdr_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k74(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k74(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k74, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k74, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4158,21 +4162,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k74(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.91 0 0) ((bruijn ##.k.30 62 0) (##string ##.string.566)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k75) (bruijn ##.sym.12 62 1) '##vcore.set-car!))
+  // (if (bruijn ##.p.91 0 0) ((bruijn ##.k.30 62 0) (##string ##.string.566)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k75) (bruijn ##.sym.12 62 1) '##vcore.set-car!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 62-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D566.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k75, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k75, self)))),
       VGetArg(statics, 62-1, 1),
       _V10vcore_Dset__car_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k73(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k73(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k73, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k73, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4180,21 +4184,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k73(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.90 0 0) ((bruijn ##.k.30 61 0) (##string ##.string.565)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k74) (bruijn ##.sym.12 61 1) '##vcore.cdr))
+  // (if (bruijn ##.p.90 0 0) ((bruijn ##.k.30 61 0) (##string ##.string.565)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k74) (bruijn ##.sym.12 61 1) '##vcore.cdr))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 61-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D565.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k74, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k74, self)))),
       VGetArg(statics, 61-1, 1),
       _V10vcore_Dcdr);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k72(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k72(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k72, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k72, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4202,21 +4206,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k72(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.89 0 0) ((bruijn ##.k.30 60 0) (##string ##.string.564)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k73) (bruijn ##.sym.12 60 1) '##vcore.car))
+  // (if (bruijn ##.p.89 0 0) ((bruijn ##.k.30 60 0) (##string ##.string.564)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k73) (bruijn ##.sym.12 60 1) '##vcore.car))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 60-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D564.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k73, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k73, self)))),
       VGetArg(statics, 60-1, 1),
       _V10vcore_Dcar);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k70(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k70(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k70, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k70, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4224,13 +4228,13 @@ static void _V10_Dlookup__intrinsic__name_D7_k70(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Dlookup__intrinsic__name_D7_k71) (close _V10_Dlookup__intrinsic__name_D7_k72))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dlookup__intrinsic__name_D7_k71, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k72, self)})));
+  // ((close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k71) (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k72))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k71, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k72, self)))));
 }
-static void _V10_Dlookup__intrinsic__name_D7_k69(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k69(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k69, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k69, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4238,21 +4242,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k69(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.88 0 0) ((bruijn ##.k.30 58 0) (##string ##.string.563)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k70) (bruijn ##.sym.12 58 1) '##vcore.cons))
+  // (if (bruijn ##.p.88 0 0) ((bruijn ##.k.30 58 0) (##string ##.string.563)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k70) (bruijn ##.sym.12 58 1) '##vcore.cons))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 58-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D563.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k70, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k70, self)))),
       VGetArg(statics, 58-1, 1),
       _V10vcore_Dcons);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k68(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k68(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k68, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k68, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4260,21 +4264,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k68(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.87 0 0) ((bruijn ##.k.30 57 0) (##string ##.string.562)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k69) (bruijn ##.sym.12 57 1) '##vcore.unload-library))
+  // (if (bruijn ##.p.87 0 0) ((bruijn ##.k.30 57 0) (##string ##.string.562)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k69) (bruijn ##.sym.12 57 1) '##vcore.unload-library))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 57-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D562.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k69, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k69, self)))),
       VGetArg(statics, 57-1, 1),
       _V10vcore_Dunload__library);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k67(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k67(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k67, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k67, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4282,21 +4286,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k67(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.86 0 0) ((bruijn ##.k.30 56 0) (##string ##.string.561)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k68) (bruijn ##.sym.12 56 1) '##vcore.load-library))
+  // (if (bruijn ##.p.86 0 0) ((bruijn ##.k.30 56 0) (##string ##.string.561)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k68) (bruijn ##.sym.12 56 1) '##vcore.load-library))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 56-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D561.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k68, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k68, self)))),
       VGetArg(statics, 56-1, 1),
       _V10vcore_Dload__library);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k66(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k66(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k66, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k66, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4304,21 +4308,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k66(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.85 0 0) ((bruijn ##.k.30 55 0) (##string ##.string.560)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k67) (bruijn ##.sym.12 55 1) '##vcore.make-import))
+  // (if (bruijn ##.p.85 0 0) ((bruijn ##.k.30 55 0) (##string ##.string.560)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k67) (bruijn ##.sym.12 55 1) '##vcore.make-import))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 55-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D560.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k67, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k67, self)))),
       VGetArg(statics, 55-1, 1),
       _V10vcore_Dmake__import);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k65(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k65(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k65, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k65, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4326,21 +4330,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k65(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.84 0 0) ((bruijn ##.k.30 54 0) (##string ##.string.559)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k66) (bruijn ##.sym.12 54 1) '##vcore.lookup-library))
+  // (if (bruijn ##.p.84 0 0) ((bruijn ##.k.30 54 0) (##string ##.string.559)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k66) (bruijn ##.sym.12 54 1) '##vcore.lookup-library))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 54-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D559.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k66, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k66, self)))),
       VGetArg(statics, 54-1, 1),
       _V10vcore_Dlookup__library);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k64(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k64(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k64, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k64, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4348,21 +4352,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k64(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.83 0 0) ((bruijn ##.k.30 53 0) (##string ##.string.555)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k65) (bruijn ##.sym.12 53 1) '##vcore.multidefine))
+  // (if (bruijn ##.p.83 0 0) ((bruijn ##.k.30 53 0) (##string ##.string.555)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k65) (bruijn ##.sym.12 53 1) '##vcore.multidefine))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 53-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D555.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k65, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k65, self)))),
       VGetArg(statics, 53-1, 1),
       _V10vcore_Dmultidefine);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k63(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k63(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k63, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k63, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4370,21 +4374,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k63(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.82 0 0) ((bruijn ##.k.30 52 0) (##string ##.string.558)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k64) (bruijn ##.sym.12 52 1) '##vcore.define))
+  // (if (bruijn ##.p.82 0 0) ((bruijn ##.k.30 52 0) (##string ##.string.558)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k64) (bruijn ##.sym.12 52 1) '##vcore.define))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 52-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D558.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k64, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k64, self)))),
       VGetArg(statics, 52-1, 1),
       _V10vcore_Ddefine);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k62(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k62(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k62, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k62, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4392,21 +4396,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k62(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.81 0 0) ((bruijn ##.k.30 51 0) (##string ##.string.557)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k63) (bruijn ##.sym.12 51 1) '##vcore.set-declare!))
+  // (if (bruijn ##.p.81 0 0) ((bruijn ##.k.30 51 0) (##string ##.string.557)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k63) (bruijn ##.sym.12 51 1) '##vcore.set-declare!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 51-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D557.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k63, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k63, self)))),
       VGetArg(statics, 51-1, 1),
       _V10vcore_Dset__declare_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k61(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k61(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k61, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k61, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4414,21 +4418,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k61(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.80 0 0) ((bruijn ##.k.30 50 0) (##string ##.string.556)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k62) (bruijn ##.sym.12 50 1) '##vcore.function))
+  // (if (bruijn ##.p.80 0 0) ((bruijn ##.k.30 50 0) (##string ##.string.556)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k62) (bruijn ##.sym.12 50 1) '##vcore.function))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 50-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D556.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k62, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k62, self)))),
       VGetArg(statics, 50-1, 1),
       _V10vcore_Dfunction);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k60(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k60(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k60, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k60, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4436,21 +4440,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k60(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.79 0 0) ((bruijn ##.k.30 49 0) (##string ##.string.555)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k61) (bruijn ##.sym.12 49 1) '##vcore.set-global!))
+  // (if (bruijn ##.p.79 0 0) ((bruijn ##.k.30 49 0) (##string ##.string.555)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k61) (bruijn ##.sym.12 49 1) '##vcore.set-global!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 49-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D555.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k61, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k61, self)))),
       VGetArg(statics, 49-1, 1),
       _V10vcore_Dset__global_B);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k59(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k59(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k59, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k59, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4458,21 +4462,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k59(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.78 0 0) ((bruijn ##.k.30 48 0) (##string ##.string.554)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k60) (bruijn ##.sym.12 48 1) '##vcore.define-global))
+  // (if (bruijn ##.p.78 0 0) ((bruijn ##.k.30 48 0) (##string ##.string.554)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k60) (bruijn ##.sym.12 48 1) '##vcore.define-global))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 48-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D554.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k60, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k60, self)))),
       VGetArg(statics, 48-1, 1),
       _V10vcore_Ddefine__global);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k58(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k58(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k58, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k58, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4480,21 +4484,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k58(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.77 0 0) ((bruijn ##.k.30 47 0) (##string ##.string.553)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k59) (bruijn ##.sym.12 47 1) '##vcore.exit))
+  // (if (bruijn ##.p.77 0 0) ((bruijn ##.k.30 47 0) (##string ##.string.553)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k59) (bruijn ##.sym.12 47 1) '##vcore.exit))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 47-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D553.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k59, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k59, self)))),
       VGetArg(statics, 47-1, 1),
       _V10vcore_Dexit);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k57(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k57(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k57, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k57, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4502,21 +4506,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k57(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.76 0 0) ((bruijn ##.k.30 46 0) (##string ##.string.552)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k58) (bruijn ##.sym.12 46 1) '##vcore.abort))
+  // (if (bruijn ##.p.76 0 0) ((bruijn ##.k.30 46 0) (##string ##.string.552)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k58) (bruijn ##.sym.12 46 1) '##vcore.abort))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 46-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D552.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k58, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k58, self)))),
       VGetArg(statics, 46-1, 1),
       _V10vcore_Dabort);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k56(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k56(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k56, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k56, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4524,21 +4528,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k56(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.75 0 0) ((bruijn ##.k.30 45 0) (##string ##.string.551)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k57) (bruijn ##.sym.12 45 1) '##vcore.apply-cps))
+  // (if (bruijn ##.p.75 0 0) ((bruijn ##.k.30 45 0) (##string ##.string.551)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k57) (bruijn ##.sym.12 45 1) '##vcore.apply-cps))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 45-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D551.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k57, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k57, self)))),
       VGetArg(statics, 45-1, 1),
       _V10vcore_Dapply__cps);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k55(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k55(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k55, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k55, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4546,21 +4550,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k55(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.74 0 0) ((bruijn ##.k.30 44 0) (##string ##.string.550)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k56) (bruijn ##.sym.12 44 1) '##vcore.apply))
+  // (if (bruijn ##.p.74 0 0) ((bruijn ##.k.30 44 0) (##string ##.string.550)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k56) (bruijn ##.sym.12 44 1) '##vcore.apply))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 44-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D550.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k56, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k56, self)))),
       VGetArg(statics, 44-1, 1),
       _V10vcore_Dapply);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k54(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k54(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k54, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k54, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4568,21 +4572,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k54(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.73 0 0) ((bruijn ##.k.30 43 0) (##string ##.string.549)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k55) (bruijn ##.sym.12 43 1) '##vcore.call-with-values))
+  // (if (bruijn ##.p.73 0 0) ((bruijn ##.k.30 43 0) (##string ##.string.549)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k55) (bruijn ##.sym.12 43 1) '##vcore.call-with-values))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 43-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D549.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k55, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k55, self)))),
       VGetArg(statics, 43-1, 1),
       _V10vcore_Dcall__with__values);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k53(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k53(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k53, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k53, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4590,21 +4594,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k53(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.72 0 0) ((bruijn ##.k.30 42 0) (##string ##.string.548)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k54) (bruijn ##.sym.12 42 1) '##vcore.call/cc))
+  // (if (bruijn ##.p.72 0 0) ((bruijn ##.k.30 42 0) (##string ##.string.548)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k54) (bruijn ##.sym.12 42 1) '##vcore.call/cc))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D548.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k54, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k54, self)))),
       VGetArg(statics, 42-1, 1),
       _V10vcore_Dcall_Wcc);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k52(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k52(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k52, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k52, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4612,21 +4616,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k52(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.71 0 0) ((bruijn ##.k.30 41 0) (##string ##.string.547)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k53) (bruijn ##.sym.12 41 1) '##vcore.next))
+  // (if (bruijn ##.p.71 0 0) ((bruijn ##.k.30 41 0) (##string ##.string.547)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k53) (bruijn ##.sym.12 41 1) '##vcore.next))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D547.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k53, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k53, self)))),
       VGetArg(statics, 41-1, 1),
       _V10vcore_Dnext);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k51(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k51(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k51, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k51, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4634,21 +4638,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k51(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.70 0 0) ((bruijn ##.k.30 40 0) (##string ##.string.546)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k52) (bruijn ##.sym.12 40 1) '##vcore.raise))
+  // (if (bruijn ##.p.70 0 0) ((bruijn ##.k.30 40 0) (##string ##.string.546)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k52) (bruijn ##.sym.12 40 1) '##vcore.raise))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D546.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k52, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k52, self)))),
       VGetArg(statics, 40-1, 1),
       _V10vcore_Draise);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k50(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k50(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k50, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k50, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4656,21 +4660,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k50(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.69 0 0) ((bruijn ##.k.30 39 0) (##string ##.string.545)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k51) (bruijn ##.sym.12 39 1) '##vcore.pop-exception-handler))
+  // (if (bruijn ##.p.69 0 0) ((bruijn ##.k.30 39 0) (##string ##.string.545)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k51) (bruijn ##.sym.12 39 1) '##vcore.pop-exception-handler))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D545.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k51, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k51, self)))),
       VGetArg(statics, 39-1, 1),
       _V10vcore_Dpop__exception__handler);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k49(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k49(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k49, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k49, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4678,21 +4682,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k49(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.68 0 0) ((bruijn ##.k.30 38 0) (##string ##.string.544)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k50) (bruijn ##.sym.12 38 1) '##vcore.push-exception-handler))
+  // (if (bruijn ##.p.68 0 0) ((bruijn ##.k.30 38 0) (##string ##.string.544)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k50) (bruijn ##.sym.12 38 1) '##vcore.push-exception-handler))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D544.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k50, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k50, self)))),
       VGetArg(statics, 38-1, 1),
       _V10vcore_Dpush__exception__handler);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k48(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k48(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k48, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k48, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4700,21 +4704,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k48(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.67 0 0) ((bruijn ##.k.30 37 0) (##string ##.string.543)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k49) (bruijn ##.sym.12 37 1) '##vcore.get-exception-handler))
+  // (if (bruijn ##.p.67 0 0) ((bruijn ##.k.30 37 0) (##string ##.string.543)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k49) (bruijn ##.sym.12 37 1) '##vcore.get-exception-handler))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 37-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D543.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k49, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k49, self)))),
       VGetArg(statics, 37-1, 1),
       _V10vcore_Dget__exception__handler);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k47(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k47(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k47, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k47, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4722,21 +4726,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k47(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.66 0 0) ((bruijn ##.k.30 36 0) (##string ##.string.542)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k48) (bruijn ##.sym.12 36 1) '##vcore.pop-dynamic))
+  // (if (bruijn ##.p.66 0 0) ((bruijn ##.k.30 36 0) (##string ##.string.542)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k48) (bruijn ##.sym.12 36 1) '##vcore.pop-dynamic))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 36-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D542.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k48, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k48, self)))),
       VGetArg(statics, 36-1, 1),
       _V10vcore_Dpop__dynamic);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k46(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k46(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k46, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k46, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4744,21 +4748,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k46(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.65 0 0) ((bruijn ##.k.30 35 0) (##string ##.string.541)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k47) (bruijn ##.sym.12 35 1) '##vcore.push-dynamic))
+  // (if (bruijn ##.p.65 0 0) ((bruijn ##.k.30 35 0) (##string ##.string.541)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k47) (bruijn ##.sym.12 35 1) '##vcore.push-dynamic))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D541.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k47, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k47, self)))),
       VGetArg(statics, 35-1, 1),
       _V10vcore_Dpush__dynamic);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k45(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k45(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k45, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k45, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4766,21 +4770,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k45(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.64 0 0) ((bruijn ##.k.30 34 0) (##string ##.string.540)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k46) (bruijn ##.sym.12 34 1) '##vcore.get-dynamics))
+  // (if (bruijn ##.p.64 0 0) ((bruijn ##.k.30 34 0) (##string ##.string.540)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k46) (bruijn ##.sym.12 34 1) '##vcore.get-dynamics))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D540.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k46, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k46, self)))),
       VGetArg(statics, 34-1, 1),
       _V10vcore_Dget__dynamics);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k44(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k44(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k44, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k44, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4788,21 +4792,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k44(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.63 0 0) ((bruijn ##.k.30 33 0) (##string ##.string.539)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k45) (bruijn ##.sym.12 33 1) '##vcore.not))
+  // (if (bruijn ##.p.63 0 0) ((bruijn ##.k.30 33 0) (##string ##.string.539)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k45) (bruijn ##.sym.12 33 1) '##vcore.not))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D539.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k45, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k45, self)))),
       VGetArg(statics, 33-1, 1),
       _V10vcore_Dnot);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k43(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k43(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k43, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k43, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4810,21 +4814,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k43(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.62 0 0) ((bruijn ##.k.30 32 0) (##string ##.string.538)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k44) (bruijn ##.sym.12 32 1) '##vcore.eqv?))
+  // (if (bruijn ##.p.62 0 0) ((bruijn ##.k.30 32 0) (##string ##.string.538)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k44) (bruijn ##.sym.12 32 1) '##vcore.eqv?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D538.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k44, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k44, self)))),
       VGetArg(statics, 32-1, 1),
       _V10vcore_Deqv_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k42(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k42(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k42, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k42, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4832,21 +4836,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k42(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.61 0 0) ((bruijn ##.k.30 31 0) (##string ##.string.537)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k43) (bruijn ##.sym.12 31 1) '##vcore.blob=?))
+  // (if (bruijn ##.p.61 0 0) ((bruijn ##.k.30 31 0) (##string ##.string.537)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k43) (bruijn ##.sym.12 31 1) '##vcore.blob=?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D537.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k43, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k43, self)))),
       VGetArg(statics, 31-1, 1),
       _V10vcore_Dblob_E_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k41(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k41(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k41, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k41, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4854,21 +4858,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k41(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.60 0 0) ((bruijn ##.k.30 30 0) (##string ##.string.536)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k42) (bruijn ##.sym.12 30 1) '##vcore.symbol=?))
+  // (if (bruijn ##.p.60 0 0) ((bruijn ##.k.30 30 0) (##string ##.string.536)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k42) (bruijn ##.sym.12 30 1) '##vcore.symbol=?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D536.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k42, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k42, self)))),
       VGetArg(statics, 30-1, 1),
       _V10vcore_Dsymbol_E_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k40(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k40(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k40, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k40, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4876,21 +4880,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k40(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.59 0 0) ((bruijn ##.k.30 29 0) (##string ##.string.535)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k41) (bruijn ##.sym.12 29 1) '##vcore.eq?))
+  // (if (bruijn ##.p.59 0 0) ((bruijn ##.k.30 29 0) (##string ##.string.535)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k41) (bruijn ##.sym.12 29 1) '##vcore.eq?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D535.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k41, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k41, self)))),
       VGetArg(statics, 29-1, 1),
       _V10vcore_Deq_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k39(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k39(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k39, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k39, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4898,21 +4902,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k39(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.58 0 0) ((bruijn ##.k.30 28 0) (##string ##.string.534)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k40) (bruijn ##.sym.12 28 1) '##vcore.foreign-pointer?))
+  // (if (bruijn ##.p.58 0 0) ((bruijn ##.k.30 28 0) (##string ##.string.534)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k40) (bruijn ##.sym.12 28 1) '##vcore.foreign-pointer?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D534.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k40, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k40, self)))),
       VGetArg(statics, 28-1, 1),
       _V10vcore_Dforeign__pointer_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k38(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k38(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k38, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k38, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4920,21 +4924,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k38(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.57 0 0) ((bruijn ##.k.30 27 0) (##string ##.string.533)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k39) (bruijn ##.sym.12 27 1) '##vcore.nullptr?))
+  // (if (bruijn ##.p.57 0 0) ((bruijn ##.k.30 27 0) (##string ##.string.533)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k39) (bruijn ##.sym.12 27 1) '##vcore.nullptr?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D533.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k39, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k39, self)))),
       VGetArg(statics, 27-1, 1),
       _V10vcore_Dnullptr_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k37(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k37(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k37, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k37, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4942,21 +4946,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k37(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.56 0 0) ((bruijn ##.k.30 26 0) (##string ##.string.532)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k38) (bruijn ##.sym.12 26 1) '##vcore.void?))
+  // (if (bruijn ##.p.56 0 0) ((bruijn ##.k.30 26 0) (##string ##.string.532)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k38) (bruijn ##.sym.12 26 1) '##vcore.void?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D532.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k38, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k38, self)))),
       VGetArg(statics, 26-1, 1),
       _V10vcore_Dvoid_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k36(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k36(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k36, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k36, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4964,21 +4968,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k36(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.55 0 0) ((bruijn ##.k.30 25 0) (##string ##.string.531)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k37) (bruijn ##.sym.12 25 1) '##vcore.char?))
+  // (if (bruijn ##.p.55 0 0) ((bruijn ##.k.30 25 0) (##string ##.string.531)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k37) (bruijn ##.sym.12 25 1) '##vcore.char?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D531.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k37, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k37, self)))),
       VGetArg(statics, 25-1, 1),
       _V10vcore_Dchar_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k35(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k35(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k35, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k35, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4986,21 +4990,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k35(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.54 0 0) ((bruijn ##.k.30 24 0) (##string ##.string.530)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k36) (bruijn ##.sym.12 24 1) '##vcore.double?))
+  // (if (bruijn ##.p.54 0 0) ((bruijn ##.k.30 24 0) (##string ##.string.530)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k36) (bruijn ##.sym.12 24 1) '##vcore.double?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D530.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k36, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k36, self)))),
       VGetArg(statics, 24-1, 1),
       _V10vcore_Ddouble_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k34(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k34(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k34, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k34, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5008,21 +5012,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k34(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.53 0 0) ((bruijn ##.k.30 23 0) (##string ##.string.529)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k35) (bruijn ##.sym.12 23 1) '##vcore.int?))
+  // (if (bruijn ##.p.53 0 0) ((bruijn ##.k.30 23 0) (##string ##.string.529)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k35) (bruijn ##.sym.12 23 1) '##vcore.int?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D529.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k35, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k35, self)))),
       VGetArg(statics, 23-1, 1),
       _V10vcore_Dint_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k33(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k33(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k33, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k33, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5030,21 +5034,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k33(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.52 0 0) ((bruijn ##.k.30 22 0) (##string ##.string.528)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k34) (bruijn ##.sym.12 22 1) '##vcore.string?))
+  // (if (bruijn ##.p.52 0 0) ((bruijn ##.k.30 22 0) (##string ##.string.528)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k34) (bruijn ##.sym.12 22 1) '##vcore.string?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D528.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k34, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k34, self)))),
       VGetArg(statics, 22-1, 1),
       _V10vcore_Dstring_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k32(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k32(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k32, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k32, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5052,21 +5056,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k32(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.51 0 0) ((bruijn ##.k.30 21 0) (##string ##.string.527)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k33) (bruijn ##.sym.12 21 1) '##vcore.symbol?))
+  // (if (bruijn ##.p.51 0 0) ((bruijn ##.k.30 21 0) (##string ##.string.527)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k33) (bruijn ##.sym.12 21 1) '##vcore.symbol?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 21-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D527.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k33, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k33, self)))),
       VGetArg(statics, 21-1, 1),
       _V10vcore_Dsymbol_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k31(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k31(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k31, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k31, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5074,21 +5078,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k31(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.50 0 0) ((bruijn ##.k.30 20 0) (##string ##.string.526)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k32) (bruijn ##.sym.12 20 1) '##vcore.blob?))
+  // (if (bruijn ##.p.50 0 0) ((bruijn ##.k.30 20 0) (##string ##.string.526)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k32) (bruijn ##.sym.12 20 1) '##vcore.blob?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D526.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k32, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k32, self)))),
       VGetArg(statics, 20-1, 1),
       _V10vcore_Dblob_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k30(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k30(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k30, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k30, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5096,21 +5100,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k30(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.49 0 0) ((bruijn ##.k.30 19 0) (##string ##.string.525)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k31) (bruijn ##.sym.12 19 1) '##vcore.procedure?))
+  // (if (bruijn ##.p.49 0 0) ((bruijn ##.k.30 19 0) (##string ##.string.525)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k31) (bruijn ##.sym.12 19 1) '##vcore.procedure?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D525.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k31, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k31, self)))),
       VGetArg(statics, 19-1, 1),
       _V10vcore_Dprocedure_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k29(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k29(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k29, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k29, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5118,21 +5122,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k29(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.48 0 0) ((bruijn ##.k.30 18 0) (##string ##.string.524)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k30) (bruijn ##.sym.12 18 1) '##vcore.hash-table?))
+  // (if (bruijn ##.p.48 0 0) ((bruijn ##.k.30 18 0) (##string ##.string.524)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k30) (bruijn ##.sym.12 18 1) '##vcore.hash-table?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D524.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k30, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k30, self)))),
       VGetArg(statics, 18-1, 1),
       _V10vcore_Dhash__table_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k28(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k28(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k28, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k28, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5140,21 +5144,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k28(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.47 0 0) ((bruijn ##.k.30 17 0) (##string ##.string.523)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k29) (bruijn ##.sym.12 17 1) '##vcore.vector?))
+  // (if (bruijn ##.p.47 0 0) ((bruijn ##.k.30 17 0) (##string ##.string.523)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k29) (bruijn ##.sym.12 17 1) '##vcore.vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D523.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k29, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k29, self)))),
       VGetArg(statics, 17-1, 1),
       _V10vcore_Dvector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k27(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k27(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k27, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k27, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5162,21 +5166,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k27(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.46 0 0) ((bruijn ##.k.30 16 0) (##string ##.string.522)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k28) (bruijn ##.sym.12 16 1) '##vcore.record?))
+  // (if (bruijn ##.p.46 0 0) ((bruijn ##.k.30 16 0) (##string ##.string.522)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k28) (bruijn ##.sym.12 16 1) '##vcore.record?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D522.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k28, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k28, self)))),
       VGetArg(statics, 16-1, 1),
       _V10vcore_Drecord_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k26(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k26(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k26, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k26, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5184,21 +5188,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k26(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.45 0 0) ((bruijn ##.k.30 15 0) (##string ##.string.521)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k27) (bruijn ##.sym.12 15 1) '##vcore.pair?))
+  // (if (bruijn ##.p.45 0 0) ((bruijn ##.k.30 15 0) (##string ##.string.521)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k27) (bruijn ##.sym.12 15 1) '##vcore.pair?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D521.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k27, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k27, self)))),
       VGetArg(statics, 15-1, 1),
       _V10vcore_Dpair_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k25(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k25(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k25, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k25, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5206,21 +5210,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k25(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.44 0 0) ((bruijn ##.k.30 14 0) (##string ##.string.520)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k26) (bruijn ##.sym.12 14 1) '##vcore.null?))
+  // (if (bruijn ##.p.44 0 0) ((bruijn ##.k.30 14 0) (##string ##.string.520)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k26) (bruijn ##.sym.12 14 1) '##vcore.null?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D520.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k26, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k26, self)))),
       VGetArg(statics, 14-1, 1),
       _V10vcore_Dnull_Q);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k24(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k24(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k24, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k24, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5228,21 +5232,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k24(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.43 0 0) ((bruijn ##.k.30 13 0) (##string ##.string.519)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k25) (bruijn ##.sym.12 13 1) '##vcore.remainder))
+  // (if (bruijn ##.p.43 0 0) ((bruijn ##.k.30 13 0) (##string ##.string.519)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k25) (bruijn ##.sym.12 13 1) '##vcore.remainder))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D519.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k25, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k25, self)))),
       VGetArg(statics, 13-1, 1),
       _V10vcore_Dremainder);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k23(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k23(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k23, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k23, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5250,21 +5254,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k23(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.42 0 0) ((bruijn ##.k.30 12 0) (##string ##.string.518)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k24) (bruijn ##.sym.12 12 1) '##vcore.quotient))
+  // (if (bruijn ##.p.42 0 0) ((bruijn ##.k.30 12 0) (##string ##.string.518)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k24) (bruijn ##.sym.12 12 1) '##vcore.quotient))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D518.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k24, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k24, self)))),
       VGetArg(statics, 12-1, 1),
       _V10vcore_Dquotient);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k22(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k22(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k22, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k22, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5272,21 +5276,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k22(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.41 0 0) ((bruijn ##.k.30 11 0) (##string ##.string.517)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k23) (bruijn ##.sym.12 11 1) '##vcore.>))
+  // (if (bruijn ##.p.41 0 0) ((bruijn ##.k.30 11 0) (##string ##.string.517)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k23) (bruijn ##.sym.12 11 1) '##vcore.>))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D517.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k23, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k23, self)))),
       VGetArg(statics, 11-1, 1),
       _V10vcore_D_G);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k21(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k21(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k21, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k21, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5294,21 +5298,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k21(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.40 0 0) ((bruijn ##.k.30 10 0) (##string ##.string.516)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k22) (bruijn ##.sym.12 10 1) '##vcore.>=))
+  // (if (bruijn ##.p.40 0 0) ((bruijn ##.k.30 10 0) (##string ##.string.516)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k22) (bruijn ##.sym.12 10 1) '##vcore.>=))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D516.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k22, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k22, self)))),
       VGetArg(statics, 10-1, 1),
       _V10vcore_D_G_E);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k20(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k20(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k20, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k20, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5316,21 +5320,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k20(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.39 0 0) ((bruijn ##.k.30 9 0) (##string ##.string.515)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k21) (bruijn ##.sym.12 9 1) '##vcore.=))
+  // (if (bruijn ##.p.39 0 0) ((bruijn ##.k.30 9 0) (##string ##.string.515)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k21) (bruijn ##.sym.12 9 1) '##vcore.=))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D515.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k21, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k21, self)))),
       VGetArg(statics, 9-1, 1),
       _V10vcore_D_E);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k19(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k19(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k19, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k19, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5338,21 +5342,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k19(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.38 0 0) ((bruijn ##.k.30 8 0) (##string ##.string.514)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k20) (bruijn ##.sym.12 8 1) '##vcore.<))
+  // (if (bruijn ##.p.38 0 0) ((bruijn ##.k.30 8 0) (##string ##.string.514)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k20) (bruijn ##.sym.12 8 1) '##vcore.<))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D514.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k20, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k20, self)))),
       VGetArg(statics, 8-1, 1),
       _V10vcore_D_L);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k18(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k18(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k18, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k18, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5360,21 +5364,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k18(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.37 0 0) ((bruijn ##.k.30 7 0) (##string ##.string.513)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k19) (bruijn ##.sym.12 7 1) '##vcore.<=))
+  // (if (bruijn ##.p.37 0 0) ((bruijn ##.k.30 7 0) (##string ##.string.513)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k19) (bruijn ##.sym.12 7 1) '##vcore.<=))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D513.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k19, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k19, self)))),
       VGetArg(statics, 7-1, 1),
       _V10vcore_D_L_E);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k17(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k17(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k17, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k17, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5382,21 +5386,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k17(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.36 0 0) ((bruijn ##.k.30 6 0) (##string ##.string.512)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k18) (bruijn ##.sym.12 6 1) '##vcore.cmp))
+  // (if (bruijn ##.p.36 0 0) ((bruijn ##.k.30 6 0) (##string ##.string.512)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k18) (bruijn ##.sym.12 6 1) '##vcore.cmp))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D512.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k18, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k18, self)))),
       VGetArg(statics, 6-1, 1),
       _V10vcore_Dcmp);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k16(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k16(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k16, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k16, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5404,21 +5408,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k16(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.35 0 0) ((bruijn ##.k.30 5 0) (##string ##.string.511)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k17) (bruijn ##.sym.12 5 1) '##vcore./))
+  // (if (bruijn ##.p.35 0 0) ((bruijn ##.k.30 5 0) (##string ##.string.511)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k17) (bruijn ##.sym.12 5 1) '##vcore./))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
       VEncodePointer(&_V10_Dstring_D511.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k17, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k17, self)))),
       VGetArg(statics, 5-1, 1),
       _V10vcore_D_W);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k15(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k15(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k15, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k15, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5426,21 +5430,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k15(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.34 0 0) ((bruijn ##.k.30 4 0) (##string ##.string.510)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k16) (bruijn ##.sym.12 4 1) '##vcore.*))
+  // (if (bruijn ##.p.34 0 0) ((bruijn ##.k.30 4 0) (##string ##.string.510)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k16) (bruijn ##.sym.12 4 1) '##vcore.*))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D510.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k16, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k16, self)))),
       statics->up->up->up->vars[1],
       _V10vcore_D_S);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k14(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k14(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k14, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k14, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5448,21 +5452,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k14(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.33 0 0) ((bruijn ##.k.30 3 0) (##string ##.string.509)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k15) (bruijn ##.sym.12 3 1) '##vcore.-))
+  // (if (bruijn ##.p.33 0 0) ((bruijn ##.k.30 3 0) (##string ##.string.509)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k15) (bruijn ##.sym.12 3 1) '##vcore.-))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D509.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k15, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k15, self)))),
       statics->up->up->vars[1],
       _V10vcore_D__);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k13(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k13(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k13, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k13, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5470,21 +5474,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k13(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.32 0 0) ((bruijn ##.k.30 2 0) (##string ##.string.508)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k14) (bruijn ##.sym.12 2 1) '##vcore.+))
+  // (if (bruijn ##.p.32 0 0) ((bruijn ##.k.30 2 0) (##string ##.string.508)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k14) (bruijn ##.sym.12 2 1) '##vcore.+))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D508.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k14, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k14, self)))),
       statics->up->vars[1],
       _V10vcore_D_P);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_k12(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k12(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_k12, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k12, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5492,21 +5496,21 @@ static void _V10_Dlookup__intrinsic__name_D7_k12(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.31 0 0) ((bruijn ##.k.30 1 0) (##string ##.string.507)) (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k13) (bruijn ##.sym.12 1 1) '##vcore.exact))
+  // (if (bruijn ##.p.31 0 0) ((bruijn ##.k.30 1 0) (##string ##.string.507)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k13) (bruijn ##.sym.12 1 1) '##vcore.exact))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D507.sym, VPOINTER_OTHER));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k13, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k13, self)))),
       statics->vars[1],
       _V10vcore_Dexact);
 }
 }
-static void _V10_Dlookup__intrinsic__name_D7_lambda3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic__name_D7_lambda3, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -5515,15 +5519,15 @@ static void _V10_Dlookup__intrinsic__name_D7_lambda3(VRuntime * runtime, VEnv * 
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (##vcore.eqv? (close _V10_Dlookup__intrinsic__name_D7_k12) (bruijn ##.sym.12 0 1) '##vcore.inexact)
+  // (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k12) (bruijn ##.sym.12 0 1) '##vcore.inexact)
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_k12, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k12, self)))),
       _var1,
       _V10vcore_Dinexact);
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k272(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k272(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k272, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k272, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5537,9 +5541,9 @@ _var0)) {
       VEncodeBool(false));
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k271(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k271(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k271, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k271, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5547,21 +5551,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k271(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.291 0 0) ((bruijn ##.k.227 64 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k272) (bruijn ##.sym.14 64 1) '##vcore.newline-stdout))
+  // (if (bruijn ##.p.291 0 0) ((bruijn ##.k.227 64 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k272) (bruijn ##.sym.14 64 1) '##vcore.newline-stdout))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 64-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k272, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k272, self)))),
       VGetArg(statics, 64-1, 1),
       _V10vcore_Dnewline__stdout);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k270(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k270(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k270, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k270, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5569,21 +5573,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k270(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.290 0 0) ((bruijn ##.k.227 63 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k271) (bruijn ##.sym.14 63 1) '##vcore.write-stdout))
+  // (if (bruijn ##.p.290 0 0) ((bruijn ##.k.227 63 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k271) (bruijn ##.sym.14 63 1) '##vcore.write-stdout))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 63-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k271, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k271, self)))),
       VGetArg(statics, 63-1, 1),
       _V10vcore_Dwrite__stdout);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k269(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k269(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k269, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k269, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5591,21 +5595,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k269(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.289 0 0) ((bruijn ##.k.227 62 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k270) (bruijn ##.sym.14 62 1) '##vcore.display-stdout))
+  // (if (bruijn ##.p.289 0 0) ((bruijn ##.k.227 62 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k270) (bruijn ##.sym.14 62 1) '##vcore.display-stdout))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 62-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k270, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k270, self)))),
       VGetArg(statics, 62-1, 1),
       _V10vcore_Ddisplay__stdout);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k268(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k268(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k268, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k268, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5613,21 +5617,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k268(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.288 0 0) ((bruijn ##.k.227 61 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k269) (bruijn ##.sym.14 61 1) '##vcore.newline))
+  // (if (bruijn ##.p.288 0 0) ((bruijn ##.k.227 61 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k269) (bruijn ##.sym.14 61 1) '##vcore.newline))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 61-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k269, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k269, self)))),
       VGetArg(statics, 61-1, 1),
       _V10vcore_Dnewline);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k267(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k267(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k267, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k267, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5635,21 +5639,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k267(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.287 0 0) ((bruijn ##.k.227 60 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k268) (bruijn ##.sym.14 60 1) '##vcore.write))
+  // (if (bruijn ##.p.287 0 0) ((bruijn ##.k.227 60 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k268) (bruijn ##.sym.14 60 1) '##vcore.write))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 60-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k268, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k268, self)))),
       VGetArg(statics, 60-1, 1),
       _V10vcore_Dwrite);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k266(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k266(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k266, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k266, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5657,21 +5661,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k266(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.286 0 0) ((bruijn ##.k.227 59 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k267) (bruijn ##.sym.14 59 1) '##vcore.display-word))
+  // (if (bruijn ##.p.286 0 0) ((bruijn ##.k.227 59 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k267) (bruijn ##.sym.14 59 1) '##vcore.display-word))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 59-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k267, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k267, self)))),
       VGetArg(statics, 59-1, 1),
       _V10vcore_Ddisplay__word);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k265(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k265(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k265, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k265, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5679,21 +5683,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k265(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.285 0 0) ((bruijn ##.k.227 58 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k266) (bruijn ##.sym.14 58 1) '##vcore.read-char))
+  // (if (bruijn ##.p.285 0 0) ((bruijn ##.k.227 58 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k266) (bruijn ##.sym.14 58 1) '##vcore.read-char))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 58-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k266, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k266, self)))),
       VGetArg(statics, 58-1, 1),
       _V10vcore_Dread__char);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k264(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k264(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k264, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k264, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5701,21 +5705,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k264(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.284 0 0) ((bruijn ##.k.227 57 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k265) (bruijn ##.sym.14 57 1) '##vcore.char-integer))
+  // (if (bruijn ##.p.284 0 0) ((bruijn ##.k.227 57 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k265) (bruijn ##.sym.14 57 1) '##vcore.char-integer))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 57-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k265, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k265, self)))),
       VGetArg(statics, 57-1, 1),
       _V10vcore_Dchar__integer);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k263(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k263(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k263, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k263, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5723,21 +5727,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k263(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.283 0 0) ((bruijn ##.k.227 56 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k264) (bruijn ##.sym.14 56 1) '##vcore.string->number))
+  // (if (bruijn ##.p.283 0 0) ((bruijn ##.k.227 56 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k264) (bruijn ##.sym.14 56 1) '##vcore.string->number))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 56-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k264, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k264, self)))),
       VGetArg(statics, 56-1, 1),
       _V10vcore_Dstring___Gnumber);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k262(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k262(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k262, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k262, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5745,21 +5749,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k262(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.282 0 0) ((bruijn ##.k.227 55 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k263) (bruijn ##.sym.14 55 1) '##vcore.string-length))
+  // (if (bruijn ##.p.282 0 0) ((bruijn ##.k.227 55 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k263) (bruijn ##.sym.14 55 1) '##vcore.string-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 55-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k263, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k263, self)))),
       VGetArg(statics, 55-1, 1),
       _V10vcore_Dstring__length);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k261(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k261(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k261, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k261, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5767,21 +5771,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k261(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.281 0 0) ((bruijn ##.k.227 54 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k262) (bruijn ##.sym.14 54 1) '##vcore.string-set!))
+  // (if (bruijn ##.p.281 0 0) ((bruijn ##.k.227 54 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k262) (bruijn ##.sym.14 54 1) '##vcore.string-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 54-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k262, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k262, self)))),
       VGetArg(statics, 54-1, 1),
       _V10vcore_Dstring__set_B);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k260(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k260(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k260, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k260, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5789,21 +5793,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k260(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.280 0 0) ((bruijn ##.k.227 53 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k261) (bruijn ##.sym.14 53 1) '##vcore.string-ref))
+  // (if (bruijn ##.p.280 0 0) ((bruijn ##.k.227 53 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k261) (bruijn ##.sym.14 53 1) '##vcore.string-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 53-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k261, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k261, self)))),
       VGetArg(statics, 53-1, 1),
       _V10vcore_Dstring__ref);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k259(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k259(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k259, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k259, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5811,21 +5815,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k259(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.279 0 0) ((bruijn ##.k.227 52 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k260) (bruijn ##.sym.14 52 1) '##vcore.record-length))
+  // (if (bruijn ##.p.279 0 0) ((bruijn ##.k.227 52 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k260) (bruijn ##.sym.14 52 1) '##vcore.record-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 52-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k260, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k260, self)))),
       VGetArg(statics, 52-1, 1),
       _V10vcore_Drecord__length);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k258(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k258(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k258, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k258, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5833,21 +5837,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k258(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.278 0 0) ((bruijn ##.k.227 51 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k259) (bruijn ##.sym.14 51 1) '##vcore.record-ref))
+  // (if (bruijn ##.p.278 0 0) ((bruijn ##.k.227 51 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k259) (bruijn ##.sym.14 51 1) '##vcore.record-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 51-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k259, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k259, self)))),
       VGetArg(statics, 51-1, 1),
       _V10vcore_Drecord__ref);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k257(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k257(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k257, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k257, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5855,21 +5859,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k257(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.277 0 0) ((bruijn ##.k.227 50 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k258) (bruijn ##.sym.14 50 1) '##vcore.u8vector-length))
+  // (if (bruijn ##.p.277 0 0) ((bruijn ##.k.227 50 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k258) (bruijn ##.sym.14 50 1) '##vcore.u8vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 50-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k258, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k258, self)))),
       VGetArg(statics, 50-1, 1),
       _V10vcore_Du8vector__length);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k256(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k256(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k256, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k256, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5877,21 +5881,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k256(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.276 0 0) ((bruijn ##.k.227 49 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k257) (bruijn ##.sym.14 49 1) '##vcore.u8vector-set!))
+  // (if (bruijn ##.p.276 0 0) ((bruijn ##.k.227 49 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k257) (bruijn ##.sym.14 49 1) '##vcore.u8vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 49-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k257, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k257, self)))),
       VGetArg(statics, 49-1, 1),
       _V10vcore_Du8vector__set_B);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k255(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k255(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k255, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k255, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5899,21 +5903,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k255(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.275 0 0) ((bruijn ##.k.227 48 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k256) (bruijn ##.sym.14 48 1) '##vcore.u8vector-ref))
+  // (if (bruijn ##.p.275 0 0) ((bruijn ##.k.227 48 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k256) (bruijn ##.sym.14 48 1) '##vcore.u8vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 48-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k256, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k256, self)))),
       VGetArg(statics, 48-1, 1),
       _V10vcore_Du8vector__ref);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k254(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k254(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k254, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k254, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5921,21 +5925,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k254(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.274 0 0) ((bruijn ##.k.227 47 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k255) (bruijn ##.sym.14 47 1) '##vcore.u8vector?))
+  // (if (bruijn ##.p.274 0 0) ((bruijn ##.k.227 47 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k255) (bruijn ##.sym.14 47 1) '##vcore.u8vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 47-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k255, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k255, self)))),
       VGetArg(statics, 47-1, 1),
       _V10vcore_Du8vector_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k253(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k253(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k253, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k253, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5943,21 +5947,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k253(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.273 0 0) ((bruijn ##.k.227 46 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k254) (bruijn ##.sym.14 46 1) '##vcore.s8vector-length))
+  // (if (bruijn ##.p.273 0 0) ((bruijn ##.k.227 46 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k254) (bruijn ##.sym.14 46 1) '##vcore.s8vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 46-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k254, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k254, self)))),
       VGetArg(statics, 46-1, 1),
       _V10vcore_Ds8vector__length);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k252(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k252(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k252, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k252, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5965,21 +5969,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k252(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.272 0 0) ((bruijn ##.k.227 45 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k253) (bruijn ##.sym.14 45 1) '##vcore.s8vector-set!))
+  // (if (bruijn ##.p.272 0 0) ((bruijn ##.k.227 45 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k253) (bruijn ##.sym.14 45 1) '##vcore.s8vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 45-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k253, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k253, self)))),
       VGetArg(statics, 45-1, 1),
       _V10vcore_Ds8vector__set_B);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k251(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k251(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k251, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k251, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5987,21 +5991,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k251(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.271 0 0) ((bruijn ##.k.227 44 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k252) (bruijn ##.sym.14 44 1) '##vcore.s8vector-ref))
+  // (if (bruijn ##.p.271 0 0) ((bruijn ##.k.227 44 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k252) (bruijn ##.sym.14 44 1) '##vcore.s8vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 44-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k252, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k252, self)))),
       VGetArg(statics, 44-1, 1),
       _V10vcore_Ds8vector__ref);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k250(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k250(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k250, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k250, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6009,21 +6013,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k250(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.270 0 0) ((bruijn ##.k.227 43 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k251) (bruijn ##.sym.14 43 1) '##vcore.s8vector?))
+  // (if (bruijn ##.p.270 0 0) ((bruijn ##.k.227 43 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k251) (bruijn ##.sym.14 43 1) '##vcore.s8vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 43-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k251, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k251, self)))),
       VGetArg(statics, 43-1, 1),
       _V10vcore_Ds8vector_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k249(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k249(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k249, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k249, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6031,21 +6035,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k249(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.269 0 0) ((bruijn ##.k.227 42 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k250) (bruijn ##.sym.14 42 1) '##vcore.u16vector-length))
+  // (if (bruijn ##.p.269 0 0) ((bruijn ##.k.227 42 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k250) (bruijn ##.sym.14 42 1) '##vcore.u16vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k250, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k250, self)))),
       VGetArg(statics, 42-1, 1),
       _V10vcore_Du16vector__length);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k248(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k248(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k248, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k248, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6053,21 +6057,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k248(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.268 0 0) ((bruijn ##.k.227 41 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k249) (bruijn ##.sym.14 41 1) '##vcore.u16vector-set!))
+  // (if (bruijn ##.p.268 0 0) ((bruijn ##.k.227 41 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k249) (bruijn ##.sym.14 41 1) '##vcore.u16vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k249, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k249, self)))),
       VGetArg(statics, 41-1, 1),
       _V10vcore_Du16vector__set_B);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k247(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k247(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k247, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k247, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6075,21 +6079,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k247(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.267 0 0) ((bruijn ##.k.227 40 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k248) (bruijn ##.sym.14 40 1) '##vcore.u16vector-ref))
+  // (if (bruijn ##.p.267 0 0) ((bruijn ##.k.227 40 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k248) (bruijn ##.sym.14 40 1) '##vcore.u16vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k248, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k248, self)))),
       VGetArg(statics, 40-1, 1),
       _V10vcore_Du16vector__ref);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k246(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k246(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k246, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k246, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6097,21 +6101,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k246(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.266 0 0) ((bruijn ##.k.227 39 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k247) (bruijn ##.sym.14 39 1) '##vcore.u16vector?))
+  // (if (bruijn ##.p.266 0 0) ((bruijn ##.k.227 39 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k247) (bruijn ##.sym.14 39 1) '##vcore.u16vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k247, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k247, self)))),
       VGetArg(statics, 39-1, 1),
       _V10vcore_Du16vector_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k245(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k245(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k245, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k245, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6119,21 +6123,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k245(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.265 0 0) ((bruijn ##.k.227 38 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k246) (bruijn ##.sym.14 38 1) '##vcore.s16vector-length))
+  // (if (bruijn ##.p.265 0 0) ((bruijn ##.k.227 38 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k246) (bruijn ##.sym.14 38 1) '##vcore.s16vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k246, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k246, self)))),
       VGetArg(statics, 38-1, 1),
       _V10vcore_Ds16vector__length);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k244(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k244(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k244, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k244, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6141,21 +6145,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k244(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.264 0 0) ((bruijn ##.k.227 37 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k245) (bruijn ##.sym.14 37 1) '##vcore.s16vector-set!))
+  // (if (bruijn ##.p.264 0 0) ((bruijn ##.k.227 37 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k245) (bruijn ##.sym.14 37 1) '##vcore.s16vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 37-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k245, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k245, self)))),
       VGetArg(statics, 37-1, 1),
       _V10vcore_Ds16vector__set_B);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k243(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k243(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k243, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k243, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6163,21 +6167,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k243(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.263 0 0) ((bruijn ##.k.227 36 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k244) (bruijn ##.sym.14 36 1) '##vcore.s16vector-ref))
+  // (if (bruijn ##.p.263 0 0) ((bruijn ##.k.227 36 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k244) (bruijn ##.sym.14 36 1) '##vcore.s16vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 36-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k244, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k244, self)))),
       VGetArg(statics, 36-1, 1),
       _V10vcore_Ds16vector__ref);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k242(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k242(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k242, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k242, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6185,21 +6189,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k242(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.262 0 0) ((bruijn ##.k.227 35 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k243) (bruijn ##.sym.14 35 1) '##vcore.s16vector?))
+  // (if (bruijn ##.p.262 0 0) ((bruijn ##.k.227 35 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k243) (bruijn ##.sym.14 35 1) '##vcore.s16vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k243, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k243, self)))),
       VGetArg(statics, 35-1, 1),
       _V10vcore_Ds16vector_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k241(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k241(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k241, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k241, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6207,21 +6211,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k241(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.261 0 0) ((bruijn ##.k.227 34 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k242) (bruijn ##.sym.14 34 1) '##vcore.s32vector-length))
+  // (if (bruijn ##.p.261 0 0) ((bruijn ##.k.227 34 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k242) (bruijn ##.sym.14 34 1) '##vcore.s32vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k242, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k242, self)))),
       VGetArg(statics, 34-1, 1),
       _V10vcore_Ds32vector__length);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k240(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k240(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k240, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k240, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6229,21 +6233,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k240(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.260 0 0) ((bruijn ##.k.227 33 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k241) (bruijn ##.sym.14 33 1) '##vcore.s32vector-set!))
+  // (if (bruijn ##.p.260 0 0) ((bruijn ##.k.227 33 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k241) (bruijn ##.sym.14 33 1) '##vcore.s32vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k241, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k241, self)))),
       VGetArg(statics, 33-1, 1),
       _V10vcore_Ds32vector__set_B);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k239(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k239(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k239, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k239, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6251,21 +6255,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k239(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.259 0 0) ((bruijn ##.k.227 32 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k240) (bruijn ##.sym.14 32 1) '##vcore.s32vector-ref))
+  // (if (bruijn ##.p.259 0 0) ((bruijn ##.k.227 32 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k240) (bruijn ##.sym.14 32 1) '##vcore.s32vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k240, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k240, self)))),
       VGetArg(statics, 32-1, 1),
       _V10vcore_Ds32vector__ref);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k238(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k238(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k238, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k238, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6273,21 +6277,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k238(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.258 0 0) ((bruijn ##.k.227 31 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k239) (bruijn ##.sym.14 31 1) '##vcore.s32vector?))
+  // (if (bruijn ##.p.258 0 0) ((bruijn ##.k.227 31 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k239) (bruijn ##.sym.14 31 1) '##vcore.s32vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k239, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k239, self)))),
       VGetArg(statics, 31-1, 1),
       _V10vcore_Ds32vector_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k237(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k237(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k237, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k237, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6295,21 +6299,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k237(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.257 0 0) ((bruijn ##.k.227 30 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k238) (bruijn ##.sym.14 30 1) '##vcore.f32vector-length))
+  // (if (bruijn ##.p.257 0 0) ((bruijn ##.k.227 30 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k238) (bruijn ##.sym.14 30 1) '##vcore.f32vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k238, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k238, self)))),
       VGetArg(statics, 30-1, 1),
       _V10vcore_Df32vector__length);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k236(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k236(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k236, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k236, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6317,21 +6321,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k236(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.256 0 0) ((bruijn ##.k.227 29 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k237) (bruijn ##.sym.14 29 1) '##vcore.f32vector-set!))
+  // (if (bruijn ##.p.256 0 0) ((bruijn ##.k.227 29 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k237) (bruijn ##.sym.14 29 1) '##vcore.f32vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k237, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k237, self)))),
       VGetArg(statics, 29-1, 1),
       _V10vcore_Df32vector__set_B);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k235(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k235(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k235, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k235, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6339,21 +6343,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k235(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.255 0 0) ((bruijn ##.k.227 28 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k236) (bruijn ##.sym.14 28 1) '##vcore.f32vector-ref))
+  // (if (bruijn ##.p.255 0 0) ((bruijn ##.k.227 28 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k236) (bruijn ##.sym.14 28 1) '##vcore.f32vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k236, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k236, self)))),
       VGetArg(statics, 28-1, 1),
       _V10vcore_Df32vector__ref);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k234(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k234(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k234, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k234, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6361,21 +6365,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k234(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.254 0 0) ((bruijn ##.k.227 27 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k235) (bruijn ##.sym.14 27 1) '##vcore.f32vector?))
+  // (if (bruijn ##.p.254 0 0) ((bruijn ##.k.227 27 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k235) (bruijn ##.sym.14 27 1) '##vcore.f32vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k235, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k235, self)))),
       VGetArg(statics, 27-1, 1),
       _V10vcore_Df32vector_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k233(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k233(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k233, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k233, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6383,21 +6387,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k233(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.253 0 0) ((bruijn ##.k.227 26 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k234) (bruijn ##.sym.14 26 1) '##vcore.f64vector-length))
+  // (if (bruijn ##.p.253 0 0) ((bruijn ##.k.227 26 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k234) (bruijn ##.sym.14 26 1) '##vcore.f64vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k234, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k234, self)))),
       VGetArg(statics, 26-1, 1),
       _V10vcore_Df64vector__length);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k232(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k232(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k232, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k232, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6405,21 +6409,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k232(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.252 0 0) ((bruijn ##.k.227 25 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k233) (bruijn ##.sym.14 25 1) '##vcore.f64vector-set!))
+  // (if (bruijn ##.p.252 0 0) ((bruijn ##.k.227 25 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k233) (bruijn ##.sym.14 25 1) '##vcore.f64vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k233, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k233, self)))),
       VGetArg(statics, 25-1, 1),
       _V10vcore_Df64vector__set_B);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k231(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k231(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k231, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k231, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6427,21 +6431,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k231(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.251 0 0) ((bruijn ##.k.227 24 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k232) (bruijn ##.sym.14 24 1) '##vcore.f64vector-ref))
+  // (if (bruijn ##.p.251 0 0) ((bruijn ##.k.227 24 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k232) (bruijn ##.sym.14 24 1) '##vcore.f64vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k232, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k232, self)))),
       VGetArg(statics, 24-1, 1),
       _V10vcore_Df64vector__ref);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k230(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k230(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k230, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k230, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6449,21 +6453,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k230(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.250 0 0) ((bruijn ##.k.227 23 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k231) (bruijn ##.sym.14 23 1) '##vcore.f64vector?))
+  // (if (bruijn ##.p.250 0 0) ((bruijn ##.k.227 23 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k231) (bruijn ##.sym.14 23 1) '##vcore.f64vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k231, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k231, self)))),
       VGetArg(statics, 23-1, 1),
       _V10vcore_Df64vector_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k229(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k229(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k229, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k229, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6471,21 +6475,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k229(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.249 0 0) ((bruijn ##.k.227 22 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k230) (bruijn ##.sym.14 22 1) '##vcore.vector-length))
+  // (if (bruijn ##.p.249 0 0) ((bruijn ##.k.227 22 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k230) (bruijn ##.sym.14 22 1) '##vcore.vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k230, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k230, self)))),
       VGetArg(statics, 22-1, 1),
       _V10vcore_Dvector__length);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k228(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k228(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k228, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k228, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6493,21 +6497,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k228(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.248 0 0) ((bruijn ##.k.227 21 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k229) (bruijn ##.sym.14 21 1) '##vcore.vector-ref))
+  // (if (bruijn ##.p.248 0 0) ((bruijn ##.k.227 21 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k229) (bruijn ##.sym.14 21 1) '##vcore.vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 21-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k229, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k229, self)))),
       VGetArg(statics, 21-1, 1),
       _V10vcore_Dvector__ref);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k227(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k227(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k227, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k227, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6515,21 +6519,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k227(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.247 0 0) ((bruijn ##.k.227 20 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k228) (bruijn ##.sym.14 20 1) '##vcore.not))
+  // (if (bruijn ##.p.247 0 0) ((bruijn ##.k.227 20 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k228) (bruijn ##.sym.14 20 1) '##vcore.not))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k228, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k228, self)))),
       VGetArg(statics, 20-1, 1),
       _V10vcore_Dnot);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k226(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k226(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k226, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k226, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6537,21 +6541,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k226(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.246 0 0) ((bruijn ##.k.227 19 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k227) (bruijn ##.sym.14 19 1) '##vcore.foreign-pointer?))
+  // (if (bruijn ##.p.246 0 0) ((bruijn ##.k.227 19 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k227) (bruijn ##.sym.14 19 1) '##vcore.foreign-pointer?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k227, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k227, self)))),
       VGetArg(statics, 19-1, 1),
       _V10vcore_Dforeign__pointer_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k225(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k225(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k225, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k225, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6559,21 +6563,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k225(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.245 0 0) ((bruijn ##.k.227 18 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k226) (bruijn ##.sym.14 18 1) '##vcore.nullptr?))
+  // (if (bruijn ##.p.245 0 0) ((bruijn ##.k.227 18 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k226) (bruijn ##.sym.14 18 1) '##vcore.nullptr?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k226, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k226, self)))),
       VGetArg(statics, 18-1, 1),
       _V10vcore_Dnullptr_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k224(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k224(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k224, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k224, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6581,21 +6585,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k224(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.244 0 0) ((bruijn ##.k.227 17 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k225) (bruijn ##.sym.14 17 1) '##vcore.void?))
+  // (if (bruijn ##.p.244 0 0) ((bruijn ##.k.227 17 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k225) (bruijn ##.sym.14 17 1) '##vcore.void?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k225, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k225, self)))),
       VGetArg(statics, 17-1, 1),
       _V10vcore_Dvoid_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k223(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k223(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k223, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k223, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6603,21 +6607,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k223(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.243 0 0) ((bruijn ##.k.227 16 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k224) (bruijn ##.sym.14 16 1) '##vcore.char?))
+  // (if (bruijn ##.p.243 0 0) ((bruijn ##.k.227 16 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k224) (bruijn ##.sym.14 16 1) '##vcore.char?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k224, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k224, self)))),
       VGetArg(statics, 16-1, 1),
       _V10vcore_Dchar_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k222(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k222(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k222, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k222, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6625,21 +6629,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k222(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.242 0 0) ((bruijn ##.k.227 15 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k223) (bruijn ##.sym.14 15 1) '##vcore.int?))
+  // (if (bruijn ##.p.242 0 0) ((bruijn ##.k.227 15 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k223) (bruijn ##.sym.14 15 1) '##vcore.int?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k223, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k223, self)))),
       VGetArg(statics, 15-1, 1),
       _V10vcore_Dint_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k221(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k221(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k221, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k221, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6647,21 +6651,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k221(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.241 0 0) ((bruijn ##.k.227 14 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k222) (bruijn ##.sym.14 14 1) '##vcore.double?))
+  // (if (bruijn ##.p.241 0 0) ((bruijn ##.k.227 14 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k222) (bruijn ##.sym.14 14 1) '##vcore.double?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k222, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k222, self)))),
       VGetArg(statics, 14-1, 1),
       _V10vcore_Ddouble_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k220(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k220(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k220, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k220, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6669,21 +6673,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k220(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.240 0 0) ((bruijn ##.k.227 13 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k221) (bruijn ##.sym.14 13 1) '##vcore.string?))
+  // (if (bruijn ##.p.240 0 0) ((bruijn ##.k.227 13 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k221) (bruijn ##.sym.14 13 1) '##vcore.string?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k221, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k221, self)))),
       VGetArg(statics, 13-1, 1),
       _V10vcore_Dstring_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k219(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k219(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k219, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k219, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6691,21 +6695,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k219(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.239 0 0) ((bruijn ##.k.227 12 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k220) (bruijn ##.sym.14 12 1) '##vcore.symbol?))
+  // (if (bruijn ##.p.239 0 0) ((bruijn ##.k.227 12 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k220) (bruijn ##.sym.14 12 1) '##vcore.symbol?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k220, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k220, self)))),
       VGetArg(statics, 12-1, 1),
       _V10vcore_Dsymbol_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k218(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k218(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k218, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k218, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6713,21 +6717,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k218(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.238 0 0) ((bruijn ##.k.227 11 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k219) (bruijn ##.sym.14 11 1) '##vcore.blob?))
+  // (if (bruijn ##.p.238 0 0) ((bruijn ##.k.227 11 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k219) (bruijn ##.sym.14 11 1) '##vcore.blob?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k219, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k219, self)))),
       VGetArg(statics, 11-1, 1),
       _V10vcore_Dblob_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k217(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k217(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k217, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k217, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6735,21 +6739,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k217(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.237 0 0) ((bruijn ##.k.227 10 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k218) (bruijn ##.sym.14 10 1) '##vcore.procedure?))
+  // (if (bruijn ##.p.237 0 0) ((bruijn ##.k.227 10 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k218) (bruijn ##.sym.14 10 1) '##vcore.procedure?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k218, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k218, self)))),
       VGetArg(statics, 10-1, 1),
       _V10vcore_Dprocedure_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k216(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k216(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k216, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k216, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6757,21 +6761,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k216(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.236 0 0) ((bruijn ##.k.227 9 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k217) (bruijn ##.sym.14 9 1) '##vcore.hash-table?))
+  // (if (bruijn ##.p.236 0 0) ((bruijn ##.k.227 9 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k217) (bruijn ##.sym.14 9 1) '##vcore.hash-table?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k217, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k217, self)))),
       VGetArg(statics, 9-1, 1),
       _V10vcore_Dhash__table_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k215(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k215(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k215, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k215, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6779,21 +6783,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k215(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.235 0 0) ((bruijn ##.k.227 8 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k216) (bruijn ##.sym.14 8 1) '##vcore.record?))
+  // (if (bruijn ##.p.235 0 0) ((bruijn ##.k.227 8 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k216) (bruijn ##.sym.14 8 1) '##vcore.record?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k216, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k216, self)))),
       VGetArg(statics, 8-1, 1),
       _V10vcore_Drecord_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k214(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k214(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k214, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k214, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6801,21 +6805,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k214(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.234 0 0) ((bruijn ##.k.227 7 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k215) (bruijn ##.sym.14 7 1) '##vcore.vector?))
+  // (if (bruijn ##.p.234 0 0) ((bruijn ##.k.227 7 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k215) (bruijn ##.sym.14 7 1) '##vcore.vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k215, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k215, self)))),
       VGetArg(statics, 7-1, 1),
       _V10vcore_Dvector_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k213(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k213(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k213, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k213, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6823,21 +6827,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k213(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.233 0 0) ((bruijn ##.k.227 6 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k214) (bruijn ##.sym.14 6 1) '##vcore.eof-object?))
+  // (if (bruijn ##.p.233 0 0) ((bruijn ##.k.227 6 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k214) (bruijn ##.sym.14 6 1) '##vcore.eof-object?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k214, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k214, self)))),
       VGetArg(statics, 6-1, 1),
       _V10vcore_Deof__object_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k212(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k212(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k212, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k212, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6845,21 +6849,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k212(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.232 0 0) ((bruijn ##.k.227 5 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k213) (bruijn ##.sym.14 5 1) '##vcore.pair?))
+  // (if (bruijn ##.p.232 0 0) ((bruijn ##.k.227 5 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k213) (bruijn ##.sym.14 5 1) '##vcore.pair?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k213, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k213, self)))),
       VGetArg(statics, 5-1, 1),
       _V10vcore_Dpair_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k211(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k211(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k211, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k211, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6867,21 +6871,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k211(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.231 0 0) ((bruijn ##.k.227 4 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k212) (bruijn ##.sym.14 4 1) '##vcore.null?))
+  // (if (bruijn ##.p.231 0 0) ((bruijn ##.k.227 4 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k212) (bruijn ##.sym.14 4 1) '##vcore.null?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k212, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k212, self)))),
       statics->up->up->up->vars[1],
       _V10vcore_Dnull_Q);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k210(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k210(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k210, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k210, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6889,21 +6893,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k210(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.230 0 0) ((bruijn ##.k.227 3 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k211) (bruijn ##.sym.14 3 1) '##vcore./))
+  // (if (bruijn ##.p.230 0 0) ((bruijn ##.k.227 3 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k211) (bruijn ##.sym.14 3 1) '##vcore./))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k211, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k211, self)))),
       statics->up->up->vars[1],
       _V10vcore_D_W);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k209(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k209(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k209, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k209, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6911,21 +6915,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k209(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.229 0 0) ((bruijn ##.k.227 2 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k210) (bruijn ##.sym.14 2 1) '##vcore.*))
+  // (if (bruijn ##.p.229 0 0) ((bruijn ##.k.227 2 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k210) (bruijn ##.sym.14 2 1) '##vcore.*))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k210, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k210, self)))),
       statics->up->vars[1],
       _V10vcore_D_S);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_k208(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k208(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_k208, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k208, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6933,21 +6937,21 @@ static void _V10_Dis__basic__intrinsic_Q_D8_k208(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.228 0 0) ((bruijn ##.k.227 1 0) #t) (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k209) (bruijn ##.sym.14 1 1) '##vcore.-))
+  // (if (bruijn ##.p.228 0 0) ((bruijn ##.k.227 1 0) #t) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k209) (bruijn ##.sym.14 1 1) '##vcore.-))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(true));
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k209, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k209, self)))),
       statics->vars[1],
       _V10vcore_D__);
 }
 }
-static void _V10_Dis__basic__intrinsic_Q_D8_lambda4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dis__basic__intrinsic_Q_D8_lambda4, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -6956,15 +6960,15 @@ static void _V10_Dis__basic__intrinsic_Q_D8_lambda4(VRuntime * runtime, VEnv * s
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (##vcore.eqv? (close _V10_Dis__basic__intrinsic_Q_D8_k208) (bruijn ##.sym.14 0 1) '##vcore.+)
+  // (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k208) (bruijn ##.sym.14 0 1) '##vcore.+)
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_k208, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k208, self)))),
       _var1,
       _V10vcore_D_P);
 }
-static void _V10_Dlookup__intrinsic_D9_k335(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k335(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k335, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k335, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6980,9 +6984,9 @@ statics->vars[0])) {
       _V10vcore_Dqcons);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k470(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k470(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k470, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k470, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -6996,9 +7000,9 @@ _var0)) {
       VEncodeBool(false));
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k469(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k469(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k469, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k469, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7006,21 +7010,21 @@ static void _V10_Dlookup__intrinsic_D9_k469(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.488 0 0) ((bruijn ##.k.293 196 0) (##intrinsic ##vcore.arithmetic-shift)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k470) (bruijn ##.sym.16 196 1) '##vcore.bit-count))
+  // (if (bruijn ##.p.488 0 0) ((bruijn ##.k.293 196 0) (##intrinsic ##vcore.arithmetic-shift)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k470) (bruijn ##.sym.16 196 1) '##vcore.bit-count))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 196-1, 0)), 1,
       _V40_V10vcore_Darithmetic__shift);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k470, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k470, self)))),
       VGetArg(statics, 196-1, 1),
       _V10vcore_Dbit__count);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k468(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k468(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k468, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k468, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7028,21 +7032,21 @@ static void _V10_Dlookup__intrinsic_D9_k468(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.487 0 0) ((bruijn ##.k.293 195 0) (##intrinsic ##vcore.bitwise-orc2)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k469) (bruijn ##.sym.16 195 1) '##vcore.arithmetic-shift))
+  // (if (bruijn ##.p.487 0 0) ((bruijn ##.k.293 195 0) (##intrinsic ##vcore.bitwise-orc2)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k469) (bruijn ##.sym.16 195 1) '##vcore.arithmetic-shift))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 195-1, 0)), 1,
       _V40_V10vcore_Dbitwise__orc2);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k469, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k469, self)))),
       VGetArg(statics, 195-1, 1),
       _V10vcore_Darithmetic__shift);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k467(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k467(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k467, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k467, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7050,21 +7054,21 @@ static void _V10_Dlookup__intrinsic_D9_k467(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.486 0 0) ((bruijn ##.k.293 194 0) (##intrinsic ##vcore.bitwise-orc1)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k468) (bruijn ##.sym.16 194 1) '##vcore.bitwise-orc2))
+  // (if (bruijn ##.p.486 0 0) ((bruijn ##.k.293 194 0) (##intrinsic ##vcore.bitwise-orc1)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k468) (bruijn ##.sym.16 194 1) '##vcore.bitwise-orc2))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 194-1, 0)), 1,
       _V40_V10vcore_Dbitwise__orc1);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k468, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k468, self)))),
       VGetArg(statics, 194-1, 1),
       _V10vcore_Dbitwise__orc2);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k466(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k466(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k466, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k466, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7072,21 +7076,21 @@ static void _V10_Dlookup__intrinsic_D9_k466(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.485 0 0) ((bruijn ##.k.293 193 0) (##intrinsic ##vcore.bitwise-andc2)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k467) (bruijn ##.sym.16 193 1) '##vcore.bitwise-orc1))
+  // (if (bruijn ##.p.485 0 0) ((bruijn ##.k.293 193 0) (##intrinsic ##vcore.bitwise-andc2)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k467) (bruijn ##.sym.16 193 1) '##vcore.bitwise-orc1))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 193-1, 0)), 1,
       _V40_V10vcore_Dbitwise__andc2);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k467, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k467, self)))),
       VGetArg(statics, 193-1, 1),
       _V10vcore_Dbitwise__orc1);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k465(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k465(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k465, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k465, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7094,21 +7098,21 @@ static void _V10_Dlookup__intrinsic_D9_k465(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.484 0 0) ((bruijn ##.k.293 192 0) (##intrinsic ##vcore.bitwise-andc1)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k466) (bruijn ##.sym.16 192 1) '##vcore.bitwise-andc2))
+  // (if (bruijn ##.p.484 0 0) ((bruijn ##.k.293 192 0) (##intrinsic ##vcore.bitwise-andc1)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k466) (bruijn ##.sym.16 192 1) '##vcore.bitwise-andc2))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 192-1, 0)), 1,
       _V40_V10vcore_Dbitwise__andc1);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k466, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k466, self)))),
       VGetArg(statics, 192-1, 1),
       _V10vcore_Dbitwise__andc2);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k464(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k464(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k464, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k464, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7116,21 +7120,21 @@ static void _V10_Dlookup__intrinsic_D9_k464(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.483 0 0) ((bruijn ##.k.293 191 0) (##intrinsic ##vcore.bitwise-nor)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k465) (bruijn ##.sym.16 191 1) '##vcore.bitwise-andc1))
+  // (if (bruijn ##.p.483 0 0) ((bruijn ##.k.293 191 0) (##intrinsic ##vcore.bitwise-nor)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k465) (bruijn ##.sym.16 191 1) '##vcore.bitwise-andc1))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 191-1, 0)), 1,
       _V40_V10vcore_Dbitwise__nor);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k465, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k465, self)))),
       VGetArg(statics, 191-1, 1),
       _V10vcore_Dbitwise__andc1);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k463(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k463(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k463, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k463, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7138,21 +7142,21 @@ static void _V10_Dlookup__intrinsic_D9_k463(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.482 0 0) ((bruijn ##.k.293 190 0) (##intrinsic ##vcore.bitwise-nand)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k464) (bruijn ##.sym.16 190 1) '##vcore.bitwise-nor))
+  // (if (bruijn ##.p.482 0 0) ((bruijn ##.k.293 190 0) (##intrinsic ##vcore.bitwise-nand)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k464) (bruijn ##.sym.16 190 1) '##vcore.bitwise-nor))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 190-1, 0)), 1,
       _V40_V10vcore_Dbitwise__nand);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k464, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k464, self)))),
       VGetArg(statics, 190-1, 1),
       _V10vcore_Dbitwise__nor);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k462(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k462(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k462, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k462, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7160,21 +7164,21 @@ static void _V10_Dlookup__intrinsic_D9_k462(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.481 0 0) ((bruijn ##.k.293 189 0) (##intrinsic ##vcore.bitwise-xnor)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k463) (bruijn ##.sym.16 189 1) '##vcore.bitwise-nand))
+  // (if (bruijn ##.p.481 0 0) ((bruijn ##.k.293 189 0) (##intrinsic ##vcore.bitwise-xnor)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k463) (bruijn ##.sym.16 189 1) '##vcore.bitwise-nand))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 189-1, 0)), 1,
       _V40_V10vcore_Dbitwise__xnor);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k463, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k463, self)))),
       VGetArg(statics, 189-1, 1),
       _V10vcore_Dbitwise__nand);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k461(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k461(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k461, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k461, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7182,21 +7186,21 @@ static void _V10_Dlookup__intrinsic_D9_k461(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.480 0 0) ((bruijn ##.k.293 188 0) (##intrinsic ##vcore.bitwise-and)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k462) (bruijn ##.sym.16 188 1) '##vcore.bitwise-xnor))
+  // (if (bruijn ##.p.480 0 0) ((bruijn ##.k.293 188 0) (##intrinsic ##vcore.bitwise-and)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k462) (bruijn ##.sym.16 188 1) '##vcore.bitwise-xnor))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 188-1, 0)), 1,
       _V40_V10vcore_Dbitwise__and);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k462, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k462, self)))),
       VGetArg(statics, 188-1, 1),
       _V10vcore_Dbitwise__xnor);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k460(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k460(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k460, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k460, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7204,21 +7208,21 @@ static void _V10_Dlookup__intrinsic_D9_k460(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.479 0 0) ((bruijn ##.k.293 187 0) (##intrinsic ##vcore.bitwise-xor)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k461) (bruijn ##.sym.16 187 1) '##vcore.bitwise-and))
+  // (if (bruijn ##.p.479 0 0) ((bruijn ##.k.293 187 0) (##intrinsic ##vcore.bitwise-xor)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k461) (bruijn ##.sym.16 187 1) '##vcore.bitwise-and))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 187-1, 0)), 1,
       _V40_V10vcore_Dbitwise__xor);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k461, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k461, self)))),
       VGetArg(statics, 187-1, 1),
       _V10vcore_Dbitwise__and);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k459(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k459(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k459, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k459, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7226,21 +7230,21 @@ static void _V10_Dlookup__intrinsic_D9_k459(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.478 0 0) ((bruijn ##.k.293 186 0) (##intrinsic ##vcore.bitwise-ior)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k460) (bruijn ##.sym.16 186 1) '##vcore.bitwise-xor))
+  // (if (bruijn ##.p.478 0 0) ((bruijn ##.k.293 186 0) (##intrinsic ##vcore.bitwise-ior)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k460) (bruijn ##.sym.16 186 1) '##vcore.bitwise-xor))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 186-1, 0)), 1,
       _V40_V10vcore_Dbitwise__ior);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k460, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k460, self)))),
       VGetArg(statics, 186-1, 1),
       _V10vcore_Dbitwise__xor);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k458(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k458(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k458, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k458, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7248,21 +7252,21 @@ static void _V10_Dlookup__intrinsic_D9_k458(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.477 0 0) ((bruijn ##.k.293 185 0) (##intrinsic ##vcore.bitwise-not)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k459) (bruijn ##.sym.16 185 1) '##vcore.bitwise-ior))
+  // (if (bruijn ##.p.477 0 0) ((bruijn ##.k.293 185 0) (##intrinsic ##vcore.bitwise-not)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k459) (bruijn ##.sym.16 185 1) '##vcore.bitwise-ior))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 185-1, 0)), 1,
       _V40_V10vcore_Dbitwise__not);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k459, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k459, self)))),
       VGetArg(statics, 185-1, 1),
       _V10vcore_Dbitwise__ior);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k457(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k457(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k457, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k457, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7270,21 +7274,21 @@ static void _V10_Dlookup__intrinsic_D9_k457(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.476 0 0) ((bruijn ##.k.293 184 0) (##intrinsic ##vcore.jiffies-per-second)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k458) (bruijn ##.sym.16 184 1) '##vcore.bitwise-not))
+  // (if (bruijn ##.p.476 0 0) ((bruijn ##.k.293 184 0) (##intrinsic ##vcore.jiffies-per-second)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k458) (bruijn ##.sym.16 184 1) '##vcore.bitwise-not))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 184-1, 0)), 1,
       _V40_V10vcore_Djiffies__per__second);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k458, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k458, self)))),
       VGetArg(statics, 184-1, 1),
       _V10vcore_Dbitwise__not);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k456(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k456(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k456, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k456, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7292,21 +7296,21 @@ static void _V10_Dlookup__intrinsic_D9_k456(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.475 0 0) ((bruijn ##.k.293 183 0) (##intrinsic ##vcore.current-jiffy)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k457) (bruijn ##.sym.16 183 1) '##vcore.jiffies-per-second))
+  // (if (bruijn ##.p.475 0 0) ((bruijn ##.k.293 183 0) (##intrinsic ##vcore.current-jiffy)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k457) (bruijn ##.sym.16 183 1) '##vcore.jiffies-per-second))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 183-1, 0)), 1,
       _V40_V10vcore_Dcurrent__jiffy);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k457, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k457, self)))),
       VGetArg(statics, 183-1, 1),
       _V10vcore_Djiffies__per__second);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k455(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k455(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k455, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k455, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7314,21 +7318,21 @@ static void _V10_Dlookup__intrinsic_D9_k455(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.474 0 0) ((bruijn ##.k.293 182 0) (##intrinsic ##vcore.access)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k456) (bruijn ##.sym.16 182 1) '##vcore.current-jiffy))
+  // (if (bruijn ##.p.474 0 0) ((bruijn ##.k.293 182 0) (##intrinsic ##vcore.access)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k456) (bruijn ##.sym.16 182 1) '##vcore.current-jiffy))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 182-1, 0)), 1,
       _V40_V10vcore_Daccess);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k456, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k456, self)))),
       VGetArg(statics, 182-1, 1),
       _V10vcore_Dcurrent__jiffy);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k454(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k454(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k454, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k454, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7336,21 +7340,21 @@ static void _V10_Dlookup__intrinsic_D9_k454(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.473 0 0) ((bruijn ##.k.293 181 0) (##intrinsic ##vcore.make-temporary-file)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k455) (bruijn ##.sym.16 181 1) '##vcore.access))
+  // (if (bruijn ##.p.473 0 0) ((bruijn ##.k.293 181 0) (##intrinsic ##vcore.make-temporary-file)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k455) (bruijn ##.sym.16 181 1) '##vcore.access))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 181-1, 0)), 1,
       _V40_V10vcore_Dmake__temporary__file);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k455, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k455, self)))),
       VGetArg(statics, 181-1, 1),
       _V10vcore_Daccess);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k453(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k453(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k453, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k453, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7358,21 +7362,21 @@ static void _V10_Dlookup__intrinsic_D9_k453(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.472 0 0) ((bruijn ##.k.293 180 0) (##intrinsic ##vcore.realpath)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k454) (bruijn ##.sym.16 180 1) '##vcore.make-temporary-file))
+  // (if (bruijn ##.p.472 0 0) ((bruijn ##.k.293 180 0) (##intrinsic ##vcore.realpath)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k454) (bruijn ##.sym.16 180 1) '##vcore.make-temporary-file))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 180-1, 0)), 1,
       _V40_V10vcore_Drealpath);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k454, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k454, self)))),
       VGetArg(statics, 180-1, 1),
       _V10vcore_Dmake__temporary__file);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k452(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k452(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k452, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k452, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7380,21 +7384,21 @@ static void _V10_Dlookup__intrinsic_D9_k452(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.471 0 0) ((bruijn ##.k.293 179 0) (##intrinsic ##vcore.await)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k453) (bruijn ##.sym.16 179 1) '##vcore.realpath))
+  // (if (bruijn ##.p.471 0 0) ((bruijn ##.k.293 179 0) (##intrinsic ##vcore.await)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k453) (bruijn ##.sym.16 179 1) '##vcore.realpath))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 179-1, 0)), 1,
       _V40_V10vcore_Dawait);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k453, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k453, self)))),
       VGetArg(statics, 179-1, 1),
       _V10vcore_Drealpath);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k451(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k451(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k451, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k451, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7402,21 +7406,21 @@ static void _V10_Dlookup__intrinsic_D9_k451(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.470 0 0) ((bruijn ##.k.293 178 0) (##intrinsic ##vcore.async)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k452) (bruijn ##.sym.16 178 1) '##vcore.await))
+  // (if (bruijn ##.p.470 0 0) ((bruijn ##.k.293 178 0) (##intrinsic ##vcore.async)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k452) (bruijn ##.sym.16 178 1) '##vcore.await))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 178-1, 0)), 1,
       _V40_V10vcore_Dasync);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k452, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k452, self)))),
       VGetArg(statics, 178-1, 1),
       _V10vcore_Dawait);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k450(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k450(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k450, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k450, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7424,21 +7428,21 @@ static void _V10_Dlookup__intrinsic_D9_k450(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.469 0 0) ((bruijn ##.k.293 177 0) (##intrinsic ##vcore.fiber-fork-list)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k451) (bruijn ##.sym.16 177 1) '##vcore.async))
+  // (if (bruijn ##.p.469 0 0) ((bruijn ##.k.293 177 0) (##intrinsic ##vcore.fiber-fork-list)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k451) (bruijn ##.sym.16 177 1) '##vcore.async))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 177-1, 0)), 1,
       _V40_V10vcore_Dfiber__fork__list);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k451, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k451, self)))),
       VGetArg(statics, 177-1, 1),
       _V10vcore_Dasync);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k449(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k449(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k449, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k449, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7446,21 +7450,21 @@ static void _V10_Dlookup__intrinsic_D9_k449(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.468 0 0) ((bruijn ##.k.293 176 0) (##intrinsic ##vcore.random-advance!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k450) (bruijn ##.sym.16 176 1) '##vcore.fiber-fork-list))
+  // (if (bruijn ##.p.468 0 0) ((bruijn ##.k.293 176 0) (##intrinsic ##vcore.random-advance!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k450) (bruijn ##.sym.16 176 1) '##vcore.fiber-fork-list))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 176-1, 0)), 1,
       _V40_V10vcore_Drandom__advance_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k450, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k450, self)))),
       VGetArg(statics, 176-1, 1),
       _V10vcore_Dfiber__fork__list);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k448(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k448(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k448, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k448, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7468,21 +7472,21 @@ static void _V10_Dlookup__intrinsic_D9_k448(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.467 0 0) ((bruijn ##.k.293 175 0) (##intrinsic ##vcore.random-sample-float!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k449) (bruijn ##.sym.16 175 1) '##vcore.random-advance!))
+  // (if (bruijn ##.p.467 0 0) ((bruijn ##.k.293 175 0) (##intrinsic ##vcore.random-sample-float!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k449) (bruijn ##.sym.16 175 1) '##vcore.random-advance!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 175-1, 0)), 1,
       _V40_V10vcore_Drandom__sample__float_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k449, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k449, self)))),
       VGetArg(statics, 175-1, 1),
       _V10vcore_Drandom__advance_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k447(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k447(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k447, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k447, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7490,21 +7494,21 @@ static void _V10_Dlookup__intrinsic_D9_k447(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.466 0 0) ((bruijn ##.k.293 174 0) (##intrinsic ##vcore.random-sample-bounded!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k448) (bruijn ##.sym.16 174 1) '##vcore.random-sample-float!))
+  // (if (bruijn ##.p.466 0 0) ((bruijn ##.k.293 174 0) (##intrinsic ##vcore.random-sample-bounded!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k448) (bruijn ##.sym.16 174 1) '##vcore.random-sample-float!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 174-1, 0)), 1,
       _V40_V10vcore_Drandom__sample__bounded_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k448, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k448, self)))),
       VGetArg(statics, 174-1, 1),
       _V10vcore_Drandom__sample__float_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k446(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k446(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k446, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k446, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7512,21 +7516,21 @@ static void _V10_Dlookup__intrinsic_D9_k446(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.465 0 0) ((bruijn ##.k.293 173 0) (##intrinsic ##vcore.random-sample!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k447) (bruijn ##.sym.16 173 1) '##vcore.random-sample-bounded!))
+  // (if (bruijn ##.p.465 0 0) ((bruijn ##.k.293 173 0) (##intrinsic ##vcore.random-sample!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k447) (bruijn ##.sym.16 173 1) '##vcore.random-sample-bounded!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 173-1, 0)), 1,
       _V40_V10vcore_Drandom__sample_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k447, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k447, self)))),
       VGetArg(statics, 173-1, 1),
       _V10vcore_Drandom__sample__bounded_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k445(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k445(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k445, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k445, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7534,21 +7538,21 @@ static void _V10_Dlookup__intrinsic_D9_k445(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.464 0 0) ((bruijn ##.k.293 172 0) (##intrinsic ##vcore.random-copy)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k446) (bruijn ##.sym.16 172 1) '##vcore.random-sample!))
+  // (if (bruijn ##.p.464 0 0) ((bruijn ##.k.293 172 0) (##intrinsic ##vcore.random-copy)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k446) (bruijn ##.sym.16 172 1) '##vcore.random-sample!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 172-1, 0)), 1,
       _V40_V10vcore_Drandom__copy);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k446, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k446, self)))),
       VGetArg(statics, 172-1, 1),
       _V10vcore_Drandom__sample_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k444(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k444(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k444, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k444, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7556,21 +7560,21 @@ static void _V10_Dlookup__intrinsic_D9_k444(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.463 0 0) ((bruijn ##.k.293 171 0) (##intrinsic ##vcore.make-random)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k445) (bruijn ##.sym.16 171 1) '##vcore.random-copy))
+  // (if (bruijn ##.p.463 0 0) ((bruijn ##.k.293 171 0) (##intrinsic ##vcore.make-random)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k445) (bruijn ##.sym.16 171 1) '##vcore.random-copy))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 171-1, 0)), 1,
       _V40_V10vcore_Dmake__random);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k445, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k445, self)))),
       VGetArg(statics, 171-1, 1),
       _V10vcore_Drandom__copy);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k443(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k443(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k443, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k443, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7578,21 +7582,21 @@ static void _V10_Dlookup__intrinsic_D9_k443(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.462 0 0) ((bruijn ##.k.293 170 0) (##intrinsic ##vcore.command-line)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k444) (bruijn ##.sym.16 170 1) '##vcore.make-random))
+  // (if (bruijn ##.p.462 0 0) ((bruijn ##.k.293 170 0) (##intrinsic ##vcore.command-line)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k444) (bruijn ##.sym.16 170 1) '##vcore.make-random))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 170-1, 0)), 1,
       _V40_V10vcore_Dcommand__line);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k444, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k444, self)))),
       VGetArg(statics, 170-1, 1),
       _V10vcore_Dmake__random);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k442(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k442(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k442, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k442, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7600,21 +7604,21 @@ static void _V10_Dlookup__intrinsic_D9_k442(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.461 0 0) ((bruijn ##.k.293 169 0) (##intrinsic ##vcore.open-output-process)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k443) (bruijn ##.sym.16 169 1) '##vcore.command-line))
+  // (if (bruijn ##.p.461 0 0) ((bruijn ##.k.293 169 0) (##intrinsic ##vcore.open-output-process)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k443) (bruijn ##.sym.16 169 1) '##vcore.command-line))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 169-1, 0)), 1,
       _V40_V10vcore_Dopen__output__process);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k443, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k443, self)))),
       VGetArg(statics, 169-1, 1),
       _V10vcore_Dcommand__line);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k441(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k441(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k441, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k441, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7622,21 +7626,21 @@ static void _V10_Dlookup__intrinsic_D9_k441(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.460 0 0) ((bruijn ##.k.293 168 0) (##intrinsic ##vcore.open-input-process)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k442) (bruijn ##.sym.16 168 1) '##vcore.open-output-process))
+  // (if (bruijn ##.p.460 0 0) ((bruijn ##.k.293 168 0) (##intrinsic ##vcore.open-input-process)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k442) (bruijn ##.sym.16 168 1) '##vcore.open-output-process))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 168-1, 0)), 1,
       _V40_V10vcore_Dopen__input__process);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k442, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k442, self)))),
       VGetArg(statics, 168-1, 1),
       _V10vcore_Dopen__output__process);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k440(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k440(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k440, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k440, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7644,21 +7648,21 @@ static void _V10_Dlookup__intrinsic_D9_k440(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.459 0 0) ((bruijn ##.k.293 167 0) (##intrinsic ##vcore.system)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k441) (bruijn ##.sym.16 167 1) '##vcore.open-input-process))
+  // (if (bruijn ##.p.459 0 0) ((bruijn ##.k.293 167 0) (##intrinsic ##vcore.system)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k441) (bruijn ##.sym.16 167 1) '##vcore.open-input-process))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 167-1, 0)), 1,
       _V40_V10vcore_Dsystem);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k441, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k441, self)))),
       VGetArg(statics, 167-1, 1),
       _V10vcore_Dopen__input__process);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k439(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k439(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k439, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k439, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7666,21 +7670,21 @@ static void _V10_Dlookup__intrinsic_D9_k439(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.458 0 0) ((bruijn ##.k.293 166 0) (##intrinsic ##vcore.yield-to-host-major)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k440) (bruijn ##.sym.16 166 1) '##vcore.system))
+  // (if (bruijn ##.p.458 0 0) ((bruijn ##.k.293 166 0) (##intrinsic ##vcore.yield-to-host-major)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k440) (bruijn ##.sym.16 166 1) '##vcore.system))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 166-1, 0)), 1,
       _V40_V10vcore_Dyield__to__host__major);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k440, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k440, self)))),
       VGetArg(statics, 166-1, 1),
       _V10vcore_Dsystem);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k438(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k438(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k438, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k438, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7688,21 +7692,21 @@ static void _V10_Dlookup__intrinsic_D9_k438(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.457 0 0) ((bruijn ##.k.293 165 0) (##intrinsic ##vcore.yield-to-host)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k439) (bruijn ##.sym.16 165 1) '##vcore.yield-to-host-major))
+  // (if (bruijn ##.p.457 0 0) ((bruijn ##.k.293 165 0) (##intrinsic ##vcore.yield-to-host)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k439) (bruijn ##.sym.16 165 1) '##vcore.yield-to-host-major))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 165-1, 0)), 1,
       _V40_V10vcore_Dyield__to__host);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k439, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k439, self)))),
       VGetArg(statics, 165-1, 1),
       _V10vcore_Dyield__to__host__major);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k437(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k437(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k437, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k437, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7710,21 +7714,21 @@ static void _V10_Dlookup__intrinsic_D9_k437(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.456 0 0) ((bruijn ##.k.293 164 0) (##intrinsic ##vcore.garbage-collect)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k438) (bruijn ##.sym.16 164 1) '##vcore.yield-to-host))
+  // (if (bruijn ##.p.456 0 0) ((bruijn ##.k.293 164 0) (##intrinsic ##vcore.garbage-collect)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k438) (bruijn ##.sym.16 164 1) '##vcore.yield-to-host))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 164-1, 0)), 1,
       _V40_V10vcore_Dgarbage__collect);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k438, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k438, self)))),
       VGetArg(statics, 164-1, 1),
       _V10vcore_Dyield__to__host);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k436(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k436(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k436, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k436, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7732,21 +7736,21 @@ static void _V10_Dlookup__intrinsic_D9_k436(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.455 0 0) ((bruijn ##.k.293 163 0) (##intrinsic ##vcore.finalize!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k437) (bruijn ##.sym.16 163 1) '##vcore.garbage-collect))
+  // (if (bruijn ##.p.455 0 0) ((bruijn ##.k.293 163 0) (##intrinsic ##vcore.finalize!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k437) (bruijn ##.sym.16 163 1) '##vcore.garbage-collect))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 163-1, 0)), 1,
       _V40_V10vcore_Dfinalize_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k437, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k437, self)))),
       VGetArg(statics, 163-1, 1),
       _V10vcore_Dgarbage__collect);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k435(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k435(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k435, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k435, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7754,21 +7758,21 @@ static void _V10_Dlookup__intrinsic_D9_k435(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.454 0 0) ((bruijn ##.k.293 162 0) (##intrinsic ##vcore.has-finalizer?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k436) (bruijn ##.sym.16 162 1) '##vcore.finalize!))
+  // (if (bruijn ##.p.454 0 0) ((bruijn ##.k.293 162 0) (##intrinsic ##vcore.has-finalizer?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k436) (bruijn ##.sym.16 162 1) '##vcore.finalize!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 162-1, 0)), 1,
       _V40_V10vcore_Dhas__finalizer_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k436, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k436, self)))),
       VGetArg(statics, 162-1, 1),
       _V10vcore_Dfinalize_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k434(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k434(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k434, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k434, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7776,21 +7780,21 @@ static void _V10_Dlookup__intrinsic_D9_k434(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.453 0 0) ((bruijn ##.k.293 161 0) (##intrinsic ##vcore.set-finalizer!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k435) (bruijn ##.sym.16 161 1) '##vcore.has-finalizer?))
+  // (if (bruijn ##.p.453 0 0) ((bruijn ##.k.293 161 0) (##intrinsic ##vcore.set-finalizer!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k435) (bruijn ##.sym.16 161 1) '##vcore.has-finalizer?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 161-1, 0)), 1,
       _V40_V10vcore_Dset__finalizer_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k435, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k435, self)))),
       VGetArg(statics, 161-1, 1),
       _V10vcore_Dhas__finalizer_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k433(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k433(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k433, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k433, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7798,21 +7802,21 @@ static void _V10_Dlookup__intrinsic_D9_k433(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.452 0 0) ((bruijn ##.k.293 160 0) (##intrinsic ##vcore.newline-stdout)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k434) (bruijn ##.sym.16 160 1) '##vcore.set-finalizer!))
+  // (if (bruijn ##.p.452 0 0) ((bruijn ##.k.293 160 0) (##intrinsic ##vcore.newline-stdout)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k434) (bruijn ##.sym.16 160 1) '##vcore.set-finalizer!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 160-1, 0)), 1,
       _V40_V10vcore_Dnewline__stdout);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k434, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k434, self)))),
       VGetArg(statics, 160-1, 1),
       _V10vcore_Dset__finalizer_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k432(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k432(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k432, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k432, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7820,21 +7824,21 @@ static void _V10_Dlookup__intrinsic_D9_k432(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.451 0 0) ((bruijn ##.k.293 159 0) (##intrinsic ##vcore.write-stdout)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k433) (bruijn ##.sym.16 159 1) '##vcore.newline-stdout))
+  // (if (bruijn ##.p.451 0 0) ((bruijn ##.k.293 159 0) (##intrinsic ##vcore.write-stdout)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k433) (bruijn ##.sym.16 159 1) '##vcore.newline-stdout))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 159-1, 0)), 1,
       _V40_V10vcore_Dwrite__stdout);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k433, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k433, self)))),
       VGetArg(statics, 159-1, 1),
       _V10vcore_Dnewline__stdout);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k431(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k431(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k431, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k431, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7842,21 +7846,21 @@ static void _V10_Dlookup__intrinsic_D9_k431(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.450 0 0) ((bruijn ##.k.293 158 0) (##intrinsic ##vcore.display-stdout)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k432) (bruijn ##.sym.16 158 1) '##vcore.write-stdout))
+  // (if (bruijn ##.p.450 0 0) ((bruijn ##.k.293 158 0) (##intrinsic ##vcore.display-stdout)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k432) (bruijn ##.sym.16 158 1) '##vcore.write-stdout))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 158-1, 0)), 1,
       _V40_V10vcore_Ddisplay__stdout);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k432, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k432, self)))),
       VGetArg(statics, 158-1, 1),
       _V10vcore_Dwrite__stdout);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k430(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k430(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k430, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k430, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7864,21 +7868,21 @@ static void _V10_Dlookup__intrinsic_D9_k430(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.449 0 0) ((bruijn ##.k.293 157 0) (##intrinsic ##vcore.newline)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k431) (bruijn ##.sym.16 157 1) '##vcore.display-stdout))
+  // (if (bruijn ##.p.449 0 0) ((bruijn ##.k.293 157 0) (##intrinsic ##vcore.newline)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k431) (bruijn ##.sym.16 157 1) '##vcore.display-stdout))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 157-1, 0)), 1,
       _V40_V10vcore_Dnewline);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k431, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k431, self)))),
       VGetArg(statics, 157-1, 1),
       _V10vcore_Ddisplay__stdout);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k429(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k429(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k429, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k429, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7886,21 +7890,21 @@ static void _V10_Dlookup__intrinsic_D9_k429(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.448 0 0) ((bruijn ##.k.293 156 0) (##intrinsic ##vcore.write)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k430) (bruijn ##.sym.16 156 1) '##vcore.newline))
+  // (if (bruijn ##.p.448 0 0) ((bruijn ##.k.293 156 0) (##intrinsic ##vcore.write)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k430) (bruijn ##.sym.16 156 1) '##vcore.newline))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 156-1, 0)), 1,
       _V40_V10vcore_Dwrite);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k430, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k430, self)))),
       VGetArg(statics, 156-1, 1),
       _V10vcore_Dnewline);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k428(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k428(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k428, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k428, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7908,21 +7912,21 @@ static void _V10_Dlookup__intrinsic_D9_k428(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.447 0 0) ((bruijn ##.k.293 155 0) (##intrinsic ##vcore.display-word)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k429) (bruijn ##.sym.16 155 1) '##vcore.write))
+  // (if (bruijn ##.p.447 0 0) ((bruijn ##.k.293 155 0) (##intrinsic ##vcore.display-word)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k429) (bruijn ##.sym.16 155 1) '##vcore.write))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 155-1, 0)), 1,
       _V40_V10vcore_Ddisplay__word);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k429, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k429, self)))),
       VGetArg(statics, 155-1, 1),
       _V10vcore_Dwrite);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k427(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k427(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k427, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k427, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7930,21 +7934,21 @@ static void _V10_Dlookup__intrinsic_D9_k427(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.446 0 0) ((bruijn ##.k.293 154 0) (##intrinsic ##vcore.read)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k428) (bruijn ##.sym.16 154 1) '##vcore.display-word))
+  // (if (bruijn ##.p.446 0 0) ((bruijn ##.k.293 154 0) (##intrinsic ##vcore.read)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k428) (bruijn ##.sym.16 154 1) '##vcore.display-word))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 154-1, 0)), 1,
       _V40_V10vcore_Dread);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k428, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k428, self)))),
       VGetArg(statics, 154-1, 1),
       _V10vcore_Ddisplay__word);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k426(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k426(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k426, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k426, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7952,21 +7956,21 @@ static void _V10_Dlookup__intrinsic_D9_k426(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.445 0 0) ((bruijn ##.k.293 153 0) (##intrinsic ##vcore.read-line2)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k427) (bruijn ##.sym.16 153 1) '##vcore.read))
+  // (if (bruijn ##.p.445 0 0) ((bruijn ##.k.293 153 0) (##intrinsic ##vcore.read-line2)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k427) (bruijn ##.sym.16 153 1) '##vcore.read))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 153-1, 0)), 1,
       _V40_V10vcore_Dread__line2);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k427, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k427, self)))),
       VGetArg(statics, 153-1, 1),
       _V10vcore_Dread);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k425(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k425(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k425, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k425, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7974,21 +7978,21 @@ static void _V10_Dlookup__intrinsic_D9_k425(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.444 0 0) ((bruijn ##.k.293 152 0) (##intrinsic ##vcore.read-line)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k426) (bruijn ##.sym.16 152 1) '##vcore.read-line2))
+  // (if (bruijn ##.p.444 0 0) ((bruijn ##.k.293 152 0) (##intrinsic ##vcore.read-line)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k426) (bruijn ##.sym.16 152 1) '##vcore.read-line2))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 152-1, 0)), 1,
       _V40_V10vcore_Dread__line);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k426, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k426, self)))),
       VGetArg(statics, 152-1, 1),
       _V10vcore_Dread__line2);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k424(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k424(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k424, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k424, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -7996,21 +8000,21 @@ static void _V10_Dlookup__intrinsic_D9_k424(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.443 0 0) ((bruijn ##.k.293 151 0) (##intrinsic ##vcore.read-char)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k425) (bruijn ##.sym.16 151 1) '##vcore.read-line))
+  // (if (bruijn ##.p.443 0 0) ((bruijn ##.k.293 151 0) (##intrinsic ##vcore.read-char)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k425) (bruijn ##.sym.16 151 1) '##vcore.read-line))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 151-1, 0)), 1,
       _V40_V10vcore_Dread__char);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k425, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k425, self)))),
       VGetArg(statics, 151-1, 1),
       _V10vcore_Dread__line);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k423(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k423(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k423, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k423, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8018,21 +8022,21 @@ static void _V10_Dlookup__intrinsic_D9_k423(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.442 0 0) ((bruijn ##.k.293 150 0) (##intrinsic ##vcore.eof-object?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k424) (bruijn ##.sym.16 150 1) '##vcore.read-char))
+  // (if (bruijn ##.p.442 0 0) ((bruijn ##.k.293 150 0) (##intrinsic ##vcore.eof-object?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k424) (bruijn ##.sym.16 150 1) '##vcore.read-char))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 150-1, 0)), 1,
       _V40_V10vcore_Deof__object_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k424, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k424, self)))),
       VGetArg(statics, 150-1, 1),
       _V10vcore_Dread__char);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k422(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k422(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k422, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k422, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8040,21 +8044,21 @@ static void _V10_Dlookup__intrinsic_D9_k422(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.441 0 0) ((bruijn ##.k.293 149 0) (##intrinsic ##vcore.get-output-string)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k423) (bruijn ##.sym.16 149 1) '##vcore.eof-object?))
+  // (if (bruijn ##.p.441 0 0) ((bruijn ##.k.293 149 0) (##intrinsic ##vcore.get-output-string)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k423) (bruijn ##.sym.16 149 1) '##vcore.eof-object?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 149-1, 0)), 1,
       _V40_V10vcore_Dget__output__string);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k423, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k423, self)))),
       VGetArg(statics, 149-1, 1),
       _V10vcore_Deof__object_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k421(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k421(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k421, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k421, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8062,21 +8066,21 @@ static void _V10_Dlookup__intrinsic_D9_k421(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.440 0 0) ((bruijn ##.k.293 148 0) (##intrinsic ##vcore.open-output-string)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k422) (bruijn ##.sym.16 148 1) '##vcore.get-output-string))
+  // (if (bruijn ##.p.440 0 0) ((bruijn ##.k.293 148 0) (##intrinsic ##vcore.open-output-string)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k422) (bruijn ##.sym.16 148 1) '##vcore.get-output-string))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 148-1, 0)), 1,
       _V40_V10vcore_Dopen__output__string);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k422, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k422, self)))),
       VGetArg(statics, 148-1, 1),
       _V10vcore_Dget__output__string);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k420(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k420(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k420, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k420, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8084,21 +8088,21 @@ static void _V10_Dlookup__intrinsic_D9_k420(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.439 0 0) ((bruijn ##.k.293 147 0) (##intrinsic ##vcore.tty-port?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k421) (bruijn ##.sym.16 147 1) '##vcore.open-output-string))
+  // (if (bruijn ##.p.439 0 0) ((bruijn ##.k.293 147 0) (##intrinsic ##vcore.tty-port?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k421) (bruijn ##.sym.16 147 1) '##vcore.open-output-string))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 147-1, 0)), 1,
       _V40_V10vcore_Dtty__port_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k421, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k421, self)))),
       VGetArg(statics, 147-1, 1),
       _V10vcore_Dopen__output__string);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k419(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k419(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k419, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k419, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8106,21 +8110,21 @@ static void _V10_Dlookup__intrinsic_D9_k419(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.438 0 0) ((bruijn ##.k.293 146 0) (##intrinsic ##vcore.close-stream)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k420) (bruijn ##.sym.16 146 1) '##vcore.tty-port?))
+  // (if (bruijn ##.p.438 0 0) ((bruijn ##.k.293 146 0) (##intrinsic ##vcore.close-stream)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k420) (bruijn ##.sym.16 146 1) '##vcore.tty-port?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 146-1, 0)), 1,
       _V40_V10vcore_Dclose__stream);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k420, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k420, self)))),
       VGetArg(statics, 146-1, 1),
       _V10vcore_Dtty__port_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k418(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k418(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k418, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k418, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8128,21 +8132,21 @@ static void _V10_Dlookup__intrinsic_D9_k418(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.437 0 0) ((bruijn ##.k.293 145 0) (##intrinsic ##vcore.open-output-stream)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k419) (bruijn ##.sym.16 145 1) '##vcore.close-stream))
+  // (if (bruijn ##.p.437 0 0) ((bruijn ##.k.293 145 0) (##intrinsic ##vcore.open-output-stream)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k419) (bruijn ##.sym.16 145 1) '##vcore.close-stream))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 145-1, 0)), 1,
       _V40_V10vcore_Dopen__output__stream);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k419, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k419, self)))),
       VGetArg(statics, 145-1, 1),
       _V10vcore_Dclose__stream);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k417(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k417(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k417, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k417, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8150,21 +8154,21 @@ static void _V10_Dlookup__intrinsic_D9_k417(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.436 0 0) ((bruijn ##.k.293 144 0) (##intrinsic ##vcore.open-input-stream)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k418) (bruijn ##.sym.16 144 1) '##vcore.open-output-stream))
+  // (if (bruijn ##.p.436 0 0) ((bruijn ##.k.293 144 0) (##intrinsic ##vcore.open-input-stream)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k418) (bruijn ##.sym.16 144 1) '##vcore.open-output-stream))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 144-1, 0)), 1,
       _V40_V10vcore_Dopen__input__stream);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k418, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k418, self)))),
       VGetArg(statics, 144-1, 1),
       _V10vcore_Dopen__output__stream);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k416(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k416(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k416, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k416, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8172,21 +8176,21 @@ static void _V10_Dlookup__intrinsic_D9_k416(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.435 0 0) ((bruijn ##.k.293 143 0) (##intrinsic ##vcore.dup-stderr)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k417) (bruijn ##.sym.16 143 1) '##vcore.open-input-stream))
+  // (if (bruijn ##.p.435 0 0) ((bruijn ##.k.293 143 0) (##intrinsic ##vcore.dup-stderr)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k417) (bruijn ##.sym.16 143 1) '##vcore.open-input-stream))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 143-1, 0)), 1,
       _V40_V10vcore_Ddup__stderr);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k417, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k417, self)))),
       VGetArg(statics, 143-1, 1),
       _V10vcore_Dopen__input__stream);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k415(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k415(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k415, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k415, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8194,21 +8198,21 @@ static void _V10_Dlookup__intrinsic_D9_k415(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.434 0 0) ((bruijn ##.k.293 142 0) (##intrinsic ##vcore.dup-stdout)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k416) (bruijn ##.sym.16 142 1) '##vcore.dup-stderr))
+  // (if (bruijn ##.p.434 0 0) ((bruijn ##.k.293 142 0) (##intrinsic ##vcore.dup-stdout)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k416) (bruijn ##.sym.16 142 1) '##vcore.dup-stderr))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 142-1, 0)), 1,
       _V40_V10vcore_Ddup__stdout);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k416, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k416, self)))),
       VGetArg(statics, 142-1, 1),
       _V10vcore_Ddup__stderr);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k414(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k414(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k414, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k414, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8216,21 +8220,21 @@ static void _V10_Dlookup__intrinsic_D9_k414(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.433 0 0) ((bruijn ##.k.293 141 0) (##intrinsic ##vcore.dup-stdin)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k415) (bruijn ##.sym.16 141 1) '##vcore.dup-stdout))
+  // (if (bruijn ##.p.433 0 0) ((bruijn ##.k.293 141 0) (##intrinsic ##vcore.dup-stdin)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k415) (bruijn ##.sym.16 141 1) '##vcore.dup-stdout))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 141-1, 0)), 1,
       _V40_V10vcore_Ddup__stdin);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k415, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k415, self)))),
       VGetArg(statics, 141-1, 1),
       _V10vcore_Ddup__stdout);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k413(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k413(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k413, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k413, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8238,21 +8242,21 @@ static void _V10_Dlookup__intrinsic_D9_k413(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.432 0 0) ((bruijn ##.k.293 140 0) (##intrinsic ##vcore.stderr->port)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k414) (bruijn ##.sym.16 140 1) '##vcore.dup-stdin))
+  // (if (bruijn ##.p.432 0 0) ((bruijn ##.k.293 140 0) (##intrinsic ##vcore.stderr->port)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k414) (bruijn ##.sym.16 140 1) '##vcore.dup-stdin))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 140-1, 0)), 1,
       _V40_V10vcore_Dstderr___Gport);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k414, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k414, self)))),
       VGetArg(statics, 140-1, 1),
       _V10vcore_Ddup__stdin);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k412(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k412(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k412, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k412, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8260,21 +8264,21 @@ static void _V10_Dlookup__intrinsic_D9_k412(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.431 0 0) ((bruijn ##.k.293 139 0) (##intrinsic ##vcore.stdout->port)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k413) (bruijn ##.sym.16 139 1) '##vcore.stderr->port))
+  // (if (bruijn ##.p.431 0 0) ((bruijn ##.k.293 139 0) (##intrinsic ##vcore.stdout->port)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k413) (bruijn ##.sym.16 139 1) '##vcore.stderr->port))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 139-1, 0)), 1,
       _V40_V10vcore_Dstdout___Gport);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k413, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k413, self)))),
       VGetArg(statics, 139-1, 1),
       _V10vcore_Dstderr___Gport);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k411(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k411(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k411, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k411, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8282,21 +8286,21 @@ static void _V10_Dlookup__intrinsic_D9_k411(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.430 0 0) ((bruijn ##.k.293 138 0) (##intrinsic ##vcore.stdin->port)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k412) (bruijn ##.sym.16 138 1) '##vcore.stdout->port))
+  // (if (bruijn ##.p.430 0 0) ((bruijn ##.k.293 138 0) (##intrinsic ##vcore.stdin->port)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k412) (bruijn ##.sym.16 138 1) '##vcore.stdout->port))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 138-1, 0)), 1,
       _V40_V10vcore_Dstdin___Gport);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k412, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k412, self)))),
       VGetArg(statics, 138-1, 1),
       _V10vcore_Dstdout___Gport);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k410(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k410(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k410, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k410, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8304,21 +8308,21 @@ static void _V10_Dlookup__intrinsic_D9_k410(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.429 0 0) ((bruijn ##.k.293 137 0) (##intrinsic ##vcore.integer->char)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k411) (bruijn ##.sym.16 137 1) '##vcore.stdin->port))
+  // (if (bruijn ##.p.429 0 0) ((bruijn ##.k.293 137 0) (##intrinsic ##vcore.integer->char)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k411) (bruijn ##.sym.16 137 1) '##vcore.stdin->port))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 137-1, 0)), 1,
       _V40_V10vcore_Dinteger___Gchar);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k411, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k411, self)))),
       VGetArg(statics, 137-1, 1),
       _V10vcore_Dstdin___Gport);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k409(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k409(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k409, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k409, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8326,21 +8330,21 @@ static void _V10_Dlookup__intrinsic_D9_k409(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.428 0 0) ((bruijn ##.k.293 136 0) (##intrinsic ##vcore.char-integer)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k410) (bruijn ##.sym.16 136 1) '##vcore.integer->char))
+  // (if (bruijn ##.p.428 0 0) ((bruijn ##.k.293 136 0) (##intrinsic ##vcore.char-integer)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k410) (bruijn ##.sym.16 136 1) '##vcore.integer->char))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 136-1, 0)), 1,
       _V40_V10vcore_Dchar__integer);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k410, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k410, self)))),
       VGetArg(statics, 136-1, 1),
       _V10vcore_Dinteger___Gchar);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k408(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k408(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k408, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k408, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8348,21 +8352,21 @@ static void _V10_Dlookup__intrinsic_D9_k408(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.427 0 0) ((bruijn ##.k.293 135 0) (##intrinsic ##vcore.gensym)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k409) (bruijn ##.sym.16 135 1) '##vcore.char-integer))
+  // (if (bruijn ##.p.427 0 0) ((bruijn ##.k.293 135 0) (##intrinsic ##vcore.gensym)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k409) (bruijn ##.sym.16 135 1) '##vcore.char-integer))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 135-1, 0)), 1,
       _V40_V10vcore_Dgensym);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k409, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k409, self)))),
       VGetArg(statics, 135-1, 1),
       _V10vcore_Dchar__integer);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k407(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k407(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k407, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k407, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8370,21 +8374,21 @@ static void _V10_Dlookup__intrinsic_D9_k407(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.426 0 0) ((bruijn ##.k.293 134 0) (##intrinsic ##vcore.symbol->string)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k408) (bruijn ##.sym.16 134 1) '##vcore.gensym))
+  // (if (bruijn ##.p.426 0 0) ((bruijn ##.k.293 134 0) (##intrinsic ##vcore.symbol->string)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k408) (bruijn ##.sym.16 134 1) '##vcore.gensym))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 134-1, 0)), 1,
       _V40_V10vcore_Dsymbol___Gstring);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k408, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k408, self)))),
       VGetArg(statics, 134-1, 1),
       _V10vcore_Dgensym);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k406(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k406(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k406, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k406, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8392,21 +8396,21 @@ static void _V10_Dlookup__intrinsic_D9_k406(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.425 0 0) ((bruijn ##.k.293 133 0) (##intrinsic ##vcore.string->number)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k407) (bruijn ##.sym.16 133 1) '##vcore.symbol->string))
+  // (if (bruijn ##.p.425 0 0) ((bruijn ##.k.293 133 0) (##intrinsic ##vcore.string->number)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k407) (bruijn ##.sym.16 133 1) '##vcore.symbol->string))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 133-1, 0)), 1,
       _V40_V10vcore_Dstring___Gnumber);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k407, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k407, self)))),
       VGetArg(statics, 133-1, 1),
       _V10vcore_Dsymbol___Gstring);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k405(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k405(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k405, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k405, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8414,21 +8418,21 @@ static void _V10_Dlookup__intrinsic_D9_k405(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.424 0 0) ((bruijn ##.k.293 132 0) (##intrinsic ##vcore.string->symbol)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k406) (bruijn ##.sym.16 132 1) '##vcore.string->number))
+  // (if (bruijn ##.p.424 0 0) ((bruijn ##.k.293 132 0) (##intrinsic ##vcore.string->symbol)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k406) (bruijn ##.sym.16 132 1) '##vcore.string->number))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 132-1, 0)), 1,
       _V40_V10vcore_Dstring___Gsymbol);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k406, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k406, self)))),
       VGetArg(statics, 132-1, 1),
       _V10vcore_Dstring___Gnumber);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k404(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k404(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k404, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k404, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8436,21 +8440,21 @@ static void _V10_Dlookup__intrinsic_D9_k404(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.423 0 0) ((bruijn ##.k.293 131 0) (##intrinsic ##vcore.string-length)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k405) (bruijn ##.sym.16 131 1) '##vcore.string->symbol))
+  // (if (bruijn ##.p.423 0 0) ((bruijn ##.k.293 131 0) (##intrinsic ##vcore.string-length)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k405) (bruijn ##.sym.16 131 1) '##vcore.string->symbol))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 131-1, 0)), 1,
       _V40_V10vcore_Dstring__length);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k405, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k405, self)))),
       VGetArg(statics, 131-1, 1),
       _V10vcore_Dstring___Gsymbol);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k403(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k403(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k403, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k403, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8458,21 +8462,21 @@ static void _V10_Dlookup__intrinsic_D9_k403(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.422 0 0) ((bruijn ##.k.293 130 0) (##intrinsic ##vcore.string-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k404) (bruijn ##.sym.16 130 1) '##vcore.string-length))
+  // (if (bruijn ##.p.422 0 0) ((bruijn ##.k.293 130 0) (##intrinsic ##vcore.string-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k404) (bruijn ##.sym.16 130 1) '##vcore.string-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 130-1, 0)), 1,
       _V40_V10vcore_Dstring__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k404, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k404, self)))),
       VGetArg(statics, 130-1, 1),
       _V10vcore_Dstring__length);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k402(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k402(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k402, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k402, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8480,21 +8484,21 @@ static void _V10_Dlookup__intrinsic_D9_k402(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.421 0 0) ((bruijn ##.k.293 129 0) (##intrinsic ##vcore.string-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k403) (bruijn ##.sym.16 129 1) '##vcore.string-set!))
+  // (if (bruijn ##.p.421 0 0) ((bruijn ##.k.293 129 0) (##intrinsic ##vcore.string-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k403) (bruijn ##.sym.16 129 1) '##vcore.string-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 129-1, 0)), 1,
       _V40_V10vcore_Dstring__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k403, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k403, self)))),
       VGetArg(statics, 129-1, 1),
       _V10vcore_Dstring__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k401(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k401(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k401, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k401, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8502,21 +8506,21 @@ static void _V10_Dlookup__intrinsic_D9_k401(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.420 0 0) ((bruijn ##.k.293 128 0) (##intrinsic ##vcore.string-copy!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k402) (bruijn ##.sym.16 128 1) '##vcore.string-ref))
+  // (if (bruijn ##.p.420 0 0) ((bruijn ##.k.293 128 0) (##intrinsic ##vcore.string-copy!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k402) (bruijn ##.sym.16 128 1) '##vcore.string-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 128-1, 0)), 1,
       _V40_V10vcore_Dstring__copy_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k402, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k402, self)))),
       VGetArg(statics, 128-1, 1),
       _V10vcore_Dstring__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k400(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k400(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k400, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k400, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8524,21 +8528,21 @@ static void _V10_Dlookup__intrinsic_D9_k400(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.419 0 0) ((bruijn ##.k.293 127 0) (##intrinsic ##vcore.substring)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k401) (bruijn ##.sym.16 127 1) '##vcore.string-copy!))
+  // (if (bruijn ##.p.419 0 0) ((bruijn ##.k.293 127 0) (##intrinsic ##vcore.substring)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k401) (bruijn ##.sym.16 127 1) '##vcore.string-copy!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 127-1, 0)), 1,
       _V40_V10vcore_Dsubstring);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k401, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k401, self)))),
       VGetArg(statics, 127-1, 1),
       _V10vcore_Dstring__copy_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k399(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k399(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k399, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k399, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8546,21 +8550,21 @@ static void _V10_Dlookup__intrinsic_D9_k399(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.418 0 0) ((bruijn ##.k.293 126 0) (##intrinsic ##vcore.make-string)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k400) (bruijn ##.sym.16 126 1) '##vcore.substring))
+  // (if (bruijn ##.p.418 0 0) ((bruijn ##.k.293 126 0) (##intrinsic ##vcore.make-string)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k400) (bruijn ##.sym.16 126 1) '##vcore.substring))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 126-1, 0)), 1,
       _V40_V10vcore_Dmake__string);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k400, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k400, self)))),
       VGetArg(statics, 126-1, 1),
       _V10vcore_Dsubstring);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k398(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k398(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k398, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k398, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8568,21 +8572,21 @@ static void _V10_Dlookup__intrinsic_D9_k398(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.417 0 0) ((bruijn ##.k.293 125 0) (##intrinsic ##vcore.hash-table-delete!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k399) (bruijn ##.sym.16 125 1) '##vcore.make-string))
+  // (if (bruijn ##.p.417 0 0) ((bruijn ##.k.293 125 0) (##intrinsic ##vcore.hash-table-delete!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k399) (bruijn ##.sym.16 125 1) '##vcore.make-string))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 125-1, 0)), 1,
       _V40_V10vcore_Dhash__table__delete_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k399, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k399, self)))),
       VGetArg(statics, 125-1, 1),
       _V10vcore_Dmake__string);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k397(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k397(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k397, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k397, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8590,21 +8594,21 @@ static void _V10_Dlookup__intrinsic_D9_k397(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.416 0 0) ((bruijn ##.k.293 124 0) (##intrinsic ##vcore.hash-table-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k398) (bruijn ##.sym.16 124 1) '##vcore.hash-table-delete!))
+  // (if (bruijn ##.p.416 0 0) ((bruijn ##.k.293 124 0) (##intrinsic ##vcore.hash-table-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k398) (bruijn ##.sym.16 124 1) '##vcore.hash-table-delete!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 124-1, 0)), 1,
       _V40_V10vcore_Dhash__table__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k398, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k398, self)))),
       VGetArg(statics, 124-1, 1),
       _V10vcore_Dhash__table__delete_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k396(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k396(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k396, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k396, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8612,21 +8616,21 @@ static void _V10_Dlookup__intrinsic_D9_k396(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.415 0 0) ((bruijn ##.k.293 123 0) (##intrinsic ##vcore.hash-table-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k397) (bruijn ##.sym.16 123 1) '##vcore.hash-table-set!))
+  // (if (bruijn ##.p.415 0 0) ((bruijn ##.k.293 123 0) (##intrinsic ##vcore.hash-table-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k397) (bruijn ##.sym.16 123 1) '##vcore.hash-table-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 123-1, 0)), 1,
       _V40_V10vcore_Dhash__table__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k397, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k397, self)))),
       VGetArg(statics, 123-1, 1),
       _V10vcore_Dhash__table__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k395(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k395(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k395, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k395, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8634,21 +8638,21 @@ static void _V10_Dlookup__intrinsic_D9_k395(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.414 0 0) ((bruijn ##.k.293 122 0) (##intrinsic ##vcore.hash-table-vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k396) (bruijn ##.sym.16 122 1) '##vcore.hash-table-ref))
+  // (if (bruijn ##.p.414 0 0) ((bruijn ##.k.293 122 0) (##intrinsic ##vcore.hash-table-vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k396) (bruijn ##.sym.16 122 1) '##vcore.hash-table-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 122-1, 0)), 1,
       _V40_V10vcore_Dhash__table__vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k396, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k396, self)))),
       VGetArg(statics, 122-1, 1),
       _V10vcore_Dhash__table__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k394(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k394(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k394, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k394, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8656,21 +8660,21 @@ static void _V10_Dlookup__intrinsic_D9_k394(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.413 0 0) ((bruijn ##.k.293 121 0) (##intrinsic ##vcore.hash-table-hash-function)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k395) (bruijn ##.sym.16 121 1) '##vcore.hash-table-vector))
+  // (if (bruijn ##.p.413 0 0) ((bruijn ##.k.293 121 0) (##intrinsic ##vcore.hash-table-hash-function)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k395) (bruijn ##.sym.16 121 1) '##vcore.hash-table-vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 121-1, 0)), 1,
       _V40_V10vcore_Dhash__table__hash__function);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k395, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k395, self)))),
       VGetArg(statics, 121-1, 1),
       _V10vcore_Dhash__table__vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k393(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k393(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k393, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k393, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8678,21 +8682,21 @@ static void _V10_Dlookup__intrinsic_D9_k393(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.412 0 0) ((bruijn ##.k.293 120 0) (##intrinsic ##vcore.hash-table-equivalence-function)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k394) (bruijn ##.sym.16 120 1) '##vcore.hash-table-hash-function))
+  // (if (bruijn ##.p.412 0 0) ((bruijn ##.k.293 120 0) (##intrinsic ##vcore.hash-table-equivalence-function)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k394) (bruijn ##.sym.16 120 1) '##vcore.hash-table-hash-function))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 120-1, 0)), 1,
       _V40_V10vcore_Dhash__table__equivalence__function);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k394, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k394, self)))),
       VGetArg(statics, 120-1, 1),
       _V10vcore_Dhash__table__hash__function);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k392(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k392(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k392, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k392, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8700,21 +8704,21 @@ static void _V10_Dlookup__intrinsic_D9_k392(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.411 0 0) ((bruijn ##.k.293 119 0) (##intrinsic ##vcore.make-hash-table)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k393) (bruijn ##.sym.16 119 1) '##vcore.hash-table-equivalence-function))
+  // (if (bruijn ##.p.411 0 0) ((bruijn ##.k.293 119 0) (##intrinsic ##vcore.make-hash-table)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k393) (bruijn ##.sym.16 119 1) '##vcore.hash-table-equivalence-function))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 119-1, 0)), 1,
       _V40_V10vcore_Dmake__hash__table);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k393, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k393, self)))),
       VGetArg(statics, 119-1, 1),
       _V10vcore_Dhash__table__equivalence__function);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k391(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k391(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k391, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k391, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8722,21 +8726,21 @@ static void _V10_Dlookup__intrinsic_D9_k391(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.410 0 0) ((bruijn ##.k.293 118 0) (##intrinsic ##vcore.record-length)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k392) (bruijn ##.sym.16 118 1) '##vcore.make-hash-table))
+  // (if (bruijn ##.p.410 0 0) ((bruijn ##.k.293 118 0) (##intrinsic ##vcore.record-length)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k392) (bruijn ##.sym.16 118 1) '##vcore.make-hash-table))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 118-1, 0)), 1,
       _V40_V10vcore_Drecord__length);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k392, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k392, self)))),
       VGetArg(statics, 118-1, 1),
       _V10vcore_Dmake__hash__table);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k390(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k390(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k390, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k390, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8744,21 +8748,21 @@ static void _V10_Dlookup__intrinsic_D9_k390(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.409 0 0) ((bruijn ##.k.293 117 0) (##intrinsic ##vcore.record-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k391) (bruijn ##.sym.16 117 1) '##vcore.record-length))
+  // (if (bruijn ##.p.409 0 0) ((bruijn ##.k.293 117 0) (##intrinsic ##vcore.record-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k391) (bruijn ##.sym.16 117 1) '##vcore.record-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 117-1, 0)), 1,
       _V40_V10vcore_Drecord__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k391, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k391, self)))),
       VGetArg(statics, 117-1, 1),
       _V10vcore_Drecord__length);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k389(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k389(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k389, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k389, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8766,21 +8770,21 @@ static void _V10_Dlookup__intrinsic_D9_k389(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.408 0 0) ((bruijn ##.k.293 116 0) (##intrinsic ##vcore.record-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k390) (bruijn ##.sym.16 116 1) '##vcore.record-set!))
+  // (if (bruijn ##.p.408 0 0) ((bruijn ##.k.293 116 0) (##intrinsic ##vcore.record-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k390) (bruijn ##.sym.16 116 1) '##vcore.record-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 116-1, 0)), 1,
       _V40_V10vcore_Drecord__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k390, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k390, self)))),
       VGetArg(statics, 116-1, 1),
       _V10vcore_Drecord__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k388(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k388(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k388, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k388, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8788,21 +8792,21 @@ static void _V10_Dlookup__intrinsic_D9_k388(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.407 0 0) ((bruijn ##.k.293 115 0) (##intrinsic ##vcore.record)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k389) (bruijn ##.sym.16 115 1) '##vcore.record-ref))
+  // (if (bruijn ##.p.407 0 0) ((bruijn ##.k.293 115 0) (##intrinsic ##vcore.record)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k389) (bruijn ##.sym.16 115 1) '##vcore.record-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 115-1, 0)), 1,
       _V40_V10vcore_Drecord);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k389, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k389, self)))),
       VGetArg(statics, 115-1, 1),
       _V10vcore_Drecord__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k387(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k387(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k387, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k387, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8810,21 +8814,21 @@ static void _V10_Dlookup__intrinsic_D9_k387(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.406 0 0) ((bruijn ##.k.293 114 0) (##intrinsic ##vcore.read-u8vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k388) (bruijn ##.sym.16 114 1) '##vcore.record))
+  // (if (bruijn ##.p.406 0 0) ((bruijn ##.k.293 114 0) (##intrinsic ##vcore.read-u8vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k388) (bruijn ##.sym.16 114 1) '##vcore.record))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 114-1, 0)), 1,
       _V40_V10vcore_Dread__u8vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k388, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k388, self)))),
       VGetArg(statics, 114-1, 1),
       _V10vcore_Drecord);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k386(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k386(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k386, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k386, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8832,21 +8836,21 @@ static void _V10_Dlookup__intrinsic_D9_k386(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.405 0 0) ((bruijn ##.k.293 113 0) (##intrinsic ##vcore.s8vector-length)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k387) (bruijn ##.sym.16 113 1) '##vcore.read-u8vector))
+  // (if (bruijn ##.p.405 0 0) ((bruijn ##.k.293 113 0) (##intrinsic ##vcore.s8vector-length)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k387) (bruijn ##.sym.16 113 1) '##vcore.read-u8vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 113-1, 0)), 1,
       _V40_V10vcore_Ds8vector__length);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k387, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k387, self)))),
       VGetArg(statics, 113-1, 1),
       _V10vcore_Dread__u8vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k385(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k385(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k385, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k385, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8854,21 +8858,21 @@ static void _V10_Dlookup__intrinsic_D9_k385(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.404 0 0) ((bruijn ##.k.293 112 0) (##intrinsic ##vcore.s8vector-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k386) (bruijn ##.sym.16 112 1) '##vcore.s8vector-length))
+  // (if (bruijn ##.p.404 0 0) ((bruijn ##.k.293 112 0) (##intrinsic ##vcore.s8vector-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k386) (bruijn ##.sym.16 112 1) '##vcore.s8vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 112-1, 0)), 1,
       _V40_V10vcore_Ds8vector__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k386, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k386, self)))),
       VGetArg(statics, 112-1, 1),
       _V10vcore_Ds8vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k384(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k384(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k384, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k384, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8876,21 +8880,21 @@ static void _V10_Dlookup__intrinsic_D9_k384(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.403 0 0) ((bruijn ##.k.293 111 0) (##intrinsic ##vcore.s8vector-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k385) (bruijn ##.sym.16 111 1) '##vcore.s8vector-set!))
+  // (if (bruijn ##.p.403 0 0) ((bruijn ##.k.293 111 0) (##intrinsic ##vcore.s8vector-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k385) (bruijn ##.sym.16 111 1) '##vcore.s8vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 111-1, 0)), 1,
       _V40_V10vcore_Ds8vector__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k385, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k385, self)))),
       VGetArg(statics, 111-1, 1),
       _V10vcore_Ds8vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k383(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k383(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k383, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k383, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8898,21 +8902,21 @@ static void _V10_Dlookup__intrinsic_D9_k383(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.402 0 0) ((bruijn ##.k.293 110 0) (##intrinsic ##vcore.list->s8vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k384) (bruijn ##.sym.16 110 1) '##vcore.s8vector-ref))
+  // (if (bruijn ##.p.402 0 0) ((bruijn ##.k.293 110 0) (##intrinsic ##vcore.list->s8vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k384) (bruijn ##.sym.16 110 1) '##vcore.s8vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 110-1, 0)), 1,
       _V40_V10vcore_Dlist___Gs8vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k384, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k384, self)))),
       VGetArg(statics, 110-1, 1),
       _V10vcore_Ds8vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k382(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k382(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k382, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k382, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8920,21 +8924,21 @@ static void _V10_Dlookup__intrinsic_D9_k382(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.401 0 0) ((bruijn ##.k.293 109 0) (##intrinsic ##vcore.make-s8vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k383) (bruijn ##.sym.16 109 1) '##vcore.list->s8vector))
+  // (if (bruijn ##.p.401 0 0) ((bruijn ##.k.293 109 0) (##intrinsic ##vcore.make-s8vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k383) (bruijn ##.sym.16 109 1) '##vcore.list->s8vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 109-1, 0)), 1,
       _V40_V10vcore_Dmake__s8vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k383, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k383, self)))),
       VGetArg(statics, 109-1, 1),
       _V10vcore_Dlist___Gs8vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k381(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k381(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k381, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k381, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8942,21 +8946,21 @@ static void _V10_Dlookup__intrinsic_D9_k381(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.400 0 0) ((bruijn ##.k.293 108 0) (##intrinsic ##vcore.s8vector?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k382) (bruijn ##.sym.16 108 1) '##vcore.make-s8vector))
+  // (if (bruijn ##.p.400 0 0) ((bruijn ##.k.293 108 0) (##intrinsic ##vcore.s8vector?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k382) (bruijn ##.sym.16 108 1) '##vcore.make-s8vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 108-1, 0)), 1,
       _V40_V10vcore_Ds8vector_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k382, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k382, self)))),
       VGetArg(statics, 108-1, 1),
       _V10vcore_Dmake__s8vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k380(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k380(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k380, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k380, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8964,21 +8968,21 @@ static void _V10_Dlookup__intrinsic_D9_k380(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.399 0 0) ((bruijn ##.k.293 107 0) (##intrinsic ##vcore.u8vector-length)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k381) (bruijn ##.sym.16 107 1) '##vcore.s8vector?))
+  // (if (bruijn ##.p.399 0 0) ((bruijn ##.k.293 107 0) (##intrinsic ##vcore.u8vector-length)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k381) (bruijn ##.sym.16 107 1) '##vcore.s8vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 107-1, 0)), 1,
       _V40_V10vcore_Du8vector__length);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k381, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k381, self)))),
       VGetArg(statics, 107-1, 1),
       _V10vcore_Ds8vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k379(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k379(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k379, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k379, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -8986,21 +8990,21 @@ static void _V10_Dlookup__intrinsic_D9_k379(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.398 0 0) ((bruijn ##.k.293 106 0) (##intrinsic ##vcore.u8vector-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k380) (bruijn ##.sym.16 106 1) '##vcore.u8vector-length))
+  // (if (bruijn ##.p.398 0 0) ((bruijn ##.k.293 106 0) (##intrinsic ##vcore.u8vector-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k380) (bruijn ##.sym.16 106 1) '##vcore.u8vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 106-1, 0)), 1,
       _V40_V10vcore_Du8vector__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k380, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k380, self)))),
       VGetArg(statics, 106-1, 1),
       _V10vcore_Du8vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k378(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k378(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k378, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k378, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9008,21 +9012,21 @@ static void _V10_Dlookup__intrinsic_D9_k378(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.397 0 0) ((bruijn ##.k.293 105 0) (##intrinsic ##vcore.u8vector-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k379) (bruijn ##.sym.16 105 1) '##vcore.u8vector-set!))
+  // (if (bruijn ##.p.397 0 0) ((bruijn ##.k.293 105 0) (##intrinsic ##vcore.u8vector-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k379) (bruijn ##.sym.16 105 1) '##vcore.u8vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 105-1, 0)), 1,
       _V40_V10vcore_Du8vector__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k379, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k379, self)))),
       VGetArg(statics, 105-1, 1),
       _V10vcore_Du8vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k377(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k377(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k377, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k377, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9030,21 +9034,21 @@ static void _V10_Dlookup__intrinsic_D9_k377(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.396 0 0) ((bruijn ##.k.293 104 0) (##intrinsic ##vcore.list->u8vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k378) (bruijn ##.sym.16 104 1) '##vcore.u8vector-ref))
+  // (if (bruijn ##.p.396 0 0) ((bruijn ##.k.293 104 0) (##intrinsic ##vcore.list->u8vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k378) (bruijn ##.sym.16 104 1) '##vcore.u8vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 104-1, 0)), 1,
       _V40_V10vcore_Dlist___Gu8vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k378, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k378, self)))),
       VGetArg(statics, 104-1, 1),
       _V10vcore_Du8vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k376(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k376(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k376, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k376, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9052,21 +9056,21 @@ static void _V10_Dlookup__intrinsic_D9_k376(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.395 0 0) ((bruijn ##.k.293 103 0) (##intrinsic ##vcore.make-u8vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k377) (bruijn ##.sym.16 103 1) '##vcore.list->u8vector))
+  // (if (bruijn ##.p.395 0 0) ((bruijn ##.k.293 103 0) (##intrinsic ##vcore.make-u8vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k377) (bruijn ##.sym.16 103 1) '##vcore.list->u8vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 103-1, 0)), 1,
       _V40_V10vcore_Dmake__u8vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k377, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k377, self)))),
       VGetArg(statics, 103-1, 1),
       _V10vcore_Dlist___Gu8vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k375(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k375(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k375, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k375, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9074,21 +9078,21 @@ static void _V10_Dlookup__intrinsic_D9_k375(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.394 0 0) ((bruijn ##.k.293 102 0) (##intrinsic ##vcore.u8vector?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k376) (bruijn ##.sym.16 102 1) '##vcore.make-u8vector))
+  // (if (bruijn ##.p.394 0 0) ((bruijn ##.k.293 102 0) (##intrinsic ##vcore.u8vector?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k376) (bruijn ##.sym.16 102 1) '##vcore.make-u8vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 102-1, 0)), 1,
       _V40_V10vcore_Du8vector_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k376, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k376, self)))),
       VGetArg(statics, 102-1, 1),
       _V10vcore_Dmake__u8vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k374(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k374(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k374, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k374, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9096,21 +9100,21 @@ static void _V10_Dlookup__intrinsic_D9_k374(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.393 0 0) ((bruijn ##.k.293 101 0) (##intrinsic ##vcore.s16vector-length)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k375) (bruijn ##.sym.16 101 1) '##vcore.u8vector?))
+  // (if (bruijn ##.p.393 0 0) ((bruijn ##.k.293 101 0) (##intrinsic ##vcore.s16vector-length)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k375) (bruijn ##.sym.16 101 1) '##vcore.u8vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 101-1, 0)), 1,
       _V40_V10vcore_Ds16vector__length);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k375, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k375, self)))),
       VGetArg(statics, 101-1, 1),
       _V10vcore_Du8vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k373(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k373(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k373, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k373, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9118,21 +9122,21 @@ static void _V10_Dlookup__intrinsic_D9_k373(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.392 0 0) ((bruijn ##.k.293 100 0) (##intrinsic ##vcore.s16vector-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k374) (bruijn ##.sym.16 100 1) '##vcore.s16vector-length))
+  // (if (bruijn ##.p.392 0 0) ((bruijn ##.k.293 100 0) (##intrinsic ##vcore.s16vector-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k374) (bruijn ##.sym.16 100 1) '##vcore.s16vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 100-1, 0)), 1,
       _V40_V10vcore_Ds16vector__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k374, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k374, self)))),
       VGetArg(statics, 100-1, 1),
       _V10vcore_Ds16vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k372(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k372(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k372, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k372, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9140,21 +9144,21 @@ static void _V10_Dlookup__intrinsic_D9_k372(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.391 0 0) ((bruijn ##.k.293 99 0) (##intrinsic ##vcore.s16vector-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k373) (bruijn ##.sym.16 99 1) '##vcore.s16vector-set!))
+  // (if (bruijn ##.p.391 0 0) ((bruijn ##.k.293 99 0) (##intrinsic ##vcore.s16vector-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k373) (bruijn ##.sym.16 99 1) '##vcore.s16vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 99-1, 0)), 1,
       _V40_V10vcore_Ds16vector__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k373, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k373, self)))),
       VGetArg(statics, 99-1, 1),
       _V10vcore_Ds16vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k371(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k371(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k371, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k371, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9162,21 +9166,21 @@ static void _V10_Dlookup__intrinsic_D9_k371(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.390 0 0) ((bruijn ##.k.293 98 0) (##intrinsic ##vcore.list->s16vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k372) (bruijn ##.sym.16 98 1) '##vcore.s16vector-ref))
+  // (if (bruijn ##.p.390 0 0) ((bruijn ##.k.293 98 0) (##intrinsic ##vcore.list->s16vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k372) (bruijn ##.sym.16 98 1) '##vcore.s16vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 98-1, 0)), 1,
       _V40_V10vcore_Dlist___Gs16vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k372, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k372, self)))),
       VGetArg(statics, 98-1, 1),
       _V10vcore_Ds16vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k370(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k370(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k370, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k370, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9184,21 +9188,21 @@ static void _V10_Dlookup__intrinsic_D9_k370(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.389 0 0) ((bruijn ##.k.293 97 0) (##intrinsic ##vcore.make-s16vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k371) (bruijn ##.sym.16 97 1) '##vcore.list->s16vector))
+  // (if (bruijn ##.p.389 0 0) ((bruijn ##.k.293 97 0) (##intrinsic ##vcore.make-s16vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k371) (bruijn ##.sym.16 97 1) '##vcore.list->s16vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 97-1, 0)), 1,
       _V40_V10vcore_Dmake__s16vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k371, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k371, self)))),
       VGetArg(statics, 97-1, 1),
       _V10vcore_Dlist___Gs16vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k369(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k369(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k369, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k369, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9206,21 +9210,21 @@ static void _V10_Dlookup__intrinsic_D9_k369(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.388 0 0) ((bruijn ##.k.293 96 0) (##intrinsic ##vcore.s16vector?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k370) (bruijn ##.sym.16 96 1) '##vcore.make-s16vector))
+  // (if (bruijn ##.p.388 0 0) ((bruijn ##.k.293 96 0) (##intrinsic ##vcore.s16vector?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k370) (bruijn ##.sym.16 96 1) '##vcore.make-s16vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 96-1, 0)), 1,
       _V40_V10vcore_Ds16vector_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k370, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k370, self)))),
       VGetArg(statics, 96-1, 1),
       _V10vcore_Dmake__s16vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k368(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k368(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k368, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k368, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9228,21 +9232,21 @@ static void _V10_Dlookup__intrinsic_D9_k368(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.387 0 0) ((bruijn ##.k.293 95 0) (##intrinsic ##vcore.u16vector-length)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k369) (bruijn ##.sym.16 95 1) '##vcore.s16vector?))
+  // (if (bruijn ##.p.387 0 0) ((bruijn ##.k.293 95 0) (##intrinsic ##vcore.u16vector-length)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k369) (bruijn ##.sym.16 95 1) '##vcore.s16vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 95-1, 0)), 1,
       _V40_V10vcore_Du16vector__length);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k369, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k369, self)))),
       VGetArg(statics, 95-1, 1),
       _V10vcore_Ds16vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k367(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k367(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k367, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k367, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9250,21 +9254,21 @@ static void _V10_Dlookup__intrinsic_D9_k367(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.386 0 0) ((bruijn ##.k.293 94 0) (##intrinsic ##vcore.u16vector-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k368) (bruijn ##.sym.16 94 1) '##vcore.u16vector-length))
+  // (if (bruijn ##.p.386 0 0) ((bruijn ##.k.293 94 0) (##intrinsic ##vcore.u16vector-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k368) (bruijn ##.sym.16 94 1) '##vcore.u16vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 94-1, 0)), 1,
       _V40_V10vcore_Du16vector__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k368, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k368, self)))),
       VGetArg(statics, 94-1, 1),
       _V10vcore_Du16vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k366(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k366(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k366, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k366, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9272,21 +9276,21 @@ static void _V10_Dlookup__intrinsic_D9_k366(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.385 0 0) ((bruijn ##.k.293 93 0) (##intrinsic ##vcore.u16vector-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k367) (bruijn ##.sym.16 93 1) '##vcore.u16vector-set!))
+  // (if (bruijn ##.p.385 0 0) ((bruijn ##.k.293 93 0) (##intrinsic ##vcore.u16vector-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k367) (bruijn ##.sym.16 93 1) '##vcore.u16vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 93-1, 0)), 1,
       _V40_V10vcore_Du16vector__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k367, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k367, self)))),
       VGetArg(statics, 93-1, 1),
       _V10vcore_Du16vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k365(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k365(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k365, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k365, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9294,21 +9298,21 @@ static void _V10_Dlookup__intrinsic_D9_k365(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.384 0 0) ((bruijn ##.k.293 92 0) (##intrinsic ##vcore.list->u16vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k366) (bruijn ##.sym.16 92 1) '##vcore.u16vector-ref))
+  // (if (bruijn ##.p.384 0 0) ((bruijn ##.k.293 92 0) (##intrinsic ##vcore.list->u16vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k366) (bruijn ##.sym.16 92 1) '##vcore.u16vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 92-1, 0)), 1,
       _V40_V10vcore_Dlist___Gu16vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k366, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k366, self)))),
       VGetArg(statics, 92-1, 1),
       _V10vcore_Du16vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k364(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k364(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k364, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k364, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9316,21 +9320,21 @@ static void _V10_Dlookup__intrinsic_D9_k364(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.383 0 0) ((bruijn ##.k.293 91 0) (##intrinsic ##vcore.make-u16vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k365) (bruijn ##.sym.16 91 1) '##vcore.list->u16vector))
+  // (if (bruijn ##.p.383 0 0) ((bruijn ##.k.293 91 0) (##intrinsic ##vcore.make-u16vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k365) (bruijn ##.sym.16 91 1) '##vcore.list->u16vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 91-1, 0)), 1,
       _V40_V10vcore_Dmake__u16vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k365, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k365, self)))),
       VGetArg(statics, 91-1, 1),
       _V10vcore_Dlist___Gu16vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k363(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k363(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k363, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k363, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9338,21 +9342,21 @@ static void _V10_Dlookup__intrinsic_D9_k363(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.382 0 0) ((bruijn ##.k.293 90 0) (##intrinsic ##vcore.u16vector?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k364) (bruijn ##.sym.16 90 1) '##vcore.make-u16vector))
+  // (if (bruijn ##.p.382 0 0) ((bruijn ##.k.293 90 0) (##intrinsic ##vcore.u16vector?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k364) (bruijn ##.sym.16 90 1) '##vcore.make-u16vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 90-1, 0)), 1,
       _V40_V10vcore_Du16vector_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k364, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k364, self)))),
       VGetArg(statics, 90-1, 1),
       _V10vcore_Dmake__u16vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k362(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k362(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k362, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k362, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9360,21 +9364,21 @@ static void _V10_Dlookup__intrinsic_D9_k362(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.381 0 0) ((bruijn ##.k.293 89 0) (##intrinsic ##vcore.s32vector-length)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k363) (bruijn ##.sym.16 89 1) '##vcore.u16vector?))
+  // (if (bruijn ##.p.381 0 0) ((bruijn ##.k.293 89 0) (##intrinsic ##vcore.s32vector-length)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k363) (bruijn ##.sym.16 89 1) '##vcore.u16vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 89-1, 0)), 1,
       _V40_V10vcore_Ds32vector__length);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k363, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k363, self)))),
       VGetArg(statics, 89-1, 1),
       _V10vcore_Du16vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k361(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k361(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k361, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k361, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9382,21 +9386,21 @@ static void _V10_Dlookup__intrinsic_D9_k361(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.380 0 0) ((bruijn ##.k.293 88 0) (##intrinsic ##vcore.s32vector-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k362) (bruijn ##.sym.16 88 1) '##vcore.s32vector-length))
+  // (if (bruijn ##.p.380 0 0) ((bruijn ##.k.293 88 0) (##intrinsic ##vcore.s32vector-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k362) (bruijn ##.sym.16 88 1) '##vcore.s32vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 88-1, 0)), 1,
       _V40_V10vcore_Ds32vector__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k362, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k362, self)))),
       VGetArg(statics, 88-1, 1),
       _V10vcore_Ds32vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k360(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k360(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k360, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k360, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9404,21 +9408,21 @@ static void _V10_Dlookup__intrinsic_D9_k360(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.379 0 0) ((bruijn ##.k.293 87 0) (##intrinsic ##vcore.s32vector-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k361) (bruijn ##.sym.16 87 1) '##vcore.s32vector-set!))
+  // (if (bruijn ##.p.379 0 0) ((bruijn ##.k.293 87 0) (##intrinsic ##vcore.s32vector-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k361) (bruijn ##.sym.16 87 1) '##vcore.s32vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 87-1, 0)), 1,
       _V40_V10vcore_Ds32vector__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k361, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k361, self)))),
       VGetArg(statics, 87-1, 1),
       _V10vcore_Ds32vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k359(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k359(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k359, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k359, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9426,21 +9430,21 @@ static void _V10_Dlookup__intrinsic_D9_k359(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.378 0 0) ((bruijn ##.k.293 86 0) (##intrinsic ##vcore.list->s32vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k360) (bruijn ##.sym.16 86 1) '##vcore.s32vector-ref))
+  // (if (bruijn ##.p.378 0 0) ((bruijn ##.k.293 86 0) (##intrinsic ##vcore.list->s32vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k360) (bruijn ##.sym.16 86 1) '##vcore.s32vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 86-1, 0)), 1,
       _V40_V10vcore_Dlist___Gs32vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k360, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k360, self)))),
       VGetArg(statics, 86-1, 1),
       _V10vcore_Ds32vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k358(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k358(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k358, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k358, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9448,21 +9452,21 @@ static void _V10_Dlookup__intrinsic_D9_k358(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.377 0 0) ((bruijn ##.k.293 85 0) (##intrinsic ##vcore.make-s32vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k359) (bruijn ##.sym.16 85 1) '##vcore.list->s32vector))
+  // (if (bruijn ##.p.377 0 0) ((bruijn ##.k.293 85 0) (##intrinsic ##vcore.make-s32vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k359) (bruijn ##.sym.16 85 1) '##vcore.list->s32vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 85-1, 0)), 1,
       _V40_V10vcore_Dmake__s32vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k359, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k359, self)))),
       VGetArg(statics, 85-1, 1),
       _V10vcore_Dlist___Gs32vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k357(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k357(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k357, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k357, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9470,21 +9474,21 @@ static void _V10_Dlookup__intrinsic_D9_k357(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.376 0 0) ((bruijn ##.k.293 84 0) (##intrinsic ##vcore.s32vector?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k358) (bruijn ##.sym.16 84 1) '##vcore.make-s32vector))
+  // (if (bruijn ##.p.376 0 0) ((bruijn ##.k.293 84 0) (##intrinsic ##vcore.s32vector?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k358) (bruijn ##.sym.16 84 1) '##vcore.make-s32vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 84-1, 0)), 1,
       _V40_V10vcore_Ds32vector_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k358, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k358, self)))),
       VGetArg(statics, 84-1, 1),
       _V10vcore_Dmake__s32vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k356(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k356(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k356, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k356, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9492,21 +9496,21 @@ static void _V10_Dlookup__intrinsic_D9_k356(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.375 0 0) ((bruijn ##.k.293 83 0) (##intrinsic ##vcore.f32vector-length)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k357) (bruijn ##.sym.16 83 1) '##vcore.s32vector?))
+  // (if (bruijn ##.p.375 0 0) ((bruijn ##.k.293 83 0) (##intrinsic ##vcore.f32vector-length)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k357) (bruijn ##.sym.16 83 1) '##vcore.s32vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 83-1, 0)), 1,
       _V40_V10vcore_Df32vector__length);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k357, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k357, self)))),
       VGetArg(statics, 83-1, 1),
       _V10vcore_Ds32vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k355(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k355(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k355, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k355, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9514,21 +9518,21 @@ static void _V10_Dlookup__intrinsic_D9_k355(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.374 0 0) ((bruijn ##.k.293 82 0) (##intrinsic ##vcore.f32vector-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k356) (bruijn ##.sym.16 82 1) '##vcore.f32vector-length))
+  // (if (bruijn ##.p.374 0 0) ((bruijn ##.k.293 82 0) (##intrinsic ##vcore.f32vector-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k356) (bruijn ##.sym.16 82 1) '##vcore.f32vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 82-1, 0)), 1,
       _V40_V10vcore_Df32vector__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k356, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k356, self)))),
       VGetArg(statics, 82-1, 1),
       _V10vcore_Df32vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k354(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k354(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k354, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k354, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9536,21 +9540,21 @@ static void _V10_Dlookup__intrinsic_D9_k354(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.373 0 0) ((bruijn ##.k.293 81 0) (##intrinsic ##vcore.f32vector-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k355) (bruijn ##.sym.16 81 1) '##vcore.f32vector-set!))
+  // (if (bruijn ##.p.373 0 0) ((bruijn ##.k.293 81 0) (##intrinsic ##vcore.f32vector-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k355) (bruijn ##.sym.16 81 1) '##vcore.f32vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 81-1, 0)), 1,
       _V40_V10vcore_Df32vector__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k355, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k355, self)))),
       VGetArg(statics, 81-1, 1),
       _V10vcore_Df32vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k353(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k353(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k353, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k353, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9558,21 +9562,21 @@ static void _V10_Dlookup__intrinsic_D9_k353(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.372 0 0) ((bruijn ##.k.293 80 0) (##intrinsic ##vcore.list->f32vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k354) (bruijn ##.sym.16 80 1) '##vcore.f32vector-ref))
+  // (if (bruijn ##.p.372 0 0) ((bruijn ##.k.293 80 0) (##intrinsic ##vcore.list->f32vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k354) (bruijn ##.sym.16 80 1) '##vcore.f32vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 80-1, 0)), 1,
       _V40_V10vcore_Dlist___Gf32vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k354, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k354, self)))),
       VGetArg(statics, 80-1, 1),
       _V10vcore_Df32vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k352(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k352(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k352, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k352, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9580,21 +9584,21 @@ static void _V10_Dlookup__intrinsic_D9_k352(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.371 0 0) ((bruijn ##.k.293 79 0) (##intrinsic ##vcore.make-f32vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k353) (bruijn ##.sym.16 79 1) '##vcore.list->f32vector))
+  // (if (bruijn ##.p.371 0 0) ((bruijn ##.k.293 79 0) (##intrinsic ##vcore.make-f32vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k353) (bruijn ##.sym.16 79 1) '##vcore.list->f32vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 79-1, 0)), 1,
       _V40_V10vcore_Dmake__f32vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k353, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k353, self)))),
       VGetArg(statics, 79-1, 1),
       _V10vcore_Dlist___Gf32vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k351(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k351(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k351, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k351, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9602,21 +9606,21 @@ static void _V10_Dlookup__intrinsic_D9_k351(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.370 0 0) ((bruijn ##.k.293 78 0) (##intrinsic ##vcore.f32vector?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k352) (bruijn ##.sym.16 78 1) '##vcore.make-f32vector))
+  // (if (bruijn ##.p.370 0 0) ((bruijn ##.k.293 78 0) (##intrinsic ##vcore.f32vector?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k352) (bruijn ##.sym.16 78 1) '##vcore.make-f32vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 78-1, 0)), 1,
       _V40_V10vcore_Df32vector_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k352, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k352, self)))),
       VGetArg(statics, 78-1, 1),
       _V10vcore_Dmake__f32vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k350(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k350(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k350, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k350, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9624,21 +9628,21 @@ static void _V10_Dlookup__intrinsic_D9_k350(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.369 0 0) ((bruijn ##.k.293 77 0) (##intrinsic ##vcore.f64vector-length)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k351) (bruijn ##.sym.16 77 1) '##vcore.f32vector?))
+  // (if (bruijn ##.p.369 0 0) ((bruijn ##.k.293 77 0) (##intrinsic ##vcore.f64vector-length)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k351) (bruijn ##.sym.16 77 1) '##vcore.f32vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 77-1, 0)), 1,
       _V40_V10vcore_Df64vector__length);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k351, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k351, self)))),
       VGetArg(statics, 77-1, 1),
       _V10vcore_Df32vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k349(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k349(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k349, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k349, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9646,21 +9650,21 @@ static void _V10_Dlookup__intrinsic_D9_k349(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.368 0 0) ((bruijn ##.k.293 76 0) (##intrinsic ##vcore.f64vector-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k350) (bruijn ##.sym.16 76 1) '##vcore.f64vector-length))
+  // (if (bruijn ##.p.368 0 0) ((bruijn ##.k.293 76 0) (##intrinsic ##vcore.f64vector-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k350) (bruijn ##.sym.16 76 1) '##vcore.f64vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 76-1, 0)), 1,
       _V40_V10vcore_Df64vector__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k350, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k350, self)))),
       VGetArg(statics, 76-1, 1),
       _V10vcore_Df64vector__length);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k348(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k348(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k348, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k348, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9668,21 +9672,21 @@ static void _V10_Dlookup__intrinsic_D9_k348(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.367 0 0) ((bruijn ##.k.293 75 0) (##intrinsic ##vcore.f64vector-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k349) (bruijn ##.sym.16 75 1) '##vcore.f64vector-set!))
+  // (if (bruijn ##.p.367 0 0) ((bruijn ##.k.293 75 0) (##intrinsic ##vcore.f64vector-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k349) (bruijn ##.sym.16 75 1) '##vcore.f64vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 75-1, 0)), 1,
       _V40_V10vcore_Df64vector__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k349, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k349, self)))),
       VGetArg(statics, 75-1, 1),
       _V10vcore_Df64vector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k347(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k347(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k347, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k347, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9690,21 +9694,21 @@ static void _V10_Dlookup__intrinsic_D9_k347(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.366 0 0) ((bruijn ##.k.293 74 0) (##intrinsic ##vcore.list->f64vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k348) (bruijn ##.sym.16 74 1) '##vcore.f64vector-ref))
+  // (if (bruijn ##.p.366 0 0) ((bruijn ##.k.293 74 0) (##intrinsic ##vcore.list->f64vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k348) (bruijn ##.sym.16 74 1) '##vcore.f64vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 74-1, 0)), 1,
       _V40_V10vcore_Dlist___Gf64vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k348, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k348, self)))),
       VGetArg(statics, 74-1, 1),
       _V10vcore_Df64vector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k346(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k346(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k346, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k346, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9712,21 +9716,21 @@ static void _V10_Dlookup__intrinsic_D9_k346(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.365 0 0) ((bruijn ##.k.293 73 0) (##intrinsic ##vcore.make-f64vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k347) (bruijn ##.sym.16 73 1) '##vcore.list->f64vector))
+  // (if (bruijn ##.p.365 0 0) ((bruijn ##.k.293 73 0) (##intrinsic ##vcore.make-f64vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k347) (bruijn ##.sym.16 73 1) '##vcore.list->f64vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 73-1, 0)), 1,
       _V40_V10vcore_Dmake__f64vector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k347, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k347, self)))),
       VGetArg(statics, 73-1, 1),
       _V10vcore_Dlist___Gf64vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k345(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k345(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k345, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k345, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9734,21 +9738,21 @@ static void _V10_Dlookup__intrinsic_D9_k345(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.364 0 0) ((bruijn ##.k.293 72 0) (##intrinsic ##vcore.f64vector?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k346) (bruijn ##.sym.16 72 1) '##vcore.make-f64vector))
+  // (if (bruijn ##.p.364 0 0) ((bruijn ##.k.293 72 0) (##intrinsic ##vcore.f64vector?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k346) (bruijn ##.sym.16 72 1) '##vcore.make-f64vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 72-1, 0)), 1,
       _V40_V10vcore_Df64vector_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k346, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k346, self)))),
       VGetArg(statics, 72-1, 1),
       _V10vcore_Dmake__f64vector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k344(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k344(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k344, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k344, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9756,21 +9760,21 @@ static void _V10_Dlookup__intrinsic_D9_k344(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.363 0 0) ((bruijn ##.k.293 71 0) (##intrinsic ##vcore.vector-length)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k345) (bruijn ##.sym.16 71 1) '##vcore.f64vector?))
+  // (if (bruijn ##.p.363 0 0) ((bruijn ##.k.293 71 0) (##intrinsic ##vcore.vector-length)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k345) (bruijn ##.sym.16 71 1) '##vcore.f64vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 71-1, 0)), 1,
       _V40_V10vcore_Dvector__length);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k345, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k345, self)))),
       VGetArg(statics, 71-1, 1),
       _V10vcore_Df64vector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k343(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k343(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k343, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k343, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9778,21 +9782,21 @@ static void _V10_Dlookup__intrinsic_D9_k343(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.362 0 0) ((bruijn ##.k.293 70 0) (##intrinsic ##vcore.vector-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k344) (bruijn ##.sym.16 70 1) '##vcore.vector-length))
+  // (if (bruijn ##.p.362 0 0) ((bruijn ##.k.293 70 0) (##intrinsic ##vcore.vector-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k344) (bruijn ##.sym.16 70 1) '##vcore.vector-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 70-1, 0)), 1,
       _V40_V10vcore_Dvector__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k344, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k344, self)))),
       VGetArg(statics, 70-1, 1),
       _V10vcore_Dvector__length);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k342(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k342(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k342, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k342, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9800,21 +9804,21 @@ static void _V10_Dlookup__intrinsic_D9_k342(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.361 0 0) ((bruijn ##.k.293 69 0) (##intrinsic ##vcore.vector-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k343) (bruijn ##.sym.16 69 1) '##vcore.vector-set!))
+  // (if (bruijn ##.p.361 0 0) ((bruijn ##.k.293 69 0) (##intrinsic ##vcore.vector-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k343) (bruijn ##.sym.16 69 1) '##vcore.vector-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 69-1, 0)), 1,
       _V40_V10vcore_Dvector__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k343, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k343, self)))),
       VGetArg(statics, 69-1, 1),
       _V10vcore_Dvector__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k341(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k341(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k341, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k341, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9822,21 +9826,21 @@ static void _V10_Dlookup__intrinsic_D9_k341(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.360 0 0) ((bruijn ##.k.293 68 0) (##intrinsic ##vcore.list->vector)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k342) (bruijn ##.sym.16 68 1) '##vcore.vector-ref))
+  // (if (bruijn ##.p.360 0 0) ((bruijn ##.k.293 68 0) (##intrinsic ##vcore.list->vector)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k342) (bruijn ##.sym.16 68 1) '##vcore.vector-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 68-1, 0)), 1,
       _V40_V10vcore_Dlist___Gvector);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k342, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k342, self)))),
       VGetArg(statics, 68-1, 1),
       _V10vcore_Dvector__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k340(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k340(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k340, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k340, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9844,21 +9848,21 @@ static void _V10_Dlookup__intrinsic_D9_k340(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.359 0 0) ((bruijn ##.k.293 67 0) (##intrinsic ##vcore.set-cdr!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k341) (bruijn ##.sym.16 67 1) '##vcore.list->vector))
+  // (if (bruijn ##.p.359 0 0) ((bruijn ##.k.293 67 0) (##intrinsic ##vcore.set-cdr!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k341) (bruijn ##.sym.16 67 1) '##vcore.list->vector))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 67-1, 0)), 1,
       _V40_V10vcore_Dset__cdr_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k341, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k341, self)))),
       VGetArg(statics, 67-1, 1),
       _V10vcore_Dlist___Gvector);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k339(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k339(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k339, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k339, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9866,21 +9870,21 @@ static void _V10_Dlookup__intrinsic_D9_k339(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.358 0 0) ((bruijn ##.k.293 66 0) (##intrinsic ##vcore.set-car!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k340) (bruijn ##.sym.16 66 1) '##vcore.set-cdr!))
+  // (if (bruijn ##.p.358 0 0) ((bruijn ##.k.293 66 0) (##intrinsic ##vcore.set-car!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k340) (bruijn ##.sym.16 66 1) '##vcore.set-cdr!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 66-1, 0)), 1,
       _V40_V10vcore_Dset__car_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k340, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k340, self)))),
       VGetArg(statics, 66-1, 1),
       _V10vcore_Dset__cdr_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k338(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k338(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k338, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k338, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9888,21 +9892,21 @@ static void _V10_Dlookup__intrinsic_D9_k338(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.357 0 0) ((bruijn ##.k.293 65 0) (##intrinsic ##vcore.cdr)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k339) (bruijn ##.sym.16 65 1) '##vcore.set-car!))
+  // (if (bruijn ##.p.357 0 0) ((bruijn ##.k.293 65 0) (##intrinsic ##vcore.cdr)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k339) (bruijn ##.sym.16 65 1) '##vcore.set-car!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 65-1, 0)), 1,
       _V40_V10vcore_Dcdr);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k339, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k339, self)))),
       VGetArg(statics, 65-1, 1),
       _V10vcore_Dset__car_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k337(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k337(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k337, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k337, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9910,21 +9914,21 @@ static void _V10_Dlookup__intrinsic_D9_k337(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.356 0 0) ((bruijn ##.k.293 64 0) (##intrinsic ##vcore.car)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k338) (bruijn ##.sym.16 64 1) '##vcore.cdr))
+  // (if (bruijn ##.p.356 0 0) ((bruijn ##.k.293 64 0) (##intrinsic ##vcore.car)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k338) (bruijn ##.sym.16 64 1) '##vcore.cdr))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 64-1, 0)), 1,
       _V40_V10vcore_Dcar);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k338, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k338, self)))),
       VGetArg(statics, 64-1, 1),
       _V10vcore_Dcdr);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k336(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k336(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k336, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k336, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9932,21 +9936,21 @@ static void _V10_Dlookup__intrinsic_D9_k336(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.355 0 0) ((bruijn ##.k.293 63 0) (##intrinsic ##vcore.cons)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k337) (bruijn ##.sym.16 63 1) '##vcore.car))
+  // (if (bruijn ##.p.355 0 0) ((bruijn ##.k.293 63 0) (##intrinsic ##vcore.cons)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k337) (bruijn ##.sym.16 63 1) '##vcore.car))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 63-1, 0)), 1,
       _V40_V10vcore_Dcons);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k337, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k337, self)))),
       VGetArg(statics, 63-1, 1),
       _V10vcore_Dcar);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k334(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k334(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k334, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k334, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9954,13 +9958,13 @@ static void _V10_Dlookup__intrinsic_D9_k334(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V10_Dlookup__intrinsic_D9_k335) (close _V10_Dlookup__intrinsic_D9_k336))
-    VCallDecodedWithGC(runtime, (VClosure[]){ { .func = (VFunc)_V10_Dlookup__intrinsic_D9_k335, .env = self }, }, 1,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k336, self)})));
+  // ((close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k335) (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k336))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k335, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k336, self)))));
 }
-static void _V10_Dlookup__intrinsic_D9_k333(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k333(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k333, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k333, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9968,21 +9972,21 @@ static void _V10_Dlookup__intrinsic_D9_k333(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.354 0 0) ((bruijn ##.k.293 61 0) (##intrinsic ##vcore.unload-library)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k334) (bruijn ##.sym.16 61 1) '##vcore.cons))
+  // (if (bruijn ##.p.354 0 0) ((bruijn ##.k.293 61 0) (##intrinsic ##vcore.unload-library)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k334) (bruijn ##.sym.16 61 1) '##vcore.cons))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 61-1, 0)), 1,
       _V40_V10vcore_Dunload__library);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k334, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k334, self)))),
       VGetArg(statics, 61-1, 1),
       _V10vcore_Dcons);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k332(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k332(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k332, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k332, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -9990,21 +9994,21 @@ static void _V10_Dlookup__intrinsic_D9_k332(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.353 0 0) ((bruijn ##.k.293 60 0) (##intrinsic ##vcore.load-library)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k333) (bruijn ##.sym.16 60 1) '##vcore.unload-library))
+  // (if (bruijn ##.p.353 0 0) ((bruijn ##.k.293 60 0) (##intrinsic ##vcore.load-library)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k333) (bruijn ##.sym.16 60 1) '##vcore.unload-library))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 60-1, 0)), 1,
       _V40_V10vcore_Dload__library);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k333, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k333, self)))),
       VGetArg(statics, 60-1, 1),
       _V10vcore_Dunload__library);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k331(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k331(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k331, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k331, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10012,21 +10016,21 @@ static void _V10_Dlookup__intrinsic_D9_k331(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.352 0 0) ((bruijn ##.k.293 59 0) (##intrinsic ##vcore.make-import)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k332) (bruijn ##.sym.16 59 1) '##vcore.load-library))
+  // (if (bruijn ##.p.352 0 0) ((bruijn ##.k.293 59 0) (##intrinsic ##vcore.make-import)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k332) (bruijn ##.sym.16 59 1) '##vcore.load-library))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 59-1, 0)), 1,
       _V40_V10vcore_Dmake__import);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k332, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k332, self)))),
       VGetArg(statics, 59-1, 1),
       _V10vcore_Dload__library);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k330(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k330(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k330, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k330, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10034,21 +10038,21 @@ static void _V10_Dlookup__intrinsic_D9_k330(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.351 0 0) ((bruijn ##.k.293 58 0) (##intrinsic ##vcore.lookup-library)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k331) (bruijn ##.sym.16 58 1) '##vcore.make-import))
+  // (if (bruijn ##.p.351 0 0) ((bruijn ##.k.293 58 0) (##intrinsic ##vcore.lookup-library)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k331) (bruijn ##.sym.16 58 1) '##vcore.make-import))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 58-1, 0)), 1,
       _V40_V10vcore_Dlookup__library);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k331, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k331, self)))),
       VGetArg(statics, 58-1, 1),
       _V10vcore_Dmake__import);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k329(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k329(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k329, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k329, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10056,21 +10060,21 @@ static void _V10_Dlookup__intrinsic_D9_k329(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.350 0 0) ((bruijn ##.k.293 57 0) (##intrinsic ##vcore.multidefine)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k330) (bruijn ##.sym.16 57 1) '##vcore.lookup-library))
+  // (if (bruijn ##.p.350 0 0) ((bruijn ##.k.293 57 0) (##intrinsic ##vcore.multidefine)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k330) (bruijn ##.sym.16 57 1) '##vcore.lookup-library))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 57-1, 0)), 1,
       _V40_V10vcore_Dmultidefine);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k330, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k330, self)))),
       VGetArg(statics, 57-1, 1),
       _V10vcore_Dlookup__library);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k328(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k328(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k328, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k328, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10078,21 +10082,21 @@ static void _V10_Dlookup__intrinsic_D9_k328(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.349 0 0) ((bruijn ##.k.293 56 0) (##intrinsic ##vcore.define)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k329) (bruijn ##.sym.16 56 1) '##vcore.multidefine))
+  // (if (bruijn ##.p.349 0 0) ((bruijn ##.k.293 56 0) (##intrinsic ##vcore.define)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k329) (bruijn ##.sym.16 56 1) '##vcore.multidefine))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 56-1, 0)), 1,
       _V40_V10vcore_Ddefine);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k329, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k329, self)))),
       VGetArg(statics, 56-1, 1),
       _V10vcore_Dmultidefine);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k327(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k327(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k327, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k327, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10100,21 +10104,21 @@ static void _V10_Dlookup__intrinsic_D9_k327(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.348 0 0) ((bruijn ##.k.293 55 0) (##intrinsic ##vcore.function)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k328) (bruijn ##.sym.16 55 1) '##vcore.define))
+  // (if (bruijn ##.p.348 0 0) ((bruijn ##.k.293 55 0) (##intrinsic ##vcore.function)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k328) (bruijn ##.sym.16 55 1) '##vcore.define))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 55-1, 0)), 1,
       _V40_V10vcore_Dfunction);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k328, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k328, self)))),
       VGetArg(statics, 55-1, 1),
       _V10vcore_Ddefine);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k326(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k326(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k326, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k326, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10122,21 +10126,21 @@ static void _V10_Dlookup__intrinsic_D9_k326(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.347 0 0) ((bruijn ##.k.293 54 0) (##intrinsic ##vcore.record-length)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k327) (bruijn ##.sym.16 54 1) '##vcore.function))
+  // (if (bruijn ##.p.347 0 0) ((bruijn ##.k.293 54 0) (##intrinsic ##vcore.record-length)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k327) (bruijn ##.sym.16 54 1) '##vcore.function))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 54-1, 0)), 1,
       _V40_V10vcore_Drecord__length);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k327, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k327, self)))),
       VGetArg(statics, 54-1, 1),
       _V10vcore_Dfunction);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k325(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k325(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k325, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k325, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10144,21 +10148,21 @@ static void _V10_Dlookup__intrinsic_D9_k325(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.346 0 0) ((bruijn ##.k.293 53 0) (##intrinsic ##vcore.record-set!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k326) (bruijn ##.sym.16 53 1) '##vcore.record-length))
+  // (if (bruijn ##.p.346 0 0) ((bruijn ##.k.293 53 0) (##intrinsic ##vcore.record-set!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k326) (bruijn ##.sym.16 53 1) '##vcore.record-length))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 53-1, 0)), 1,
       _V40_V10vcore_Drecord__set_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k326, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k326, self)))),
       VGetArg(statics, 53-1, 1),
       _V10vcore_Drecord__length);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k324(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k324(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k324, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k324, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10166,21 +10170,21 @@ static void _V10_Dlookup__intrinsic_D9_k324(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.345 0 0) ((bruijn ##.k.293 52 0) (##intrinsic ##vcore.record-ref)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k325) (bruijn ##.sym.16 52 1) '##vcore.record-set!))
+  // (if (bruijn ##.p.345 0 0) ((bruijn ##.k.293 52 0) (##intrinsic ##vcore.record-ref)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k325) (bruijn ##.sym.16 52 1) '##vcore.record-set!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 52-1, 0)), 1,
       _V40_V10vcore_Drecord__ref);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k325, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k325, self)))),
       VGetArg(statics, 52-1, 1),
       _V10vcore_Drecord__set_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k323(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k323(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k323, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k323, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10188,21 +10192,21 @@ static void _V10_Dlookup__intrinsic_D9_k323(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.344 0 0) ((bruijn ##.k.293 51 0) (##intrinsic ##vcore.record)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k324) (bruijn ##.sym.16 51 1) '##vcore.record-ref))
+  // (if (bruijn ##.p.344 0 0) ((bruijn ##.k.293 51 0) (##intrinsic ##vcore.record)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k324) (bruijn ##.sym.16 51 1) '##vcore.record-ref))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 51-1, 0)), 1,
       _V40_V10vcore_Drecord);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k324, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k324, self)))),
       VGetArg(statics, 51-1, 1),
       _V10vcore_Drecord__ref);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k322(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k322(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k322, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k322, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10210,21 +10214,21 @@ static void _V10_Dlookup__intrinsic_D9_k322(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.343 0 0) ((bruijn ##.k.293 50 0) (##intrinsic ##vcore.set-global!)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k323) (bruijn ##.sym.16 50 1) '##vcore.record))
+  // (if (bruijn ##.p.343 0 0) ((bruijn ##.k.293 50 0) (##intrinsic ##vcore.set-global!)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k323) (bruijn ##.sym.16 50 1) '##vcore.record))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 50-1, 0)), 1,
       _V40_V10vcore_Dset__global_B);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k323, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k323, self)))),
       VGetArg(statics, 50-1, 1),
       _V10vcore_Drecord);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k321(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k321(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k321, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k321, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10232,21 +10236,21 @@ static void _V10_Dlookup__intrinsic_D9_k321(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.342 0 0) ((bruijn ##.k.293 49 0) (##intrinsic ##vcore.define-global)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k322) (bruijn ##.sym.16 49 1) '##vcore.set-global!))
+  // (if (bruijn ##.p.342 0 0) ((bruijn ##.k.293 49 0) (##intrinsic ##vcore.define-global)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k322) (bruijn ##.sym.16 49 1) '##vcore.set-global!))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 49-1, 0)), 1,
       _V40_V10vcore_Ddefine__global);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k322, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k322, self)))),
       VGetArg(statics, 49-1, 1),
       _V10vcore_Dset__global_B);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k320(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k320(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k320, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k320, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10254,21 +10258,21 @@ static void _V10_Dlookup__intrinsic_D9_k320(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.341 0 0) ((bruijn ##.k.293 48 0) (##intrinsic ##vcore.exit)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k321) (bruijn ##.sym.16 48 1) '##vcore.define-global))
+  // (if (bruijn ##.p.341 0 0) ((bruijn ##.k.293 48 0) (##intrinsic ##vcore.exit)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k321) (bruijn ##.sym.16 48 1) '##vcore.define-global))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 48-1, 0)), 1,
       _V40_V10vcore_Dexit);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k321, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k321, self)))),
       VGetArg(statics, 48-1, 1),
       _V10vcore_Ddefine__global);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k319(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k319(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k319, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k319, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10276,21 +10280,21 @@ static void _V10_Dlookup__intrinsic_D9_k319(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.340 0 0) ((bruijn ##.k.293 47 0) (##intrinsic ##vcore.abort)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k320) (bruijn ##.sym.16 47 1) '##vcore.exit))
+  // (if (bruijn ##.p.340 0 0) ((bruijn ##.k.293 47 0) (##intrinsic ##vcore.abort)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k320) (bruijn ##.sym.16 47 1) '##vcore.exit))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 47-1, 0)), 1,
       _V40_V10vcore_Dabort);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k320, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k320, self)))),
       VGetArg(statics, 47-1, 1),
       _V10vcore_Dexit);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k318(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k318(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k318, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k318, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10298,21 +10302,21 @@ static void _V10_Dlookup__intrinsic_D9_k318(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.339 0 0) ((bruijn ##.k.293 46 0) (##intrinsic ##vcore.apply-cps)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k319) (bruijn ##.sym.16 46 1) '##vcore.abort))
+  // (if (bruijn ##.p.339 0 0) ((bruijn ##.k.293 46 0) (##intrinsic ##vcore.apply-cps)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k319) (bruijn ##.sym.16 46 1) '##vcore.abort))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 46-1, 0)), 1,
       _V40_V10vcore_Dapply__cps);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k319, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k319, self)))),
       VGetArg(statics, 46-1, 1),
       _V10vcore_Dabort);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k317(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k317(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k317, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k317, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10320,21 +10324,21 @@ static void _V10_Dlookup__intrinsic_D9_k317(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.338 0 0) ((bruijn ##.k.293 45 0) (##intrinsic ##vcore.apply)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k318) (bruijn ##.sym.16 45 1) '##vcore.apply-cps))
+  // (if (bruijn ##.p.338 0 0) ((bruijn ##.k.293 45 0) (##intrinsic ##vcore.apply)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k318) (bruijn ##.sym.16 45 1) '##vcore.apply-cps))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 45-1, 0)), 1,
       _V40_V10vcore_Dapply);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k318, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k318, self)))),
       VGetArg(statics, 45-1, 1),
       _V10vcore_Dapply__cps);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k316(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k316(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k316, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k316, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10342,21 +10346,21 @@ static void _V10_Dlookup__intrinsic_D9_k316(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.337 0 0) ((bruijn ##.k.293 44 0) (##intrinsic ##vcore.call-with-values)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k317) (bruijn ##.sym.16 44 1) '##vcore.apply))
+  // (if (bruijn ##.p.337 0 0) ((bruijn ##.k.293 44 0) (##intrinsic ##vcore.call-with-values)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k317) (bruijn ##.sym.16 44 1) '##vcore.apply))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 44-1, 0)), 1,
       _V40_V10vcore_Dcall__with__values);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k317, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k317, self)))),
       VGetArg(statics, 44-1, 1),
       _V10vcore_Dapply);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k315(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k315(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k315, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k315, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10364,21 +10368,21 @@ static void _V10_Dlookup__intrinsic_D9_k315(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.336 0 0) ((bruijn ##.k.293 43 0) (##intrinsic ##vcore.call/cc)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k316) (bruijn ##.sym.16 43 1) '##vcore.call-with-values))
+  // (if (bruijn ##.p.336 0 0) ((bruijn ##.k.293 43 0) (##intrinsic ##vcore.call/cc)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k316) (bruijn ##.sym.16 43 1) '##vcore.call-with-values))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 43-1, 0)), 1,
       _V40_V10vcore_Dcall_Wcc);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k316, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k316, self)))),
       VGetArg(statics, 43-1, 1),
       _V10vcore_Dcall__with__values);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k314(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k314(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k314, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k314, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10386,21 +10390,21 @@ static void _V10_Dlookup__intrinsic_D9_k314(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.335 0 0) ((bruijn ##.k.293 42 0) (##intrinsic ##vcore.next)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k315) (bruijn ##.sym.16 42 1) '##vcore.call/cc))
+  // (if (bruijn ##.p.335 0 0) ((bruijn ##.k.293 42 0) (##intrinsic ##vcore.next)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k315) (bruijn ##.sym.16 42 1) '##vcore.call/cc))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 1,
       _V40_V10vcore_Dnext);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k315, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k315, self)))),
       VGetArg(statics, 42-1, 1),
       _V10vcore_Dcall_Wcc);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k313(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k313(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k313, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k313, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10408,21 +10412,21 @@ static void _V10_Dlookup__intrinsic_D9_k313(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.334 0 0) ((bruijn ##.k.293 41 0) (##intrinsic ##vcore.raise)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k314) (bruijn ##.sym.16 41 1) '##vcore.next))
+  // (if (bruijn ##.p.334 0 0) ((bruijn ##.k.293 41 0) (##intrinsic ##vcore.raise)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k314) (bruijn ##.sym.16 41 1) '##vcore.next))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 1,
       _V40_V10vcore_Draise);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k314, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k314, self)))),
       VGetArg(statics, 41-1, 1),
       _V10vcore_Dnext);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k312(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k312(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k312, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k312, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10430,21 +10434,21 @@ static void _V10_Dlookup__intrinsic_D9_k312(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.333 0 0) ((bruijn ##.k.293 40 0) (##intrinsic ##vcore.pop-exception-handler)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k313) (bruijn ##.sym.16 40 1) '##vcore.raise))
+  // (if (bruijn ##.p.333 0 0) ((bruijn ##.k.293 40 0) (##intrinsic ##vcore.pop-exception-handler)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k313) (bruijn ##.sym.16 40 1) '##vcore.raise))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 1,
       _V40_V10vcore_Dpop__exception__handler);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k313, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k313, self)))),
       VGetArg(statics, 40-1, 1),
       _V10vcore_Draise);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k311(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k311(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k311, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k311, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10452,21 +10456,21 @@ static void _V10_Dlookup__intrinsic_D9_k311(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.332 0 0) ((bruijn ##.k.293 39 0) (##intrinsic ##vcore.push-exception-handler)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k312) (bruijn ##.sym.16 39 1) '##vcore.pop-exception-handler))
+  // (if (bruijn ##.p.332 0 0) ((bruijn ##.k.293 39 0) (##intrinsic ##vcore.push-exception-handler)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k312) (bruijn ##.sym.16 39 1) '##vcore.pop-exception-handler))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 1,
       _V40_V10vcore_Dpush__exception__handler);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k312, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k312, self)))),
       VGetArg(statics, 39-1, 1),
       _V10vcore_Dpop__exception__handler);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k310(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k310(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k310, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k310, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10474,21 +10478,21 @@ static void _V10_Dlookup__intrinsic_D9_k310(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.331 0 0) ((bruijn ##.k.293 38 0) (##intrinsic ##vcore.get-exception-handler)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k311) (bruijn ##.sym.16 38 1) '##vcore.push-exception-handler))
+  // (if (bruijn ##.p.331 0 0) ((bruijn ##.k.293 38 0) (##intrinsic ##vcore.get-exception-handler)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k311) (bruijn ##.sym.16 38 1) '##vcore.push-exception-handler))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 1,
       _V40_V10vcore_Dget__exception__handler);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k311, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k311, self)))),
       VGetArg(statics, 38-1, 1),
       _V10vcore_Dpush__exception__handler);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k309(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k309(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k309, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k309, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10496,21 +10500,21 @@ static void _V10_Dlookup__intrinsic_D9_k309(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.330 0 0) ((bruijn ##.k.293 37 0) (##intrinsic ##vcore.pop-dynamic)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k310) (bruijn ##.sym.16 37 1) '##vcore.get-exception-handler))
+  // (if (bruijn ##.p.330 0 0) ((bruijn ##.k.293 37 0) (##intrinsic ##vcore.pop-dynamic)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k310) (bruijn ##.sym.16 37 1) '##vcore.get-exception-handler))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 37-1, 0)), 1,
       _V40_V10vcore_Dpop__dynamic);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k310, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k310, self)))),
       VGetArg(statics, 37-1, 1),
       _V10vcore_Dget__exception__handler);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k308(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k308(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k308, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k308, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10518,21 +10522,21 @@ static void _V10_Dlookup__intrinsic_D9_k308(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.329 0 0) ((bruijn ##.k.293 36 0) (##intrinsic ##vcore.push-dynamic)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k309) (bruijn ##.sym.16 36 1) '##vcore.pop-dynamic))
+  // (if (bruijn ##.p.329 0 0) ((bruijn ##.k.293 36 0) (##intrinsic ##vcore.push-dynamic)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k309) (bruijn ##.sym.16 36 1) '##vcore.pop-dynamic))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 36-1, 0)), 1,
       _V40_V10vcore_Dpush__dynamic);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k309, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k309, self)))),
       VGetArg(statics, 36-1, 1),
       _V10vcore_Dpop__dynamic);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k307(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k307(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k307, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k307, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10540,21 +10544,21 @@ static void _V10_Dlookup__intrinsic_D9_k307(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.328 0 0) ((bruijn ##.k.293 35 0) (##intrinsic ##vcore.get-dynamics)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k308) (bruijn ##.sym.16 35 1) '##vcore.push-dynamic))
+  // (if (bruijn ##.p.328 0 0) ((bruijn ##.k.293 35 0) (##intrinsic ##vcore.get-dynamics)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k308) (bruijn ##.sym.16 35 1) '##vcore.push-dynamic))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 1,
       _V40_V10vcore_Dget__dynamics);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k308, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k308, self)))),
       VGetArg(statics, 35-1, 1),
       _V10vcore_Dpush__dynamic);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k306(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k306(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k306, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k306, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10562,21 +10566,21 @@ static void _V10_Dlookup__intrinsic_D9_k306(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.327 0 0) ((bruijn ##.k.293 34 0) (##intrinsic ##vcore.not)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k307) (bruijn ##.sym.16 34 1) '##vcore.get-dynamics))
+  // (if (bruijn ##.p.327 0 0) ((bruijn ##.k.293 34 0) (##intrinsic ##vcore.not)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k307) (bruijn ##.sym.16 34 1) '##vcore.get-dynamics))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 1,
       _V40_V10vcore_Dnot);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k307, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k307, self)))),
       VGetArg(statics, 34-1, 1),
       _V10vcore_Dget__dynamics);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k305(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k305(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k305, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k305, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10584,21 +10588,21 @@ static void _V10_Dlookup__intrinsic_D9_k305(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.326 0 0) ((bruijn ##.k.293 33 0) (##intrinsic ##vcore.eqv?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k306) (bruijn ##.sym.16 33 1) '##vcore.not))
+  // (if (bruijn ##.p.326 0 0) ((bruijn ##.k.293 33 0) (##intrinsic ##vcore.eqv?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k306) (bruijn ##.sym.16 33 1) '##vcore.not))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 1,
       _V40_V10vcore_Deqv_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k306, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k306, self)))),
       VGetArg(statics, 33-1, 1),
       _V10vcore_Dnot);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k304(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k304(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k304, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k304, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10606,21 +10610,21 @@ static void _V10_Dlookup__intrinsic_D9_k304(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.325 0 0) ((bruijn ##.k.293 32 0) (##intrinsic ##vcore.blob=?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k305) (bruijn ##.sym.16 32 1) '##vcore.eqv?))
+  // (if (bruijn ##.p.325 0 0) ((bruijn ##.k.293 32 0) (##intrinsic ##vcore.blob=?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k305) (bruijn ##.sym.16 32 1) '##vcore.eqv?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 1,
       _V40_V10vcore_Dblob_E_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k305, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k305, self)))),
       VGetArg(statics, 32-1, 1),
       _V10vcore_Deqv_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k303(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k303(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k303, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k303, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10628,21 +10632,21 @@ static void _V10_Dlookup__intrinsic_D9_k303(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.324 0 0) ((bruijn ##.k.293 31 0) (##intrinsic ##vcore.symbol=?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k304) (bruijn ##.sym.16 31 1) '##vcore.blob=?))
+  // (if (bruijn ##.p.324 0 0) ((bruijn ##.k.293 31 0) (##intrinsic ##vcore.symbol=?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k304) (bruijn ##.sym.16 31 1) '##vcore.blob=?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 1,
       _V40_V10vcore_Dsymbol_E_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k304, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k304, self)))),
       VGetArg(statics, 31-1, 1),
       _V10vcore_Dblob_E_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k302(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k302(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k302, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k302, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10650,21 +10654,21 @@ static void _V10_Dlookup__intrinsic_D9_k302(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.323 0 0) ((bruijn ##.k.293 30 0) (##intrinsic ##vcore.eq?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k303) (bruijn ##.sym.16 30 1) '##vcore.symbol=?))
+  // (if (bruijn ##.p.323 0 0) ((bruijn ##.k.293 30 0) (##intrinsic ##vcore.eq?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k303) (bruijn ##.sym.16 30 1) '##vcore.symbol=?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 1,
       _V40_V10vcore_Deq_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k303, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k303, self)))),
       VGetArg(statics, 30-1, 1),
       _V10vcore_Dsymbol_E_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k301(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k301(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k301, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k301, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10672,21 +10676,21 @@ static void _V10_Dlookup__intrinsic_D9_k301(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.322 0 0) ((bruijn ##.k.293 29 0) (##intrinsic ##vcore.foreign-pointer?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k302) (bruijn ##.sym.16 29 1) '##vcore.eq?))
+  // (if (bruijn ##.p.322 0 0) ((bruijn ##.k.293 29 0) (##intrinsic ##vcore.foreign-pointer?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k302) (bruijn ##.sym.16 29 1) '##vcore.eq?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 1,
       _V40_V10vcore_Dforeign__pointer_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k302, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k302, self)))),
       VGetArg(statics, 29-1, 1),
       _V10vcore_Deq_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k300(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k300(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k300, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k300, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10694,21 +10698,21 @@ static void _V10_Dlookup__intrinsic_D9_k300(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.321 0 0) ((bruijn ##.k.293 28 0) (##intrinsic ##vcore.nullptr?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k301) (bruijn ##.sym.16 28 1) '##vcore.foreign-pointer?))
+  // (if (bruijn ##.p.321 0 0) ((bruijn ##.k.293 28 0) (##intrinsic ##vcore.nullptr?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k301) (bruijn ##.sym.16 28 1) '##vcore.foreign-pointer?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 1,
       _V40_V10vcore_Dnullptr_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k301, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k301, self)))),
       VGetArg(statics, 28-1, 1),
       _V10vcore_Dforeign__pointer_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k299(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k299(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k299, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k299, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10716,21 +10720,21 @@ static void _V10_Dlookup__intrinsic_D9_k299(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.320 0 0) ((bruijn ##.k.293 27 0) (##intrinsic ##vcore.void?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k300) (bruijn ##.sym.16 27 1) '##vcore.nullptr?))
+  // (if (bruijn ##.p.320 0 0) ((bruijn ##.k.293 27 0) (##intrinsic ##vcore.void?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k300) (bruijn ##.sym.16 27 1) '##vcore.nullptr?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 1,
       _V40_V10vcore_Dvoid_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k300, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k300, self)))),
       VGetArg(statics, 27-1, 1),
       _V10vcore_Dnullptr_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k298(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k298(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k298, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k298, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10738,21 +10742,21 @@ static void _V10_Dlookup__intrinsic_D9_k298(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.319 0 0) ((bruijn ##.k.293 26 0) (##intrinsic ##vcore.char?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k299) (bruijn ##.sym.16 26 1) '##vcore.void?))
+  // (if (bruijn ##.p.319 0 0) ((bruijn ##.k.293 26 0) (##intrinsic ##vcore.char?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k299) (bruijn ##.sym.16 26 1) '##vcore.void?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 1,
       _V40_V10vcore_Dchar_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k299, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k299, self)))),
       VGetArg(statics, 26-1, 1),
       _V10vcore_Dvoid_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k297(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k297(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k297, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k297, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10760,21 +10764,21 @@ static void _V10_Dlookup__intrinsic_D9_k297(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.318 0 0) ((bruijn ##.k.293 25 0) (##intrinsic ##vcore.double?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k298) (bruijn ##.sym.16 25 1) '##vcore.char?))
+  // (if (bruijn ##.p.318 0 0) ((bruijn ##.k.293 25 0) (##intrinsic ##vcore.double?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k298) (bruijn ##.sym.16 25 1) '##vcore.char?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 1,
       _V40_V10vcore_Ddouble_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k298, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k298, self)))),
       VGetArg(statics, 25-1, 1),
       _V10vcore_Dchar_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k296(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k296(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k296, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k296, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10782,21 +10786,21 @@ static void _V10_Dlookup__intrinsic_D9_k296(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.317 0 0) ((bruijn ##.k.293 24 0) (##intrinsic ##vcore.int?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k297) (bruijn ##.sym.16 24 1) '##vcore.double?))
+  // (if (bruijn ##.p.317 0 0) ((bruijn ##.k.293 24 0) (##intrinsic ##vcore.int?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k297) (bruijn ##.sym.16 24 1) '##vcore.double?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 0)), 1,
       _V40_V10vcore_Dint_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k297, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k297, self)))),
       VGetArg(statics, 24-1, 1),
       _V10vcore_Ddouble_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k295(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k295(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k295, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k295, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10804,21 +10808,21 @@ static void _V10_Dlookup__intrinsic_D9_k295(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.316 0 0) ((bruijn ##.k.293 23 0) (##intrinsic ##vcore.string?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k296) (bruijn ##.sym.16 23 1) '##vcore.int?))
+  // (if (bruijn ##.p.316 0 0) ((bruijn ##.k.293 23 0) (##intrinsic ##vcore.string?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k296) (bruijn ##.sym.16 23 1) '##vcore.int?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 1,
       _V40_V10vcore_Dstring_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k296, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k296, self)))),
       VGetArg(statics, 23-1, 1),
       _V10vcore_Dint_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k294(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k294(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k294, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k294, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10826,21 +10830,21 @@ static void _V10_Dlookup__intrinsic_D9_k294(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.315 0 0) ((bruijn ##.k.293 22 0) (##intrinsic ##vcore.symbol?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k295) (bruijn ##.sym.16 22 1) '##vcore.string?))
+  // (if (bruijn ##.p.315 0 0) ((bruijn ##.k.293 22 0) (##intrinsic ##vcore.symbol?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k295) (bruijn ##.sym.16 22 1) '##vcore.string?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 1,
       _V40_V10vcore_Dsymbol_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k295, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k295, self)))),
       VGetArg(statics, 22-1, 1),
       _V10vcore_Dstring_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k293(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k293(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k293, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k293, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10848,21 +10852,21 @@ static void _V10_Dlookup__intrinsic_D9_k293(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.314 0 0) ((bruijn ##.k.293 21 0) (##intrinsic ##vcore.blob?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k294) (bruijn ##.sym.16 21 1) '##vcore.symbol?))
+  // (if (bruijn ##.p.314 0 0) ((bruijn ##.k.293 21 0) (##intrinsic ##vcore.blob?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k294) (bruijn ##.sym.16 21 1) '##vcore.symbol?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 21-1, 0)), 1,
       _V40_V10vcore_Dblob_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k294, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k294, self)))),
       VGetArg(statics, 21-1, 1),
       _V10vcore_Dsymbol_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k292(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k292(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k292, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k292, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10870,21 +10874,21 @@ static void _V10_Dlookup__intrinsic_D9_k292(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.313 0 0) ((bruijn ##.k.293 20 0) (##intrinsic ##vcore.procedure?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k293) (bruijn ##.sym.16 20 1) '##vcore.blob?))
+  // (if (bruijn ##.p.313 0 0) ((bruijn ##.k.293 20 0) (##intrinsic ##vcore.procedure?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k293) (bruijn ##.sym.16 20 1) '##vcore.blob?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 1,
       _V40_V10vcore_Dprocedure_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k293, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k293, self)))),
       VGetArg(statics, 20-1, 1),
       _V10vcore_Dblob_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k291(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k291(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k291, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k291, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10892,21 +10896,21 @@ static void _V10_Dlookup__intrinsic_D9_k291(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.312 0 0) ((bruijn ##.k.293 19 0) (##intrinsic ##vcore.record?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k292) (bruijn ##.sym.16 19 1) '##vcore.procedure?))
+  // (if (bruijn ##.p.312 0 0) ((bruijn ##.k.293 19 0) (##intrinsic ##vcore.record?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k292) (bruijn ##.sym.16 19 1) '##vcore.procedure?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 1,
       _V40_V10vcore_Drecord_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k292, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k292, self)))),
       VGetArg(statics, 19-1, 1),
       _V10vcore_Dprocedure_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k290(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k290(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k290, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k290, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10914,21 +10918,21 @@ static void _V10_Dlookup__intrinsic_D9_k290(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.311 0 0) ((bruijn ##.k.293 18 0) (##intrinsic ##vcore.hash-table?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k291) (bruijn ##.sym.16 18 1) '##vcore.record?))
+  // (if (bruijn ##.p.311 0 0) ((bruijn ##.k.293 18 0) (##intrinsic ##vcore.hash-table?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k291) (bruijn ##.sym.16 18 1) '##vcore.record?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 0)), 1,
       _V40_V10vcore_Dhash__table_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k291, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k291, self)))),
       VGetArg(statics, 18-1, 1),
       _V10vcore_Drecord_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k289(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k289(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k289, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k289, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10936,21 +10940,21 @@ static void _V10_Dlookup__intrinsic_D9_k289(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.310 0 0) ((bruijn ##.k.293 17 0) (##intrinsic ##vcore.vector?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k290) (bruijn ##.sym.16 17 1) '##vcore.hash-table?))
+  // (if (bruijn ##.p.310 0 0) ((bruijn ##.k.293 17 0) (##intrinsic ##vcore.vector?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k290) (bruijn ##.sym.16 17 1) '##vcore.hash-table?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 0)), 1,
       _V40_V10vcore_Dvector_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k290, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k290, self)))),
       VGetArg(statics, 17-1, 1),
       _V10vcore_Dhash__table_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k288(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k288(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k288, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k288, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10958,21 +10962,21 @@ static void _V10_Dlookup__intrinsic_D9_k288(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.309 0 0) ((bruijn ##.k.293 16 0) (##intrinsic ##vcore.pair?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k289) (bruijn ##.sym.16 16 1) '##vcore.vector?))
+  // (if (bruijn ##.p.309 0 0) ((bruijn ##.k.293 16 0) (##intrinsic ##vcore.pair?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k289) (bruijn ##.sym.16 16 1) '##vcore.vector?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 0)), 1,
       _V40_V10vcore_Dpair_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k289, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k289, self)))),
       VGetArg(statics, 16-1, 1),
       _V10vcore_Dvector_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k287(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k287(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k287, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k287, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -10980,21 +10984,21 @@ static void _V10_Dlookup__intrinsic_D9_k287(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.308 0 0) ((bruijn ##.k.293 15 0) (##intrinsic ##vcore.null?)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k288) (bruijn ##.sym.16 15 1) '##vcore.pair?))
+  // (if (bruijn ##.p.308 0 0) ((bruijn ##.k.293 15 0) (##intrinsic ##vcore.null?)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k288) (bruijn ##.sym.16 15 1) '##vcore.pair?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 0)), 1,
       _V40_V10vcore_Dnull_Q);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k288, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k288, self)))),
       VGetArg(statics, 15-1, 1),
       _V10vcore_Dpair_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k286(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k286(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k286, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k286, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11002,21 +11006,21 @@ static void _V10_Dlookup__intrinsic_D9_k286(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.307 0 0) ((bruijn ##.k.293 14 0) (##intrinsic ##vcore.remainder)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k287) (bruijn ##.sym.16 14 1) '##vcore.null?))
+  // (if (bruijn ##.p.307 0 0) ((bruijn ##.k.293 14 0) (##intrinsic ##vcore.remainder)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k287) (bruijn ##.sym.16 14 1) '##vcore.null?))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 1,
       _V40_V10vcore_Dremainder);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k287, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k287, self)))),
       VGetArg(statics, 14-1, 1),
       _V10vcore_Dnull_Q);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k285(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k285(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k285, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k285, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11024,21 +11028,21 @@ static void _V10_Dlookup__intrinsic_D9_k285(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.306 0 0) ((bruijn ##.k.293 13 0) (##intrinsic ##vcore.quotient)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k286) (bruijn ##.sym.16 13 1) '##vcore.remainder))
+  // (if (bruijn ##.p.306 0 0) ((bruijn ##.k.293 13 0) (##intrinsic ##vcore.quotient)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k286) (bruijn ##.sym.16 13 1) '##vcore.remainder))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 1,
       _V40_V10vcore_Dquotient);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k286, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k286, self)))),
       VGetArg(statics, 13-1, 1),
       _V10vcore_Dremainder);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k284(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k284(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k284, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k284, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11046,21 +11050,21 @@ static void _V10_Dlookup__intrinsic_D9_k284(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.305 0 0) ((bruijn ##.k.293 12 0) (##intrinsic ##vcore.>)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k285) (bruijn ##.sym.16 12 1) '##vcore.quotient))
+  // (if (bruijn ##.p.305 0 0) ((bruijn ##.k.293 12 0) (##intrinsic ##vcore.>)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k285) (bruijn ##.sym.16 12 1) '##vcore.quotient))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 1,
       _V40_V10vcore_D_G);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k285, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k285, self)))),
       VGetArg(statics, 12-1, 1),
       _V10vcore_Dquotient);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k283(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k283(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k283, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k283, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11068,21 +11072,21 @@ static void _V10_Dlookup__intrinsic_D9_k283(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.304 0 0) ((bruijn ##.k.293 11 0) (##intrinsic ##vcore.>=)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k284) (bruijn ##.sym.16 11 1) '##vcore.>))
+  // (if (bruijn ##.p.304 0 0) ((bruijn ##.k.293 11 0) (##intrinsic ##vcore.>=)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k284) (bruijn ##.sym.16 11 1) '##vcore.>))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 1,
       _V40_V10vcore_D_G_E);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k284, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k284, self)))),
       VGetArg(statics, 11-1, 1),
       _V10vcore_D_G);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k282(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k282(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k282, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k282, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11090,21 +11094,21 @@ static void _V10_Dlookup__intrinsic_D9_k282(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.303 0 0) ((bruijn ##.k.293 10 0) (##intrinsic ##vcore.=)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k283) (bruijn ##.sym.16 10 1) '##vcore.>=))
+  // (if (bruijn ##.p.303 0 0) ((bruijn ##.k.293 10 0) (##intrinsic ##vcore.=)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k283) (bruijn ##.sym.16 10 1) '##vcore.>=))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 1,
       _V40_V10vcore_D_E);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k283, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k283, self)))),
       VGetArg(statics, 10-1, 1),
       _V10vcore_D_G_E);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k281(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k281(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k281, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k281, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11112,21 +11116,21 @@ static void _V10_Dlookup__intrinsic_D9_k281(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.302 0 0) ((bruijn ##.k.293 9 0) (##intrinsic ##vcore.<)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k282) (bruijn ##.sym.16 9 1) '##vcore.=))
+  // (if (bruijn ##.p.302 0 0) ((bruijn ##.k.293 9 0) (##intrinsic ##vcore.<)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k282) (bruijn ##.sym.16 9 1) '##vcore.=))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 1,
       _V40_V10vcore_D_L);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k282, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k282, self)))),
       VGetArg(statics, 9-1, 1),
       _V10vcore_D_E);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k280(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k280(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k280, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k280, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11134,21 +11138,21 @@ static void _V10_Dlookup__intrinsic_D9_k280(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.301 0 0) ((bruijn ##.k.293 8 0) (##intrinsic ##vcore.<=)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k281) (bruijn ##.sym.16 8 1) '##vcore.<))
+  // (if (bruijn ##.p.301 0 0) ((bruijn ##.k.293 8 0) (##intrinsic ##vcore.<=)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k281) (bruijn ##.sym.16 8 1) '##vcore.<))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 1,
       _V40_V10vcore_D_L_E);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k281, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k281, self)))),
       VGetArg(statics, 8-1, 1),
       _V10vcore_D_L);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k279(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k279(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k279, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k279, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11156,21 +11160,21 @@ static void _V10_Dlookup__intrinsic_D9_k279(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.300 0 0) ((bruijn ##.k.293 7 0) (##intrinsic ##vcore.cmp)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k280) (bruijn ##.sym.16 7 1) '##vcore.<=))
+  // (if (bruijn ##.p.300 0 0) ((bruijn ##.k.293 7 0) (##intrinsic ##vcore.cmp)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k280) (bruijn ##.sym.16 7 1) '##vcore.<=))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 1,
       _V40_V10vcore_Dcmp);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k280, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k280, self)))),
       VGetArg(statics, 7-1, 1),
       _V10vcore_D_L_E);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k278(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k278(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k278, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k278, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11178,21 +11182,21 @@ static void _V10_Dlookup__intrinsic_D9_k278(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.299 0 0) ((bruijn ##.k.293 6 0) (##intrinsic ##vcore./)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k279) (bruijn ##.sym.16 6 1) '##vcore.cmp))
+  // (if (bruijn ##.p.299 0 0) ((bruijn ##.k.293 6 0) (##intrinsic ##vcore./)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k279) (bruijn ##.sym.16 6 1) '##vcore.cmp))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 1,
       _V40_V10vcore_D_W);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k279, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k279, self)))),
       VGetArg(statics, 6-1, 1),
       _V10vcore_Dcmp);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k277(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k277(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k277, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k277, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11200,21 +11204,21 @@ static void _V10_Dlookup__intrinsic_D9_k277(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.298 0 0) ((bruijn ##.k.293 5 0) (##intrinsic ##vcore.*)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k278) (bruijn ##.sym.16 5 1) '##vcore./))
+  // (if (bruijn ##.p.298 0 0) ((bruijn ##.k.293 5 0) (##intrinsic ##vcore.*)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k278) (bruijn ##.sym.16 5 1) '##vcore./))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
       _V40_V10vcore_D_S);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k278, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k278, self)))),
       VGetArg(statics, 5-1, 1),
       _V10vcore_D_W);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k276(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k276(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k276, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k276, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11222,21 +11226,21 @@ static void _V10_Dlookup__intrinsic_D9_k276(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.297 0 0) ((bruijn ##.k.293 4 0) (##intrinsic ##vcore.-)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k277) (bruijn ##.sym.16 4 1) '##vcore.*))
+  // (if (bruijn ##.p.297 0 0) ((bruijn ##.k.293 4 0) (##intrinsic ##vcore.-)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k277) (bruijn ##.sym.16 4 1) '##vcore.*))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
       _V40_V10vcore_D__);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k277, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k277, self)))),
       statics->up->up->up->vars[1],
       _V10vcore_D_S);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k275(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k275(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k275, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k275, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11244,21 +11248,21 @@ static void _V10_Dlookup__intrinsic_D9_k275(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.296 0 0) ((bruijn ##.k.293 3 0) (##intrinsic ##vcore.+)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k276) (bruijn ##.sym.16 3 1) '##vcore.-))
+  // (if (bruijn ##.p.296 0 0) ((bruijn ##.k.293 3 0) (##intrinsic ##vcore.+)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k276) (bruijn ##.sym.16 3 1) '##vcore.-))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       _V40_V10vcore_D_P);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k276, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k276, self)))),
       statics->up->up->vars[1],
       _V10vcore_D__);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k274(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k274(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k274, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k274, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11266,21 +11270,21 @@ static void _V10_Dlookup__intrinsic_D9_k274(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.295 0 0) ((bruijn ##.k.293 2 0) (##intrinsic ##vcore.exact)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k275) (bruijn ##.sym.16 2 1) '##vcore.+))
+  // (if (bruijn ##.p.295 0 0) ((bruijn ##.k.293 2 0) (##intrinsic ##vcore.exact)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k275) (bruijn ##.sym.16 2 1) '##vcore.+))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       _V40_V10vcore_Dexact);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k275, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k275, self)))),
       statics->up->vars[1],
       _V10vcore_D_P);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_k273(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k273(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_k273, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k273, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11288,21 +11292,21 @@ static void _V10_Dlookup__intrinsic_D9_k273(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.294 0 0) ((bruijn ##.k.293 1 0) (##intrinsic ##vcore.inexact)) (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k274) (bruijn ##.sym.16 1 1) '##vcore.exact))
+  // (if (bruijn ##.p.294 0 0) ((bruijn ##.k.293 1 0) (##intrinsic ##vcore.inexact)) (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k274) (bruijn ##.sym.16 1 1) '##vcore.exact))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       _V40_V10vcore_Dinexact);
 } else {
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k274, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k274, self)))),
       statics->vars[1],
       _V10vcore_Dexact);
 }
 }
-static void _V10_Dlookup__intrinsic_D9_lambda5(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V10_Dlookup__intrinsic_D9_lambda5, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -11311,15 +11315,15 @@ static void _V10_Dlookup__intrinsic_D9_lambda5(VRuntime * runtime, VEnv * static
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (##vcore.eqv? (close _V10_Dlookup__intrinsic_D9_k273) (bruijn ##.sym.16 0 1) '##vcore.inexact)
+  // (##vcore.eqv? (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k273) (bruijn ##.sym.16 0 1) '##vcore.inexact)
     VCallFuncWithGC(runtime, (VFunc)VEqv, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_k273, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k273, self)))),
       _var1,
       _V10vcore_Dinexact);
 }
-static void _V0vanity_V0intrinsics_V20_k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0vanity_V0intrinsics_V20_V0k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0intrinsics_V20_k2, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0intrinsics_V20_V0k2, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11327,16 +11331,16 @@ static void _V0vanity_V0intrinsics_V20_k2(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (letrec 4 ((close _V10_Dlookup__inline__name_D6_lambda2) (close _V10_Dlookup__intrinsic__name_D7_lambda3) (close _V10_Dis__basic__intrinsic_Q_D8_lambda4) (close _V10_Dlookup__intrinsic_D9_lambda5)) ((bruijn ##.k.19 3 0) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-inline-name (bruijn ##.lookup-inline-name.6 0 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-intrinsic-name (bruijn ##.lookup-intrinsic-name.7 0 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-intrinsic (bruijn ##.lookup-intrinsic.9 0 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'is-basic-intrinsic? (bruijn ##.is-basic-intrinsic?.8 0 2)) '()))))))
+  // (letrec 4 ((close "_V50_V0vanity_V0intrinsics_V0lookup__inline__name") (close "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name") (close "_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q") (close "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic")) ((bruijn ##.k.19 3 0) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-inline-name (bruijn ##.lookup-inline-name.6 0 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-intrinsic-name (bruijn ##.lookup-intrinsic-name.7 0 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-intrinsic (bruijn ##.lookup-intrinsic.9 0 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'is-basic-intrinsic? (bruijn ##.is-basic-intrinsic?.8 0 2)) '()))))))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[4]; } container;
     self = &container.self;
     VInitEnv(self, 4, 4, statics);
-    self->vars[0] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__inline__name_D6_lambda2, self)}));
-    self->vars[1] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic__name_D7_lambda3, self)}));
-    self->vars[2] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dis__basic__intrinsic_Q_D8_lambda4, self)}));
-    self->vars[3] = (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V10_Dlookup__intrinsic_D9_lambda5, self)}));
+    self->vars[0] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name, self))));
+    self->vars[1] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name, self))));
+    self->vars[2] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q, self))));
+    self->vars[3] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic, self))));
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VInlineCons2(runtime,
         VInlineCons2(runtime,
@@ -11357,9 +11361,9 @@ static void _V0vanity_V0intrinsics_V20_k2(VRuntime * runtime, VEnv * statics, in
         VNULL)))));
     }
 }
-static void _V0vanity_V0intrinsics_V20_k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0vanity_V0intrinsics_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0intrinsics_V20_k1, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0intrinsics_V20_V0k1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11367,15 +11371,15 @@ static void _V0vanity_V0intrinsics_V20_k1(VRuntime * runtime, VEnv * statics, in
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.make-import (close _V0vanity_V0intrinsics_V20_k2) (##string ##.string.700) (bruijn ##.x.499 0 0))
+  // (##vcore.make-import (close _V0vanity_V0intrinsics_V20_V0k2) (##string ##.string.700) (bruijn ##.x.499 0 0))
     VCallFuncWithGC(runtime, (VFunc)VMakeImport2, 3,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0intrinsics_V20_k2, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0intrinsics_V20_V0k2, self)))),
       VEncodePointer(&_V10_Dstring_D700.sym, VPOINTER_OTHER),
       _var0);
 }
-static void _V0vanity_V0intrinsics_V20_lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0vanity_V0intrinsics_V20_V0lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0intrinsics_V20_lambda1, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0intrinsics_V20_V0lambda1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -11383,9 +11387,9 @@ static void _V0vanity_V0intrinsics_V20_lambda1(VRuntime * runtime, VEnv * static
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0intrinsics_V20_k1) (##string ##.string.701))
+  // (##vcore.load-library (close _V0vanity_V0intrinsics_V20_V0k1) (##string ##.string.701))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0intrinsics_V20_k1, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0intrinsics_V20_V0k1, self)))),
       VEncodePointer(&_V10_Dstring_D701.sym, VPOINTER_OTHER));
 }
-VFunc _V0vanity_V0intrinsics_V20 = (VFunc)_V0vanity_V0intrinsics_V20_lambda1;
+VFunc _V0vanity_V0intrinsics_V20 = (VFunc)_V0vanity_V0intrinsics_V20_V0lambda1;

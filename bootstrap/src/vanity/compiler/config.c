@@ -39,9 +39,9 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0install__root = VEncodePointer(VLookupConstant("_V0install__root", &_VW_V0install__root), VPOINTER_OTHER);
   _V0linux = VEncodePointer(VLookupConstant("_V0linux", &_VW_V0linux), VPOINTER_OTHER);
 }
-static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0vanity_V0compiler_V0config_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_k1, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_V0k1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -78,9 +78,9 @@ static void _V0vanity_V0compiler_V0config_V20_k1(VRuntime * runtime, VEnv * stat
         VNULL))));
     }
 }
-static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+static void _V0vanity_V0compiler_V0config_V20_V0lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_lambda1, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0config_V20_V0lambda1, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -88,9 +88,9 @@ static void _V0vanity_V0compiler_V0config_V20_lambda1(VRuntime * runtime, VEnv *
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.make-import (close _V0vanity_V0compiler_V0config_V20_k1) (##string ##.string.14))
+  // (##vcore.make-import (close _V0vanity_V0compiler_V0config_V20_V0k1) (##string ##.string.14))
     VCallFuncWithGC(runtime, (VFunc)VMakeImport2, 2,
-      (VEncodeClosure((VClosure[]){VMakeClosure2((VFunc)_V0vanity_V0compiler_V0config_V20_k1, self)})),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0config_V20_V0k1, self)))),
       VEncodePointer(&_V10_Dstring_D14.sym, VPOINTER_OTHER));
 }
-VFunc _V0vanity_V0compiler_V0config_V20 = (VFunc)_V0vanity_V0compiler_V0config_V20_lambda1;
+VFunc _V0vanity_V0compiler_V0config_V20 = (VFunc)_V0vanity_V0compiler_V0config_V20_V0lambda1;
