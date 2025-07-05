@@ -792,7 +792,8 @@ V_BEGIN_FUNC(VListVector2, "list->vector", 2, k, lst)
   }
   if(VBits(v) != VBits(VNULL)) VErrorC(runtime, "list->vector: not a null-terminated list\n");
 
-  VVector * vec = V_ALLOCA_VECTOR(len);
+  VVector * vec = V_ALLOCA_VECTOR2(&runtime, runtime, len);
+  if(!vec) VGarbageCollect2Func(runtime, (VFunc)VListVector2, 2, k, lst);
   vec->base = VMakeSmallObject(VVECTOR);
   vec->len = len;
 
@@ -803,7 +804,7 @@ V_BEGIN_FUNC(VListVector2, "list->vector", 2, k, lst)
     vec->arr[i++] = p->first;
     v = p->rest;
   }
-  V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(vec, VPOINTER_OTHER));
 }
 
 V_BEGIN_FUNC_BASIC(VVectorRef2, "vector-ref", 2, vector, index)
@@ -826,7 +827,7 @@ V_BEGIN_FUNC_MIN(VCreateRecord2, "record", 2, k, type)
   int len = argc-2;
   if(len > 65534) VErrorC(runtime, "record: records with more than 65535 fields not supported\n");
 
-  VVector * rec = V_ALLOCA_VECTOR(len+1);
+  VVector * rec = V_ALLOCA_SMALL_VECTOR(runtime, len+1);
   rec->base = VMakeSmallObject(VRECORD);
   rec->len = len+1;
 
@@ -838,7 +839,7 @@ V_BEGIN_FUNC_MIN(VCreateRecord2, "record", 2, k, type)
     rec->arr[i++] = self->vars[i2++];
     c++;
   }
-  V_CALL(k, runtime, VEncodePointer(rec, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(rec, VPOINTER_OTHER));
 }
 
 V_BEGIN_FUNC_BASIC(VRecordRef2, "record-ref", 2, record, index)
@@ -970,7 +971,8 @@ V_BEGIN_FUNC(VMakeHashTable, "make-hash-table", 4, k, eq, hash, _len)
   if(len <= 0) VErrorC(runtime, "hash tables need length > 0");
   if(len > INT_MAX/3) VErrorC(runtime, "hash table is too large ~D\n", len);
   if(len & (len-1)) VErrorC(runtime, "hash table needs pow2 length ~D\n", len);
-  VVector * vec = V_ALLOCA_VECTOR(3*len);
+  VVector * vec = V_ALLOCA_VECTOR2(&runtime, runtime, 3*len);
+  if(!vec) VGarbageCollect2Func(runtime, (VFunc)VMakeHashTable, 4, k, eq, hash, _len);
   vec->base = VMakeSmallObject(VVECTOR);
   vec->len = 3*len;
   for(int i = 0; i < len; i++) {
@@ -978,7 +980,7 @@ V_BEGIN_FUNC(VMakeHashTable, "make-hash-table", 4, k, eq, hash, _len)
     vec->arr[3*i+1] = VEncodeInt(0);
     vec->arr[3*i+2] = VVOID;
   }
-  VHashTable table = {
+  VHashTable _table = {
     .base = VMakeSmallObject(VHASH_TABLE),
     .flags = closure->func == (void*)VEq2 ? HFLAG_EQ : HFLAG_EQV,
     .occupancy = 0,
@@ -987,7 +989,8 @@ V_BEGIN_FUNC(VMakeHashTable, "make-hash-table", 4, k, eq, hash, _len)
     .eq = eq,
     .hash = hash,
   };
-  V_CALL(k, runtime, VEncodePointer(&table, VPOINTER_OTHER));
+  VHashTable * table = V_EDEN_INIT(runtime, VHashTable, _table);
+  V_BOUNCE(k, runtime, VEncodePointer(table, VPOINTER_OTHER));
 }
 
 V_BEGIN_FUNC(VHashTableEqvFunc, "hash-table-equivalence-function", 2, k, _table)
@@ -1035,15 +1038,16 @@ try_again: ;
     tries++;
   }
   if(!found && (table->flags & HFLAG_DIRTY)) {
-    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
+    VVector * newvec = V_ALLOCA_VECTOR2(&runtime, runtime, 3 * capacity);
+    if(!newvec) VGarbageCollect2Func(runtime, (VFunc)VHashTableRef, 4, k, _table, key, thunk);
     VGrowHashTable(runtime, table, capacity, newvec);
     vec = newvec;
     goto try_again;
   }
   if(found) {
-    V_CALL(k, runtime, vec->arr[3*index+2]);
+    V_BOUNCE(k, runtime, vec->arr[3*index+2]);
   } else {
-    V_CALL(thunk, runtime, k);
+    V_BOUNCE(thunk, runtime, k);
   }
 }
 
@@ -1056,7 +1060,8 @@ V_BEGIN_FUNC(VHashTableSet, "hash-table-set!", 4, k, _table, key, val)
   uint64_t capacity = vec->len / 3;
 
   if(table->occupancy+1 >= table->load_factor * capacity) {
-    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity * 2);
+    VVector * newvec = V_ALLOCA_VECTOR2(&runtime, runtime, 3 * capacity * 2);
+    if(!newvec) VGarbageCollect2Func(runtime, (VFunc)VHashTableSet, 4, k, _table, key, val);
     VGrowHashTable(runtime, table, capacity * 2, newvec);
 
     vec = newvec;
@@ -1081,7 +1086,8 @@ V_BEGIN_FUNC(VHashTableSet, "hash-table-set!", 4, k, _table, key, val)
   // the bug was that I need to consider a poverty swap a
   // opportunity to check for rehashing!!!
   if(table->flags & HFLAG_DIRTY) {
-    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
+    VVector * newvec = V_ALLOCA_VECTOR2(&runtime, runtime, 3 * capacity);
+    if(!newvec) VGarbageCollect2Func(runtime, (VFunc)VHashTableSet, 4, k, _table, key, val);
     VGrowHashTable(runtime, table, capacity, newvec);
     vec = newvec;
   }
@@ -1146,7 +1152,7 @@ V_BEGIN_FUNC(VHashTableSet, "hash-table-set!", 4, k, _table, key, val)
   // poverty is an int, nothing to track
   VTrackMutation(runtime, vec, &vec->arr[3*index+2], val);
 
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 }
 V_BEGIN_FUNC(VHashTableDelete, "hash-table-delete!", 3, k, _table, key)
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-delete!");
@@ -1157,7 +1163,8 @@ V_BEGIN_FUNC(VHashTableDelete, "hash-table-delete!", 3, k, _table, key)
 
   // shrinkage. with a bit of histerisis
   if(table->occupancy < 0.9 * table->load_factor * (capacity / 2)) {
-    VVector * newvec = V_ALLOCA_VECTOR(3 * (capacity / 2));
+    VVector * newvec = V_ALLOCA_VECTOR2(&runtime, runtime, 3 * (capacity / 2));
+    if(!newvec) VGarbageCollect2Func(runtime, (VFunc)VHashTableDelete, 3, k, _table, key);
     VGrowHashTable(runtime, table, capacity / 2, newvec);
 
     vec = newvec;
@@ -1170,7 +1177,8 @@ V_BEGIN_FUNC(VHashTableDelete, "hash-table-delete!", 3, k, _table, key)
   //
   // I think if I'm correct the bug shouldn't be here.
   if(table->flags & HFLAG_DIRTY) {
-    VVector * newvec = V_ALLOCA_VECTOR(3 * capacity);
+    VVector * newvec = V_ALLOCA_VECTOR2(&runtime, runtime, 3 * capacity);
+    if(!newvec) VGarbageCollect2Func(runtime, (VFunc)VHashTableDelete, 3, k, _table, key);
     VGrowHashTable(runtime, table, capacity, newvec);
     vec = newvec;
   }
@@ -1200,7 +1208,7 @@ V_BEGIN_FUNC(VHashTableDelete, "hash-table-delete!", 3, k, _table, key)
     tries++;
   }
   if(!found) {
-    V_CALL(k, runtime, VVOID);
+    V_BOUNCE(k, runtime, VVOID);
     return;
   }
   table->occupancy--;
@@ -1229,7 +1237,7 @@ V_BEGIN_FUNC(VHashTableDelete, "hash-table-delete!", 3, k, _table, key)
     vec->arr[3*index+1] = VEncodeInt(0);
     vec->arr[3*index+2] = VVOID;
   }
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 }
 
 // strings
@@ -1254,7 +1262,7 @@ V_BEGIN_FUNC_RANGE(VMakeString2, "make-string", 2, 3, k, len, fill)
   str->buf[i] = '\0';
   memset(str->buf, c, i);
 
-  V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }
 
 V_BEGIN_FUNC_RANGE(VSubstring2, "substring", 2, 4, k, string, startword, endword)
@@ -1285,7 +1293,7 @@ V_BEGIN_FUNC_RANGE(VSubstring2, "substring", 2, 4, k, string, startword, endword
   copy->buf[len] = '\0';
   memcpy(copy->buf, str->buf + start, len);
 
-  V_CALL(k, runtime, VEncodePointer(copy, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(copy, VPOINTER_OTHER));
 }
 
 V_BEGIN_FUNC_RANGE(VStringCopy2, "string-copy!", 4, 6, k, dest, _at, source, _start, _end)
@@ -1316,7 +1324,7 @@ V_BEGIN_FUNC_RANGE(VStringCopy2, "string-copy!", 4, 6, k, dest, _at, source, _st
   if(dstlen < srclen) VErrorC(runtime, "string-copy!: attempting to copy ~l chars into a substring ~l chars long.\n", srclen, dstlen);
 
   memmove(dst->buf + at, src->buf + start, srclen);
-  V_CALL(k, runtime, VVOID);
+  V_BOUNCE(k, runtime, VVOID);
 }
 
 V_BEGIN_FUNC_BASIC(VStringLength2, "string-length", 1, _str)
@@ -1355,16 +1363,18 @@ V_END_FUNC
 V_BEGIN_FUNC(VStringSymbol2, "string->symbol", 2, k, _str)
   VBlob * str = VCheckedDecodeString2(runtime, _str, "string->symbol");
 
-  VBlob * sym = V_ALLOCA_BLOB(str->len);
+  VBlob * sym = V_ALLOCA_BLOB2(&runtime, runtime, str->len);
+  if(!sym) VGarbageCollect2Func(runtime, (VFunc)VStringSymbol2, 2, k, _str);
   VFillBlob(sym, VSYMBOL, str->len, str->buf);
-  V_CALL(k, runtime, VEncodePointer(sym, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(sym, VPOINTER_OTHER));
 }
 V_BEGIN_FUNC(VSymbolString2, "symbol->string", 2, k, _sym)
   VBlob * sym = VCheckedDecodeSymbol2(runtime, _sym, "symbol->string");
 
-  VBlob * str = V_ALLOCA_BLOB(sym->len);
+  VBlob * str = V_ALLOCA_BLOB2(&runtime, runtime, sym->len);
+  if(!str) VGarbageCollect2Func(runtime, (VFunc)VSymbolString2, 2, k, _sym);
   VFillBlob(str, VSTRING, sym->len, sym->buf);
-  V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }
 
 V_BEGIN_FUNC_BASIC(VStringNumber2, "string->number", 1, _str)
@@ -1426,18 +1436,18 @@ V_BEGIN_FUNC(VDupStderr2, "dup-stderr", 1, k)
 // less idiotic versions of the dup procedures
 //
 V_BEGIN_FUNC(VStdoutPort, "stdout->port", 1, k)
-  VPort port = VMakePortStream(stdout, PFLAG_WRITE | PFLAG_NOCLOSE);
-  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  VPort * port = V_EDEN_INIT(runtime, VPort, VMakePortStream(stdout, PFLAG_WRITE | PFLAG_NOCLOSE));
+  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER));
 }
 
 V_BEGIN_FUNC(VStdinPort, "stdin->port", 1, k)
-  VPort port = VMakePortStream(stdin, PFLAG_READ | PFLAG_NOCLOSE);
-  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  VPort * port = V_EDEN_INIT(runtime, VPort, VMakePortStream(stdin, PFLAG_READ | PFLAG_NOCLOSE));
+  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER));
 }
 
 V_BEGIN_FUNC(VStderrPort, "stderr->port", 1, k)
-  VPort port = VMakePortStream(stderr, PFLAG_WRITE | PFLAG_NOCLOSE);
-  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  VPort * port = V_EDEN_INIT(runtime, VPort, VMakePortStream(stderr, PFLAG_WRITE | PFLAG_NOCLOSE));
+  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER));
 }
 
 
@@ -1452,15 +1462,15 @@ SYSV_CALL static void VOpenStream2(VRuntime * runtime, VWORD k, VWORD path, char
   VWORD ok = VEncodeBool(errno != ENFILE && errno != EMFILE);
   if(!f) {
     if(errno == ENFILE || errno == EMFILE) {
-      V_CALL(k, runtime, VFALSE, ok);
+      V_BOUNCE(k, runtime, VFALSE, ok);
     } else {
       // unrecoverable error, just return VFALSE
-      V_CALL(k, runtime, VFALSE, VTRUE);
+      V_BOUNCE(k, runtime, VFALSE, VTRUE);
     }
   }
 
-  VPort port = VMakePortStream(f, flags);
-  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER), ok);
+  VPort * port = V_EDEN_INIT(runtime, VPort, VMakePortStream(f, flags));
+  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER), ok);
 }
 
 V_BEGIN_FUNC(VOpenInputStream2, "open-input-stream", 2, k, path)
@@ -1480,7 +1490,7 @@ V_BEGIN_FUNC(VCloseStream2, "close-port", 2, k, _port)
 
   int ret = port_close(port);
 
-  V_CALL(k, runtime, VEncodeInt(ret));
+  V_BOUNCE(k, runtime, VEncodeInt(ret));
 }
 
 V_BEGIN_FUNC(VTtyPortP, "tty-port?", 2, k, _port)
@@ -1494,7 +1504,7 @@ V_BEGIN_FUNC(VTtyPortP, "tty-port?", 2, k, _port)
   bool tty = isatty(fd);
   errno = 0;
 
-  V_CALL(k, runtime, VEncodeBool(tty));
+  V_BOUNCE(k, runtime, VEncodeBool(tty));
 }
 
 FILE * Windows_TmpFile();
@@ -1515,34 +1525,35 @@ V_BEGIN_FUNC(VOpenOutputString2, "open-output-string", 1, k)
   VWORD ok = VEncodeBool(errno != ENFILE && errno != EMFILE);
   if(!f) {
     if(errno == ENFILE || errno == EMFILE) {
-      V_CALL(k, runtime, VFALSE, ok);
+      V_BOUNCE(k, runtime, VFALSE, ok);
     } else {
 #ifdef USE_DFILE_OSTREAM
-      V_CALL(k, runtime, VFALSE, VFALSE);
+      V_BOUNCE(k, runtime, VFALSE, VFALSE);
 #else
 #ifdef _WIN64
       // Windows tmpfile() doesn't set errno! >:(
-      V_CALL(k, runtime, VFALSE, VFALSE);
+      V_BOUNCE(k, runtime, VFALSE, VFALSE);
 #endif
 #ifdef __linux__
       // unrecoverable error: return false to the user
-      V_CALL(k, runtime, VFALSE, VTRUE);
+      V_BOUNCE(k, runtime, VFALSE, VTRUE);
 #endif
 #endif
     }
   }
 
 #ifdef USE_DFILE_OSTREAM
-  VPort port = {
+  VPort _port = {
     .base.tag = VPORT,
     .line = 1,
     .dstream = f,
     .flags = PFLAG_WRITE | PFLAG_OSTRING | PFLAG_DFILE,
   };
 #else
-  VPort port = VMakePortStream(f, PFLAG_WRITE | PFLAG_OSTRING);
+  VPort _port = VMakePortStream(f, PFLAG_WRITE | PFLAG_OSTRING);
 #endif
-  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER), ok);
+  VPort * port = V_EDEN_INIT(runtime, VPort, _port);
+  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER), ok);
 }
 
 V_BEGIN_FUNC(VGetOutputString2, "get-output-string", 2, k, _port)
@@ -1562,7 +1573,7 @@ V_BEGIN_FUNC(VGetOutputString2, "get-output-string", 2, k, _port)
   str->buf[len] = '\0';
   port_fseek(port, 0, SEEK_END);
 
-  V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }
 
 // input
@@ -1585,10 +1596,10 @@ V_BEGIN_FUNC(VReadLine2, "read-line", 2, k, _port)
   if(!port || port->base.tag != VPORT) VErrorC(runtime, "read-line: not a port ~S~N", _port);
   if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read-line: not an readable port ~S~N", _port);
 
-  VBlob * str = alloca(sizeof(VBlob) + 256);
+  VBlob * str = VAlloca(runtime, sizeof(VBlob) + 256);
   str->base = VMakeSmallObject(VSTRING);
   if(!port_fgets(str->buf, 256, port)) {
-    V_CALL(k, runtime, VEOF);
+    V_BOUNCE(k, runtime, VEOF);
   } else {
     size_t len = strlen(str->buf);
     if(len > 0 && str->buf[len-1] == '\n')
@@ -1597,7 +1608,7 @@ V_BEGIN_FUNC(VReadLine2, "read-line", 2, k, _port)
       len--;
     str->buf[len] = '\0';
     str->len = len+1; // account for the null terminal
-    V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
+    V_BOUNCE(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
   }
 }
 V_BEGIN_FUNC(VReadLine3, "read-line", 2, k, _port)
@@ -1605,10 +1616,10 @@ V_BEGIN_FUNC(VReadLine3, "read-line", 2, k, _port)
   if(!port || port->base.tag != VPORT) VErrorC(runtime, "read-line: not a port ~S~N", _port);
   if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read-line: not an readable port ~S~N", _port);
 
-  VBlob * str = alloca(sizeof(VBlob) + 256);
+  VBlob * str = VAlloca(runtime, sizeof(VBlob) + 256);
   str->base = VMakeSmallObject(VSTRING);
   if(!port_fgets(str->buf, 256, port)) {
-    V_CALL(k, runtime, VEOF, VFALSE);
+    V_BOUNCE(k, runtime, VEOF, VFALSE);
   } else {
     bool line = false;
     size_t len = strlen(str->buf);
@@ -1620,7 +1631,7 @@ V_BEGIN_FUNC(VReadLine3, "read-line", 2, k, _port)
     }
     str->buf[len] = '\0';
     str->len = len+1; // account for the null terminal
-    V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER), VEncodeBool(line));
+    V_BOUNCE(k, runtime, VEncodePointer(str, VPOINTER_OTHER), VEncodeBool(line));
   }
 }
 
@@ -1690,14 +1701,10 @@ static V_BEGIN_FUNC_MIN(VCallCCLambda2, "call/cc-lambda", 1, k)
     environ->runtime = runtime;
     environ->static_chain = realk_real->env;
 
-    //va_list args;
-    //va_start(args, k);
     for(int i = 1; i < argc; i++) {
-      //environ->argv[i-1] = va_arg(args, VWORD);
       environ->argv[i-1] = self->vars[i];
     }
-    //va_end(args);
-    VSysApply(realk_real->func, environ);
+    VSysApplyBounce(realk_real->func, environ);
   }
 }
 
@@ -1705,49 +1712,45 @@ V_BEGIN_FUNC(VCallCC2, "call/cc", 2, k, _proc)
   // (lambda (k proc) (proc k (lambda (k2 x) (k x))))
   // for supporting multiple values
   // (lambda (k proc) (proc k (lambda (k2 . xs) (apply k xs))))
-  VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[3]));
+  VEnv * env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[3]));
   env->base = VMakeSmallObject(VENV); env->num_vars = 3; env->var_len = 3; env->up = NULL;
   env->vars[0] = k;
   env->vars[1] = runtime->dynamics;
   env->vars[2] = runtime->exception_handlers;
-  VClosure k_wrapped = VMakeClosure2((VFunc)VCallCCLambda2, env);
+  VClosure * k_wrapped = V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)VCallCCLambda2, env));
 
-  V_CALL(_proc, runtime, k, VEncodeClosure(&k_wrapped));
+  V_BOUNCE(_proc, runtime, k, VEncodeClosure(k_wrapped));
 }
 
 static V_BEGIN_FUNC_MIN(VCallValuesK2, "call/values-k", 0)
   VWORD k = statics->vars[0];
   VClosure * consumer = VCheckedDecodeClosure2(runtime, statics->vars[1], "call/values");
 
-  VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc+1]));
+  VEnvironment * environ = VAlloca(runtime, sizeof(VEnvironment) + sizeof(VWORD[argc+1]));
   environ->base = VMakeObject(VENVIRONMENT);
   environ->argc = argc+1;
   environ->runtime = runtime;
   environ->static_chain = consumer->env;
 
   environ->argv[0] = k;
-  //va_list args;
-  //va_start(args, argc);
   for(int i = 0; i < argc; i++) {
-    //environ->argv[i+1] = va_arg(args, VWORD);
     environ->argv[i+1] = self->vars[i];
   }
-  //va_end(args);
 
-  VSysApply(consumer->func, environ);
+  VSysApplyBounce(consumer->func, environ);
 }
 
 V_BEGIN_FUNC(VCallValues2, "call-with-values", 3, _k, _producer, _consumer)
   // FIXME type check
   // (lambda (k producer consumer) (producer (lambda (k2 . args) (apply consumer k args))))
 
-  VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+  VEnv * env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
   env->base = VMakeSmallObject(VENV); env->num_vars = 2; env->var_len = 2; env->up = NULL;
   env->vars[0] = _k;
   env->vars[1] = _consumer;
-  VClosure consume = VMakeClosure2((VFunc)VCallValuesK2, env);
+  VClosure * consume = V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)VCallValuesK2, env));
 
-  V_CALL(_producer, runtime, VEncodeClosure(&consume));
+  V_BOUNCE(_producer, runtime, VEncodeClosure(consume));
 }
 
 V_BEGIN_FUNC_MIN(VApply2, "apply", 2, k, _proc)
@@ -1777,7 +1780,7 @@ V_BEGIN_FUNC_MIN(VApply2, "apply", 2, k, _proc)
   if(!VIsToken(pair, VTOK_NULL))
     VErrorC(runtime, "apply: not a null terminated list ~S~N\n", lst);
 
-  VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[nargs]));
+  VEnvironment * environ = VAlloca(runtime, sizeof(VEnvironment) + sizeof(VWORD[nargs]));
   environ->base = VMakeObject(VENVIRONMENT);
   environ->argc = nargs;
   environ->runtime = runtime;
@@ -1791,7 +1794,7 @@ V_BEGIN_FUNC_MIN(VApply2, "apply", 2, k, _proc)
     lst = p->rest;
   }
 
-  VSysApply(proc->func, environ);
+  VSysApplyBounce(proc->func, environ);
 }
 
 V_BEGIN_FUNC(VApplyCps, "apply-cps", 3, k, _proc, lst)
@@ -1806,7 +1809,7 @@ V_BEGIN_FUNC(VApplyCps, "apply-cps", 3, k, _proc, lst)
   if(!VIsToken(pair, VTOK_NULL))
     VErrorC(runtime, "apply-cps: not a null terminated list ~S~N\n", lst);
 
-  VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[nargs]));
+  VEnvironment * environ = VAlloca(runtime, sizeof(VEnvironment) + sizeof(VWORD[nargs]));
   environ->base = VMakeObject(VENVIRONMENT);
   environ->argc = nargs;
   environ->runtime = runtime;
@@ -1819,7 +1822,7 @@ V_BEGIN_FUNC(VApplyCps, "apply-cps", 3, k, _proc, lst)
     lst = p->rest;
   }
 
-  VSysApply(proc->func, environ);
+  VSysApplyBounce(proc->func, environ);
 }
 
 V_BEGIN_FUNC(VSystem2, "system", 2, k, cmd)
@@ -1837,8 +1840,8 @@ SYSV_CALL static void VOpenProcess2(V_CORE_ARGS, VWORD k, VWORD cmd, char const 
   FILE * f = popen(blob->buf, mode);
 
   if(!f) VErrorC(runtime, "open-io-process: failed to open process `~Z`~N", blob->buf);
-  VPort port = VMakePortStream(f, flags | PFLAG_PROCESS);
-  V_CALL(k, runtime, VEncodePointer(&port, VPOINTER_OTHER));
+  VPort * port = V_EDEN_INIT(runtime, VPort, VMakePortStream(f, flags | PFLAG_PROCESS));
+  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER));
 }
 
 V_BEGIN_FUNC(VOpenInputProcess2, "open-input-process", 2, k, cmd)
@@ -1868,7 +1871,7 @@ V_BEGIN_FUNC_RANGE(VMakeTemporaryFile2, "make-temporary-file", 2, 3, k, _prefix,
   if(len > PATH_MAX)
     VErrorC(runtime, "make-temporary-file: temporary filename length of ~D exceeds max length of ~D\n", (int)len, (int)PATH_MAX);
 
-  VBlob * str = alloca(sizeof(VBlob) + len);
+  VBlob * str = VAlloca(runtime, sizeof(VBlob) + len);
   str->base = VMakeSmallObject(VSTRING);
   str->len = len;
   strcpy(str->buf, p);
@@ -1886,27 +1889,27 @@ V_BEGIN_FUNC_RANGE(VMakeTemporaryFile2, "make-temporary-file", 2, 3, k, _prefix,
   VErrorC(runtime, "make-temporary-file: not supported on Windows\n");
 #endif
 
-  V_CALL(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }
 
 V_BEGIN_FUNC(VMakeRandom, "make-random", 3, k, _seed, _stream)
   unsigned seed = VCheckedDecodeInt2(runtime, _seed, "make-random");
   unsigned stream = VCheckedDecodeInt2(runtime, _stream, "make-random");
-  VBlob * buf = alloca(sizeof(VBlob)+sizeof(vrandom_state));
+  VBlob * buf = VAlloca(runtime, sizeof(VBlob)+sizeof(vrandom_state));
   buf->base = VMakeSmallObject(VRNG_STATE);
   buf->len = sizeof(vrandom_state);
   vsrandom((vrandom_state*)buf->buf, seed, stream);
 
-  V_CALL(k, runtime, VEncodePointer(buf, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(buf, VPOINTER_OTHER));
 }
 V_BEGIN_FUNC(VRandomCopy, "random-copy", 2, k, rng)
   VBlob const * buf = VCheckedDecodePointer2(runtime, rng, VRNG_STATE, "random-copy");
-  VBlob * copy = alloca(sizeof(VBlob)+sizeof(vrandom_state));
+  VBlob * copy = VAlloca(runtime, sizeof(VBlob)+sizeof(vrandom_state));
   copy->base = VMakeSmallObject(VRNG_STATE);
   copy->len = sizeof(vrandom_state);
   memcpy(copy->buf, buf->buf, sizeof(vrandom_state));
 
-  V_CALL(k, runtime, VEncodePointer(copy, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(copy, VPOINTER_OTHER));
 }
 
 V_BEGIN_FUNC(VRandomSample, "random-sample", 2, k, rng)
@@ -1940,7 +1943,7 @@ V_BEGIN_FUNC(VRandomAdvance, "random-advance", 3, k, rng, _n)
 
 V_BEGIN_FUNC(VRealpath, "realpath", 2, k, _relpath)
   VBlob * relpath = VCheckedDecodeString2(runtime, _relpath, "realpath");
-  VBlob * ret = alloca(sizeof(VBlob) + PATH_MAX);
+  VBlob * ret = VAlloca(runtime, sizeof(VBlob) + PATH_MAX);
   *ret = (VBlob){ .base = VMakeSmallObject(VSTRING), .len = PATH_MAX };
 #ifdef __linux__
   char * ok = realpath(relpath->buf, ret->buf);
@@ -1954,7 +1957,7 @@ V_BEGIN_FUNC(VRealpath, "realpath", 2, k, _relpath)
   bool ok = false;
 #endif
   ret->len = strlen(ret->buf)+1;
-  V_CALL(k, runtime, ok ? VEncodePointer(ret, VPOINTER_OTHER) : VFALSE);
+  V_BOUNCE(k, runtime, ok ? VEncodePointer(ret, VPOINTER_OTHER) : VFALSE);
 }
 
 V_BEGIN_FUNC(VAccess, "access", 3, k, _path, _mode)
@@ -2079,7 +2082,7 @@ V_BEGIN_FUNC(VMake ## Prefix ## Vector, "make-" #prefix "vector", 3, k, _len, fi
       offset += elem_width; \
     } \
   } \
-  V_CALL(k, runtime, VEncodePointer(ret, VPOINTER_OTHER)); \
+  V_BOUNCE(k, runtime, VEncodePointer(ret, VPOINTER_OTHER)); \
 V_END_FUNC \
 V_BEGIN_FUNC(VList ## Prefix ## Vector, "list->" #prefix "vector", 2, k, lst) \
   int len = 0; \
@@ -2103,7 +2106,7 @@ V_BEGIN_FUNC(VList ## Prefix ## Vector, "list->" #prefix "vector", 2, k, lst) \
     offset += elem_width; \
     v = p->rest; \
   } \
-  V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER)); \
+  V_BOUNCE(k, runtime, VEncodePointer(vec, VPOINTER_OTHER)); \
 V_END_FUNC \
 V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorLength, #prefix "vector-length", 1, _buf) \
   VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, #prefix "vector-length"); \
@@ -2154,7 +2157,7 @@ V_BEGIN_FUNC(VReadU8Vector, "read-u8vector", 3, k, _n, _port)
     port_fseek(port, start, SEEK_SET);
     n = end-start;
     if(n == 0)
-      V_CALL(k, runtime, VEOF);
+      V_BOUNCE(k, runtime, VEOF);
   }
   VBlob * ret = V_ALLOCA_BLOB2((void*)&runtime, runtime, n+1);
   if(!ret) VGarbageCollect2Func(runtime, (VFunc)VReadU8Vector, argc, k, _n, _port);
@@ -2168,12 +2171,12 @@ V_BEGIN_FUNC(VReadU8Vector, "read-u8vector", 3, k, _n, _port)
     ret->len = n+1;
     if(n <= 0) {
       if(port_feof(port))
-        V_CALL(k, runtime, VEOF);
+        V_BOUNCE(k, runtime, VEOF);
       if(port_ferror(port))
         VErrorC(runtime, "read-u8vector: io error during read");
     }
   }
-  V_CALL(k, runtime, VEncodePointer(ret, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(ret, VPOINTER_OTHER));
 }
 
 uint64_t VCurrentJiffyImpl();

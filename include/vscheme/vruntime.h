@@ -1083,6 +1083,8 @@ static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned len, char co
   memcpy(blob->buf, dat, len);
   return blob;
 }
+
+#define V_ALLOCA_SMALL_BLOB(runtime, len) VAlloca(runtime, sizeof(VBlob) + len);
 #define V_ALLOCA_BLOB2(last_alloced, runtime, len) \
   ({ \
     VBlob * _ret = NULL; \
@@ -1093,7 +1095,7 @@ static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned len, char co
       _ret = VHugeAlloc(runtime, _size, true); \
     } else { \
     if(!VStackOverflowNoInline2(runtime, ((char*)last_alloced) - _size)) \
-      _ret = alloca(_size); \
+      _ret = VAlloca(runtime, _size); \
     } \
     _ret;\
   })
@@ -1101,6 +1103,8 @@ static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned len, char co
 #define V_STATIC_STRING(name, str) struct { VBlob b; char buf[sizeof str]; } name = { { .base = { .tag =VSTRING, .flags = 0, .pincount = 0, }, .len = sizeof str }, str };
 
 #define V_ALLOCA_VECTOR(len) alloca(sizeof(VVector) + sizeof(VWORD[len]))
+
+#define V_ALLOCA_SMALL_VECTOR(runtime, len) VAlloca(runtime, sizeof(VVector) + sizeof(VWORD[len]))
 #define V_ALLOCA_VECTOR2(last_alloced, runtime, len) \
   ({ \
     VVector * _ret = NULL; \
@@ -1108,10 +1112,9 @@ static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned len, char co
       VErrorC(runtime, "cannot allocate vector with more than 65536 elements, asked to allocate one with ~D\n", len); \
     size_t _size = sizeof(VVector) + sizeof(VWORD[len]); \
     if(!VStackOverflowNoInline2(runtime, ((char*)last_alloced) - _size)) \
-      _ret = alloca(_size); \
+      _ret = VAlloca(runtime, _size); \
     _ret;\
   })
-
 
 static inline VVector * VFillVector(VVector * vec, VNEWTAG tag, unsigned len, VWORD const * dat) {
   vec->base = VMakeSmallObject(tag);
@@ -1149,6 +1152,12 @@ static inline VWORD VLookupGlobalVarFast2(VRuntime * runtime, char const * sym) 
 
 #undef environ
 void VSysApply(VFunc func, VEnvironment * environ);
+
+#ifdef VANITY_PURE_C
+void VSysApplyBounce(VFunc func, VEnvironment * environ);
+#else
+#define VSysApplyBounce VSysApply
+#endif
 
 static inline VWORD VGetArg(VEnv * env, int up, int var) {
   while(up) {
