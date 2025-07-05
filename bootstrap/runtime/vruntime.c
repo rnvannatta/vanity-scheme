@@ -125,10 +125,23 @@ static void * VStackPop(VStack * stack) {
 #ifdef VANITY_PURE_C
 void VSysApply(VFunc func, VEnvironment * environ) {
   int argc = environ->argc;
-  VEnv * self = alloca(sizeof(VEnv)+sizeof(VWORD[argc]));
+  VEnv * self = VAlloca(environ->runtime, sizeof(VEnv)+sizeof(VWORD[argc]));
   memcpy(self->vars, environ->argv, sizeof(VWORD[argc]));
   VInitEnv(self, argc, argc, environ->static_chain);
 
+  func(environ->runtime, environ->static_chain, argc, self);
+  while(1) {
+    VPublicRuntime * _pub = (VPublicRuntime *)environ->runtime;
+    _pub->trampoline_func(environ->runtime, _pub->trampoline_env, _pub->trampoline_argc, _pub->trampoline_args);
+  }
+}
+void VSysApplyBounce(VFunc func, VEnvironment * environ) {
+  int argc = environ->argc;
+  VEnv * self = VAlloca(environ->runtime, sizeof(VEnv)+sizeof(VWORD[argc]));
+  memcpy(self->vars, environ->argv, sizeof(VWORD[argc]));
+  VInitEnv(self, argc, argc, environ->static_chain);
+
+  // possible to get ourselves in trouble without doing a gc check but ehhhhh
   func(environ->runtime, environ->static_chain, argc, self);
 }
 #endif
@@ -1112,7 +1125,7 @@ static V_BEGIN_FUNC_MIN(VGCResumeFunc, "gc-resume", 0)
 //SYSV_CALL static void VGCResumeFunc(V_CORE_ARGS, ...) {
   VFunc f = VCheckedDecodeForeignPointer2(runtime, statics->vars[0], "gc-resume");
   VEnvironment * e = (void*)VDecodePointer(statics->vars[1]);
-  VSysApply(f, e);
+  VSysApplyBounce(f, e);
 V_END_FUNC
 
 SYSV_CALL static void VSwapHeap(VRuntime * runtime) {
