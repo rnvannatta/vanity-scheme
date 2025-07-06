@@ -259,7 +259,7 @@
            (table->defines
              (cdr table)
              (cons
-               `(define ,name ,val)
+               `(define-constant ,name ,val)
                acc)))
           (('typedef name val)
            (duplicate-mismatch name (car table) (cdr table)

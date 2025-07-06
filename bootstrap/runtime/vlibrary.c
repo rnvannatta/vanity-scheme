@@ -782,8 +782,33 @@ V_END_FUNC
 
 // vectors
 
-V_BEGIN_FUNC(VListVector2, "list->vector", 2, k, lst)
+V_BEGIN_FUNC_RANGE(VMakeVector, "make-vector", 2, 3, k, _len, _fill)
+  int len = VCheckedDecodeInt2(runtime, _len, "make-vector");
 
+  VWORD fill = argc == 3 ? _fill : VFALSE;
+  VVector * vec = V_ALLOCA_VECTOR2(&runtime, runtime, len);
+  if(!vec) VGarbageCollect2Func(runtime, (VFunc)VMakeVector, 3, k, _len, fill);
+  vec->base = VMakeSmallObject(VVECTOR);
+  vec->len = len;
+
+  for(int i = 0; i < len; i++) {
+    vec->arr[i] = fill;
+  }
+  V_BOUNCE(k, runtime, VEncodePointer(vec, VPOINTER_OTHER));
+}
+V_BEGIN_FUNC_MIN(VCreateVector, "vector", 1, k)
+  int len = argc-1;
+
+  VVector * vec = V_ALLOCA_SMALL_VECTOR(runtime, len);
+  vec->base = VMakeSmallObject(VVECTOR);
+  vec->len = len;
+
+  for(int i = 0; i < len; i++) {
+    vec->arr[i] = self->vars[i+1];
+  }
+  V_BOUNCE(k, runtime, VEncodePointer(vec, VPOINTER_OTHER));
+}
+V_BEGIN_FUNC(VListVector2, "list->vector", 2, k, lst)
   int len = 0;
   VWORD v = lst;
   while(VWordType(v) == VPOINTER_PAIR) {
@@ -2065,8 +2090,9 @@ V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorP, #prefix "vector?", 1, _buf) \
   } \
   return ret; \
 V_END_FUNC \
-V_BEGIN_FUNC(VMake ## Prefix ## Vector, "make-" #prefix "vector", 3, k, _len, fill) \
+V_BEGIN_FUNC_RANGE(VMake ## Prefix ## Vector, "make-" #prefix "vector", 2, 3, k, _len, _fill) \
   unsigned len = VCheckedDecodeInt2(runtime, _len, "make-" #prefix "vector"); \
+  VWORD fill = argc == 3 ? _fill : VFALSE; \
   if(len > INT_MAX) \
     VErrorC(runtime, "make-" #prefix "vector: tried to make a vector of length ~D, maximum vector length is ~D", len, INT_MAX); \
   unsigned size = elem_width * (len+1); \
@@ -2105,6 +2131,20 @@ V_BEGIN_FUNC(VList ## Prefix ## Vector, "list->" #prefix "vector", 2, k, lst) \
     Prefix ## Write(runtime, vec, offset, p->first); \
     offset += elem_width; \
     v = p->rest; \
+  } \
+  V_BOUNCE(k, runtime, VEncodePointer(vec, VPOINTER_OTHER)); \
+V_END_FUNC \
+V_BEGIN_FUNC_MIN(V ## Prefix ## Vector, #prefix "vector", 1, k) \
+  int len = argc-1; \
+  unsigned size = elem_width * (len+1); \
+  VBlob * vec = V_ALLOCA_SMALL_BLOB(runtime, size); \
+  vec->base = VMakeSmallObject(VBUFFER); \
+  vec->len = size; \
+  vec->buf[0] = BUF_ ## Prefix; \
+  unsigned offset = elem_width; \
+  for(int i = 1; i < argc; i++) { \
+    Prefix ## Write(runtime, vec, offset, self->vars[i]); \
+    offset += elem_width; \
   } \
   V_BOUNCE(k, runtime, VEncodePointer(vec, VPOINTER_OTHER)); \
 V_END_FUNC \

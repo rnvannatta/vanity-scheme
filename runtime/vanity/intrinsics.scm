@@ -127,12 +127,16 @@
          ((##vcore.set-cdr!) "VSetCdr2")
 
          ; Vectors
+         ((##vcore.vector) "VCreateVector")
+         ((##vcore.make-vector) "VMakeVector")
+         ((##vcore.list->vector) "VListVector2")
          ((##vcore.list->vector) "VListVector2")
          ((##vcore.vector-ref) "VVectorRef2")
          ((##vcore.vector-set!) "VVectorSet2")
          ((##vcore.vector-length) "VVectorLength2")
 
          ; Typevectors
+         ((##vcore.f64vector) "VF64Vector")
          ((##vcore.f64vector?) "VF64VectorP")
          ((##vcore.make-f64vector) "VMakeF64Vector")
          ((##vcore.list->f64vector) "VListF64Vector")
@@ -140,6 +144,7 @@
          ((##vcore.f64vector-set!) "VF64VectorSet")
          ((##vcore.f64vector-length) "VF64VectorLength")
 
+         ((##vcore.f32vector) "VF32Vector")
          ((##vcore.f32vector?) "VF32VectorP")
          ((##vcore.make-f32vector) "VMakeF32Vector")
          ((##vcore.list->f32vector) "VListF32Vector")
@@ -147,6 +152,7 @@
          ((##vcore.f32vector-set!) "VF32VectorSet")
          ((##vcore.f32vector-length) "VF32VectorLength")
 
+         ((##vcore.s32vector) "VS32Vector")
          ((##vcore.s32vector?) "VS32VectorP")
          ((##vcore.make-s32vector) "VMakeS32Vector")
          ((##vcore.list->s32vector) "VListS32Vector")
@@ -154,6 +160,7 @@
          ((##vcore.s32vector-set!) "VS32VectorSet")
          ((##vcore.s32vector-length) "VS32VectorLength")
 
+         ((##vcore.u16vector) "VU16Vector")
          ((##vcore.u16vector?) "VU16VectorP")
          ((##vcore.make-u16vector) "VMakeU16Vector")
          ((##vcore.list->u16vector) "VListU16Vector")
@@ -161,6 +168,7 @@
          ((##vcore.u16vector-set!) "VU16VectorSet")
          ((##vcore.u16vector-length) "VU16VectorLength")
 
+         ((##vcore.s16vector) "VS16Vector")
          ((##vcore.s16vector?) "VS16VectorP")
          ((##vcore.make-s16vector) "VMakeS16Vector")
          ((##vcore.list->s16vector) "VListS16Vector")
@@ -168,6 +176,7 @@
          ((##vcore.s16vector-set!) "VS16VectorSet")
          ((##vcore.s16vector-length) "VS16VectorLength")
 
+         ((##vcore.u8vector) "VU8Vector")
          ((##vcore.u8vector?) "VU8VectorP")
          ((##vcore.make-u8vector) "VMakeU8Vector")
          ((##vcore.list->u8vector) "VListU8Vector")
@@ -175,6 +184,7 @@
          ((##vcore.u8vector-set!) "VU8VectorSet")
          ((##vcore.u8vector-length) "VU8VectorLength")
 
+         ((##vcore.s8vector) "VS8Vector")
          ((##vcore.s8vector?) "VS8VectorP")
          ((##vcore.make-s8vector) "VMakeS8Vector")
          ((##vcore.list->s8vector) "VListS8Vector")
@@ -317,6 +327,12 @@
       ((##vcore./) #t)
       ;((##vcore.quotient) #t)
       ;((##vcore.remainder) #t)
+      ((##vcore.<=) #t)
+      ((##vcore.<) #t)
+      ((##vcore.=) #t)
+      ((##vcore.>=) #t)
+      ((##vcore.>) #t)
+
       ; predicates
       ((##vcore.null?) #t)
       ((##vcore.pair?) #t)
@@ -498,12 +514,15 @@
          ((##vcore.set-cdr!) ##vcore.set-cdr!)
 
          ; Vectors
+         ((##vcore.vector) ##vcore.vector)
+         ((##vcore.make-vector) ##vcore.make-vector)
          ((##vcore.list->vector) ##vcore.list->vector)
          ((##vcore.vector-ref) ##vcore.vector-ref)
          ((##vcore.vector-set!) ##vcore.vector-set!)
          ((##vcore.vector-length) ##vcore.vector-length)
 
          ; Typevectors
+         ((##vcore.f64vector) ##vcore.f64vector)
          ((##vcore.f64vector?) ##vcore.f64vector?)
          ((##vcore.make-f64vector) ##vcore.make-f64vector)
          ((##vcore.list->f64vector) ##vcore.list->f64vector)
@@ -511,6 +530,7 @@
          ((##vcore.f64vector-set!) ##vcore.f64vector-set!)
          ((##vcore.f64vector-length) ##vcore.f64vector-length)
 
+         ((##vcore.f32vector) ##vcore.f32vector)
          ((##vcore.f32vector?) ##vcore.f32vector?)
          ((##vcore.make-f32vector) ##vcore.make-f32vector)
          ((##vcore.list->f32vector) ##vcore.list->f32vector)
@@ -518,6 +538,7 @@
          ((##vcore.f32vector-set!) ##vcore.f32vector-set!)
          ((##vcore.f32vector-length) ##vcore.f32vector-length)
 
+         ((##vcore.s32vector) ##vcore.s32vector)
          ((##vcore.s32vector?) ##vcore.s32vector?)
          ((##vcore.make-s32vector) ##vcore.make-s32vector)
          ((##vcore.list->s32vector) ##vcore.list->s32vector)
@@ -525,6 +546,7 @@
          ((##vcore.s32vector-set!) ##vcore.s32vector-set!)
          ((##vcore.s32vector-length) ##vcore.s32vector-length)
 
+         ((##vcore.u16vector) ##vcore.u16vector)
          ((##vcore.u16vector?) ##vcore.u16vector?)
          ((##vcore.make-u16vector) ##vcore.make-u16vector)
          ((##vcore.list->u16vector) ##vcore.list->u16vector)
@@ -532,6 +554,7 @@
          ((##vcore.u16vector-set!) ##vcore.u16vector-set!)
          ((##vcore.u16vector-length) ##vcore.u16vector-length)
 
+         ((##vcore.s16vector) ##vcore.s16vector)
          ((##vcore.s16vector?) ##vcore.s16vector?)
          ((##vcore.make-s16vector) ##vcore.make-s16vector)
          ((##vcore.list->s16vector) ##vcore.list->s16vector)
@@ -539,6 +562,7 @@
          ((##vcore.s16vector-set!) ##vcore.s16vector-set!)
          ((##vcore.s16vector-length) ##vcore.s16vector-length)
 
+         ((##vcore.u8vector) ##vcore.u8vector)
          ((##vcore.u8vector?) ##vcore.u8vector?)
          ((##vcore.make-u8vector) ##vcore.make-u8vector)
          ((##vcore.list->u8vector) ##vcore.list->u8vector)
@@ -546,6 +570,7 @@
          ((##vcore.u8vector-set!) ##vcore.u8vector-set!)
          ((##vcore.u8vector-length) ##vcore.u8vector-length)
 
+         ((##vcore.s8vector) ##vcore.s8vector)
          ((##vcore.s8vector?) ##vcore.s8vector?)
          ((##vcore.make-s8vector) ##vcore.make-s8vector)
          ((##vcore.list->s8vector) ##vcore.list->s8vector)
