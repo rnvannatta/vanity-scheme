@@ -86,6 +86,30 @@ VWORD _VBasic_VDiv_Binary(VRuntime * runtime, VEnv * statics, VWORD a, VWORD b);
      _basic_ret; \
   })
 
+#define _VBasic_VCmpOp(cmp, runtime, statics, ...) \
+  ({ \
+     VRuntime * _basic_runtime = runtime; \
+     VWORD _basic_args[] = { __VA_ARGS__ }; \
+     enum { _basic_argc = sizeof _basic_args / sizeof *_basic_args }; \
+     _Static_assert(_basic_argc >= 2, #cmp ": two or more arguments required"); \
+     double _basic_a = VCheckedDecodeNumber2(_basic_runtime, _basic_args[0], #cmp); \
+     VWORD ret = VTRUE; \
+     for(int _basic_i = 1; _basic_i < _basic_argc; _basic_i++) { \
+      double _basic_b = VCheckedDecodeNumber2(_basic_runtime, _basic_args[_basic_i], #cmp); \
+      if(!(_basic_a cmp _basic_b)) { \
+        ret = VFALSE; \
+        break; \
+      } \
+      _basic_a = _basic_b; \
+     } \
+     ret; \
+  })
+#define _VBasic_VCmpLt(runtime, statics, ...) _VBasic_VCmpOp(<, runtime, statics, __VA_ARGS__)
+#define _VBasic_VCmpLe(runtime, statics, ...) _VBasic_VCmpOp(<=, runtime, statics, __VA_ARGS__)
+#define _VBasic_VCmpEq(runtime, statics, ...) _VBasic_VCmpOp(==, runtime, statics, __VA_ARGS__)
+#define _VBasic_VCmpGe(runtime, statics, ...) _VBasic_VCmpOp(>=, runtime, statics, __VA_ARGS__)
+#define _VBasic_VCmpGt(runtime, statics, ...) _VBasic_VCmpOp(>, runtime, statics, __VA_ARGS__)
+
 // Legacy inlines
 
 // predicates

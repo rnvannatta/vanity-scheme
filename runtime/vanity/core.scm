@@ -590,20 +590,18 @@
       (strs (fold-right string-append "" strs))))
 
   ; vectors
+  (define-constant vector ##vcore.vector)
+  (define-constant make-vector ##vcore.make-vector)
   (define-constant list->vector ##vcore.list->vector)
-  (define vector (lambda args (list->vector args)))
   (define-constant vector-ref ##vcore.vector-ref)
   (define-constant vector-set! ##vcore.vector-set!)
   (define-constant vector-length ##vcore.vector-length)
 
   ; typevectors
   (define-constant f32vector? ##vcore.f32vector?)
-  (define make-f32vector
-    (case-lambda
-      ((len) (##vcore.make-f32vector len #f))
-      ((len fill) (##vcore.make-f32vector len fill))))
+  (define-constant make-f32vector ##vcore.make-f32vector)
   (define-constant list->f32vector ##vcore.list->f32vector)
-  (define f32vector (lambda args (list->f32vector args)))
+  (define-constant f32vector ##vcore.f32vector)
   (define-constant f32vector-ref ##vcore.f32vector-ref)
   (define-constant f32vector-set! ##vcore.f32vector-set!)
   (define-constant f32vector-length ##vcore.f32vector-length)
@@ -615,12 +613,9 @@
             (loop (cons (f32vector-ref vec i) acc) (- i 1))))))
 
   (define-constant f64vector? ##vcore.f64vector?)
-  (define make-f64vector
-    (case-lambda
-      ((len) (##vcore.make-f64vector len #f))
-      ((len fill) (##vcore.make-f64vector len fill))))
+  (define-constant make-f64vector ##vcore.make-f64vector)
   (define-constant list->f64vector ##vcore.list->f64vector)
-  (define f64vector (lambda args (list->f64vector args)))
+  (define-constant f64vector ##vcore.f64vector)
   (define-constant f64vector-ref ##vcore.f64vector-ref)
   (define-constant f64vector-set! ##vcore.f64vector-set!)
   (define-constant f64vector-length ##vcore.f64vector-length)
@@ -632,12 +627,9 @@
             (loop (cons (f64vector-ref vec i) acc) (- i 1))))))
 
   (define-constant s32vector? ##vcore.s32vector?)
-  (define make-s32vector
-    (case-lambda
-      ((len) (##vcore.make-s32vector len #f))
-      ((len fill) (##vcore.make-s32vector len fill))))
+  (define-constant make-s32vector ##vcore.make-s32vector)
   (define-constant list->s32vector ##vcore.list->s32vector)
-  (define s32vector (lambda args (list->s32vector args)))
+  (define-constant s32vector ##vcore.s32vector)
   (define-constant s32vector-ref ##vcore.s32vector-ref)
   (define-constant s32vector-set! ##vcore.s32vector-set!)
   (define-constant s32vector-length ##vcore.s32vector-length)
@@ -649,12 +641,9 @@
             (loop (cons (s32vector-ref vec i) acc) (- i 1))))))
 
   (define-constant u16vector? ##vcore.u16vector?)
-  (define make-u16vector
-    (case-lambda
-      ((len) (##vcore.make-u16vector len #f))
-      ((len fill) (##vcore.make-u16vector len fill))))
+  (define-constant make-u16vector ##vcore.make-u16vector)
   (define-constant list->u16vector ##vcore.list->u16vector)
-  (define u16vector (lambda args (list->u16vector args)))
+  (define-constant u16vector ##vcore.u16vector)
   (define-constant u16vector-ref ##vcore.u16vector-ref)
   (define-constant u16vector-set! ##vcore.u16vector-set!)
   (define-constant u16vector-length ##vcore.u16vector-length)
@@ -666,12 +655,9 @@
             (loop (cons (u16vector-ref vec i) acc) (- i 1))))))
 
   (define-constant s16vector? ##vcore.s16vector?)
-  (define make-s16vector
-    (case-lambda
-      ((len) (##vcore.make-s16vector len #f))
-      ((len fill) (##vcore.make-s16vector len fill))))
+  (define-constant make-s16vector ##vcore.make-s16vector)
   (define-constant list->s16vector ##vcore.list->s16vector)
-  (define s16vector (lambda args (list->s16vector args)))
+  (define-constant s16vector ##vcore.s16vector)
   (define-constant s16vector-ref ##vcore.s16vector-ref)
   (define-constant s16vector-set! ##vcore.s16vector-set!)
   (define-constant s16vector-length ##vcore.s16vector-length)
@@ -683,12 +669,9 @@
             (loop (cons (s16vector-ref vec i) acc) (- i 1))))))
 
   (define-constant u8vector? ##vcore.u8vector?)
-  (define make-u8vector
-    (case-lambda
-      ((len) (##vcore.make-u8vector len #f))
-      ((len fill) (##vcore.make-u8vector len fill))))
+  (define-constant make-u8vector ##vcore.make-u8vector)
   (define-constant list->u8vector ##vcore.list->u8vector)
-  (define u8vector (lambda args (list->u8vector args)))
+  (define-constant u8vector ##vcore.u8vector)
   (define-constant u8vector-ref ##vcore.u8vector-ref)
   (define-constant u8vector-set! ##vcore.u8vector-set!)
   (define-constant u8vector-length ##vcore.u8vector-length)
@@ -700,10 +683,10 @@
             (loop (cons (u8vector-ref vec i) acc) (- i 1))))))
 
   (define-constant bytevector? ##vcore.u8vector?)
-  (define make-bytevector make-u8vector)
+  (define-constant make-bytevector ##vcore.make-u8vector)
   (define-constant list->bytevector ##vcore.list->u8vector)
   (define bytevector->list u8vector->list)
-  (define bytevector u8vector)
+  (define-constant bytevector ##vcore.u8vector)
   (define-constant bytevector-u8-ref ##vcore.u8vector-ref)
   (define-constant bytevector-u8-set! ##vcore.u8vector-set!)
   (define-constant bytevector-length ##vcore.u8vector-length)
@@ -715,12 +698,9 @@
   (define read-bytevector read-u8vector)
 
   (define-constant s8vector? ##vcore.s8vector?)
-  (define make-s8vector
-    (case-lambda
-      ((len) (##vcore.make-s8vector len #f))
-      ((len fill) (##vcore.make-s8vector len fill))))
+  (define-constant make-s8vector ##vcore.make-s8vector)
   (define-constant list->s8vector ##vcore.list->s8vector)
-  (define s8vector (lambda args (list->s8vector args)))
+  (define-constant s8vector ##vcore.make-s8vector)
   (define-constant s8vector-ref ##vcore.s8vector-ref)
   (define-constant s8vector-set! ##vcore.s8vector-set!)
   (define-constant s8vector-length ##vcore.s8vector-length)
@@ -748,10 +728,6 @@
             (loop (cons (vector-ref vec i) acc) (- i 1))))))
 
   ; Hideous
-  (define make-vector
-    (case-lambda
-      ((n) (list->vector (make-list n)))
-      ((n fill) (list->vector (make-list n fill)))))
 
   (define vector-for-each
     (case-lambda

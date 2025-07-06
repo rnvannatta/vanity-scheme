@@ -140,6 +140,7 @@ static struct { VBlob sym; char bytes[38]; } _V10_Dstring_D1753 = { { .base = { 
 static struct { VBlob sym; char bytes[37]; } _V10_Dstring_D1752 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 37 }, "Declaration is not a single function" };
 static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1751 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "naked_declaration" };
 static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D1750 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "unknown entry in ffi table" };
+VWEAK VWORD _V0define__constant;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0define__constant = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "define-constant" };
 static struct { VBlob sym; char bytes[40]; } _V10_Dstring_D1749 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 40 }, "variable redeclared as different symbol" };
 static struct { VBlob sym; char bytes[1]; } _V10_Dstring_D1748 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 1 }, "" };
 static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D1747 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "C" };
@@ -246,6 +247,7 @@ static __attribute__((constructor)) void VDllMain1() {
   _V10foreign_Dimport = VEncodePointer(VLookupConstant("_V10foreign_Dimport", &_VW_V10foreign_Dimport), VPOINTER_OTHER);
   _V10foreign_Ddeclare = VEncodePointer(VLookupConstant("_V10foreign_Ddeclare", &_VW_V10foreign_Ddeclare), VPOINTER_OTHER);
   _V0windows = VEncodePointer(VLookupConstant("_V0windows", &_VW_V0windows), VPOINTER_OTHER);
+  _V0define__constant = VEncodePointer(VLookupConstant("_V0define__constant", &_VW_V0define__constant), VPOINTER_OTHER);
   _V10foreign_Dfunction = VEncodePointer(VLookupConstant("_V10foreign_Dfunction", &_VW_V10foreign_Dfunction), VPOINTER_OTHER);
   _V0define = VEncodePointer(VLookupConstant("_V0define", &_VW_V0define), VPOINTER_OTHER);
   _V0enum = VEncodePointer(VLookupConstant("_V0enum", &_VW_V0enum), VPOINTER_OTHER);
@@ -7704,7 +7706,7 @@ void _V50_V0vanity_V0compiler_V0ffi_V0table___Gdefines_V0k309(VRuntime * runtime
   "-- expected 1~N"
   , argc);
  }
-  // (##qualified-call (vanity compiler ffi table->defines) (bruijn ##.table->defines.227 12 7) (bruijn ##.k.1215 1 0) (##inline ##vcore.cdr (bruijn ##.table.435 11 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'define (##inline ##vcore.cons (bruijn ##.name.453 3 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.118.454 2 0)) '()))) (bruijn ##.acc.436 11 2)))
+  // (##qualified-call (vanity compiler ffi table->defines) (bruijn ##.table->defines.227 12 7) (bruijn ##.k.1215 1 0) (##inline ##vcore.cdr (bruijn ##.table.435 11 1)) (##inline ##vcore.cons (##inline ##vcore.cons 'define-constant (##inline ##vcore.cons (bruijn ##.name.453 3 0) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.118.454 2 0)) '()))) (bruijn ##.acc.436 11 2)))
   {
     VClosure * _closure = VDecodeClosure(VGetArg(statics, 12-1, 7));
     VWORD _arg0 = 
@@ -7715,7 +7717,7 @@ void _V50_V0vanity_V0compiler_V0ffi_V0table___Gdefines_V0k309(VRuntime * runtime
     VWORD _arg2 = 
       VInlineCons2(runtime,
         VInlineCons2(runtime,
-        _V0define,
+        _V0define__constant,
         VInlineCons2(runtime,
         statics->up->up->vars[0],
         VInlineCons2(runtime,

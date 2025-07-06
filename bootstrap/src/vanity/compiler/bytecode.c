@@ -27,15 +27,15 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D932 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D931 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0list_V20" };
-static struct { VBlob sym; char bytes[30]; } _V10_Dstring_D930 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 30 }, "_V0vanity_V0pretty__print_V20" };
-static struct { VBlob sym; char bytes[33]; } _V10_Dstring_D929 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 33 }, "_V0vanity_V0compiler_V0utils_V20" };
-static struct { VBlob sym; char bytes[33]; } _V10_Dstring_D928 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 33 }, "_V0vanity_V0compiler_V0match_V20" };
-static struct { VBlob sym; char bytes[37]; } _V10_Dstring_D927 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 37 }, "_V0vanity_V0compiler_V0variables_V20" };
-static struct { VBlob sym; char bytes[31]; } _V10_Dstring_D926 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 31 }, "_V0vanity_V0compiler_V0ffi_V20" };
-static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D925 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "_V0vanity_V0intrinsics_V20" };
-static struct { VBlob sym; char bytes[36]; } _V10_Dstring_D924 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 36 }, "_V0vanity_V0compiler_V0bytecode_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D934 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D933 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0list_V20" };
+static struct { VBlob sym; char bytes[30]; } _V10_Dstring_D932 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 30 }, "_V0vanity_V0pretty__print_V20" };
+static struct { VBlob sym; char bytes[33]; } _V10_Dstring_D931 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 33 }, "_V0vanity_V0compiler_V0utils_V20" };
+static struct { VBlob sym; char bytes[33]; } _V10_Dstring_D930 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 33 }, "_V0vanity_V0compiler_V0match_V20" };
+static struct { VBlob sym; char bytes[37]; } _V10_Dstring_D929 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 37 }, "_V0vanity_V0compiler_V0variables_V20" };
+static struct { VBlob sym; char bytes[31]; } _V10_Dstring_D928 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 31 }, "_V0vanity_V0compiler_V0ffi_V20" };
+static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D927 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "_V0vanity_V0intrinsics_V20" };
+static struct { VBlob sym; char bytes[36]; } _V10_Dstring_D926 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 36 }, "_V0vanity_V0compiler_V0bytecode_V20" };
 VWEAK VWORD _V0compiler__error;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V0compiler__error = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "compiler-error" };
 VWEAK VWORD _V0number_Q;VWEAK struct { VBlob sym; char bytes[8]; } _VW_V0number_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 8 }, "number\?" };
 VWEAK VWORD _V0error;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0error = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "error" };
@@ -61,46 +61,46 @@ VWEAK VWORD _V0memv;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0memv = { { 
 VWEAK VWORD _V0displayln;VWEAK struct { VBlob sym; char bytes[10]; } _VW_V0displayln = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 10 }, "displayln" };
 VWEAK VWORD _V0to__bytecode;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0to__bytecode = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "to-bytecode" };
 VWEAK VWORD _V0write__bytecode;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V0write__bytecode = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "write-bytecode" };
-static struct { VBlob sym; char bytes[53]; } _V10_Dstring_D923 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 53 }, "logic error: bytecode shouldn't have a literal table" };
-static struct { VBlob sym; char bytes[40]; } _V10_Dstring_D922 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 40 }, "shared library has toplevel expressions" };
-static struct { VBlob sym; char bytes[44]; } _V10_Dstring_D921 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 44 }, "bytecode shared libraries not supported yet" };
-static struct { VBlob sym; char bytes[3]; } _V10_Dstring_D920 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 3 }, "#(" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D919 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, ")" };
+static struct { VBlob sym; char bytes[53]; } _V10_Dstring_D925 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 53 }, "logic error: bytecode shouldn't have a literal table" };
+static struct { VBlob sym; char bytes[40]; } _V10_Dstring_D924 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 40 }, "shared library has toplevel expressions" };
+static struct { VBlob sym; char bytes[44]; } _V10_Dstring_D923 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 44 }, "bytecode shared libraries not supported yet" };
+static struct { VBlob sym; char bytes[3]; } _V10_Dstring_D922 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 3 }, "#(" };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D921 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, ")" };
 VWEAK VWORD _V0k;VWEAK struct { VBlob sym; char bytes[2]; } _VW_V0k = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 2 }, "k" };
 VWEAK VWORD _V0toplevel;VWEAK struct { VBlob sym; char bytes[9]; } _VW_V0toplevel = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 9 }, "toplevel" };
 VWEAK VWORD _V10vcore_Ddeclare;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V10vcore_Ddeclare = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "##vcore.declare" };
 VWEAK VWORD _V0declare;VWEAK struct { VBlob sym; char bytes[8]; } _VW_V0declare = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 8 }, "declare" };
 VWEAK VWORD _V10foreign_Ddeclare;VWEAK struct { VBlob sym; char bytes[18]; } _VW_V10foreign_Ddeclare = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 18 }, "##foreign.declare" };
 VWEAK VWORD _V0declare__foreign;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0declare__foreign = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "declare-foreign" };
-static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D918 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "case" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D917 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "case-error" };
-static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D916 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "process-case-lambda" };
+static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D920 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "case" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D919 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "case-error" };
+static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D918 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "process-case-lambda" };
 VWEAK VWORD _V0case__lambda;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0case__lambda = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "case-lambda" };
 VWEAK VWORD _V0case__lambda_P;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0case__lambda_P = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "case-lambda+" };
-static struct { VBlob sym; char bytes[25]; } _V10_Dstring_D915 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 25 }, "process-case-lambda-tail" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D914 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "--expected ~A\n" };
+static struct { VBlob sym; char bytes[25]; } _V10_Dstring_D917 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 25 }, "process-case-lambda-tail" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D916 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "--expected ~A\n" };
 VWEAK VWORD _V0_P;VWEAK struct { VBlob sym; char bytes[2]; } _VW_V0_P = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 2 }, "+" };
-static struct { VBlob sym; char bytes[23]; } _V10_Dstring_D913 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 23 }, "--expected ~A or more\n" };
-static struct { VBlob sym; char bytes[1]; } _V10_Dstring_D912 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 1 }, "" };
+static struct { VBlob sym; char bytes[23]; } _V10_Dstring_D915 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 23 }, "--expected ~A or more\n" };
+static struct { VBlob sym; char bytes[1]; } _V10_Dstring_D914 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 1 }, "" };
 VWEAK VWORD _V0case__lambda__error;VWEAK struct { VBlob sym; char bytes[18]; } _VW_V0case__lambda__error = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 18 }, "case-lambda-error" };
 VWEAK VWORD _V0lambda;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0lambda = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "lambda" };
 VWEAK VWORD _V0lambda_P;VWEAK struct { VBlob sym; char bytes[8]; } _VW_V0lambda_P = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 8 }, "lambda+" };
 VWEAK VWORD _V0define;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0define = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "define" };
 VWEAK VWORD _V10vcore_Ddefine;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V10vcore_Ddefine = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "##vcore.define" };
 VWEAK VWORD _V0set_B;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0set_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "set!" };
-static struct { VBlob sym; char bytes[38]; } _V10_Dstring_D911 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 38 }, "print-bytecode: set must set a symbol" };
+static struct { VBlob sym; char bytes[38]; } _V10_Dstring_D913 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 38 }, "print-bytecode: set must set a symbol" };
 VWEAK VWORD _V10vcore_Dset__global_B;VWEAK struct { VBlob sym; char bytes[20]; } _VW_V10vcore_Dset__global_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 20 }, "##vcore.set-global!" };
 VWEAK VWORD _V0push__set_B;VWEAK struct { VBlob sym; char bytes[10]; } _VW_V0push__set_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 10 }, "push-set!" };
 VWEAK VWORD _V0letrec;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0letrec = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "letrec" };
 VWEAK VWORD _V0letrec__end;VWEAK struct { VBlob sym; char bytes[11]; } _VW_V0letrec__end = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 11 }, "letrec-end" };
 VWEAK VWORD _V0letrec__begin;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0letrec__begin = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "letrec-begin" };
 VWEAK VWORD _V0if;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0if = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "if" };
-static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D910 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "L" };
+static struct { VBlob sym; char bytes[2]; } _V10_Dstring_D912 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 2 }, "L" };
 VWEAK VWORD _V0label;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0label = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "label" };
 VWEAK VWORD _V0bf;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0bf = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "bf" };
 VWEAK VWORD _V0call;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0call = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "call" };
 VWEAK VWORD _V0lookup;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0lookup = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "lookup" };
-static struct { VBlob sym; char bytes[26]; } _V10_Dstring_D909 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 26 }, "match statement exhausted" };
+static struct { VBlob sym; char bytes[26]; } _V10_Dstring_D911 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 26 }, "match statement exhausted" };
 VWEAK VWORD _V10foreign_Dfunction;VWEAK struct { VBlob sym; char bytes[19]; } _VW_V10foreign_Dfunction = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 19 }, "##foreign.function" };
 VWEAK VWORD _V0foreign__function;VWEAK struct { VBlob sym; char bytes[17]; } _VW_V0foreign__function = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 17 }, "foreign-function" };
 VWEAK VWORD _V10intrinsic;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V10intrinsic = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "##intrinsic" };
@@ -108,7 +108,7 @@ VWEAK VWORD _V0intrinsic;VWEAK struct { VBlob sym; char bytes[10]; } _VW_V0intri
 VWEAK VWORD _V0bruijn;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0bruijn = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "bruijn" };
 VWEAK VWORD _V0close;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0close = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "close" };
 VWEAK VWORD _V0quote;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0quote = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "quote" };
-static struct { VBlob sym; char bytes[37]; } _V10_Dstring_D908 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 37 }, "print-bytecode: unknown literal type" };
+static struct { VBlob sym; char bytes[37]; } _V10_Dstring_D910 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 37 }, "print-bytecode: unknown literal type" };
 VWEAK VWORD _V0push;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0push = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "push" };
 static __attribute__((constructor)) void VDllMain1() {
   _V0compiler__error = VEncodePointer(VLookupConstant("_V0compiler__error", &_VW_V0compiler__error), VPOINTER_OTHER);
@@ -312,7 +312,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__literal_V0k36(VRuntime * run
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.382 0 0) ((bruijn ##.k.381 2 0) (##inline ##vcore.cons 'push (##inline ##vcore.cons (bruijn ##.x.153 2 1) '()))) ((bruijn ##.x.358 26 0) (bruijn ##.k.381 2 0) (##string ##.string.908) (bruijn ##.x.153 2 1)))
+  // (if (bruijn ##.p.382 0 0) ((bruijn ##.k.381 2 0) (##inline ##vcore.cons 'push (##inline ##vcore.cons (bruijn ##.x.153 2 1) '()))) ((bruijn ##.x.358 26 0) (bruijn ##.k.381 2 0) (##string ##.string.910) (bruijn ##.x.153 2 1)))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
@@ -324,7 +324,7 @@ _var0)) {
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 3,
       statics->up->vars[0],
-      VEncodePointer(&_V10_Dstring_D908.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D910.sym, VPOINTER_OTHER),
       statics->up->vars[1]);
 }
 }
@@ -924,10 +924,10 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__atom_V0k66(VRuntime * runtim
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.360 30 0) (bruijn ##.k.393 7 0) (##string ##.string.909))
+  // ((bruijn ##.x.360 30 0) (bruijn ##.k.393 7 0) (##string ##.string.911))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 2,
       VGetArg(statics, 7-1, 0),
-      VEncodePointer(&_V10_Dstring_D909.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D911.sym, VPOINTER_OTHER));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__atom_V0k65(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -1286,10 +1286,10 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0lambda10(VRunt
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.367 22 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0k76) (##string ##.string.910))
+  // ((bruijn ##.x.367 22 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0k76) (##string ##.string.912))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0k76, self)))),
-      VEncodePointer(&_V10_Dstring_D910.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D912.sym, VPOINTER_OTHER));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0k74(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -1840,10 +1840,10 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0k109(VRuntime 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.360 38 0) (bruijn ##.k.525 3 0) (##string ##.string.909))
+  // ((bruijn ##.x.360 38 0) (bruijn ##.k.525 3 0) (##string ##.string.911))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 2,
       statics->up->up->vars[0],
-      VEncodePointer(&_V10_Dstring_D909.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D911.sym, VPOINTER_OTHER));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0k108(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -1925,7 +1925,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0lambda15(VRunt
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.reg.904) ((##vcore.symbol? (bruijn ##.y.202 7 0))) (if (bruijn ##.reg.904 0 0) (##qualified-call (vanity compiler bytecode process-atom) (bruijn ##.process-atom.140 17 1) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0k110) (bruijn ##.k.200 9 0)) ((bruijn ##.x.360 38 0) (bruijn ##.k.529 1 0) (##string ##.string.911))))
+  // (basic-block 1 1 (##.reg.904) ((##vcore.symbol? (bruijn ##.y.202 7 0))) (if (bruijn ##.reg.904 0 0) (##qualified-call (vanity compiler bytecode process-atom) (bruijn ##.process-atom.140 17 1) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0k110) (bruijn ##.k.200 9 0)) ((bruijn ##.x.360 38 0) (bruijn ##.k.529 1 0) (##string ##.string.913))))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -1950,7 +1950,7 @@ self->vars[0])) {
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 2,
       statics->vars[0],
-      VEncodePointer(&_V10_Dstring_D911.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D913.sym, VPOINTER_OTHER));
 }
     }
 }
@@ -2642,10 +2642,10 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0k129(VRuntime 
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.360 28 0) (bruijn ##.k.467 5 0) (##string ##.string.909))
+  // ((bruijn ##.x.360 28 0) (bruijn ##.k.467 5 0) (##string ##.string.911))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 2,
       VGetArg(statics, 5-1, 0),
-      VEncodePointer(&_V10_Dstring_D909.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D911.sym, VPOINTER_OTHER));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__application_V0k121(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -2849,11 +2849,11 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V10_Dloop_D243_V0k
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.370 22 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V10_Dloop_D243_V0k141) (bruijn ##.x.369 23 0) (##string ##.string.912) (bruijn ##.x.630 0 0))
+  // ((bruijn ##.x.370 22 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V10_Dloop_D243_V0k141) (bruijn ##.x.369 23 0) (##string ##.string.914) (bruijn ##.x.630 0 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 4,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V10_Dloop_D243_V0k141, self)))),
       VGetArg(statics, 23-1, 0),
-      VEncodePointer(&_V10_Dstring_D912.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D914.sym, VPOINTER_OTHER),
       _var0);
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V10_Dloop_D243_V0k148(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -2872,10 +2872,10 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V10_Dloop_D243_V0l
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.368 32 0) (bruijn ##.k.657 0 0) (##string ##.string.913) (##inline ##vcore.car (bruijn ##.expr.48.251 4 0)))
+  // ((bruijn ##.x.368 32 0) (bruijn ##.k.657 0 0) (##string ##.string.915) (##inline ##vcore.car (bruijn ##.expr.48.251 4 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 3,
       _var0,
-      VEncodePointer(&_V10_Dstring_D913.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D915.sym, VPOINTER_OTHER),
       VInlineCar2(runtime,
         statics->up->up->up->vars[0]));
 }
@@ -3045,10 +3045,10 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V10_Dloop_D243_V0l
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.368 31 0) (bruijn ##.k.644 0 0) (##string ##.string.914) (##inline ##vcore.car (bruijn ##.expr.53.259 2 0)))
+  // ((bruijn ##.x.368 31 0) (bruijn ##.k.644 0 0) (##string ##.string.916) (##inline ##vcore.car (bruijn ##.expr.53.259 2 0)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 3,
       _var0,
-      VEncodePointer(&_V10_Dstring_D914.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D916.sym, VPOINTER_OTHER),
       VInlineCar2(runtime,
         statics->up->vars[0]));
 }
@@ -3163,10 +3163,10 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V10_Dloop_D243_V0l
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.360 36 0) (bruijn ##.k.635 0 0) (##string ##.string.915) (bruijn ##.e.245 4 1))
+  // ((bruijn ##.x.360 36 0) (bruijn ##.k.635 0 0) (##string ##.string.917) (bruijn ##.e.245 4 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 36-1, 0)), 3,
       _var0,
-      VEncodePointer(&_V10_Dstring_D915.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D917.sym, VPOINTER_OTHER),
       statics->up->up->up->vars[1]);
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V10_Dloop_D243_V0k155(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -3800,10 +3800,10 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V10_Dloop_D243_V0l
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.360 35 0) (bruijn ##.k.668 0 0) (##string ##.string.916) (##inline ##vcore.car (bruijn ##.rest.244 5 1)))
+  // ((bruijn ##.x.360 35 0) (bruijn ##.k.668 0 0) (##string ##.string.918) (##inline ##vcore.car (bruijn ##.rest.244 5 1)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 3,
       _var0,
-      VEncodePointer(&_V10_Dstring_D916.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D918.sym, VPOINTER_OTHER),
       VInlineCar2(runtime,
         VGetArg(statics, 5-1, 1)));
 }
@@ -3932,18 +3932,18 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k137(VRuntime * 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.367 20 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k138) (##string ##.string.917))
+  // ((bruijn ##.x.367 20 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k138) (##string ##.string.919))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k138, self)))),
-      VEncodePointer(&_V10_Dstring_D917.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D919.sym, VPOINTER_OTHER));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k184(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k183(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k184, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k183, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.724 1 0) ((bruijn ##.k.725 0 0) (bruijn ##.name.239 6 0)) ((bruijn ##.x.367 22 0) (bruijn ##.k.725 0 0) (##string ##.string.918)))
+  // (if (bruijn ##.reg.905 1 0) ((bruijn ##.k.725 0 0) (bruijn ##.name.239 6 0)) ((bruijn ##.x.367 22 0) (bruijn ##.k.725 0 0) (##string ##.string.920)))
 if(VDecodeBool(
 statics->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
@@ -3951,12 +3951,12 @@ statics->vars[0])) {
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 2,
       _var0,
-      VEncodePointer(&_V10_Dstring_D918.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D920.sym, VPOINTER_OTHER));
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k185(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k184(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k185, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k184, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -3967,20 +3967,6 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k185(VRuntime * 
         VInlineCons2(runtime,
         statics->up->vars[2],
         VNULL)));
-}
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k183(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k183, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k184) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k185))
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k184, self)), 1,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k185, self)))));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0lambda32(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
@@ -3994,11 +3980,18 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0lambda32(VRuntim
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (##vcore.= (close _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k183) (bruijn ##.i.280 0 1) 0)
-    VCallFuncWithGC(runtime, (VFunc)VCmpEq, 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k183, self)))),
-      _var1,
+  // (basic-block 1 1 (##.reg.905) ((##vcore.= (bruijn ##.i.280 1 1) 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k183) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k184)))
+    {
+    VEnv * statics = self;
+    struct { VEnv self; VWORD argv[1]; } container;
+    self = &container.self;
+    VInitEnv(self, 1, 1, statics);
+    self->vars[0] = _VBasic_VCmpEq(runtime, NULL,
+      statics->vars[1],
       VEncodeInt(0l));
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k183, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k184, self)))));
+    }
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case_V0k136(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -4078,9 +4071,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__fun__case(VRuntime * runtime
       VInlineCar2(runtime,
         _var1));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k191(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k190(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k191, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k190, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4120,9 +4113,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda34(VRuntime
     }
   }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k190(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k189(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k190, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k189, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4130,7 +4123,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k190(VRuntime * r
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.72.292 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.72.292 0 0))) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.70.289 2 0))) (##vcore.call-with-values (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k191) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda34) (bruijn ##.kk.66.283 5 1)) ((bruijn ##.k.749 4 0) #f)) ((bruijn ##.k.749 4 0) #f)) ((bruijn ##.k.749 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.72.292 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.72.292 0 0))) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.70.289 2 0))) (##vcore.call-with-values (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k190) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda34) (bruijn ##.kk.66.283 5 1)) ((bruijn ##.k.749 4 0) #f)) ((bruijn ##.k.749 4 0) #f)) ((bruijn ##.k.749 4 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4143,7 +4136,7 @@ VInlineNullP2(runtime,
         VInlineCdr2(runtime,
         statics->up->vars[0])))) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k191, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k190, self)))),
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda34, self)))),
       VGetArg(statics, 5-1, 1));
 } else {
@@ -4159,28 +4152,6 @@ VInlineNullP2(runtime,
       VEncodeBool(false));
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k189(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k189, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.71.290 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k190) (##inline ##vcore.cdr (bruijn ##.expr.71.290 0 0))) ((bruijn ##.k.749 3 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k190, self)), 1,
-      VInlineCdr2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k188(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k188, got ~D~N"
@@ -4191,15 +4162,15 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k188(VRuntime * r
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.70.289 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k189) (##inline ##vcore.car (bruijn ##.expr.70.289 0 0))) ((bruijn ##.k.749 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.71.290 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k189) (##inline ##vcore.cdr (bruijn ##.expr.71.290 0 0))) ((bruijn ##.k.749 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k189, self)), 1,
-      VInlineCar2(runtime,
+      VInlineCdr2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -4213,15 +4184,15 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k187(VRuntime * r
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.69.287 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k188) (##inline ##vcore.cdr (bruijn ##.expr.69.287 0 0))) ((bruijn ##.k.749 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.70.289 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k188) (##inline ##vcore.car (bruijn ##.expr.70.289 0 0))) ((bruijn ##.k.749 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k188, self)), 1,
-      VInlineCdr2(runtime,
+      VInlineCar2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -4235,11 +4206,33 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k186(VRuntime * r
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.fun.282 2 1)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k187) (##inline ##vcore.cdr (bruijn ##.fun.282 2 1))) ((bruijn ##.k.749 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.69.287 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k187) (##inline ##vcore.cdr (bruijn ##.expr.69.287 0 0))) ((bruijn ##.k.749 1 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k187, self)), 1,
+      VInlineCdr2(runtime,
+        _var0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k185(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k185, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.fun.282 2 1)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k186) (##inline ##vcore.cdr (bruijn ##.fun.282 2 1))) ((bruijn ##.k.749 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k187, self)), 1,
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k186, self)), 1,
       VInlineCdr2(runtime,
         statics->up->vars[1]));
 } else {
@@ -4247,9 +4240,9 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k200(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k199(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k200, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k199, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4289,9 +4282,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda35(VRuntime
     }
   }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k199(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k198(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k199, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k198, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4299,7 +4292,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k199(VRuntime * r
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.78.302 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.78.302 0 0))) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.75.298 4 0))) (##vcore.call-with-values (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k200) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda35) (bruijn ##.kk.66.283 8 1)) ((bruijn ##.k.734 6 0) #f)) ((bruijn ##.k.734 6 0) #f)) ((bruijn ##.k.734 6 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.78.302 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.78.302 0 0))) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.75.298 4 0))) (##vcore.call-with-values (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k199) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda35) (bruijn ##.kk.66.283 8 1)) ((bruijn ##.k.734 6 0) #f)) ((bruijn ##.k.734 6 0) #f)) ((bruijn ##.k.734 6 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4312,7 +4305,7 @@ VInlineNullP2(runtime,
         VInlineCdr2(runtime,
         statics->up->up->up->vars[0])))) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k200, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k199, self)))),
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda35, self)))),
       VGetArg(statics, 8-1, 1));
 } else {
@@ -4328,27 +4321,6 @@ VInlineNullP2(runtime,
       VEncodeBool(false));
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k198(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k198, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (bruijn ##.p.739 0 0) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k199) (##inline ##vcore.cdr (bruijn ##.expr.77.301 1 0))) ((bruijn ##.k.734 5 0) #f))
-if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k199, self)), 1,
-      VInlineCdr2(runtime,
-        statics->vars[0]));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
-      VEncodeBool(false));
-}
-}
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k197(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k197, got ~D~N"
@@ -4359,17 +4331,14 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k197(VRuntime * r
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.77.301 0 0)) ((bruijn ##.x.362 27 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k198) '+ (##inline ##vcore.car (bruijn ##.expr.77.301 0 0))) ((bruijn ##.k.734 4 0) #f))
+  // (if (bruijn ##.p.739 0 0) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k198) (##inline ##vcore.cdr (bruijn ##.expr.77.301 1 0))) ((bruijn ##.k.734 5 0) #f))
 if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k198, self)))),
-      _V0_P,
-      VInlineCar2(runtime,
-        _var0));
+_var0)) {
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k198, self)), 1,
+      VInlineCdr2(runtime,
+        statics->vars[0]));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
       VEncodeBool(false));
 }
 }
@@ -4383,15 +4352,17 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k196(VRuntime * r
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.76.299 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k197) (##inline ##vcore.cdr (bruijn ##.expr.76.299 0 0))) ((bruijn ##.k.734 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.77.301 0 0)) ((bruijn ##.x.362 27 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k197) '+ (##inline ##vcore.car (bruijn ##.expr.77.301 0 0))) ((bruijn ##.k.734 4 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k197, self)), 1,
-      VInlineCdr2(runtime,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 3,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k197, self)))),
+      _V0_P,
+      VInlineCar2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -4405,15 +4376,15 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k195(VRuntime * r
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.75.298 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k196) (##inline ##vcore.car (bruijn ##.expr.75.298 0 0))) ((bruijn ##.k.734 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.76.299 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k196) (##inline ##vcore.cdr (bruijn ##.expr.76.299 0 0))) ((bruijn ##.k.734 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k196, self)), 1,
-      VInlineCar2(runtime,
+      VInlineCdr2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -4427,15 +4398,15 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k194(VRuntime * r
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.74.296 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k195) (##inline ##vcore.cdr (bruijn ##.expr.74.296 0 0))) ((bruijn ##.k.734 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.75.298 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k195) (##inline ##vcore.car (bruijn ##.expr.75.298 0 0))) ((bruijn ##.k.734 2 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k195, self)), 1,
-      VInlineCdr2(runtime,
+      VInlineCar2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -4449,11 +4420,33 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k193(VRuntime * r
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.fun.282 3 1)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k194) (##inline ##vcore.cdr (bruijn ##.fun.282 3 1))) ((bruijn ##.k.734 0 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.74.296 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k194) (##inline ##vcore.cdr (bruijn ##.expr.74.296 0 0))) ((bruijn ##.k.734 1 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        _var0))) {
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k194, self)), 1,
+      VInlineCdr2(runtime,
+        _var0));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k192(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k192, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.fun.282 3 1)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k193) (##inline ##vcore.cdr (bruijn ##.fun.282 3 1))) ((bruijn ##.k.734 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k194, self)), 1,
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k193, self)), 1,
       VInlineCdr2(runtime,
         statics->up->up->vars[1]));
 } else {
@@ -4481,9 +4474,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda36(VRuntime
     }
   }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k201(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k200(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k201, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k200, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4497,9 +4490,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k201(VRuntime * r
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda36, self)))),
       statics->up->vars[1]);
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k192(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k191(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k192, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k191, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4507,9 +4500,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k192(VRuntime * r
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k193) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k201))
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k193, self)), 1,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k201, self)))));
+  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k192) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k200))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k192, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k200, self)))));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda33(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
@@ -4522,9 +4515,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda33(VRuntime
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k186) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k192))
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k186, self)), 1,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k192, self)))));
+  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k185) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k191))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k185, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0k191, self)))));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__function(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
@@ -4542,9 +4535,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__function(VRuntime * runtime,
       _var0,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__function_V0lambda33, self)))));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k210(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k209(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k210, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k209, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4554,9 +4547,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_
       statics->up->vars[1],
       _var0);
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k209(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k208(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k209, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k208, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4564,22 +4557,22 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.90.319 1 1))) ((bruijn ##.x.366 29 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k210) (bruijn ##.args.87.320 1 2)) ((bruijn ##.k.781 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.pair? (bruijn ##.expr.90.319 1 1))) ((bruijn ##.x.366 29 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k209) (bruijn ##.args.87.320 1 2)) ((bruijn ##.k.781 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlinePairP2(runtime,
         statics->vars[1])))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k210, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k209, self)))),
       statics->vars[2]);
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k213(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k212(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k213, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k212, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4589,9 +4582,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_
       VGetArg(statics, 5-1, 1),
       _var0);
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k212(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k211(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k212, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k211, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4599,9 +4592,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.366 32 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k213) (bruijn ##.args.87.320 4 2))
+  // ((bruijn ##.x.366 32 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k212) (bruijn ##.args.87.320 4 2))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 2,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k213, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k212, self)))),
       statics->up->up->up->vars[2]);
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0lambda41(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
@@ -4615,9 +4608,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.kk.89.321 0 1) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k212) (##inline ##vcore.cdr (bruijn ##.expr.90.319 3 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.90.319 3 1)) (bruijn ##.args.87.320 3 2)))
+  // ((bruijn ##.kk.89.321 0 1) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k211) (##inline ##vcore.cdr (bruijn ##.expr.90.319 3 1)) (##inline ##vcore.cons (##inline ##vcore.car (bruijn ##.expr.90.319 3 1)) (bruijn ##.args.87.320 3 2)))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var1), 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k212, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k211, self)))),
       VInlineCdr2(runtime,
         statics->up->up->vars[1]),
       VInlineCons2(runtime,
@@ -4640,9 +4633,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_
       _var0,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0lambda41, self)))));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k211(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k210(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k211, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k210, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4668,9 +4661,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k209) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k211))
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k209, self)), 1,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k211, self)))));
+  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k208) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k210))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k208, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V10_Dloop_D318_V0k210, self)))));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda39(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
@@ -4722,9 +4715,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda38
       _var0,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda39, self)))));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k214(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k213(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k214, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k213, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4732,9 +4725,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k214(VRu
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       statics->vars[0]);
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k218(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k217(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k218, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k217, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4760,9 +4753,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k218(VRu
         VNULL))),
         VNULL));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k219(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k218(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k219, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k218, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4782,26 +4775,10 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda44
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.374 22 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k219) (bruijn ##.arg.325 0 1))
+  // ((bruijn ##.x.374 22 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k218) (bruijn ##.arg.325 0 1))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 2,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k219, self)))),
-      _var1);
-}
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k217(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k217, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.364 31 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k218) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda44) (bruijn ##.args.324 4 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 3,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k218, self)))),
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda44, self)))),
-      statics->up->up->up->vars[2]);
+      _var1);
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k216(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -4813,11 +4790,11 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k216(VRu
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.375 19 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k217) (##inline ##vcore.car (bruijn ##.expr.84.312 6 0)))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 2,
+  // ((bruijn ##.x.364 31 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k217) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda44) (bruijn ##.args.324 4 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 3,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k217, self)))),
-      VInlineCar2(runtime,
-        VGetArg(statics, 6-1, 0)));
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda44, self)))),
+      statics->up->up->up->vars[2]);
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k215(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -4829,9 +4806,25 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k215(VRu
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.string->symbol (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k216) (bruijn ##.x.801 0 0))
-    VCallFuncWithGC(runtime, (VFunc)VStringSymbol2, 2,
+  // ((bruijn ##.x.375 19 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k216) (##inline ##vcore.car (bruijn ##.expr.84.312 6 0)))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k216, self)))),
+      VInlineCar2(runtime,
+        VGetArg(statics, 6-1, 0)));
+}
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k214(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k214, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (##vcore.string->symbol (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k215) (bruijn ##.x.801 0 0))
+    VCallFuncWithGC(runtime, (VFunc)VStringSymbol2, 2,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k215, self)))),
       _var0);
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda43(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -4844,9 +4837,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda43
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.376 16 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k215) (bruijn ##.name.315 2 0))
+  // ((bruijn ##.x.376 16 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k214) (bruijn ##.name.315 2 0))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 0)), 2,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k215, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k214, self)))),
       statics->up->vars[0]);
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda42(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
@@ -4861,12 +4854,12 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda42
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.323 0 1)) (##vcore.call-with-values (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k214) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda43) (bruijn ##.kk.79.305 8 1)) ((bruijn ##.k.784 0 0) #f))
+  // (if (##inline ##vcore.null? (bruijn ##.tail-expr.323 0 1)) (##vcore.call-with-values (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k213) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda43) (bruijn ##.kk.79.305 8 1)) ((bruijn ##.k.784 0 0) #f))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
     VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k214, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k213, self)))),
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda43, self)))),
       VGetArg(statics, 8-1, 1));
 } else {
@@ -4874,9 +4867,9 @@ VInlineNullP2(runtime,
       VEncodeBool(false));
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k208(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k207(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k208, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k207, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -4890,28 +4883,6 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k208(VRu
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda38, self)))),
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda42, self)))));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k207(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k207, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.85.314 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k208) (##inline ##vcore.car (bruijn ##.expr.85.314 0 0))) ((bruijn ##.k.764 5 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k208, self)), 1,
-      VInlineCar2(runtime,
-        _var0));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
-      VEncodeBool(false));
-}
-}
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k206(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k206, got ~D~N"
@@ -4922,15 +4893,15 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k206(VRu
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.84.312 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k207) (##inline ##vcore.cdr (bruijn ##.expr.84.312 0 0))) ((bruijn ##.k.764 4 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.85.314 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k207) (##inline ##vcore.car (bruijn ##.expr.85.314 0 0))) ((bruijn ##.k.764 5 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k207, self)), 1,
-      VInlineCdr2(runtime,
+      VInlineCar2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
       VEncodeBool(false));
 }
 }
@@ -4944,7 +4915,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k205(VRu
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.83.310 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k206) (##inline ##vcore.cdr (bruijn ##.expr.83.310 0 0))) ((bruijn ##.k.764 3 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.84.312 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k206) (##inline ##vcore.cdr (bruijn ##.expr.84.312 0 0))) ((bruijn ##.k.764 4 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4952,7 +4923,7 @@ VInlinePairP2(runtime,
       VInlineCdr2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -4966,7 +4937,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k204(VRu
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.82.308 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k205) (##inline ##vcore.cdr (bruijn ##.expr.82.308 0 0))) ((bruijn ##.k.764 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.83.310 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k205) (##inline ##vcore.cdr (bruijn ##.expr.83.310 0 0))) ((bruijn ##.k.764 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
@@ -4974,7 +4945,7 @@ VInlinePairP2(runtime,
       VInlineCdr2(runtime,
         _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -4988,14 +4959,15 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k203(VRu
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.765 0 0) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k204) (##inline ##vcore.cdr (bruijn ##.expr.304 3 1))) ((bruijn ##.k.764 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.82.308 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k204) (##inline ##vcore.cdr (bruijn ##.expr.82.308 0 0))) ((bruijn ##.k.764 2 0) #f))
 if(VDecodeBool(
-_var0)) {
+VInlinePairP2(runtime,
+        _var0))) {
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k204, self)), 1,
       VInlineCdr2(runtime,
-        statics->up->up->vars[1]));
+        _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -5009,12 +4981,33 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k202(VRu
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.304 2 1)) ((bruijn ##.x.362 22 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k203) '##foreign.function (##inline ##vcore.car (bruijn ##.expr.304 2 1))) ((bruijn ##.k.764 0 0) #f))
+  // (if (bruijn ##.p.765 0 0) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k203) (##inline ##vcore.cdr (bruijn ##.expr.304 3 1))) ((bruijn ##.k.764 1 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k203, self)), 1,
+      VInlineCdr2(runtime,
+        statics->up->up->vars[1]));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k201(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k201, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.304 2 1)) ((bruijn ##.x.362 22 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k202) '##foreign.function (##inline ##vcore.car (bruijn ##.expr.304 2 1))) ((bruijn ##.k.764 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->vars[1]))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k203, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k202, self)))),
       _V10foreign_Dfunction,
       VInlineCar2(runtime,
         statics->up->vars[1]));
@@ -5023,16 +5016,16 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k220(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k219(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k220, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k219, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.360 24 0) (bruijn ##.k.761 1 0) (##string ##.string.909))
+  // ((bruijn ##.x.360 24 0) (bruijn ##.k.761 1 0) (##string ##.string.911))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 0)), 2,
       statics->vars[0],
-      VEncodePointer(&_V10_Dstring_D909.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D911.sym, VPOINTER_OTHER));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda37(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
@@ -5045,9 +5038,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda37
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k202) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k220))
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k202, self)), 1,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k220, self)))));
+  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k201) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k219))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k201, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0k219, self)))));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
@@ -5065,9 +5058,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function(VRuntime *
       _var0,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__foreign__function_V0lambda37, self)))));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k224(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k223(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k224, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k223, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5085,37 +5078,6 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda46(VRuntime 
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VNULL);
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k223(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k223, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.94.330 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.94.330 0 0))) (##vcore.call-with-values (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k224) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda46) (bruijn ##.kk.91.327 3 1)) ((bruijn ##.k.821 2 0) #f)) ((bruijn ##.k.821 2 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-if(VDecodeBool(
-VInlineNullP2(runtime,
-        VInlineCdr2(runtime,
-        _var0)))) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k224, self)))),
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda46, self)))),
-      statics->up->up->vars[1]);
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k222(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k222, got ~D~N"
@@ -5126,14 +5088,24 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k222(VRuntime * ru
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.822 0 0) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k223) (##inline ##vcore.cdr (bruijn ##.declare.326 3 1))) ((bruijn ##.k.821 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.94.330 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.94.330 0 0))) (##vcore.call-with-values (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k223) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda46) (bruijn ##.kk.91.327 3 1)) ((bruijn ##.k.821 2 0) #f)) ((bruijn ##.k.821 2 0) #f))
 if(VDecodeBool(
-_var0)) {
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k223, self)), 1,
-      VInlineCdr2(runtime,
-        statics->up->up->vars[1]));
+VInlinePairP2(runtime,
+        _var0))) {
+if(VDecodeBool(
+VInlineNullP2(runtime,
+        VInlineCdr2(runtime,
+        _var0)))) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k223, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda46, self)))),
+      statics->up->up->vars[1]);
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -5147,12 +5119,33 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k221(VRuntime * ru
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.declare.326 2 1)) ((bruijn ##.x.362 22 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k222) '##foreign.declare (##inline ##vcore.car (bruijn ##.declare.326 2 1))) ((bruijn ##.k.821 0 0) #f))
+  // (if (bruijn ##.p.822 0 0) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k222) (##inline ##vcore.cdr (bruijn ##.declare.326 3 1))) ((bruijn ##.k.821 1 0) #f))
+if(VDecodeBool(
+_var0)) {
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k222, self)), 1,
+      VInlineCdr2(runtime,
+        statics->up->up->vars[1]));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+      VEncodeBool(false));
+}
+}
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k220(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k220, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (if (##inline ##vcore.pair? (bruijn ##.declare.326 2 1)) ((bruijn ##.x.362 22 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k221) '##foreign.declare (##inline ##vcore.car (bruijn ##.declare.326 2 1))) ((bruijn ##.k.821 0 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         statics->up->vars[1]))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k222, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k221, self)))),
       _V10foreign_Ddeclare,
       VInlineCar2(runtime,
         statics->up->vars[1]));
@@ -5161,9 +5154,9 @@ VInlinePairP2(runtime,
       VEncodeBool(false));
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k230(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k229(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k230, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k229, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5191,37 +5184,6 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda47(VRuntime 
         VNULL))),
         VNULL));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k229(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k229, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.97.335 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.97.335 0 0))) (##vcore.call-with-values (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k230) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda47) (bruijn ##.kk.91.327 5 1)) ((bruijn ##.k.808 3 0) #f)) ((bruijn ##.k.808 3 0) #f))
-if(VDecodeBool(
-VInlinePairP2(runtime,
-        _var0))) {
-if(VDecodeBool(
-VInlineNullP2(runtime,
-        VInlineCdr2(runtime,
-        _var0)))) {
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k230, self)))),
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda47, self)))),
-      VGetArg(statics, 5-1, 1));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
-      VEncodeBool(false));
-}
-}
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k228(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k228, got ~D~N"
@@ -5232,15 +5194,24 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k228(VRuntime * ru
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.expr.96.333 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k229) (##inline ##vcore.cdr (bruijn ##.expr.96.333 0 0))) ((bruijn ##.k.808 2 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.97.335 0 0)) (if (##inline ##vcore.null? (##inline ##vcore.cdr (bruijn ##.expr.97.335 0 0))) (##vcore.call-with-values (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k229) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda47) (bruijn ##.kk.91.327 5 1)) ((bruijn ##.k.808 3 0) #f)) ((bruijn ##.k.808 3 0) #f))
 if(VDecodeBool(
 VInlinePairP2(runtime,
         _var0))) {
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k229, self)), 1,
-      VInlineCdr2(runtime,
-        _var0));
+if(VDecodeBool(
+VInlineNullP2(runtime,
+        VInlineCdr2(runtime,
+        _var0)))) {
+    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k229, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda47, self)))),
+      VGetArg(statics, 5-1, 1));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+      VEncodeBool(false));
+}
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -5254,14 +5225,15 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k227(VRuntime * ru
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.809 0 0) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k228) (##inline ##vcore.cdr (bruijn ##.declare.326 4 1))) ((bruijn ##.k.808 1 0) #f))
+  // (if (##inline ##vcore.pair? (bruijn ##.expr.96.333 0 0)) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k228) (##inline ##vcore.cdr (bruijn ##.expr.96.333 0 0))) ((bruijn ##.k.808 2 0) #f))
 if(VDecodeBool(
-_var0)) {
+VInlinePairP2(runtime,
+        _var0))) {
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k228, self)), 1,
       VInlineCdr2(runtime,
-        statics->up->up->up->vars[1]));
+        _var0));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
 }
 }
@@ -5275,30 +5247,16 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k226(VRuntime * ru
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (##inline ##vcore.pair? (bruijn ##.declare.326 3 1)) ((bruijn ##.x.362 23 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k227) '##vcore.declare (##inline ##vcore.car (bruijn ##.declare.326 3 1))) ((bruijn ##.k.808 0 0) #f))
+  // (if (bruijn ##.p.809 0 0) ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k227) (##inline ##vcore.cdr (bruijn ##.declare.326 4 1))) ((bruijn ##.k.808 1 0) #f))
 if(VDecodeBool(
-VInlinePairP2(runtime,
-        statics->up->up->vars[1]))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k227, self)))),
-      _V10vcore_Ddeclare,
-      VInlineCar2(runtime,
-        statics->up->up->vars[1]));
+_var0)) {
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k227, self)), 1,
+      VInlineCdr2(runtime,
+        statics->up->up->up->vars[1]));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
-}
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k231(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k231, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((bruijn ##.x.360 25 0) (bruijn ##.k.804 2 0) (##string ##.string.909))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 2,
-      statics->up->vars[0],
-      VEncodePointer(&_V10_Dstring_D909.sym, VPOINTER_OTHER));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k225(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -5310,9 +5268,44 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k225(VRuntime * ru
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k226) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k231))
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k226, self)), 1,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k231, self)))));
+  // (if (##inline ##vcore.pair? (bruijn ##.declare.326 3 1)) ((bruijn ##.x.362 23 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k226) '##vcore.declare (##inline ##vcore.car (bruijn ##.declare.326 3 1))) ((bruijn ##.k.808 0 0) #f))
+if(VDecodeBool(
+VInlinePairP2(runtime,
+        statics->up->up->vars[1]))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 3,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k226, self)))),
+      _V10vcore_Ddeclare,
+      VInlineCar2(runtime,
+        statics->up->up->vars[1]));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k230(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k230, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // ((bruijn ##.x.360 25 0) (bruijn ##.k.804 2 0) (##string ##.string.911))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 2,
+      statics->up->vars[0],
+      VEncodePointer(&_V10_Dstring_D911.sym, VPOINTER_OTHER));
+}
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k224(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k224, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k225) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k230))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k225, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k230, self)))));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda45(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
@@ -5325,9 +5318,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda45(VRuntime 
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k221) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k225))
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k221, self)), 1,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k225, self)))));
+  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k220) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k224))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k220, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0k224, self)))));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
@@ -5345,9 +5338,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__declare(VRuntime * runtime, 
       _var0,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__declare_V0lambda45, self)))));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0process__toplevel_V0k232(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0process__toplevel_V0k231(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__toplevel_V0k232, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0process__toplevel_V0k231, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5370,11 +5363,11 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__toplevel(VRuntime * runtime,
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (##qualified-call (vanity compiler bytecode process-combination) (bruijn ##.process-combination.141 1 2) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__toplevel_V0k232) (##inline ##vcore.cons (bruijn ##.expr.337 0 1) (##inline ##vcore.cons (##inline ##vcore.cons 'bruijn (##inline ##vcore.cons 'k (##inline ##vcore.cons '0 (##inline ##vcore.cons '0 '())))) '())))
+  // (##qualified-call (vanity compiler bytecode process-combination) (bruijn ##.process-combination.141 1 2) (close _V50_V0vanity_V0compiler_V0bytecode_V0process__toplevel_V0k231) (##inline ##vcore.cons (bruijn ##.expr.337 0 1) (##inline ##vcore.cons (##inline ##vcore.cons 'bruijn (##inline ##vcore.cons 'k (##inline ##vcore.cons '0 (##inline ##vcore.cons '0 '())))) '())))
   {
     VClosure * _closure = VDecodeClosure(statics->vars[2]);
     VWORD _arg0 = 
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__toplevel_V0k232, self))));
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0process__toplevel_V0k231, self))));
     VWORD _arg1 = 
       VInlineCons2(runtime,
         _var1,
@@ -5396,9 +5389,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0process__toplevel(VRuntime * runtime,
     }
   }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V10_Dloop_D339_V0k233(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V10_Dloop_D339_V0k232(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V10_Dloop_D339_V0k233, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V10_Dloop_D339_V0k232, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5420,7 +5413,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V10_Dloop_D339(VRuntim
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (if (##inline ##vcore.null? (bruijn ##.segments.340 0 1)) ((bruijn ##.k.840 0 0) '()) (##qualified-call (vanity compiler bytecode glue-bytecode ##.loop.339) (bruijn ##.loop.339 1 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V10_Dloop_D339_V0k233) (##inline ##vcore.cdr (bruijn ##.segments.340 0 1))))
+  // (if (##inline ##vcore.null? (bruijn ##.segments.340 0 1)) ((bruijn ##.k.840 0 0) '()) (##qualified-call (vanity compiler bytecode glue-bytecode ##.loop.339) (bruijn ##.loop.339 1 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V10_Dloop_D339_V0k232) (##inline ##vcore.cdr (bruijn ##.segments.340 0 1))))
 if(VDecodeBool(
 VInlineNullP2(runtime,
         _var1))) {
@@ -5430,7 +5423,7 @@ VInlineNullP2(runtime,
   {
     VClosure * _closure = VDecodeClosure(statics->vars[0]);
     VWORD _arg0 = 
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V10_Dloop_D339_V0k233, self))));
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V10_Dloop_D339_V0k232, self))));
     VWORD _arg1 = 
       VInlineCdr2(runtime,
         _var1);
@@ -5442,9 +5435,9 @@ VInlineNullP2(runtime,
   }
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V0k234(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V0k233(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V0k234, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V0k233, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5464,7 +5457,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode(VRuntime * runtime, VE
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (letrec 1 ((close "_V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V10_Dloop_D339")) (##qualified-call (vanity compiler bytecode glue-bytecode ##.loop.339) (bruijn ##.loop.339 0 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V0k234) (bruijn ##.segments.338 1 1)))
+  // (letrec 1 ((close "_V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V10_Dloop_D339")) (##qualified-call (vanity compiler bytecode glue-bytecode ##.loop.339) (bruijn ##.loop.339 0 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V0k233) (bruijn ##.segments.338 1 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -5474,7 +5467,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode(VRuntime * runtime, VE
   {
     VClosure * _closure = VDecodeClosure(self->vars[0]);
     VWORD _arg0 = 
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V0k234, self))));
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode_V0k233, self))));
     VWORD _arg1 = 
       statics->vars[1];
     if(VStackOverflow(runtime)){
@@ -5485,9 +5478,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0glue__bytecode(VRuntime * runtime, VE
   }
     }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k236(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k235(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k236, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k235, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5503,9 +5496,9 @@ VInlineNot2(runtime,
       VEncodeBool(false));
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k237(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k236(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k237, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k236, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5514,9 +5507,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k237(VRuntime
       statics->up->vars[0],
       statics->up->vars[1]);
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k235(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k234(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k235, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k234, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5524,9 +5517,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k235(VRuntime
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k236) (close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k237))
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k236, self)), 1,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k237, self)))));
+  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k235) (close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k236))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k235, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k236, self)))));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  if(argc != 2) {
@@ -5539,9 +5532,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line(VRuntime * runt
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.379 3 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k235) (##inline ##vcore.car (bruijn ##.line.341 0 1)) (##inline ##vcore.qcons 'label (##inline ##vcore.qcons 'toplevel (##inline ##vcore.qcons 'lambda (##inline ##vcore.qcons 'lambda+ (##inline ##vcore.qcons 'case-lambda (##inline ##vcore.qcons 'case-lambda+ (##inline ##vcore.qcons 'declare (##inline ##vcore.qcons 'declare-foreign '())))))))))
+  // ((bruijn ##.x.379 3 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k234) (##inline ##vcore.car (bruijn ##.line.341 0 1)) (##inline ##vcore.qcons 'label (##inline ##vcore.qcons 'toplevel (##inline ##vcore.qcons 'lambda (##inline ##vcore.qcons 'lambda+ (##inline ##vcore.qcons 'case-lambda (##inline ##vcore.qcons 'case-lambda+ (##inline ##vcore.qcons 'declare (##inline ##vcore.qcons 'declare-foreign '())))))))))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k235, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line_V0k234, self)))),
       VInlineCar2(runtime,
         _var1),
       VInlineCons2(runtime,
@@ -5562,9 +5555,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode__line(VRuntime * runt
         _V0declare__foreign,
         VNULL)))))))));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k240(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k238(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k240, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k238, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5572,7 +5565,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k240
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.reg.907) ((##vcore.+ (bruijn ##.i.345 4 1) 1)) (##qualified-call (vanity compiler bytecode write-bytecode ##.loop.344) (bruijn ##.loop.344 5 0) (bruijn ##.k.862 4 0) (bruijn ##.reg.907 0 0)))
+  // (basic-block 1 1 (##.reg.909) ((##vcore.+ (bruijn ##.i.345 4 1) 1)) (##qualified-call (vanity compiler bytecode write-bytecode ##.loop.344) (bruijn ##.loop.344 5 0) (bruijn ##.k.862 4 0) (bruijn ##.reg.909 0 0)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -5595,19 +5588,28 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k240
   }
     }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k239(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k239, got ~D~N"
-  "-- expected 1~N"
+void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+ if(argc != 2) {
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344, got ~D~N"
+  "-- expected 2~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
+  struct { VEnv self; VWORD argv[2]; } container;
   VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
+  VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.p.863 0 0) (basic-block 1 1 (##.reg.906) ((##vcore.vector-ref (bruijn ##.bytecode.342 6 1) (bruijn ##.i.345 2 1))) (##qualified-call (vanity compiler bytecode write-bytecode-line) (bruijn ##.write-bytecode-line.150 7 11) (close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k240) (bruijn ##.reg.906 0 0))) ((bruijn ##.k.862 1 0) #f))
+  self->vars[1] = _var1;
+  // (basic-block 1 1 (##.reg.907) ((##vcore.< (bruijn ##.i.345 1 1) (bruijn ##.reg.906 3 0))) (if (bruijn ##.reg.907 0 0) (basic-block 1 1 (##.reg.908) ((##vcore.vector-ref (bruijn ##.bytecode.342 6 1) (bruijn ##.i.345 2 1))) (##qualified-call (vanity compiler bytecode write-bytecode-line) (bruijn ##.write-bytecode-line.150 7 11) (close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k238) (bruijn ##.reg.908 0 0))) ((bruijn ##.k.862 1 0) #f)))
+    {
+    VEnv * statics = self;
+    struct { VEnv self; VWORD argv[1]; } container;
+    self = &container.self;
+    VInitEnv(self, 1, 1, statics);
+    self->vars[0] = _VBasic_VCmpLt(runtime, NULL,
+      statics->vars[1],
+      statics->up->up->vars[0]);
 if(VDecodeBool(
-_var0)) {
+self->vars[0])) {
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -5619,7 +5621,7 @@ _var0)) {
   {
     VClosure * _closure = VDecodeClosure(VGetArg(statics, 7-1, 11));
     VWORD _arg0 = 
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k240, self))));
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k238, self))));
     VWORD _arg1 = 
       self->vars[0];
     if(VStackOverflow(runtime)){
@@ -5633,38 +5635,22 @@ _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
       VEncodeBool(false));
 }
+    }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
- if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344, got ~D~N"
-  "-- expected 2~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[2]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 2, 2, statics);
-  self->vars[0] = _var0;
-  self->vars[1] = _var1;
-  // (##vcore.< (close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k239) (bruijn ##.i.345 0 1) (bruijn ##.reg.905 2 0))
-    VCallFuncWithGC(runtime, (VFunc)VCmpLt, 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344_V0k239, self)))),
-      _var1,
-      statics->up->vars[0]);
-}
-void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k241(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k239(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k241, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k239, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.x.380 6 0) (bruijn ##.k.859 4 0) (##string ##.string.919))
+  // ((bruijn ##.x.380 6 0) (bruijn ##.k.859 4 0) (##string ##.string.921))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 2,
       statics->up->up->up->vars[0],
-      VEncodePointer(&_V10_Dstring_D919.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D921.sym, VPOINTER_OTHER));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k238(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k237(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k238, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k237, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5672,7 +5658,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k238(VRuntime * run
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.reg.905) ((##vcore.vector-length (bruijn ##.bytecode.342 2 1))) (letrec 1 ((close "_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344")) (##qualified-call (vanity compiler bytecode write-bytecode ##.loop.344) (bruijn ##.loop.344 0 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k241) 0)))
+  // (basic-block 1 1 (##.reg.906) ((##vcore.vector-length (bruijn ##.bytecode.342 2 1))) (letrec 1 ((close "_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V10_Dloop_D344")) (##qualified-call (vanity compiler bytecode write-bytecode ##.loop.344) (bruijn ##.loop.344 0 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k239) 0)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -5689,7 +5675,7 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k238(VRuntime * run
   {
     VClosure * _closure = VDecodeClosure(self->vars[0]);
     VWORD _arg0 = 
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k241, self))));
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k239, self))));
     VWORD _arg1 = 
       VEncodeInt(0l);
     if(VStackOverflow(runtime)){
@@ -5712,31 +5698,31 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode(VRuntime * runtime, V
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.x.380 2 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k238) (##string ##.string.920))
+  // ((bruijn ##.x.380 2 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k237) (##string ##.string.922))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 2,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k238, self)))),
-      VEncodePointer(&_V10_Dstring_D920.sym, VPOINTER_OTHER));
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0write__bytecode_V0k237, self)))),
+      VEncodePointer(&_V10_Dstring_D922.sym, VPOINTER_OTHER));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k244(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k242(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k244, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k242, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.shared?.347 3 2) ((bruijn ##.x.358 27 0) (bruijn ##.k.885 0 0) (##string ##.string.921)) ((bruijn ##.k.885 0 0) #f))
+  // (if (bruijn ##.shared?.347 3 2) ((bruijn ##.x.358 27 0) (bruijn ##.k.885 0 0) (##string ##.string.923)) ((bruijn ##.k.885 0 0) #f))
 if(VDecodeBool(
 statics->up->up->vars[2])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 2,
       _var0,
-      VEncodePointer(&_V10_Dstring_D921.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D923.sym, VPOINTER_OTHER));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k246(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k244(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k246, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k244, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5750,46 +5736,46 @@ statics->up->up->up->vars[2])) {
       VEncodeBool(false));
 }
 }
+void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k246(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k246, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  // (if (bruijn ##.p.882 1 0) ((bruijn ##.x.358 29 0) (bruijn ##.k.883 0 0) (##string ##.string.924)) ((bruijn ##.k.883 0 0) #f))
+if(VDecodeBool(
+statics->vars[0])) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
+      _var0,
+      VEncodePointer(&_V10_Dstring_D924.sym, VPOINTER_OTHER));
+} else {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(false));
+}
+}
 void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k248(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k248, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.882 1 0) ((bruijn ##.x.358 29 0) (bruijn ##.k.883 0 0) (##string ##.string.922)) ((bruijn ##.k.883 0 0) #f))
-if(VDecodeBool(
-statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 2,
-      _var0,
-      VEncodePointer(&_V10_Dstring_D922.sym, VPOINTER_OTHER));
-} else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodeBool(false));
-}
-}
-void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k250(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k250, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // (if (##inline ##vcore.not (##inline ##vcore.null? (bruijn ##.literal-table.348 6 3))) ((bruijn ##.x.358 30 0) (bruijn ##.k.880 0 0) (##string ##.string.923) (bruijn ##.literal-table.348 6 3)) ((bruijn ##.k.880 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.null? (bruijn ##.literal-table.348 6 3))) ((bruijn ##.x.358 30 0) (bruijn ##.k.880 0 0) (##string ##.string.925) (bruijn ##.literal-table.348 6 3)) ((bruijn ##.k.880 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlineNullP2(runtime,
         VGetArg(statics, 6-1, 3))))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 3,
       _var0,
-      VEncodePointer(&_V10_Dstring_D923.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D925.sym, VPOINTER_OTHER),
       VGetArg(statics, 6-1, 3));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k255(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k253(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k255, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k253, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5805,9 +5791,9 @@ VGetArg(statics, 9-1, 0))) {
       VNULL);
 }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k257(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k255(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k257, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k255, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5825,24 +5811,6 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k257(VRuntime * runtim
     }
   }
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k256(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k256, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.363 29 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k257) (bruijn ##.x.874 3 0) (bruijn ##.x.875 2 0) (bruijn ##.x.876 1 0) (bruijn ##.x.877 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 5,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k257, self)))),
-      statics->up->up->vars[0],
-      statics->up->vars[0],
-      statics->vars[0],
-      _var0);
-}
 void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k254(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k254, got ~D~N"
@@ -5853,25 +5821,13 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k254(VRuntime * runtim
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k255) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k256))
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k255, self)), 1,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k256, self)))));
-}
-void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k253(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k253, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // ((bruijn ##.x.364 26 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k254) (bruijn ##.process-foreign-function.146 9 7) (bruijn ##.foreign-functions.349 8 4))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k254, self)))),
-      VGetArg(statics, 9-1, 7),
-      VGetArg(statics, 8-1, 4));
+  // ((bruijn ##.x.363 29 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k255) (bruijn ##.x.874 3 0) (bruijn ##.x.875 2 0) (bruijn ##.x.876 1 0) (bruijn ##.x.877 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 5,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k255, self)))),
+      statics->up->up->vars[0],
+      statics->up->vars[0],
+      statics->vars[0],
+      _var0);
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k252(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -5883,11 +5839,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k252(VRuntime * runtim
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.364 25 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k253) (bruijn ##.process-function.145 8 6) (bruijn ##.x.869 5 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 3,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k253, self)))),
-      VGetArg(statics, 8-1, 6),
-      VGetArg(statics, 5-1, 0));
+  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k253) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k254))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k253, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k254, self)))));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k251(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -5899,11 +5853,27 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k251(VRuntime * runtim
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.364 24 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k252) (bruijn ##.process-declare.147 7 8) (bruijn ##.declares.352 6 7))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 0)), 3,
+  // ((bruijn ##.x.364 26 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k252) (bruijn ##.process-foreign-function.146 9 7) (bruijn ##.foreign-functions.349 8 4))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 3,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k252, self)))),
-      VGetArg(statics, 7-1, 8),
-      VGetArg(statics, 6-1, 7));
+      VGetArg(statics, 9-1, 7),
+      VGetArg(statics, 8-1, 4));
+}
+void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k250(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k250, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.364 25 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k251) (bruijn ##.process-function.145 8 6) (bruijn ##.x.869 5 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 3,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k251, self)))),
+      VGetArg(statics, 8-1, 6),
+      VGetArg(statics, 5-1, 0));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k249(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -5915,9 +5885,11 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k249(VRuntime * runtim
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k250) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k251))
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k250, self)), 1,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k251, self)))));
+  // ((bruijn ##.x.364 24 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k250) (bruijn ##.process-declare.147 7 8) (bruijn ##.declares.352 6 7))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 0)), 3,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k250, self)))),
+      VGetArg(statics, 7-1, 8),
+      VGetArg(statics, 6-1, 7));
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k247(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -5961,9 +5933,9 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k243(VRuntime * runtim
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k244, self)), 1,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k245, self)))));
 }
-void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k242(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k241(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k242, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k241, got ~D~N"
   "-- expected 1~N"
   , argc);
  }
@@ -5971,9 +5943,23 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k242(VRuntime * runtim
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.x.366 17 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k243) (bruijn ##.functions.350 1 5))
+  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k242) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k243))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k242, self)), 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k243, self)))));
+}
+void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k240(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k240, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((bruijn ##.x.366 17 0) (close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k241) (bruijn ##.functions.350 1 5))
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 0)), 2,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k243, self)))),
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k241, self)))),
       statics->vars[5]);
 }
 void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6, VWORD _var7, VWORD _var8) {
@@ -5994,8 +5980,8 @@ void _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode(VRuntime * runtime, VEnv
   self->vars[6] = _var6;
   self->vars[7] = _var7;
   self->vars[8] = _var8;
-  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k242) (##inline ##vcore.not (##inline ##vcore.null? (bruijn ##.toplevels.353 0 8))))
-    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k242, self)), 1,
+  // ((close _V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k240) (##inline ##vcore.not (##inline ##vcore.null? (bruijn ##.toplevels.353 0 8))))
+    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0bytecode_V0to__bytecode_V0k240, self)), 1,
       VInlineNot2(runtime,
         VInlineNullP2(runtime,
         _var8)));
@@ -6397,10 +6383,10 @@ static void _V0vanity_V0compiler_V0bytecode_V20_V0k8(VRuntime * runtime, VEnv * 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.make-import (close _V0vanity_V0compiler_V0bytecode_V20_V0k9) (##string ##.string.924) (bruijn ##.x.890 7 0) (bruijn ##.x.891 6 0) (bruijn ##.x.892 5 0) (bruijn ##.x.893 4 0) (bruijn ##.x.894 3 0) (bruijn ##.x.895 2 0) (bruijn ##.x.896 1 0) (bruijn ##.x.897 0 0))
+  // (##vcore.make-import (close _V0vanity_V0compiler_V0bytecode_V20_V0k9) (##string ##.string.926) (bruijn ##.x.890 7 0) (bruijn ##.x.891 6 0) (bruijn ##.x.892 5 0) (bruijn ##.x.893 4 0) (bruijn ##.x.894 3 0) (bruijn ##.x.895 2 0) (bruijn ##.x.896 1 0) (bruijn ##.x.897 0 0))
     VCallFuncWithGC(runtime, (VFunc)VMakeImport2, 10,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0bytecode_V20_V0k9, self)))),
-      VEncodePointer(&_V10_Dstring_D924.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D926.sym, VPOINTER_OTHER),
       VGetArg(statics, 7-1, 0),
       VGetArg(statics, 6-1, 0),
       VGetArg(statics, 5-1, 0),
@@ -6420,10 +6406,10 @@ static void _V0vanity_V0compiler_V0bytecode_V20_V0k7(VRuntime * runtime, VEnv * 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k8) (##string ##.string.925))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k8) (##string ##.string.927))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0bytecode_V20_V0k8, self)))),
-      VEncodePointer(&_V10_Dstring_D925.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D927.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0bytecode_V20_V0k6(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -6435,10 +6421,10 @@ static void _V0vanity_V0compiler_V0bytecode_V20_V0k6(VRuntime * runtime, VEnv * 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k7) (##string ##.string.926))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k7) (##string ##.string.928))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0bytecode_V20_V0k7, self)))),
-      VEncodePointer(&_V10_Dstring_D926.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D928.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0bytecode_V20_V0k5(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -6450,10 +6436,10 @@ static void _V0vanity_V0compiler_V0bytecode_V20_V0k5(VRuntime * runtime, VEnv * 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k6) (##string ##.string.927))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k6) (##string ##.string.929))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0bytecode_V20_V0k6, self)))),
-      VEncodePointer(&_V10_Dstring_D927.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D929.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0bytecode_V20_V0k4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -6465,10 +6451,10 @@ static void _V0vanity_V0compiler_V0bytecode_V20_V0k4(VRuntime * runtime, VEnv * 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k5) (##string ##.string.928))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k5) (##string ##.string.930))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0bytecode_V20_V0k5, self)))),
-      VEncodePointer(&_V10_Dstring_D928.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D930.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0bytecode_V20_V0k3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -6480,10 +6466,10 @@ static void _V0vanity_V0compiler_V0bytecode_V20_V0k3(VRuntime * runtime, VEnv * 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k4) (##string ##.string.929))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k4) (##string ##.string.931))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0bytecode_V20_V0k4, self)))),
-      VEncodePointer(&_V10_Dstring_D929.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D931.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0bytecode_V20_V0k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -6495,10 +6481,10 @@ static void _V0vanity_V0compiler_V0bytecode_V20_V0k2(VRuntime * runtime, VEnv * 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k3) (##string ##.string.930))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k3) (##string ##.string.932))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0bytecode_V20_V0k3, self)))),
-      VEncodePointer(&_V10_Dstring_D930.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D932.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0bytecode_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -6510,10 +6496,10 @@ static void _V0vanity_V0compiler_V0bytecode_V20_V0k1(VRuntime * runtime, VEnv * 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k2) (##string ##.string.931))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k2) (##string ##.string.933))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0bytecode_V20_V0k2, self)))),
-      VEncodePointer(&_V10_Dstring_D931.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D933.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0bytecode_V20_V0lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  if(argc != 1) {
@@ -6525,9 +6511,9 @@ static void _V0vanity_V0compiler_V0bytecode_V20_V0lambda1(VRuntime * runtime, VE
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k1) (##string ##.string.932))
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0bytecode_V20_V0k1) (##string ##.string.934))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0bytecode_V20_V0k1, self)))),
-      VEncodePointer(&_V10_Dstring_D932.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D934.sym, VPOINTER_OTHER));
 }
 VFunc _V0vanity_V0compiler_V0bytecode_V20 = (VFunc)_V0vanity_V0compiler_V0bytecode_V20_V0lambda1;

@@ -80,7 +80,9 @@ V_DECLARE_FUNC(VCdr2, k, x);
 
 // vectors
 
+V_DECLARE_FUNC_MIN(VCreateVector, k);
 V_DECLARE_FUNC(VListVector2, k, vec);
+V_DECLARE_FUNC(VMakeVector, k, len, fill);
 V_DECLARE_FUNC_BASIC(VVectorRef2, vec, i);
 V_DECLARE_FUNC_BASIC(VVectorLength2, vec);
 
@@ -88,6 +90,7 @@ V_DECLARE_FUNC_BASIC(VVectorLength2, vec);
 
 #define IMPLEMENT_BUFFER_PROTOTYPES(Prefix) \
 V_DECLARE_FUNC(VMake ## Prefix ## Vector, k, len, fill); \
+V_DECLARE_FUNC_MIN(V ## Prefix ## Vector, k); \
 V_DECLARE_FUNC_BASIC(V ## Prefix ## VectorP, vec); \
 V_DECLARE_FUNC_BASIC(V ## Prefix ## VectorRef, vec, i); \
 V_DECLARE_FUNC_BASIC(V ## Prefix ## VectorSet, vec, i, x); \
