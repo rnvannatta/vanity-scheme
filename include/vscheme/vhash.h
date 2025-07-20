@@ -43,39 +43,39 @@ extern "C" {
  *  wyhash with default salting. Note that it does unaligned reads and
  *  uses 128 bit multiplication.
  */
-static inline uint64_t vhash(const void *dat, size_t len, uint64_t seed);
+uint64_t vhash(const void *dat, size_t len, uint64_t seed);
 /** Non-cryptographic small-value hash. Seed can be any value including zero. Can
  *  be used to fold together hashes ie in hashing a linked list. Uses wyhash64 with
  *  default salting.
  */
-static inline uint64_t vhash64(uint64_t x, uint64_t seed);
+uint64_t vhash64(uint64_t x, uint64_t seed);
 /** Non-cryptographic and invertible bit mixer. Can be used to quickly hash small
  *  values. Uses a variant of the murmur3 finalizer.
  */
-static inline uint64_t vhash64_quick(uint64_t x);
+uint64_t vhash64_quick(uint64_t x);
 
 typedef struct vrandom_state vrandom_state;
 /** Initialize an rng state. Seed and streamid can be any value. The top bit of streamid
  *  is ignored. Streamid is used to provide multiple rngs from the
  *  same seed, ie for multithreading.
  */
-static inline void vsrandom(vrandom_state * state, uint64_t seed, uint64_t streamid);
+void vsrandom(vrandom_state * state, uint64_t seed, uint64_t streamid);
 /** Returns a random uniform integer in the range from 0 to UINT32_MAX, inclusively, and
  *  advances the rng state once. Uses the excellent pcg-random32 function. Thread unsafe.
  */
-static inline uint32_t vrandom(vrandom_state * state);
+uint32_t vrandom(vrandom_state * state);
 /** Returns a random uniform integer in the range from 0 to bounds-1, inclusively, and advances
  *  the rng state once. Uses the excellent pcg-random32 function. Very thread unsafe.
  */
-static inline uint32_t vrandom_bounded(vrandom_state * state, uint64_t bounds);
+uint32_t vrandom_bounded(vrandom_state * state, uint64_t bounds);
 /** Returns a random uniform double in the range from 0 to 1, inclusively, and advances the
  *  rng state once. Uses the excellent pcg-random32 function. Granularity is currently 2^-32. 
  */
-static inline double vrandom_double(vrandom_state * state);
+double vrandom_double(vrandom_state * state);
 /** Efficiently advances the rng state n steps in log(n) time. To go backwards, pass a signed
  *  int and let the rng state wraparound.
  */
-static inline void vrandom_advance(vrandom_state * state, uint64_t n);
+void vrandom_advance(vrandom_state * state, uint64_t n);
 
 #if __cplusplus
 }
@@ -2760,15 +2760,15 @@ static inline uint64_t pcg_advance_lcg_64(uint64_t state, uint64_t delta, uint64
 extern "C" {
 #endif
 
-static inline uint64_t vhash(const void *dat, size_t len, uint64_t seed) {
+__attribute__((weak)) uint64_t vhash(const void *dat, size_t len, uint64_t seed) {
   return wyhash(dat, len, seed, _wyp);
 }
 
-static inline uint64_t vhash64(uint64_t x, uint64_t seed) {
+__attribute__((weak)) uint64_t vhash64(uint64_t x, uint64_t seed) {
   return wyhash64(x, seed);
 }
 
-static inline uint64_t vhash64_quick(uint64_t x) {
+__attribute__((weak)) uint64_t vhash64_quick(uint64_t x) {
   // Murmur3 based mixer optimized for low entropy keys
   // Mix 13 from https://zimbry.blogspot.com/2011/09/better-bit-mixing-improving-on.html
   // This is actually considerably better than the base murmurhash
@@ -2793,21 +2793,21 @@ struct vrandom_state {
   pcg32_random_t state;
 };
 
-static inline void vsrandom(vrandom_state * state, uint64_t seed, uint64_t streamid) {
+__attribute__((weak)) void vsrandom(vrandom_state * state, uint64_t seed, uint64_t streamid) {
   return pcg32_srandom_r(&state->state, seed, streamid);
 }
-static inline uint32_t vrandom(vrandom_state * state) {
+__attribute__((weak)) uint32_t vrandom(vrandom_state * state) {
   return pcg32_random_r(&state->state);
 }
-static inline uint32_t vrandom_bounded(vrandom_state * state, uint64_t bounds) {
+__attribute__((weak)) uint32_t vrandom_bounded(vrandom_state * state, uint64_t bounds) {
   return pcg32_boundedrand_r(&state->state, bounds); 
 }
 
-static inline double vrandom_double(vrandom_state * state) {
+__attribute__((weak)) double vrandom_double(vrandom_state * state) {
   return (double)vrandom(state) * 0x1.0p-32;
 }
 
-static inline void vrandom_advance(vrandom_state * state, uint64_t n) {
+__attribute__((weak)) void vrandom_advance(vrandom_state * state, uint64_t n) {
   pcg32_advance_r(&state->state, n);
 }
 

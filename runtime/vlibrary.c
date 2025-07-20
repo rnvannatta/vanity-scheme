@@ -2100,6 +2100,7 @@ V_BEGIN_FUNC_RANGE(VMake ## Prefix ## Vector, "make-" #prefix "vector", 2, 3, k,
   if(!ret) VGarbageCollect2Func(runtime, (VFunc)VMake ## Prefix ## Vector, argc, k, _len, fill); \
   ret->base = VMakeSmallObject(VBUFFER); \
   ret->len = size; \
+  memset(ret->buf, 0, elem_width); \
   ret->buf[0] = BUF_ ## Prefix; \
   if(VDecodeBool(fill)) { \
     unsigned offset = elem_width; \
@@ -2123,6 +2124,7 @@ V_BEGIN_FUNC(VList ## Prefix ## Vector, "list->" #prefix "vector", 2, k, lst) \
   if(!vec) VGarbageCollect2Func(runtime, (VFunc)VList ## Prefix ## Vector, argc, k, lst); \
   vec->base = VMakeSmallObject(VBUFFER); \
   vec->len = size; \
+  memset(vec->buf, 0, elem_width); \
   vec->buf[0] = BUF_ ## Prefix; \
   v = lst; \
   unsigned offset = elem_width; \
@@ -2140,6 +2142,7 @@ V_BEGIN_FUNC_MIN(V ## Prefix ## Vector, #prefix "vector", 1, k) \
   VBlob * vec = V_ALLOCA_SMALL_BLOB(runtime, size); \
   vec->base = VMakeSmallObject(VBUFFER); \
   vec->len = size; \
+  memset(vec->buf, 0, elem_width); \
   vec->buf[0] = BUF_ ## Prefix; \
   unsigned offset = elem_width; \
   for(int i = 1; i < argc; i++) { \
