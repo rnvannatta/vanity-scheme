@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler expand)
-  (import (vanity core) (vanity pretty-print) (vanity intrinsics) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi) (vanity compiler library))
+  (import (vanity core) (vanity pretty-print) (vanity intrinsics) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi) (vanity compiler library) (vanity compiler blasphemy))
   (export expand-toplevel free-variables-toplevel expand-library-simple)
   ; TODO
 
@@ -895,6 +895,7 @@
       (('define . ys) (compiler-error "stray define in program" `(define . ,ys)))
 
       (('match . ys) (expand-syntax (transform-match `(match . ,ys) eqv?)))
+      (('do-loop . ys) (expand-syntax (expand-do-loop expr)))
 
       (('##foreign.function . _)
        (validate-foreign-function expr))
