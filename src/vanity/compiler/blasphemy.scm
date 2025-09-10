@@ -57,7 +57,6 @@
             (let ((tail (gensym (string->symbol (sprintf "~A-tail" acc)))))
               (set! tail-table (cons (cons acc tail)  tail-table))
               tail))))
-    ; TODO yoink the y and z into when variables
     (define (parse-for parsed-withs parsed-vars var expr)
       (define (parse-to expr default-cmp default-inc)
         (match expr
@@ -69,19 +68,28 @@
           (else (values #f default-inc #f expr))))
       (define (parse-by expr)
         (match expr (('by z . rest) (values z rest)) (else (values 1 expr))))
+      (define (lift-yz cmp y z withs)
+        (let* ((lift-y? (and cmp (not (or (symbol? y) (number? y)))))
+               (lift-z? (not (or (symbol? z) (number? z))))
+               (*y* (if lift-y? (gensym 'y) y))
+               (*z* (if lift-z? (gensym 'z) z))
+               (withs (if lift-y? (cons `(,*y* ,y) withs) withs))
+               (withs (if lift-z? (cons `(,*z* ,z) withs) withs)))
+          (values *y* *z* withs)))
       (define (parse-from x rest default-cmp default-inc)
         (define-values (cmp inc y to-rest) (parse-to rest default-cmp default-inc))
         (define-values (by by-rest) (parse-by to-rest))
+        (define-values (*y* *by* withs) (lift-yz cmp y by parsed-withs))
         (cond
          ((not cmp)
           (parse-variable-clauses
-            parsed-withs
-            (cons `(for ,var from ,x ,default-inc ,by) parsed-vars)
+            withs
+            (cons `(for ,var from ,x ,default-inc ,*by*) parsed-vars)
             by-rest))
          (else
           (parse-variable-clauses
-            parsed-withs
-            (cons `(for ,var from ,x ,cmp ,y ,inc ,by) parsed-vars)
+            withs
+            (cons `(for ,var from ,x ,cmp ,*y* ,inc ,*by*) parsed-vars)
             by-rest))))
       (match expr
         (('from x . rest)
