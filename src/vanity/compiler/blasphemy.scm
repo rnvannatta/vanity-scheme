@@ -19,10 +19,6 @@
       ((xs) (my-delete-duplicates xs equal?))))
 
   ; TODO:
-  ; named
-  ; return
-  ; always never thereis ; returns value
-  ; for = then
 
   ; for as hash : notyet
 
@@ -35,11 +31,11 @@
 
   ; BONUS SYNTAX: `for x repeat N`, sugar for `for x from 0 below N`
 
-  ; with vars first    - done
-  ; then for vars      - done
-  ; then let = vars    - done
-  ; then initially     - done
-  ; then exprs         - done
+  ; with vars first     - done
+  ; then for vars       - done
+  ; then let = vars     - done
+  ; then initially      - done
+  ; then exprs          - done
   ; then finally        - done
   ; then finally-return - done
 
@@ -106,6 +102,11 @@
          (parse-variable-clauses
            parsed-withs
            (cons `(for ,var on ,x) parsed-vars)
+           rest))
+        (('= x 'then y . rest)
+         (parse-variable-clauses
+           parsed-withs
+           (cons `(for ,var ,x then ,y) parsed-vars)
            rest))
         (('across x . rest)
          (let ((vec (gensym 'vec)))
@@ -244,6 +245,28 @@
               parsed-initially
               (cons `(do ,bool ,x) parsed-exprs)
               rest-rest))
+           ((return always never thereis)
+            (define-values (and-else rest-rest) (parse-and-else rest))
+            (define-values (bool new-bool-stack) (unpack-bool-stack bool-stack and-else))
+            (parse-main-clauses
+              new-bool-stack
+              parsed-withs
+              parsed-vars
+              parsed-lets
+              parsed-initially
+              (cons `(,cmd ,bool ,x) parsed-exprs)
+              rest-rest))
+           #;((always never thereis)
+            (define-values (and-else rest-rest) (parse-and-else rest))
+            (define-values (bool new-bool-stack) (unpack-bool-stack bool-stack and-else))
+            (parse-main-clauses
+              new-bool-stack
+              parsed-withs
+              parsed-vars
+              parsed-lets
+              parsed-initially
+              (cons `(,cmd ,bool ,x) parsed-exprs)
+              rest-rest))
            ((while until)
             (define-values (and-else rest-rest) (parse-and-else rest))
             (define-values (bool new-bool-stack) (unpack-bool-stack bool-stack and-else))
@@ -360,6 +383,15 @@
           (('accumulate bool op x 'into var init) var)
           ((_ bool x 'into var . _) var)
           (else #f)))
+      (define (extract-final-var final-var parsed-vars)
+        (match parsed-vars
+          ((('accumulate bool op x 'into var init) . rest) (extract-final-var var (cdr parsed-vars)))
+          (((_ bool x 'into var . _) . rest) (extract-final-var var (cdr parsed-vars)))
+          ((('always . _) . rest) (extract-final-var #t (cdr parsed-vars)))
+          ((('never . _) . rest) (extract-final-var #t (cdr parsed-vars)))
+          ((('thereis . _) . rest) (extract-final-var #f (cdr parsed-vars)))
+          (() final-var)
+          (else (extract-final-var final-var (cdr parsed-vars)))))
       (define (extract-into-vars parsed-vars)
         (filter (lambda (x) x) (map extract-into-var parsed-vars)))
       (match expr
@@ -383,7 +415,7 @@
            (reverse parsed-exprs)
            (let ((args (my-delete-duplicates (extract-into-vars (reverse parsed-exprs)) eqv?)))
              `(lambda ,args
-                . ,(reverse (cons (if (null? args) #void (car (take-right args 1))) parsed-finally))))))
+                . ,(reverse (cons (extract-final-var #void (reverse parsed-exprs)) parsed-finally))))))
         (else (error "invalid do-loop" expr))))
     (define (write-loop parsed-withs parsed-vars parsed-lets parsed-initially parsed-exprs parsed-finally)
       (define (write-for-test expr)
@@ -396,6 +428,8 @@
            `(pair? ,lst-iter))
           (('for var 'on _)
            `(pair? ,var))
+          (('for var x 'then y)
+           #t)
           (('for _ 'across vec i)
            `(< ,i (vector-length ,vec)))
           (('for _ 'across-s8 vec i)
@@ -421,6 +455,14 @@
         (match exprs-left
           ((('do bool x) . rest)
            `(begin ,(wrap-if bool x #f) ,(write-exprs rest)))
+          ((('return bool x) . rest)
+           `(if ,bool ,x ,(write-exprs rest)))
+          ((('always bool x) . rest)
+           `(if (and ,bool (not ,x)) #f ,(write-exprs rest)))
+          ((('never bool x) . rest)
+           `(if (and ,bool ,x) #f ,(write-exprs rest)))
+          ((('thereis bool x) . rest)
+           `(if (and ,bool ,x) #t ,(write-exprs rest)))
           ((('let x y) . rest)
            `(let ((,x ,y)) ,(write-exprs rest)))
           ((('until x) . rest)
@@ -487,6 +529,10 @@
            (cons
              `(cdr ,var)
              (write-recur-vars rest)))
+          ((('for var x 'then y) . rest)
+           (cons
+             y
+             (write-recur-vars rest)))
           ((('for var 'across vec i) . rest)
            (cons `(+ ,i 1) (write-recur-vars rest)))
           ((('for var 'across-s8 vec i) . rest)
@@ -513,6 +559,8 @@
            `(,var ,lst))
           (('for var 'in lst iter-lst)
            `(,iter-lst ,lst))
+          (('for var x 'then y)
+           `(,var ,x))
           (('for _ 'across _ i) `(,i 0))
           (('for _ 'across-s8 _ i) `(,i 0))
           (('for _ 'across-u8 _ i) `(,i 0))
@@ -556,6 +604,10 @@
                  ,(write-exprs parsed-exprs)))
              (,*finalize* . ,(cadr parsed-finally))))))
     (match expr
+      (('do-loop 'named x . rest)
+       (if (not (symbol? x)) (error "do-loop: not a symbol" x))
+       (set! *loop* x)
+       (parse-with-clauses '() rest))
       (('do-loop . rest)
        (parse-with-clauses '() rest))
       (else (error "not a do-loop")))))
