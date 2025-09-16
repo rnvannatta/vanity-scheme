@@ -89,7 +89,6 @@ VWORD _VBasic_VDiv_Binary(VRuntime * runtime, VEnv * statics, VWORD a, VWORD b);
 #define _VBasic_VCmpOp(cmp, runtime, statics, ...) \
   ({ \
      VRuntime * _basic_runtime = runtime; \
-     VEnv * _basic_statics = statics; \
      VWORD _basic_args[] = { __VA_ARGS__ }; \
      enum { _basic_argc = sizeof _basic_args / sizeof *_basic_args }; \
      _Static_assert(_basic_argc >= 2, #cmp ": two or more arguments required"); \

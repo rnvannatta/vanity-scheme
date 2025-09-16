@@ -2390,6 +2390,32 @@ static VClosure VFunctionImpl(VRuntime * runtime, VWORD name) {
   VFunc * fun = ptr;
   return VMakeClosure2(*fun, NULL);
 }
+static VClosure VFunctionImpl3(VRuntime * runtime, VWORD name) {
+  VBlob * blob = VCheckedDecodeString2(runtime, name, "function");
+
+  const char * str = blob->buf;
+#if 0
+#if defined(__linux__) || defined(__EMSCRIPTEN__)
+  void * ptr = dlsym(RTLD_DEFAULT, str);
+#elif defined(_WIN64)
+  void * ptr = VDLSym(str);
+#else
+  void * ptr == NULL;
+  VErrorC(runtime, "function: unsupported platform");
+#endif
+#else
+  void * ptr = VDLSym(str);
+#endif
+  if(!ptr) {
+    VPair * decl = VAssocDeclares(runtime, blob);
+    if(decl) return *VCheckedDecodeClosure2(runtime, decl->rest, "function");
+  }
+
+  if(!ptr) {
+    VErrorC(runtime, "function: failed to dlsym function ~z (did you remember to load or link the file it's in?)\n", str);
+  }
+  return VMakeClosure2((VFunc)ptr, NULL);
+}
 
 static V_BEGIN_FUNC(VLoadForeignFunctionImpl, "load-foreign-function", 2, k, name)
   VBlob * blob = VCheckedDecodeString2(runtime, name, "load-foreign-function");
@@ -3161,6 +3187,12 @@ VWORD VGetExitCode(VRuntime * runtime) {
 
 V_BEGIN_FUNC(VFunction2, "function", 2, k, name)
   VClosure fun = VFunctionImpl(runtime, name);
+
+  V_CALL(k, runtime, VEncodeClosure(&fun));
+V_END_FUNC
+
+V_BEGIN_FUNC(VFunction3, "function3", 2, k, name)
+  VClosure fun = VFunctionImpl3(runtime, name);
 
   V_CALL(k, runtime, VEncodeClosure(&fun));
 V_END_FUNC

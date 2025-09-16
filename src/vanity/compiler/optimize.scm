@@ -138,6 +138,8 @@
 
         (('basic-block cost xs-vals ... appl)
          `(basic-block ,cost . ,(append xs-vals (list (qualify-iter current-qualname qualified-funcs appl)))))
+        (('##intrinsic . _) expr)
+        (('##basic-intrinsic . _) expr)
         (('##foreign.function . _) expr)
         (('quote . _) expr)
         (('##inline f . xs)

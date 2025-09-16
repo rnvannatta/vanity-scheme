@@ -12,6 +12,11 @@ FX - int, with X encoding number of extra data bytes. ints are always signed
 --> example: 'F07F' -> +127, or 'F10104' -> +260 or 'F0FF' -> -1
 EX - char, with X encoding number of extra data bytes. Chars are at most 24 bits and are encoded as if they're signed, which is fine as utf8 is 21 bit
 --> example 'E056' -> V
+DX - start of vector, next is an int of length X 
+CX - start of blob, next is an int of length X, followed by a type
+BX - start of record, next is an int of length X. length includes implicit type field
+AX - start of hashtable, next is int of length X, followed by the eq field
+8X - backreference, next is int of length X which says how many bytes to go backwards
 
 2. interesting types
 
@@ -39,11 +44,3 @@ EX - char, with X encoding number of extra data bytes. Chars are at most 24 bits
 --> (1 2 3) is stored as 09 F003 F002 F001 00
 0A : dotted list
 --> (1 2 . 3) is stored as 0A F003 F002 F001 00
-0B : vector
---> length followed by elements and a 00
---> vectors are not stored in reverse
-0C : record
---> length incl record label, followed by record label (a symbol) followed by elements and a 00
---> records are not stored in reverse
-
-
