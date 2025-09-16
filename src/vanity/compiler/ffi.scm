@@ -32,7 +32,7 @@
 ;  int func(mytype arr[static X]): unsupported
 
 (define-library (vanity compiler ffi)
-  (export mangle-foreign-function validate-foreign-function print-foreign-function resolve-foreign-import get-foreign-encoder get-foreign-decoder)
+  (export mangle-foreign mangle-foreign-function mangle-foreign-basic mangle-foreign-closure validate-foreign-function print-foreign-function resolve-foreign-import get-foreign-encoder get-foreign-decoder)
   (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler config))
 
   ; user exposed syntax:
@@ -328,8 +328,14 @@
            (table->defines (unwrap-declares parse '()) '()))))
       (else (compiler-error "Invalid foreign import syntax" expr))))
 
+  (define (mangle-foreign name)
+    (sprintf "_V30~A" name))
+  (define (mangle-foreign-basic name)
+    (sprintf "_V30~A_shim_basic" name))
   (define (mangle-foreign-function name)
     (sprintf "_V30~A_shim" name))
+  (define (mangle-foreign-closure name)
+    (sprintf "_V30~A_closure" name))
 
   (define (get-foreign-encoder type)
     (if #;(equal? type '(pointer void))
@@ -406,10 +412,14 @@
     (match expr
       (('##foreign.function lang decl ret name args ...)
        (let ((mangled (mangle-foreign-function name))
+             (basic (mangle-foreign-basic name))
+             (closure (mangle-foreign-closure name))
              (names (iota (length args))))
          (define (print-arg arg argname)
            (printf "~A(runtime, _arg~A, \"~A\")" (cdr (get-foreign-decoder arg)) argname name))
          (printf "~A;~N" decl)
+
+         ; NONBASIC FUNC
          (if purec?
              (begin
                (printf "static V_BEGIN_FUNC(_V30~A_shim, \"_V30~A_shim\", ~A, _k " name name (+ 1 (length args)))
@@ -440,4 +450,29 @@
          (if (eqv? ret 'void)
              (printf "  V_BOUNCE(_k, runtime, VVOID);~N")
              (printf "  V_BOUNCE(_k, runtime, _ret);~N"))
-         (printf "  }~N}~N"))))))
+         (printf "  }~N}~N")
+
+         ; BASIC FUNC
+         (printf "static VWORD ~A(VRuntime * runtime, VEnv * statics" basic)
+         (for-each (lambda (e) (printf ", VWORD _arg~A" e)) names)
+         (printf ") {~N")
+         (if (eqv? ret 'void)
+             (printf "  ~A("  name)
+             (printf "  return ~A(~A("  (cdr (get-foreign-encoder ret)) name))
+         (if (pair? args)
+             (begin
+               (print-arg (car args) (car names))
+               (for-each
+                 (lambda (arg argname)
+                  (printf ", ")
+                  (print-arg arg argname))
+                 (cdr args)
+                 (cdr names))))
+         (if (eqv? ret 'void)
+             (printf ");~N  return VVOID;~N}~N")
+             (printf "));~N}~N"))
+
+         ; CLOSURE
+         (printf "static VClosure ~A = { .base.tag = VCLOSURE, .base.flags = VFLAG_STATIC, .func = (VFunc)~A };~N" closure mangled)
+
+         )))))

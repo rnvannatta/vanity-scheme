@@ -27,6 +27,8 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
+
+
 static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D894 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "file does not exist" };
 static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D893 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "read" };
 static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D892 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "expand" };

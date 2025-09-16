@@ -71,6 +71,10 @@
        `(intrinsic ,x))
       (('##foreign.function x)
        `(foreign-function ,(string->symbol x)))
+      (('##intrinsic x)
+       `(intrinsic ,(string->symbol x)))
+      (('##basic-intrinsic x)
+       `(intrinsic ,(string->symbol x)))
       (x
        (cond ((not (symbol? x)) (process-literal expr))
              ((lookup-intrinsic-name x) `(intrinsic ,x))
@@ -171,6 +175,16 @@
        `((label
            ,(string->symbol (mangle-foreign-function name))
            (declare-foreign ,lang ,(car (get-foreign-encoder ret)) ,name . ,(map (lambda (arg) (car (get-foreign-decoder arg))) args)))))))
+  #;(define (process-intrinsics expr)
+    (match expr
+      (('##intrinsic name . _)
+       `((label
+           ,(string->symbol name)
+           (intrinsic ,name))))
+      (('##basic-intrinsic name . _)
+       `((label
+           ,(string->symbol name)
+           (intrinsic ,name))))))
   (define (process-declare declare)
     (match declare
       (('##foreign.declare d) `())
@@ -201,7 +215,7 @@
               (loop (+ i 1))
             ))))
     (displayln ")"))
-  (define (to-bytecode debug? shared? literal-table foreign-functions functions qualified-functions declares toplevels)
+  (define (to-bytecode debug? shared? literal-table foreign-functions intrinsics functions qualified-functions declares toplevels)
     (let ((print-main? (not (null? toplevels)))
           (functions (reverse functions)))
       (if shared? (compiler-error "bytecode shared libraries not supported yet"))
@@ -214,6 +228,7 @@
         (append (map process-declare declares)
                 (map process-function functions)
                 (map process-foreign-function foreign-functions)
+                #;(map process-intrinsics intrinsics)
                 (if print-main?
                     (map process-toplevel toplevels)
                     '()))))))

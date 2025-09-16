@@ -111,6 +111,7 @@
 
          ; Libraries
          ((##vcore.function) "VFunction2")
+         ((##vcore.function3) "VFunction3")
          ((##vcore.set-declare!) "VSetDeclare")
          ((##vcore.define) "VDefineGlobalVar2")
          ((##vcore.multidefine) "VMultiDefine2")

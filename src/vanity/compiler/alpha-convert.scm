@@ -35,9 +35,9 @@
 
   (define (alpha-convert expr)
     (define (application? x)
-      (and (pair? x) (not (memv (car x) '(quote lambda ##qualified-lambda case-lambda ##qualified-case-lambda ##foreign.function)))))
+      (and (pair? x) (not (memv (car x) '(quote lambda ##qualified-lambda case-lambda ##qualified-case-lambda ##instrinsic ##basic-intrinsic ##foreign.function)))))
     (define (combination? x)
-      (and (pair? x) (not (memv (car x) '(quote lambda ##qualified-lambda case-lambda ##qualified-case-lambda ##foreign.function begin if or letrec)))))
+      (and (pair? x) (not (memv (car x) '(quote lambda ##qualified-lambda case-lambda ##qualified-case-lambda ##instrinsic ##basic-intrinsic ##foreign.function begin if or letrec)))))
     (define (lookup-env sym env)
       (cond ((null? env) #f)
             ((assv sym (car env)) => (lambda (keyval) keyval))
@@ -81,6 +81,8 @@
         (('##qualified-case-lambda name (args bodies) ...)
          (cons '##qualified-case-lambda (cons name (map (lambda (arg body) (iter-lambda arg '() body env)) args bodies))))
         (('##foreign.function . _) x)
+        (('##intrinsic . _) x)
+        (('##basic-intrinsic . _) x)
         (('quote _) x)
         (() (compiler-error "stray () in program"))
         (else

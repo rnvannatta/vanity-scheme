@@ -150,6 +150,8 @@
     (match expr
       (('quote . _) #t)
       (('##foreign.function . _) #t)
+      (('##intrinsic . _) #t)
+      (('##basic-intrinsic . _) #t)
       (('lambda xs body)
        (variable-pure-body? k xs body))
       (('case-lambda . bodies)
@@ -191,6 +193,8 @@
             ((atom? expr) '())
             ((eqv? (car expr) 'quote) '())
             ((eqv? (car expr) '##foreign.function) '())
+            ((eqv? (car expr) '##intrinsic) '())
+            ((eqv? (car expr) '##basic-intrinsic) '())
             ((eqv? (car expr) 'if)
              (merge (merge (loop bound (cadr expr) expr) (loop bound (caddr expr) expr)) (loop bound (cadddr expr) expr)))
             ((memv (car expr) '(begin and or))

@@ -26,32 +26,6 @@
 (define-library (vanity compiler expand)
   (import (vanity core) (vanity pretty-print) (vanity intrinsics) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi) (vanity compiler library) (vanity compiler blasphemy))
   (export expand-toplevel free-variables-toplevel expand-library-simple)
-  ; TODO
-
-  ; garbage collect strings and pairs - DONE
-  ; resizable heap - DONE
-  ; exact numbers - DONE
-  ; full quotation - DONE
-  ; work on defining literals - DONE
-  ; remove the damn k's from the continuations - DONE
-  ; symbols - DONE
-  ; global defines - DONE
-  ; moar inlines
-  ; eqv and equal - DONE
-
-  ; define and let syntactic sugar - DONE
-  ; define-syntax with common lisp macros
-  ; variadic funcalls other than hand written - DONE
-  ; format - DONE
-  ; call/cc - DONE
-  ; match syntax - DONE
-  ; vectors and records - VECTORS DONE
-  ; interning - DONE
-
-  ; makefile - DONE
-  ; global defines, main entrypoint - DONE
-  ; define syntatic sugar - DONE
-  ; record? - do it with $
 
   ; returns true if val can be directly assigned in a simple letrec primitive
   ; without mutation.
@@ -76,6 +50,8 @@
              (return #f))
             (('##qualified-case-lambda . _) 
              (return #f))
+            (('##intrinsic . _) #t)
+            (('##basic-intrinsic . _) #t)
             (('##foreign.function . _) #t)
             (('letrec . _)
              (return #f))
@@ -90,6 +66,8 @@
             (('case-lambda . _) #t)
             (('##qualified-lambda . _) #t)
             (('##qualified-case-lambda . _) #t)
+            (('##intrinsic . _) #t)
+            (('##basic-intrinsic . _) #t)
             (('##foreign.function . _) #t)
             ((_ . _) (advanced-letrec-one val))
             (x (not (and (symbol? x) (memv x xs))))))))
@@ -148,6 +126,11 @@
   (define (constant-expr? expr)
     (or (and (symbol? expr) (lookup-intrinsic-name expr))
         (and (not (pair? expr)) (not (symbol? expr)))
+        (and (pair? expr)
+             (or
+               (eqv? (car expr) '##intrinsic)
+               (eqv? (car expr) '##basic-intrinsic)
+               (eqv? (car expr) '##foreign.function)))
         #;(and (pair? expr) (eqv? (car expr) 'lambda) (null? (free-variables expr)))))
   #;(define (variable-pure-body? k xs body)
     (if (memtail k xs)
@@ -901,6 +884,30 @@
        (validate-foreign-function expr))
       (('foreign-function . rest)
        (expand-syntax (cons '##foreign.function rest)))
+      (('##foreign-function . rest)
+       (expand-syntax (cons '##foreign.function rest)))
+
+      (('##intrinsic name x)
+       (unless (and (string? name) (integer? x) (>= x 0))
+         (compiler-error "malformed ##intrinsic" expr))
+       expr)
+      (('##intrinsic name x y)
+       (unless (and (string? name) (integer? x) (>= x 0) (or (eqv? y '+) (and (integer? y) (>= y x))))
+         (compiler-error "malformed ##intrinsic" expr))
+       expr)
+      (('##basic-intrinsic name x)
+       (unless (and (string? name) (integer? x) (>= x 0))
+         (compiler-error "malformed ##basic-intrinsic" expr))
+       expr)
+      (('##basic-intrinsic name x y)
+       (compiler-error "variadic basic intrinsics not supported yet")
+       (unless (and (string? name) (integer? x) (>= x 0) (integer? y) (>= y x))
+         (compiler-error "malformed ##basic-intrinsic" expr))
+       expr)
+      (('##intrinsic . _)
+       (compiler-error "malformed ##intrinsic" expr))
+      (('##basic-intrinsic . _)
+       (compiler-error "malformed ##basic-intrinsic" expr))
 
       ((f args ...)
        (if (and (atom? f) (not (symbol? f))) (compiler-error "function application's first arg is not a function" f))
@@ -935,6 +942,8 @@
              (if (or (memv expr bound) (lookup-intrinsic-name expr)) '() (list expr)))
             ((atom? expr) '())
             ((eqv? (car expr) 'quote) '())
+            ((eqv? (car expr) '##intrinsic) '())
+            ((eqv? (car expr) '##basic-intrinsic) '())
             ((eqv? (car expr) '##foreign.function) '())
             ((eqv? (car expr) 'if)
              (merge (merge (loop bound (cadr expr)) (loop bound (caddr expr))) (loop bound (cadddr expr))))

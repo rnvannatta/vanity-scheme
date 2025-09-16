@@ -31,7 +31,7 @@
       (lambda ()
         (set! x (+ x 1))
         (sprintf "VDllMain~A" x))))
-  (define (printout2 main purec? debug? shared? literal-table foreign-functions functions qualified-functions declares toplevels)
+  (define (printout2 main purec? debug? shared? literal-table foreign-functions intrinsics functions qualified-functions declares toplevels)
     (define (print-global sym)
       (let ((builtin (lookup-intrinsic-name sym)))
         (if builtin
@@ -77,7 +77,9 @@
     (define (print-literal-string x)
       (printf "VEncodePointer(&~A.sym, VPOINTER_OTHER)" (mangle-symbol x)))
     (define (print-intrinsic x)
-       (printf "_V40~A" (mangle-symbol x)))
+       (if (symbol? x)
+           (printf "_V40~A" (mangle-symbol x))
+           (printf "_V40~A" x)))
     (define (print-literal x)
       (cond ((integer? x) (printf "VEncodeInt(~Al)" x))
             ((number? x) (printf "VEncodeNumber(~A)" x))
@@ -107,12 +109,18 @@
                 len mangled len escaped)))
             ; of shape (('##intrinsic intrin) . c-function)
             ((and (pair? (car lit)) (eqv? (caar lit) '##intrinsic))
-             (let ((mangled (mangle-symbol (cadar lit))))
-               (begin
-                 (printf "VWEAK VWORD _V40~A;" mangled)
-                 (printf "VWEAK VClosure _VW_V40~A = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)~A, NULL };~N"
-                   mangled
-                   (cdr lit)))))
+             (if (symbol? (cadar lit))
+                 (let ((mangled (mangle-symbol (cadar lit))))
+                   (begin
+                     (printf "VWEAK VWORD _V40~A;~N" mangled)
+                     (printf "VWEAK VClosure _VW_V40~A = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)~A, NULL };~N"
+                       mangled
+                       (cdr lit))))
+                 (begin
+                   (printf "VWEAK VWORD _V40~A;~N" (cadar lit))
+                   (printf "VWEAK VClosure _VW_V40~A = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)~A, NULL };~N"
+                     (cdr lit)
+                     (cdr lit)))))
             (else (compiler-error "print-literal-table: unknown entry in literal table" lit))))
     (define (print-dllmain literals)
       (define (print-init lit)
@@ -120,8 +128,10 @@
                (let* ((mangled (mangle-symbol (car lit))))
                  (printf "  ~A = VEncodePointer(VLookupConstant(\"~A\", &_VW~A), VPOINTER_OTHER);~N" mangled mangled mangled)))
               ((and (pair? (car lit)) (eqv? (caar lit) '##intrinsic))
-               (let ((mangled (mangle-symbol (cadar lit))))
-                 (printf "  _V40~A = VEncodePointer(VLookupConstant(\"_V40~A\", &_VW_V40~A), VPOINTER_CLOSURE);~N" mangled mangled mangled)))
+               (if (symbol? (cadar lit))
+                   (let ((mangled (mangle-symbol (cadar lit))))
+                     (printf "  _V40~A = VEncodePointer(VLookupConstant(\"_V40~A\", &_VW_V40~A), VPOINTER_CLOSURE);~N" mangled mangled mangled))
+                   (printf "  _V40~A = VEncodePointer(VLookupConstant(\"_V40~A\", &_VW_V40~A), VPOINTER_CLOSURE);~N" (cdr lit) (cdr lit) (cdr lit))))
               (else #f)))
       (printf "static __attribute__((constructor)) void ~A() {~N" (gendllmain))
       (for-each print-init literals)
@@ -152,8 +162,15 @@
         (else (compiler-error "closes?: unknown form" expr))))
     (define (print-basic-expr expr args)
       (let ((name (lookup-intrinsic-name (car expr))))
-        (if (not name) (compiler-error "basic expression that isn't an intrinsic call" expr))
-        (printf "_VBasic_~A(runtime, NULL" name))
+        (cond
+          (name
+           (printf "_VBasic_~A(runtime, NULL" name))
+          ((and (pair? (car expr)) (eqv? (caar expr) '##foreign.function))
+           (printf "~A_shim_basic(runtime, NULL" (cadar expr)))
+          ((and (pair? (car expr)) (eqv? (caar expr) '##basic-intrinsic))
+           (printf "_VBasic_~A(runtime, NULL" (cadar expr)))
+          (else
+           (compiler-error "basic expression that isn't an intrinsic call" expr))))
       (for-each
         (lambda (x)
           (printf ",~N      ")
@@ -163,8 +180,18 @@
     (define (print-expr expr args)
       (define (print-builtin-apply f xs tail-call?)
         (if purec?
-            (printf "    V_BOUNCE_FUNC((VFunc)~A, self, runtime" (lookup-intrinsic-name f))
-            (printf "    VCallFuncWithGC(runtime, (VFunc)~A, ~A" (lookup-intrinsic-name f) (length xs)))
+            (printf "    V_BOUNCE_FUNC((VFunc)~A, self, runtime" (if (symbol? f) (lookup-intrinsic-name f) f))
+            (printf "    VCallFuncWithGC(runtime, (VFunc)~A, ~A" (if (symbol? f) (lookup-intrinsic-name f) f) (length xs)))
+        (for-each
+          (lambda (x)
+           (printf ",~N      ")
+           (print-expr x args))
+          xs)
+        (printf ");~N"))
+      (define (print-foreign-apply f xs tail-call?)
+        (if purec?
+            (printf "    V_BOUNCE_FUNC((VFunc)~A_shim, self, runtime" f)
+            (printf "    VCallFuncWithGC(runtime, (VFunc)~A_shim, ~A" f (length xs)))
         (for-each
           (lambda (x)
            (printf ",~N      ")
@@ -355,8 +382,10 @@
          (print-literal-string x))
         (('##intrinsic x)
          (print-intrinsic x))
+        (('##basic-intrinsic x)
+         (print-intrinsic x))
         (('##foreign.function x)
-         (printf "(VEncodeClosure((V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, NULL)))))" x))
+         (printf "(VEncodeClosure(&~A_closure))" x))
         (('letrec n xs body)
          (print-letrec n xs body args))
         (('basic-block cost n xs vals body)
@@ -367,6 +396,8 @@
          (cond ((lookup-intrinsic-name f) (print-builtin-apply f xs #f))
                ((and (pair? f) (eqv? (car f) '##intrinsic))
                 (print-builtin-apply (cadr f) xs #f))
+               ((and (pair? f) (eqv? (car f) '##foreign.function))
+                (print-foreign-apply (cadr f) xs #f))
                (else (print-closure-apply f xs #f))))
         (x (if (symbol? x) (print-global x) (print-literal x)))
         (else (compiler-error "print-expr: malformed expression" expr))))
@@ -540,6 +571,37 @@
            (iota n))
          (printf ");~N"))
         (else (compiler-error "print-qualified-declaration: unknown form" decl))))
+    (define (print-intrinsic-declaration purec? decl)
+      (match decl
+        (('##intrinsic name x)
+         (printf "V_DECLARE_FUNC(~A" name)
+         (for-each
+          (lambda (i)
+            (printf ", _var~A" i))
+          (iota x))
+          (printf ");~N"))
+        (('##intrinsic name x '+)
+         (printf "V_DECLARE_FUNC_MIN(~A" name)
+         (for-each
+          (lambda (i)
+            (printf ", _var~A" i))
+          (iota x))
+          (printf ");~N"))
+        (('##intrinsic name x y)
+         (printf "V_DECLARE_FUNC(~A" name)
+         (for-each
+          (lambda (i)
+            (printf ", _var~A" i))
+          (iota y))
+          (printf ");~N"))
+        (('##basic-intrinsic name x)
+         (printf "V_DECLARE_FUNC_BASIC(~A" name)
+         (for-each
+          (lambda (i)
+            (printf ", _var~A" i))
+          (iota x))
+          (printf ");~N"))
+        (else (compiler-error "print-intrinsic-declaration: malformed intrinsic" decl))))
 
     ; Kind of gross to do it this way but whatever
     (define (print-foreign-declare declare)
@@ -619,6 +681,9 @@
       (displayln "#include \"vscheme/vlibrary.h\"")
       (displayln "#include \"vscheme/vinlines.h\"")
       (displayln "#include <stdarg.h>")
+      (newline)
+      (for-each (lambda (e) (print-intrinsic-declaration purec? e)) intrinsics)
+      (newline)
       (for-each print-literal-declaration literal-table)
       (print-dllmain literal-table)
       (for-each print-foreign-declare declares)

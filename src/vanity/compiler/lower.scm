@@ -108,9 +108,10 @@
         (string->symbol (sprintf "~A_V0k~A" fun curcont)))
     (define qualified-functions '())
     (define foreign-functions '())
+    (define intrinsics '())
     (define functions '())
     (define literal-table '())
-    (define (lift-intrinsic sym intrin)
+    (define (lift-intrinsic! sym intrin)
       ; FIXME ASSOC DETECTED
       (if lifting-literals?
           (let* ((key (list '##intrinsic sym))
@@ -189,13 +190,22 @@
          (let ((k (gencont fun)))
            (set! functions (cons `(,k #t (,n ,(iter-apply fun body))) functions))
            `(close ,k)))
-        ; TODO replace lang with C
         (('##foreign.function lang decl ret name . args)
-         (let ((mangled (mangle-foreign-function name)))
+         (let ((mangled (mangle-foreign name)))
            ; FIXME ASSOC DETECTED
            (if (not (assoc mangled foreign-functions))
-               (set! foreign-functions (cons expr foreign-functions)))
+               (set! foreign-functions (cons (cons mangled expr) foreign-functions)))
            `(##foreign.function ,mangled)))
+        (('##intrinsic name . _)
+         (if (not (assoc name intrinsics))
+             (set! intrinsics (cons (cons name expr) intrinsics)))
+         (lift-intrinsic! name name)
+         `(##intrinsic ,name))
+        (('##basic-intrinsic name . _)
+         (if (not (assoc name intrinsics))
+             (set! intrinsics (cons (cons name expr) intrinsics)))
+         (lift-intrinsic! name name)
+         `(##basic-intrinsic ,name))
         (('quote x)
          `(quote ,(lift-literal x)))
         (('##inline f . xs)
@@ -209,7 +219,7 @@
                    (let ((intrin (lookup-intrinsic-name x)))
                      (if (not intrin)
                          x
-                         (lift-intrinsic x intrin))))
+                         (lift-intrinsic! x intrin))))
                (lift-literal x)))))
     (define (iter-apply fun expr)
       (match expr
@@ -296,5 +306,5 @@
       (lambda (globals declares)
         (let ((toplevels (map (lambda (e) (iter "global" e)) globals))
               (declares (map iter-declare declares)))
-          (list literal-table foreign-functions functions qualified-functions declares toplevels)))))
+          (list literal-table (map cdr foreign-functions) (map cdr intrinsics) functions qualified-functions declares toplevels)))))
 )
