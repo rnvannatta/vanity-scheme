@@ -162,7 +162,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |features                       |             |             |            |
 |file-error?                    |             |             |            |
 |file-exists?                   | Yes         |             |            |
-|finite?                        |             |             |            |
+|finite?                        | Yes         |             |            |
 |floor                          | Yes         |             |            |
 |floor-quotient                 |             |             |            |
 |floor-remainder                |             |             |            |
@@ -170,7 +170,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |flush-output-port              |             |             |            |
 |for-each                       | Yes         |             |            |
 |force                          |             |             |            |
-|gcd                            |             |             |            |
+|gcd                            | Yes         |             |            |
 |get-environment-variable       |             |             |            |
 |get-environment-variables      |             |             |            |
 |get-output-bytevector          |             |             |            |
@@ -193,7 +193,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |interaction-environment        | Low Prio    |             |            |
 |jiffies-per-second             | Yes         |             |            |
 |lambda                         | Yes         |             |            |
-|lcm                            |             |             |            |
+|lcm                            | Yes         |             |            |
 |length                         | Yes         |             |            |
 |let                            | Yes         |             |            |
 |let*                           | Yes         |             |            |

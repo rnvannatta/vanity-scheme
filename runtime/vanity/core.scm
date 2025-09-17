@@ -39,12 +39,13 @@
     ; math constructors
     exact inexact->exact inexact exact->inexact
     ; math predicates
-    number? complex? rational? positive? negative? zero? nan? infinite? even? odd?
+    number? complex? rational? positive? negative? zero? nan? finite? infinite? even? odd?
     ; math functions
     + - * / quotient remainder max min
-    abs square sqrt exact-integer-sqrt
+    abs square sqrt
     ceiling floor round
     sin cos tan asin acos atan exp log expt pow
+    exact-integer-sqrt gcd lcm
     ; pairs
     cons car cdr set-car! set-cdr!
     ; cxr
@@ -291,6 +292,7 @@
   (define (negative? x) (< x 0))
   (define (nan? x) (not (= x x)))
   (define (infinite? x) (= (abs x) (/ 1 0.0)))
+  (define (finite? x) (and (= x x) (not (infinite? x))))
   (define (even? x) (= (bitwise-and x 1) 0))
   (define (odd? x) (= (bitwise-and x 1) 1))
 
@@ -312,13 +314,6 @@
 
   (define (square x) (* x x))
   (define sqrt (foreign-function "C" "double sqrt(double);"))
-  (define (exact-integer-sqrt x)
-    (if (inexact? x) (error "exact-integer-sqrt: not an int" x))
-    (if (< x 0) (error "exact-integer-sqrt: negative int" x))
-    (let* ((appx (sqrt x))
-           (s (exact (floor appx)))
-           (k (- x (* s s))))
-      (values s k)))
 
   (define sin (foreign-function "C" "double sin(double);"))
   (define cos (foreign-function "C" "double cos(double);"))
@@ -368,6 +363,43 @@
        (let loop ((ret a) (rem bs))
         (if (null? bs) ret
             (loop (min a (car bs)) (cdr bs)))))))
+
+  ; integer math functions
+  (define (exact-integer-sqrt x)
+    (if (inexact? x) (error "exact-integer-sqrt: not an int" x))
+    (if (< x 0) (error "exact-integer-sqrt: negative int" x))
+    (let* ((appx (sqrt x))
+           (s (exact (floor appx)))
+           (k (- x (* s s))))
+      (values s k)))
+  (define gcd
+    (case-lambda
+      (() 0)
+      ((a) (abs a))
+      ((a b)
+       (if (= b 0)
+           (abs a)
+           (abs (gcd b (remainder a b)))))
+      (xs
+       (let loop ((ret (abs (car xs))) (xs (cdr xs)))
+         (if (null? xs)
+             ret
+             (loop (gcd ret (car xs)) (cdr xs)))))))
+  (define lcm
+    (case-lambda
+      (() 1)
+      ((a) (abs a))
+      ((a b)
+       (let ((g (gcd a b)))
+       (cond
+         ((and (= a 0) (= b 0)) 0)
+         ((= (remainder b g) 0) (abs (* a (quotient b g))))
+         (else (abs (* b (quotient a g)))))))
+      (xs
+       (let loop ((ret (abs (car xs))) (xs (cdr xs)))
+         (if (null? xs)
+             ret
+             (loop (lcm ret (car xs)) (cdr xs)))))))
 
   ; lists
   (define-constant cons ##vcore.cons)
