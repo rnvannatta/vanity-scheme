@@ -39,10 +39,10 @@
     ; math constructors
     exact inexact->exact inexact exact->inexact
     ; math predicates
-    number? complex? rational? positive? negative? zero?
+    number? complex? rational? positive? negative? zero? nan? infinite? even? odd?
     ; math functions
     + - * / quotient remainder max min
-    abs square sqrt
+    abs square sqrt exact-integer-sqrt
     ceiling floor round
     sin cos tan asin acos atan exp log expt pow
     ; pairs
@@ -56,19 +56,19 @@
     list list? length list-tail list-ref list-set! list-copy make-list map for-each append reverse memq memv member assq assv assoc
     num-pairs split-at-right
     ; strings
-    string->list list->string make-string substring string-copy string-copy! string-ref string-set! string-length string->symbol string->number string-append
+    string string->list list->string make-string substring string-copy string-copy! string-ref string-set! string-length string->symbol string->number string-append
     symbol->string
     ; vectors
     list->vector vector->list make-vector vector-copy vector-copy! vector vector-ref vector-set! vector-length vector-map vector-for-each vector-append vector-fill!
     ; typevectors
-    f64vector? list->f64vector f64vector->list make-f64vector f64vector f64vector-ref f64vector-set! f64vector-length
-    f32vector? list->f32vector f32vector->list make-f32vector f32vector f32vector-ref f32vector-set! f32vector-length
-    s32vector? list->s32vector s32vector->list make-s32vector s32vector s32vector-ref s32vector-set! s32vector-length
-    u16vector? list->u16vector u16vector->list make-u16vector u16vector u16vector-ref u16vector-set! u16vector-length
-    s16vector? list->s16vector s16vector->list make-s16vector s16vector s16vector-ref s16vector-set! s16vector-length
-    u8vector? list->u8vector u8vector->list make-u8vector u8vector u8vector-ref u8vector-set! u8vector-length
-    s8vector? list->s8vector s8vector->list make-s8vector s8vector s8vector-ref s8vector-set! s8vector-length
-    bytevector? list->bytevector bytevector->list make-bytevector bytevector bytevector-u8-ref bytevector-u8-set! bytevector-length
+    f64vector? list->f64vector f64vector->list make-f64vector f64vector f64vector-ref f64vector-set! f64vector-length f64vector-copy f64vector-copy!
+    f32vector? list->f32vector f32vector->list make-f32vector f32vector f32vector-ref f32vector-set! f32vector-length f32vector-copy f32vector-copy!
+    s32vector? list->s32vector s32vector->list make-s32vector s32vector s32vector-ref s32vector-set! s32vector-length s32vector-copy s32vector-copy!
+    u16vector? list->u16vector u16vector->list make-u16vector u16vector u16vector-ref u16vector-set! u16vector-length u16vector-copy u16vector-copy!
+    s16vector? list->s16vector s16vector->list make-s16vector s16vector s16vector-ref s16vector-set! s16vector-length s16vector-copy s16vector-copy!
+    u8vector? list->u8vector u8vector->list make-u8vector u8vector u8vector-ref u8vector-set! u8vector-length u8vector-copy u8vector-copy!
+    s8vector? list->s8vector s8vector->list make-s8vector s8vector s8vector-ref s8vector-set! s8vector-length s8vector-copy s8vector-copy!
+    bytevector? list->bytevector bytevector->list make-bytevector bytevector bytevector-u8-ref bytevector-u8-set! bytevector-length bytevector-copy bytevector-copy!
     read-u8vector read-bytevector
 
     typevector?
@@ -109,6 +109,8 @@
     fiber-fork fiber-fork-list fiber-map async await
     ; not r5rs
     atom? displayln writeln format printf sprintf error
+    ; srfi-260
+    generate-symbol
   )
   ; predicates
   (define-constant null? ##vcore.null?)
@@ -287,6 +289,11 @@
   (define (positive? x) (> x 0))
   (define (zero? x) (= x 0))
   (define (negative? x) (< x 0))
+  (define (nan? x) (not (= x x)))
+  (define (infinite? x) (= (abs x) (/ 1 0.0)))
+  (define (even? x) (= (bitwise-and x 1) 0))
+  (define (odd? x) (= (bitwise-and x 1) 1))
+
 
   ; math functions
   (define-constant + ##vcore.+)
@@ -305,6 +312,13 @@
 
   (define (square x) (* x x))
   (define sqrt (foreign-function "C" "double sqrt(double);"))
+  (define (exact-integer-sqrt x)
+    (if (inexact? x) (error "exact-integer-sqrt: not an int" x))
+    (if (< x 0) (error "exact-integer-sqrt: negative int" x))
+    (let* ((appx (sqrt x))
+           (s (exact (floor appx)))
+           (k (- x (* s s))))
+      (values s k)))
 
   (define sin (foreign-function "C" "double sin(double);"))
   (define cos (foreign-function "C" "double cos(double);"))
@@ -556,6 +570,8 @@
             (begin
               (string-set! str i (car lst))
               (loop (cdr lst) (+ i 1)))))))
+  (define (string . xs)
+    (list->string xs))
 
   (define (string->list str)
     (let loop ((i (- (string-length str) 1)) (acc '()))
@@ -605,6 +621,15 @@
   (define-constant f32vector-ref ##vcore.f32vector-ref)
   (define-constant f32vector-set! ##vcore.f32vector-set!)
   (define-constant f32vector-length ##vcore.f32vector-length)
+  (define-constant f32vector-copy! (##intrinsic "VF32VectorCopy" 4 6))
+  (define f32vector-copy
+    (case-lambda
+      ((vec) (f32vector-copy vec 0 (f32vector-length vec)))
+      ((vec start) (f32vector-copy vec start (f32vector-length vec)))
+      ((vec start end)
+       (let ((ret (make-f32vector (- end start))))
+         (f32vector-copy! ret 0 vec start end)
+         ret))))
   (define (f32vector->list vec)
     (let ((len (f32vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -619,6 +644,15 @@
   (define-constant f64vector-ref ##vcore.f64vector-ref)
   (define-constant f64vector-set! ##vcore.f64vector-set!)
   (define-constant f64vector-length ##vcore.f64vector-length)
+  (define-constant f64vector-copy! (##intrinsic "VF64VectorCopy" 4 6))
+  (define f64vector-copy
+    (case-lambda
+      ((vec) (f64vector-copy vec 0 (f64vector-length vec)))
+      ((vec start) (f64vector-copy vec start (f64vector-length vec)))
+      ((vec start end)
+       (let ((ret (make-f64vector (- end start))))
+         (f64vector-copy! ret 0 vec start end)
+         ret))))
   (define (f64vector->list vec)
     (let ((len (f64vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -633,6 +667,15 @@
   (define-constant s32vector-ref ##vcore.s32vector-ref)
   (define-constant s32vector-set! ##vcore.s32vector-set!)
   (define-constant s32vector-length ##vcore.s32vector-length)
+  (define-constant s32vector-copy! (##intrinsic "VS32VectorCopy" 4 6))
+  (define s32vector-copy
+    (case-lambda
+      ((vec) (s32vector-copy vec 0 (s32vector-length vec)))
+      ((vec start) (s32vector-copy vec start (s32vector-length vec)))
+      ((vec start end)
+       (let ((ret (make-s32vector (- end start))))
+         (s32vector-copy! ret 0 vec start end)
+         ret))))
   (define (s32vector->list vec)
     (let ((len (s32vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -647,6 +690,15 @@
   (define-constant u16vector-ref ##vcore.u16vector-ref)
   (define-constant u16vector-set! ##vcore.u16vector-set!)
   (define-constant u16vector-length ##vcore.u16vector-length)
+  (define-constant u16vector-copy! (##intrinsic "VU16VectorCopy" 4 6))
+  (define u16vector-copy
+    (case-lambda
+      ((vec) (u16vector-copy vec 0 (u16vector-length vec)))
+      ((vec start) (u16vector-copy vec start (u16vector-length vec)))
+      ((vec start end)
+       (let ((ret (make-u16vector (- end start))))
+         (u16vector-copy! ret 0 vec start end)
+         ret))))
   (define (u16vector->list vec)
     (let ((len (u16vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -661,6 +713,15 @@
   (define-constant s16vector-ref ##vcore.s16vector-ref)
   (define-constant s16vector-set! ##vcore.s16vector-set!)
   (define-constant s16vector-length ##vcore.s16vector-length)
+  (define-constant s16vector-copy! (##intrinsic "VS16VectorCopy" 4 6))
+  (define s16vector-copy
+    (case-lambda
+      ((vec) (s16vector-copy vec 0 (s16vector-length vec)))
+      ((vec start) (s16vector-copy vec start (s16vector-length vec)))
+      ((vec start end)
+       (let ((ret (make-s16vector (- end start))))
+         (s16vector-copy! ret 0 vec start end)
+         ret))))
   (define (s16vector->list vec)
     (let ((len (s16vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -675,6 +736,15 @@
   (define-constant u8vector-ref ##vcore.u8vector-ref)
   (define-constant u8vector-set! ##vcore.u8vector-set!)
   (define-constant u8vector-length ##vcore.u8vector-length)
+  (define-constant u8vector-copy! (##intrinsic "VU8VectorCopy" 4 6))
+  (define u8vector-copy
+    (case-lambda
+      ((vec) (u8vector-copy vec 0 (u8vector-length vec)))
+      ((vec start) (u8vector-copy vec start (u8vector-length vec)))
+      ((vec start end)
+       (let ((ret (make-u8vector (- end start))))
+         (u8vector-copy! ret 0 vec start end)
+         ret))))
   (define (u8vector->list vec)
     (let ((len (u8vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -685,11 +755,13 @@
   (define-constant bytevector? ##vcore.u8vector?)
   (define-constant make-bytevector ##vcore.make-u8vector)
   (define-constant list->bytevector ##vcore.list->u8vector)
-  (define bytevector->list u8vector->list)
   (define-constant bytevector ##vcore.u8vector)
   (define-constant bytevector-u8-ref ##vcore.u8vector-ref)
   (define-constant bytevector-u8-set! ##vcore.u8vector-set!)
   (define-constant bytevector-length ##vcore.u8vector-length)
+  (define-constant bytevector-copy! (##intrinsic "VU8VectorCopy" 4 6))
+  (define bytevector-copy u8vector-copy)
+  (define bytevector->list u8vector->list)
 
   (define read-u8vector
     (case-lambda
@@ -704,6 +776,15 @@
   (define-constant s8vector-ref ##vcore.s8vector-ref)
   (define-constant s8vector-set! ##vcore.s8vector-set!)
   (define-constant s8vector-length ##vcore.s8vector-length)
+  (define-constant s8vector-copy! (##intrinsic "VS8VectorCopy" 4 6))
+  (define s8vector-copy
+    (case-lambda
+      ((vec) (s8vector-copy vec 0 (s8vector-length vec)))
+      ((vec start) (s8vector-copy vec start (s8vector-length vec)))
+      ((vec start end)
+       (let ((ret (make-s8vector (- end start))))
+         (s8vector-copy! ret 0 vec start end)
+         ret))))
   (define (s8vector->list vec)
     (let ((len (s8vector-length vec)))
       (let loop ((acc '()) (i (- len 1)))
@@ -1262,4 +1343,9 @@
       ((f as . args) (fiber-fork-list (apply map (lambda args (lambda () (apply f args))) as args)))))
   (define-constant async ##vcore.async)
   (define-constant await ##vcore.await)
+
+  (define generate-symbol
+    (case-lambda
+      (() (##vcore.gensym "x"))
+      ((x) ##vcore.gensym x)))
 )

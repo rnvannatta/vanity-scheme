@@ -2750,7 +2750,7 @@ static void VDisplayWordImpl(VPort * port, VWORD v, bool write, int depth) {
               break;
             case BUF_F32:
             {
-              unsigned len = (blob->len/4)-1;
+              int len = (blob->len/4)-1;
               float * floats = (float*)(blob->buf+4);
               port_fputs("#f32(", port);
               for(int i = 0; i < len-1; i++) {
@@ -2764,7 +2764,7 @@ static void VDisplayWordImpl(VPort * port, VWORD v, bool write, int depth) {
             }
             case BUF_F64:
             {
-              unsigned len = (blob->len/8)-1;
+              int len = (blob->len/8)-1;
               double * doubles = (double*)(blob->buf+8);
               port_fputs("#f64(", port);
               for(int i = 0; i < len-1; i++) {
