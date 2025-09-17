@@ -175,16 +175,6 @@
        `((label
            ,(string->symbol (mangle-foreign-function name))
            (declare-foreign ,lang ,(car (get-foreign-encoder ret)) ,name . ,(map (lambda (arg) (car (get-foreign-decoder arg))) args)))))))
-  #;(define (process-intrinsics expr)
-    (match expr
-      (('##intrinsic name . _)
-       `((label
-           ,(string->symbol name)
-           (intrinsic ,name))))
-      (('##basic-intrinsic name . _)
-       `((label
-           ,(string->symbol name)
-           (intrinsic ,name))))))
   (define (process-declare declare)
     (match declare
       (('##foreign.declare d) `())

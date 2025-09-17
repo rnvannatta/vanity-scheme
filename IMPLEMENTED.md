@@ -1,6 +1,6 @@
 # Vanity Scheme Implementation Status
 
-Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI-1, SRFI-4, SRFI-17, SRFI-26, SRFI-69, and SRFI-151
+Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI-1, SRFI-4, SRFI-17, SRFI-26, SRFI-69, SRFI-151, and SRFI-260
 
 ## R7RS Syntax and Procedures
 
@@ -40,8 +40,8 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |boolean?                       | Yes         |             |            |
 |bytevector                     | Yes         |             |            |
 |bytevector-append              | Yes         |             |            |
-|bytevector-copy                |             |             |            |
-|bytevector-copy!               |             |             |            |
+|bytevector-copy                | Yes         |             |            |
+|bytevector-copy!               | Yes         |             |            |
 |bytevector-length              | Yes         |             |            |
 |bytevector-u8-ref              | Yes         |             |            |
 |bytevector-u8-set!             | Yes         |             |            |
@@ -148,10 +148,10 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |error-object-message           |             |             |            |
 |error-object?                  |             |             |            |
 |eval                           | Low Prio    |             |            |
-|even?                          |             |             |            |
+|even?                          | Yes         |             |            |
 |exact                          | Yes         |             |            |
-|exact-integer-sqrt             |             |             |            |
-|exact-integer?                 |             |             |            |
+|exact-integer-sqrt             | Yes         |             |            |
+|exact-integer?                 | Yes         |             |            |
 |exact?                         | Yes         |             |            |
 |except                         |             |             |            |
 |exit                           | Yes         |             |            |
@@ -185,7 +185,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |include-library-declarations   |             |             |            |
 |inexact                        | Yes         |             |            |
 |inexact?                       | Yes         |             |            |
-|infinite?                      |             |             |            |
+|infinite?                      | Yes         |             |            |
 |input-port-open?               |             |             |            |
 |input-port?                    |             |             |            |
 |integer-\>char                 |             |             |            |
@@ -229,7 +229,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |memv                           | Yes         |             |            |
 |min                            | Yes         |             |            |
 |modulo                         |             |             |            |
-|nan?                           |             |             |            |
+|nan?                           | Yes         |             |            |
 |negative?                      | Yes         |             |            |
 |newline                        | Yes         |             |            |
 |not                            | Yes         |             |            |
@@ -239,7 +239,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |number?                        | Yes         |             |            |
 |numerator                      | Low Prio    |             |            |
 |#o                             |             |             |            |
-|odd?                           |             |             |            |
+|odd?                           | Yes         |             |            |
 |only                           |             |             |            |
 |open-binary-input-file         |             |             |            |
 |open-binary-output-file        |             |             |            |
@@ -289,7 +289,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |sin                            | Yes         |             |            |
 |sqrt                           | Yes         |             |            |
 |square                         | Yes         |             |            |
-|string                         |             |             |            |
+|string                         | Yes         |             |            |
 |string->list                   | Yes         |             |            |
 |string->number                 | Yes         |             |            |
 |string->symbol                 | Yes         |             |            |
@@ -530,6 +530,10 @@ Maximum number of function arguments is 65535, including the hidden continuation
 |TAGvector-set!                 | Yes         |             |            |
 |TAGvector->list                | Yes         |             |            |
 |list->TAGvector                | Yes         | ?           |            |
+|TAGvector-copy (bonus)         | Yes         | ?           |            |
+|TAGvector-copy! (bonus         | Yes         | ?           |            |
+
+Also u8vector is an alias for bytevector and all procedures exist there too
 
 ## SRFI-17
 
