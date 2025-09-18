@@ -354,7 +354,7 @@
               parsed-vars
               parsed-lets
               parsed-initially
-              (cons `(accumulate ,bool (lambda (x acc) (if x (+ acc 1) acc 0)) ,x into ,acc) parsed-exprs)
+              (cons `(accumulate ,bool (lambda (x acc) (if x (+ acc 1) acc)) ,x into ,acc 0) parsed-exprs)
               rest-rest))
            ((minimize minimizing)
             (define-values (acc into-rest) (parse-into rest *minimize-acc*))
