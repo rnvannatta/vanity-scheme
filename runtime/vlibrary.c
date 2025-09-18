@@ -2176,8 +2176,16 @@ V_BEGIN_FUNC_RANGE(V ## Prefix ## VectorCopy, #prefix "vector-copy!", 4, 6, k, _
   VBlob * dst = VCheckedDecodePointer2(runtime, _dst, VBUFFER, #prefix "vector-copy!"); \
   VBlob * src = VCheckedDecodePointer2(runtime, _src, VBUFFER, #prefix "vector-copy!"); \
   int at = VCheckedDecodeInt2(runtime, _at, #prefix "vector-copy!"); \
-  int start = VCheckedDecodeInt2(runtime, _start, #prefix "vector-copy!"); \
-  int end = VCheckedDecodeInt2(runtime, _end, #prefix "vector-copy!"); \
+  int start; \
+  if(argc > 4) \
+    start = VCheckedDecodeInt2(runtime, _start, #prefix "vector-copy!"); \
+  else \
+    start = 0; \
+  int end; \
+  if(argc > 5) \
+    end = VCheckedDecodeInt2(runtime, _end, #prefix "vector-copy!"); \
+  else \
+    end = src->len / elem_width - 1;\
   int nelems = end - start; \
   int atend = at + nelems; \
   if(at < 0 || start < 0 || nelems < 0) \
