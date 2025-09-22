@@ -164,6 +164,11 @@
        (and (not (eqv? x k)) (variable-pure? k val)))
       (('define x val)
        (or (eqv? x k) (variable-pure? k val)))
+      ; CPS version of set and define, which despite being syntax are procedure-ish
+      (('set! cont x val)
+       (and (not (eqv? x k)) (variable-pure? k cont) (variable-pure? k val)))
+      (('define cont x val)
+       (or (eqv? x k) (and (variable-pure? k cont) (variable-pure? k val))))
       (('letrec ((xs vals) ...) body)
        ; a bit of a hack.
        ; but if k is in the xs, it's shadowed
