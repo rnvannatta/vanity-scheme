@@ -2,7 +2,7 @@ SRC := $(addprefix vanity/compiler/, variables.scm match.scm utils.scm getopt.sc
 COMPILE_SRC := $(addprefix vanity/compiler/, frontend.scm)
 INTERP_SRC := $(addprefix vanity/interpreter/, frontend.scm)
 
-RUNTIME_SRC := vruntime.c vlibrary.c vread.c vfiber.c vbytecode.c wacky.c
+RUNTIME_SRC := vruntime.c vlibrary.c vread.c vfiber.c vbytecode.c wacky.c intern.c
 WASM_SRC := vruntime.c vlibrary.c vread.c
 
 PRIVATE_HEADERS := vruntime_private.h vqueue_private.h vsetjmp_private.h wacky_private.h vport_private.h

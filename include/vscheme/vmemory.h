@@ -91,9 +91,11 @@ static inline VWORD VPoolString(VMemoryPool * pool, char const * str) {
   VFillBlob(b, VSTRING, len, str);
   return VEncodePointer(b, VPOINTER_OTHER);
 }
+#if 0
 static inline VWORD VPoolSymbol(VMemoryPool * pool, char const * str) {
   unsigned len = strlen(str)+1;
   VBlob * b = VPoolAlloc(pool, sizeof(VBlob) + len);
   VFillBlob(b, VSYMBOL, len, str);
   return VEncodePointer(b, VPOINTER_OTHER);
 }
+#endif

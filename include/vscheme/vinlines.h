@@ -141,8 +141,23 @@ static inline VWORD VInlineSymbolEqv2(VRuntime * runtime, VWORD a, VWORD b) {
   return VEncodeBool(VIsSymbol(a) && VIsSymbol(b) && VCheckSymbolEqv(a, b));
 }
 
+#define WARN_EQUITY
+#ifdef WARN_EQUITY
+#include <stdio.h>
+#endif
+
 static inline VWORD VInlineEqv2(VRuntime * runtime, VWORD a, VWORD b) {
+#ifndef WARN_EQUITY
   return VEncodeBool(VBits(a) == VBits(b) || (VIsSymbol(a) && VIsSymbol(b) && VCheckSymbolEqv(a, b)));
+#else
+  if(VBits(a) == VBits(b))
+    return VTRUE;
+  if(VIsSymbol(a) && VIsSymbol(b) && VCheckSymbolEqv(a, b)) {
+    fprintf(stderr, "symbol eq-ity failure: %s\n", VDecodeBlob(a)->buf);
+    return VTRUE;
+  }
+  return VFALSE;
+#endif
 }
 
 // lists

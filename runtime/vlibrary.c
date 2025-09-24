@@ -36,6 +36,7 @@
 #include <limits.h>
 #include "vanity/dfile.h"
 #include "vport_private.h"
+#include "intern_private.h"
 
 #ifdef __linux__
 #endif
@@ -1388,9 +1389,11 @@ V_END_FUNC
 V_BEGIN_FUNC(VStringSymbol2, "string->symbol", 2, k, _str)
   VBlob * str = VCheckedDecodeString2(runtime, _str, "string->symbol");
 
-  VBlob * sym = V_ALLOCA_BLOB2(&runtime, runtime, str->len);
-  if(!sym) VGarbageCollect2Func(runtime, (VFunc)VStringSymbol2, 2, k, _str);
-  VFillBlob(sym, VSYMBOL, str->len, str->buf);
+  VBlob * sym = VCreateSymbolSlow(str->buf, str->len-1);
+
+  //VBlob * sym = V_ALLOCA_BLOB2(&runtime, runtime, str->len);
+  //if(!sym) VGarbageCollect2Func(runtime, (VFunc)VStringSymbol2, 2, k, _str);
+  //VFillBlob(sym, VSYMBOL, str->len, str->buf);
   V_BOUNCE(k, runtime, VEncodePointer(sym, VPOINTER_OTHER));
 }
 V_BEGIN_FUNC(VSymbolString2, "symbol->string", 2, k, _sym)
