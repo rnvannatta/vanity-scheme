@@ -180,9 +180,9 @@ build/%.d : build/%.scm
 -include $(DEP)
 
 bin/vsc : $(OBJ) $(COMPILE_OBJ)
-	vsc -o $@ $^ $(SCMFLAGS)
+	vsc -o $@ $^ $(SCMFLAGS) -Wc,-Llib
 bin/vanity : $(OBJ) $(INTERP_OBJ)
-	vsc -o $@ $^ $(SCMFLAGS)
+	vsc -o $@ $^ $(SCMFLAGS) -Wc,-Llib
 
 # I don't like this, any files vsc doesn't understand should just be passed to cc
 bin/x86_64-w64-mingw32/vanity.exe : $(WINDOWS_OBJ) $(WINDOWS_INTERP_OBJ) build/vanity.res

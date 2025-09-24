@@ -1,3 +1,4 @@
 bootstrap/** linguist-vendored
 include/vscheme/vhash.h linguist-vendored
 vendor/** linguist-vendored
+runtime/xxhash.h linguist-vendored
