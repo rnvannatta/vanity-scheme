@@ -1134,11 +1134,7 @@ void VRegisterSym(char const * name, void * ptr);
 void * VLookupConstant(char * name, void * val);
 
 static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
-  if(VBits(a) == VBits(b))
-    return true;
-  VBlob * blob_a = (VBlob*)VDecodePointer(a);
-  VBlob * blob_b = (VBlob*)VDecodePointer(b);
-  return !strcmp(blob_a->buf, blob_b->buf);
+  return VBits(a) == VBits(b);
 }
 
 VGlobalEntry * VLookupGlobalEntryFast2(VRuntime * runtime, char const * sym);

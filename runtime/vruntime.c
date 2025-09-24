@@ -2132,12 +2132,7 @@ V_BEGIN_FUNC(VLookupLibrary2, "lookup-library", 2, k, name)
   if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VLookupLibrary2, runtime, statics, 2, argc, k, name);
 
-  // TODO statically allocate this you knucklehead
 #define sym_str "##vcore.libraries"
-  //VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
-  //sym->base = VMakeSmallObject(VSYMBOL);
-  //sym->len = sizeof sym_str;
-  //memcpy(sym->buf, sym_str, sym->len);
   VBlob * sym = VCreateSymbolSlow(sym_str, sizeof sym_str - 1);
 #undef sym_str
 
@@ -2484,10 +2479,6 @@ V_BEGIN_FUNC(VLoadLibrary2, "load-library", 2, k, name)
     VGarbageCollect2Args((VFunc)VLoadLibrary2, runtime, statics, 2, argc, k, name);
 
 #define sym_str "##vcore.libraries"
-  //VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
-  //sym->base = VMakeSmallObject(VSYMBOL);
-  //sym->len = sizeof sym_str;
-  //memcpy(sym->buf, sym_str, sym->len);
   VBlob * sym = VCreateSymbolSlow(sym_str, sizeof sym_str - 1);
 #undef sym_str
 
@@ -2533,10 +2524,6 @@ V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
     VGarbageCollect2Args((VFunc)VUnloadLibrary2, runtime, statics, 2, argc, k, name);
 
 #define sym_str "##vcore.libraries"
-  //VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
-  //sym->base = VMakeSmallObject(VSYMBOL);
-  //sym->len = sizeof sym_str;
-  //memcpy(sym->buf, sym_str, sym->len);
   VBlob * sym = VCreateSymbolSlow(sym_str, sizeof sym_str - 1);
 #undef sym_str
 
@@ -3235,13 +3222,6 @@ V_BEGIN_FUNC(VGensym, "gensym", 2, k, _str)
     dots = "..";
     var = str->buf+2;
   }
-  //int len = snprintf(NULL, 0, "##%s%s.%llu", dots, var, (unsigned long long)index);
-  //len++;
-  //VBlob * sym = alloca(sizeof(VBlob)+len);
-  //sym->base = VMakeSmallObject(VSYMBOL);
-  //sym->len = len;
-  //int ret = snprintf(sym->buf, sym->len, "##%s%s.%llu", dots, var, (unsigned long long)index);
-  //assert(ret == sym->len-1);
   char buf[1024];
   int ret = snprintf(buf, sizeof buf, "##%s%s.%llu", dots, var, (unsigned long long)index);
   if(ret >= sizeof buf - 1)

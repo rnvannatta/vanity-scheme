@@ -32,6 +32,7 @@
 #include "vscheme/vruntime.h"
 #include "vruntime_private.h"
 #include "vport_private.h"
+#include "intern_private.h"
 
 enum lex_t {
   LEX_START,
@@ -877,8 +878,9 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
             break;
         }
         size_t len = strlen(str)+1;
-        VBlob * sym = myalloca(sizeof(VBlob)+len);
-        VFillBlob(sym, VSYMBOL, len, str);
+        //VBlob * sym = myalloca(sizeof(VBlob)+len);
+        //VFillBlob(sym, VSYMBOL, len, str);
+        VBlob * sym = VCreateSymbolSlow(str, len-1);
         VPair * pair = myalloca(sizeof(VPair)), *second = myalloca(sizeof(VPair));
         *second = VMakePair(VEncodePointer(sym, VPOINTER_OTHER), VNULL);
         *pair = VMakePair(VEncodePair(second), root->rest);
@@ -1051,8 +1053,9 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
       case LEX_SYMBOL:
       {
         size_t len = strlen(runtime->lex_buf) + 1;
-        VBlob * blob = myalloca(sizeof(VBlob) + len);
-        VFillBlob(blob, VSYMBOL, len, runtime->lex_buf);
+        //VBlob * blob = myalloca(sizeof(VBlob) + len);
+        //VFillBlob(blob, VSYMBOL, len, runtime->lex_buf);
+        VBlob * blob = VCreateSymbolSlow(runtime->lex_buf, len-1);
         elem = VEncodePointer(blob, VPOINTER_OTHER);
 
         VPair * pair = myalloca(sizeof(VPair));

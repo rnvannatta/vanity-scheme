@@ -69,9 +69,15 @@ static void InsertSymbol(int hash, VBlob * sym);
 static void GrowTable() {
   int old_capacity = capacity;
   if(!capacity) {
+#if 0
     capacity = 256;
     log_buckets = 8;
     hash_mask = 255;
+#else
+    capacity = 1;
+    log_buckets = 0;
+    hash_mask = 0;
+#endif
   }
   capacity *= 2;
   log_buckets++;

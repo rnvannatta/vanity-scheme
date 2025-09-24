@@ -36,6 +36,7 @@
 #include <limits.h>
 #include "vanity/dfile.h"
 #include "vport_private.h"
+#include "intern_private.h"
 
 #ifdef __linux__
 #endif
@@ -1388,9 +1389,11 @@ V_END_FUNC
 V_BEGIN_FUNC(VStringSymbol2, "string->symbol", 2, k, _str)
   VBlob * str = VCheckedDecodeString2(runtime, _str, "string->symbol");
 
-  VBlob * sym = V_ALLOCA_BLOB2(&runtime, runtime, str->len);
-  if(!sym) VGarbageCollect2Func(runtime, (VFunc)VStringSymbol2, 2, k, _str);
-  VFillBlob(sym, VSYMBOL, str->len, str->buf);
+  VBlob * sym = VCreateSymbolSlow(str->buf, str->len-1);
+
+  //VBlob * sym = V_ALLOCA_BLOB2(&runtime, runtime, str->len);
+  //if(!sym) VGarbageCollect2Func(runtime, (VFunc)VStringSymbol2, 2, k, _str);
+  //VFillBlob(sym, VSYMBOL, str->len, str->buf);
   V_BOUNCE(k, runtime, VEncodePointer(sym, VPOINTER_OTHER));
 }
 V_BEGIN_FUNC(VSymbolString2, "symbol->string", 2, k, _sym)
@@ -2171,6 +2174,31 @@ V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorSet, #prefix "vector-set!", 3, _buf, _i,
     VErrorC(runtime, #prefix "vector-set!: not a vector of the right type.", _buf); \
   Prefix ## Write(runtime, buf, elem_width*(i+1), val); \
   return VVOID; \
+V_END_FUNC \
+V_BEGIN_FUNC_RANGE(V ## Prefix ## VectorCopy, #prefix "vector-copy!", 4, 6, k, _dst, _at, _src, _start, _end) \
+  VBlob * dst = VCheckedDecodePointer2(runtime, _dst, VBUFFER, #prefix "vector-copy!"); \
+  VBlob * src = VCheckedDecodePointer2(runtime, _src, VBUFFER, #prefix "vector-copy!"); \
+  int at = VCheckedDecodeInt2(runtime, _at, #prefix "vector-copy!"); \
+  int start; \
+  if(argc > 4) \
+    start = VCheckedDecodeInt2(runtime, _start, #prefix "vector-copy!"); \
+  else \
+    start = 0; \
+  int end; \
+  if(argc > 5) \
+    end = VCheckedDecodeInt2(runtime, _end, #prefix "vector-copy!"); \
+  else \
+    end = src->len / elem_width - 1;\
+  int nelems = end - start; \
+  int atend = at + nelems; \
+  if(at < 0 || start < 0 || nelems < 0) \
+    VErrorC(runtime, #prefix "vector-copy!: invalid at, start, or end. at ~D, start ~D, end ~D", at, start, end); \
+  /* buffers have n elements plus a tag */ \
+  /* so the length of a buffer is n+1 */ \
+  if(dst->len < elem_width * (atend +1) || src->len < elem_width * (end + 1)) \
+    VErrorC(runtime, #prefix "vector-copy!: copy out of bounds"); \
+  memmove(dst->buf + elem_width * (at + 1), src->buf + elem_width * (start + 1), elem_width * nelems); \
+  V_BOUNCE(k, runtime, VVOID); \
 V_END_FUNC
 
 IMPLEMENT_BUFFER(s8, S8, 1)

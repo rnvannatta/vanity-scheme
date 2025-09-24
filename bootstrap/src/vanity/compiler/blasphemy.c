@@ -27,6 +27,7 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
+VBlob * VInternSymbol(int hash, VBlob * sym);
 
 
 static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D3971 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
@@ -181,139 +182,139 @@ static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D3957 = { { .base = { .
 VWEAK VWORD _V40_V10vcore_Dgensym;
 VWEAK VClosure _VW_V40_V10vcore_Dgensym = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VGensym, NULL };
 static __attribute__((constructor)) void VDllMain1() {
-  _V0equal_Q = VEncodePointer(VLookupConstant("_V0equal_Q", &_VW_V0equal_Q), VPOINTER_OTHER);
-  _V0error = VEncodePointer(VLookupConstant("_V0error", &_VW_V0error), VPOINTER_OTHER);
-  _V0cadr = VEncodePointer(VLookupConstant("_V0cadr", &_VW_V0cadr), VPOINTER_OTHER);
-  _V0list__ref = VEncodePointer(VLookupConstant("_V0list__ref", &_VW_V0list__ref), VPOINTER_OTHER);
-  _V0list = VEncodePointer(VLookupConstant("_V0list", &_VW_V0list), VPOINTER_OTHER);
-  _V0filter = VEncodePointer(VLookupConstant("_V0filter", &_VW_V0filter), VPOINTER_OTHER);
-  _V0map = VEncodePointer(VLookupConstant("_V0map", &_VW_V0map), VPOINTER_OTHER);
-  _V0reverse = VEncodePointer(VLookupConstant("_V0reverse", &_VW_V0reverse), VPOINTER_OTHER);
-  _V0values = VEncodePointer(VLookupConstant("_V0values", &_VW_V0values), VPOINTER_OTHER);
-  _V0number_Q = VEncodePointer(VLookupConstant("_V0number_Q", &_VW_V0number_Q), VPOINTER_OTHER);
-  _V0assv = VEncodePointer(VLookupConstant("_V0assv", &_VW_V0assv), VPOINTER_OTHER);
-  _V0sprintf = VEncodePointer(VLookupConstant("_V0sprintf", &_VW_V0sprintf), VPOINTER_OTHER);
-  _V0expand__do__loop = VEncodePointer(VLookupConstant("_V0expand__do__loop", &_VW_V0expand__do__loop), VPOINTER_OTHER);
-  _V0loop = VEncodePointer(VLookupConstant("_V0loop", &_VW_V0loop), VPOINTER_OTHER);
-  _V0finalize = VEncodePointer(VLookupConstant("_V0finalize", &_VW_V0finalize), VPOINTER_OTHER);
-  _V0collect__acc = VEncodePointer(VLookupConstant("_V0collect__acc", &_VW_V0collect__acc), VPOINTER_OTHER);
-  _V0append__acc = VEncodePointer(VLookupConstant("_V0append__acc", &_VW_V0append__acc), VPOINTER_OTHER);
-  _V0append__acc_B = VEncodePointer(VLookupConstant("_V0append__acc_B", &_VW_V0append__acc_B), VPOINTER_OTHER);
-  _V0sum__acc = VEncodePointer(VLookupConstant("_V0sum__acc", &_VW_V0sum__acc), VPOINTER_OTHER);
-  _V0count__acc = VEncodePointer(VLookupConstant("_V0count__acc", &_VW_V0count__acc), VPOINTER_OTHER);
-  _V0maximize__acc = VEncodePointer(VLookupConstant("_V0maximize__acc", &_VW_V0maximize__acc), VPOINTER_OTHER);
-  _V0minimize__acc = VEncodePointer(VLookupConstant("_V0minimize__acc", &_VW_V0minimize__acc), VPOINTER_OTHER);
-  _V0do__loop = VEncodePointer(VLookupConstant("_V0do__loop", &_VW_V0do__loop), VPOINTER_OTHER);
-  _V0named = VEncodePointer(VLookupConstant("_V0named", &_VW_V0named), VPOINTER_OTHER);
-  _V0f64vector__ref = VEncodePointer(VLookupConstant("_V0f64vector__ref", &_VW_V0f64vector__ref), VPOINTER_OTHER);
-  _V0f32vector__ref = VEncodePointer(VLookupConstant("_V0f32vector__ref", &_VW_V0f32vector__ref), VPOINTER_OTHER);
-  _V0s32vector__ref = VEncodePointer(VLookupConstant("_V0s32vector__ref", &_VW_V0s32vector__ref), VPOINTER_OTHER);
-  _V0u16vector__ref = VEncodePointer(VLookupConstant("_V0u16vector__ref", &_VW_V0u16vector__ref), VPOINTER_OTHER);
-  _V0s16vector__ref = VEncodePointer(VLookupConstant("_V0s16vector__ref", &_VW_V0s16vector__ref), VPOINTER_OTHER);
-  _V0u8vector__ref = VEncodePointer(VLookupConstant("_V0u8vector__ref", &_VW_V0u8vector__ref), VPOINTER_OTHER);
-  _V0s8vector__ref = VEncodePointer(VLookupConstant("_V0s8vector__ref", &_VW_V0s8vector__ref), VPOINTER_OTHER);
-  _V0vector__ref = VEncodePointer(VLookupConstant("_V0vector__ref", &_VW_V0vector__ref), VPOINTER_OTHER);
-  _V0car = VEncodePointer(VLookupConstant("_V0car", &_VW_V0car), VPOINTER_OTHER);
-  _V0cdr = VEncodePointer(VLookupConstant("_V0cdr", &_VW_V0cdr), VPOINTER_OTHER);
-  _V0let_S = VEncodePointer(VLookupConstant("_V0let_S", &_VW_V0let_S), VPOINTER_OTHER);
-  _V0list__copy = VEncodePointer(VLookupConstant("_V0list__copy", &_VW_V0list__copy), VPOINTER_OTHER);
-  _V0take__right = VEncodePointer(VLookupConstant("_V0take__right", &_VW_V0take__right), VPOINTER_OTHER);
-  _V0_Slst_S = VEncodePointer(VLookupConstant("_V0_Slst_S", &_VW_V0_Slst_S), VPOINTER_OTHER);
-  _V0set__cdr_B = VEncodePointer(VLookupConstant("_V0set__cdr_B", &_VW_V0set__cdr_B), VPOINTER_OTHER);
-  _V0set_B = VEncodePointer(VLookupConstant("_V0set_B", &_VW_V0set_B), VPOINTER_OTHER);
-  _V0null_Q = VEncodePointer(VLookupConstant("_V0null_Q", &_VW_V0null_Q), VPOINTER_OTHER);
-  _V0cons = VEncodePointer(VLookupConstant("_V0cons", &_VW_V0cons), VPOINTER_OTHER);
-  _V0_Snode_S = VEncodePointer(VLookupConstant("_V0_Snode_S", &_VW_V0_Snode_S), VPOINTER_OTHER);
-  _V0begin = VEncodePointer(VLookupConstant("_V0begin", &_VW_V0begin), VPOINTER_OTHER);
-  _V0f64vector__length = VEncodePointer(VLookupConstant("_V0f64vector__length", &_VW_V0f64vector__length), VPOINTER_OTHER);
-  _V0f32vector__length = VEncodePointer(VLookupConstant("_V0f32vector__length", &_VW_V0f32vector__length), VPOINTER_OTHER);
-  _V0s32vector__length = VEncodePointer(VLookupConstant("_V0s32vector__length", &_VW_V0s32vector__length), VPOINTER_OTHER);
-  _V0u16vector__length = VEncodePointer(VLookupConstant("_V0u16vector__length", &_VW_V0u16vector__length), VPOINTER_OTHER);
-  _V0s16vector__length = VEncodePointer(VLookupConstant("_V0s16vector__length", &_VW_V0s16vector__length), VPOINTER_OTHER);
-  _V0u8vector__length = VEncodePointer(VLookupConstant("_V0u8vector__length", &_VW_V0u8vector__length), VPOINTER_OTHER);
-  _V0s8vector__length = VEncodePointer(VLookupConstant("_V0s8vector__length", &_VW_V0s8vector__length), VPOINTER_OTHER);
-  _V0vector__length = VEncodePointer(VLookupConstant("_V0vector__length", &_VW_V0vector__length), VPOINTER_OTHER);
-  _V0pair_Q = VEncodePointer(VLookupConstant("_V0pair_Q", &_VW_V0pair_Q), VPOINTER_OTHER);
-  _V0finally__return = VEncodePointer(VLookupConstant("_V0finally__return", &_VW_V0finally__return), VPOINTER_OTHER);
+  _V0equal_Q = VEncodePointer(VInternSymbol(1746439164, &_VW_V0equal_Q.sym), VPOINTER_OTHER);
+  _V0error = VEncodePointer(VInternSymbol(147890691, &_VW_V0error.sym), VPOINTER_OTHER);
+  _V0cadr = VEncodePointer(VInternSymbol(137264287, &_VW_V0cadr.sym), VPOINTER_OTHER);
+  _V0list__ref = VEncodePointer(VInternSymbol(-297841368, &_VW_V0list__ref.sym), VPOINTER_OTHER);
+  _V0list = VEncodePointer(VInternSymbol(-1594870040, &_VW_V0list.sym), VPOINTER_OTHER);
+  _V0filter = VEncodePointer(VInternSymbol(-52975199, &_VW_V0filter.sym), VPOINTER_OTHER);
+  _V0map = VEncodePointer(VInternSymbol(-1940887657, &_VW_V0map.sym), VPOINTER_OTHER);
+  _V0reverse = VEncodePointer(VInternSymbol(418515197, &_VW_V0reverse.sym), VPOINTER_OTHER);
+  _V0values = VEncodePointer(VInternSymbol(711325068, &_VW_V0values.sym), VPOINTER_OTHER);
+  _V0number_Q = VEncodePointer(VInternSymbol(-1605136215, &_VW_V0number_Q.sym), VPOINTER_OTHER);
+  _V0assv = VEncodePointer(VInternSymbol(-1259600321, &_VW_V0assv.sym), VPOINTER_OTHER);
+  _V0sprintf = VEncodePointer(VInternSymbol(1933004612, &_VW_V0sprintf.sym), VPOINTER_OTHER);
+  _V0expand__do__loop = VEncodePointer(VInternSymbol(521840868, &_VW_V0expand__do__loop.sym), VPOINTER_OTHER);
+  _V0loop = VEncodePointer(VInternSymbol(-596409721, &_VW_V0loop.sym), VPOINTER_OTHER);
+  _V0finalize = VEncodePointer(VInternSymbol(-1841371922, &_VW_V0finalize.sym), VPOINTER_OTHER);
+  _V0collect__acc = VEncodePointer(VInternSymbol(501110861, &_VW_V0collect__acc.sym), VPOINTER_OTHER);
+  _V0append__acc = VEncodePointer(VInternSymbol(-1664958005, &_VW_V0append__acc.sym), VPOINTER_OTHER);
+  _V0append__acc_B = VEncodePointer(VInternSymbol(1323575956, &_VW_V0append__acc_B.sym), VPOINTER_OTHER);
+  _V0sum__acc = VEncodePointer(VInternSymbol(1438066003, &_VW_V0sum__acc.sym), VPOINTER_OTHER);
+  _V0count__acc = VEncodePointer(VInternSymbol(28336760, &_VW_V0count__acc.sym), VPOINTER_OTHER);
+  _V0maximize__acc = VEncodePointer(VInternSymbol(-914476027, &_VW_V0maximize__acc.sym), VPOINTER_OTHER);
+  _V0minimize__acc = VEncodePointer(VInternSymbol(-1670491641, &_VW_V0minimize__acc.sym), VPOINTER_OTHER);
+  _V0do__loop = VEncodePointer(VInternSymbol(718546327, &_VW_V0do__loop.sym), VPOINTER_OTHER);
+  _V0named = VEncodePointer(VInternSymbol(1938636167, &_VW_V0named.sym), VPOINTER_OTHER);
+  _V0f64vector__ref = VEncodePointer(VInternSymbol(1609041930, &_VW_V0f64vector__ref.sym), VPOINTER_OTHER);
+  _V0f32vector__ref = VEncodePointer(VInternSymbol(-21423757, &_VW_V0f32vector__ref.sym), VPOINTER_OTHER);
+  _V0s32vector__ref = VEncodePointer(VInternSymbol(-1250367719, &_VW_V0s32vector__ref.sym), VPOINTER_OTHER);
+  _V0u16vector__ref = VEncodePointer(VInternSymbol(2138318570, &_VW_V0u16vector__ref.sym), VPOINTER_OTHER);
+  _V0s16vector__ref = VEncodePointer(VInternSymbol(449751626, &_VW_V0s16vector__ref.sym), VPOINTER_OTHER);
+  _V0u8vector__ref = VEncodePointer(VInternSymbol(68346898, &_VW_V0u8vector__ref.sym), VPOINTER_OTHER);
+  _V0s8vector__ref = VEncodePointer(VInternSymbol(1501090850, &_VW_V0s8vector__ref.sym), VPOINTER_OTHER);
+  _V0vector__ref = VEncodePointer(VInternSymbol(1088741906, &_VW_V0vector__ref.sym), VPOINTER_OTHER);
+  _V0car = VEncodePointer(VInternSymbol(-5179575, &_VW_V0car.sym), VPOINTER_OTHER);
+  _V0cdr = VEncodePointer(VInternSymbol(-27845161, &_VW_V0cdr.sym), VPOINTER_OTHER);
+  _V0let_S = VEncodePointer(VInternSymbol(-1235035137, &_VW_V0let_S.sym), VPOINTER_OTHER);
+  _V0list__copy = VEncodePointer(VInternSymbol(600805102, &_VW_V0list__copy.sym), VPOINTER_OTHER);
+  _V0take__right = VEncodePointer(VInternSymbol(427694580, &_VW_V0take__right.sym), VPOINTER_OTHER);
+  _V0_Slst_S = VEncodePointer(VInternSymbol(457980192, &_VW_V0_Slst_S.sym), VPOINTER_OTHER);
+  _V0set__cdr_B = VEncodePointer(VInternSymbol(-1220981645, &_VW_V0set__cdr_B.sym), VPOINTER_OTHER);
+  _V0set_B = VEncodePointer(VInternSymbol(-530681865, &_VW_V0set_B.sym), VPOINTER_OTHER);
+  _V0null_Q = VEncodePointer(VInternSymbol(1722024332, &_VW_V0null_Q.sym), VPOINTER_OTHER);
+  _V0cons = VEncodePointer(VInternSymbol(943237530, &_VW_V0cons.sym), VPOINTER_OTHER);
+  _V0_Snode_S = VEncodePointer(VInternSymbol(-237755562, &_VW_V0_Snode_S.sym), VPOINTER_OTHER);
+  _V0begin = VEncodePointer(VInternSymbol(1265111139, &_VW_V0begin.sym), VPOINTER_OTHER);
+  _V0f64vector__length = VEncodePointer(VInternSymbol(-877669771, &_VW_V0f64vector__length.sym), VPOINTER_OTHER);
+  _V0f32vector__length = VEncodePointer(VInternSymbol(369840287, &_VW_V0f32vector__length.sym), VPOINTER_OTHER);
+  _V0s32vector__length = VEncodePointer(VInternSymbol(12052213, &_VW_V0s32vector__length.sym), VPOINTER_OTHER);
+  _V0u16vector__length = VEncodePointer(VInternSymbol(-1711901790, &_VW_V0u16vector__length.sym), VPOINTER_OTHER);
+  _V0s16vector__length = VEncodePointer(VInternSymbol(-1278156404, &_VW_V0s16vector__length.sym), VPOINTER_OTHER);
+  _V0u8vector__length = VEncodePointer(VInternSymbol(-1061582660, &_VW_V0u8vector__length.sym), VPOINTER_OTHER);
+  _V0s8vector__length = VEncodePointer(VInternSymbol(-855670152, &_VW_V0s8vector__length.sym), VPOINTER_OTHER);
+  _V0vector__length = VEncodePointer(VInternSymbol(992023749, &_VW_V0vector__length.sym), VPOINTER_OTHER);
+  _V0pair_Q = VEncodePointer(VInternSymbol(1000447642, &_VW_V0pair_Q.sym), VPOINTER_OTHER);
+  _V0finally__return = VEncodePointer(VInternSymbol(890942532, &_VW_V0finally__return.sym), VPOINTER_OTHER);
   _V40_V10vcore_Deqv_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Deqv_Q", &_VW_V40_V10vcore_Deqv_Q), VPOINTER_CLOSURE);
-  _V0finally = VEncodePointer(VLookupConstant("_V0finally", &_VW_V0finally), VPOINTER_OTHER);
-  _V0unless = VEncodePointer(VLookupConstant("_V0unless", &_VW_V0unless), VPOINTER_OTHER);
-  _V0return = VEncodePointer(VLookupConstant("_V0return", &_VW_V0return), VPOINTER_OTHER);
-  _V0sum = VEncodePointer(VLookupConstant("_V0sum", &_VW_V0sum), VPOINTER_OTHER);
-  _V0count = VEncodePointer(VLookupConstant("_V0count", &_VW_V0count), VPOINTER_OTHER);
-  _V0minimize = VEncodePointer(VLookupConstant("_V0minimize", &_VW_V0minimize), VPOINTER_OTHER);
-  _V0maximize = VEncodePointer(VLookupConstant("_V0maximize", &_VW_V0maximize), VPOINTER_OTHER);
-  _V0max = VEncodePointer(VLookupConstant("_V0max", &_VW_V0max), VPOINTER_OTHER);
-  _V0maximizing = VEncodePointer(VLookupConstant("_V0maximizing", &_VW_V0maximizing), VPOINTER_OTHER);
-  _V0_W = VEncodePointer(VLookupConstant("_V0_W", &_VW_V0_W), VPOINTER_OTHER);
-  _V0min = VEncodePointer(VLookupConstant("_V0min", &_VW_V0min), VPOINTER_OTHER);
-  _V0minimizing = VEncodePointer(VLookupConstant("_V0minimizing", &_VW_V0minimizing), VPOINTER_OTHER);
-  _V0if = VEncodePointer(VLookupConstant("_V0if", &_VW_V0if), VPOINTER_OTHER);
-  _V0acc = VEncodePointer(VLookupConstant("_V0acc", &_VW_V0acc), VPOINTER_OTHER);
-  _V0x = VEncodePointer(VLookupConstant("_V0x", &_VW_V0x), VPOINTER_OTHER);
-  _V0lambda = VEncodePointer(VLookupConstant("_V0lambda", &_VW_V0lambda), VPOINTER_OTHER);
-  _V0counting = VEncodePointer(VLookupConstant("_V0counting", &_VW_V0counting), VPOINTER_OTHER);
-  _V0accumulate = VEncodePointer(VLookupConstant("_V0accumulate", &_VW_V0accumulate), VPOINTER_OTHER);
-  _V0summing = VEncodePointer(VLookupConstant("_V0summing", &_VW_V0summing), VPOINTER_OTHER);
-  _V0append_B = VEncodePointer(VLookupConstant("_V0append_B", &_VW_V0append_B), VPOINTER_OTHER);
-  _V0appending_B = VEncodePointer(VLookupConstant("_V0appending_B", &_VW_V0appending_B), VPOINTER_OTHER);
-  _V0append = VEncodePointer(VLookupConstant("_V0append", &_VW_V0append), VPOINTER_OTHER);
-  _V0appending = VEncodePointer(VLookupConstant("_V0appending", &_VW_V0appending), VPOINTER_OTHER);
-  _V0collect = VEncodePointer(VLookupConstant("_V0collect", &_VW_V0collect), VPOINTER_OTHER);
-  _V0quote = VEncodePointer(VLookupConstant("_V0quote", &_VW_V0quote), VPOINTER_OTHER);
-  _V0collecting = VEncodePointer(VLookupConstant("_V0collecting", &_VW_V0collecting), VPOINTER_OTHER);
-  _V0while = VEncodePointer(VLookupConstant("_V0while", &_VW_V0while), VPOINTER_OTHER);
-  _V0until = VEncodePointer(VLookupConstant("_V0until", &_VW_V0until), VPOINTER_OTHER);
-  _V0always = VEncodePointer(VLookupConstant("_V0always", &_VW_V0always), VPOINTER_OTHER);
-  _V0never = VEncodePointer(VLookupConstant("_V0never", &_VW_V0never), VPOINTER_OTHER);
-  _V0thereis = VEncodePointer(VLookupConstant("_V0thereis", &_VW_V0thereis), VPOINTER_OTHER);
-  _V0do = VEncodePointer(VLookupConstant("_V0do", &_VW_V0do), VPOINTER_OTHER);
-  _V0doing = VEncodePointer(VLookupConstant("_V0doing", &_VW_V0doing), VPOINTER_OTHER);
-  _V0p = VEncodePointer(VLookupConstant("_V0p", &_VW_V0p), VPOINTER_OTHER);
-  _V0when = VEncodePointer(VLookupConstant("_V0when", &_VW_V0when), VPOINTER_OTHER);
-  _V0not = VEncodePointer(VLookupConstant("_V0not", &_VW_V0not), VPOINTER_OTHER);
-  _V0and = VEncodePointer(VLookupConstant("_V0and", &_VW_V0and), VPOINTER_OTHER);
-  _V0else = VEncodePointer(VLookupConstant("_V0else", &_VW_V0else), VPOINTER_OTHER);
-  _V0into = VEncodePointer(VLookupConstant("_V0into", &_VW_V0into), VPOINTER_OTHER);
-  _V0initially = VEncodePointer(VLookupConstant("_V0initially", &_VW_V0initially), VPOINTER_OTHER);
-  _V0rep = VEncodePointer(VLookupConstant("_V0rep", &_VW_V0rep), VPOINTER_OTHER);
-  _V0as = VEncodePointer(VLookupConstant("_V0as", &_VW_V0as), VPOINTER_OTHER);
-  _V0repeat = VEncodePointer(VLookupConstant("_V0repeat", &_VW_V0repeat), VPOINTER_OTHER);
-  _V0let = VEncodePointer(VLookupConstant("_V0let", &_VW_V0let), VPOINTER_OTHER);
-  _V0with = VEncodePointer(VLookupConstant("_V0with", &_VW_V0with), VPOINTER_OTHER);
-  _V0across__f64 = VEncodePointer(VLookupConstant("_V0across__f64", &_VW_V0across__f64), VPOINTER_OTHER);
-  _V0across__f32 = VEncodePointer(VLookupConstant("_V0across__f32", &_VW_V0across__f32), VPOINTER_OTHER);
-  _V0across__s32 = VEncodePointer(VLookupConstant("_V0across__s32", &_VW_V0across__s32), VPOINTER_OTHER);
-  _V0across__u16 = VEncodePointer(VLookupConstant("_V0across__u16", &_VW_V0across__u16), VPOINTER_OTHER);
-  _V0across__s16 = VEncodePointer(VLookupConstant("_V0across__s16", &_VW_V0across__s16), VPOINTER_OTHER);
-  _V0across__u8 = VEncodePointer(VLookupConstant("_V0across__u8", &_VW_V0across__u8), VPOINTER_OTHER);
-  _V0across__s8 = VEncodePointer(VLookupConstant("_V0across__s8", &_VW_V0across__s8), VPOINTER_OTHER);
-  _V0vec = VEncodePointer(VLookupConstant("_V0vec", &_VW_V0vec), VPOINTER_OTHER);
-  _V0i = VEncodePointer(VLookupConstant("_V0i", &_VW_V0i), VPOINTER_OTHER);
-  _V0across = VEncodePointer(VLookupConstant("_V0across", &_VW_V0across), VPOINTER_OTHER);
-  _V0_E = VEncodePointer(VLookupConstant("_V0_E", &_VW_V0_E), VPOINTER_OTHER);
-  _V0then = VEncodePointer(VLookupConstant("_V0then", &_VW_V0then), VPOINTER_OTHER);
-  _V0on = VEncodePointer(VLookupConstant("_V0on", &_VW_V0on), VPOINTER_OTHER);
-  _V0lst = VEncodePointer(VLookupConstant("_V0lst", &_VW_V0lst), VPOINTER_OTHER);
-  _V0in = VEncodePointer(VLookupConstant("_V0in", &_VW_V0in), VPOINTER_OTHER);
-  _V0downfrom = VEncodePointer(VLookupConstant("_V0downfrom", &_VW_V0downfrom), VPOINTER_OTHER);
-  _V0upfrom = VEncodePointer(VLookupConstant("_V0upfrom", &_VW_V0upfrom), VPOINTER_OTHER);
-  _V0from = VEncodePointer(VLookupConstant("_V0from", &_VW_V0from), VPOINTER_OTHER);
-  _V0for = VEncodePointer(VLookupConstant("_V0for", &_VW_V0for), VPOINTER_OTHER);
-  _V0z = VEncodePointer(VLookupConstant("_V0z", &_VW_V0z), VPOINTER_OTHER);
-  _V0y = VEncodePointer(VLookupConstant("_V0y", &_VW_V0y), VPOINTER_OTHER);
-  _V0by = VEncodePointer(VLookupConstant("_V0by", &_VW_V0by), VPOINTER_OTHER);
-  _V0above = VEncodePointer(VLookupConstant("_V0above", &_VW_V0above), VPOINTER_OTHER);
-  _V0_G = VEncodePointer(VLookupConstant("_V0_G", &_VW_V0_G), VPOINTER_OTHER);
-  _V0downto = VEncodePointer(VLookupConstant("_V0downto", &_VW_V0downto), VPOINTER_OTHER);
-  _V0__ = VEncodePointer(VLookupConstant("_V0__", &_VW_V0__), VPOINTER_OTHER);
-  _V0_G_E = VEncodePointer(VLookupConstant("_V0_G_E", &_VW_V0_G_E), VPOINTER_OTHER);
-  _V0below = VEncodePointer(VLookupConstant("_V0below", &_VW_V0below), VPOINTER_OTHER);
-  _V0_L = VEncodePointer(VLookupConstant("_V0_L", &_VW_V0_L), VPOINTER_OTHER);
-  _V0upto = VEncodePointer(VLookupConstant("_V0upto", &_VW_V0upto), VPOINTER_OTHER);
-  _V0_P = VEncodePointer(VLookupConstant("_V0_P", &_VW_V0_P), VPOINTER_OTHER);
-  _V0_L_E = VEncodePointer(VLookupConstant("_V0_L_E", &_VW_V0_L_E), VPOINTER_OTHER);
-  _V0to = VEncodePointer(VLookupConstant("_V0to", &_VW_V0to), VPOINTER_OTHER);
+  _V0finally = VEncodePointer(VInternSymbol(1553935886, &_VW_V0finally.sym), VPOINTER_OTHER);
+  _V0unless = VEncodePointer(VInternSymbol(-1405078824, &_VW_V0unless.sym), VPOINTER_OTHER);
+  _V0return = VEncodePointer(VInternSymbol(732585183, &_VW_V0return.sym), VPOINTER_OTHER);
+  _V0sum = VEncodePointer(VInternSymbol(800543656, &_VW_V0sum.sym), VPOINTER_OTHER);
+  _V0count = VEncodePointer(VInternSymbol(3689525, &_VW_V0count.sym), VPOINTER_OTHER);
+  _V0minimize = VEncodePointer(VInternSymbol(377039211, &_VW_V0minimize.sym), VPOINTER_OTHER);
+  _V0maximize = VEncodePointer(VInternSymbol(1279467544, &_VW_V0maximize.sym), VPOINTER_OTHER);
+  _V0max = VEncodePointer(VInternSymbol(-606210272, &_VW_V0max.sym), VPOINTER_OTHER);
+  _V0maximizing = VEncodePointer(VInternSymbol(1428080863, &_VW_V0maximizing.sym), VPOINTER_OTHER);
+  _V0_W = VEncodePointer(VInternSymbol(-1980900630, &_VW_V0_W.sym), VPOINTER_OTHER);
+  _V0min = VEncodePointer(VInternSymbol(1503276295, &_VW_V0min.sym), VPOINTER_OTHER);
+  _V0minimizing = VEncodePointer(VInternSymbol(-333748367, &_VW_V0minimizing.sym), VPOINTER_OTHER);
+  _V0if = VEncodePointer(VInternSymbol(-1008835161, &_VW_V0if.sym), VPOINTER_OTHER);
+  _V0acc = VEncodePointer(VInternSymbol(112110611, &_VW_V0acc.sym), VPOINTER_OTHER);
+  _V0x = VEncodePointer(VInternSymbol(-2096885469, &_VW_V0x.sym), VPOINTER_OTHER);
+  _V0lambda = VEncodePointer(VInternSymbol(1054233532, &_VW_V0lambda.sym), VPOINTER_OTHER);
+  _V0counting = VEncodePointer(VInternSymbol(1934523116, &_VW_V0counting.sym), VPOINTER_OTHER);
+  _V0accumulate = VEncodePointer(VInternSymbol(1223740566, &_VW_V0accumulate.sym), VPOINTER_OTHER);
+  _V0summing = VEncodePointer(VInternSymbol(408216549, &_VW_V0summing.sym), VPOINTER_OTHER);
+  _V0append_B = VEncodePointer(VInternSymbol(-622418166, &_VW_V0append_B.sym), VPOINTER_OTHER);
+  _V0appending_B = VEncodePointer(VInternSymbol(-911243303, &_VW_V0appending_B.sym), VPOINTER_OTHER);
+  _V0append = VEncodePointer(VInternSymbol(-700471979, &_VW_V0append.sym), VPOINTER_OTHER);
+  _V0appending = VEncodePointer(VInternSymbol(-15158088, &_VW_V0appending.sym), VPOINTER_OTHER);
+  _V0collect = VEncodePointer(VInternSymbol(469771329, &_VW_V0collect.sym), VPOINTER_OTHER);
+  _V0quote = VEncodePointer(VInternSymbol(-278310088, &_VW_V0quote.sym), VPOINTER_OTHER);
+  _V0collecting = VEncodePointer(VInternSymbol(-519269006, &_VW_V0collecting.sym), VPOINTER_OTHER);
+  _V0while = VEncodePointer(VInternSymbol(1480898205, &_VW_V0while.sym), VPOINTER_OTHER);
+  _V0until = VEncodePointer(VInternSymbol(1905084868, &_VW_V0until.sym), VPOINTER_OTHER);
+  _V0always = VEncodePointer(VInternSymbol(-722486748, &_VW_V0always.sym), VPOINTER_OTHER);
+  _V0never = VEncodePointer(VInternSymbol(257423413, &_VW_V0never.sym), VPOINTER_OTHER);
+  _V0thereis = VEncodePointer(VInternSymbol(-345618920, &_VW_V0thereis.sym), VPOINTER_OTHER);
+  _V0do = VEncodePointer(VInternSymbol(-1951174996, &_VW_V0do.sym), VPOINTER_OTHER);
+  _V0doing = VEncodePointer(VInternSymbol(342583660, &_VW_V0doing.sym), VPOINTER_OTHER);
+  _V0p = VEncodePointer(VInternSymbol(-1603972369, &_VW_V0p.sym), VPOINTER_OTHER);
+  _V0when = VEncodePointer(VInternSymbol(-1754585681, &_VW_V0when.sym), VPOINTER_OTHER);
+  _V0not = VEncodePointer(VInternSymbol(1947793232, &_VW_V0not.sym), VPOINTER_OTHER);
+  _V0and = VEncodePointer(VInternSymbol(-2136794974, &_VW_V0and.sym), VPOINTER_OTHER);
+  _V0else = VEncodePointer(VInternSymbol(1332432884, &_VW_V0else.sym), VPOINTER_OTHER);
+  _V0into = VEncodePointer(VInternSymbol(758450266, &_VW_V0into.sym), VPOINTER_OTHER);
+  _V0initially = VEncodePointer(VInternSymbol(450935827, &_VW_V0initially.sym), VPOINTER_OTHER);
+  _V0rep = VEncodePointer(VInternSymbol(427592353, &_VW_V0rep.sym), VPOINTER_OTHER);
+  _V0as = VEncodePointer(VInternSymbol(-697572999, &_VW_V0as.sym), VPOINTER_OTHER);
+  _V0repeat = VEncodePointer(VInternSymbol(136509050, &_VW_V0repeat.sym), VPOINTER_OTHER);
+  _V0let = VEncodePointer(VInternSymbol(-599055874, &_VW_V0let.sym), VPOINTER_OTHER);
+  _V0with = VEncodePointer(VInternSymbol(92382503, &_VW_V0with.sym), VPOINTER_OTHER);
+  _V0across__f64 = VEncodePointer(VInternSymbol(-314022801, &_VW_V0across__f64.sym), VPOINTER_OTHER);
+  _V0across__f32 = VEncodePointer(VInternSymbol(2131282873, &_VW_V0across__f32.sym), VPOINTER_OTHER);
+  _V0across__s32 = VEncodePointer(VInternSymbol(-1169256548, &_VW_V0across__s32.sym), VPOINTER_OTHER);
+  _V0across__u16 = VEncodePointer(VInternSymbol(2067737050, &_VW_V0across__u16.sym), VPOINTER_OTHER);
+  _V0across__s16 = VEncodePointer(VInternSymbol(1446289912, &_VW_V0across__s16.sym), VPOINTER_OTHER);
+  _V0across__u8 = VEncodePointer(VInternSymbol(1995926619, &_VW_V0across__u8.sym), VPOINTER_OTHER);
+  _V0across__s8 = VEncodePointer(VInternSymbol(1546741274, &_VW_V0across__s8.sym), VPOINTER_OTHER);
+  _V0vec = VEncodePointer(VInternSymbol(1875852456, &_VW_V0vec.sym), VPOINTER_OTHER);
+  _V0i = VEncodePointer(VInternSymbol(-1354779579, &_VW_V0i.sym), VPOINTER_OTHER);
+  _V0across = VEncodePointer(VInternSymbol(1260844141, &_VW_V0across.sym), VPOINTER_OTHER);
+  _V0_E = VEncodePointer(VInternSymbol(91122933, &_VW_V0_E.sym), VPOINTER_OTHER);
+  _V0then = VEncodePointer(VInternSymbol(-1735073347, &_VW_V0then.sym), VPOINTER_OTHER);
+  _V0on = VEncodePointer(VInternSymbol(-320834775, &_VW_V0on.sym), VPOINTER_OTHER);
+  _V0lst = VEncodePointer(VInternSymbol(1724715609, &_VW_V0lst.sym), VPOINTER_OTHER);
+  _V0in = VEncodePointer(VInternSymbol(1086130307, &_VW_V0in.sym), VPOINTER_OTHER);
+  _V0downfrom = VEncodePointer(VInternSymbol(308777508, &_VW_V0downfrom.sym), VPOINTER_OTHER);
+  _V0upfrom = VEncodePointer(VInternSymbol(2026469960, &_VW_V0upfrom.sym), VPOINTER_OTHER);
+  _V0from = VEncodePointer(VInternSymbol(-1212237762, &_VW_V0from.sym), VPOINTER_OTHER);
+  _V0for = VEncodePointer(VInternSymbol(1758655379, &_VW_V0for.sym), VPOINTER_OTHER);
+  _V0z = VEncodePointer(VInternSymbol(2007557256, &_VW_V0z.sym), VPOINTER_OTHER);
+  _V0y = VEncodePointer(VInternSymbol(-1581629518, &_VW_V0y.sym), VPOINTER_OTHER);
+  _V0by = VEncodePointer(VInternSymbol(1690906897, &_VW_V0by.sym), VPOINTER_OTHER);
+  _V0above = VEncodePointer(VInternSymbol(-1235462288, &_VW_V0above.sym), VPOINTER_OTHER);
+  _V0_G = VEncodePointer(VInternSymbol(-990041482, &_VW_V0_G.sym), VPOINTER_OTHER);
+  _V0downto = VEncodePointer(VInternSymbol(1147776203, &_VW_V0downto.sym), VPOINTER_OTHER);
+  _V0__ = VEncodePointer(VInternSymbol(1290206293, &_VW_V0__.sym), VPOINTER_OTHER);
+  _V0_G_E = VEncodePointer(VInternSymbol(1925865613, &_VW_V0_G_E.sym), VPOINTER_OTHER);
+  _V0below = VEncodePointer(VInternSymbol(-1013057444, &_VW_V0below.sym), VPOINTER_OTHER);
+  _V0_L = VEncodePointer(VInternSymbol(1057406733, &_VW_V0_L.sym), VPOINTER_OTHER);
+  _V0upto = VEncodePointer(VInternSymbol(7428555, &_VW_V0upto.sym), VPOINTER_OTHER);
+  _V0_P = VEncodePointer(VInternSymbol(-1632835872, &_VW_V0_P.sym), VPOINTER_OTHER);
+  _V0_L_E = VEncodePointer(VInternSymbol(-2106268102, &_VW_V0_L_E.sym), VPOINTER_OTHER);
+  _V0to = VEncodePointer(VInternSymbol(809732360, &_VW_V0to.sym), VPOINTER_OTHER);
   _V40_V10vcore_Dgensym = VEncodePointer(VLookupConstant("_V40_V10vcore_Dgensym", &_VW_V40_V10vcore_Dgensym), VPOINTER_CLOSURE);
 }
 V_DECLARE_FUNC(_V50_V0vanity_V0compiler_V0blasphemy_V0expand__do__loop_V10_Dwrite__loop_D621_V10_Dwrite__init__var__lets_D1100, _var0, _var1);
@@ -8755,7 +8756,7 @@ void _V50_V0vanity_V0compiler_V0blasphemy_V0expand__do__loop_V10_Dparse__main__c
   "-- expected 1~N"
   , argc);
  }
-  // (##qualified-call (vanity compiler blasphemy expand-do-loop ##.parse-main-clauses.619) (bruijn ##.parse-main-clauses.619 35 16) (bruijn ##.k.2159 26 0) (bruijn ##.new-bool-stack.969 6 7) (bruijn ##.parsed-withs.831 34 2) (bruijn ##.parsed-vars.832 34 3) (bruijn ##.parsed-lets.833 34 4) (bruijn ##.parsed-initially.834 34 5) (##inline ##vcore.cons (##inline ##vcore.cons 'accumulate (##inline ##vcore.cons (bruijn ##.bool.968 6 6) (##inline ##vcore.cons (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (##inline ##vcore.cons 'x (##inline ##vcore.cons 'acc '())) (##inline ##vcore.cons (##inline ##vcore.cons 'if (##inline ##vcore.cons 'x (##inline ##vcore.cons (##inline ##vcore.cons '+ (##inline ##vcore.cons 'acc (##inline ##vcore.cons '1 '()))) (##inline ##vcore.cons 'acc (##inline ##vcore.cons '0 '()))))) '()))) (##inline ##vcore.cons (bruijn ##.x.864 28 0) (##inline ##vcore.cons 'into (##inline ##vcore.cons (bruijn ##.acc.962 6 0) '())))))) (bruijn ##.parsed-exprs.835 34 6)) (bruijn ##.rest-rest.966 6 4))
+  // (##qualified-call (vanity compiler blasphemy expand-do-loop ##.parse-main-clauses.619) (bruijn ##.parse-main-clauses.619 35 16) (bruijn ##.k.2159 26 0) (bruijn ##.new-bool-stack.969 6 7) (bruijn ##.parsed-withs.831 34 2) (bruijn ##.parsed-vars.832 34 3) (bruijn ##.parsed-lets.833 34 4) (bruijn ##.parsed-initially.834 34 5) (##inline ##vcore.cons (##inline ##vcore.cons 'accumulate (##inline ##vcore.cons (bruijn ##.bool.968 6 6) (##inline ##vcore.cons (##inline ##vcore.cons 'lambda (##inline ##vcore.cons (##inline ##vcore.cons 'x (##inline ##vcore.cons 'acc '())) (##inline ##vcore.cons (##inline ##vcore.cons 'if (##inline ##vcore.cons 'x (##inline ##vcore.cons (##inline ##vcore.cons '+ (##inline ##vcore.cons 'acc (##inline ##vcore.cons '1 '()))) (##inline ##vcore.cons 'acc '())))) '()))) (##inline ##vcore.cons (bruijn ##.x.864 28 0) (##inline ##vcore.cons 'into (##inline ##vcore.cons (bruijn ##.acc.962 6 0) (##inline ##vcore.cons '0 '()))))))) (bruijn ##.parsed-exprs.835 34 6)) (bruijn ##.rest-rest.966 6 4))
   {
     VClosure * _closure = VDecodeClosure(VGetArg(statics, 35-1, 16));
     VWORD _arg0 = 
@@ -8800,9 +8801,7 @@ void _V50_V0vanity_V0compiler_V0blasphemy_V0expand__do__loop_V10_Dparse__main__c
         VNULL))),
         VInlineCons2(runtime,
         _V0acc,
-        VInlineCons2(runtime,
-        VEncodeInt(0l),
-        VNULL))))),
+        VNULL)))),
         VNULL))),
         VInlineCons2(runtime,
         VGetArg(statics, 28-1, 0),
@@ -8810,7 +8809,9 @@ void _V50_V0vanity_V0compiler_V0blasphemy_V0expand__do__loop_V10_Dparse__main__c
         _V0into,
         VInlineCons2(runtime,
         VGetArg(statics, 6-1, 0),
-        VNULL)))))),
+        VInlineCons2(runtime,
+        VEncodeInt(0l),
+        VNULL))))))),
         VGetArg(statics, 34-1, 6));
     VWORD _arg7 = 
       VGetArg(statics, 6-1, 4);

@@ -5,7 +5,7 @@ INTERP_SRC := $(addprefix vanity/interpreter/, frontend.scm)
 RUNTIME_SRC := vruntime.c vlibrary.c vread.c vfiber.c vbytecode.c wacky.c intern.c
 WASM_SRC := vruntime.c vlibrary.c vread.c
 
-PRIVATE_HEADERS := vruntime_private.h vqueue_private.h vsetjmp_private.h wacky_private.h vport_private.h
+PRIVATE_HEADERS := vruntime_private.h vqueue_private.h vsetjmp_private.h wacky_private.h vport_private.h intern_private.h xxhash.h
 ASSEMBLY_SRC := vapply-sysv-amd64.S vfiber-sysv-amd64.S sicko.S
 WINDOWS_ASSEMBLY_SRC := vapply-windows-amd64.S vfiber-windows-amd64.S sicko.S
 

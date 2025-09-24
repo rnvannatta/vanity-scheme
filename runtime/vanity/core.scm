@@ -135,7 +135,7 @@
 
   ; equality
   (define-constant eq? ##vcore.eq?)
-  (define-constant eqv? ##vcore.eqv?)
+  (define-constant eqv? ##vcore.eq?)
 
   (define-constant boolean=? ##vcore.eq?)
   (define-constant char=? ##vcore.eq?)
@@ -537,10 +537,7 @@
     (cond ((null? lst) #f)
           ((eq? x (car lst)) lst)
           (else (memq x (cdr lst)))))
-  (define (memv x lst)
-    (cond ((null? lst) #f)
-          ((eqv? x (car lst)) lst)
-          (else (memv x (cdr lst)))))
+  (define memv memq)
   (define member
     (case-lambda
       ((x lst) (member x lst equal?))
@@ -553,10 +550,7 @@
     (cond ((null? alst) #f)
           ((eq? x (caar alst)) (car alst))
           (else (assq x (cdr alst)))))
-  (define (assv x alst)
-    (cond ((null? alst) #f)
-          ((eqv? x (caar alst)) (car alst))
-          (else (assv x (cdr alst)))))
+  (define assv assq)
   (define assoc
     (case-lambda 
       ((x alst) (assoc x alst equal?))

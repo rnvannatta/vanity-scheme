@@ -68,7 +68,7 @@ V_DECLARE_FUNC_BASIC(VForeignPointerP2, x);
 V_DECLARE_FUNC(VEq2, k, x, y);
 V_DECLARE_FUNC(VSymbolEqv2, k, x, y);
 V_DECLARE_FUNC(VBlobEqv2, k, x, y);
-V_DECLARE_FUNC(VEqv, k, x, y);
+#define VEqv VEq2
 
 // logic
 V_DECLARE_FUNC_BASIC(VNot2, x);

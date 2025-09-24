@@ -27,6 +27,7 @@
 #include "vscheme/vlibrary.h"
 #include "vscheme/vinlines.h"
 #include <stdarg.h>
+VBlob * VInternSymbol(int hash, VBlob * sym);
 
 
 static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D22 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0hash_V20" };
@@ -44,11 +45,11 @@ VWEAK VClosure _VW_V40_V10vcore_Drandom__copy = { .base = { .tag = VCLOSURE, .fl
 VWEAK VWORD _V40_V10vcore_Dmake__random;
 VWEAK VClosure _VW_V40_V10vcore_Dmake__random = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMakeRandom, NULL };
 static __attribute__((constructor)) void VDllMain1() {
-  _V0random__advance_B = VEncodePointer(VLookupConstant("_V0random__advance_B", &_VW_V0random__advance_B), VPOINTER_OTHER);
-  _V0random__sample__float_B = VEncodePointer(VLookupConstant("_V0random__sample__float_B", &_VW_V0random__sample__float_B), VPOINTER_OTHER);
-  _V0random__sample_B = VEncodePointer(VLookupConstant("_V0random__sample_B", &_VW_V0random__sample_B), VPOINTER_OTHER);
-  _V0random__copy = VEncodePointer(VLookupConstant("_V0random__copy", &_VW_V0random__copy), VPOINTER_OTHER);
-  _V0make__random = VEncodePointer(VLookupConstant("_V0make__random", &_VW_V0make__random), VPOINTER_OTHER);
+  _V0random__advance_B = VEncodePointer(VInternSymbol(-1678545240, &_VW_V0random__advance_B.sym), VPOINTER_OTHER);
+  _V0random__sample__float_B = VEncodePointer(VInternSymbol(-594491265, &_VW_V0random__sample__float_B.sym), VPOINTER_OTHER);
+  _V0random__sample_B = VEncodePointer(VInternSymbol(-1854759504, &_VW_V0random__sample_B.sym), VPOINTER_OTHER);
+  _V0random__copy = VEncodePointer(VInternSymbol(790874858, &_VW_V0random__copy.sym), VPOINTER_OTHER);
+  _V0make__random = VEncodePointer(VInternSymbol(1013818122, &_VW_V0make__random.sym), VPOINTER_OTHER);
   _V40_V10vcore_Drandom__advance_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__advance_B", &_VW_V40_V10vcore_Drandom__advance_B), VPOINTER_CLOSURE);
   _V40_V10vcore_Drandom__sample__float_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__sample__float_B", &_VW_V40_V10vcore_Drandom__sample__float_B), VPOINTER_CLOSURE);
   _V40_V10vcore_Drandom__copy = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__copy", &_VW_V40_V10vcore_Drandom__copy), VPOINTER_CLOSURE);
