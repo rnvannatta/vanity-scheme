@@ -84,7 +84,7 @@
          ((##vcore.eq?) "VEq2")
          ((##vcore.symbol=?) "VSymbolEqv2")
          ((##vcore.blob=?) "VBlobEqv2")
-         ((##vcore.eqv?) "VEqv")
+         ((##vcore.eqv?) "VEq2")
 
          ; Logic
          ((##vcore.not) "VNot2")

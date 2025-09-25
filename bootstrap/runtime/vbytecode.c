@@ -125,23 +125,6 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
       *closure = VMakeClosure2(VEvalVasmForeignLambda, closure_env);
       stack[stackptr++] = VEncodeClosure(closure);
     }
-#if 0
-    else if(!strcmp(name, "intrinsic")) {
-      // need to get closure pc
-      VPair * data = VCheckedDecodePair2(runtime, ins->rest, "eval-vasm: malformed intrinsic");
-      int func_pc = VCheckedDecodeInt2(runtime, data->first, "eval-vasm: malformed intrinsic");
-      VWORD func = tape->arr[func_pc];
-
-      VPair * data_decl = VCheckedDecodePair2(runtime, func, "eval-vasm: malformed intrinsic");
-      VPair * data_name = VCheckedDecodePair2(runtime, data_decl->rest, "eval-vasm: malformed intrinsic");
-
-      void * intrin = VLoadFunction(runtime, data_name->first);
-
-      VClosure * closure = alloca(sizeof(VClosure));
-      *closure = VMakeClosure2((VFunc)intrin, NULL);
-      stack[stackptr++] = VEncodeClosure(closure);
-    }
-#endif
     else if(!strcmp(name, "push-set!")) {
       VClosure * closure = alloca(sizeof(VClosure));
       *closure = VMakeClosure2((VFunc)VSetEnvVar2, env);

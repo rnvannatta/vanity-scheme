@@ -67,6 +67,7 @@
 #include "vport_private.h"
 #include "vscheme/vinlines.h"
 #include "vscheme/vhash.h"
+#include "intern_private.h"
 
 #ifndef VANITY_PURE_C
 // fibers require asm support
@@ -2133,10 +2134,11 @@ V_BEGIN_FUNC(VLookupLibrary2, "lookup-library", 2, k, name)
 
   // TODO statically allocate this you knucklehead
 #define sym_str "##vcore.libraries"
-  VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
-  sym->base = VMakeSmallObject(VSYMBOL);
-  sym->len = sizeof sym_str;
-  memcpy(sym->buf, sym_str, sym->len);
+  //VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
+  //sym->base = VMakeSmallObject(VSYMBOL);
+  //sym->len = sizeof sym_str;
+  //memcpy(sym->buf, sym_str, sym->len);
+  VBlob * sym = VCreateSymbolSlow(sym_str, sizeof sym_str - 1);
 #undef sym_str
 
   VWORD sym_word = VEncodePointer(sym, VPOINTER_OTHER);
@@ -2482,10 +2484,11 @@ V_BEGIN_FUNC(VLoadLibrary2, "load-library", 2, k, name)
     VGarbageCollect2Args((VFunc)VLoadLibrary2, runtime, statics, 2, argc, k, name);
 
 #define sym_str "##vcore.libraries"
-  VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
-  sym->base = VMakeSmallObject(VSYMBOL);
-  sym->len = sizeof sym_str;
-  memcpy(sym->buf, sym_str, sym->len);
+  //VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
+  //sym->base = VMakeSmallObject(VSYMBOL);
+  //sym->len = sizeof sym_str;
+  //memcpy(sym->buf, sym_str, sym->len);
+  VBlob * sym = VCreateSymbolSlow(sym_str, sizeof sym_str - 1);
 #undef sym_str
 
   VWORD sym_word = VEncodePointer(sym, VPOINTER_OTHER);
@@ -2530,10 +2533,11 @@ V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
     VGarbageCollect2Args((VFunc)VUnloadLibrary2, runtime, statics, 2, argc, k, name);
 
 #define sym_str "##vcore.libraries"
-  VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
-  sym->base = VMakeSmallObject(VSYMBOL);
-  sym->len = sizeof sym_str;
-  memcpy(sym->buf, sym_str, sym->len);
+  //VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
+  //sym->base = VMakeSmallObject(VSYMBOL);
+  //sym->len = sizeof sym_str;
+  //memcpy(sym->buf, sym_str, sym->len);
+  VBlob * sym = VCreateSymbolSlow(sym_str, sizeof sym_str - 1);
 #undef sym_str
 
   VWORD sym_word = VEncodePointer(sym, VPOINTER_OTHER);
@@ -2750,7 +2754,7 @@ static void VDisplayWordImpl(VPort * port, VWORD v, bool write, int depth) {
               break;
             case BUF_F32:
             {
-              unsigned len = (blob->len/4)-1;
+              int len = (blob->len/4)-1;
               float * floats = (float*)(blob->buf+4);
               port_fputs("#f32(", port);
               for(int i = 0; i < len-1; i++) {
@@ -2764,7 +2768,7 @@ static void VDisplayWordImpl(VPort * port, VWORD v, bool write, int depth) {
             }
             case BUF_F64:
             {
-              unsigned len = (blob->len/8)-1;
+              int len = (blob->len/8)-1;
               double * doubles = (double*)(blob->buf+8);
               port_fputs("#f64(", port);
               for(int i = 0; i < len-1; i++) {
@@ -3231,13 +3235,19 @@ V_BEGIN_FUNC(VGensym, "gensym", 2, k, _str)
     dots = "..";
     var = str->buf+2;
   }
-  int len = snprintf(NULL, 0, "##%s%s.%llu", dots, var, (unsigned long long)index);
-  len++;
-  VBlob * sym = alloca(sizeof(VBlob)+len);
-  sym->base = VMakeSmallObject(VSYMBOL);
-  sym->len = len;
-  int ret = snprintf(sym->buf, sym->len, "##%s%s.%llu", dots, var, (unsigned long long)index);
-  assert(ret == sym->len-1);
+  //int len = snprintf(NULL, 0, "##%s%s.%llu", dots, var, (unsigned long long)index);
+  //len++;
+  //VBlob * sym = alloca(sizeof(VBlob)+len);
+  //sym->base = VMakeSmallObject(VSYMBOL);
+  //sym->len = len;
+  //int ret = snprintf(sym->buf, sym->len, "##%s%s.%llu", dots, var, (unsigned long long)index);
+  //assert(ret == sym->len-1);
+  char buf[1024];
+  int ret = snprintf(buf, sizeof buf, "##%s%s.%llu", dots, var, (unsigned long long)index);
+  if(ret >= sizeof buf - 1)
+    VErrorC(runtime, "gensym: symbol too long ~A", _str);
+  VBlob * sym = VCreateSymbolSlow(buf, strlen(buf));
+
   V_CALL(k, runtime, VEncodePointer(sym, VPOINTER_OTHER));
 V_END_FUNC
 

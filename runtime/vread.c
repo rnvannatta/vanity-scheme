@@ -42,8 +42,6 @@ enum lex_t {
   LEX_COMMENT,
   LEX_OPEN_PAREN,
   LEX_CLOSE_PAREN,
-  LEX_TRUE,
-  LEX_FALSE,
   LEX_INT,
   LEX_CHAR,
   LEX_NAMED_CHAR,
@@ -163,13 +161,8 @@ SYSV_CALL static int VLex2Dot(int c, bool * satisfied, bool * unget) {
 
 SYSV_CALL static int VLexSharp(int c, bool * satisfied, bool * unget) {
   switch(c) {
-    //case 't':
-      //*satisfied = true;
-      //return LEX_TRUE;
     case 't':
     case 'f':
-      //*satisfied = true;
-      //return LEX_FALSE;
       return LEX_SHARP_TF;
     case ';':
       *satisfied = true;
@@ -878,8 +871,6 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
             break;
         }
         size_t len = strlen(str)+1;
-        //VBlob * sym = myalloca(sizeof(VBlob)+len);
-        //VFillBlob(sym, VSYMBOL, len, str);
         VBlob * sym = VCreateSymbolSlow(str, len-1);
         VPair * pair = myalloca(sizeof(VPair)), *second = myalloca(sizeof(VPair));
         *second = VMakePair(VEncodePointer(sym, VPOINTER_OTHER), VNULL);
@@ -890,18 +881,6 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
         read_more = true;
         break;
       }
-      /*
-      case LEX_TRUE:
-      case LEX_FALSE:
-      {
-        elem = token == LEX_TRUE ? VTRUE : VFALSE;
-
-        VPair * pair = myalloca(sizeof(VPair));
-        *pair = VMakePair(elem, root->rest);
-        root->rest = VEncodePair(pair);
-        break;
-      }
-      */
       case LEX_SHARP_WORD:
       {
         bool is_vector = false;
@@ -1053,8 +1032,6 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
       case LEX_SYMBOL:
       {
         size_t len = strlen(runtime->lex_buf) + 1;
-        //VBlob * blob = myalloca(sizeof(VBlob) + len);
-        //VFillBlob(blob, VSYMBOL, len, runtime->lex_buf);
         VBlob * blob = VCreateSymbolSlow(runtime->lex_buf, len-1);
         elem = VEncodePointer(blob, VPOINTER_OTHER);
 
