@@ -467,7 +467,7 @@
          ((##vcore.eq?) ##vcore.eq?)
          ((##vcore.symbol=?) ##vcore.symbol=?)
          ((##vcore.blob=?) ##vcore.blob=?)
-         ((##vcore.eqv?) ##vcore.eqv?)
+         ((##vcore.eqv?) ##vcore.eq?)
 
          ; Logic
          ((##vcore.not) ##vcore.not)

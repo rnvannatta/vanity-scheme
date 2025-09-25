@@ -137,7 +137,7 @@ V_DECLARE_FUNC_BASIC(VStringNumber2, str);
 //void VNumberString2(V_CORE_ARGS, VWORD k, VWORD num);
 V_DECLARE_FUNC(VStringSymbol2, k, str);
 V_DECLARE_FUNC(VSymbolString2, k, sym);
-V_DECLARE_FUNC_BASIC(VInternHash, sym);
+V_DECLARE_FUNC_BASIC(VInternHash2, sym, is64);
 
 // chars
 

@@ -26,7 +26,7 @@
 (define-library (vanity compiler transpile)
   (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi) (vanity intrinsics))
   (export printout2)
-  (define intern-hash (##basic-intrinsic "VInternHash" 1))
+  (define intern-hash (##basic-intrinsic "VInternHash2" 2))
   (define gendllmain
     (let ((x 0))
       (lambda ()
@@ -127,7 +127,7 @@
       (define (print-init lit)
         (cond ((symbol? (car lit))
                (let ((mangled (mangle-symbol (car lit)))
-                     (hash (intern-hash (car lit))))
+                     (hash (intern-hash (car lit) (not purec?))))
                  (printf "  ~A = VEncodePointer(VInternSymbol(~A, &_VW~A.sym), VPOINTER_OTHER);~N" mangled hash mangled)
                  #;(printf "  ~A = VEncodePointer(VLookupConstant(\"~A\", &_VW~A), VPOINTER_OTHER);~N" mangled mangled mangled)))
               ((and (pair? (car lit)) (eqv? (caar lit) '##intrinsic))
