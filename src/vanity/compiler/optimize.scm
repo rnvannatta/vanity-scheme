@@ -40,18 +40,19 @@
              `(,(if (eqv? lamb 'lambda) '##qualified-lambda '##qualified-case-lambda)
                ; at this point all identifiers are unique so no need for gensym
                ,(append current-qualname (list (car xs)))
+               #f
                . ,lambda-rest)
              #f))
       (match rest-vals
-        ((('##qualified-lambda name . _) . rest)
+        ((('##qualified-lambda name static? . _) . rest)
          (scan-bindings-loop
-           (cons (cons (car xs) name) qualified-funcs)
+           (cons (list (car xs) static? name) qualified-funcs)
            (cons (car rest-vals) new-vals)
            (cdr xs)
            (cdr rest-vals)))
-        ((('##qualified-case-lambda name . _) . rest)
+        ((('##qualified-case-lambda name static? . _) . rest)
          (scan-bindings-loop
-           (cons (cons (car xs) name) qualified-funcs)
+           (cons (list (car xs) static? name) qualified-funcs)
            (cons (car rest-vals) new-vals)
            (cdr xs)
            (cdr rest-vals)))
@@ -59,7 +60,7 @@
          (let ((new-lambda (qualify-lambda 'lambda lambda-rest)))
            (if new-lambda
                (scan-bindings-loop
-                 (cons (cons (car xs) (cadr new-lambda)) qualified-funcs)
+                 (cons (list (car xs) #f (cadr new-lambda)) qualified-funcs)
                  (cons new-lambda new-vals)
                  (cdr xs)
                  (cdr rest-vals))
@@ -72,7 +73,7 @@
          (let ((new-lambda (qualify-lambda 'case-lambda lambda-rest)))
            (if new-lambda
                (scan-bindings-loop
-                 (cons (cons (car xs) (cadr new-lambda)) qualified-funcs)
+                 (cons (list (car xs) #f (cadr new-lambda)) qualified-funcs)
                  (cons new-lambda new-vals)
                  (cdr xs)
                  (cdr rest-vals))
@@ -99,12 +100,13 @@
       (match expr
         (('lambda xs body)
          `(lambda ,xs ,(qualify-iter current-qualname qualified-funcs body)))
-        (('##qualified-lambda name xs body)
-         `(##qualified-lambda ,name ,xs ,(qualify-iter name qualified-funcs body)))
+        (('##qualified-lambda name static? xs body)
+         `(##qualified-lambda ,name ,static? ,xs ,(qualify-iter name qualified-funcs body)))
         (('case-lambda . cases)
          `(case-lambda . ,(map (lambda (cases) `(,(car cases) ,(qualify-iter current-qualname qualified-funcs (cadr cases)))) cases)))
-        (('##qualified-case-lambda name . cases)
-         `(##qualified-case-lambda ,name . ,(map (lambda (cases) `(,(car cases) ,(qualify-iter name qualified-funcs (cadr cases)))) cases)))
+        (('##qualified-case-lambda name static? . cases)
+         `(##qualified-case-lambda ,name ,static?
+          . ,(map (lambda (cases) `(,(car cases) ,(qualify-iter name qualified-funcs (cadr cases)))) cases)))
         (('continuation xs body)
          `(continuation ,xs ,(qualify-iter current-qualname qualified-funcs body)))
 
@@ -124,17 +126,22 @@
           (lambda () (scan-bindings current-qualname qualified-funcs xs vals body #f))
           (lambda (new-vals new-qualified-funcs)
             `((continuation ,xs ,(qualify-iter current-qualname new-qualified-funcs body)) . ,(qualify-iter current-qualname qualified-funcs new-vals)))))
-        ((('##qualified-lambda name xs body) vals ...)
+        ((('##qualified-lambda name static? xs body) vals ...)
          (call-with-values
           ; why scan-bindings current-qualname? well. we're generating a name for any values outside the qualified lambda.
           (lambda () (scan-bindings current-qualname qualified-funcs xs vals body #f))
           (lambda (new-vals new-qualified-funcs)
-            `((##qualified-lambda ,name ,xs ,(qualify-iter name new-qualified-funcs body)) . ,(qualify-iter current-qualname qualified-funcs new-vals)))))
+            `((##qualified-lambda ,name ,static? ,xs ,(qualify-iter name new-qualified-funcs body)) . ,(qualify-iter current-qualname qualified-funcs new-vals)))))
         (('letrec ((xs vals) ...) body)
          (call-with-values
           (lambda () (scan-bindings current-qualname qualified-funcs xs vals body #t))
           (lambda (new-vals new-qualified-funcs)
             `(letrec ,(map (lambda (x val) (list x (qualify-iter current-qualname new-qualified-funcs val))) xs new-vals) ,(qualify-iter current-qualname new-qualified-funcs body)))))
+        (('##letrec path ((xs vals) ...) body)
+         (call-with-values
+          (lambda () (scan-bindings current-qualname qualified-funcs xs vals body #t))
+          (lambda (new-vals new-qualified-funcs)
+            `(##letrec ,path ,(map (lambda (x val) (list x (qualify-iter current-qualname new-qualified-funcs val))) xs new-vals) ,(qualify-iter current-qualname new-qualified-funcs body)))))
 
         (('basic-block cost xs-vals ... appl)
          `(basic-block ,cost . ,(append xs-vals (list (qualify-iter current-qualname qualified-funcs appl)))))
@@ -147,7 +154,8 @@
         ((f xs ...)
          (cond
            ((and (symbol? f) (assv f qualified-funcs)) =>
-            (lambda (keyval) `(##qualified-call ,(cdr keyval) ,f . ,(map (cut qualify-iter current-qualname qualified-funcs <>) xs))))
+            (lambda (keyval)
+              `(##qualified-call ,(caddr keyval) ,(cadr keyval) ,f . ,(map (cut qualify-iter current-qualname qualified-funcs <>) xs))))
            (else (cons (qualify-iter current-qualname qualified-funcs f) (map (cut qualify-iter current-qualname qualified-funcs <>) xs)))))
         (x x)
         (else (compiler-error "qualify-callsites: NO matching case" expr))))

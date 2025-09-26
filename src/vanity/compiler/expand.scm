@@ -55,6 +55,8 @@
             (('##foreign.function . _) #t)
             (('letrec . _)
              (return #f))
+            (('##letrec . _)
+             (return #f))
             ((_ . _) (map advanced-letrec-one val))
             (x
              (if (and (symbol? x) (memv x xs))
@@ -132,37 +134,6 @@
                (eqv? (car expr) '##basic-intrinsic)
                (eqv? (car expr) '##foreign.function)))
         #;(and (pair? expr) (eqv? (car expr) 'lambda) (null? (free-variables expr)))))
-  #;(define (variable-pure-body? k xs body)
-    (if (memtail k xs)
-        #t
-        (variable-pure? k body)))
-  #;(define (variable-pure? k expr)
-    (match expr
-      (('quote . _) #t)
-      (('##foreign.function . _) #t)
-      (('lambda xs body)
-       (variable-pure-body? k xs body))
-      (('case-lambda . bodies)
-       (fold (lambda (body p) (and p (variable-pure-body? k (car body) (cadr body)))) #t bodies))
-      (('##qualified-lambda name xs body)
-       (variable-pure-body? k xs body))
-      (('##qualified-case-lambda name . bodies)
-       (fold (lambda (body p) (and p (variable-pure-body? k (car body) (cadr body)))) #t bodies))
-      (('set! x val)
-       (and (not (eqv? x k)) (variable-pure? k val)))
-      (('define x val)
-       (or (eqv? x k) (variable-pure? k val)))
-      (('letrec ((xs vals) ...) body)
-       ; a bit of a hack.
-       ; but if k is in the xs, it's shadowed
-       ; and such doesn't matter for the vals and the body
-       ; otherwise we need to check the vals and the body for a set! expr
-       (variable-pure-body? k xs (cons 'begin (cons body vals))))
-      ; if, begin, and or can be handled by this case as the 3 each contain a harmless keyword
-      ; and a sequence of plain statements
-      ((xs ...)
-       (fold (lambda (x p) (and p (variable-pure? k x))) #t xs))
-      (else #t)))
   (define (expand-body full-body)
     (let loop ((defines '()) (constants '()) (body full-body))
       (match body
@@ -180,7 +151,7 @@
         ((('define-constant x body) . rest)
          (if (not (constant-expr? body)) (compiler-error "define-constant does not define a constant expression" `(define-constant ,x ,body)))
          (if (not (symbol? x)) (compiler-error "define-constant's first argument is not a symbol" x))
-         (loop defines (cons (list x body) constants) rest))
+         (loop defines (cons (list x (expand-syntax body)) constants) rest))
         (('define-constant . noise) (compiler-error "malformed define-constant" `(define . ,noise)))
 
         ((('define-values formals body) . rest)
@@ -228,6 +199,12 @@
                          (vals (map cadr constants)))
                     `((lambda ,xs ,the-letrec) . ,vals))
                        )))))))
+
+  (define (beginify body)
+    (fold-right
+      (lambda (e acc) (list 'begin e acc))
+      (car (take-right body 1))
+      (drop-right body 1)))
 
   (define (expand-quasiquote quotation expr)
     ; bug with chicken is why we use quasiquotes on quotes, unquotes, and unquote-splicings
@@ -306,7 +283,7 @@
          (if (not (constant-expr? body)) (compiler-error "define-constant does not define a constant expression" `(define-constant ,x ,body)))
          (if (not (symbol? x)) (compiler-error "define-constant's first argument is not a symbol" x))
          (begin
-           (set! constants (cons `(define-constant ,x ,body) constants))
+           (set! constants (cons `(define-constant ,x ,(expand-syntax body)) constants))
            (list)))
         (('define-constant . noise) (compiler-error "malformed define-constant" `(define . ,noise)))
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
@@ -330,7 +307,7 @@
         (() '())
         ((('define f ('lambda xs . lambda-body)) . rest)
          (if (and (variable-pure? f `(lambda ,xs . ,lambda-body)) (variable-pure? f all-defines) (variable-pure? f body))
-             (cons `(define ,f (##qualified-lambda (,@(cadr lib) ,f) ,xs . ,lambda-body)) (qualify (cdr defines) all-defines body))
+             (cons `(define ,f (##qualified-lambda (,@(cadr lib) ,f) #t ,xs . ,lambda-body)) (qualify (cdr defines) all-defines body))
              (cons (car defines) (qualify (cdr defines) all-defines body))))
         ((('define f ('case-lambda (xses . lambda-bodies) ...)) . rest)
          (if (and
@@ -338,7 +315,7 @@
                 (variable-pure? f all-defines)
                 (variable-pure? f body))
              (cons
-               `(define ,f (##qualified-case-lambda (,@(cadr lib) ,f) . ,(map (lambda (xs lambda-body) `(,xs . ,lambda-body)) xses lambda-bodies)))
+               `(define ,f (##qualified-case-lambda (,@(cadr lib) ,f) #t . ,(map (lambda (xs lambda-body) `(,xs . ,lambda-body)) xses lambda-bodies)))
                (qualify (cdr defines) all-defines body))
              (cons (car defines) (qualify (cdr defines) all-defines body))))
         (else
@@ -390,20 +367,17 @@
          (sanitize-define-procedure f xs body)
          (set! defines (cons `(define ,f ,(expand-syntax `(lambda ,xs . ,body))) defines))
          (list))
-        ; TODO this case necessary still?
         (('define f ('lambda . body))
          (sanitize-define f `(lambda . ,body))
          (set! defines (cons `(define ,f ,(expand-syntax `(lambda . ,body))) defines))
          (list))
-        ; TODO this case necessary still?
         (('define f ('case-lambda . body))
          (sanitize-define f `(case-lambda . ,body))
          (set! defines (cons `(define ,f ,(expand-syntax `(case-lambda . ,body))) defines))
          (list))
-        ; TODO don't forget about ##qualified-lambda and ##qualified-case-lambda
         (('define x y)
          (sanitize-define x y)
-         (if just-defines
+         (if (constant-expr? y)
              (begin
                (set! defines (cons `(define ,x ,(expand-syntax y)) defines))
                (list))
@@ -416,7 +390,7 @@
          (if (not (constant-expr? body)) (compiler-error "define-constant does not define a constant expression" `(define-constant ,x ,body)))
          (if (not (symbol? x)) (compiler-error "define-constant's first argument is not a symbol" x))
          (begin
-           (set! constants (cons `(define-constant ,x ,body) constants))
+           (set! constants (cons `(define-constant ,x ,(expand-syntax body)) constants))
            (list)))
         (('define-constant . noise) (compiler-error "malformed define-constant" `(define . ,noise)))
         (('define . noise) (compiler-error "malformed define" `(define . ,noise)))
@@ -433,14 +407,14 @@
           (apply append (map expand-library-expr (cdr decl-defines)))))
         (else
           (set! just-defines #f)
-          (list expr))))
+          (list (expand-syntax expr)))))
     ; still has free variables
     (define (qualify defines all-defines body)
       (match defines
         (() '())
         ((('define f ('lambda xs . lambda-body)) . rest)
          (if (and (variable-pure? f `(lambda ,xs . ,lambda-body)) (variable-pure? f all-defines) (variable-pure? f body))
-             (cons `(define ,f (##qualified-lambda (,@(cadr lib) ,f) ,xs . ,lambda-body)) (qualify (cdr defines) all-defines body))
+             (cons `(define ,f (##qualified-lambda (,@(cadr lib) ,f) #t ,xs . ,lambda-body)) (qualify (cdr defines) all-defines body))
              (cons (car defines) (qualify (cdr defines) all-defines body))))
         ((('define f ('case-lambda (xses . lambda-bodies) ...)) . rest)
          (if (and
@@ -448,7 +422,7 @@
                 (variable-pure? f all-defines)
                 (variable-pure? f body))
              (cons
-               `(define ,f (##qualified-case-lambda (,@(cadr lib) ,f) . ,(map (lambda (xs lambda-body) `(,xs . ,lambda-body)) xses lambda-bodies)))
+               `(define ,f (##qualified-case-lambda (,@(cadr lib) ,f) #t . ,(map (lambda (xs lambda-body) `(,xs . ,lambda-body)) xses lambda-bodies)))
                (qualify (cdr defines) all-defines body))
              (cons (car defines) (qualify (cdr defines) all-defines body))))
         (else
@@ -458,11 +432,11 @@
              (body (append (apply append expanded)
                            (list (make-library-output exports))))
              (defines (if #t (qualify defines defines body) defines)))
-        (expand-syntax
-           `(lambda ()
-              ,@(reverse constants)
-              ,@(reverse defines)
-              . ,body))))
+        `(lambda ()
+           ((lambda ,(map cadr constants)
+              (##letrec ,(cadr lib) ,(map cdr defines)
+                ,(beginify body)))
+            . ,(map caddr constants)))))
     (define free-vars (free-variables basic-library))
 
     (define unbound-vars '())
@@ -479,12 +453,7 @@
                 (let ((ret (get-output-string strport))) (close-port strport) ret))
               (begin
                 (format strport "* ~A: ~S~N" (caar free-vars) (cdar free-vars))
-                (loop (cdr free-vars)))))
-        #;(do ((free-vars free-vars (cdr free-vars)))
-            ((null? free-vars)
-             (display "context may not match source because of macro expansion" strport)
-             (let ((ret (get-output-string strport))) (close-port strport) ret))
-          (format strport "* ~A: ~S~N" (caar free-vars) (cdar free-vars)))))
+                (loop (cdr free-vars)))))))
 
     (let loop ((free-vars free-vars))
       (if (null? free-vars)
@@ -499,7 +468,7 @@
     (if (not (null? unbound-vars))
         (begin
           (compiler-error (pretty-print-free-vars (cadr lib) unbound-vars))
-          #;(compiler-error "library has free variables" (cadr lib) unbound-vars)))
+          ))
 
     (register-library-interface! (header-from-library lib))
     (let* ((libname (mangle-library (cadr lib))))
@@ -509,13 +478,17 @@
       `(,@(reverse declares)
         (##vcore.declare ,libname
            (lambda ()
-            ,(expand-syntax
-            `(let ((##vcore.import (##vcore.make-import ,libname . ,(map (lambda (i) `(##vcore.load-library ,i)) mangled-imports))))
-              (let ()
-                ,@constant-vars
-                (let ,(map (lambda (f) `(,f (##vcore.import ,(list 'quote f)))) imported-vars)
-                  .
-                  ,(cddr basic-library))))))))))
+            ,((lambda (x) x)
+              `((lambda (##vcore.import)
+                  ((lambda ,(map cadr constant-vars)
+                    ((lambda ,imported-vars
+                       ,(fold-right
+                          (lambda (e acc) (list 'begin e acc))
+                          (car (take-right (cddr basic-library) 1))
+                          (drop-right (cddr basic-library) 1)))
+                     . ,(map (lambda (f) `(##vcore.import ,(list 'quote f))) imported-vars)))
+                  . ,(map caddr constant-vars)))
+                (##vcore.make-import ,libname . ,(map (lambda (i) `(##vcore.load-library ,i)) mangled-imports)))))))))
 
   (define (valid-identifier? s) (symbol? s))
   (define (valid-arguments? args)
@@ -736,9 +709,10 @@
        `(case-lambda . ,(map expand-lambda lamb)))
       (('case-lambda . _) (compiler-error "malformed case-lambda" expr))
 
-      (('##qualified-lambda name . rest) (cons '##qualified-lambda (cons name (expand-lambda rest))))
-      (('##qualified-case-lambda name lamb ...)
-       `(##qualified-case-lambda ,name . ,(map expand-lambda lamb)))
+      (('##qualified-lambda name static? . rest)
+       `(##qualified-lambda ,name ,static? . ,(expand-lambda rest)))
+      (('##qualified-case-lambda name static? lamb ...)
+       `(##qualified-case-lambda ,name ,static? . ,(map expand-lambda lamb)))
       (('##qualified-case-lambda . _) (compiler-error "malformed case-lambda" expr))
 
       (('quasiquote x) (expand-syntax (expand-quasiquote 1 x)))
@@ -766,6 +740,9 @@
       (('letrec* . noise) (compiler-error "malformed letrec*" `(letrec . ,noise)))
       (('letrec ((xs vals) ...) . body)
        (expand-letrec xs vals body))
+      (('##letrec path ((xs vals) ...) . body)
+       (append `(##letrec ,path)
+         (cdr (expand-letrec xs vals body))))
       (('letrec* . noise) (compiler-error "malformed letrec" `(letrec . ,noise)))
 
       (('let* ((x val) rest ...) . body) (expand-syntax `(let ((,x ,val)) (let* ,rest . ,body))))
@@ -956,14 +933,17 @@
               (if (null? cases) '()
                   (merge (loop (append-improper (caar cases) bound) (cdar cases)) (loop2 (cdr cases))))))
             ((eqv? (car expr) '##qualified-lambda)
-             (loop (append-improper (caddr expr) bound) (cdddr expr)))
+             (loop (append-improper (cadddr expr) bound) (cddddr expr)))
             ((eqv? (car expr) '##qualified-case-lambda)
-             (let loop2 ((cases (cddr expr)))
+             (let loop2 ((cases (cdddr expr)))
               (if (null? cases) '()
                   (merge (loop (append-improper (caar cases) bound) (cdar cases)) (loop2 (cdr cases))))))
             ((eqv? (car expr) 'letrec)
              (loop (append-improper (map car (cadr expr)) bound)
                    (cons 'begin (cons (map cadr (cadr expr)) (cddr expr)))))
+            ((eqv? (car expr) '##letrec)
+             (loop (append-improper (map car (caddr expr)) bound)
+                   (cons 'begin (cons (map cadr (caddr expr)) (cdddr expr)))))
             ((eqv? (car expr) 'set!)
              (loop bound (cdr expr)))
             (else (merge (loop bound (car expr)) (loop bound (cdr expr))))))

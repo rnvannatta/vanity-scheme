@@ -407,6 +407,41 @@ SYSV_CALL void * VLookupConstant(char * name, void * val) {
   return val;
 } 
 
+static int VStaticEnvTableSize;
+static int VStaticEnvTableCapacity;
+typedef struct {
+  char const * name;
+  VEnv ** slot;
+} VStaticEnvEntry;
+
+static VStaticEnvEntry * VStaticEnvTable;
+void VRegisterStaticEnv(char const * name, VEnv ** slot) {
+  for(int i = 0; i < VStaticEnvTableSize; i++) {
+    if(!strcmp(VStaticEnvTable[i].name, name)) {
+      fprintf(stderr, "Internal system error: double registering a static environment: %s\n", name);
+      VAbortC(NULL, VERROR);
+    }
+  }
+  if(VStaticEnvTableSize == VStaticEnvTableCapacity) {
+    if(!VStaticEnvTableCapacity)
+      VStaticEnvTableCapacity = 1;
+    VStaticEnvTableCapacity *= 2;
+    VStaticEnvTable = realloc(VStaticEnvTable, sizeof(VStaticEnvEntry[VStaticEnvTableCapacity]));
+  }
+  VStaticEnvTable[VStaticEnvTableSize].name = name;
+  VStaticEnvTable[VStaticEnvTableSize++].slot = slot;
+}
+void VUnregisterStaticEnv(char const * name) {
+  for(int i = 0; i < VStaticEnvTableSize; i++) {
+    if(!strcmp(VStaticEnvTable[i].name, name)) {
+      memmove(&VStaticEnvTable[i], &VStaticEnvTable[i+1], sizeof(VStaticEnvEntry[VStaticEnvTableSize - i - 1]));
+      VStaticEnvTableSize--;
+      return;
+    }
+  }
+  fprintf(stderr, "Warning: unregistering a nonexistant static environment:  %s\n", name);
+}
+
 // okay: so finalizers to managed memory can be detected as stale when they remain after a gc
 // specifically, after gc, a finalizer to managed memory points to a forwarded address
 // -- finalizers to foreign memory are manually tended to during move
@@ -1353,6 +1388,13 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
         runtime->VGlobalTable[i].value = VMoveDispatch(runtime, runtime->VGlobalTable[i].value);
       }
     }
+  }
+
+  // These objects are normally extremely veteran. So maybe worth doing some trickery
+  // So we only have to consider them in major collects. Eh. Only a handful of libraries at a time.
+  // ~20.
+  for(int i = 0; i < VStaticEnvTableSize; i++) {
+    *VStaticEnvTable[i].slot = VCheckedMoveEnv(runtime, *VStaticEnvTable[i].slot);
   }
 
   environ = VCheckedMoveEnviron(runtime, environ);
@@ -2527,6 +2569,11 @@ V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
   VBlob * sym = VCreateSymbolSlow(sym_str, sizeof sym_str - 1);
 #undef sym_str
 
+  VBlob * nm = VDecodeBlob(name);
+  // why would this be null????
+  if(nm)
+    VUnregisterStaticEnv(nm->buf);
+
   VWORD sym_word = VEncodePointer(sym, VPOINTER_OTHER);
   VGlobalEntry * lookup = VLookupGlobalEntry(runtime, sym_word);
   VWORD libs = VNULL;
@@ -2542,7 +2589,7 @@ V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
     VPair * libs_dec = VDecodePair(libs);
     VPair * pair = VDecodePair(libs_dec->first);
     VBlob * str = VDecodeBlob(pair->first);
-    VBlob * nm = VDecodeBlob(name);
+    // how can nm be null????
     if(str && nm && !strcmp(nm->buf, str->buf)) {
       lib_entry = pair;
       break;

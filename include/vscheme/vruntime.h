@@ -1126,12 +1126,26 @@ static inline VVector * VFillVector(VVector * vec, VNEWTAG tag, unsigned len, VW
 /* ======================== Misc ======================= */
 
 #ifdef __EMSCRIPTEN__
+// Used to implement declares in emscripten. But why? IDK.
+// Declares are crufty anyway and need to be reworked.
 void VRegisterSym(char const * name, void * ptr);
 #endif
 
 // stores constants like the literal 'foo or the value of ##sys.+
 // necessary because Windows doesn't have weak symbols lmao
+// DEPRECATED. Still used for intrinsic closures, working on removing.
 void * VLookupConstant(char * name, void * val);
+
+// Static environments are directly inserted into function calls
+// ie in MyFunc(runtime, foo_library_env, k, x, y);
+// So the garbage collector needs to be informed of them
+// by calling VRegisterStaticEnv(&foo_library_env);
+// since they're not in the normal environment chains.
+// It is an error to call RegisterStaticEnv twice. Since that
+// implies the environment is not actually static.
+void VRegisterStaticEnv(char const * name, VEnv ** slot);
+// UnregisterStaticEnv exists to support reloading of libaries.
+void VUnregisterStaticEnv(char const * name);
 
 static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
   return VBits(a) == VBits(b);
