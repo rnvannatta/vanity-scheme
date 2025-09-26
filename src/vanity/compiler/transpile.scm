@@ -32,7 +32,7 @@
       (lambda ()
         (set! x (+ x 1))
         (sprintf "VDllMain~A" x))))
-  (define (printout2 main purec? debug? shared? literal-table foreign-functions intrinsics functions qualified-functions declares toplevels)
+  (define (printout2 main purec? debug? shared? static-environments literal-table foreign-functions intrinsics functions qualified-functions declares toplevels)
     (define (print-global sym)
       (let ((builtin (lookup-intrinsic-name sym)))
         (if builtin
@@ -142,6 +142,7 @@
     (define (closes? expr)
       (match expr
         (('close fun) #t)
+        (('close fun name) #t)
 
         (('quote . _) #f)
         (('bruijn . _) #f)
@@ -154,9 +155,10 @@
         (('##inline f . xs)
          (closes? xs))
         (('letrec . _) #t)
+        (('##letrec . _) #t)
         ; FIXME!!! not always true
         (('basic-block . _) #t)
-        (('##qualified-call _ f . xs)
+        (('##qualified-call _ _ f . xs)
          (or (closes? f) (closes? xs)))
         ((f) (closes? f))
         ((f . xs)
@@ -207,8 +209,12 @@
            (if purec?
                (printf "    V_BOUNCE_FUNC((VFunc)~A, self, runtime" fun)
                ; FIXME yucky! let's find a way to avoid creating this stack data
-               (printf "    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self)), ~A" fun (length xs)))
-           )
+               (printf "    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self)), ~A" fun (length xs))))
+          (('close fun name)
+           (if purec?
+               (printf "    V_BOUNCE_FUNC((VFunc)~A, ~A, runtime" fun name)
+               ; FIXME yucky! let's find a way to avoid creating this stack data
+               (printf "    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, ~A)), ~A" fun name (length xs))))
           (else
             (if purec?
                 (begin
@@ -226,19 +232,27 @@
            (print-expr x args))
           xs)
         (printf ");~N"))
-      (define (print-qualified-apply name f xs tail-call?)
+      (define (print-qualified-apply name static? f xs tail-call?)
         (printf "  {~N")
         (let ((func (mangle-qualified-function name))
+              (env (mangle-environment (drop-right name 1)))
               (len (length xs)))
-          (printf "    VClosure * _closure = ")
-          (match f
-            (('close fun)
-             (printf "V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self))" func))
-            (else
-             (printf "VDecodeClosure(")
-             (print-expr f args)
-             (printf ")")))
-          (printf ";~N")
+          (if static?
+              (printf "   VEnv * _closure_env = ~A;~N" env)
+              (begin
+                (printf "    VClosure * _closure = ")
+                (match f
+                  (('close fun)
+                   (printf "V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self))" func))
+                  (('close fun name)
+                   (printf "V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, ~A))" func name))
+                  (else
+                   (printf "VDecodeClosure(")
+                   (print-expr f args)
+                   (printf ")")))
+                (printf ";~N")
+                (printf "   VEnv * _closure_env = _closure->env;~N")
+                ))
           (for-each
             (lambda (x i)
              (printf "    VWORD _arg~A = ~N      " i)
@@ -248,20 +262,22 @@
             (iota len))
           (if purec?
               (begin
-                (printf "    V_BOUNCE_FUNC(~A, _closure->env, runtime" func)
+                (printf "    V_BOUNCE_FUNC(~A, _closure_env, runtime" func)
                 (for-each
                   (lambda (i) (printf ", _arg~A" i))
                   (iota len))
                 (printf ");~N"))
               (begin
-                (printf "    if(VStackOverflow(runtime)){~N")
-                (printf "      VGarbageCollect2Closure(runtime, _closure, ~A" len)
+                (printf "    if(V_UNLIKELY(VStackOverflow(runtime))){~N")
+                (if static?
+                    (printf "      VGarbageCollect2Closure(runtime, (VClosure[]){VMakeClosure2((VFunc)~A, ~A)}, ~A" func env len)
+                    (printf "      VGarbageCollect2Closure(runtime, _closure, ~A" len))
                 (for-each
                   (lambda (i) (printf ", _arg~A" i))
                   (iota len))
                 (printf ");~N")
                 (printf "    } else {~N")
-                (printf "       ~A(runtime, _closure->env, ~A" func len)
+                (printf "       ~A(runtime, _closure_env, ~A" func len)
                 (for-each
                   (lambda (i) (printf ", _arg~A" i))
                   (iota len))
@@ -269,7 +285,7 @@
                 (printf "    }~N")
                 )))
         (printf "  }~N"))
-      (define (print-letrec n xs body args)
+      (define (print-letrec path n xs body args)
         (displayln "    {")
         (displayln "    VEnv * statics = self;")
         (if purec?
@@ -277,6 +293,9 @@
           (begin
             (printf "    struct { VEnv self; VWORD argv[~A]; } container;~N" n)
             (printf "    self = &container.self;~N")))
+            (if path
+                (let ((mangled-env (mangle-environment path)))
+                  (printf "    ~A = self;~N" mangled-env)))
         (printf "    VInitEnv(self, ~A, ~A, statics);~N" n n)
         (let ((args (map (lambda (i) (sprintf "self->vars[~A]" i)) (iota n))))
           (for-each
@@ -286,6 +305,10 @@
               (displayln ";"))
             xs
             (iota n))
+          (if path
+              (let ((mangled-lib (mangle-library path))
+                    (mangled-env (mangle-environment path)))
+                (printf "    VRegisterStaticEnv(\"~A\", &~A);~N" mangled-lib mangled-env)))
           (print-expr body args))
         (displayln "    }"))
       (define (print-basic-block cost n xs vals body)
@@ -361,7 +384,10 @@
         ; FIXME
         (('quote ('##string x)) (print-literal-string x))
         (('quote x) (print-literal x))
-        (('close fun) (printf "(VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self))))" fun))
+        (('close fun)
+         (printf "(VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self))))" fun))
+        (('close fun name)
+         (printf "(VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, ~A))))" fun name))
         (('bruijn name up right)
          (cond ((= up 0) (display (list-ref args right)))
                ((= up 1) (printf "statics->vars[~A]" right))
@@ -390,11 +416,13 @@
         (('##foreign.function x)
          (printf "(VEncodeClosure(&~A_closure))" x))
         (('letrec n xs body)
-         (print-letrec n xs body args))
+         (print-letrec #f n xs body args))
+        (('##letrec path n xs body)
+         (print-letrec path n xs body args))
         (('basic-block cost n xs vals body)
          (print-basic-block cost n xs vals body))
-        (('##qualified-call name f . xs)
-         (print-qualified-apply name f xs #f))
+        (('##qualified-call name static? f . xs)
+         (print-qualified-apply name static? f xs #f))
         ((f . xs)
          (cond ((lookup-intrinsic-name f) (print-builtin-apply f xs #f))
                ((and (pair? f) (eqv? (car f) '##intrinsic))
@@ -687,6 +715,11 @@
       (displayln "VBlob * VInternSymbol(int hash, VBlob * sym);")
       (newline)
       (for-each (lambda (e) (print-intrinsic-declaration purec? e)) intrinsics)
+      (newline)
+      (for-each
+        (lambda (e) 
+          (printf "VEnv * ~A;~N" (mangle-environment e)))
+        static-environments)
       (newline)
       (for-each print-literal-declaration literal-table)
       (print-dllmain literal-table)

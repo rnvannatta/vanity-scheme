@@ -2,6 +2,7 @@
   (import (vanity core))
   (define-constant puts (##foreign.function "C" "int puts(const char *)"))
   (define-constant fabs (##foreign.function "C" "double fabs(double)"))
+  (define stop-the-warn #f)
   #;(puts "Hello, world!")
   #;(puts "Hayo")
   (unless (= (fabs 3) 3)

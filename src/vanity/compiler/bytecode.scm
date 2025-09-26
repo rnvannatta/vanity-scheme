@@ -99,6 +99,12 @@
           (map process-atom xs) 
           `((letrec-end))
           (process-application body)))
+      (('##letrec path n xs body)
+       (append
+         `((letrec-begin ,n))
+          (map process-atom xs) 
+          `((letrec-end))
+          (process-application body)))
       (('set! k y x)
        (match y
          (('bruijn name up right)
@@ -205,7 +211,7 @@
               (loop (+ i 1))
             ))))
     (displayln ")"))
-  (define (to-bytecode debug? shared? literal-table foreign-functions intrinsics functions qualified-functions declares toplevels)
+  (define (to-bytecode debug? shared? static-environments literal-table foreign-functions intrinsics functions qualified-functions declares toplevels)
     (let ((print-main? (not (null? toplevels)))
           (functions (reverse functions)))
       (if shared? (compiler-error "bytecode shared libraries not supported yet"))

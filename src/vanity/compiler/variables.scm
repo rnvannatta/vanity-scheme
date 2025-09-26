@@ -29,12 +29,15 @@
 ;          _V30 a shim function for a ffi
 ;          _V40 an intrinsic
 ;          _V50 a qualified function
+;          _V60 a static environment
 ;          _VW  an interned value
 
 (define-library (vanity compiler variables)
-  (export mangle-symbol mangle-library mangle-qualified-function free-variables variable-pure?)
+  (export mangle-symbol mangle-library mangle-qualified-function mangle-environment free-variables variable-pure?)
   (import (vanity core) (vanity list) (vanity intrinsics) (vanity compiler utils))
 
+  (define (mangle-environment name)
+    (string-append "_V60" (fold-right string-append "" (map symbol->string (map mangle-symbol name)))))
   (define (mangle-qualified-function name)
     (string-append "_V50" (fold-right string-append "" (map symbol->string (map mangle-symbol name)))))
   ; why does this return another symbol? should return a string? maybe I want eqv? that bad
@@ -156,9 +159,9 @@
        (variable-pure-body? k xs body))
       (('case-lambda . bodies)
        (fold (lambda (body p) (and p (variable-pure-body? k (car body) (cadr body)))) #t bodies))
-      (('##qualified-lambda name xs body)
+      (('##qualified-lambda name static? xs body)
        (variable-pure-body? k xs body))
-      (('##qualified-case-lambda name . bodies)
+      (('##qualified-case-lambda name static? . bodies)
        (fold (lambda (body p) (and p (variable-pure-body? k (car body) (cadr body)))) #t bodies))
       (('set! x val)
        (and (not (eqv? x k)) (variable-pure? k val)))
@@ -174,6 +177,8 @@
        ; but if k is in the xs, it's shadowed
        ; and such doesn't matter for the vals and the body
        ; otherwise we need to check the vals and the body for a set! expr
+       (variable-pure-body? k xs (cons 'begin (cons body vals))))
+      (('##letrec _ ((xs vals) ...) body)
        (variable-pure-body? k xs (cons 'begin (cons body vals))))
       ; if, begin, and or can be handled by this case as the 3 each contain a harmless keyword
       ; and a sequence of plain statements
@@ -207,20 +212,24 @@
             ((eqv? (car expr) 'lambda)
              (loop (append-improper (cadr expr) bound) (cddr expr) expr))
             ((eqv? (car expr) '##qualified-lambda)
-             (loop (append-improper (caddr expr) bound) (cdddr expr) expr))
+             (loop (append-improper (cadddr expr) bound) (cddddr expr) expr))
             ((eqv? (car expr) 'case-lambda)
              (let loop2 ((cases (cdr expr)))
               (if (null? cases)
                   '()
                   (merge (loop (append-improper (caar cases) bound) (cdar cases) (car cases)) (loop2 (cdr cases))))))
             ((eqv? (car expr) '##qualified-case-lambda)
-             (let loop2 ((cases (cddr expr)))
+             (let loop2 ((cases (cdddr expr)))
               (if (null? cases)
                   '()
                   (merge (loop (append-improper (caar cases) bound) (cdar cases) (car cases)) (loop2 (cdr cases))))))
             ((eqv? (car expr) 'letrec)
              (loop (append-improper (map car (cadr expr)) bound)
                    (cons 'begin (cons (map cadr (cadr expr)) (cddr expr)))
+                   expr))
+            ((eqv? (car expr) '##letrec)
+             (loop (append-improper (map car (caddr expr)) bound)
+                   (cons 'begin (cons (map cadr (caddr expr)) (cdddr expr)))
                    expr))
             ((eqv? (car expr) 'set!)
              (loop bound (cdr expr) expr))

@@ -1,0 +1,41 @@
+(call/cc (lambda (k) ...))
+
+=>
+
+(call/cc next (lambda (kreal k) ...))
+
+=>
+
+((lambda (kreal k) ...) next (lambda (k . args) (apply next args)))
+
+actually terrible. building an arg list to destroy it. need to check on how the wrapped cont is used to lower it to say
+
+((lambda (kreal k) ...) next (lambda (k x) (next x)))
+
+well really we should just directly rewrite all calls to (k k x) to (next x)
+
+(values 1 2 3)
+
+=>
+
+(values k 1 2 3)
+
+(k 1 2 3)
+
+ez.
+
+(call-with-values producer consumer)
+
+=>
+
+(call-with-values next prod consumer)
+
+=>
+
+(producer (lambda args) (apply next consumer args))
+
+again only valuable if we dont do the apply
+
+((lambda (k) ...) (lambda (args) (apply next (lambda (k . args) args))))
+
+can just rewrite away the 
