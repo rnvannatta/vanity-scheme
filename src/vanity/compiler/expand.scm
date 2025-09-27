@@ -479,7 +479,21 @@
         (##vcore.declare ,libname
            (lambda ()
             ,((lambda (x) x)
-              `((lambda (##vcore.import)
+              `(##vcore.call-with-values
+                 (lambda ()
+                   ((##intrinsic "VMultiImport" 3 +)
+                     ,libname
+                     (##vcore.vector
+                      . ,(map (lambda (i) `(##vcore.load-library ,i)) mangled-imports))
+                     . ,(map (lambda (f) (list 'quote f)) imported-vars)))
+                 (lambda ,imported-vars
+                   ((lambda ,(map cadr constant-vars)
+                      ,(fold-right
+                         (lambda (e acc) (list 'begin e acc))
+                         (car (take-right (cddr basic-library) 1))
+                         (drop-right (cddr basic-library) 1)))
+                    . ,(map caddr constant-vars))))
+              #;`((lambda (##vcore.import)
                   ((lambda ,(map cadr constant-vars)
                     ((lambda ,imported-vars
                        ,(fold-right

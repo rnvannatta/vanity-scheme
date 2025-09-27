@@ -2202,6 +2202,32 @@ V_BEGIN_FUNC(VLookupLibrary2, "lookup-library", 2, k, name)
   V_CALL(k, runtime, lib);
 V_END_FUNC
 
+
+static VWORD ImportImpl(VRuntime * runtime, VWORD * libs, int num_libs, VWORD importing_lib, VWORD x) {
+  int cur = 0, end = num_libs;
+  VWORD * rest = libs;
+  VWORD args = VNULL;
+  while(true) {
+    if(VIsToken(args, VTOK_NULL)) {
+      if(cur == end) {
+        break;
+      } else {
+        args = rest[cur];
+        cur++;
+      }
+    }
+    VWORD arg = VInlineCar2(runtime, args);
+    if(VDecodeBool(VInlineEqv2(runtime, VInlineCar2(runtime, arg), x))) {
+      return VInlineCdr2(runtime, arg);
+      break;
+    } else {
+      args = VInlineCdr2(runtime, args);
+    }
+  }
+  VErrorC(runtime, "library ~A: symbol not found: ~A\n", importing_lib, x);
+  return VVOID;
+}
+
 static V_BEGIN_FUNC(VMakeImportLambda, "make-import-lambda", 2, k, x)
   int cur = 2, end = statics->var_len;
   VWORD * rest = statics->vars;
@@ -2226,9 +2252,25 @@ static V_BEGIN_FUNC(VMakeImportLambda, "make-import-lambda", 2, k, x)
   }
 V_END_FUNC
 
+
 V_BEGIN_FUNC_MIN(VMakeImport2, "make-import", 2, k, lib)
   VClosure ret = VMakeClosure2((VFunc)VMakeImportLambda, self);
   V_CALL(k, runtime, VEncodeClosure(&ret));
+V_END_FUNC
+
+V_BEGIN_FUNC_MIN(VMultiImport, "multi-import", 3, _k, lib, _imports)
+  VClosure * k = VDecodeClosureApply2(runtime, _k);
+  VVector * imports = VCheckedDecodeVector2(runtime, _imports, "multi-import");
+
+  VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc-3]));
+  environ->base = VMakeObject(VENVIRONMENT);
+  environ->argc = argc-3;
+  environ->runtime = runtime;
+  environ->static_chain = k->env;
+  for(int i = 3; i < argc; i++) {
+    environ->argv[i-3] = ImportImpl(runtime, imports->arr, imports->len, lib, self->vars[i]);
+  }
+  VSysApplyBounce(k->func, environ);
 V_END_FUNC
 
 
