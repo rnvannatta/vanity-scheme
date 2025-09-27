@@ -8,6 +8,8 @@ It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it
 
 The parallelism model uses cooperative M:N fibers with a continuation-stealing scheduler. There are two principle parallelism operators: `fiber-fork` and `async`/`await`. `fiber-fork` pauses the current fiber, launching N child fibers and waiting on them. `async` launches a child fiber and returns a future, while `await` waits on the future. `await` can be safely called multiple times from multiple fibers.
 
+Beyond parallelism, the single threaded performance of programs produced by Vanity is becoming competitive with more mature scheme compilers like chez and chicken. I believe this is mainly from a faster runtime model: the actual compiler is still somewhat primitive, there are a couple places where it produces boneheaded naive CPS and it doesn't do any type inference.
+
 It is capable of producing executables which run on Linux and Windows, using GCC and MinGW. The compiler itself only runs on Linux. An interpreter is also provided, as well as windows builds for that interpreter. The interpreter is fully capable of running any vanity scheme program. There are no limitations on FFI code, unlike e.g. Chicken Scheme.
 
 The compiler also has support for targeting wasm via the emscripten toolchain.
@@ -17,8 +19,6 @@ The compiler is free software under GPL v2.0, and the runtime is free software u
 ## Install Instructions
 
 At the moment, x64 Linux is a requirement to run the compiler and thus to compile the project.
-
-Prebuilt Windows releases of the interpreter are provided on github. The releases include vendored copies of all dependencies.
 
 Linux Dependencies:
 * gcc preferred (or clang)

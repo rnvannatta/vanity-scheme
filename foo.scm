@@ -1,0 +1,12 @@
+(define-library (foo)
+  (import (vanity core))
+  (export pi foo bar)
+  (define-constant pi 3)
+  (define (foo x) (map / x))
+  (define (bar) (foo '(6 7 8 9 10)))
+  )
+(import (foo) (vanity core))
+
+(displayln pi)
+(displayln (foo '(1 2 3 4 5)))
+(displayln (bar))
