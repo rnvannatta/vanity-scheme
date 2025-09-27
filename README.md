@@ -2,7 +2,7 @@
 
 An R7RS scheme compiler vanity project, with Cilk-inspired structured parallelism, that I started writing July 2022.
 
-It would be a mistake to use this compiler in its current state, but you can have fun looking at the code!
+The compiler is still in an alpha state and undergoing major changes.
 
 It is an implementation of the 'Cheney on the MTA' concept for a compiler. So it compiles to continuation passing style, and is a compacting generational garbage collected language. But importantly, it compiles to C code, so it's very amenable to mixing C with it. The compiler is very similar to Chicken Scheme.
 
