@@ -1894,6 +1894,37 @@ V_BEGIN_FUNC_RANGE(VMakeTemporaryFile2, "make-temporary-file", 2, 3, k, _prefix,
   V_BOUNCE(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }
 
+static VWORD VGetParameterImpl(VRuntime * runtime, VWORD key, VWORD init) {
+  VWORD dynamics = runtime->dynamics;
+#if 0
+  if(VIsEq(dynamics, cache->first))
+    return cache->rest;
+#endif
+
+  VWORD ret = init;
+  while(!VIsEq(dynamics, VNULL)) {
+    VPair * node = VDecodePair(dynamics);
+    VPair * keyval = VDecodePair(node->first);
+    dynamics = node->rest;
+
+    if(VIsEq(keyval->first, key)) {
+      ret = keyval->rest;
+      break;
+    }
+  }
+#if 0
+  cache->first = runtime->dynamics;
+  cache->rest = ret;
+  VTrackMutation(runtime, cache, &cache->first, runtime->dynamics);
+  VTrackMutation(runtime, cache, &cache->rest, ret);
+#endif
+  return ret;
+}
+
+V_BEGIN_FUNC_BASIC(VGetParameter, "get-parameter", 2, key, init)
+  return VGetParameterImpl(runtime, key, init);
+V_END_FUNC
+
 V_BEGIN_FUNC(VMakeRandom, "make-random", 3, k, _seed, _stream)
   unsigned seed = VCheckedDecodeInt2(runtime, _seed, "make-random");
   unsigned stream = VCheckedDecodeInt2(runtime, _stream, "make-random");
@@ -2355,3 +2386,27 @@ V_BEGIN_FUNC(VBitCount, "bit-count", 2, k, _a)
   V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
+
+// CRIMES: If this gets a significant speedup in urbench, it means we need
+// to implement l00ps
+
+V_BEGIN_FUNC_BASIC(VAssq, "assq", 2, x, lst)
+  while(!VIsEq(lst, VNULL)) {
+    VPair * p = VCheckedDecodePair2(runtime, lst, "assq");
+    VPair * keyval = VCheckedDecodePair2(runtime, p->first, "assq");
+    if(VIsEq(keyval->first, x))
+      return p->first;
+    lst = p->rest;
+  }
+  return VFALSE;
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VMemq, "memq", 2, x, lst)
+  while(!VIsEq(lst, VNULL)) {
+    VPair * p = VCheckedDecodePair2(runtime, lst, "memq");
+    if(VIsEq(p->first, x))
+      return lst;
+    lst = p->rest;
+  }
+  return VFALSE;
+V_END_FUNC

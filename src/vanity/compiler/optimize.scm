@@ -109,6 +109,8 @@
           . ,(map (lambda (cases) `(,(car cases) ,(qualify-iter name qualified-funcs (cadr cases)))) cases)))
         (('continuation xs body)
          `(continuation ,xs ,(qualify-iter current-qualname qualified-funcs body)))
+        (('continuation body)
+         `(continuation ,(qualify-iter current-qualname qualified-funcs body)))
 
         ; let bindings: let's get scanning
 

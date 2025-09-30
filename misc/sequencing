@@ -1,0 +1,37 @@
+problem: (begin (f x) (g y)) is implemented naively
+
+it becomes in cps (f (continuation (ign) (g next y)) x)
+
+and this nesting stacks up. it results in really deep chains of do nothing environments
+
+two approaches in IR:
+
+A: shell lambda
+
+(f (continuation (g next y)) x)
+
+Doesn't make the source easier to read but marks the function as a begin continuation
+
+B: sequence form
+
+(begin
+  (#f (f ##c0 x))
+  (##c0 (g next y)))
+
+Makes the source easier to read but is a bit wackier
+
+one approach in codegen:
+
+the shell lambdas aren't counted for bruijn purposes
+
+in codegen they're dealt with by setting self = upenv
+
+leaning towards A. B can be a visualization for human reading, more general like so
+
+(begin (f x) (+ (* y y) (* z z)))
+
+(cps-sequence
+  (#f #f (f ##c0 x))
+  (#tmp1 ##c0 (* ##c1 y y))
+  (#tmp2 ##c1 (* ##c2 z z))
+  (#f ##c2 (+ next ##tmp1 ##tmp2)))
