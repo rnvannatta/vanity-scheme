@@ -389,7 +389,11 @@
         (('close fun name)
          (printf "(VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, ~A))))" fun name))
         (('bruijn name up right)
-         (cond ((= up 0) (display (list-ref args right)))
+         (cond ((= up 0)
+                (if args
+                    (display (list-ref args right))
+                    ; this case is hit only for begin continuations
+                    (printf "self->vars[~A]" right)))
                ((= up 1) (printf "statics->vars[~A]" right))
                ((= up 2) (printf "statics->up->vars[~A]" right))
                ((= up 3) (printf "statics->up->up->vars[~A]" right))
@@ -432,6 +436,15 @@
                (else (print-closure-apply f xs #f))))
         (x (if (symbol? x) (print-global x) (print-literal x)))
         (else (compiler-error "print-expr: malformed expression" expr))))
+     (define (print-begin-continuation name body)
+       (if purec?
+           (printf "static void ~A(VRuntime * runtime, VEnv * statics, int argc, VEnv * _ignored) {~N" name)
+           (printf "static void ~A(VRuntime * runtime, VEnv * statics, int argc) {~N" name))
+       (printf "  VEnv * self = statics;~N")
+       (printf "  statics = self ? self->up : NULL;~N")
+       (printf "  // ~S~N" body)
+       (print-expr body #f)
+       (printf "}~N"))
      (define (print-fun-single name check-args? num variadic? body needs-used?)
       (define (gen-args num)
         (map (lambda (e) (sprintf "_var~A" e)) (iota num)))
@@ -571,6 +584,8 @@
              (printf ");~N")))))
     (define (print-fun fun)
       (match fun
+       ((name _ (#f body))
+        (print-begin-continuation name body))
        ((name check-args? (num body))
         (print-fun-single name check-args? num #f body #f))
        ((name check-args? (num '+ body))

@@ -40,7 +40,7 @@
              expr
              (error "vasm call: not a nonnegative integer" x)))
         (('lambda x)
-         (if (and (integer? x) (>= x 0))
+         (if (or (not x) (and (integer? x) (>= x 0)))
              expr
              (error "vasm lambda: not a nonnegative integer" x)))
         (('lambda+ x)

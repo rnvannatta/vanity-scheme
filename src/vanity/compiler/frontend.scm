@@ -187,7 +187,7 @@
     (newline)
     (exit 1)))
 
-(with-exception-handler handle-exception
+(;with-exception-handler handle-exception
   (lambda ()
     (let loop ((args (getopt "vghtco:I:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (main #t main) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark)))))
       (if (not (null? args))
@@ -284,7 +284,7 @@
 ;;; RUN COMPILE: super messy
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(with-exception-handler handle-exception
+(;with-exception-handler handle-exception
   (lambda ()
     (define cc-files
       (if (or header? bytecode? transpile? expand?) (list out-file)

@@ -71,6 +71,8 @@
          `(##qualified-case-lambda ,name ,static? . ,(map (lambda (e) (bruijn-lambda env e)) cases)))
         (('continuation (x) body)
          `(continuation 1 ,(iter (cons (list x) env) body)))
+        (('continuation body)
+         `(continuation #f ,(iter env body)))
         (('letrec ((xs vals) ...) body)
          `(letrec ,(length xs) ,xs ,(map (lambda (e) (iter (cons xs env) e)) vals) ,(iter (cons xs env) body)))
         (('##letrec path ((xs vals) ...) body)

@@ -533,11 +533,13 @@
           (iter (cons (car rest) acc) (cdr rest))))
     (iter '() lst))
 
-  (define (memq x lst)
+  #;(define (memq x lst)
     (cond ((null? lst) #f)
           ((eq? x (car lst)) lst)
           (else (memq x (cdr lst)))))
-  (define memv memq)
+  #;(define memv memq)
+  (define memq (##basic-intrinsic "VMemq" 2))
+  (define memv (##basic-intrinsic "VMemq" 2))
   (define member
     (case-lambda
       ((x lst) (member x lst equal?))
@@ -546,11 +548,13 @@
              ((= x (car lst)) lst)
              (else (member x (cdr lst)))))))
 
-  (define (assq x alst)
+  #;(define (assq x alst)
     (cond ((null? alst) #f)
           ((eq? x (caar alst)) (car alst))
           (else (assq x (cdr alst)))))
-  (define assv assq)
+  #;(define assv assq)
+  (define assq (##basic-intrinsic "VAssq" 2))
+  (define assv (##basic-intrinsic "VAssq" 2))
   (define assoc
     (case-lambda 
       ((x alst) (assoc x alst equal?))
@@ -1125,40 +1129,66 @@
   (define (printout-quotation x write? port)
     (##vcore.display-word (cdr (assv (car x) '((quote . "'") (quasiquote . "`") (unquote . ",") (unquote-splicing . ",@")))) port)
     (printout (cadr x) write? port))
-  (define (printout x write? port)
-    (cond
-      ((pair? x)
-       (if (memq (car x) '(quote quasiquote unquote unquote-splicing))
-           (printout-quotation x write? port)
-           (printout-list x write? port)))
-      ((vector? x)
-       (let ((len (vector-length x)))
-        (##vcore.display-word "#(" port)
-        (let loop ((i 0))
-         (if (eq? i len)
-             #f
-             (begin
-              (if (eq? i 0)
-                  #f
-                  (##vcore.display-word " " port))
-              (printout (vector-ref x i) write? port)
-              (loop (+ i 1)))))
-        (##vcore.display-word ")" port)))
-      ((hash-table? x)
-       (let ((eq (hash-table-equivalence-function x)))
+  (define (printout-pair x write? port)
+    (if (memq (car x) '(quote quasiquote unquote unquote-splicing))
+        (printout-quotation x write? port)
+        (printout-list x write? port)))
+  (define (printout-vector x write? port)
+    (let ((len (vector-length x)))
+      (##vcore.display-word "#(" port)
+      (let loop ((i 0))
+       (if (eq? i len)
+           #f
+           (begin
+            (if (eq? i 0)
+                #f
+                (##vcore.display-word " " port))
+            (printout (vector-ref x i) write? port)
+            (loop (+ i 1)))))
+      (##vcore.display-word ")" port)))
+  (define (printout-hash-table x write? port)
+    (let ((eq (hash-table-equivalence-function x)))
          (cond ((eq? eq eq?) (##vcore.display-word "#hasheq" port))
                ((eq? eq eqv?) (##vcore.display-word "#hasheqv" port))
                (else (##vcore.display-word "#hash" port))))
-       (printout (hash-table->alist x) write? port))
-      (else (if write? (##vcore.write x port) (##vcore.display-word x port)))))
+    (printout (hash-table->alist x) write? port))
+  (define (printout x write? port)
+    (cond
+      ((pair? x) (printout-pair x write? port))
+      ((vector? x) (printout-vector x write? port))
+      ((hash-table? x) (printout-hash-table x write? port))
+      (write? (##vcore.write x port))
+      (else (##vcore.display-word x port))))
   (define display
     (case-lambda
-      ((x) (printout x #f (current-output-port)))
-      ((x port) (printout x #f port))))
+      ((x)
+       (let ((port (current-output-port)))
+         (cond
+           ((pair? x) (printout-pair x #f port))
+           ((vector? x) (printout-vector x #f port))
+           ((hash-table? x) (printout-hash-table x #f port))
+           (else (##vcore.display-word x port)))))
+      ((x port)
+       (cond
+         ((pair? x) (printout-pair x #f port))
+         ((vector? x) (printout-vector x #f port))
+         ((hash-table? x) (printout-hash-table x #f port))
+         (else (##vcore.display-word x port))))))
   (define write
     (case-lambda
-      ((x) (printout x #t (current-output-port)))
-      ((x port) (printout x #t port))))
+      ((x)
+       (let ((port (current-output-port)))
+         (cond
+           ((pair? x) (printout-pair x #t port))
+           ((vector? x) (printout-vector x #t port))
+           ((hash-table? x) (printout-hash-table x #t port))
+           (else (##vcore.write x port)))))
+      ((x port)
+       (cond
+         ((pair? x) (printout-pair x #t port))
+         ((vector? x) (printout-vector x #t port))
+         ((hash-table? x) (printout-hash-table x #t port))
+         (else (##vcore.write x port))))))
 
   ; misc 
   (define-constant call/cc ##vcore.call/cc)
@@ -1180,8 +1210,9 @@
        (let ((key (cons name '()))
              (init (convert init)))
          (case-lambda
-          (() (let ((lookup (assq key (##vcore.get-dynamics))))
-                (if lookup (cdr lookup) init)))
+          (() #;(let ((lookup (assq key (##vcore.get-dynamics))))
+                (if lookup (cdr lookup) init))
+           ((##basic-intrinsic "VGetParameter" 2) key init))
           ((action x)
            (case action
              ((##vcore.push-value) (##vcore.push-dynamic key (convert x)))
