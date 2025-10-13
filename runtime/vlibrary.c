@@ -1509,54 +1509,70 @@ V_BEGIN_FUNC(VTtyPortP, "tty-port?", 2, k, _port)
   V_BOUNCE(k, runtime, VEncodeBool(tty));
 }
 
-FILE * Windows_TmpFile();
+typedef struct instring_cookie {
+  size_t len;
+  off64_t tell;
+  char * buf;
+} instring_cookie;
+static ssize_t read_instring(void * _cookie, char * ptr, size_t nbytes) {
+  instring_cookie * cookie = _cookie;
+
+  if(cookie->len - cookie->tell < nbytes)
+    nbytes = cookie->len - cookie->tell;
+  memcpy(ptr, cookie->buf + cookie->tell, nbytes);
+  cookie->tell += nbytes;
+
+  return nbytes;
+}
+static int close_instring(void * _cookie) {
+  instring_cookie * cookie = _cookie;
+  free(cookie->buf);
+  free(cookie);
+  return 0;
+}
+
+V_BEGIN_FUNC(VOpenInputString, "open-input-string", 2, k, _str)
+  errno = 0;
+  VBlob * str = VCheckedDecodeString2(runtime, _str, "open-input-string");
+  size_t len = str->len - 1;
+  char * buf = malloc(len);
+  memcpy(buf, str->buf, len);
+  //DFILE * f = d_fmemopen(buf, len, "rb");
+
+  instring_cookie * cookie = malloc(sizeof(instring_cookie));
+  *cookie = (instring_cookie) {
+    .len = len,
+    .buf = buf,
+  };
+  d_cookie_io_functions_t funcs = {
+    .read = read_instring,
+    .close = close_instring,
+  };
+  DFILE * f = d_fopencookie(cookie, "rb", funcs);
+
+  VPort _port = {
+    .base.tag = VPORT,
+    .line = 1,
+    .dstream = f,
+    .flags = PFLAG_READ | PFLAG_DFILE,
+  };
+  VPort * port = V_EDEN_INIT(runtime, VPort, _port);
+  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER));
+V_END_FUNC
 
 V_BEGIN_FUNC(VOpenOutputString2, "open-output-string", 1, k)
   errno = 0;
-#define USE_DFILE_OSTREAM
-#ifdef USE_DFILE_OSTREAM
   DFILE * f = d_strfile();
-#else
-#ifdef _WIN64
-  FILE * f = Windows_TmpFile();
-#else
-  FILE * f = tmpfile();
-#endif
-#endif
-  // ENFILE error can be fixed by running a garbage collect
-  VWORD ok = VEncodeBool(errno != ENFILE && errno != EMFILE);
-  if(!f) {
-    if(errno == ENFILE || errno == EMFILE) {
-      V_BOUNCE(k, runtime, VFALSE, ok);
-    } else {
-#ifdef USE_DFILE_OSTREAM
-      V_BOUNCE(k, runtime, VFALSE, VFALSE);
-#else
-#ifdef _WIN64
-      // Windows tmpfile() doesn't set errno! >:(
-      V_BOUNCE(k, runtime, VFALSE, VFALSE);
-#endif
-#ifdef __linux__
-      // unrecoverable error: return false to the user
-      V_BOUNCE(k, runtime, VFALSE, VTRUE);
-#endif
-#endif
-    }
-  }
 
-#ifdef USE_DFILE_OSTREAM
   VPort _port = {
     .base.tag = VPORT,
     .line = 1,
     .dstream = f,
     .flags = PFLAG_WRITE | PFLAG_OSTRING | PFLAG_DFILE,
   };
-#else
-  VPort _port = VMakePortStream(f, PFLAG_WRITE | PFLAG_OSTRING);
-#endif
   VPort * port = V_EDEN_INIT(runtime, VPort, _port);
-  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER), ok);
-}
+  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER), VTRUE);
+V_END_FUNC
 
 V_BEGIN_FUNC(VGetOutputString2, "get-output-string", 2, k, _port)
   VPort * port = (VPort*)VDecodePointer(_port);

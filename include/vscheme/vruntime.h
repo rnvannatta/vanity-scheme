@@ -37,6 +37,7 @@
 #include <stdint.h>
 #include <stdatomic.h>
 #include "vmetamacro.h"
+typedef struct VMemoryPool VMemoryPool;
 
 static_assert(sizeof(char) == sizeof(int8_t), "");
 static_assert(sizeof(short) == sizeof(int16_t), "");
@@ -1407,6 +1408,13 @@ void VReallyExit(int ret);
 
 __attribute__((noreturn))
 void VReallyAbort();
+
+// Passes a memory pool filled with live objects to the runtime.
+// DUE TO MY LAZINESS YOU MUST CALL GARBAGE COLLECT IMMEDIATELY AFTERWARDS
+// This completely donates the pool, the runtime will close it.
+// The purpose is to allow allocation in C where arbitrary garbage collection is
+// impractical or impossible.
+void VDonateMemoryPool(VRuntime * runtime, VMemoryPool * pool);
 
 /* ======================== Core Functions ======================= */
 

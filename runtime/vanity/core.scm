@@ -83,7 +83,7 @@
     char-numeric? char-alphabetic?
     ; io
     current-output-port current-error-port current-input-port open-input-file open-output-file close-port
-    open-output-string get-output-string with-output-to-file with-input-from-file 
+    open-input-string open-output-string get-output-string with-output-to-file with-input-from-file 
     call-with-port call-with-input-file call-with-output-file
     read-char read-line read newline display write
     ; misc
@@ -1051,6 +1051,11 @@
       (lambda (ret ok)
         (if ret (##vcore.set-finalizer! ret ##vcore.close-stream))
         (values ret ok))))
+
+  (define (open-input-string str)
+    (let ((port ((##intrinsic "VOpenInputString" 2) str)))
+      (##vcore.set-finalizer! port ##vcore.close-stream)
+      port))
   (define (open-output-string-impl)
     (call-with-values
       (lambda () (##vcore.open-output-string))

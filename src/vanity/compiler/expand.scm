@@ -80,6 +80,9 @@
           (else (cons (car lst) (undot (cdr lst))))))
 
 
+  ; TODO remove the need to expand the body syntax
+  ; by ensuring all callers have the body expanded
+  ; likewise for the vals.
   (define (expand-letrec* orig-xs vals body)
     (let loop ((body `((let () . ,body)))
                (done-vals '())
@@ -146,6 +149,7 @@
         alist
         (assq-dropall (assq-drop alist (car xs)) (cdr xs))))
   ; TODO PROBABLY worth doing though ehh don't feel like testing further
+  ; Or maybe not
   (define (substitute-constants expr consts)
     (define (iter-letrec path args body vals consts)
       (define trimmed-consts (assq-dropall consts args))

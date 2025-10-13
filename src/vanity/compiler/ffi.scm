@@ -29,7 +29,8 @@
 ; GRIVIANCES:
 ;  typedef a b: a can't be a typedef
 ;  enum { X = Y }: y cant be an integer constant expression
-;  int func(mytype arr[static X]): unsupported
+;  int func(mytype arr[static X]): faked
+;  typedefs are forgotten after each foreign-function and foreign-import
 
 (define-library (vanity compiler ffi)
   (export mangle-foreign mangle-foreign-function mangle-foreign-basic mangle-foreign-closure validate-foreign-function print-foreign-function resolve-foreign-import get-foreign-encoder get-foreign-decoder)
@@ -268,14 +269,14 @@
           (else (compiler-error "unknown entry in ffi table" (car table))))))
 
   ; not exposing outside this file because it only correctly copies the datatypes ffi.y returns
-  (define (deep-copy x)
+  #;(define (deep-copy x)
     (cond ((string? x) (string-copy x))
           ((pair? x) (cons (deep-copy (car x)) (deep-copy (cdr x))))
           (else x)))
 
   (define (validate-foreign-function expr)
     (define parse-decl-c (##vcore.function "VForeignParseDeclC"))
-    (define release-parse (##vcore.function "VForeignReleaseParse"))
+    ;(define release-parse (##vcore.function "VForeignReleaseParse"))
     (define (is-one-decl parse)
       (match parse
         (("toplevel" ("declaration" ret _)) (cdadr parse))
@@ -285,8 +286,10 @@
       (('##foreign.function lang decl a b . d) expr)
       (('##foreign.function lang decl)
        (if (not (equal? lang "C")) (compiler-error "Unsupported foreign function language" lang))
-       (let ((parse (is-one-decl (deep-copy (parse-decl-c decl)))))
-         (release-parse)
+       (let* ((raw-parse (parse-decl-c decl))
+              (parse (is-one-decl raw-parse #;(deep-copy raw-parse))))
+         ;(set! raw-parse #f)
+         ;(release-parse)
          (let ((ff (unwrap-function (reduce-type (car parse) '() #t) (cadr parse) '())))
            `(##foreign.function "C" ,decl ,(caddr ff) ,(cadr ff) . ,(cdddr ff)))))
       (else (compiler-error "Invalid foreign function syntax" expr))))
@@ -311,15 +314,15 @@
         (sprintf "\"~A\" -E -P -undef -std=c11 -nostdinc -D__VANITY__ -w \"~A\" -I \"~A/~A/~A/\"" gcc-path file (get-install-root) "include/vscheme/stdc" architecture)))
   (define (resolve-foreign-import expr paths architecture)
     (define parse-header-c (##vcore.function "VForeignParseHeaderC"))
-    (define release-parse (##vcore.function "VForeignReleaseParse"))
+    #;(define release-parse (##vcore.function "VForeignReleaseParse"))
     (match expr
       (('##foreign.import lang file)
        (if (not (equal? lang "C")) (compiler-error "Unsupported foreign function language" expr))
        (if (not (string? file)) (compiler-error "File must be a string" expr))
        (let* ((cmd (make-preprocess-command (find-file file paths) architecture))
               (fd (open-input-process cmd))
-              (parse (deep-copy (parse-header-c fd))))
-         (release-parse)
+              (parse (parse-header-c fd)))
+         ;(release-parse)
          (close-port fd)
          (cons
            ; because the files are compiled in /tmp/ don't want to have the search path include
