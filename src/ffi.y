@@ -530,7 +530,13 @@ void VForeignParseDeclCImpl(V_CORE_ARGS, VWORD k, VWORD decl) {
 
     if(err || parse_error) VErrorC(runtime, "foreign-parse-decl-c: error during parsing\n");
   }
-  V_CALL(k, runtime, parse_ret);
+
+  VDonateMemoryPool(runtime, &parse_pool);
+  // erasing the typedef table doesn't feel great
+  typedef_table = (VWORD){ LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
+
+  VGarbageCollect2Closure(runtime, VDecodeClosureApply2(runtime, k), 1, parse_ret);
+
   VErrorC(runtime, "foreign-parse-decl-c: unsupported platform");
 }
 void VForeignParseHeaderCImpl(V_CORE_ARGS, VWORD k, VWORD header) {
@@ -551,16 +557,13 @@ void VForeignParseHeaderCImpl(V_CORE_ARGS, VWORD k, VWORD header) {
 
     if(parse_error || !VDecodeBool(parse_ret)) VErrorC(runtime, "foreign-parse-decl-c: error during parsing (returned false)\n");
   }
-  V_CALL(k, runtime, parse_ret);
-}
-void VForeignReleaseParseImpl(V_CORE_ARGS, VWORD k) {
-  global_runtime = runtime;
-  V_ARG_CHECK3(runtime, "foreign-release-parse", 1, argc);
-  VDestroyMemoryPool(&parse_pool);
+
+  VDonateMemoryPool(runtime, &parse_pool);
+  // erasing the typedef table doesn't feel great
   typedef_table = (VWORD){ LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
-  V_CALL(k, runtime, VFALSE);
+
+  VGarbageCollect2Closure(runtime, VDecodeClosureApply2(runtime, k), 1, parse_ret);
 }
 
 void (*VForeignParseDeclC)(V_CORE_ARGS, VWORD k, VWORD decl) = VForeignParseDeclCImpl;
 void (*VForeignParseHeaderC)(V_CORE_ARGS, VWORD k, VWORD header) = VForeignParseHeaderCImpl;
-void (*VForeignReleaseParse)(V_CORE_ARGS, VWORD k) = VForeignReleaseParseImpl;

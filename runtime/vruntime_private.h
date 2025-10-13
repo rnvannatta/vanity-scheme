@@ -51,6 +51,14 @@ typedef struct VFinalizerTable {
   unsigned new_finalizers_start;
 } VFinalizerTable;
 
+typedef struct VArena {
+  char * buf;
+  char * buf_end;
+  char * buf_cursor;
+  VStack * heap_return;
+  VFinalizerTable finalizers;
+} VArena;
+
 typedef struct VRuntime VRuntime;
 typedef struct VRuntime {
   VPublicRuntime public;
@@ -102,6 +110,9 @@ typedef struct VRuntime {
   unsigned VNumMajorGCs;
   uint64_t VMinorGCTime;
   uint64_t VMajorGCTime;
+
+  int num_unreaped_arenas;
+  VArena * unreaped_arenas;
   // args
   int VArgc;
   char ** VArgv;
@@ -119,8 +130,8 @@ typedef struct VRuntime {
   bool owns_heap[2];
   VFuture * my_future;
 
-  int num_half_reaped_fibers;
-  VRuntime ** half_reaped_fibers;
+  //int num_half_reaped_fibers;
+  //VRuntime ** half_reaped_fibers;
   // misc
   uint64_t _Atomic gensym_storage;
   uint64_t _Atomic * gensym_index;
