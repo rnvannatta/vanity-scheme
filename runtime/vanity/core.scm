@@ -27,7 +27,7 @@
   (import (vanity seed))
   (export
     ; predicates
-    null? eof-object? boolean? pair? vector? hash-table? record? procedure? symbol? string? exact? exact-integer? inexact? real? integer? char?
+    null? eof-object? boolean? pair? vector? hash-table? record? procedure? port? binary-port? textual-port? symbol? string? exact? exact-integer? inexact? real? integer? char?
     nullptr? foreign-pointer?
     ; equality
     eq? eqv? equal?
@@ -41,9 +41,11 @@
     ; math predicates
     number? complex? rational? positive? negative? zero? nan? finite? infinite? even? odd?
     ; math functions
-    + - * / quotient remainder max min
+    + - * / quotient remainder modulo max min
+    floor/ floor-quotient floor-remainder
+    truncate/ truncate-quotient truncate-remainder
     abs square sqrt
-    ceiling floor round
+    ceiling floor round truncate
     sin cos tan asin acos atan exp log expt pow
     exact-integer-sqrt gcd lcm
     ; pairs
@@ -80,8 +82,11 @@
     make-hash-table hash-table-ref hash-table-set! hash-table-delete! hash-table->alist
     ; chars
     char->integer integer->char number->string
-    char-numeric? char-alphabetic?
+    char-numeric? char-alphabetic? char-upper-case? char-lower-case? char-whitespace?
+    char-upcase char-downcase char-foldcase
+    char<=? char<? char=? char>=? char>?
     ; io
+    input-port? output-port? input-port-open? output-port-open? close-input-port close-output-port
     current-output-port current-error-port current-input-port open-input-file open-output-file close-port
     open-input-string open-output-string get-output-string with-output-to-file with-input-from-file 
     call-with-port call-with-input-file call-with-output-file
@@ -122,6 +127,9 @@
   (define-constant hash-table? ##vcore.hash-table?)
   (define-constant record? ##vcore.record?)
   (define-constant procedure? ##vcore.procedure?)
+  (define-constant port? (##basic-intrinsic "VPortP" 1))
+  (define-constant binary-port? (##basic-intrinsic "VPortP" 1))
+  (define-constant textual-port? (##basic-intrinsic "VPortP" 1))
   (define-constant symbol? ##vcore.symbol?)
   (define-constant string? ##vcore.string?)
   (define-constant char? ##vcore.char?)
@@ -305,12 +313,37 @@
 
   (define-constant quotient ##vcore.quotient)
   (define-constant remainder ##vcore.remainder)
+  (define-constant truncate-quotient ##vcore.quotient)
+  (define-constant truncate-remainder ##vcore.remainder)
+  (define (truncate/ a b)
+    (values (quotient a b) (remainder a b)))
+
+  (define (floor/ a b)
+    (let ((q (quotient a b))
+          (r (remainder a b)))
+      (if (or (< r 0 b)
+              (< b 0 r))
+        (values (- q 1) (+ r b))
+        (values q r))))
+  (define (floor-quotient a b)
+    (call-with-values
+      (lambda () (floor/ a b))
+      (lambda (q r)
+        q)))
+  (define (floor-remainder a b)
+    (call-with-values
+      (lambda () (floor/ a b))
+      (lambda (q r)
+        r)))
+  (define (modulo a b)
+    (floor-remainder a b))
 
   ; All need to work on ints
   (define (abs x) (if (< x 0) (- x) x))
   (define ceiling (##foreign.function "C" "double ceil(double);"))
   (define floor (##foreign.function "C" "double floor(double);"))
   (define round (##foreign.function "C" "double round(double);"))
+  (define truncate (##foreign.function "C" "double trunc(double);"))
 
   (define (square x) (* x x))
   (define sqrt (foreign-function "C" "double sqrt(double);"))
@@ -379,7 +412,7 @@
       ((a b)
        (if (= b 0)
            (abs a)
-           (abs (gcd b (remainder a b)))))
+           (gcd b (remainder a b))))
       (xs
        (let loop ((ret (abs (car xs))) (xs (cdr xs)))
          (if (null? xs)
@@ -1012,7 +1045,115 @@
   (define (char-alphabetic? x)
     (let ((i (char->integer x)))
       (or (<= 65 i 90) (<= 97 i 122))))
+  (define (char-upper-case? x)
+    (let ((i (char->integer x)))
+      (or (<= 65 i 90))))
+  (define (char-lower-case? x)
+    (let ((i (char->integer x)))
+      (or (<= 97 i 122))))
+  (define (char-whitespace? x)
+    (or
+      (eq? x #\space)
+      (eq? x #\tab)
+      (eq? x #\newline)
+      (eq? x #\return)))
 
+  (define (char-upcase c)
+    (let ((i (char->integer c)))
+      (if (<= 97 i 122)
+          (integer->char (bitwise-xor i 32))
+          c)))
+  (define (char-downcase c)
+    (let ((i (char->integer c)))
+      (if (<= 65 i 90)
+          (integer->char (bitwise-xor i 32))
+          c)))
+  (define (char-foldcase c)
+    (let ((i (char->integer c)))
+      (if (<= 65 i 90)
+          (integer->char (bitwise-xor i 32))
+          c)))
+
+  (define char<?
+    (case-lambda
+      ((a b)
+       (< (char->integer a) (char->integer b)))
+      ((a b c)
+       (< (char->integer a) (char->integer b) (char->integer c)))
+      ((a b c d)
+       (< (char->integer a) (char->integer b) (char->integer d)))
+      ((a b . rest)
+       (and
+         (< (char->integer a) (char->integer b))
+         (let loop ((x b) (xs rest))
+           (cond ((null? xs) #t)
+                 ((< (char->integer x) (char->integer (car xs)))
+                  (loop (car xs) (cdr xs)))
+                 (else #f)))))))
+  (define char<=?
+    (case-lambda
+      ((a b)
+       (<= (char->integer a) (char->integer b)))
+      ((a b c)
+       (<= (char->integer a) (char->integer b) (char->integer c)))
+      ((a b c d)
+       (<= (char->integer a) (char->integer b) (char->integer d)))
+      ((a b . rest)
+       (and
+         (<= (char->integer a) (char->integer b))
+         (let loop ((x b) (xs rest))
+           (cond ((null? xs) #t)
+                 ((<= (char->integer x) (char->integer (car xs)))
+                  (loop (car xs) (cdr xs)))
+                 (else #f)))))))
+  (define char=?
+    (case-lambda
+      ((a b)
+       (= (char->integer a) (char->integer b)))
+      ((a b c)
+       (= (char->integer a) (char->integer b) (char->integer c)))
+      ((a b c d)
+       (= (char->integer a) (char->integer b) (char->integer d)))
+      ((a b . rest)
+       (and
+         (= (char->integer a) (char->integer b))
+         (let loop ((x b) (xs rest))
+           (cond ((null? xs) #t)
+                 ((= (char->integer x) (char->integer (car xs)))
+                  (loop (car xs) (cdr xs)))
+                 (else #f)))))))
+  (define char>=?
+    (case-lambda
+      ((a b)
+       (>= (char->integer a) (char->integer b)))
+      ((a b c)
+       (>= (char->integer a) (char->integer b) (char->integer c)))
+      ((a b c d)
+       (>= (char->integer a) (char->integer b) (char->integer d)))
+      ((a b . rest)
+       (and
+         (>= (char->integer a) (char->integer b))
+         (let loop ((x b) (xs rest))
+           (cond ((null? xs) #t)
+                 ((>= (char->integer x) (char->integer (car xs)))
+                  (loop (car xs) (cdr xs)))
+                 (else #f)))))))
+  (define char>?
+    (case-lambda
+      ((a b)
+       (> (char->integer a) (char->integer b)))
+      ((a b c)
+       (> (char->integer a) (char->integer b) (char->integer c)))
+      ((a b c d)
+       (> (char->integer a) (char->integer b) (char->integer d)))
+      ((a b . rest)
+       (and
+         (> (char->integer a) (char->integer b))
+         (let loop ((x b) (xs rest))
+           (cond ((null? xs) #t)
+                 ((> (char->integer x) (char->integer (car xs)))
+                  (loop (car xs) (cdr xs)))
+                 (else #f)))))))
   ; io
   (define current-output-port (make-parameter (##vcore.stdout->port)))
   (define current-error-port (make-parameter (##vcore.stderr->port)))
@@ -1034,10 +1175,17 @@
                 thunk
                 (lambda (ret ok) (if ok ret (error msg)))))))))
 
+  (define-constant input-port? (##basic-intrinsic "VInputPortP" 1))
+  (define-constant output-port? (##basic-intrinsic "VOutputPortP" 1))
+  (define-constant input-port-open? (##basic-intrinsic "VInputPortOpenP" 1))
+  (define-constant output-port-open? (##basic-intrinsic "VOutputPortOpenP" 1))
+
   (define (close-port port)
     (if (##vcore.has-finalizer? port)
         (##vcore.finalize! port)
         (##vcore.close-stream port)))
+  (define-constant close-input-port (##basic-intrinsic "VCloseInputPort" 1))
+  (define-constant close-output-port (##basic-intrinsic "VCloseOutputPort" 1))
 
   (define (open-input-file-impl path)
     (call-with-values

@@ -35,8 +35,8 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |atan                           | Yes         |             |            |
 |#b                             |             |             |            |
 |begin                          | Yes         |             |            |
-|binary-port?                   |             |             |            |
-|boolean=?                      |             |             |            |
+|binary-port?                   | Yes         |             |            |
+|boolean=?                      | Yes         |             |            |
 |boolean?                       | Yes         |             |            |
 |bytevector                     | Yes         |             |            |
 |bytevector-append              | Yes         |             |            |
@@ -92,22 +92,22 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |char-ci=?                      |             |             |            |
 |char-ci>=?                     |             |             |            |
 |char-ci>?                      |             |             |            |
-|char-downcase                  |             |             |            |
-|char-foldcase                  |             |             |            |
-|char-lower-case?               |             |             |            |
+|char-downcase                  | Yes         |             |            |
+|char-foldcase                  | Yes         |             |            |
+|char-lower-case?               | Yes         |             |            |
 |char-numeric?                  | Yes         |             |            |
 |char-ready?                    |             |             |            |
-|char-upcase                    |             |             |            |
-|char-upper-case?               |             |             |            |
-|char-whitespace?               |             |             |            |
-|char<=?                        |             |             |            |
-|char<?                         |             |             |            |
-|char=?                         |             |             |            |
-|char>=?                        |             |             |            |
-|char>?                         |             |             |            |
+|char-upcase                    | Yes         |             |            |
+|char-upper-case?               | Yes         |             |            |
+|char-whitespace?               | Yes         |             |            |
+|char<=?                        | Yes         |             |            |
+|char<?                         | Yes         |             |            |
+|char=?                         | Yes         |             |            |
+|char>=?                        | Yes         |             |            |
+|char>?                         | Yes         |             |            |
 |char?                          | Yes         |             |            |
-|close-input-port               |             |             |            |
-|close-output-port              |             |             |            |
+|close-input-port               | Yes         |             |            |
+|close-output-port              | Yes         |             |            |
 |close-port                     | Yes         |             |            |
 |command-line                   | Yes         |             |            |
 |complex?                       | Low Prio    |             |            |
@@ -164,9 +164,9 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |file-exists?                   | Yes         |             |            |
 |finite?                        | Yes         |             |            |
 |floor                          | Yes         |             |            |
-|floor-quotient                 |             |             |            |
-|floor-remainder                |             |             |            |
-|floor/                         |             |             |            |
+|floor-quotient                 | Yes         |             |            |
+|floor-remainder                | Yes         |             |            |
+|floor/                         | Yes         |             |            |
 |flush-output-port              |             |             |            |
 |for-each                       | Yes         |             |            |
 |force                          |             |             |            |
@@ -181,13 +181,13 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |imag-part                      | Low Prio    |             |            |
 |import                         | Yes         |             |            |
 |include                        |             |             |            |
-|include-ci                     |             |             |            |
+|include-ci                     | Low Prio    |             |            |
 |include-library-declarations   |             |             |            |
 |inexact                        | Yes         |             |            |
 |inexact?                       | Yes         |             |            |
 |infinite?                      | Yes         |             |            |
-|input-port-open?               |             |             |            |
-|input-port?                    |             |             |            |
+|input-port-open?               | Yes         |             |            |
+|input-port?                    | Yes         |             |            |
 |integer-\>char                 |             |             |            |
 |integer?                       | Yes         |             |            |
 |interaction-environment        | Low Prio    |             |            |
@@ -228,7 +228,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |memq                           | Yes         |             |            |
 |memv                           | Yes         |             |            |
 |min                            | Yes         |             |            |
-|modulo                         |             |             |            |
+|modulo                         | Yes         |             |            |
 |nan?                           | Yes         |             |            |
 |negative?                      | Yes         |             |            |
 |newline                        | Yes         |             |            |
@@ -245,13 +245,13 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |open-binary-output-file        |             |             |            |
 |open-input-bytevector          |             |             |            |
 |open-input-file                | Yes         |             |            |
-|open-input-string              |             |             |            |
+|open-input-string              | Yes         |             |            |
 |open-output-bytevector         |             |             |            |
 |open-output-file               | Yes         |             |            |
 |open-output-string             | Yes         |             |            |
 |or                             | Yes         |             |            |
-|output-port-open?              |             |             |            |
-|output-port?                   |             |             |            |
+|output-port-open?              | Yes         |             |            |
+|output-port?                   | Yes         |             |            |
 |pair?                          | Yes         |             |            |
 |parameterize                   | Yes         |             |            |
 |peek-char                      |             |             |            |
@@ -326,11 +326,11 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |syntax-rules                   | Low Prio    |             |            |
 |#t                             | Yes         |             |            |
 |tan                            | Yes         |             |            |
-|textual-port?                  |             |             |            |
-|truncate                       |             |             |            |
-|truncate-quotient              |             |             |            |
-|truncate-remainder             |             |             |            |
-|truncate/                      |             |             |            |
+|textual-port?                  | Yes         |             |            |
+|truncate                       | Yes         |             |            |
+|truncate-quotient              | Yes         |             |            |
+|truncate-remainder             | Yes         |             |            |
+|truncate/                      | Yes         |             |            |
 |u8-ready?                      |             |             |            |
 |unless                         | Yes         |             |            |
 |unquote                        | Yes         |             |            |
