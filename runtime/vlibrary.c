@@ -700,6 +700,10 @@ V_BEGIN_FUNC_BASIC(VBlobP2, "blob?", 1, x)
   return VEncodeBool(VIsBlob(x));
 V_END_FUNC
 
+V_BEGIN_FUNC_BASIC(VPortP, "port?", 1, x)
+  return VEncodeBool(VIsPort(x));
+V_END_FUNC
+
 V_BEGIN_FUNC_BASIC(VSymbolP2, "symbol?", 1, x)
   return VEncodeBool(VIsSymbol(x));
 V_END_FUNC
@@ -1485,15 +1489,64 @@ V_END_FUNC
 
 
 V_BEGIN_FUNC(VCloseStream2, "close-port", 2, k, _port)
-
   if(VWordType(_port) != VPOINTER_OTHER) VErrorC(runtime, "close-port: not a port\n");
   VPort * port = (VPort*)VDecodePointer(_port);
   if(port->base.tag != VPORT) VErrorC(runtime, "close-port: not a port\n");
 
-  int ret = port_close(port);
+  V_BOUNCE(k, runtime, VEncodeInt(port_close(port)));
+V_END_FUNC
 
-  V_BOUNCE(k, runtime, VEncodeInt(ret));
-}
+V_BEGIN_FUNC(VCloseInputPort, "close-input-port", 2, k, _port)
+  if(VWordType(_port) != VPOINTER_OTHER) VErrorC(runtime, "close-input-port: not a port\n");
+  VPort * port = (VPort*)VDecodePointer(_port);
+  if(port->base.tag != VPORT) VErrorC(runtime, "close-input-port: not a port\n");
+
+  if(port->flags & PFLAG_READ)
+    port->flags &= ~PFLAG_READ;
+
+  if(!(port->flags & PFLAG_WRITE))
+    V_BOUNCE(k, runtime, VEncodeInt(port_close(port)));
+  else
+    V_BOUNCE(k, runtime, VEncodeInt(0));
+V_END_FUNC
+
+V_BEGIN_FUNC(VCloseOutputPort, "close-output-port", 2, k, _port)
+  if(VWordType(_port) != VPOINTER_OTHER) VErrorC(runtime, "close-output-port: not a port\n");
+  VPort * port = (VPort*)VDecodePointer(_port);
+  if(port->base.tag != VPORT) VErrorC(runtime, "close-output-port: not a port\n");
+
+  if(port->flags & PFLAG_WRITE)
+    port->flags &= ~PFLAG_WRITE;
+
+  if(!(port->flags & PFLAG_READ))
+    V_BOUNCE(k, runtime, VEncodeInt(port_close(port)));
+  else
+    V_BOUNCE(k, runtime, VEncodeInt(0));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VInputPortP, "input-port?", 1, x)
+  if(!VIsPort(x))
+    return VFALSE;
+  VPort * p = (VPort*)VDecodePointer(x);
+  return VEncodeBool(p->flags & PFLAG_READ);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VOutputPortP, "output-port?", 1, x)
+  if(!VIsPort(x))
+    return VFALSE;
+  VPort * p = (VPort*)VDecodePointer(x);
+  return VEncodeBool(p->flags & PFLAG_WRITE);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VInputPortOpenP, "input-port-open?", 1, x)
+  VPort * p = VCheckedDecodePort2(runtime, x, "input-port-open?");
+  return VEncodeBool(p->flags & PFLAG_READ);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VOutputPortOpenP, "output-port-open?", 1, x)
+  VPort * p = VCheckedDecodePort2(runtime, x, "output-port-open?");
+  return VEncodeBool(p->flags & PFLAG_WRITE);
+V_END_FUNC
 
 V_BEGIN_FUNC(VTtyPortP, "tty-port?", 2, k, _port)
 
