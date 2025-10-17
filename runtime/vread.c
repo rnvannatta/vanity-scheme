@@ -45,6 +45,8 @@ enum lex_t {
   LEX_INT,
   LEX_CHAR,
   LEX_NAMED_CHAR,
+  LEX_NUMBER_START,
+  LEX_NUMBER_SHARP,
   LEX_NUMBER,
   LEX_DOUBLE,
   LEX_SYMBOL,
@@ -159,8 +161,47 @@ SYSV_CALL static int VLex2Dot(int c, bool * satisfied, bool * unget) {
   }
 }
 
+SYSV_CALL static int VLexNumberStart(int c, bool * satisfied, bool * unget) {
+  if('0' <= c && c <= '9') return LEX_NUMBER;
+  if('a' <= c && c <= 'f') return LEX_NUMBER;
+  if('A' <= c && c <= 'F') return LEX_NUMBER;
+  switch(c) {
+    case '#':
+      return LEX_NUMBER_SHARP;
+    case '-':
+    case '+':
+      return LEX_NUMBER;
+    case '.':
+      return LEX_DOUBLE;
+    default:
+      *satisfied = true;
+      return LEX_ERROR;
+  }
+}
+SYSV_CALL static int VLexNumberSharp(int c, bool * satisfied, bool * unget) {
+  switch(c) {
+    case 'b':
+    case 'o':
+    case 'd':
+    case 'e':
+    case 'i':
+    case 'x':
+      return LEX_NUMBER_START;
+    default:
+      *satisfied = true;
+      return LEX_ERROR;
+  }
+}
+
 SYSV_CALL static int VLexSharp(int c, bool * satisfied, bool * unget) {
   switch(c) {
+    case 'b':
+    case 'o':
+    case 'd':
+    case 'e':
+    case 'i':
+    case 'x':
+      return LEX_NUMBER_START;
     case 't':
     case 'f':
       return LEX_SHARP_TF;
@@ -253,10 +294,9 @@ SYSV_CALL static int VLexSign(int c, bool * satisfied, bool * unget) {
 }
 
 SYSV_CALL static int VLexNumber(int c, bool * satisfied, bool * unget) {
-  if('0' <= c && c <= '9') {
-    return LEX_NUMBER;
-  }
-  // TODO add doubles & add fancy number decoding
+  if('0' <= c && c <= '9') return LEX_NUMBER;
+  if('a' <= c && c <= 'f') return LEX_NUMBER;
+  if('A' <= c && c <= 'F') return LEX_NUMBER;
   switch(c) {
     case '.':
       return LEX_DOUBLE;
@@ -280,6 +320,7 @@ SYSV_CALL static int VLexNumber(int c, bool * satisfied, bool * unget) {
 }
 
 SYSV_CALL static int VLexDouble(int c, bool * satisfied, bool * unget) {
+  // TODO add suffixes
   if('0' <= c && c <= '9') {
     return LEX_DOUBLE;
   }
@@ -412,6 +453,12 @@ SYSV_CALL static int VLex(VRuntime * runtime, VPort * port) {
         break;
       case LEX_SIGN:
         lex_state = VLexSign(c, &satisfied, &unget);
+        break;
+      case LEX_NUMBER_START:
+        lex_state = VLexNumberStart(c, &satisfied, &unget);
+        break;
+      case LEX_NUMBER_SHARP:
+        lex_state = VLexNumberSharp(c, &satisfied, &unget);
         break;
       case LEX_NUMBER:
         lex_state = VLexNumber(c, &satisfied, &unget);
@@ -775,6 +822,53 @@ SYSV_CALL static char * ParseString(VRuntime * runtime, char * buf, int line) {
 
 // ============================================================================
 
+static char * PeelNumberPrefixes(char * ptr, bool * _is_exact, bool * _is_inexact, int * _base) {
+  bool is_exact = false;
+  bool is_inexact = false;
+  int base = 0;
+  while(ptr[0] == '#') {
+    bool errored = false;
+    switch(ptr[1]) {
+      case 'i':
+        errored = is_exact || is_inexact;
+        is_inexact = true;
+        break;
+      case 'e':
+        errored = is_exact || is_inexact;
+        is_exact = true;
+        break;
+      case 'b':
+        errored = base;
+        base = 2;
+        break;
+      case 'o':
+        errored = base;
+        base = 8;
+        break;
+      case 'd':
+        errored = base;
+        base = 10;
+        break;
+      case 'x':
+        errored = base;
+        base = 16;
+        break;
+      default:
+        errored = true;
+        break;
+    }
+    if(errored)
+      return NULL;
+    ptr += 2;
+  }
+  if(!base)
+    base = 10;
+  *_is_exact = is_exact;
+  *_is_inexact = is_inexact;
+  *_base = base;
+  return ptr;
+}
+
 static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_more_cause, _read_more, _root);
   VPort * port = VCheckedDecodePort2(runtime, _port, "read");
   if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "read: trying to read from port with closed input\n");
@@ -975,22 +1069,23 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
       case LEX_NUMBER:
       {
         errno = 0;
+
+        bool is_exact = false;
+        bool is_inexact = false;
+        int base = 0;
+        char * ptr = PeelNumberPrefixes(runtime->lex_buf, &is_exact, &is_inexact, &base);
+        if(!ptr)
+          VErrorC(runtime, "read: line ~d: invalid sharp syntax on int: ~z\n", port->line ? port->line : -1, runtime->lex_buf);
+
         char * end;
-        double d = strtod(runtime->lex_buf, &end);
-        if(errno || runtime->lex_buf == end)
-        {
-          VErrorC(runtime, "read: line ~d: failed to parse as number: ~z\n", port->line ? port->line : -1, runtime->lex_buf);
-          depth = 0;
-          break;
-        }
-        if(ceil(d) == d && INT32_MIN <= d && d <= INT32_MAX)
-        {
-          elem = VEncodeInt((int)d);
-        }
+        long long l = strtoll(ptr, &end, base);
+        if(errno || (!is_inexact && (l < INT32_MIN || l > INT32_MAX)) || *end)
+          VErrorC(runtime, "read: line ~d: failed to parse as int: ~z\n", port->line ? port->line : -1, runtime->lex_buf);
+
+        if(!is_inexact)
+          elem = VEncodeInt((int)l);
         else
-        {
-          elem = VEncodeNumber(d);
-        }
+          elem = VEncodeDouble((double)l);
 
         VPair * pair = myalloca(sizeof(VPair));
         *pair = VMakePair(elem, root->rest);
@@ -1000,15 +1095,24 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
       case LEX_DOUBLE:
       {
         errno = 0;
+
+        bool is_exact = false;
+        bool is_inexact = false;
+        int base = 0;
+        char * ptr = PeelNumberPrefixes(runtime->lex_buf, &is_exact, &is_inexact, &base);
+        if(!ptr)
+          VErrorC(runtime, "read: line ~d: invalid sharp syntax on double: ~z\n", port->line ? port->line : -1, runtime->lex_buf);
+        if(base != 10)
+          VErrorC(runtime, "read: line ~d: doubles must be base 10: ~z\n", port->line ? port->line : -1, runtime->lex_buf);
+        if(is_exact)
+          VErrorC(runtime, "read: line ~d: vanity has no exact doubles: ~z\n", port->line ? port->line : -1, runtime->lex_buf);
+
         char * end;
-        double d = strtod(runtime->lex_buf, &end);
-        if(errno || runtime->lex_buf == end)
-        {
-          VErrorC(runtime, "read: line ~d: failed to parse as number: ~z\n", port->line ? port->line : -1, runtime->lex_buf);
-          depth = 0;
-          break;
-        }
-        elem = VEncodeNumber(d);
+        double d = strtod(ptr, &end);
+        if(errno || *end)
+          VErrorC(runtime, "read: line ~d: failed to parse as double: ~z\n", port->line ? port->line : -1, runtime->lex_buf);
+
+        elem = VEncodeDouble(d);
 
         VPair * pair = myalloca(sizeof(VPair));
         *pair = VMakePair(elem, root->rest);
