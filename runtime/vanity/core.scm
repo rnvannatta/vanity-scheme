@@ -59,10 +59,11 @@
     list list? length list-tail list-ref list-set! list-copy make-list map for-each append reverse memq memv member assq assv assoc
     num-pairs split-at-right
     ; strings
-    string string->list list->string make-string substring string-copy string-copy! string-ref string-set! string-length string->symbol string->number string-append
-    symbol->string
+    string string->list list->string make-string substring string-copy string-copy! string-ref string-set! string-length string->symbol string->number string-append string-for-each string-map
+    string-foldcase string-upcase string-downcase
+    symbol->string utf8->string string->utf8 string->vector
     ; vectors
-    list->vector vector->list make-vector vector-copy vector-copy! vector vector-ref vector-set! vector-length vector-map vector-for-each vector-append vector-fill!
+    list->vector vector->list vector->string make-vector vector-copy vector-copy! vector vector-ref vector-set! vector-length vector-map vector-for-each vector-append vector-fill!
     ; typevectors
     f64vector? list->f64vector f64vector->list make-f64vector f64vector f64vector-ref f64vector-set! f64vector-length f64vector-copy f64vector-copy!
     f32vector? list->f32vector f32vector->list make-f32vector f32vector f32vector-ref f32vector-set! f32vector-length f32vector-copy f32vector-copy!
@@ -85,12 +86,14 @@
     char-numeric? char-alphabetic? char-upper-case? char-lower-case? char-whitespace?
     char-upcase char-downcase char-foldcase
     char<=? char<? char=? char>=? char>?
+    char-ci<=? char-ci<? char-ci=? char-ci>=? char-ci>?
     ; io
     input-port? output-port? input-port-open? output-port-open? close-input-port close-output-port
     current-output-port current-error-port current-input-port open-input-file open-output-file close-port
     open-input-string open-output-string get-output-string with-output-to-file with-input-from-file 
     call-with-port call-with-input-file call-with-output-file
-    read-char read-line read newline display write
+    read-char read-line read newline display write write-simple
+    write-char write-u8 write-string write-bytevector
     ; misc
     call/cc call-with-current-continuation call-with-values apply values
     setter mutator ##vcore.setter ##vcore.mutator
@@ -626,6 +629,59 @@
 
   (define-constant symbol->string ##vcore.symbol->string)
 
+  (define string-for-each
+    (case-lambda
+      ((f str1)
+       (let ((len (string-length str1)))
+         (do-loop
+           for i from 0 to len
+           do (f (string-ref str1 i)))))
+      ((f str1 str2)
+       (let ((len (min (string-length str1) (string-length str2))))
+         (do-loop
+           for i from 0 to len
+           do (f (string-ref str1 i) (string-ref str2 i)))))
+      ((f str1 str2 str3)
+       (let ((len (min (string-length str1) (string-length str2) (string-length str3))))
+         (do-loop
+           for i from 0 to len
+           do (f (string-ref str1 i) (string-ref str2 i) (string-ref str3 i)))))
+      ((f str1 . strs)
+       (let ((len (apply min (string-length str1) (map string-length strs))))
+         (do-loop
+           for i from 0 to len
+           do (apply f (string-ref str1 i) (map (lambda (e) (string-ref e i)) strs)))))))
+  (define string-map
+    (case-lambda
+      ((f str1)
+       (let* ((len (string-length str1))
+              (ret (make-string len)))
+         (do-loop
+           for i from 0 to len
+           do (string-set! ret i (f (string-ref str1 i))))
+         ret))
+      ((f str1 str2)
+       (let* ((len (min (string-length str1) (string-length str2)))
+              (ret (make-string len)))
+         (do-loop
+           for i from 0 to len
+           do (string-set! ret i (f (string-ref str1 i) (string-ref str2 i))))
+         ret))
+      ((f str1 str2 str3)
+       (let* ((len (min (string-length str1) (string-length str2) (string-length str3)))
+              (ret (make-string len)))
+         (do-loop
+           for i from 0 to len
+           do (string-set! ret i (f (string-ref str1 i) (string-ref str2 i) (string-ref str3 i))))
+         ret))
+      ((f str1 . strs)
+       (let* ((len (apply min (string-length str1) (map string-length strs)))
+              (ret (make-string len)))
+         (do-loop
+           for i from 0 to len
+           do (string-set! ret i (apply f (string-ref str1 i) (map (lambda (e) (string-ref e i)) strs))))
+         ret))))
+
   (define (list->string lst)
     (let ((str (make-string (length lst))))
       (let loop ((lst lst) (i 0))
@@ -667,6 +723,13 @@
         (string-copy! str (+ (string-length a) (string-length b) (string-length c)) d)
         str))
       (strs (fold-right string-append "" strs))))
+
+  (define (string-foldcase str)
+    (string-map char-foldcase str))
+  (define (string-downcase str)
+    (string-map char-downcase str))
+  (define (string-upcase str)
+    (string-map char-upcase str))
 
   ; vectors
   (define-constant vector ##vcore.vector)
@@ -998,7 +1061,33 @@
              (begin
                (vector-set! v i fill)
                (loop (+ i 1))))))))
+  (define (vector->string v)
+    (let ((str (make-string (vector-length v))))
+      (do-loop
+        for c across v
+        for i from 0
+        do (string-set! str i c))
+      str))
 
+  (define (utf8->string vec)
+    (let ((str (make-string (u8vector-length vec))))
+      (do-loop
+        for c across-u8 vec
+        for i from 0
+        do (string-set! str i (integer->char c)))
+      str))
+  (define (string->utf8 str)
+    (let ((vec (make-bytevector (string-length str))))
+      (do-loop
+        for i from 0 below (string-length str)
+        do (u8vector-set! vec i (char->integer (string-ref str i))))
+      vec))
+  (define (string->vector str)
+    (let ((vec (make-vector (string-length str))))
+      (do-loop
+        for i from 0 below (string-length str)
+        do (vector-set! vec i (string-ref str i)))
+      vec))
 
   ; records
   (define-constant record ##vcore.record)
@@ -1154,6 +1243,92 @@
                  ((> (char->integer x) (char->integer (car xs)))
                   (loop (car xs) (cdr xs)))
                  (else #f)))))))
+
+
+  (define (char->ci-integer c)
+    (char->integer (char-foldcase c)))
+
+  (define char-ci<?
+    (case-lambda
+      ((a b)
+       (< (char->ci-integer a) (char->ci-integer b)))
+      ((a b c)
+       (< (char->ci-integer a) (char->ci-integer b) (char->ci-integer c)))
+      ((a b c d)
+       (< (char->ci-integer a) (char->ci-integer b) (char->ci-integer d)))
+      ((a b . rest)
+       (and
+         (< (char->ci-integer a) (char->ci-integer b))
+         (let loop ((x b) (xs rest))
+           (cond ((null? xs) #t)
+                 ((< (char->ci-integer x) (char->ci-integer (car xs)))
+                  (loop (car xs) (cdr xs)))
+                 (else #f)))))))
+  (define char-ci<=?
+    (case-lambda
+      ((a b)
+       (<= (char->ci-integer a) (char->ci-integer b)))
+      ((a b c)
+       (<= (char->ci-integer a) (char->ci-integer b) (char->ci-integer c)))
+      ((a b c d)
+       (<= (char->ci-integer a) (char->ci-integer b) (char->ci-integer d)))
+      ((a b . rest)
+       (and
+         (<= (char->ci-integer a) (char->ci-integer b))
+         (let loop ((x b) (xs rest))
+           (cond ((null? xs) #t)
+                 ((<= (char->ci-integer x) (char->ci-integer (car xs)))
+                  (loop (car xs) (cdr xs)))
+                 (else #f)))))))
+  (define char-ci=?
+    (case-lambda
+      ((a b)
+       (= (char->ci-integer a) (char->ci-integer b)))
+      ((a b c)
+       (= (char->ci-integer a) (char->ci-integer b) (char->ci-integer c)))
+      ((a b c d)
+       (= (char->ci-integer a) (char->ci-integer b) (char->ci-integer d)))
+      ((a b . rest)
+       (and
+         (= (char->ci-integer a) (char->ci-integer b))
+         (let loop ((x b) (xs rest))
+           (cond ((null? xs) #t)
+                 ((= (char->ci-integer x) (char->ci-integer (car xs)))
+                  (loop (car xs) (cdr xs)))
+                 (else #f)))))))
+  (define char-ci>=?
+    (case-lambda
+      ((a b)
+       (>= (char->ci-integer a) (char->ci-integer b)))
+      ((a b c)
+       (>= (char->ci-integer a) (char->ci-integer b) (char->ci-integer c)))
+      ((a b c d)
+       (>= (char->ci-integer a) (char->ci-integer b) (char->ci-integer d)))
+      ((a b . rest)
+       (and
+         (>= (char->ci-integer a) (char->ci-integer b))
+         (let loop ((x b) (xs rest))
+           (cond ((null? xs) #t)
+                 ((>= (char->ci-integer x) (char->ci-integer (car xs)))
+                  (loop (car xs) (cdr xs)))
+                 (else #f)))))))
+  (define char-ci>?
+    (case-lambda
+      ((a b)
+       (> (char->ci-integer a) (char->ci-integer b)))
+      ((a b c)
+       (> (char->ci-integer a) (char->ci-integer b) (char->ci-integer c)))
+      ((a b c d)
+       (> (char->ci-integer a) (char->ci-integer b) (char->ci-integer d)))
+      ((a b . rest)
+       (and
+         (> (char->ci-integer a) (char->ci-integer b))
+         (let loop ((x b) (xs rest))
+           (cond ((null? xs) #t)
+                 ((> (char->ci-integer x) (char->ci-integer (car xs)))
+                  (loop (car xs) (cdr xs)))
+                 (else #f)))))))
+
   ; io
   (define current-output-port (make-parameter (##vcore.stdout->port)))
   (define current-error-port (make-parameter (##vcore.stderr->port)))
@@ -1342,6 +1517,26 @@
          ((vector? x) (printout-vector x #t port))
          ((hash-table? x) (printout-hash-table x #t port))
          (else (##vcore.write x port))))))
+  (define write-simple write)
+  (define write-char
+    (case-lambda
+      ((c) (unless (char? c) (error "write-char: not a char" c)) (##vcore.display-word c (current-output-port)))
+      ((c port) (unless (char? c) (error "write-char: not a char" c)) (##vcore.display-word c port))))
+  (define write-u8
+    (case-lambda
+      ((c) (write-char (integer->char c)))
+      ((c port) (write-char (integer->char c) port))))
+  (define write-string
+    (case-lambda
+      ((s) (unless (string? s) (error "write-string: not a string" s)) (##vcore.display-word s (current-output-port)))
+      ((s port) (unless (string? s) (error "write-string: not a string" s)) (##vcore.display-word s port))))
+  (define write-bytevector
+    (case-lambda
+      ((b) (write-bytevector b (current-output-port)))
+      ((b port)
+       (do-loop
+         for c across-u8 b
+         do (##vcore.display-word (integer->char c) port)))))
 
   ; misc 
   (define-constant call/cc ##vcore.call/cc)
