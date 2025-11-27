@@ -1418,9 +1418,9 @@ V_END_FUNC
 V_BEGIN_FUNC_BASIC(VIntChar, "integer->char", 1, _i)
   if(VWordType(_i) != VIMM_INT) VErrorC(runtime, "integer->char: not an int: ~A", _i);
   int i = VDecodeInt(_i);
-  if(i < 0 || i > 127)
+  if(i < 0 || i > 255)
     VErrorC(runtime, "integer->char: int out of bounds: ~A", _i);
-  return VEncodeChar((char)i);
+  return VEncodeChar((char)(unsigned char)i);
 V_END_FUNC
 
 // ports
