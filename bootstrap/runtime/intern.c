@@ -25,12 +25,20 @@ typedef struct SymbolEntry {
   VBlob * sym;
 } SymbolEntry;
 
+#ifdef VANITY64
+#define symhash symhash64
+enum { POOL_SIZE = 4088, };
+#else
+#define symhash symhash32
+enum { POOL_SIZE = 4092, };
+#endif
+
 static _Atomic int intern_busy;
 VMemoryPool symbol_pool = {
-  .page_offset = 4088,
-  .page_size = 4088,
+  .page_offset = POOL_SIZE,
+  .page_size = POOL_SIZE,
 };
-_Static_assert(sizeof(VAllocPage)+4088 == 4096);
+_Static_assert(sizeof(VAllocPage)+POOL_SIZE == 4096, "intern pool isn't exactly a page");
 
 static float load_factor = 0.75f;
 static int size;
@@ -38,14 +46,11 @@ static int capacity;
 static int log_buckets;
 static int hash_mask;
 static SymbolEntry * intern_table;
-
-#ifdef VANITY64
-#define XXHXX XXH64
-#else
-#define XXHXX XXH32
-#endif
-int symhash(char const * name, int size) {
-  return (int)(uint32_t)XXHXX(name, size, 0);
+int symhash64(char const * name, int size) {
+  return (int)(uint32_t)XXH64(name, size, 0);
+}
+int symhash32(char const * name, int size) {
+  return (int)(uint32_t)XXH32(name, size, 0);
 }
 
 static VBlob * FindSymbol(int hash, char const * name) {
@@ -69,15 +74,9 @@ static void InsertSymbol(int hash, VBlob * sym);
 static void GrowTable() {
   int old_capacity = capacity;
   if(!capacity) {
-#if 0
     capacity = 256;
     log_buckets = 8;
     hash_mask = 255;
-#else
-    capacity = 1;
-    log_buckets = 0;
-    hash_mask = 0;
-#endif
   }
   capacity *= 2;
   log_buckets++;
@@ -165,7 +164,23 @@ VBlob * VCreateSymbolSlow(char const * name, int length) {
 
 V_BEGIN_FUNC_BASIC(VInternHash, "intern-hash", 1, _sym)
   VBlob * sym = VCheckedDecodeBlob2(runtime, _sym, "intern-hash");
+  int hash;
+  hash = symhash(sym->buf, sym->len-1);
+
   if(sym->base.tag != VSYMBOL && sym->base.tag != VSTRING)
     VErrorC(runtime, "intern-hash: not a symbol: ~A", _sym);
-  return VEncodeInt(symhash(sym->buf, sym->len-1));
+  return VEncodeInt(hash);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VInternHash2, "intern-hash2", 2, _sym, _64)
+  VBlob * sym = VCheckedDecodeBlob2(runtime, _sym, "intern-hash2");
+  int hash;
+  if(VDecodeBool(_64))
+    hash = symhash64(sym->buf, sym->len-1);
+  else
+    hash = symhash32(sym->buf, sym->len-1);
+
+  if(sym->base.tag != VSYMBOL && sym->base.tag != VSTRING)
+    VErrorC(runtime, "intern-hash: not a symbol: ~A", _sym);
+  return VEncodeInt(hash);
 V_END_FUNC

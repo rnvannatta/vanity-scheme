@@ -37,6 +37,7 @@
 #include <stdint.h>
 #include <stdatomic.h>
 #include "vmetamacro.h"
+typedef struct VMemoryPool VMemoryPool;
 
 static_assert(sizeof(char) == sizeof(int8_t), "");
 static_assert(sizeof(short) == sizeof(int16_t), "");
@@ -59,6 +60,93 @@ static_assert(0, "");
 #define V_LIKELY(x) __builtin_expect(!!(x), 1)
 
 /* ======================== Structures and Enums ======================= */
+
+/*
+
+MTE PREPARED NEO POINTER ENCODING: OH LAWD
+
+VWORD is int64
+
+the mantissa is stored bit inverted, so decoding a real double
+requires flipping the bits
+so encoded real doubles have nonzero top 11 bits after the sign
+
+positive numbers with zero top 12 bits are pointers
+
+pointer tags are stored in bottom 3 bits:
+other, closure, pair
+
+on mte systems pointers need to have their MTE tags moved around
+
+negative numbers with zero top 11 bits after the sign are immediates
+
+token, int, char
+
+INF, -INF, and NAN are tokens
+
+FOREIGN_POINTER is stripped of its immediate status. That's the first
+thing to do anyway, for type info
+
+bool IsReal(VWORD v) {
+  return v.bits & MANTISSA_MASK;
+}
+bool IsDouble(VWORD v) {
+  return IsReal(v) || v.bits == VNAN.bits || v.bits == VINF.bits || v.bits == VNEG_INF.bits;
+}
+bool IsPointer(VWORD v) {
+  return !(v.bits >> 52);
+}
+bool IsPair(VWORD v) {
+  return !(v.bits >> 52) && (v.bits & 7) == VPOINTER_PAIR;
+}
+VPair * VDecodePair(VWORD v) {
+#ifndef VANITY_MTE_PAIN
+  return (VPair*)(v.bits ^ VPOINTER_PAIR);
+#else
+  int64_t bits = v.bits ^ VPOINTER_PAIR;
+  int64_t mt = bits >> 48;
+  bits ^= mt << 48;
+  bits |= mt << 56;
+  return (VPair*)bits;
+#endif
+}
+
+*/
+
+/*
+
+C pointer system
+
+FOREIGN_POINTER_CELL
+VWORD
+void*
+
+structure of the vword. base types:
+
+char, void, float, double
+schar, int, short-int, long-int, long-long-int
+uchar, uint, short-uint, long-uint, long-long-uint
+
+a struct is a cons cell of 'struct and the tag
+an enum is a cons cell of 'enum and the tag
+a union is a cons cell of 'union and the tag
+
+a T const * is a cons cell of 'const and T
+a T * * is a cons cell of 'ptr and T
+
+an array is a cons cell of (array . len) and T
+
+the final pointer is implicit
+
+examples:
+
+const char * -> (const . char)
+const char * const * -> (const ptr const . char)
+const int(*)[10] -> ((array . 10) const . int)
+
+the C type info is interned.
+
+*/
 
 // If not ISNAN => a number
 // 4 bits after mantissa are tag
@@ -901,7 +989,7 @@ static inline VWORD VCheckedDecodeVWORD2(VRuntime * runtime, VWORD v, char const
  static inline type VCheckedDecode ## Type ## 2(VRuntime * runtime, VWORD v, char const * proc) { \
     if(VWordType(v) != VIMM_INT) VErrorC(runtime, "~Z: not an int: ~S\n", proc, v); \
     int dec = VDecodeInt(v); \
-    if(!(TYPE ## _MIN < dec && dec <= TYPE ## _MAX)) VErrorC(runtime, "~Z: overflow casting to " # type ": ~S\n", proc, v); \
+    if(!(TYPE ## _MIN <= dec && dec <= TYPE ## _MAX)) VErrorC(runtime, "~Z: overflow casting to " # type ": ~S\n", proc, v); \
     return (type)dec; \
  }
 
@@ -1126,19 +1214,29 @@ static inline VVector * VFillVector(VVector * vec, VNEWTAG tag, unsigned len, VW
 /* ======================== Misc ======================= */
 
 #ifdef __EMSCRIPTEN__
+// Used to implement declares in emscripten. But why? IDK.
+// Declares are crufty anyway and need to be reworked.
 void VRegisterSym(char const * name, void * ptr);
 #endif
 
 // stores constants like the literal 'foo or the value of ##sys.+
 // necessary because Windows doesn't have weak symbols lmao
+// DEPRECATED. Still used for intrinsic closures, working on removing.
 void * VLookupConstant(char * name, void * val);
 
+// Static environments are directly inserted into function calls
+// ie in MyFunc(runtime, foo_library_env, k, x, y);
+// So the garbage collector needs to be informed of them
+// by calling VRegisterStaticEnv(&foo_library_env);
+// since they're not in the normal environment chains.
+// It is an error to call RegisterStaticEnv twice. Since that
+// implies the environment is not actually static.
+void VRegisterStaticEnv(char const * name, VEnv ** slot);
+// UnregisterStaticEnv exists to support reloading of libaries.
+void VUnregisterStaticEnv(char const * name);
+
 static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
-  if(VBits(a) == VBits(b))
-    return true;
-  VBlob * blob_a = (VBlob*)VDecodePointer(a);
-  VBlob * blob_b = (VBlob*)VDecodePointer(b);
-  return !strcmp(blob_a->buf, blob_b->buf);
+  return VBits(a) == VBits(b);
 }
 
 VGlobalEntry * VLookupGlobalEntryFast2(VRuntime * runtime, char const * sym);
@@ -1397,6 +1495,13 @@ void VReallyExit(int ret);
 
 __attribute__((noreturn))
 void VReallyAbort();
+
+// Passes a memory pool filled with live objects to the runtime.
+// DUE TO MY LAZINESS YOU MUST CALL GARBAGE COLLECT IMMEDIATELY AFTERWARDS
+// This completely donates the pool, the runtime will close it.
+// The purpose is to allow allocation in C where arbitrary garbage collection is
+// impractical or impossible.
+void VDonateMemoryPool(VRuntime * runtime, VMemoryPool * pool);
 
 /* ======================== Core Functions ======================= */
 

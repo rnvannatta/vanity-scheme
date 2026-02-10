@@ -26,7 +26,12 @@
 (define-library (vanity seed)
   (export
     ##vcore.setter
-    ##vcore.mutator)
+    ##vcore.mutator
+
+    ##vcore.delay-force-impl
+    ##vcore.make-promise
+    ##vcore.promise?
+    ##vcore.force)
 
   (define setter-table (##vcore.make-hash-table ##vcore.eq? #f 32))
   (define (##vcore.setter func)
@@ -62,4 +67,32 @@
       (set-mutator! ##vcore.cdr (lambda (pair proc) (##vcore.set-cdr! pair (proc (##vcore.cdr pair)))))
       (set-mutator! ##vcore.vector-ref (lambda (vec i proc) (##vcore.vector-set! vec i (proc (##vcore.vector-ref vec i)))))
       (set-mutator! ##vcore.string-ref (lambda (vec i proc) (##vcore.string-set! vec i (proc (##vcore.string-ref vec i)))))
-      set-mutator!)))
+      set-mutator!))
+
+  (define-record-type promise-box
+    (make-promise-impl kind-val)
+    ##vcore.promise?
+    (kind-val get-promise-kind-val set-promise-kind-val!))
+
+  (define (##vcore.delay-force-impl thunk)
+    (make-promise-impl (##vcore.cons 'lazy thunk)))
+
+  (define (##vcore.make-promise x)
+    (if (##vcore.promise? x)
+        x
+        (make-promise-impl (##vcore.cons 'eager x))))
+
+  (define (##vcore.force promise)
+    (let ((content (get-promise-kind-val promise)))
+      (if (##vcore.eqv? (##vcore.car content) 'eager)
+          (##vcore.cdr content)
+          (let* ((promise* ((##vcore.cdr content)))
+                (content (get-promise-kind-val promise)))
+           (if (##vcore.not (##vcore.eqv? (##vcore.car content) 'eager))
+               (begin
+                 (##vcore.set-car! content (##vcore.car (get-promise-kind-val promise*)))
+                 (##vcore.set-cdr! content (##vcore.cdr (get-promise-kind-val promise*)))
+                 (set-promise-kind-val! promise* content)))
+           (##vcore.force promise)))))
+
+      )
