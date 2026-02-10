@@ -67,6 +67,7 @@
 #include "vport_private.h"
 #include "vscheme/vinlines.h"
 #include "vscheme/vhash.h"
+#include "vscheme/vmemory.h"
 #include "intern_private.h"
 
 #ifndef VANITY_PURE_C
@@ -178,6 +179,42 @@ void VReallyAbort() {
   abort();
 }
 
+void VDonateMemoryPool(VRuntime * runtime, VMemoryPool * pool) {
+  assert(!runtime->num_unreaped_arenas);
+  int ct = 0;
+  VAllocPage * cur_page = pool->page;
+  {
+    while(cur_page) {
+      ct++;
+      cur_page = cur_page->next;
+    }
+  }
+  if(!ct) return;
+
+  VArena * arenas = malloc(sizeof(VArena[ct]));
+  int i = 0;
+  cur_page = pool->page;
+  size_t pagesize = pool->page_size;
+  size_t pageoffset = pool->page_offset;
+  while(cur_page)
+  {
+    char * page_end = cur_page->buf + pagesize;
+    arenas[i] = (VArena) {
+      .buf = (char*)cur_page,
+      .buf_end = page_end,
+      .buf_cursor = cur_page->next ? page_end : cur_page->buf + pageoffset,
+    };
+    i++;
+    cur_page = cur_page->next;
+  }
+  assert(i == ct);
+  runtime->num_unreaped_arenas = ct;
+  runtime->unreaped_arenas = arenas;
+
+  pool->page_offset = pool->page_size;
+  pool->page = NULL;
+}
+
 static SYSV_CALL void VFPrintfC(VRuntime * runtime, VPort * p, char const * str, ...);
 
 __attribute__((noreturn))
@@ -248,7 +285,7 @@ typedef struct VFinalizerEntry {
 
 
 // Anything < HEAP MEM needs to be collected during a GC
-enum MEMORY_LOCATION { FIBER_MEM = 1, OLD_HEAP_MEM = 2, STACK_MEM = 4, HEAP_MEM = 8, STATIC_MEM = 16 };
+enum MEMORY_LOCATION { ARENA_MEM = 1, OLD_HEAP_MEM = 2, STACK_MEM = 4, HEAP_MEM = 8, STATIC_MEM = 16 };
 SYSV_CALL static unsigned VMemLocation(VRuntime * runtime, void * obj) {
   if(((VObject*)obj)->flags & VFLAG_STATIC)
     return STATIC_MEM;
@@ -264,10 +301,17 @@ SYSV_CALL static unsigned VMemLocation(VRuntime * runtime, void * obj) {
   if(runtime->VHeaps[!runtime->VActiveHeap].begin <= obj && obj < runtime->VHeaps[!runtime->VActiveHeap].end)
     return OLD_HEAP_MEM;
 
+#if 0
   for(int i = 0; i < runtime->num_half_reaped_fibers; i++) {
     VRuntime * fiber_runtime = runtime->half_reaped_fibers[i];
     if(fiber_runtime->VHeaps[fiber_runtime->VActiveHeap].begin <= obj && obj < fiber_runtime->VHeaps[fiber_runtime->VActiveHeap].end)
-      return FIBER_MEM;
+      return ARENA_MEM;
+  }
+#endif
+  for(int i = 0; i < runtime->num_unreaped_arenas; i++) {
+    VArena * arena = &runtime->unreaped_arenas[i];
+    if(arena->buf <= (char*)obj && (char*)obj <= arena->buf_end)
+      return ARENA_MEM;
   }
 
   return STATIC_MEM;
@@ -386,6 +430,7 @@ SYSV_CALL static void VInsertConstant(char * name, void * val) {
       if(oldconsts[i].name)
         VInsertConstantImpl(oldconsts[i].name, oldconsts[i].val);
     }
+    free(oldconsts);
   }
   VInsertConstantImpl(name, val);
   VConstantTableOccupancy++;
@@ -406,6 +451,41 @@ SYSV_CALL void * VLookupConstant(char * name, void * val) {
   VInsertConstant(name, val);
   return val;
 } 
+
+static int VStaticEnvTableSize;
+static int VStaticEnvTableCapacity;
+typedef struct {
+  char const * name;
+  VEnv ** slot;
+} VStaticEnvEntry;
+
+static VStaticEnvEntry * VStaticEnvTable;
+void VRegisterStaticEnv(char const * name, VEnv ** slot) {
+  for(int i = 0; i < VStaticEnvTableSize; i++) {
+    if(!strcmp(VStaticEnvTable[i].name, name)) {
+      fprintf(stderr, "Internal system error: double registering a static environment: %s\n", name);
+      VAbortC(NULL, VERROR);
+    }
+  }
+  if(VStaticEnvTableSize == VStaticEnvTableCapacity) {
+    if(!VStaticEnvTableCapacity)
+      VStaticEnvTableCapacity = 1;
+    VStaticEnvTableCapacity *= 2;
+    VStaticEnvTable = realloc(VStaticEnvTable, sizeof(VStaticEnvEntry[VStaticEnvTableCapacity]));
+  }
+  VStaticEnvTable[VStaticEnvTableSize].name = name;
+  VStaticEnvTable[VStaticEnvTableSize++].slot = slot;
+}
+void VUnregisterStaticEnv(char const * name) {
+  for(int i = 0; i < VStaticEnvTableSize; i++) {
+    if(!strcmp(VStaticEnvTable[i].name, name)) {
+      memmove(&VStaticEnvTable[i], &VStaticEnvTable[i+1], sizeof(VStaticEnvEntry[VStaticEnvTableSize - i - 1]));
+      VStaticEnvTableSize--;
+      return;
+    }
+  }
+  fprintf(stderr, "Warning: unregistering a nonexistant static environment:  %s\n", name);
+}
 
 // okay: so finalizers to managed memory can be detected as stale when they remain after a gc
 // specifically, after gc, a finalizer to managed memory points to a forwarded address
@@ -1209,19 +1289,27 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   stack_len += runtime->public.VSecondStackCursor;
 #endif
 
-  size_t fiber_size = 0;
+  size_t arena_size = 0;
+#if 0
   if(runtime->num_half_reaped_fibers) {
     for(int i = 0; i < runtime->num_half_reaped_fibers; i++) {
-      fiber_size += runtime->half_reaped_fibers[i]->VHeapPos - runtime->half_reaped_fibers[i]->VHeap;
+      arena_size += runtime->half_reaped_fibers[i]->VHeapPos - runtime->half_reaped_fibers[i]->VHeap;
     }
   }
+#else
+  if(runtime->num_unreaped_arenas) {
+    for(int i = 0; i < runtime->num_unreaped_arenas; i++) {
+      arena_size += runtime->unreaped_arenas[i].buf_cursor - runtime->unreaped_arenas[i].buf;
+    }
+  }
+#endif
 
   size_t total_stack_size = runtime->public.VStackSize;
 #ifdef VANITY_PURE_C
   total_stack_size += runtime->public.VSecondStackSize;
 #endif
 
-  size_t after_gc_size = runtime->VHeapPos - runtime->VHeap + stack_len + fiber_size;
+  size_t after_gc_size = runtime->VHeapPos - runtime->VHeap + stack_len + arena_size;
   bool is_unplanned_major = runtime->VHeap + after_gc_size >= runtime->VHeapEnd - total_stack_size;
   bool is_major = runtime->VForceMajorGC || is_unplanned_major;
   runtime->VIsMajorGC = is_major;
@@ -1238,7 +1326,7 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   }
 
   if(after_gc_size > runtime->VHeaps[runtime->VActiveHeap].size) {
-    if(!runtime->num_half_reaped_fibers) {
+    if(!runtime->num_unreaped_arenas) {
       fprintf(stderr, "Garbage collector may overflow: this should be impossible.\n");
       VAbortC(NULL, VERROR);
     }
@@ -1314,13 +1402,14 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     }
   }
   // all finalizers returned from a fiber are living, but it's tricky to handle them anyway
-  if(runtime->num_half_reaped_fibers) {
+  if(runtime->num_unreaped_arenas) {
     VFinalizerTable * table = &runtime->VHeapFinalizers[runtime->VActiveHeap];
-    for(int j = 0; j < runtime->num_half_reaped_fibers; j++) {
-      VRuntime * fiber_runtime = runtime->half_reaped_fibers[j];
-      VFinalizerTable const * fiber_table = &fiber_runtime->VHeapFinalizers[fiber_runtime->VActiveHeap];
-      for(unsigned i = 0; i < fiber_table->num_finalizers; i++) {
-        VFinalizerEntry * entry = fiber_table->dense + i;
+    for(int j = 0; j < runtime->num_unreaped_arenas; j++) {
+      //VRuntime * fiber_runtime = runtime->half_reaped_fibers[j];
+      //VFinalizerTable const * fiber_table = &fiber_runtime->VHeapFinalizers[fiber_runtime->VActiveHeap];
+      VFinalizerTable const * arena_table = &runtime->unreaped_arenas[j].finalizers;
+      for(unsigned i = 0; i < arena_table->num_finalizers; i++) {
+        VFinalizerEntry * entry = arena_table->dense + i;
         VWORD finalizer = entry->finalizer = VMoveDispatch(runtime, entry->finalizer);
         VWORD mem = VMoveDispatch(runtime, entry->mem);
         VSetFinalizerImpl(runtime, table, mem, finalizer);
@@ -1353,6 +1442,13 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
         runtime->VGlobalTable[i].value = VMoveDispatch(runtime, runtime->VGlobalTable[i].value);
       }
     }
+  }
+
+  // These objects are normally extremely veteran. So maybe worth doing some trickery
+  // So we only have to consider them in major collects. Eh. Only a handful of libraries at a time.
+  // ~20.
+  for(int i = 0; i < VStaticEnvTableSize; i++) {
+    *VStaticEnvTable[i].slot = VCheckedMoveEnv(runtime, *VStaticEnvTable[i].slot);
   }
 
   environ = VCheckedMoveEnviron(runtime, environ);
@@ -1401,9 +1497,25 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     VErrorC(runtime, "interrupted");
   }
 
+#if 0
   runtime->num_half_reaped_fibers = 0;
   free(runtime->half_reaped_fibers);
   runtime->half_reaped_fibers = NULL;
+#else
+  // TODO: what about the arena mem??? did I leak that???
+  for(int i = 0; i < runtime->num_unreaped_arenas; i++) {
+    VArena * arena = &runtime->unreaped_arenas[i];
+    if(arena->heap_return)
+      VStackPush(arena->heap_return, arena->buf);
+    else
+      free(arena->buf);
+    free(arena->finalizers.dense);
+    free(arena->finalizers.table);
+  }
+  runtime->num_unreaped_arenas = 0;
+  free(runtime->unreaped_arenas);
+  runtime->unreaped_arenas = NULL;
+#endif
 
   // If after a GC, we are still in a state where the next garbage collect can overflow the heap
   // we need to grow the heap
@@ -2132,12 +2244,7 @@ V_BEGIN_FUNC(VLookupLibrary2, "lookup-library", 2, k, name)
   if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
     VGarbageCollect2Args((VFunc)VLookupLibrary2, runtime, statics, 2, argc, k, name);
 
-  // TODO statically allocate this you knucklehead
 #define sym_str "##vcore.libraries"
-  //VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
-  //sym->base = VMakeSmallObject(VSYMBOL);
-  //sym->len = sizeof sym_str;
-  //memcpy(sym->buf, sym_str, sym->len);
   VBlob * sym = VCreateSymbolSlow(sym_str, sizeof sym_str - 1);
 #undef sym_str
 
@@ -2165,6 +2272,32 @@ V_BEGIN_FUNC(VLookupLibrary2, "lookup-library", 2, k, name)
   V_CALL(k, runtime, lib);
 V_END_FUNC
 
+
+static VWORD ImportImpl(VRuntime * runtime, VWORD * libs, int num_libs, VWORD importing_lib, VWORD x) {
+  int cur = 0, end = num_libs;
+  VWORD * rest = libs;
+  VWORD args = VNULL;
+  while(true) {
+    if(VIsToken(args, VTOK_NULL)) {
+      if(cur == end) {
+        break;
+      } else {
+        args = rest[cur];
+        cur++;
+      }
+    }
+    VWORD arg = VInlineCar2(runtime, args);
+    if(VDecodeBool(VInlineEqv2(runtime, VInlineCar2(runtime, arg), x))) {
+      return VInlineCdr2(runtime, arg);
+      break;
+    } else {
+      args = VInlineCdr2(runtime, args);
+    }
+  }
+  VErrorC(runtime, "library ~A: symbol not found: ~A\n", importing_lib, x);
+  return VVOID;
+}
+
 static V_BEGIN_FUNC(VMakeImportLambda, "make-import-lambda", 2, k, x)
   int cur = 2, end = statics->var_len;
   VWORD * rest = statics->vars;
@@ -2189,9 +2322,25 @@ static V_BEGIN_FUNC(VMakeImportLambda, "make-import-lambda", 2, k, x)
   }
 V_END_FUNC
 
+
 V_BEGIN_FUNC_MIN(VMakeImport2, "make-import", 2, k, lib)
   VClosure ret = VMakeClosure2((VFunc)VMakeImportLambda, self);
   V_CALL(k, runtime, VEncodeClosure(&ret));
+V_END_FUNC
+
+V_BEGIN_FUNC_MIN(VMultiImport, "multi-import", 3, _k, lib, _imports)
+  VClosure * k = VDecodeClosureApply2(runtime, _k);
+  VVector * imports = VCheckedDecodeVector2(runtime, _imports, "multi-import");
+
+  VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc-3]));
+  environ->base = VMakeObject(VENVIRONMENT);
+  environ->argc = argc-3;
+  environ->runtime = runtime;
+  environ->static_chain = k->env;
+  for(int i = 3; i < argc; i++) {
+    environ->argv[i-3] = ImportImpl(runtime, imports->arr, imports->len, lib, self->vars[i]);
+  }
+  VSysApplyBounce(k->func, environ);
 V_END_FUNC
 
 
@@ -2484,10 +2633,6 @@ V_BEGIN_FUNC(VLoadLibrary2, "load-library", 2, k, name)
     VGarbageCollect2Args((VFunc)VLoadLibrary2, runtime, statics, 2, argc, k, name);
 
 #define sym_str "##vcore.libraries"
-  //VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
-  //sym->base = VMakeSmallObject(VSYMBOL);
-  //sym->len = sizeof sym_str;
-  //memcpy(sym->buf, sym_str, sym->len);
   VBlob * sym = VCreateSymbolSlow(sym_str, sizeof sym_str - 1);
 #undef sym_str
 
@@ -2533,12 +2678,13 @@ V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
     VGarbageCollect2Args((VFunc)VUnloadLibrary2, runtime, statics, 2, argc, k, name);
 
 #define sym_str "##vcore.libraries"
-  //VBlob * sym = alloca(sizeof(VBlob) + sizeof sym_str);
-  //sym->base = VMakeSmallObject(VSYMBOL);
-  //sym->len = sizeof sym_str;
-  //memcpy(sym->buf, sym_str, sym->len);
   VBlob * sym = VCreateSymbolSlow(sym_str, sizeof sym_str - 1);
 #undef sym_str
+
+  VBlob * nm = VDecodeBlob(name);
+  // why would this be null????
+  if(nm)
+    VUnregisterStaticEnv(nm->buf);
 
   VWORD sym_word = VEncodePointer(sym, VPOINTER_OTHER);
   VGlobalEntry * lookup = VLookupGlobalEntry(runtime, sym_word);
@@ -2555,7 +2701,7 @@ V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
     VPair * libs_dec = VDecodePair(libs);
     VPair * pair = VDecodePair(libs_dec->first);
     VBlob * str = VDecodeBlob(pair->first);
-    VBlob * nm = VDecodeBlob(name);
+    // how can nm be null????
     if(str && nm && !strcmp(nm->buf, str->buf)) {
       lib_entry = pair;
       break;
@@ -2968,8 +3114,8 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
   r->fiber_heaps = malloc(sizeof(VStack));
   VStackInit(r->fiber_heaps);
 
-  r->num_half_reaped_fibers = 0;
-  r->half_reaped_fibers = NULL;
+  r->num_unreaped_arenas = 0;
+  r->unreaped_arenas = NULL;
 
   atomic_init(&r->gensym_storage, 0ull);
   r->gensym_index = (_Atomic uint64_t*)&r->gensym_storage;
@@ -3235,13 +3381,6 @@ V_BEGIN_FUNC(VGensym, "gensym", 2, k, _str)
     dots = "..";
     var = str->buf+2;
   }
-  //int len = snprintf(NULL, 0, "##%s%s.%llu", dots, var, (unsigned long long)index);
-  //len++;
-  //VBlob * sym = alloca(sizeof(VBlob)+len);
-  //sym->base = VMakeSmallObject(VSYMBOL);
-  //sym->len = len;
-  //int ret = snprintf(sym->buf, sym->len, "##%s%s.%llu", dots, var, (unsigned long long)index);
-  //assert(ret == sym->len-1);
   char buf[1024];
   int ret = snprintf(buf, sizeof buf, "##%s%s.%llu", dots, var, (unsigned long long)index);
   if(ret >= sizeof buf - 1)
@@ -3398,10 +3537,8 @@ static void VFreeFiberRuntime(VRuntime * r) {
     }
   }
   for(int i = 0; i < 2; i++) {
-    if(r->VHeapFinalizers[i].dense)
-      free(r->VHeapFinalizers[i].dense);
-    if(r->VHeapFinalizers[i].table)
-      free(r->VHeapFinalizers[i].table);
+    free(r->VHeapFinalizers[i].dense);
+    free(r->VHeapFinalizers[i].table);
   }
   if(r->lex_buf)
     free(r->lex_buf);
@@ -3464,6 +3601,7 @@ static void VReapFiberRuntime(VRuntime * runtime, char * buf, VRuntime * fiber_r
 static void VPushHalfReapedFibers(VRuntime * runtime, int numfibers, VLaunchFiberData * datas) {
   if(!numfibers)
     return;
+#if 0
   assert(runtime->num_half_reaped_fibers == 0);
   assert(!runtime->half_reaped_fibers);
   runtime->num_half_reaped_fibers = numfibers;
@@ -3471,10 +3609,32 @@ static void VPushHalfReapedFibers(VRuntime * runtime, int numfibers, VLaunchFibe
   for(int i = 0; i < numfibers; i++) {
     runtimes[i] = datas[i].my_runtime;
   }
+#else
+  assert(runtime->num_unreaped_arenas == 0);
+  assert(!runtime->unreaped_arenas);
+  runtime->num_unreaped_arenas = numfibers;
+  VArena * arenas = runtime->unreaped_arenas = malloc(sizeof(VArena[numfibers]));
+  for(int i = 0; i < numfibers; i++) {
+    VRuntime * fiber_runtime = datas[i].my_runtime;
+    arenas[i].buf = fiber_runtime->VHeaps[fiber_runtime->VActiveHeap].begin;
+    arenas[i].buf_end = fiber_runtime->VHeaps[fiber_runtime->VActiveHeap].end;
+    arenas[i].buf_cursor = fiber_runtime->VHeapPos;
+    arenas[i].finalizers = fiber_runtime->VHeapFinalizers[fiber_runtime->VActiveHeap];
+    if(fiber_runtime->owns_heap[fiber_runtime->VActiveHeap])
+      arenas[i].heap_return = fiber_runtime->fiber_heaps;
+
+    fiber_runtime->VHeaps[fiber_runtime->VActiveHeap].begin = NULL;
+    fiber_runtime->VHeapFinalizers[fiber_runtime->VActiveHeap] = (VFinalizerTable){0};
+
+    VFreeFiberRuntime(fiber_runtime);
+    VStackPush(runtime->fiber_runtimes, fiber_runtime);
+  }
+#endif
 }
 static void VPushHalfReapedRuntimes(VRuntime * runtime, int numfibers, VRuntime ** _runtimes) {
   if(!numfibers)
     return;
+#if 0
   assert(runtime->num_half_reaped_fibers == 0);
   assert(!runtime->half_reaped_fibers);
   runtime->num_half_reaped_fibers = numfibers;
@@ -3482,6 +3642,20 @@ static void VPushHalfReapedRuntimes(VRuntime * runtime, int numfibers, VRuntime 
   for(int i = 0; i < numfibers; i++) {
     runtimes[i] = _runtimes[i];
   }
+#else
+  assert(runtime->num_unreaped_arenas == 0);
+  assert(!runtime->unreaped_arenas);
+  runtime->num_unreaped_arenas = numfibers;
+  VArena * arenas = runtime->unreaped_arenas = malloc(sizeof(VArena[numfibers]));
+  for(int i = 0; i < numfibers; i++) {
+    VRuntime * fiber_runtime = _runtimes[i];
+    arenas[i].buf = fiber_runtime->VHeaps[fiber_runtime->VActiveHeap].begin;
+    arenas[i].buf_end = fiber_runtime->VHeaps[fiber_runtime->VActiveHeap].end;
+    arenas[i].buf_cursor = fiber_runtime->VHeapPos;
+    arenas[i].finalizers = fiber_runtime->VHeapFinalizers[fiber_runtime->VActiveHeap];
+    fiber_runtime->VHeapFinalizers[fiber_runtime->VActiveHeap] = (VFinalizerTable){0};
+  }
+#endif
 }
 
 static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfibers, VWORD k, VLaunchFiberData * datas) {

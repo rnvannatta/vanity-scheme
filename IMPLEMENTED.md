@@ -126,8 +126,8 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |define-record-type             | Yes         |             |            |
 |define-syntax                  | Low Prio    |             |            |
 |define-values                  | Yes         |             |            |
-|delay                          |             |             |            |
-|delay-force                    |             |             |            |
+|delay                          | Yes         |             |            |
+|delay-force                    | Yes         |             |            |
 |delete-file                    |             |             |            |
 |denominator                    | Low Prio    |             |            |
 |digit-value                    |             |             |            |
@@ -136,7 +136,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |dynamic-wind                   | Never Ever  |             |            |
 |#e                             | Yes         |             |            |
 |else                           | Yes         |             |            |
-|emergency-exit                 |             |             |            |
+|emergency-exit                 | Yes         |             |            |
 |environment                    | Low Prio    |             |            |
 |eof-object                     |             |             |            |
 |eof-object?                    | Yes         |             |            |
@@ -144,9 +144,9 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |equal?                         | Yes         |             |            |
 |eqv?                           | Yes         |             |            |
 |error                          | Yes         |             |            |
-|error-object-irritants         |             |             |            |
-|error-object-message           |             |             |            |
-|error-object?                  |             |             |            |
+|error-object-irritants         | Yes         |             |            |
+|error-object-message           | Yes         |             |            |
+|error-object?                  | Yes         |             |            |
 |eval                           | Low Prio    |             |            |
 |even?                          | Yes         |             |            |
 |exact                          | Yes         |             |            |
@@ -169,7 +169,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |floor/                         | Yes         |             |            |
 |flush-output-port              |             |             |            |
 |for-each                       | Yes         |             |            |
-|force                          |             |             |            |
+|force                          | Yes         |             |            |
 |gcd                            | Yes         |             |            |
 |get-environment-variable       |             |             |            |
 |get-environment-variables      |             |             |            |
@@ -218,7 +218,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |make-list                      | Yes         |             |            |
 |make-parameter                 | Yes         |             |            |
 |make-polar                     | Low Prio    |             |            |
-|make-promise                   |             |             |            |
+|make-promise                   | Yes         |             |            |
 |make-rectangular               | Low Prio    |             |            |
 |make-string                    | Yes         | ?           |            |
 |make-vector                    | Yes         |             |            |
@@ -260,7 +260,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |positive?                      | Yes         |             |            |
 |prefix                         |             |             |            |
 |procedure?                     | Yes         |             |            |
-|promise?                       |             |             |            |
+|promise?                       | Yes         |             |            |
 |quasiquote                     | Yes         |             |            |
 |quote                          | Yes         |             |            |
 |quotient                       | Yes         |             |            |

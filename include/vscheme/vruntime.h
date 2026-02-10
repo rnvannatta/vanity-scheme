@@ -989,7 +989,7 @@ static inline VWORD VCheckedDecodeVWORD2(VRuntime * runtime, VWORD v, char const
  static inline type VCheckedDecode ## Type ## 2(VRuntime * runtime, VWORD v, char const * proc) { \
     if(VWordType(v) != VIMM_INT) VErrorC(runtime, "~Z: not an int: ~S\n", proc, v); \
     int dec = VDecodeInt(v); \
-    if(!(TYPE ## _MIN < dec && dec <= TYPE ## _MAX)) VErrorC(runtime, "~Z: overflow casting to " # type ": ~S\n", proc, v); \
+    if(!(TYPE ## _MIN <= dec && dec <= TYPE ## _MAX)) VErrorC(runtime, "~Z: overflow casting to " # type ": ~S\n", proc, v); \
     return (type)dec; \
  }
 

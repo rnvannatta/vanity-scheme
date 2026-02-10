@@ -97,6 +97,7 @@
     ; misc
     call/cc call-with-current-continuation call-with-values apply values
     setter mutator ##vcore.setter ##vcore.mutator
+    ##vcore.delay-force-impl make-promise ##vcore.make-promise promise? ##vcore.promise? force ##vcore.force
     make-parameter
     raise raise-continuable with-exception-handler
     ; system interface
@@ -107,7 +108,7 @@
     ; filesystem
     make-temporary-file
     file-exists?
-    exit
+    exit emergency-exit
     ; time
     current-jiffy
     jiffies-per-second
@@ -117,7 +118,9 @@
     ; fibers
     fiber-fork fiber-fork-list fiber-map async await
     ; not r5rs
-    atom? displayln writeln format printf sprintf error
+    atom? displayln writeln format printf sprintf
+    error
+    error-object? error-object-message error-object-irritants
     ; srfi-260
     generate-symbol
   )
@@ -1549,6 +1552,10 @@
   (define setter ##vcore.setter)
   (define mutator ##vcore.mutator)
 
+  (define force ##vcore.force)
+  (define promise? ##vcore.promise?)
+  (define make-promise ##vcore.make-promise)
+
   ; dynamic variables
   (define make-parameter
     (case-lambda
@@ -1580,6 +1587,9 @@
       ((path mode)
        (##vcore.access path mode))))
   (define-constant exit ##vcore.exit)
+
+  (define (emergency-exit e)
+    ((foreign-function "C" "void _exit(int)") (if (integer? e) e (if e 0 1))))
 
   (define-constant current-jiffy ##vcore.current-jiffy)
   (define-constant jiffies-per-second ##vcore.jiffies-per-second)
@@ -1736,6 +1746,17 @@
 
   (define (error msg . irritants)
     (raise (##vcore.record #f 'error msg irritants)))
+
+  (define (error-object? e)
+    (and (##vcore.record? e) (not (##vcore.record-ref e 0)) (eqv? (##vcore.record-ref e 1) 'error)))
+  (define (error-object-message e)
+    (if (error-object? e)
+        (##vcore.record-ref e 2)
+        (error "not an error object" e)))
+  (define (error-object-irritants e)
+    (if (error-object? e)
+        (##vcore.record-ref e 3)
+        (error "not an error object" e)))
 
   (define-constant fiber-fork-list ##vcore.fiber-fork-list)
   (define (fiber-fork . args)

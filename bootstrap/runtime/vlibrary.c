@@ -700,6 +700,10 @@ V_BEGIN_FUNC_BASIC(VBlobP2, "blob?", 1, x)
   return VEncodeBool(VIsBlob(x));
 V_END_FUNC
 
+V_BEGIN_FUNC_BASIC(VPortP, "port?", 1, x)
+  return VEncodeBool(VIsPort(x));
+V_END_FUNC
+
 V_BEGIN_FUNC_BASIC(VSymbolP2, "symbol?", 1, x)
   return VEncodeBool(VIsSymbol(x));
 V_END_FUNC
@@ -755,6 +759,8 @@ V_BEGIN_FUNC(VBlobEqv2, "blob=?", 3, k, x, y)
   V_BOUNCE(k, runtime, VEncodeBool(ret));
 V_END_FUNC
 
+// TODO REMOVE WITH PREJUDICE
+#undef VEqv
 V_BEGIN_FUNC(VEqv, "eqv?", 3, k, x, y)
   V_BOUNCE(k, runtime, VInlineEqv2(runtime, x, y));
 V_END_FUNC
@@ -888,19 +894,11 @@ static uint64_t VEqHashImpl(VWORD x) {
   return vhash64_quick(VBits(x));
 }
 
-static uint64_t VEqvHashImpl(VWORD x) {
-  if(VIsSymbol(x)) {
-    VBlob * b = VDecodeBlob(x);
-    return vhash(b->buf, b->len, 0);
-  }
-  return vhash64_quick(VBits(x));
-}
-
 // hash tables
 SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VHashTable * table, VVector * vec, VWORD key, VWORD val, unsigned flags) {
   uint64_t capacity = vec->len / 3;
   uint64_t tries = 0;
-  uint64_t hash = (flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
+  uint64_t hash = VEqHashImpl(key);
   uint64_t index = hash & (capacity-1);
 
   uint64_t poverty = 0;
@@ -912,10 +910,6 @@ SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VHashTable * table, 
     VWORD test = vec->arr[3*index+0];
 
     if(VBits(key) == VBits(test)) {
-      found = true;
-      break;
-    }
-    if((flags & HFLAG_EQV) && VDecodeBool(VInlineEqv2(runtime, key, test))) {
       found = true;
       break;
     }
@@ -990,7 +984,7 @@ SYSV_CALL static void VGrowHashTable(VRuntime * runtime, VHashTable * table, int
 
 V_BEGIN_FUNC(VMakeHashTable, "make-hash-table", 4, k, eq, hash, _len)
   VClosure * closure = VCheckedDecodeClosure2(runtime, eq, "make-hash-table");
-  if(closure->func != (void*)VEq2 && closure->func != (void*)VEqv)
+  if(closure->func != (void*)VEq2)
     VErrorC(runtime, "hash tables currently only support `eq?` and `eqv?` as the comparator\n");
 
   int len = VCheckedDecodeInt2(runtime, _len, "make-hash-table");
@@ -1008,7 +1002,7 @@ V_BEGIN_FUNC(VMakeHashTable, "make-hash-table", 4, k, eq, hash, _len)
   }
   VHashTable _table = {
     .base = VMakeSmallObject(VHASH_TABLE),
-    .flags = closure->func == (void*)VEq2 ? HFLAG_EQ : HFLAG_EQV,
+    .flags = HFLAG_EQ,
     .occupancy = 0,
     .load_factor = 0.8f,
     .vec = VEncodePointer(vec, VPOINTER_OTHER),
@@ -1035,12 +1029,12 @@ V_BEGIN_FUNC(VHashTableRef, "hash-table-ref", 4, k, _table, key, thunk)
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-ref");
   VVector * vec = VCheckedDecodeVector2(runtime, table->vec, "hash-table-ref");
 
-  assert((table->flags & HFLAG_EQ) || (table->flags & HFLAG_EQV));
+  assert(table->flags & HFLAG_EQ);
 
 try_again: ;
   uint64_t capacity = vec->len / 3;
   uint64_t tries = 0;
-  uint64_t hash = (table->flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
+  uint64_t hash = VEqHashImpl(key);
   uint64_t index = hash & (capacity-1);
 
   bool found = false;
@@ -1048,10 +1042,6 @@ try_again: ;
     VWORD test = vec->arr[3*index+0];
 
     if(VBits(key) == VBits(test)) {
-      found = true;
-      break;
-    }
-    if((table->flags & HFLAG_EQV) && VDecodeBool(VInlineEqv2(runtime, key, test))) {
       found = true;
       break;
     }
@@ -1082,7 +1072,7 @@ V_BEGIN_FUNC(VHashTableSet, "hash-table-set!", 4, k, _table, key, val)
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-set!");
   VVector * vec = VCheckedDecodeVector2(runtime, table->vec, "hash-table-set!");
 
-  assert((table->flags & HFLAG_EQ) || (table->flags & HFLAG_EQV));
+  assert(table->flags & HFLAG_EQ);
   uint64_t capacity = vec->len / 3;
 
   if(table->occupancy+1 >= table->load_factor * capacity) {
@@ -1119,7 +1109,7 @@ V_BEGIN_FUNC(VHashTableSet, "hash-table-set!", 4, k, _table, key, val)
   }
 
   uint64_t tries = 0;
-  uint64_t hash = (table->flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
+  uint64_t hash = VEqHashImpl(key);
   uint64_t index = hash & (capacity-1);
 
   uint64_t poverty = 0;
@@ -1132,10 +1122,6 @@ V_BEGIN_FUNC(VHashTableSet, "hash-table-set!", 4, k, _table, key, val)
     VWORD test = vec->arr[3*index+0];
 
     if(VBits(key) == VBits(test)) {
-      found = true;
-      break;
-    }
-    if((table->flags & HFLAG_EQV) && VDecodeBool(VInlineEqv2(runtime, key, test))) {
       found = true;
       break;
     }
@@ -1184,7 +1170,7 @@ V_BEGIN_FUNC(VHashTableDelete, "hash-table-delete!", 3, k, _table, key)
   VHashTable * table = VCheckedDecodeHashTable2(runtime, _table, "hash-table-delete!");
   VVector * vec = VCheckedDecodeVector2(runtime, table->vec, "hash-table-delete!");
 
-  assert((table->flags & HFLAG_EQ) || (table->flags & HFLAG_EQV));
+  assert(table->flags & HFLAG_EQ);
   uint64_t capacity = vec->len / 3;
 
   // shrinkage. with a bit of histerisis
@@ -1210,7 +1196,7 @@ V_BEGIN_FUNC(VHashTableDelete, "hash-table-delete!", 3, k, _table, key)
   }
 
   uint64_t tries = 0;
-  uint64_t hash = (table->flags & HFLAG_EQ) ? VEqHashImpl(key) : VEqvHashImpl(key);
+  uint64_t hash = VEqHashImpl(key);
   uint64_t index = hash & (capacity-1);
 
   bool found = false;
@@ -1219,10 +1205,6 @@ V_BEGIN_FUNC(VHashTableDelete, "hash-table-delete!", 3, k, _table, key)
     VWORD test = vec->arr[3*index+0];
 
     if(VBits(key) == VBits(test)) {
-      found = true;
-      break;
-    }
-    if((table->flags & HFLAG_EQV) && VDecodeBool(VInlineEqv2(runtime, key, test))) {
       found = true;
       break;
     }
@@ -1390,10 +1372,6 @@ V_BEGIN_FUNC(VStringSymbol2, "string->symbol", 2, k, _str)
   VBlob * str = VCheckedDecodeString2(runtime, _str, "string->symbol");
 
   VBlob * sym = VCreateSymbolSlow(str->buf, str->len-1);
-
-  //VBlob * sym = V_ALLOCA_BLOB2(&runtime, runtime, str->len);
-  //if(!sym) VGarbageCollect2Func(runtime, (VFunc)VStringSymbol2, 2, k, _str);
-  //VFillBlob(sym, VSYMBOL, str->len, str->buf);
   V_BOUNCE(k, runtime, VEncodePointer(sym, VPOINTER_OTHER));
 }
 V_BEGIN_FUNC(VSymbolString2, "symbol->string", 2, k, _sym)
@@ -1440,9 +1418,9 @@ V_END_FUNC
 V_BEGIN_FUNC_BASIC(VIntChar, "integer->char", 1, _i)
   if(VWordType(_i) != VIMM_INT) VErrorC(runtime, "integer->char: not an int: ~A", _i);
   int i = VDecodeInt(_i);
-  if(i < 0 || i > 127)
+  if(i < 0 || i > 255)
     VErrorC(runtime, "integer->char: int out of bounds: ~A", _i);
-  return VEncodeChar((char)i);
+  return VEncodeChar((char)(unsigned char)i);
 V_END_FUNC
 
 // ports
@@ -1511,15 +1489,64 @@ V_END_FUNC
 
 
 V_BEGIN_FUNC(VCloseStream2, "close-port", 2, k, _port)
-
   if(VWordType(_port) != VPOINTER_OTHER) VErrorC(runtime, "close-port: not a port\n");
   VPort * port = (VPort*)VDecodePointer(_port);
   if(port->base.tag != VPORT) VErrorC(runtime, "close-port: not a port\n");
 
-  int ret = port_close(port);
+  V_BOUNCE(k, runtime, VEncodeInt(port_close(port)));
+V_END_FUNC
 
-  V_BOUNCE(k, runtime, VEncodeInt(ret));
-}
+V_BEGIN_FUNC(VCloseInputPort, "close-input-port", 2, k, _port)
+  if(VWordType(_port) != VPOINTER_OTHER) VErrorC(runtime, "close-input-port: not a port\n");
+  VPort * port = (VPort*)VDecodePointer(_port);
+  if(port->base.tag != VPORT) VErrorC(runtime, "close-input-port: not a port\n");
+
+  if(port->flags & PFLAG_READ)
+    port->flags &= ~PFLAG_READ;
+
+  if(!(port->flags & PFLAG_WRITE))
+    V_BOUNCE(k, runtime, VEncodeInt(port_close(port)));
+  else
+    V_BOUNCE(k, runtime, VEncodeInt(0));
+V_END_FUNC
+
+V_BEGIN_FUNC(VCloseOutputPort, "close-output-port", 2, k, _port)
+  if(VWordType(_port) != VPOINTER_OTHER) VErrorC(runtime, "close-output-port: not a port\n");
+  VPort * port = (VPort*)VDecodePointer(_port);
+  if(port->base.tag != VPORT) VErrorC(runtime, "close-output-port: not a port\n");
+
+  if(port->flags & PFLAG_WRITE)
+    port->flags &= ~PFLAG_WRITE;
+
+  if(!(port->flags & PFLAG_READ))
+    V_BOUNCE(k, runtime, VEncodeInt(port_close(port)));
+  else
+    V_BOUNCE(k, runtime, VEncodeInt(0));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VInputPortP, "input-port?", 1, x)
+  if(!VIsPort(x))
+    return VFALSE;
+  VPort * p = (VPort*)VDecodePointer(x);
+  return VEncodeBool(p->flags & PFLAG_READ);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VOutputPortP, "output-port?", 1, x)
+  if(!VIsPort(x))
+    return VFALSE;
+  VPort * p = (VPort*)VDecodePointer(x);
+  return VEncodeBool(p->flags & PFLAG_WRITE);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VInputPortOpenP, "input-port-open?", 1, x)
+  VPort * p = VCheckedDecodePort2(runtime, x, "input-port-open?");
+  return VEncodeBool(p->flags & PFLAG_READ);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VOutputPortOpenP, "output-port-open?", 1, x)
+  VPort * p = VCheckedDecodePort2(runtime, x, "output-port-open?");
+  return VEncodeBool(p->flags & PFLAG_WRITE);
+V_END_FUNC
 
 V_BEGIN_FUNC(VTtyPortP, "tty-port?", 2, k, _port)
 
@@ -1535,54 +1562,70 @@ V_BEGIN_FUNC(VTtyPortP, "tty-port?", 2, k, _port)
   V_BOUNCE(k, runtime, VEncodeBool(tty));
 }
 
-FILE * Windows_TmpFile();
+typedef struct instring_cookie {
+  size_t len;
+  off64_t tell;
+  char * buf;
+} instring_cookie;
+static ssize_t read_instring(void * _cookie, char * ptr, size_t nbytes) {
+  instring_cookie * cookie = _cookie;
+
+  if(cookie->len - cookie->tell < nbytes)
+    nbytes = cookie->len - cookie->tell;
+  memcpy(ptr, cookie->buf + cookie->tell, nbytes);
+  cookie->tell += nbytes;
+
+  return nbytes;
+}
+static int close_instring(void * _cookie) {
+  instring_cookie * cookie = _cookie;
+  free(cookie->buf);
+  free(cookie);
+  return 0;
+}
+
+V_BEGIN_FUNC(VOpenInputString, "open-input-string", 2, k, _str)
+  errno = 0;
+  VBlob * str = VCheckedDecodeString2(runtime, _str, "open-input-string");
+  size_t len = str->len - 1;
+  char * buf = malloc(len);
+  memcpy(buf, str->buf, len);
+  //DFILE * f = d_fmemopen(buf, len, "rb");
+
+  instring_cookie * cookie = malloc(sizeof(instring_cookie));
+  *cookie = (instring_cookie) {
+    .len = len,
+    .buf = buf,
+  };
+  d_cookie_io_functions_t funcs = {
+    .read = read_instring,
+    .close = close_instring,
+  };
+  DFILE * f = d_fopencookie(cookie, "rb", funcs);
+
+  VPort _port = {
+    .base.tag = VPORT,
+    .line = 1,
+    .dstream = f,
+    .flags = PFLAG_READ | PFLAG_DFILE,
+  };
+  VPort * port = V_EDEN_INIT(runtime, VPort, _port);
+  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER));
+V_END_FUNC
 
 V_BEGIN_FUNC(VOpenOutputString2, "open-output-string", 1, k)
   errno = 0;
-#define USE_DFILE_OSTREAM
-#ifdef USE_DFILE_OSTREAM
   DFILE * f = d_strfile();
-#else
-#ifdef _WIN64
-  FILE * f = Windows_TmpFile();
-#else
-  FILE * f = tmpfile();
-#endif
-#endif
-  // ENFILE error can be fixed by running a garbage collect
-  VWORD ok = VEncodeBool(errno != ENFILE && errno != EMFILE);
-  if(!f) {
-    if(errno == ENFILE || errno == EMFILE) {
-      V_BOUNCE(k, runtime, VFALSE, ok);
-    } else {
-#ifdef USE_DFILE_OSTREAM
-      V_BOUNCE(k, runtime, VFALSE, VFALSE);
-#else
-#ifdef _WIN64
-      // Windows tmpfile() doesn't set errno! >:(
-      V_BOUNCE(k, runtime, VFALSE, VFALSE);
-#endif
-#ifdef __linux__
-      // unrecoverable error: return false to the user
-      V_BOUNCE(k, runtime, VFALSE, VTRUE);
-#endif
-#endif
-    }
-  }
 
-#ifdef USE_DFILE_OSTREAM
   VPort _port = {
     .base.tag = VPORT,
     .line = 1,
     .dstream = f,
     .flags = PFLAG_WRITE | PFLAG_OSTRING | PFLAG_DFILE,
   };
-#else
-  VPort _port = VMakePortStream(f, PFLAG_WRITE | PFLAG_OSTRING);
-#endif
   VPort * port = V_EDEN_INIT(runtime, VPort, _port);
-  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER), ok);
-}
+  V_BOUNCE(k, runtime, VEncodePointer(port, VPOINTER_OTHER), VTRUE);
+V_END_FUNC
 
 V_BEGIN_FUNC(VGetOutputString2, "get-output-string", 2, k, _port)
   VPort * port = (VPort*)VDecodePointer(_port);
@@ -1919,6 +1962,37 @@ V_BEGIN_FUNC_RANGE(VMakeTemporaryFile2, "make-temporary-file", 2, 3, k, _prefix,
 
   V_BOUNCE(k, runtime, VEncodePointer(str, VPOINTER_OTHER));
 }
+
+static VWORD VGetParameterImpl(VRuntime * runtime, VWORD key, VWORD init) {
+  VWORD dynamics = runtime->dynamics;
+#if 0
+  if(VIsEq(dynamics, cache->first))
+    return cache->rest;
+#endif
+
+  VWORD ret = init;
+  while(!VIsEq(dynamics, VNULL)) {
+    VPair * node = VDecodePair(dynamics);
+    VPair * keyval = VDecodePair(node->first);
+    dynamics = node->rest;
+
+    if(VIsEq(keyval->first, key)) {
+      ret = keyval->rest;
+      break;
+    }
+  }
+#if 0
+  cache->first = runtime->dynamics;
+  cache->rest = ret;
+  VTrackMutation(runtime, cache, &cache->first, runtime->dynamics);
+  VTrackMutation(runtime, cache, &cache->rest, ret);
+#endif
+  return ret;
+}
+
+V_BEGIN_FUNC_BASIC(VGetParameter, "get-parameter", 2, key, init)
+  return VGetParameterImpl(runtime, key, init);
+V_END_FUNC
 
 V_BEGIN_FUNC(VMakeRandom, "make-random", 3, k, _seed, _stream)
   unsigned seed = VCheckedDecodeInt2(runtime, _seed, "make-random");
@@ -2381,3 +2455,27 @@ V_BEGIN_FUNC(VBitCount, "bit-count", 2, k, _a)
   V_BOUNCE(k, runtime, VEncodeInt(ret));
 #undef NAME
 }
+
+// CRIMES: If this gets a significant speedup in urbench, it means we need
+// to implement l00ps
+
+V_BEGIN_FUNC_BASIC(VAssq, "assq", 2, x, lst)
+  while(!VIsEq(lst, VNULL)) {
+    VPair * p = VCheckedDecodePair2(runtime, lst, "assq");
+    VPair * keyval = VCheckedDecodePair2(runtime, p->first, "assq");
+    if(VIsEq(keyval->first, x))
+      return p->first;
+    lst = p->rest;
+  }
+  return VFALSE;
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VMemq, "memq", 2, x, lst)
+  while(!VIsEq(lst, VNULL)) {
+    VPair * p = VCheckedDecodePair2(runtime, lst, "memq");
+    if(VIsEq(p->first, x))
+      return lst;
+    lst = p->rest;
+  }
+  return VFALSE;
+V_END_FUNC

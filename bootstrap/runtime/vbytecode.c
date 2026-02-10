@@ -20,9 +20,13 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
     //printf("%s\n", name);
     if(!strcmp(name, "lambda")) {
       VPair * data = VCheckedDecodePair2(runtime, ins->rest, "eval-vasm: malformed lambda");
-      int req_argc = VCheckedDecodeInt2(runtime, data->first, "eval-vasm: malformed lambda");
-      if(env->num_vars != req_argc)
-        VErrorC(runtime, "not enough arguments to lambda: expected ~D, got ~D~N", req_argc, env->num_vars);
+      if(VIsEq(data->first, VFALSE)) {
+        env = env->up;
+      } else {
+        int req_argc = VCheckedDecodeInt2(runtime, data->first, "eval-vasm: malformed lambda");
+        if(env->num_vars != req_argc)
+          VErrorC(runtime, "not enough arguments to lambda: expected ~D, got ~D~N", req_argc, env->num_vars);
+      }
     }
     else if(!strcmp(name, "lambda+")) {
       VPair * data = VCheckedDecodePair2(runtime, ins->rest, "eval-vasm: malformed lambda");

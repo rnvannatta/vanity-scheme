@@ -55,6 +55,7 @@ V_DECLARE_FUNC_BASIC(VHashTableP, x);
 V_DECLARE_FUNC_BASIC(VRecordP2, x);
 V_DECLARE_FUNC_BASIC(VProcedureP2, x);
 V_DECLARE_FUNC_BASIC(VBlobP2, x);
+V_DECLARE_FUNC_BASIC(VPortP, x);
 V_DECLARE_FUNC_BASIC(VSymbolP2, x);
 V_DECLARE_FUNC_BASIC(VStringP2, x);
 V_DECLARE_FUNC_BASIC(VDoubleP2, x);
@@ -68,7 +69,7 @@ V_DECLARE_FUNC_BASIC(VForeignPointerP2, x);
 V_DECLARE_FUNC(VEq2, k, x, y);
 V_DECLARE_FUNC(VSymbolEqv2, k, x, y);
 V_DECLARE_FUNC(VBlobEqv2, k, x, y);
-V_DECLARE_FUNC(VEqv, k, x, y);
+#define VEqv VEq2
 
 // logic
 V_DECLARE_FUNC_BASIC(VNot2, x);
@@ -137,7 +138,7 @@ V_DECLARE_FUNC_BASIC(VStringNumber2, str);
 //void VNumberString2(V_CORE_ARGS, VWORD k, VWORD num);
 V_DECLARE_FUNC(VStringSymbol2, k, str);
 V_DECLARE_FUNC(VSymbolString2, k, sym);
-V_DECLARE_FUNC_BASIC(VInternHash, sym);
+V_DECLARE_FUNC_BASIC(VInternHash2, sym, is64);
 
 // chars
 
@@ -156,6 +157,16 @@ V_DECLARE_FUNC(VDupStderr2, k);
 V_DECLARE_FUNC(VOpenInputStream2, k, path);
 V_DECLARE_FUNC(VOpenOutputStream2, k, path);
 V_DECLARE_FUNC(VCloseStream2, k, port);
+V_DECLARE_FUNC(VCloseInputPort, k, port);
+V_DECLARE_FUNC(VCloseOutputPort, k, port);
+
+V_DECLARE_FUNC(VInputPortP, k, port);
+V_DECLARE_FUNC(VOutputPortP, k, port);
+V_DECLARE_FUNC(VInputPortOpenP, k, port);
+V_DECLARE_FUNC(VOutputPortOpenP, k, port);
+
+V_DECLARE_FUNC(VInputPortOpenP, k, port);
+V_DECLARE_FUNC(VOutputPortOpenP, k, port);
 
 V_DECLARE_FUNC(VTtyPortP, k, _port);
 
