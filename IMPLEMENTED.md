@@ -188,7 +188,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |infinite?                      | Yes         |             |            |
 |input-port-open?               | Yes         |             |            |
 |input-port?                    | Yes         |             |            |
-|integer-\>char                 |             |             |            |
+|integer-\>char                 | Yes         |             |            |
 |integer?                       | Yes         |             |            |
 |interaction-environment        | Low Prio    |             |            |
 |jiffies-per-second             | Yes         |             |            |
@@ -390,21 +390,21 @@ All ports are both binary and textual.
 |-------------------------------|-------------|-------------|------------|
 |cons                           | Yes         |             |            |
 |list                           | Yes         |             |            |
-|xcons                          |             |             |            |
-|cons*                          |             |             |            |
+|xcons                          | Yes         |             |            |
+|cons*                          | Yes         |             |            |
 |make-list                      | Yes         |             |            |
-|list-tabulate                  |             |             |            |
+|list-tabulate                  | Yes         |             |            |
 |list-copy                      | Yes         |             |            |
-|circular-list                  |             |             |            |
+|circular-list                  | Yes         |             |            |
 |iota                           | Yes         |             |            |
 |pair?                          | Yes         |             |            |
 |null?                          | Yes         |             |            |
-|proper-list?                   |             |             |            |
-|circular-list?                 |             |             |            |
-|dotted-list?                   |             |             |            |
-|not-pair?                      |             |             |            |
-|null-list?                     |             |             |            |
-|list=                          |             |             |            |
+|proper-list?                   | Yes         |             |            |
+|circular-list?                 | Yes         |             |            |
+|dotted-list?                   | Yes         |             |            |
+|not-pair?                      | Yes         |             |            |
+|null-list?                     | Yes         |             |            |
+|list=                          | Yes         |             |            |
 |car                            | Yes         |             |            |
 |cdr                            | Yes         |             |            |
 |cxr                            | Yes         |             |            |
@@ -424,22 +424,22 @@ All ports are both binary and textual.
 |drop                           | Yes         |             |            |
 |take-right                     | Yes         |             |            |
 |drop-right                     | Yes         |             |            |
-|take!                          |             |             |            |
-|drop-right!                    |             |             |            |
+|take!                          | Yes         |             |            |
+|drop-right!                    | Yes         |             |            |
 |split-at                       | Yes         |             |            |
-|split-at!                      |             |             |            |
-|last                           |             |             |            |
-|last-pair                      |             |             |            |
+|split-at!                      | Yes         |             |            |
+|last                           | Yes         |             |            |
+|last-pair                      | Yes         |             |            |
 |length                         | Yes         |             |            |
-|length+                        |             |             |            |
+|length+                        | Yes         |             |            |
 |append                         | Yes         |             |            |
-|concatenate                    |             |             |            |
+|concatenate                    | Yes         |             |            |
 |reverse                        | Yes         |             |            |
 |append!                        | Yes         |             |            |
-|concatenate!                   |             |             |            |
-|reverse!                       |             |             |            |
-|append-reverse                 |             |             |            |
-|append-reverse!                |             |             |            |
+|concatenate!                   | Yes         |             |            |
+|reverse!                       | Yes         |             |            |
+|append-reverse                 | Yes         |             |            |
+|append-reverse!                | Yes         |             |            |
 |zip                            | Yes         |             |            |
 |unzip1                         | Yes         |             |            |
 |unzip2                         | Yes         |             |            |
@@ -450,64 +450,64 @@ All ports are both binary and textual.
 |map                            | Yes         |             |            |
 |for-each                       | Yes         |             |            |
 |fold                           | Yes         |             |            |
-|unfold                         |             |             |            |
-|pair-fold                      |             |             |            |
-|reduce                         |             |             |            |
+|unfold                         | Yes         |             |            |
+|pair-fold                      | Yes         |             |            |
+|reduce                         | Yes         |             |            |
 |fold-right                     | Yes         |             |            |
-|unfold-right                   |             |             |            |
-|pair-fold-right                |             |             |            |
-|reduce-right                   |             |             |            |
+|unfold-right                   | Yes         |             |            |
+|pair-fold-right                | Yes         |             |            |
+|reduce-right                   | Yes         |             |            |
 |append-map                     | Yes         |             |            |
 |append-map!                    | Yes         |             |            |
-|map!                           |             |             |            |
-|pair-for-each                  |             |             |            |
-|filter-map                     |             |             |            |
-|map-in-order                   |             |             |            |
+|map!                           | Yes         |             |            |
+|pair-for-each                  | Yes         |             |            |
+|filter-map                     | Yes         |             |            |
+|map-in-order                   | Yes         |             |            |
 |filter                         | Yes         |             |            |
 |partition                      | Yes         |             |            |
-|remove                         |             |             |            |
-|filter!                        |             |             |            |
-|partition!                     |             |             |            |
-|remove!                        |             |             |            |
+|remove                         | Yes         |             |            |
+|filter!                        | Yes         |             |            |
+|partition!                     | Yes         |             |            |
+|remove!                        | Yes         |             |            |
 |member                         | Yes         |             |            |
 |memq                           | Yes         |             |            |
 |memv                           | Yes         |             |            |
-|find                           |             |             |            |
-|find-tail                      |             |             |            |
-|any                            |             |             |            |
-|every                          |             |             |            |
+|find                           | Yes         |             |            |
+|find-tail                      | Yes         |             |            |
+|any                            | Yes         |             |            |
+|every                          | Yes         |             |            |
 |list-index                     | Yes         |             |            |
 |take-while                     | Yes         |             |            |
 |drop-while                     | Yes         |             |            |
-|take-while!                    |             |             |            |
-|span                           |             |             |            |
-|break                          |             |             |            |
-|span!                          |             |             |            |
-|break!                         |             |             |            |
+|take-while!                    | Yes         |             |            |
+|span                           | Yes         |             |            |
+|break                          | Yes         |             |            |
+|span!                          | Yes         |             |            |
+|break!                         | Yes         |             |            |
 |delete                         |             |             |            |
-|delete-duplicates              |             |             |            |
+|delete-duplicates              | Yes         |             |            |
 |delete!                        |             |             |            |
-|delete-duplicates!             |             |             |            |
+|delete-duplicates!             | Yes         |             |            |
 |assoc                          | Yes         |             |            |
 |assq                           | Yes         |             |            |
 |assv                           | Yes         |             |            |
-|alist-cons                     |             |             |            |
-|alist-copy                     |             |             |            |
-|alist-delete                   |             |             |            |
-|alist-delete!                  |             |             |            |
-|lset<=                         |             |             |            |
-|lset=                          |             |             |            |
-|lset-adjoin                    |             |             |            |
-|lset-union		                  |             |             |            |
-|lset-union!                    |             |             |            |
-|lset-intersection	            |             |             |            |
-|lset-intersection!             |             |             |            |
-|lset-difference		            |             |             |            |
-|lset-difference!               |             |             |            |
-|lset-xor		                    |             |             |            |
-|lset-xor!                      |             |             |            |
-|lset-diff+intersection	        |             |             |            |
-|lset-diff+intersection!        |             |             |            |
+|alist-cons                     | Yes         |             |            |
+|alist-copy                     | Yes         |             |            |
+|alist-delete                   | Yes         |             |            |
+|alist-delete!                  | Yes         |             |            |
+|lset<=                         | Yes         |             |            |
+|lset=                          | Yes         |             |            |
+|lset-adjoin                    | Yes         |             |            |
+|lset-union		                  | Yes         |             |            |
+|lset-union!                    | Yes         |             |            |
+|lset-intersection	            | Yes         |             |            |
+|lset-intersection!             | Yes         |             |            |
+|lset-difference		            | Yes         |             |            |
+|lset-difference!               | Yes         |             |            |
+|lset-xor		                    | Yes         |             |            |
+|lset-xor!                      | Yes         |             |            |
+|lset-diff+intersection	        | Yes         |             |            |
+|lset-diff+intersection!        | Yes         |             |            |
 |set-car!                       | Yes         |             |            |
 |set-cdr!                       | Yes         |             |            |
 
