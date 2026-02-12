@@ -78,6 +78,10 @@
     (cond ((null? lst) '())
           ((symbol? lst) (list lst))
           (else (cons (car lst) (undot (cdr lst))))))
+  (define (map-improper f xs)
+    (cond ((null? xs) '())
+          ((pair? xs) (cons (f (car xs)) (map-improper f (cdr xs))))
+          (else (f xs))))
 
 
   ; TODO remove the need to expand the body syntax
@@ -796,6 +800,44 @@
 
       (('let . _) (expand-let (cdr expr)))
 
+      (('let-values ((xs producer) ...) . body)
+       (let ((tmps (map (lambda (xs) (map-improper gensym xs)) xs)))
+         (define (gen-bindings)
+           (let ((tmps (apply append (map undot tmps)))
+                 (xs (apply append (map undot xs))))
+             `(let ,(map list xs tmps) . ,body)))
+         (expand-syntax
+           (let loop ((tmps tmps) (producer producer))
+             (if (null? tmps)
+                 (gen-bindings)
+                 `(call-with-values
+                    (lambda () ,(car producer))
+                    (lambda ,(car tmps)
+                       ,(loop (cdr tmps) (cdr producer)))))))))
+
+      (('guard (var . clauses) . body)
+       (let ((guard-k (gensym 'guard-k))
+             (condition (gensym 'condition))
+             (handler-k (gensym 'handler-k))
+             (args (gensym 'args)))
+         (expand-syntax
+         `((call/cc
+            (lambda (,guard-k)
+              (with-exception-handler
+                (lambda (,condition)
+                  ((call/cc
+                     (lambda (,handler-k)
+                       (,guard-k
+                         (lambda ()
+                           (let ((,var ,condition))
+                             ,(if (assv 'else clauses)
+                                  `(cond . ,clauses)
+                                  `(cond ,@clauses (else (,handler-k (lambda () (raise-continuable ,condition)))))))))))))
+                (lambda ()
+                  (call-with-values
+                    (lambda () . ,body)
+                    (lambda ,args (,guard-k (lambda () (apply values ,args)))))))))))))
+
       (('let*-values ((xs producer) . rest) . body)
        (expand-syntax `(call-with-values (lambda () ,producer) (lambda ,xs (let*-values ,rest . ,body)))))
       (('let*-values () . body) (expand-syntax `(let () . ,body)))
@@ -855,7 +897,9 @@
            `(let ((,foobar ,p))
              (if ,foobar (,f ,foobar) (cond . ,rest))))))
       (('cond (p . body) . rest)
-       (expand-syntax `(if ,p (let () . ,body) (cond . ,rest))))
+       (if (null? body)
+           (expand-syntax `(or ,p (cond . ,rest)))
+           (expand-syntax `(if ,p (let () . ,body) (cond . ,rest)))))
       (('cond) `(error "exhausted cond statement"))
       (('cond . noise) (compiler-error "malformed cond" `(cond . ,noise)))
 
@@ -872,9 +916,27 @@
       (('cut f . args) (expand-syntax `(cut-iter () () ,f . ,args)))
       (('cut-iter xs args f) (expand-syntax `(lambda ,(reverse xs) (,f . ,(reverse args)))))
       (('cut-iter xs args f '<> . rest) (let ((x (gensym "x"))) (expand-syntax `(cut-iter (,x . ,xs) (,x . ,args) ,f . ,rest))))
-      (('cut-iter xs args f '<...>) (compiler-error "cut: ellipses syntax not supported yet"))
+      (('cut-iter xs args f '<...>)
+       (let ((rest (gensym 'rest)))
+         (expand-syntax
+           `(lambda (,@(reverse xs) . ,rest) (apply ,f ,@(reverse args) ,rest)))))
       (('cut-iter xs args f x . rest) (expand-syntax `(cut-iter ,xs (,x . ,args) ,f . ,rest)))
       (('cut . noise) (compiler-error "malformed cut" `(cut . ,noise)))
+
+      (('cute f . args) (expand-syntax `(cute-iter () () ,f . ,args)))
+      (('cute-iter xs args f) (expand-syntax `(lambda ,(reverse xs) (,f . ,(reverse args)))))
+      (('cute-iter xs args f '<> . rest) (let ((x (gensym "x"))) (expand-syntax `(cute-iter (,x . ,xs) (,x . ,args) ,f . ,rest))))
+      (('cute-iter xs args f '<...>)
+       (let ((rest (gensym 'rest)))
+         (expand-syntax
+           `(lambda (,@(reverse xs) . ,rest) (apply ,f ,@(reverse args) ,rest)))))
+      (('cute-iter xs args f x . rest)
+       (let ((tmp (gensym 'tmp)))
+         (expand-syntax `(let ((,tmp ,x)) (cute-iter ,xs (,tmp . ,args) ,f . ,rest)))))
+      (('cute . noise) (compiler-error "malformed cute" `(cute . ,noise)))
+
+      (('receive formals expr . body)
+       `(call-with-values (lambda () ,expr) (lambda ,formals . ,body)))
 
       (('do ((var init . step) ...)
             (test ret ...)
