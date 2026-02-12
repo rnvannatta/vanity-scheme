@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <limits.h>
+#include <time.h>
 #include "vanity/dfile.h"
 #include "vport_private.h"
 #include "intern_private.h"
@@ -1662,6 +1663,20 @@ V_BEGIN_FUNC_BASIC(VReadChar2, "read-char", 1, _port)
   }
 V_END_FUNC
 
+V_BEGIN_FUNC_BASIC(VPeekChar, "peek-char", 1, _port)
+  VPort * port = (VPort*)VDecodePointer(_port);
+  if(!port || port->base.tag != VPORT) VErrorC(runtime, "peek-char: not a port ~S~N", _port);
+  if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "peek-char: not an readable port ~S~N", _port);
+
+  char c = port_fgetc(port);
+  if(c < 0) {
+    return VEOF;
+  } else {
+    port_ungetc(c, port);
+    return VEncodeChar((char)c);
+  }
+V_END_FUNC
+
 V_BEGIN_FUNC(VReadLine2, "read-line", 2, k, _port)
   VPort * port = (VPort*)VDecodePointer(_port);
   if(!port || port->base.tag != VPORT) VErrorC(runtime, "read-line: not a port ~S~N", _port);
@@ -1724,6 +1739,12 @@ V_BEGIN_FUNC_BASIC(VNewline2, "newline", 1, port)
     VPort * p = VCheckedDecodePort2(runtime, port, "newline");
     if(!(p->flags & PFLAG_WRITE)) VErrorC(runtime, "newline: port's write end is closed~N");
     port_fputc('\n', p);
+    port_fflush(p);
+    return VVOID;
+}
+V_BEGIN_FUNC_BASIC(VFlushOutputPort, "flush-output-port", 1, port)
+    VPort * p = VCheckedDecodePort2(runtime, port, "flush-output-port");
+    if(!(p->flags & PFLAG_WRITE)) VErrorC(runtime, "flush-output-port: port's write end is closed~N");
     port_fflush(p);
     return VVOID;
 }
@@ -2479,3 +2500,37 @@ V_BEGIN_FUNC_BASIC(VMemq, "memq", 2, x, lst)
   }
   return VFALSE;
 V_END_FUNC
+
+#if defined(_WIN32)
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
+double VCurrentSecond() {
+  FILETIME ft;
+  ULARGE_INTEGER uli;
+
+  GetSystemTimeAsFileTime(&ft);
+
+  uli.LowPart  = ft.dwLowDateTime;
+  uli.HighPart = ft.dwHighDateTime;
+
+  const unsigned long long WINDOWS_TICK = 10000000ULL;
+  const unsigned long long SEC_TO_UNIX_EPOCH = 11644473600ULL;
+
+  double seconds = (double)(uli.QuadPart / WINDOWS_TICK);
+  double fraction = (double)(uli.QuadPart % WINDOWS_TICK) / WINDOWS_TICK;
+
+  return (seconds - SEC_TO_UNIX_EPOCH) + fraction;
+}
+
+#else
+
+#include <sys/time.h>
+double VCurrentSecond() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (double)tv.tv_sec + (double)tv.tv_usec / 1e6;
+}
+
+#endif
