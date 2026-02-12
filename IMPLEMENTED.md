@@ -1,6 +1,6 @@
 # Vanity Scheme Implementation Status
 
-Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI-1, SRFI-4, SRFI-17, SRFI-26, SRFI-69, SRFI-151, and SRFI-260
+Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI-1, SRFI-4, SRIF-8 SRFI-17, SRFI-26, SRFI-69, SRFI-125, SRFI-151, and SRFI-260
 
 ## R7RS Syntax and Procedures
 
@@ -175,7 +175,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |get-environment-variables      |             |             |            |
 |get-output-bytevector          |             |             |            |
 |get-output-string              | Yes         | ?           |            |
-|guard                          |             |             |            |
+|guard                          | Yes         |             |            |
 |#i                             | Yes         |             |            |
 |if                             | Yes         |             |            |
 |imag-part                      | Low Prio    |             |            |
@@ -199,7 +199,7 @@ Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI
 |let*                           | Yes         |             |            |
 |let\*-values                   | Yes         |             |            |
 |let-syntax                     | Low Prio    |             |            |
-|let-values                     |             |             |            |
+|let-values                     | Yes         |             |            |
 |letrec                         | Yes         |             |            |
 |letrec\*                       | Yes         |             |            |
 |letrec-syntax                  | Low Prio    |             |            |
@@ -484,9 +484,9 @@ All ports are both binary and textual.
 |break                          | Yes         |             |            |
 |span!                          | Yes         |             |            |
 |break!                         | Yes         |             |            |
-|delete                         |             |             |            |
+|delete                         | Yes         |             |            |
 |delete-duplicates              | Yes         |             |            |
-|delete!                        |             |             |            |
+|delete!                        | Yes         |             |            |
 |delete-duplicates!             | Yes         |             |            |
 |assoc                          | Yes         |             |            |
 |assq                           | Yes         |             |            |
@@ -537,6 +537,12 @@ All ports are both binary and textual.
 
 Also u8vector is an alias for bytevector and all procedures exist there too
 
+## SRFI-8
+
+| Name                          | Implemented | Well Tested | Documented |
+|-------------------------------|-------------|-------------|------------|
+|receive                        | Yes         |             |            |
+
 ## SRFI-17
 
 | Name                          | Implemented | Well Tested | Documented |
@@ -549,10 +555,8 @@ Also u8vector is an alias for bytevector and all procedures exist there too
 
 | Name                          | Implemented | Well Tested | Documented |
 |-------------------------------|-------------|-------------|------------|
-|cut                            | Partial     |             |            |
-|cute                           |             |             |            |
-
-`cut` does not support `<...>` yet.
+|cut                            | Yes         |             |            |
+|cute                           | Yes         |             |            |
 
 ## SRFI-69
 
@@ -582,6 +586,8 @@ Also u8vector is an alias for bytevector and all procedures exist there too
 |string-hash                    |             |             |            |
 |string-ci-hash                 |             |             |            |
 |hash-by-identity               |             |             |            |
+
+## SRFI-125
 
 ## SRFI 151
 
