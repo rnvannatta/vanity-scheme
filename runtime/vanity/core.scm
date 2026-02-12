@@ -62,6 +62,9 @@
     string string->list list->string make-string substring string-copy string-copy! string-ref string-set! string-length string->symbol string->number string-append string-for-each string-map
     string-foldcase string-upcase string-downcase
     symbol->string utf8->string string->utf8 string->vector
+    string<=? string<? string=? string>=? string>?
+    string-ci<=? string-ci<? string-ci=? string-ci>=? string-ci>?
+    string-fill!
     ; vectors
     list->vector vector->list vector->string make-vector vector-copy vector-copy! vector vector-ref vector-set! vector-length vector-map vector-for-each vector-append vector-fill!
     ; typevectors
@@ -73,7 +76,7 @@
     u8vector? list->u8vector u8vector->list make-u8vector u8vector u8vector-ref u8vector-set! u8vector-length u8vector-copy u8vector-copy!
     s8vector? list->s8vector s8vector->list make-s8vector s8vector s8vector-ref s8vector-set! s8vector-length s8vector-copy s8vector-copy!
     bytevector? list->bytevector bytevector->list make-bytevector bytevector bytevector-u8-ref bytevector-u8-set! bytevector-length bytevector-copy bytevector-copy!
-    read-u8vector read-bytevector
+    read-u8vector read-bytevector read-bytevector!
 
     typevector?
 
@@ -82,7 +85,7 @@
     ; hash table
     make-hash-table hash-table-ref hash-table-set! hash-table-delete! hash-table->alist
     ; chars
-    char->integer integer->char number->string
+    char->integer integer->char digit-value number->string
     char-numeric? char-alphabetic? char-upper-case? char-lower-case? char-whitespace?
     char-upcase char-downcase char-foldcase
     char<=? char<? char=? char>=? char>?
@@ -90,9 +93,13 @@
     ; io
     input-port? output-port? input-port-open? output-port-open? close-input-port close-output-port
     current-output-port current-error-port current-input-port open-input-file open-output-file close-port
+    open-binary-input-file open-binary-output-file
     open-input-string open-output-string get-output-string with-output-to-file with-input-from-file 
+    open-input-bytevector open-output-bytevector get-output-bytevector
     call-with-port call-with-input-file call-with-output-file
-    read-char read-line read newline display write write-simple
+    eof-object read-char read-u8 read-line read read-string
+    newline display write write-simple flush-output-port
+    char-ready? u8-ready? peek-char peek-u8
     write-char write-u8 write-string write-bytevector
     ; misc
     call/cc call-with-current-continuation call-with-values apply values
@@ -107,11 +114,12 @@
     open-output-process
     ; filesystem
     make-temporary-file
-    file-exists?
+    file-exists? delete-file
     exit emergency-exit
     ; time
     current-jiffy
     jiffies-per-second
+    current-second
     ; bit banging
     bitwise-not bitwise-and bitwise-or bitwise-ior bitwise-xor bitwise-xnor bitwise-eqv
     bitwise-nand bitwise-nor bitwise-andc1 bitwise-andc2 bitwise-orc1 bitwise-orc2 arithmetic-shift bit-count
@@ -119,8 +127,9 @@
     fiber-fork fiber-fork-list fiber-map async await
     ; not r5rs
     atom? displayln writeln format printf sprintf
-    error
+    error file-error read-error
     error-object? error-object-message error-object-irritants
+    file-error? read-error?
     ; srfi-260
     generate-symbol
   )
@@ -898,6 +907,18 @@
       ((n port) (##vcore.read-u8vector n port))))
   (define read-bytevector read-u8vector)
 
+  (define read-bytevector!
+    (case-lambda
+      ((bv) (read-bytevector! bv (current-input-port) 0 (bytevector-length bv)))
+      ((bv port) (read-bytevector! bv port 0 (bytevector-length bv)))
+      ((bv port start) (read-bytevector! bv port start (bytevector-length bv)))
+      ((bv port start end)
+       (let* ((len (- end start))
+              (data (read-bytevector len port))
+              (bytes-read (bytevector-length data)))
+         (bytevector-copy! bv start data 0 bytes-read)
+         bytes-read))))
+
   (define-constant s8vector? ##vcore.s8vector?)
   (define-constant make-s8vector ##vcore.make-s8vector)
   (define-constant list->s8vector ##vcore.list->s8vector)
@@ -1092,6 +1113,136 @@
         do (vector-set! vec i (string-ref str i)))
       vec))
 
+  (define (string=?-2 a b)
+    (let ((n (string-length a)) (m (string-length b)))
+      (and (= n m)
+           (let loop ((i 0))
+             (or (= i n)
+                 (and (char=? (string-ref a i) (string-ref b i))
+                      (loop (+ i 1))))))))
+
+  (define (string<?-2 a b)
+    (let ((n (string-length a)) (m (string-length b)))
+      (let loop ((i 0))
+        (cond ((= i n) (< n m))
+              ((= i m) #f)
+              ((char<? (string-ref a i) (string-ref b i)) #t)
+              ((char=? (string-ref a i) (string-ref b i)) (loop (+ i 1)))
+              (else #f)))))
+
+  (define (string>?-2 a b) (string<?-2 b a))
+  (define (string<=?-2 a b) (not (string>?-2 a b)))
+  (define (string>=?-2 a b) (not (string<?-2 a b)))
+
+  (define (string-ci=?-2 a b)
+    (let ((n (string-length a)) (m (string-length b)))
+      (and (= n m)
+           (let loop ((i 0))
+             (or (= i n)
+                 (and (char-ci=? (string-ref a i) (string-ref b i))
+                      (loop (+ i 1))))))))
+
+  (define (string-ci<?-2 a b)
+    (let ((n (string-length a)) (m (string-length b)))
+      (let loop ((i 0))
+        (cond ((= i n) (< n m))
+              ((= i m) #f)
+              ((char-ci<? (string-ref a i) (string-ref b i)) #t)
+              ((char-ci=? (string-ref a i) (string-ref b i)) (loop (+ i 1)))
+              (else #f)))))
+
+  (define (string-ci>?-2 a b) (string-ci<?-2 b a))
+  (define (string-ci<=?-2 a b) (not (string-ci>?-2 a b)))
+  (define (string-ci>=?-2 a b) (not (string-ci<?-2 a b)))
+
+  (define (chain-string-cmp bin? a b c d rest)
+    (and (bin? a b) (bin? b c) (bin? c d)
+         (let loop ((prev d) (lst rest))
+           (or (null? lst)
+               (and (bin? prev (car lst)) (loop (car lst) (cdr lst)))))))
+
+  (define string<=?
+    (case-lambda
+      ((a b) (string<=?-2 a b))
+      ((a b c) (and (string<=?-2 a b) (string<=?-2 b c)))
+      ((a b c d) (and (string<=?-2 a b) (string<=?-2 b c) (string<=?-2 c d)))
+      ((a b c d . rest) (chain-string-cmp string<=?-2 a b c d rest))))
+
+  (define string<?
+    (case-lambda
+      ((a b) (string<?-2 a b))
+      ((a b c) (and (string<?-2 a b) (string<?-2 b c)))
+      ((a b c d) (and (string<?-2 a b) (string<?-2 b c) (string<?-2 c d)))
+      ((a b c d . rest) (chain-string-cmp string<?-2 a b c d rest))))
+
+  (define string=?
+    (case-lambda
+      ((a b) (string=?-2 a b))
+      ((a b c) (and (string=?-2 a b) (string=?-2 b c)))
+      ((a b c d) (and (string=?-2 a b) (string=?-2 b c) (string=?-2 c d)))
+      ((a b c d . rest) (chain-string-cmp string=?-2 a b c d rest))))
+
+  (define string>=?
+    (case-lambda
+      ((a b) (string>=?-2 a b))
+      ((a b c) (and (string>=?-2 a b) (string>=?-2 b c)))
+      ((a b c d) (and (string>=?-2 a b) (string>=?-2 b c) (string>=?-2 c d)))
+      ((a b c d . rest) (chain-string-cmp string>=?-2 a b c d rest))))
+
+  (define string>?
+    (case-lambda
+      ((a b) (string>?-2 a b))
+      ((a b c) (and (string>?-2 a b) (string>?-2 b c)))
+      ((a b c d) (and (string>?-2 a b) (string>?-2 b c) (string>?-2 c d)))
+      ((a b c d . rest) (chain-string-cmp string>?-2 a b c d rest))))
+
+  (define string-ci<=?
+    (case-lambda
+      ((a b) (string-ci<=?-2 a b))
+      ((a b c) (and (string-ci<=?-2 a b) (string-ci<=?-2 b c)))
+      ((a b c d) (and (string-ci<=?-2 a b) (string-ci<=?-2 b c) (string-ci<=?-2 c d)))
+      ((a b c d . rest) (chain-string-cmp string-ci<=?-2 a b c d rest))))
+
+  (define string-ci<?
+    (case-lambda
+      ((a b) (string-ci<?-2 a b))
+      ((a b c) (and (string-ci<?-2 a b) (string-ci<?-2 b c)))
+      ((a b c d) (and (string-ci<?-2 a b) (string-ci<?-2 b c) (string-ci<?-2 c d)))
+      ((a b c d . rest) (chain-string-cmp string-ci<?-2 a b c d rest))))
+
+  (define string-ci=?
+    (case-lambda
+      ((a b) (string-ci=?-2 a b))
+      ((a b c) (and (string-ci=?-2 a b) (string-ci=?-2 b c)))
+      ((a b c d) (and (string-ci=?-2 a b) (string-ci=?-2 b c) (string-ci=?-2 c d)))
+      ((a b c d . rest) (chain-string-cmp string-ci=?-2 a b c d rest))))
+
+  (define string-ci>=?
+    (case-lambda
+      ((a b) (string-ci>=?-2 a b))
+      ((a b c) (and (string-ci>=?-2 a b) (string-ci>=?-2 b c)))
+      ((a b c d) (and (string-ci>=?-2 a b) (string-ci>=?-2 b c) (string-ci>=?-2 c d)))
+      ((a b c d . rest) (chain-string-cmp string-ci>=?-2 a b c d rest))))
+
+  (define string-ci>?
+    (case-lambda
+      ((a b) (string-ci>?-2 a b))
+      ((a b c) (and (string-ci>?-2 a b) (string-ci>?-2 b c)))
+      ((a b c d) (and (string-ci>?-2 a b) (string-ci>?-2 b c) (string-ci>?-2 c d)))
+      ((a b c d . rest) (chain-string-cmp string-ci>?-2 a b c d rest))))
+
+  (define string-fill!
+    (case-lambda
+      ((str fill)
+       (string-fill! str fill 0 (string-length str)))
+      ((str fill start)
+       (string-fill! str fill start (string-length str)))
+      ((str fill start end)
+       (let loop ((i start))
+        (when (< i end)
+          (string-set! str i fill)
+          (loop (+ i 1)))))))
+
   ; records
   (define-constant record ##vcore.record)
   (define-constant record-ref ##vcore.record-ref)
@@ -1165,6 +1316,12 @@
       (if (<= 65 i 90)
           (integer->char (bitwise-xor i 32))
           c)))
+  (define (digit-value c)
+    (let ((i (char->integer c)))
+      (if (<= 48 i 57)
+          (- i 48)
+          #f)))
+
 
   (define char<?
     (case-lambda
@@ -1382,6 +1539,10 @@
     (let ((port ((##intrinsic "VOpenInputString" 2) str)))
       (##vcore.set-finalizer! port ##vcore.close-stream)
       port))
+
+  (define (open-input-bytevector bv)
+    (open-input-string (utf8->string bv)))
+
   (define (open-output-string-impl)
     (call-with-values
       (lambda () (##vcore.open-output-string))
@@ -1393,9 +1554,17 @@
     (try-or-gc (lambda () (open-input-file-impl path)) "open-input-file: failed"))
   (define (open-output-file path)
     (try-or-gc (lambda () (open-output-file-impl path)) "open-output-file: failed"))
+  (define open-binary-input-file open-input-file)
+  (define open-binary-output-file open-output-file)
+
   (define (open-output-string)
     (try-or-gc open-output-string-impl "open-output-string: failed"))
   (define get-output-string ##vcore.get-output-string)
+
+  (define open-output-bytevector open-output-string)
+  (define (get-output-bytevector port)
+    (let ((str (get-output-string port)))
+      (string->utf8 str)))
 
   (define (call-with-port port proc)
     (let ((ret (proc port)))
@@ -1423,6 +1592,11 @@
     (case-lambda
       (() (##vcore.read-char (current-input-port)))
       ((port) (##vcore.read-char port))))
+  (define read-u8
+    (case-lambda
+      (() (char->integer (##vcore.read-char (current-input-port))))
+      ((port) (char->integer (##vcore.read-char port)))))
+
   (define read-line
     (case-lambda
       (() (read-line (current-input-port)))
@@ -1434,15 +1608,40 @@
               (let ((rest (read-line port)))
                 (string-append line (if (eof-object? rest) "" rest))))))))
 
+  (define eof-object
+    (let ((obj (call-with-port (open-input-string "") read-char)))
+      (lambda () obj)))
+
   (define read
     (case-lambda
       (() (##vcore.read (current-input-port)))
       ((port) (##vcore.read port))))
 
+  (define read-string
+    (case-lambda
+      ((k) (read-string k (current-input-port)))
+      ((k port)
+       (let ((bv (read-bytevector k port)))
+         (utf8->string bv)))))
+
+  (define peek-char
+    (case-lambda
+      (() (peek-char (current-input-port)))
+      ((port) ((##basic-intrinsic "VPeekChar" 1) port))))
+  (define peek-u8
+    (case-lambda
+      (() (char->integer (peek-char)))
+      ((port) (char->integer (peek-char port)))))
+
   (define newline
     (case-lambda
       (() (##vcore.newline (current-output-port)))
       ((port) (##vcore.newline port))))
+
+  (define flush-output-port
+    (case-lambda
+      (() (flush-output-port (current-output-port)))
+      ((port) ((##basic-intrinsic "VFlushOutputPort" 1) port))))
   
   (define (printout-list x write? port)
     (##vcore.display-word "(" port)
@@ -1541,6 +1740,12 @@
          for c across-u8 b
          do (##vcore.display-word (integer->char c) port)))))
 
+  (define char-ready?
+    (case-lambda
+      (() #t)
+      ((port) (unless (port? port) (error "char-ready?: not a port" port)) #t)))
+  (define u8-ready? char-ready?)
+
   ; misc 
   (define-constant call/cc ##vcore.call/cc)
   (define-constant call-with-current-continuation ##vcore.call/cc)
@@ -1586,6 +1791,9 @@
        (##vcore.access path 0))
       ((path mode)
        (##vcore.access path mode))))
+  (define (delete-file path)
+    (let ((ret ((foreign-function "C" "int remove(const char* path)") path)))
+      (if ret (file-error "delete file: operation failed" path))))
   (define-constant exit ##vcore.exit)
 
   (define (emergency-exit e)
@@ -1593,6 +1801,8 @@
 
   (define-constant current-jiffy ##vcore.current-jiffy)
   (define-constant jiffies-per-second ##vcore.jiffies-per-second)
+
+  (define current-second (foreign-function "C" "double VCurrentSecond();"))
 
   (define bitwise-and
     (case-lambda
@@ -1746,9 +1956,18 @@
 
   (define (error msg . irritants)
     (raise (##vcore.record #f 'error msg irritants)))
+  (define (file-error msg . irritants)
+    (raise (##vcore.record #f 'file-error msg irritants)))
+  (define (read-error msg . irritants)
+    (raise (##vcore.record #f 'read-error msg irritants)))
 
   (define (error-object? e)
-    (and (##vcore.record? e) (not (##vcore.record-ref e 0)) (eqv? (##vcore.record-ref e 1) 'error)))
+    (and (##vcore.record? e) (not (##vcore.record-ref e 0)) #;(eqv? (##vcore.record-ref e 1) 'error)))
+  (define (file-error? e)
+    (and (##vcore.record? e) (not (##vcore.record-ref e 0)) (eqv? (##vcore.record-ref e 1) 'file-error)))
+  (define (read-error? e)
+    (and (##vcore.record? e) (not (##vcore.record-ref e 0)) (eqv? (##vcore.record-ref e 1) 'read-error)))
+
   (define (error-object-message e)
     (if (error-object? e)
         (##vcore.record-ref e 2)

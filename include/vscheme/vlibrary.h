@@ -175,6 +175,7 @@ V_DECLARE_FUNC(VGetOutputString2, k, port);
 
 // input
 V_DECLARE_FUNC_BASIC(VReadChar2, port);
+V_DECLARE_FUNC_BASIC(VPeekChar, port);
 V_DECLARE_FUNC(VReadLine2, k, port);
 V_DECLARE_FUNC(VReadLine3, k, port);
 V_DECLARE_FUNC(VRead2, k, port);
@@ -183,6 +184,7 @@ V_DECLARE_FUNC(VRead2, k, port);
 V_DECLARE_FUNC_BASIC(VDisplay2, val, port);
 V_DECLARE_FUNC_BASIC(VWrite2, val, port);
 V_DECLARE_FUNC_BASIC(VNewline2, port);
+V_DECLARE_FUNC_BASIC(VFlushOutputPort, port);
 
 V_DECLARE_FUNC_BASIC(VDisplayStdout, val);
 V_DECLARE_FUNC_BASIC(VWriteStdout, val);
