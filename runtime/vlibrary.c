@@ -1356,6 +1356,8 @@ V_END_FUNC
 V_BEGIN_FUNC_BASIC(VStringSet2, "string-set!", 3, _str, _i, _c)
   VBlob * str = VCheckedDecodeString2(runtime, _str, "string-set!");
 
+  if(str->base.flags & VFLAG_IMMUTABLE) VErrorC(runtime, "string-set!: string is immutable");
+
   if(VWordType(_i) != VIMM_INT) VErrorC(runtime, "string-set!: not an int");
   int i = VDecodeInt(_i);
   // not exposing the null terminal
@@ -2265,6 +2267,7 @@ V_END_FUNC \
 V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorSet, #prefix "vector-set!", 3, _buf, _i, val) \
   int i = VCheckedDecodeInt2(runtime, _i, #prefix "vector-set!"); \
   VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, #prefix "vector-set!"); \
+  if(buf->base.flags & VFLAG_IMMUTABLE) VErrorC(runtime, #prefix "vector-set!: vector is immutable"); \
   if(buf->buf[0] != BUF_ ## Prefix) \
     VErrorC(runtime, #prefix "vector-set!: not a vector of the right type.", _buf); \
   Prefix ## Write(runtime, buf, elem_width*(i+1), val); \
@@ -2304,6 +2307,31 @@ IMPLEMENT_BUFFER(s32, S32, 4)
 
 IMPLEMENT_BUFFER(f32, F32, 4)
 IMPLEMENT_BUFFER(f64, F64, 8)
+
+V_BEGIN_FUNC(VCompileTypevector, "compile-typevector", 2, k, _vec)
+  VBlob * vec = VDecodeBlob(_vec);
+  int len = vec->len;
+  if(len >= (INT_MAX - 1) / 4)
+    VErrorC(runtime, "compile-typevector: typevector too long");
+
+  VBlob * ret = V_ALLOCA_BLOB2((void*)&runtime, runtime, len*4+1);
+  if(!ret) VGarbageCollect2Func(runtime, (VFunc)VCompileTypevector, argc, k, _vec);
+  ret->base = VMakeSmallObject(VSTRING);
+  ret->len = len*4+1;
+  for(int i = 0; i < len; i++) {
+    uint8_t byte = vec->buf[i];
+    uint8_t hi = (byte >> 4) & 15;
+    uint8_t lo = byte & 15;
+    char hex[] = "0123456789ABCDEF";
+
+    ret->buf[4*i+0] = '\\';
+    ret->buf[4*i+1] = 'x';
+    ret->buf[4*i+2] = hex[hi];
+    ret->buf[4*i+3] = hex[lo];
+  }
+  ret->buf[len*4] = '\0';
+  V_BOUNCE(k, runtime, VEncodePointer(ret, VPOINTER_OTHER));
+V_END_FUNC
 
 V_BEGIN_FUNC(VReadU8Vector, "read-u8vector", 3, k, _n, _port)
   VPort * port = VCheckedDecodePointer2(runtime, _port, VPORT, "read-u8vector");

@@ -25,7 +25,7 @@
 
 (define-library (vanity compiler library)
   (import (vanity core) (vanity list) (vanity compiler utils))
-  (export find-library-interface! register-library-interface! header-from-library valid-import? import-basepath import->path gather-dependencies)
+  (export process-import! register-library-interface! header-from-library valid-import? import-basepath import->path gather-dependencies)
 
   (define library-interfaces '())
   (define (load-library-interface import paths)
@@ -41,10 +41,73 @@
         #;(compiler-error "library already registered" (cadr lib))
         (set-cdr! (assoc (cadr lib) library-interfaces) lib)
         (set! library-interfaces (cons (cons (cadr lib) lib) library-interfaces))))
+  (define (import-path import)
+    (match import
+      (('only import . _) (import-path import))
+      (('except import . _) (import-path import))
+      (('prefix import prefix) (import-path import))
+      (('rename import . _) (import-path import))
+      (else import)))
   (define (find-library-interface! import paths)
     (let ((lookup (assoc import library-interfaces)))
       (if lookup (cdr lookup)
           (load-library-interface import paths))))
+
+  (define (extract-exports lib)
+    (cond ((assoc 'export (cddr lib)) => cdr)
+          (else '())))
+  (define (extract-constants lib)
+    (cond ((assoc 'constant-export (cddr lib)) => cdr)
+          (else '())))
+
+  (define (process-import! import paths)
+    (define (prefix-import import prefix)
+      (cons (car import) (string->symbol (string-append prefix (symbol->string (cdr import))))))
+    (define (rename-import import renames)
+      (cons (car import) (cond ((assv (cdr import) renames) => cadr) (else (cdr import)))))
+    (define (process-export e)
+      (match e
+        (('rename a b)
+         (cons a b))
+        (else
+         (unless (symbol? e) (compiler-error "invalid export" e))
+         (cons e e))))
+    (match import
+      (('only import . names)
+       (let ((resolved-import (process-import! import paths)))
+         (match resolved-import
+           ((path imports constant-imports)
+            (list path
+              (filter (lambda (e) (memv (cdr e) names)) imports)
+              (filter (lambda (e) (memv (cdr e) names)) constant-imports))))))
+      (('except import . names)
+       (let ((resolved-import (process-import! import paths)))
+         (match resolved-import
+           ((path imports constant-imports)
+            (list path
+              (filter (lambda (e) (not (memv (cdr e) names))) imports)
+              (filter (lambda (e) (not (memv (cdr e) names))) constant-imports))))))
+      (('prefix import prefix)
+       (let ((resolved-import (process-import! import paths)))
+         (match resolved-import
+           ((path imports constant-imports)
+            (let ((stringfix (symbol->string prefix)))
+              (list path
+                (map (cut prefix-import <> stringfix) imports)
+                (map (cut prefix-import <> stringfix) constant-imports)))))))
+      (('rename import . renames)
+       (let ((resolved-import (process-import! import paths)))
+         (match resolved-import
+           ((path imports constant-imports)
+              (list path
+                (map (cut rename-import <> renames) imports)
+                (map (cut rename-import <> renames) constant-imports))))))
+      (else
+        (let ((lib (find-library-interface! import paths)))
+          (list
+            import
+            (map process-export (extract-exports lib))
+            (map (lambda (e) (cons (cadr e) (car e))) (extract-constants lib)))))))
 
   (define (acceptable-char? c)
     (let ((i (char->integer c)))
@@ -79,7 +142,7 @@
             (constant-export . ,constants))
           (match (car rest)
             (('export . syms) (iter constants (append exports syms) imports (cdr rest)))
-            (('import . libs) (iter constants exports (append imports libs) (cdr rest)))
+            (('import . libs) (iter constants exports (append imports (map import-path libs)) (cdr rest)))
             (('begin . statements)
              (iter constants exports imports (append statements (cdr rest))))
             (('define-constant x val)
@@ -93,7 +156,7 @@
     (if (null? statements) '()
         (match (car statements)
           (('import . libs)
-           (append libs (gather-dependencies (cdr statements))))
+           (append (map import-path libs) (gather-dependencies (cdr statements))))
           (('define-library name . body)
            (append (gather-dependencies body) (gather-dependencies (cdr statements))))
           (else (gather-dependencies (cdr statements)))))))

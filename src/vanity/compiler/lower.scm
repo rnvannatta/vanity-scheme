@@ -139,10 +139,19 @@
                 ((eq? x #t) x)
                 ((eq? x #f) x)
                 ((null? x) x)
+                ((typevector? x)
+                 ; FIXME ASSOC DETECTED
+                 (let ((lookup (assoc x literal-table)))
+                   (if lookup
+                       `(##typevector ,(cdr lookup))
+                       (begin
+                         (set! literal-table (cons (cons x (gensym "typevector")) literal-table))
+                         `(##typevector ,(cdar literal-table))))))
                 ((string? x)
                  ; FIXME ASSOC DETECTED
                  (let ((lookup (assoc x literal-table)))
-                   (if lookup `(##string ,(cdr lookup))
+                   (if lookup
+                       `(##string ,(cdr lookup))
                        (begin
                          (set! literal-table (cons (cons x (gensym "string")) literal-table))
                          `(##string ,(cdar literal-table))))))
@@ -151,6 +160,24 @@
                  (if (not (assv x literal-table))
                      (set! literal-table (cons (cons x '()) literal-table)))
                  x)
+                ((pair? x)
+                 ; FIXME ASSOC DETECTED
+                 (let* ((x (list '##pair (cons (lift-literal (car x)) (lift-literal (cdr x)))))
+                        (lookup (assoc x literal-table)))
+                   (if lookup
+                       `(##pair ,(cdr lookup))
+                       (begin
+                         (set! literal-table (cons (cons x (gensym "pair")) literal-table))
+                         `(##pair ,(cdar literal-table))))))
+                ((vector? x)
+                 ; FIXME ASSOC DETECTED
+                 (let* ((x (vector-map lift-literal x))
+                        (lookup (assoc x literal-table)))
+                   (if lookup
+                       `(##vector ,(cdr lookup))
+                       (begin
+                         (set! literal-table (cons (cons x (gensym "vector")) literal-table))
+                         `(##vector ,(cdar literal-table))))))
                 (else (compiler-error "literal-lifting: unknown literal type" x)))
           x))
     (define (iter-lambda fun lamb) 

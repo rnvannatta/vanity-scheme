@@ -62,6 +62,7 @@
 
 #include "vanity/dfile.h"
 #include "vscheme/vruntime.h"
+#include "vscheme/vlibrary.h"
 #include "vsetjmp_private.h"
 #include "vruntime_private.h"
 #include "vport_private.h"
@@ -2100,6 +2101,7 @@ static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val)
   } else {
     if(VWordType(pair) != VPOINTER_PAIR) VErrorC(runtime, "%s: arg 1 not a pair\n", proc);
     VPair * p = VDecodePair(pair);
+    if(p->base.flags & VFLAG_IMMUTABLE) VErrorC(runtime, "%s: pair is immutable", proc);
 
     VTrackMutation(runtime, p, bSetCar ? &p->first : &p->rest, val);
     
@@ -2130,6 +2132,7 @@ V_BEGIN_FUNC(VVectorSet2, "vector-set!", 4, k, v, i, val)
     VGarbageCollect2Args((VFunc)VVectorSet2, runtime, statics, 4, argc, k, v, i, val);
   } else {
     VVector * vector = VCheckedDecodeVector2(runtime, v, "vector-set!");
+    if(vector->base.flags & VFLAG_IMMUTABLE) VErrorC(runtime, "vector-set!: vector is immutable");
     if(VWordType(i) != VIMM_INT) VErrorC(runtime, "vector-set!: arg 2 not an int\n");
     int index = VDecodeInt(i);
     if(!(0 <= index && index < vector->len)) VErrorC(runtime, "vector-set!: out of range\n");
@@ -2718,6 +2721,36 @@ V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
     VDefineImpl(runtime, sym_word, lib_entry->rest, true);
   }
   V_CALL(k, runtime, VVOID);
+V_END_FUNC
+
+V_BEGIN_FUNC(VRenameImports, "rename-imports", 3, k, imports, renames)
+  if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
+    VGarbageCollect2Args((VFunc)VRenameImports, runtime, statics, 2, argc, k, imports, renames);
+
+  VWORD ret = VNULL;
+  VWORD pair = renames;
+  while(!VIsEq(pair, VNULL)) {
+    VPair * _pair = VDecodePair(pair);
+    VPair * names = VDecodePair(_pair->first);
+    VWORD oldname = names->first;
+    VWORD newname = names->rest;
+
+    VWORD funcentry = _VBasic_VAssq(runtime, NULL, oldname, imports);
+    if(VIsEq(funcentry, VFALSE))
+      VErrorC(runtime, "rename-imports: procedure not found: ~S\n", _pair->first);
+
+    VWORD closure = VDecodePair(funcentry)->rest;
+    
+    VPair * newfuncentry = alloca(sizeof(VPair));
+    *newfuncentry = VMakePair(newname, closure);
+
+    VPair * newnode = alloca(sizeof(VPair));
+    *newnode = VMakePair(VEncodePair(newfuncentry), ret);
+    ret = VEncodePair(newnode);
+
+    pair = _pair->rest;
+  }
+  V_CALL(k, runtime, ret);
 V_END_FUNC
 
 #define IMPLEMENT_PRINT_VECTOR(Prefix, prefix, stride, ctype, fputi) \

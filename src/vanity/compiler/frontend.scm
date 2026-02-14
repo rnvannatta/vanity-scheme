@@ -106,19 +106,6 @@
     (if (null? args) ct
         (loop (cdr args) (+ ct (if (car args) 1 0))))))
 (define (delete-file f)  (system (sprintf "/bin/rm ~A" f)))
-(define (gen-header2)
-  (let* ((file (read-all (open-input-file (car scm-files))))
-         (filtered (filter (lambda (x) (and (pair? x) (eqv? (car x) 'define-library))) file))
-         (expanded (map (cut expand-library-simple <> (cons (realbasepath (car scm-files)) paths)) filtered))
-         #;(headers (filter (lambda (x) x) (map header-from-library filtered))))
-    #;(if (> (length headers) 1) (compiler-error "Only one statement permitted in header generation"))
-    #;(if (not (or (null? headers) (car headers))) (compiler-error "File did not produce a valid header"))
-    (with-output-to-file
-      out-file
-      (lambda ()
-        (for-each pretty-print expanded)
-        ;(if (not (null? headers)) (write (car headers)))
-        (newline)))))
 (define (gen-header)
   (let* ((file (read-all (open-input-file (car scm-files))))
          (headers (filter (lambda (x) x) (map header-from-library file))))
@@ -276,7 +263,6 @@
                 (makefile? out-file)
                 (else #f))))
 
-    (if (eq? expand? 9) (begin (gen-header2) (exit)))
     (if header? (begin (gen-header) (exit)))
     (if makefile? (begin (gen-makefile) (exit)))))
 

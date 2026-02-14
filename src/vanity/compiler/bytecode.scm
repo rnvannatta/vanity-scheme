@@ -53,6 +53,7 @@
                (##vcore.foreign-pointer? x)
                (char? x)
                (string? x)
+               (typevector? x)
                (eq? x #t)
                (eq? x #f))
            `(push ,x))

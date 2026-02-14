@@ -13,7 +13,7 @@ RUNTIME_LISP_SRC := scheme/r7rs.scm vanity/core.scm vanity/assert.scm vanity/lis
 
 DAYS := 01 02 03 04 05 06 07 08
 AOC := $(addprefix aoc-2022/, $(addsuffix /main.ss, $(DAYS)))
-TEST_SRC := fact.scm ack.scm core.scm weak.scm multilib.scm list.scm listfunc.scm match.scm io.scm callcc.scm callvalues.scm ffitest.scm ffiimport.scm finalize.scm hashtable.scm set.scm vector.scm typevector.scm record.scm param.scm exception.scm define-values.scm define-constant.scm intrin.scm $(AOC)
+TEST_SRC := fact.scm ack.scm core.scm weak.scm multilib.scm list.scm listfunc.scm match.scm io.scm callcc.scm callvalues.scm ffitest.scm ffiimport.scm finalize.scm hashtable.scm set.scm vector.scm typevector.scm record.scm param.scm exception.scm define-values.scm define-constant.scm intrin.scm literals.scm $(AOC)
 # add do.scm when u do the next bootstrap
 
 HOME_DIR := $(shell echo ~)

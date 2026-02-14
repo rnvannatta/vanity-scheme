@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler cps)
-  (import (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity intrinsics) (vanity pretty-print))
+  (import (vanity core) (vanity list) (vanity compiler library) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity intrinsics) (vanity pretty-print))
   (export to-cps optimize)
   (define (application? x)
     (and (pair? x) (not (memv (car x) '(quote lambda ##qualified-lambda ##qualified-case-lambda continuation case-lambda ##intrinsic ##basic-intrinsic ##foreign.function ##inline)))))
@@ -144,7 +144,20 @@
       (('##foreign.declare . _) expr)
       (('##vcore.declare f l)
        `(##vcore.declare ,f ,(cadr (caddr (to-cps-impl l)))))
+      ; this really doesn't belong here... why is it here?
+      ; hmmm. hmmmmm.
+      ; I can't find any reason for it. but it looks bad here now.
       (('import lib)
+       (define (quotify lst)
+         (if (null? lst)
+             ''()
+             (list '##vcore.qcons (car lst) (quotify (cdr lst)))))
+       #;(let ((lib (process-import! lib '())))
+         (to-cps-impl `(##vcore.multidefine ((##intrinsic "VRenameImports" 3 3)
+                                             (##vcore.load-library ,(mangle-library (car lib)))
+                                             ,(quotify (map (lambda (e) `(##vcore.qcons ',(car e) ',(cdr e))) (cadr lib)))))))
+       ; FIXME not doing the proper for now because it slows down compilation too much
+       ; that is my proof that it's important to add quoted pairs to static data instead of compiling them to cons.
        (to-cps-impl `(##vcore.multidefine (##vcore.load-library ,(mangle-library lib)))))
       (else (to-cps-impl expr))))
 
