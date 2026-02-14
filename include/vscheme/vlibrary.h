@@ -79,6 +79,8 @@ V_DECLARE_FUNC(VCons2, k, x, y);
 V_DECLARE_FUNC(VCar2, k, x);
 V_DECLARE_FUNC(VCdr2, k, x);
 
+V_DECLARE_FUNC_BASIC(VAssq, x, lst);
+
 // vectors
 
 V_DECLARE_FUNC_MIN(VCreateVector, k);
