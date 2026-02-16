@@ -30,7 +30,7 @@
     (and (pair? x) (not (memv (car x) '(quote lambda ##qualified-lambda ##qualified-case-lambda continuation case-lambda ##intrinsic ##basic-intrinsic ##foreign.function ##inline)))))
   (define (combination? x)
     (and (pair? x) (not (memv (car x) '(quote lambda ##qualified-lambda ##qualified-case-lambda continuation case-lambda ##intrinsic ##basic-intrinsic ##foreign.function ##inline begin if or letrec ##letrec)))))
-  (define (to-cps expr)
+  (define (to-cps expr paths)
     (define (iter-atom x)
       (define (iter-lambda args body)
         (let ((k (gensym "k")))
@@ -147,18 +147,17 @@
       ; this really doesn't belong here... why is it here?
       ; hmmm. hmmmmm.
       ; I can't find any reason for it. but it looks bad here now.
+      ; AH. Its because free variable scanning is done after macro expansion.
       (('import lib)
-       (define (quotify lst)
-         (if (null? lst)
-             ''()
-             (list '##vcore.qcons (car lst) (quotify (cdr lst)))))
-       #;(let ((lib (process-import! lib '())))
-         (to-cps-impl `(##vcore.multidefine ((##intrinsic "VRenameImports" 3 3)
-                                             (##vcore.load-library ,(mangle-library (car lib)))
-                                             ,(quotify (map (lambda (e) `(##vcore.qcons ',(car e) ',(cdr e))) (cadr lib)))))))
-       ; FIXME not doing the proper for now because it slows down compilation too much
-       ; that is my proof that it's important to add quoted pairs to static data instead of compiling them to cons.
-       (to-cps-impl `(##vcore.multidefine (##vcore.load-library ,(mangle-library lib)))))
+       (if (and (pair? lib) (memv (car lib) '(only except rename prefix)))
+           (let ((lib (process-import! lib paths)))
+             ; FIXME this is actually a horrible approach because it explodes the amount of code for trivial imports
+             ; Instead, we should have 4 intrinsics that filter the library variables at runtime.
+             ; OR IS IT HORRIBLE? maybe we should just change that place to a hash table.
+             (to-cps-impl `(##vcore.multidefine ((##intrinsic "VRenameImports" 3 3)
+                                                 (##vcore.load-library ,(mangle-library (car lib)))
+                                                 ,(list 'quote (cadr lib))))))
+           (to-cps-impl `(##vcore.multidefine (##vcore.load-library ,(mangle-library lib))))))
       (else (to-cps-impl expr))))
 
   (define (substitute x atom atom-frees expr n)

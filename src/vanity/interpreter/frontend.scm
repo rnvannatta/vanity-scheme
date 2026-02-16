@@ -41,7 +41,7 @@
     (let* ((architecture (if (eqv? platform 'windows) "windows_amd64" "sysv_amd64"))
            (expanded (expand-toplevel expr (if path (cons path paths) paths) architecture))
            (alpha (map alpha-convert expanded))
-           (cps (map to-cps alpha))
+           (cps (map (cute to-cps <> (if path (cons path paths) paths)) alpha))
            (opt (map (lambda (e) (optimize e #f)) cps))
            (bruijn (map bruijn-ify opt))
            (funs (to-functions bruijn #f))

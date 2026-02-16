@@ -286,13 +286,6 @@
       ((a . b) `(##vcore.cons ,(expand-quasiquote quotation a) ,(expand-quasiquote quotation b)))
       (x
        (cond ((vector? x) `(##vcore.list->vector ,(expand-quasiquote quotation (vector->list x))))
-             ;((f64vector? x) `(##vcore.list->f64vector ,(expand-quasiquote quotation (f64vector->list x))))
-             ;((f32vector? x) `(##vcore.list->f32vector ,(expand-quasiquote quotation (f32vector->list x))))
-             ;((s32vector? x) `(##vcore.list->s32vector ,(expand-quasiquote quotation (s32vector->list x))))
-             ;((u16vector? x) `(##vcore.list->u16vector ,(expand-quasiquote quotation (u16vector->list x))))
-             ;((s16vector? x) `(##vcore.list->s16vector ,(expand-quasiquote quotation (s16vector->list x))))
-             ;((u8vector? x) `(##vcore.list->u8vector ,(expand-quasiquote quotation (u8vector->list x))))
-             ;((s8vector? x) `(##vcore.list->s8vector ,(expand-quasiquote quotation (s8vector->list x))))
              (else `',x)))))
 
   ; pretty ugly code
@@ -320,21 +313,27 @@
     (define (expand-library-expr expr)
       (match expr
         (('export . syms)
-         (set! exports (append syms exports))
+         (set! exports
+          (append
+            (map
+              (lambda (e)
+                (match e
+                  (('rename from to)
+                   from)
+                  (else e)))
+              syms)
+            exports))
          (list))
         (('import . libs)
-         ;(for-each (lambda (import) (displayln (process-import! import paths) (current-error-port))) libs)
          (let ((libs (map (cut process-import! <> paths) libs)))
            (set! imports
              (fold append
                imports
-               (reverse (map (lambda (lib) (map (lambda (e) (cons (cdr e) (car e))) (cadr lib))) libs))
-               #;(reverse (map (lambda (import) (extract-exports (find-library-interface! import paths))) libs))))
+               (reverse (map (lambda (lib) (map (lambda (e) (cons (cdr e) (car e))) (cadr lib))) libs))))
            (set! constant-imports
               (fold append
                 constant-imports
-                (reverse (map (lambda (lib) (map (lambda (e) (cons (cdr e) (car e))) (caddr lib))) libs))
-                #;(reverse (map (lambda (import) (extract-constants (find-library-interface! import paths))) libs))))
+                (reverse (map (lambda (lib) (map (lambda (e) (cons (cdr e) (car e))) (caddr lib))) libs))))
            (set! mangled-imports (append (map mangle-library (map car libs)) mangled-imports))
            (list)))
         (('define (f . xs) . body)
@@ -462,12 +461,6 @@
                       . ,(map (lambda (i) `(##vcore.load-library ,i)) mangled-imports))
                      . ,(map (lambda (f) (list 'quote (cdr f))) imported-vars)))
                  (lambda ,(map car imported-vars)
-                   #;(substitute-constants
-                      (fold-right
-                        (lambda (e acc) (list 'begin e acc))
-                        (car (take-right (cddr basic-library) 1))
-                        (drop-right (cddr basic-library) 1))
-                      constant-vars)
                    ((lambda ,(map car constant-vars)
                       ,(fold-right
                          (lambda (e acc) (list 'begin e acc))
@@ -499,18 +492,16 @@
         `(define (,getter rec)
            (if (,pred rec)
                (##vcore.record-ref rec ,(+ i 1))
-               #;(error "not a record of the right type" ',getter rec)
                (##vcore.raise (##vcore.record #f 'error "not a record of the right type" (##vcore.cons ',getter (##vcore.cons rec '()))))
-               #;(##vcore.raise (##vcore.record #f 'error "not a record of the right type" ((lambda args args) ',getter rec))))))
+               )))
       (define (make-setter setter)
         (if (not (valid-identifier? setter))
             (compiler-error "define-record-type: not a valid identifier" setter))
         `(define (,setter rec x)
            (if (,pred rec)
                (##vcore.record-set! rec ,(+ i 1) x)
-               #;(error "not a record of the right type" ',setter rec)
                (##vcore.raise (##vcore.record #f 'error "not a record of the right type" (##vcore.cons ',setter (##vcore.cons rec '()))))
-               #;(##vcore.raise (##vcore.record #f 'error "not a record of the right type" ((lambda args args) ',setter rec))))))
+               )))
       (match (assv field fields)
         ((field getter)
          (make-getter getter))
@@ -582,7 +573,6 @@
   (define (expand-lambda expr)
     (match expr
       ((args . body)
-       #;(if (not (valid-args? args)) (compiler-error "invalid lambda args" args))
        (cond ((invalid-args? args) =>
               (lambda (e)
                 (compiler-error
@@ -705,17 +695,7 @@
       (('##qualified-case-lambda . _) (compiler-error "malformed case-lambda" expr))
 
       (('quasiquote x) (expand-syntax (expand-quasiquote 1 x)))
-      ;(('quote (a . b)) (expand-syntax `(##vcore.qcons (quote ,a) (quote ,b))))
-      (('quote x)
-       (cond ;((vector? x) `(##vcore.list->vector ,(expand-syntax `',(vector->list x))))
-             ;((f64vector? x) `(##vcore.list->f64vector ,(expand-syntax `',(f64vector->list x))))
-             ;((f32vector? x) `(##vcore.list->f32vector ,(expand-syntax `',(f32vector->list x))))
-             ;((s32vector? x) `(##vcore.list->s32vector ,(expand-syntax `',(s32vector->list x))))
-             ;((u16vector? x) `(##vcore.list->u16vector ,(expand-syntax `',(u16vector->list x))))
-             ;((s16vector? x) `(##vcore.list->s16vector ,(expand-syntax `',(s16vector->list x))))
-             ;((u8vector? x) `(##vcore.list->u8vector ,(expand-syntax `',(u8vector->list x))))
-             ;((s8vector? x) `(##vcore.list->s8vector ,(expand-syntax `',(s8vector->list x))))
-             (else `(quote ,x))))
+      (('quote x) expr)
 
       (('let . _) (expand-let (cdr expr)))
 
@@ -945,17 +925,7 @@
       ((a . b) (compiler-error "stray improper list in program" `(,a . ,b)))
       (() (compiler-error "stray null list in program" '()))
 
-      (else
-        ; FIXME: really terrible need to properly do this with a literal
-        (cond ;((vector? expr) `(##vcore.list->vector ,(expand-syntax `',(vector->list expr))))
-              ;((f64vector? expr) `(##vcore.list->f64vector ,(expand-syntax `',(f64vector->list expr))))
-              ;((f32vector? expr) `(##vcore.list->f32vector ,(expand-syntax `',(f32vector->list expr))))
-              ;((s32vector? expr) `(##vcore.list->s32vector ,(expand-syntax `',(s32vector->list expr))))
-              ;((u16vector? expr) `(##vcore.list->u16vector ,(expand-syntax `',(u16vector->list expr))))
-              ;((s16vector? expr) `(##vcore.list->s16vector ,(expand-syntax `',(s16vector->list expr))))
-              ;((u8vector? expr) `(##vcore.list->u8vector ,(expand-syntax `',(u8vector->list expr))))
-              ;((s8vector? expr) `(##vcore.list->s8vector ,(expand-syntax `',(s8vector->list expr))))
-              (else expr)))))
+      (else expr)))
 
   (define (free-variables-toplevel expr bound paths)
     (define (merge a b)
