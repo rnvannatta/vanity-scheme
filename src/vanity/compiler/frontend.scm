@@ -320,7 +320,7 @@
                                   (free-variables-toplevel (car exprs) bound (cons path paths)))
                                 (loop (cdr exprs) new-bound (append (filter (lambda (e) (not (memv e free))) new-free) free))))))
                     (if (eq? expand? 0) (for-each pretty-print expanded)
-                        (let ((cps (benchmark "cps" (lambda () (map (lambda (expr) (to-cps expr)) (apply append expanded))))))
+                        (let ((cps (benchmark "cps" (lambda () (map (lambda (expr) (to-cps expr (cons path paths))) (apply append expanded))))))
                          (if (eq? expand? 1) (for-each pretty-print cps)
                              (let ((opt (benchmark "optimize"
                                           (lambda ()
