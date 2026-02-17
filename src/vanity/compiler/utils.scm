@@ -25,14 +25,21 @@
 
 (define-library (vanity compiler utils)
   (import (vanity core) (vanity compiler config))
-  (export read-all search-open-input-file compiler-error compiler-warning gensym filter gcc-path)
+  (export read-all resolve-file-path search-open-input-file compiler-error compiler-warning gensym filter gcc-path set-feature-list! get-feature-list)
   (define (read-all port)
     (let ((expr (read port)))
       (if (eof-object? expr) '()
           (cons expr (read-all port)))))
+  (define (resolve-file-path file paths)
+    (let loop ((paths paths))
+      (if (null? paths)
+          #f
+          (let ((path (string-append (car paths) "/" file)))
+            (if (file-exists? path) path (loop (cdr paths)))))))
   (define (search-open-input-file file paths)
     (let loop ((paths paths))
-      (if (null? paths) #f
+      (if (null? paths)
+          #f
           (let ((fd (open-input-file (string-append (car paths) "/" file))))
             (if fd fd (loop (cdr paths)))))))
   (define (compiler-error msg . irritants)
@@ -51,4 +58,7 @@
     (if (eqv? platform 'windows)
         (sprintf "~A/../~A" ((##vcore.function "VExePath")) "mingw64/bin/gcc.exe")
         "gcc"))
-  (define gensym ##vcore.gensym))
+  (define gensym ##vcore.gensym)
+  (define feature-list '(r7rs ieee-float vanity-scheme vanity-scheme-0.0))
+  (define (set-feature-list! lst) (set! feature-list lst))
+  (define (get-feature-list) feature-list))

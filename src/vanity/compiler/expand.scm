@@ -25,7 +25,7 @@
 
 (define-library (vanity compiler expand)
   (import (vanity core) (vanity pretty-print) (vanity intrinsics) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi) (vanity compiler library) (vanity compiler blasphemy))
-  (export expand-toplevel free-variables-toplevel)
+  (export expand-toplevel header-from-library free-variables-toplevel)
 
   ; returns true if val can be directly assigned in a simple letrec primitive
   ; without mutation.
@@ -312,6 +312,8 @@
 
     (define (expand-library-expr expr)
       (match expr
+        (('cond-expand . clauses)
+         (expand-library-expr (expand-cond-expand clauses)))
         (('export . syms)
          (set! exports
           (append
@@ -444,7 +446,7 @@
           (compiler-error (pretty-print-free-vars (cadr lib) unbound-vars))
           ))
 
-    (register-library-interface! (header-from-library lib))
+    (register-library-interface! (header-from-library lib (library-paths)))
     (let* ((libname (mangle-library (cadr lib))))
       (if (not (fold (lambda (a b) (and a b)) #t (map string? mangled-imports))) (compiler-error "imports to library must all be c strings"))
       (if (and (null? mangled-imports) (not (null? free-vars)))
@@ -611,21 +613,48 @@
        (list `(define ,x ,(expand-syntax body))))
       (else (compiler-error "malformed define" expr))))
 
+  (define (header-from-library lib paths)
+    (define (iter constants exports imports rest)
+      (if (null? rest)
+          `(define-library-interface ,(cadr lib)
+            (import . ,imports)
+            (export . ,exports)
+            (constant-export . ,constants))
+          (match (car rest)
+            (('export . syms) (iter constants (append exports syms) imports (cdr rest)))
+            (('import . libs) (iter constants exports (append imports (map import-path libs)) (cdr rest)))
+            (('begin . statements)
+             (iter constants exports imports (append statements (cdr rest))))
+            (('cond-expand . clauses)
+             (iter constants exports imports (cons (expand-cond-expand clauses) (cdr rest))))
+            (('define-constant x val)
+             (iter (cons (list x val) constants) exports imports (cdr rest)))
+            (else  (iter constants exports imports (cdr rest))))))
+    (parameterize ((library-paths paths))
+      (match lib
+        (('define-library name . body) (iter '() '() '() body))
+        (('define-library . _) (compiler-error "not a valid library" lib))
+        (else #f))))
+
+  (define library-paths (make-parameter '()))
   (define (expand-toplevel expr paths architecture)
+    (parameterize ((library-paths paths))
+      (expand-toplevel-impl expr paths architecture)))
+  (define (expand-toplevel-impl expr paths architecture)
     (match expr
       (('begin . ys)
-       (apply append (map (lambda (e) (expand-toplevel e paths architecture)) ys)))
+       (apply append (map (lambda (e) (expand-toplevel-impl e paths architecture)) ys)))
 
       (('define-library lib . body) (expand-library `(define-library ,lib . ,body) paths))
       (('define-library . noise) (compiler-error "malformed define-library" `(define-library . ,noise)))
 
-      (('define-record-type . body) (expand-toplevel (expand-define-record-type expr) paths architecture))
+      (('define-record-type . body) (expand-toplevel-impl (expand-define-record-type expr) paths architecture))
 
       (('import) '())
       (('import lib . rest)
        (cons `(import ,lib)
              #;`(##vcore.multidefine (##vcore.load-library ,(mangle-library lib)))
-             (expand-toplevel `(import . ,rest) paths architecture)))
+             (expand-toplevel-impl `(import . ,rest) paths architecture)))
       (('unload-library lib)
        (list `(##vcore.unload-library ,(mangle-library lib))))
 
@@ -641,7 +670,7 @@
        (sanitize-define-values formals body)
        (let* ((names (undot formals))
               (mangles (map gensym names)))
-         (expand-toplevel
+         (expand-toplevel-impl
            (append
              '(begin)
              (map (lambda (name) `(define ,name #f)) names)
@@ -674,9 +703,9 @@
        (resolve-foreign-import expr paths "sysv_amd64"))
 
       (('foreign-declare . rest)
-       (expand-toplevel (cons '##foreign.declare rest) paths architecture))
+       (expand-toplevel-impl (cons '##foreign.declare rest) paths architecture))
       (('foreign-import . rest)
-       (expand-toplevel (cons '##foreign.import rest) paths architecture))
+       (expand-toplevel-impl (cons '##foreign.import rest) paths architecture))
 
       (expr (list (expand-syntax expr)))))
 
@@ -918,6 +947,9 @@
       (('delay x)
        `(##vcore.delay-force-impl (lambda () (##vcore.make-promise ,(expand-syntax x)))))
 
+      (('features) `',(get-feature-list))
+      (('cond-expand . rest) (expand-cond-expand rest))
+
       ((f args ...)
        (if (and (atom? f) (not (symbol? f))) (compiler-error "function application's first arg is not a function" f))
        `(,(expand-syntax f) . ,(map expand-syntax args)))
@@ -926,6 +958,33 @@
       (() (compiler-error "stray null list in program" '()))
 
       (else expr)))
+
+  (define (expand-cond-expand clauses)
+    (define feature-list (get-feature-list))
+    (define (cond-expand-true test)
+      (match test
+        (('library lib)
+         (library-exists? lib (library-paths)))
+        (('and) #t)
+        (('and test . tests)
+         (if (cond-expand-true test) (cond-expand-true `(and . ,tests)) #f))
+        (('or) #f)
+        (('or test . tests)
+         (if (cond-expand-true test) #t (cond-expand-true `(or . ,tests))))
+        (('not test)
+         (not (cond-expand-true test)))
+        (feat
+         (if (symbol? feat)
+             (memv feat feature-list)
+             (compiler-error "invalid cond-expand test" test)))))
+    (match clauses
+      ((('else . body))
+       (expand-syntax `(begin . ,body)))
+      (((test . body) . rest-clauses)
+       (if (cond-expand-true test)
+           (expand-syntax `(begin . ,body))
+           (expand-cond-expand rest-clauses)))
+      (else #void)))
 
   (define (free-variables-toplevel expr bound paths)
     (define (merge a b)

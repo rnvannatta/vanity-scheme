@@ -45,6 +45,7 @@
 (define cc #f)
 (define w-unbound-variables #f)
 (define werror-unbound-variables #f)
+(define user-feature-list '())
 
 (define c-options '())
 (define paths (list (sprintf "~Ainclude" install-root)))
@@ -108,7 +109,7 @@
 (define (delete-file f)  (system (sprintf "/bin/rm ~A" f)))
 (define (gen-header)
   (let* ((file (read-all (open-input-file (car scm-files))))
-         (headers (filter (lambda (x) x) (map header-from-library file))))
+         (headers (filter (lambda (x) x) (map (cut header-from-library <> (cons (realbasepath (car scm-files)) paths)) file))))
     (if (> (length headers) 1) (compiler-error "Only one statement permitted in header generation"))
     (if (not (or (null? headers) (car headers))) (compiler-error "File did not produce a valid header"))
     (with-output-to-file
@@ -145,6 +146,7 @@
   (displayln "  -c              Transpile, compile, and assemble, but do not link")
   (displayln "  -o<file>        Place the output into <file>")
   (displayln "  -I<dir>         Add the directory to the list to be searched for scheme header files")
+  (displayln "  -D<feature>     Define a feature for use with cond-expand")
   (displayln "  -Wc,<option>    Pass comma seperated to the C compiler")
   (displayln "  -Wl,<option>    Pass comma seperated to the linker")
   (displayln "  -v              Show intermediate commands")
@@ -176,7 +178,7 @@
 
 (with-exception-handler handle-exception
   (lambda ()
-    (let loop ((args (getopt "vghtco:I:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (main #t main) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark)))))
+    (let loop ((args (getopt "vghtco:I:D:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (main #t main) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark)))))
       (if (not (null? args))
           (begin
             (case (caar args)
@@ -198,6 +200,7 @@
               ; TODO use realpath on out-file to ensure we can actually write to it
               ((#\o) (set! out-file (cdar args)))
               ((#\I) (set! paths (append paths (list (realpath (cdar args))))))
+              ((#\D) (set! user-feature-list (cons (string->symbol (cdar args)) user-feature-list)))
               ((#\O)
                (set! optimization (string->number (cdar args)))
                (if (not (and optimization (integer? optimization) (<= 0 optimization 3)))
@@ -265,6 +268,17 @@
 
     (if header? (begin (gen-header) (exit)))
     (if makefile? (begin (gen-makefile) (exit)))))
+
+(define feature-list
+  `(r7rs c17
+    ieee-float
+    ,@(if (equal? platform "linux") '(posix gnu-linux gnuc compiled x86-64 lp64 little-endian) '())
+    ,@(if (equal? platform "windows") '(windows mingw compiled llp64 little-endian) '())
+    ,@(if (equal? platform "emscripten") '(wasm emscripten compiled ilp32 little-endian) '())
+    ,@user-feature-list
+    vanity-scheme
+    ,(string->symbol (sprintf "vanity-scheme-~A.~A" (car version) (cadr version)))))
+(set-feature-list! feature-list)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; RUN COMPILE: super messy
