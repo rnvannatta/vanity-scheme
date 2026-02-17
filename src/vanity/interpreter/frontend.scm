@@ -4,7 +4,8 @@
     (vanity compiler alpha-convert)
     (vanity compiler cps)
     (vanity compiler lower)
-    (vanity compiler bytecode))
+    (vanity compiler bytecode)
+    (vanity compiler utils))
   (export ##vcore.vanity-main load)
 
   (define (extension file)
@@ -69,6 +70,7 @@
               ((eq? (string-ref str i) chr) i)
               (else (loop (+ i 1)))))))
 
+  (define user-feature-list '())
   (define (display-help)
     (displayln "Usage: vanity [options]")
     (displayln "       vanity [options] file")
@@ -88,7 +90,7 @@
   (define (##vcore.vanity-main)
     (define file #f)
     (define lang #f)
-    (let main-loop ((args (getopt "I:l:" (command-line) '((help #f help) (version #f version) (scheme #f scheme) (vasm #f vasm)))))
+    (let main-loop ((args (getopt "I:D:l:" (command-line) '((help #f help) (version #f version) (scheme #f scheme) (vasm #f vasm)))))
       (if (not (null? args))
           (begin
             (case (caar args)
@@ -106,6 +108,7 @@
                (let ((path (##vcore.realpath (cdar args))))
                  (if (not path) (error "vanity: path does not exist" path))
                  (set! paths (append paths (list path)))))
+              ((#\D) (set! user-feature-list (cons (string->symbol (cdar args)) user-feature-list)))
               ((#\l)
                (if (or (strchr (cdar args) #\/) (and (eqv? platform 'windows) (strchr (cdar args) #\\)))
                    (dlopen-library! (##vcore.realpath (cdar args)))
@@ -113,6 +116,16 @@
               (else
                (error "vanity: unknown command line option" (car args))))
             (main-loop (cdr args)))))
+    (set-feature-list!
+      `(r7rs c17
+        ieee-float
+        ; TODO use features in features
+        ;,@(if (equal? platform "linux") '(posix gnu-linux gnuc compiled x86-64 lp64 little-endian) '())
+        interpreted
+        ,@user-feature-list
+        vanity-scheme
+        ,(string->symbol (sprintf "vanity-scheme-~A.~A" (car version) (cadr version)))))
+
     (if (equal? file "-") (set! file #f))
     (cond ((and (not lang) (not file)) (set! lang 'scheme))
           ((and (not lang) file) (set! lang (filetype file)))
