@@ -594,7 +594,7 @@
       ((x lst =)
        (cond ((null? lst) #f)
              ((= x (car lst)) lst)
-             (else (member x (cdr lst)))))))
+             (else (member x (cdr lst) =))))))
 
   #;(define (assq x alst)
     (cond ((null? alst) #f)
@@ -609,7 +609,7 @@
       ((x alst =)
        (cond ((null? alst) #f)
              ((= x (caar alst)) (car alst))
-             (else (assoc x (cdr alst)))))))
+             (else (assoc x (cdr alst) =))))))
 
   (define (num-pairs lst)
     (let loop ((n 0) (lst lst))
@@ -1994,5 +1994,5 @@
   (define generate-symbol
     (case-lambda
       (() (##vcore.gensym "x"))
-      ((x) ##vcore.gensym x)))
+      ((x) (##vcore.gensym x))))
 )
