@@ -66,6 +66,8 @@
        `(push ,x))
       (('close fun)
        `(close ,fun))
+      (('close fun name)
+       `(close ,(string->symbol fun) ,(mangle-library name)))
       (('bruijn name up right)
        `(bruijn ,up ,right))
       (('##intrinsic x)
@@ -102,7 +104,7 @@
           (process-application body)))
       (('##letrec path n xs body)
        (append
-         `((letrec-begin ,n))
+         `((letrec-begin ,n ,(mangle-library path)))
           (map process-atom xs) 
           `((letrec-end))
           (process-application body)))
@@ -134,7 +136,7 @@
 
   (define (process-fun-single name check-args? num variadic? body)
     (cons
-      `(label ,name (,(if variadic? 'lambda+ 'lambda) ,num))
+      `(label ,(if (string? name) (string->symbol name) name) (,(if variadic? 'lambda+ 'lambda) ,num))
       (process-application body)))
   (define (process-fun-case fun)
     (let* ((name (car fun))
