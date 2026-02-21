@@ -46,20 +46,6 @@
   ; feed a complete read into it
   ; take that bytecode, run it
 
-  (define (process-literal x)
-    (cond ((or (integer? x)
-               (number? x)
-               (##vcore.void? x)
-               (##vcore.foreign-pointer? x)
-               (char? x)
-               (string? x)
-               (typevector? x)
-               (eq? x #t)
-               (eq? x #f))
-           `(push ,x))
-          (else
-           (compiler-error "print-bytecode: unknown literal type" x))))
-
   (define (process-atom expr)
     (match expr
       (('quote x)
@@ -79,7 +65,8 @@
       (('##basic-intrinsic x)
        `(intrinsic ,(string->symbol x)))
       (x
-       (cond ((not (symbol? x)) (process-literal expr))
+       (cond ((pair? x) (compiler-error "print-bytecode: unknown atom" x))
+             ((not (symbol? x)) `(push ,x))
              ((lookup-intrinsic-name x) `(intrinsic ,x))
              (else `(lookup ,x))))))
 
