@@ -458,6 +458,7 @@ static int VStaticEnvTableCapacity;
 typedef struct {
   char const * name;
   VEnv ** slot;
+  bool cleanup;
 } VStaticEnvEntry;
 
 static VStaticEnvEntry * VStaticEnvTable;
@@ -475,17 +476,37 @@ void VRegisterStaticEnv(char const * name, VEnv ** slot) {
     VStaticEnvTable = realloc(VStaticEnvTable, sizeof(VStaticEnvEntry[VStaticEnvTableCapacity]));
   }
   VStaticEnvTable[VStaticEnvTableSize].name = name;
+  VStaticEnvTable[VStaticEnvTableSize].cleanup = false;
   VStaticEnvTable[VStaticEnvTableSize++].slot = slot;
 }
 void VUnregisterStaticEnv(char const * name) {
   for(int i = 0; i < VStaticEnvTableSize; i++) {
     if(!strcmp(VStaticEnvTable[i].name, name)) {
+      if(VStaticEnvTable[i].cleanup)
+        free(VStaticEnvTable[i].slot);
+
       memmove(&VStaticEnvTable[i], &VStaticEnvTable[i+1], sizeof(VStaticEnvEntry[VStaticEnvTableSize - i - 1]));
       VStaticEnvTableSize--;
       return;
     }
   }
   fprintf(stderr, "Warning: unregistering a nonexistant static environment:  %s\n", name);
+}
+void VSetStaticEnvCleanup(const char * name) {
+  for(int i = 0; i < VStaticEnvTableSize; i++) {
+    if(!strcmp(VStaticEnvTable[i].name, name)) {
+      VStaticEnvTable[i].cleanup = true;
+      return;
+    }
+  }
+}
+VEnv ** VFindStaticEnv(const char * name) {
+  for(int i = 0; i < VStaticEnvTableSize; i++) {
+    if(!strcmp(VStaticEnvTable[i].name, name)) {
+      return VStaticEnvTable[i].slot;
+    }
+  }
+  return NULL;
 }
 
 // okay: so finalizers to managed memory can be detected as stale when they remain after a gc
@@ -2648,13 +2669,13 @@ V_BEGIN_FUNC(VLoadLibrary2, "load-library", 2, k, name)
     libs = lookup->value;
   }
 
+  VBlob * nm = VDecodeBlob(name);
   VWORD libraries = libs;
   VWORD lib = VFALSE;
   while(!VIsEq(libs, VNULL)) {
     VPair * libs_dec = VDecodePair(libs);
     VPair * pair = VDecodePair(libs_dec->first);
     VBlob * str = VDecodeBlob(pair->first);
-    VBlob * nm = VDecodeBlob(name);
     if(str && nm && !strcmp(nm->buf, str->buf)) {
       lib = pair->rest;
       break;
@@ -2685,9 +2706,9 @@ V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
 #undef sym_str
 
   VBlob * nm = VDecodeBlob(name);
-  // why would this be null????
-  if(nm)
-    VUnregisterStaticEnv(nm->buf);
+  assert(nm);
+
+  VUnregisterStaticEnv(nm->buf);
 
   VWORD sym_word = VEncodePointer(sym, VPOINTER_OTHER);
   VGlobalEntry * lookup = VLookupGlobalEntry(runtime, sym_word);
@@ -2702,23 +2723,27 @@ V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
   VPair * lib_entry = NULL;
   while(!VIsEq(libs, VNULL)) {
     VPair * libs_dec = VDecodePair(libs);
-    VPair * pair = VDecodePair(libs_dec->first);
-    VBlob * str = VDecodeBlob(pair->first);
-    // how can nm be null????
-    if(str && nm && !strcmp(nm->buf, str->buf)) {
-      lib_entry = pair;
+    VPair * keyval = VDecodePair(libs_dec->first);
+    VBlob * str = VDecodeBlob(keyval->first);
+    assert(str);
+    if(!strcmp(nm->buf, str->buf)) {
+      lib_entry = libs_dec;
       break;
     }
-    parent = pair;
+    parent = libs_dec;
 
     libs = libs_dec->rest;
   }
 
-  if(lib_entry && parent) {
-    parent->rest = lib_entry->rest;
-  }
-  else if(lib_entry && !parent) {
-    VDefineImpl(runtime, sym_word, lib_entry->rest, true);
+
+  if(lib_entry) {
+    if(parent) {
+      parent->rest = lib_entry->rest;
+    }
+    else {
+      VDefineImpl(runtime, sym_word, lib_entry->rest, true);
+    }
+  } else {
   }
   V_CALL(k, runtime, VVOID);
 V_END_FUNC

@@ -202,14 +202,14 @@
            (set! qualified-functions (cons (list lamb n #f) qualified-functions))
            (set! functions (cons `(,lamb #t (,n ,(iter-apply lamb body))) functions))
            (if static?
-               `(close ,lamb ,(mangle-environment (drop-right name 1)))
+               `(close ,lamb ,(drop-right name 1))
                `(close ,lamb ))))
         (('##qualified-lambda name static? n '+ body)
          (let ((lamb (mangle-qualified-function name)))
            (set! qualified-functions (cons (list lamb n #t) qualified-functions))
            (set! functions (cons `(,lamb #t (,n + ,(iter-apply lamb body))) functions))
            (if static?
-               `(close ,lamb ,(mangle-environment (drop-right name 1)))
+               `(close ,lamb ,(drop-right name 1))
                `(close ,lamb))))
         (('case-lambda . cases)
          (let ((lamb (genlambda fun)))
@@ -222,7 +222,7 @@
                (set! qualified-functions (cons (list lamb 0 #t) qualified-functions))
                (set! functions (cons `(,lamb #t . ,(map (lambda (e) (iter-lambda fun e)) cases)) functions))
                (if static?
-                   `(close ,lamb ,(mangle-environment (drop-right name 1)))
+                   `(close ,lamb ,(drop-right name 1))
                    `(close ,lamb)))))
         (('continuation n body)
          (let ((k (gencont fun)))

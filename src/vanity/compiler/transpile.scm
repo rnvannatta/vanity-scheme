@@ -262,10 +262,11 @@
                ; FIXME yucky! let's find a way to avoid creating this stack data
                (printf "    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self)), ~A" fun (length xs))))
           (('close fun name)
-           (if purec?
-               (printf "    V_BOUNCE_FUNC((VFunc)~A, ~A, runtime" fun name)
-               ; FIXME yucky! let's find a way to avoid creating this stack data
-               (printf "    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, ~A)), ~A" fun name (length xs))))
+           (let ((name (mangle-environment name)))
+             (if purec?
+                 (printf "    V_BOUNCE_FUNC((VFunc)~A, ~A, runtime" fun name)
+                 ; FIXME yucky! let's find a way to avoid creating this stack data
+                 (printf "    VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, ~A)), ~A" fun name (length xs)))))
           (else
             (if purec?
                 (begin
@@ -296,7 +297,7 @@
                   (('close fun)
                    (printf "V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self))" func))
                   (('close fun name)
-                   (printf "V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, ~A))" func name))
+                   (printf "V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, ~A))" func (mangle-environment name)))
                   (else
                    (printf "VDecodeClosure(")
                    (print-expr f args)
@@ -436,7 +437,7 @@
         (('close fun)
          (printf "(VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, self))))" fun))
         (('close fun name)
-         (printf "(VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, ~A))))" fun name))
+         (printf "(VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)~A, ~A))))" fun (mangle-environment name)))
         (('bruijn name up right)
          (cond ((= up 0)
                 (if args
