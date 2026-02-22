@@ -736,11 +736,13 @@
       (('import) '())
       (('import lib . rest)
        (cons `(import ,lib)
-             #;`(##vcore.multidefine (##vcore.load-library ,(mangle-library lib)))
              (expand-toplevel-impl `(import . ,rest) paths architecture)))
-      (('unload-library lib)
-       (list `(##vcore.unload-library ,(mangle-library lib))))
-
+      (('reimport) '())
+      (('reimport lib . rest)
+       `((##vcore.unload-library ,(mangle-library lib))
+         (import ,lib)
+         .
+         ,(expand-toplevel-impl `(reimport . ,rest) paths architecture)))
       (('define (f . xs) . body)
        (sanitize-define-procedure f xs body)
        (expand-define `(define ,f (lambda ,xs . ,body))))
