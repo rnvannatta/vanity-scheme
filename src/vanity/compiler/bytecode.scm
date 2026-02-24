@@ -127,6 +127,7 @@
       (process-application body)))
   (define (process-fun-case fun)
     (let* ((name (car fun))
+           (name (if (string? name) (string->symbol name) name))
            (cases (cddr fun))
            (cases (map (lambda (i e) `(,(if (= i 0) name (gensym "case")) ,e)) (iota (length cases)) cases))
            (error-label (gensym "case-error")))
