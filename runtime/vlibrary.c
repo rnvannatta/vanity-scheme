@@ -2373,12 +2373,12 @@ V_BEGIN_FUNC(VReadU8Vector, "read-u8vector", 3, k, _n, _port)
   V_BOUNCE(k, runtime, VEncodePointer(ret, VPOINTER_OTHER));
 }
 
-uint64_t VCurrentJiffyImpl();
-uint64_t VJiffiesPerSecondImpl();
+uint64_t jiffies_per_second();
+uint64_t current_jiffy();
 
 V_BEGIN_FUNC(VCurrentJiffy, "current-jiffy", 1, k)
 #if defined(__linux) || defined(_WIN64) || defined(__EMSCRIPTEN__)
-  uint64_t ret = VCurrentJiffyImpl();
+  uint64_t ret = current_jiffy();
   V_BOUNCE(k, runtime, VEncodeNumber(ret));
 #endif
   VErrorC(runtime, "current-jiffy: unsupported platform");
@@ -2386,7 +2386,7 @@ V_BEGIN_FUNC(VCurrentJiffy, "current-jiffy", 1, k)
 
 V_BEGIN_FUNC(VJiffiesPerSecond, "jiffies-per-second", 1, k)
 #if defined(__linux) || defined(_WIN64) || defined(__EMSCRIPTEN__)
-  V_BOUNCE(k, runtime, VEncodeNumber(VJiffiesPerSecondImpl()));
+  V_BOUNCE(k, runtime, VEncodeNumber(jiffies_per_second()));
 #endif
   VErrorC(runtime, "jiffies-per-second: unsupported platform");
 }

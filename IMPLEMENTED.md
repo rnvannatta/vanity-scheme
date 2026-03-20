@@ -1,6 +1,8 @@
 # Vanity Scheme Implementation Status
 
-Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI-1, SRFI-4, SRIF-8 SRFI-17, SRFI-26, SRFI-69, SRFI-125, SRFI-151, and SRFI-260
+Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI-1, SRFI-4, SRIF-8, SRFI-9, SRFI-11, SRFI-17, SRFI-26, SRFI-28, SRFI-69, SRFI-125, SRFI-151, and SRFI-260
+
+TODO: 2, 13, 14, 27, 45, 48, 95
 
 ## R7RS Syntax and Procedures
 
