@@ -3180,8 +3180,6 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
 
   r->declare_list = VNULL;
   r->library_list = VNULL;
-
-  (void)VCurrentJiffyImpl();
 }
 
 static VClosure next_closure = { .base = { .tag = VCLOSURE }, .func = (VFunc)VNext2, .env = NULL };
@@ -4002,48 +4000,6 @@ V_BEGIN_FUNC(VRegisterSigint, "register-sigint", 1, k)
   signal(SIGINT, sigint_handler);
   V_BOUNCE(k, runtime, VVOID);
 V_END_FUNC
-
-static bool jiffy_epoch_set;
-static uint64_t jiffy_epoch;
-static uint64_t one_billion = 1000ull * 1000 * 1000;
-uint64_t VCurrentJiffyImpl() {
-  (void)one_billion;
-#ifdef __linux__
-  struct timespec nanotime;
-  // using clock monotonic to avoid skew? the adjustments are allegedly gentle
-  clock_gettime(CLOCK_MONOTONIC, &nanotime);
-  uint64_t ret = nanotime.tv_nsec + one_billion * nanotime.tv_sec;
-#elif defined(_WIN64)
-  LARGE_INTEGER ticks;
-  QueryPerformanceCounter(&ticks);
-  uint64_t ret = ticks.QuadPart;
-#elif defined(__EMSCRIPTEN__)
-  double d = emscripten_get_now();
-  uint64_t ret = round(d * 1000);
-#else
-  uint64_t ret = 0;
-#endif
-  if(!jiffy_epoch_set)
-  {
-    jiffy_epoch_set = true;
-    jiffy_epoch = ret;
-  }
-  return ret - jiffy_epoch;
-}
-uint64_t VJiffiesPerSecondImpl() {
-#ifdef __linux__
-  return one_billion;
-#endif
-#ifdef _WIN64
-  LARGE_INTEGER ticks_per_second;
-  QueryPerformanceFrequency(&ticks_per_second);
-  return ticks_per_second.QuadPart;
-#endif
-#ifdef __EMSCRIPTEN__
-  return 1000 * 1000;
-#endif
-  return 0;
-}
 
 // ======================================================
 // ------------------- DEBUGGING STUFF ------------------

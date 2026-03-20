@@ -157,7 +157,9 @@
         (lambda ()
          (let repl-loop ()
           (##vcore.garbage-collect #f)
-          (if is-tty? (display "> "))
+          (when is-tty?
+            (display "> ")
+            (flush-output-port))
           (let ((tape (with-exception-handler handle-error (lambda () (read port)))))
             (if (not (eof-object? tape))
                 (begin
