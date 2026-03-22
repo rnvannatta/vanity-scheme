@@ -109,9 +109,11 @@ static uint64_t jiffies_per_second_fallback() {
 
 #ifdef __x86_64__
 uint64_t current_jiffy_tsc(void) {
-  unsigned int aux;
-  uint64_t now = __rdtscp(&aux);
-  asm volatile ("" ::: "memory");
+  // gcc doesn't optimize the intrinsic well, leaves in some stack manip gunk
+  // rawdogging assembly produces cleaner code
+  uint64_t lo, hi, aux;
+  asm volatile("rdtscp" : "=a"(lo), "=d"(hi), "=c"(aux) :: "memory");
+  uint64_t now = (hi << 32) | lo;
   // not necessary because the cas on x86 is always seq cst
   //_mm_lfence();
   uint64_t delta = now - jiffy_epoch;
