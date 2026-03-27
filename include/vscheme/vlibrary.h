@@ -27,8 +27,8 @@
 
 #pragma once
 // math
-V_DECLARE_FUNC(VExact, k, x);
-V_DECLARE_FUNC(VInexact, k, x);
+V_DECLARE_FUNC_BASIC(VExact, x);
+V_DECLARE_FUNC_BASIC(VInexact, x);
 
 V_DECLARE_FUNC_MIN(VAdd2, k);
 V_DECLARE_FUNC_MIN(VSub2, k, x);
@@ -42,8 +42,8 @@ V_DECLARE_FUNC_MIN(VCmpEq, k, a, b);
 V_DECLARE_FUNC_MIN(VCmpGe, k, a, b);
 V_DECLARE_FUNC_MIN(VCmpGt, k, a, b);
 
-V_DECLARE_FUNC(VQuot2, k, x, y);
-V_DECLARE_FUNC(VRem2, k, x, y);
+V_DECLARE_FUNC_BASIC(VQuot2, x, y);
+V_DECLARE_FUNC_BASIC(VRem2, x, y);
 V_DECLARE_FUNC_MIN(VDiv2, k, x);
 
 // predicates

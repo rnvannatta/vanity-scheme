@@ -64,25 +64,27 @@
 
 /////////////////////////////////////////////////////////
 
-V_BEGIN_FUNC(VExact, "exact", 2, k, x)
+V_BEGIN_FUNC_BASIC(VExact, "exact", 1, x)
   uint64_t type = VWordType(x);
   if(type == VIMM_INT) {
-    V_BOUNCE(k, runtime, x);
+    return x;
   } else if(type == VIMM_NUMBER) {
-    V_BOUNCE(k, runtime, VEncodeInt((int)VDecodeNumber(x)));
+    return VEncodeInt((int)VDecodeNumber(x));
   } else {
     VErrorC(runtime, "exact: not a number: ~S", x);
+    return VVOID;
   }
 V_END_FUNC
 
-V_BEGIN_FUNC(VInexact, "inexact", 2, k, x)
+V_BEGIN_FUNC_BASIC(VInexact, "inexact", 1, x)
   uint64_t type = VWordType(x);
   if(type == VIMM_INT) {
-    V_BOUNCE(k, runtime, VEncodeNumber((double)VDecodeInt(x)));
+    return VEncodeNumber((double)VDecodeInt(x));
   } else if(type == VIMM_NUMBER) {
-    V_BOUNCE(k, runtime, x);
+    return x;
   } else {
     VErrorC(runtime, "exact: not a number: ~S", x);
+    return VVOID;
   }
 V_END_FUNC
 
@@ -544,12 +546,12 @@ end:
     }
 V_END_FUNC
 
-V_BEGIN_FUNC(VQuot2, "quotient", 3, k, x, y)
-    V_BOUNCE(k, runtime, VEncodeInt(VCheckedDecodeInt2(runtime, x, "quotient") / VCheckedDecodeInt2(runtime, y, "quotient")));
+V_BEGIN_FUNC_BASIC(VQuot2, "quotient", 2, x, y)
+    return VEncodeInt(VCheckedDecodeInt2(runtime, x, "quotient") / VCheckedDecodeInt2(runtime, y, "quotient"));
 V_END_FUNC
 
-V_BEGIN_FUNC(VRem2, "remainder", 3, k, x, y)
-    V_BOUNCE(k, runtime, VEncodeInt(VCheckedDecodeInt2(runtime, x, "remainder") % VCheckedDecodeInt2(runtime, y, "remainder")));
+V_BEGIN_FUNC_BASIC(VRem2, "remainder", 2, x, y)
+    return VEncodeInt(VCheckedDecodeInt2(runtime, x, "remainder") % VCheckedDecodeInt2(runtime, y, "remainder"));
 V_END_FUNC
 
 // This feels fucking idiotic.

@@ -320,14 +320,14 @@
   (define (is-basic-intrinsic? sym)
     (case sym
       ; Math
-      ;((##vcore.inexact) #t)
-      ;((##vcore.exact) #t)
+      ((##vcore.inexact) #t)
+      ((##vcore.exact) #t)
       ((##vcore.+) #t)
       ((##vcore.-) #t)
       ((##vcore.*) #t)
       ((##vcore./) #t)
-      ;((##vcore.quotient) #t)
-      ;((##vcore.remainder) #t)
+      ((##vcore.quotient) #t)
+      ((##vcore.remainder) #t)
       ((##vcore.<=) #t)
       ((##vcore.<) #t)
       ((##vcore.=) #t)
