@@ -772,6 +772,7 @@
            paths
            architecture)))
       (('define-values . noise) (compiler-error "malformed define-values" `(define-values . ,noise)))
+      (('cond-expand . rest) (expand-toplevel-impl (expand-cond-expand rest) paths architecture))
 
       (('##vcore.declare f l)
        (if (not (string? f)) (compiler-error "##vcore.declare's first argument is not a string" f))
@@ -1033,7 +1034,7 @@
        `(##vcore.delay-force-impl (lambda () (##vcore.make-promise ,(expand-syntax x)))))
 
       (('features) `',(get-feature-list))
-      (('cond-expand . rest) (expand-cond-expand rest))
+      (('cond-expand . rest) (expand-syntax (expand-cond-expand rest)))
 
       ((f args ...)
        (if (and (atom? f) (not (symbol? f))) (compiler-error "function application's first arg is not a function" f))
@@ -1059,15 +1060,16 @@
         (('not test)
          (not (cond-expand-true test)))
         (feat
-         (if (symbol? feat)
-             (memv feat feature-list)
-             (compiler-error "invalid cond-expand test" test)))))
+         (cond
+           ((symbol? feat) (memv feat feature-list))
+           ((pair? feat) (compiler-error "invalid cond-expand test" test))
+           (else feat)))))
     (match clauses
       ((('else . body))
        (expand-syntax `(begin . ,body)))
       (((test . body) . rest-clauses)
        (if (cond-expand-true test)
-           (expand-syntax `(begin . ,body))
+           `(begin . ,body)
            (expand-cond-expand rest-clauses)))
       (else #void)))
 

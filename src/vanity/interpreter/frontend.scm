@@ -79,6 +79,7 @@
     (displayln "  -I<dir>     Add the directory to the list to be searched for scheme header files")
     (displayln "  -l<lib>     Open the shared library lib<lib>.so into vanity's address space before execution. If")
     (displayln "                <lib> contains a slash it is treated as a direct path to the library instead.")
+    (displayln "  -D<feature> Define a feature for use with cond-expand")
     (displayln "  --scheme    Interpret the file as a scheme source file regardless of file extension")
     (displayln "  --vasm      Interpret the file as a vanity bytecode assembly file regardless of file extension")
     (displayln "  --help      You know about this")
