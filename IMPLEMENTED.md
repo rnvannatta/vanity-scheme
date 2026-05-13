@@ -1,6 +1,6 @@
 # Vanity Scheme Implementation Status
 
-Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI-1, SRFI-4, SRIF-8, SRFI-9, SRFI-11, SRFI-17, SRFI-26, SRFI-28, SRFI-69, SRFI-125, SRFI-151, and SRFI-260
+Vanity Scheme is a currently-incomplete implementation of R7RS Scheme, with SRFI-1, SRFI-4, SRIF-8, SRFI-9, SRFI-11, SRFI-17, SRFI-26, SRFI-28, SRFI-69, SRFI-72, SRFI-125, SRFI-151, and SRFI-260
 
 TODO: 2, 13, 14, 27, 45, 48, 95
 
@@ -126,7 +126,7 @@ TODO: 2, 13, 14, 27, 45, 48, 95
 |define                         | Yes         |             |            |
 |define-library                 | Yes         |             |            |
 |define-record-type             | Yes         |             |            |
-|define-syntax                  | Low Prio    |             |            |
+|define-syntax                  |             |             |            |
 |define-values                  | Yes         |             |            |
 |delay                          | Yes         |             |            |
 |delay-force                    | Yes         |             |            |
@@ -200,11 +200,11 @@ TODO: 2, 13, 14, 27, 45, 48, 95
 |let                            | Yes         |             |            |
 |let*                           | Yes         |             |            |
 |let\*-values                   | Yes         |             |            |
-|let-syntax                     | Low Prio    |             |            |
+|let-syntax                     |             |             |            |
 |let-values                     | Yes         |             |            |
 |letrec                         | Yes         |             |            |
 |letrec\*                       | Yes         |             |            |
-|letrec-syntax                  | Low Prio    |             |            |
+|letrec-syntax                  |             |             |            |
 |list                           | Yes         |             |            |
 |list-\>string                  | Yes         |             |            |
 |list-\>vector                  | Yes         |             |            |
@@ -324,8 +324,8 @@ TODO: 2, 13, 14, 27, 45, 48, 95
 |symbol->string                 | Yes         |             |            |
 |symbol=?                       | Yes         |             |            |
 |symbol?                        | Yes         |             |            |
-|syntax-error                   | Low Prio    |             |            |
-|syntax-rules                   | Low Prio    |             |            |
+|syntax-error                   |             |             |            |
+|syntax-rules                   |             |             |            |
 |#t                             | Yes         |             |            |
 |tan                            | Yes         |             |            |
 |textual-port?                  | Yes         |             |            |
@@ -590,6 +590,29 @@ Also u8vector is an alias for bytevector and all procedures exist there too
 |string-hash                    |             |             |            |
 |string-ci-hash                 |             |             |            |
 |hash-by-identity               |             |             |            |
+
+## SRFI-72
+
+| Name                          | Implemented | Well Tested | Documented |
+|-------------------------------|-------------|-------------|------------|
+|define-syntax                  | Yes         |             |            |
+|let-syntax                     | Yes         |             |            |
+|letrec-syntax                  |             |             |            |
+|identifier?                    |             |             |            |
+|bound-identifier=?             |             |             |            |
+|free-identifier=?              |             |             |            |
+|literal-identifier=?           |             |             |            |
+|syntax                         | Yes         |             |            |
+|quasisyntax                    | Yes         |             |            |
+|datum->syntax-object           |             |             |            |
+|syntax-object->datum           |             |             |            |
+|make-capturing-identifier      |             |             |            |
+|begin-for-syntax               | Low Prio    |             |            |
+|syntax-error                   |             |             |            |
+
+SRFI-72 is define-library unaware so some work will have to be done for it.
+
+Also, the macro engine is unlikely to have a phase tower, and it's also unfortunately unlikely to allow arbitrary imports. The latter restriction is because syntax objects are not cons cells to enable a critical optimization, so the `car` and `cdr` during macro expand phase are not normal car and cdr.
 
 ## SRFI-125
 

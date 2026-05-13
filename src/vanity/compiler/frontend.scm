@@ -23,7 +23,21 @@
 ;
 ; If not, visit <https://github.com/rnvannatta>
 
-(import (vanity core) (vanity list) (vanity pretty-print) (vanity compiler utils) (vanity compiler variables) (vanity compiler match) (vanity compiler getopt) (vanity compiler expand) (vanity compiler cps) (vanity compiler lower) (vanity compiler transpile) (vanity compiler bytecode) (vanity compiler library) (vanity compiler config) (vanity compiler alpha-convert) (vanity compiler optimize))
+(import (vanity core) (vanity list) (vanity pretty-print)
+  (vanity compiler utils)
+  (vanity compiler variables)
+  (vanity compiler match)
+  (vanity compiler getopt)
+  (vanity compiler expand)
+  (vanity compiler hygienic expand)
+  (vanity compiler cps)
+  (vanity compiler lower)
+  (vanity compiler transpile)
+  (vanity compiler bytecode)
+  (vanity compiler library)
+  (vanity compiler config)
+  (vanity compiler alpha-convert)
+  (vanity compiler optimize))
 
 (define scm-files '())
 (define obj-files '())
@@ -41,6 +55,7 @@
 (define out-file #f)
 (define platform "linux")
 (define purec? #f)
+(define hygiene? #f)
 (define main "main")
 (define cc #f)
 (define w-unbound-variables #f)
@@ -156,6 +171,7 @@
   (displayln "")
   (displayln "  --shared        Compile as shared library")
   (displayln "  --keep-temps    Keep temporary compilation files, such as C intermediates")
+  (displayln "  --hygiene       Use new hygienic macro-expander (still in development)")
   ;(displayln "  --api=<num>    Compile with major api version 0 or 1")
   (displayln "  --platform=<os> Which OS to make executables for. Either 'linux' or 'windows' or 'emscripten'.")
   (displayln "  --main=<main>   What style of main to use. Either 'main' or 'winmain' or 'emscripten-loop' or 'none'.")
@@ -178,7 +194,7 @@
 
 (with-exception-handler handle-exception
   (lambda ()
-    (let loop ((args (getopt "vghtco:I:D:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (main #t main) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark)))))
+    (let loop ((args (getopt "vghtco:I:D:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (main #t main) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark) (hygiene #f hygiene)))))
       (if (not (null? args))
           (begin
             (case (caar args)
@@ -237,6 +253,7 @@
               ((maketarget) (set! maketargets (cons (cdar args) maketargets)))
               ((benchmark) (set! benchmark? #t))
               ((bytecode) (set! bytecode? #t))
+              ((hygiene) (set! hygiene? #t))
               (else (compiler-error "Unknown CLI option" (cdar args))))
             (loop (cdr args)))))
     (if (not cc)
@@ -322,7 +339,11 @@
                 (lambda ()
                   (let* ((fd (open-input-file scm-file))
                          (file (benchmark "read" (lambda () (if fd (append (read-all fd)) (compiler-error "file does not exist" scm-file)))))
-                         (expanded (benchmark "expand" (lambda () (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths) architecture))) file)))))
+                         (expanded (benchmark "expand"
+                                     (lambda ()
+                                       (if hygiene?
+                                           (map (lambda (e) (expand-syntax e)) file)
+                                           (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths) architecture))) file))))))
                     (if w-unbound-variables
                         (let loop ((exprs (apply append expanded)) (bound '()) (free '()))
                           (if (null? exprs)

@@ -288,6 +288,33 @@
        (cond ((vector? x) `(##vcore.list->vector ,(expand-quasiquote quotation (vector->list x))))
              (else `',x)))))
 
+  ; hacked up ad-hoc macro to aid in development of new macro engine
+  (define (expand-global-syntax quotation expr)
+    (match expr
+      (('quasiquote x) `(##vcore.cons `quasiquote (##vcore.cons ,(expand-global-syntax (+ quotation 1) x) '())))
+      (('unquote x)
+       (if (= quotation 1)
+           (cond ((vector? x) `(##vcore.list->vector ,(expand-syntax `',(vector->list x))))
+                 ((f64vector? x) `(##vcore.list->f64vector ,(expand-syntax `',(f64vector->list x))))
+                 ((f32vector? x) `(##vcore.list->f32vector ,(expand-syntax `',(f32vector->list x))))
+                 ((s32vector? x) `(##vcore.list->s32vector ,(expand-syntax `',(s32vector->list x))))
+                 ((u16vector? x) `(##vcore.list->u16vector ,(expand-syntax `',(u16vector->list x))))
+                 ((s16vector? x) `(##vcore.list->s16vector ,(expand-syntax `',(s16vector->list x))))
+                 ((u8vector? x) `(##vcore.list->u8vector ,(expand-syntax `',(u8vector->list x))))
+                 ((s8vector? x) `(##vcore.list->s8vector ,(expand-syntax `',(s8vector->list x))))
+                 (else x))
+           `(##vcore.cons `unquote (##vcore.cons ,(expand-global-syntax (- quotation 1) x) '()))))
+      ((('unquote-splicing x) . y)
+       (if (= quotation 1)
+           ; FIXME dont' like this naked append, need long and short function
+           `(append ,x ,(expand-global-syntax quotation y))
+           `(##vcore.cons (##vcore.cons `unquote-splicing (##vcore.cons ,(expand-global-syntax (- quotation 1) x) '()) ,(expand-global-syntax quotation y)))))
+      ((a . b) `(##vcore.cons ,(expand-global-syntax quotation a) ,(expand-global-syntax quotation b)))
+      (x
+       (cond ((vector? x) `(##vcore.list->vector ,(expand-global-syntax quotation (vector->list x))))
+             ((symbol? x) `(global-identifier ',x))
+             (else `',x)))))
+
   ; pretty ugly code
   (define (expand-library lib paths)
     (define (make-library-output exports)
@@ -810,6 +837,7 @@
       (('##qualified-case-lambda . _) (compiler-error "malformed case-lambda" expr))
 
       (('quasiquote x) (expand-syntax (expand-quasiquote 1 x)))
+      (('##global-quasisyntax x) (expand-syntax (expand-global-syntax 1 x)))
       (('quote x) expr)
 
       (('let . _) (expand-let (cdr expr)))
@@ -1066,7 +1094,7 @@
            (else feat)))))
     (match clauses
       ((('else . body))
-       (expand-syntax `(begin . ,body)))
+       `(begin . ,body))
       (((test . body) . rest-clauses)
        (if (cond-expand-true test)
            `(begin . ,body)

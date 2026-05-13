@@ -789,6 +789,27 @@ V_BEGIN_FUNC(VCdr2, "cdr", 2, k, x)
     V_BOUNCE(k, runtime, VInlineCdr2(runtime, x));
 V_END_FUNC
 
+V_BEGIN_FUNC(VAppendK, "append-k", 1, rest)
+  V_BOUNCE_FUNC(VCons2, NULL, runtime, statics->vars[0], VDecodePair(statics->vars[1])->first, rest);
+}
+
+// (cons (car x) (append (cdr x) y))
+// => (append (lambda (rest) (cons (car x) rest)) (cdr x) y)
+V_BEGIN_FUNC(VAppend, "append", 3, k, _x, y)
+  if(VIsEq(_x, VNULL))
+    V_BOUNCE(k, runtime, y);
+  if(VIsEq(y, VNULL))
+    V_BOUNCE(k, runtime, _x);
+
+  VEnv * env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
+  env->base = VMakeSmallObject(VENV); env->num_vars = 2; env->var_len = 2; env->up = NULL;
+  env->vars[0] = k;
+  env->vars[1] = _x;
+  VClosure * k_wrapped = V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)VAppendK, env));
+
+  VPair * x = VCheckedDecodePair2(runtime, _x, "append");
+  V_BOUNCE_FUNC(VAppend, NULL, runtime, VEncodeClosure(k_wrapped), x->rest, y);
+}
 
 // vectors
 

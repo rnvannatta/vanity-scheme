@@ -10,7 +10,8 @@
 (cond-expand ((and (not (library (i simply do not exist))) (library (vanity core))) (import (vanity core))))
 
 (cond-expand (#t (define uhoh 'foobar)))
-(or (eq? uhoh 'foobar) (exit 1))
+(cond-expand (else (define ruhoh 'foobar)))
+(or (eq? uhoh ruhoh) (exit 1))
 
 (cond-expand)
 (cond-expand ((not r7rs) (exit 1)) ((or exact-closed r7rs) (exit (eq? foo 0))))
