@@ -126,6 +126,7 @@
          ((##vcore.cdr) "VCdr2")
          ((##vcore.set-car!) "VSetCar2")
          ((##vcore.set-cdr!) "VSetCdr2")
+         ((##vcore.append) "VAppend")
 
          ; Vectors
          ((##vcore.vector) "VCreateVector")
@@ -513,6 +514,7 @@
          ((##vcore.cdr) ##vcore.cdr)
          ((##vcore.set-car!) ##vcore.set-car!)
          ((##vcore.set-cdr!) ##vcore.set-cdr!)
+         ((##vcore.append) (##intrinsic "VAppend" 3 3))
 
          ; Vectors
          ((##vcore.vector) ##vcore.vector)

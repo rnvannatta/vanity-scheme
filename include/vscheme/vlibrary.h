@@ -78,6 +78,7 @@ V_DECLARE_FUNC_BASIC(VNot2, x);
 V_DECLARE_FUNC(VCons2, k, x, y);
 V_DECLARE_FUNC(VCar2, k, x);
 V_DECLARE_FUNC(VCdr2, k, x);
+V_DECLARE_FUNC(VAppend, k, x, y);
 
 V_DECLARE_FUNC_BASIC(VAssq, x, lst);
 

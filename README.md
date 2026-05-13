@@ -16,6 +16,8 @@ The compiler also has support for targeting wasm via the emscripten toolchain.
 
 The compiler is free software under GPL v2.0, and the runtime is free software under LGPL v2.1. So, just as with gcc, you may use the compiler to build and link nonfree software if you do not statically link the runtime library.
 
+A major rewrite to the expansion engine to support hygienic macros is underway!
+
 ## Install Instructions
 
 At the moment, x64 Linux is a requirement to run the compiler and thus to compile the project.
@@ -113,14 +115,37 @@ There's also a bit of cool syntax in the compiler: pattern matching! Here's an e
 (displayln (expand '(let ((x 1) (y 2)) (cons x y))))
 ```
 
+## The Macro Engine
+
+The **NEW** hygienic macro expansion engine is under development. It is based on SRFI-72 and Matthew Flatt's "scope-set" macro expansion algorithm.
+
+Here is an example of use. Compile with `vsc --hygiene foo.scm`
+
+```
+(import (vanity core))
+(define-syntax (foo x) #`(define ,x 'foo))
+(foo bar)
+(let ((x 'hygienic!))
+  (let-syntax ((x-macro (lambda (form) #'x)))
+    (let ((x 'this-macro-engine-is))
+      (displayln (cons x (x-macro))))))
+```
+
+In the snippet above, `` #\` `` is reader shorthand for `quasisyntax`, and likewise `#'` is shorthand for `syntax`. These are the macro versions of `quote` and `quasiquote`, retaining hygiene info, such that `define`, `quote`, and `foo` are in the macro definition's scope, not the macro instance's scope. This is demonstrated in the final macro example, where `x-macro`'s notion of `x` refers to the `x` defined as `'hygienic!` More info in SRFI-72's documents.
+
+It is *extremely* incomplete, and is a massive project as I unfortunately have to reimplement all of Vanity's syntax in this macro engine. And solve some issues like how to make the R5RS SRFI-72 gel with R7RS and its define-library.
+
 ## Roadmap
 
-Currently I'm focused on improving Vanity's codegen, particularly for Webassembly. 
+I am currently trying to hit a 'beta release'. These are the tasks that remain:
 
-1. Better wasm codegen
-2. More complete standard library
-3. Better struct support in C FFI
-4. Type inference based optimization
+1. MAJOR: New expansion engine that supports user-defined hygienic macros (srfi-72 inspired)
+2. Line editor
+3. Breakloops
+4. Some minor missing bits from R7RS
+5. SRFI-126 and SRFI-151 support
+6. Documentation
+7. Streamlined install process
 
 Progress is very slow as I am moonlighting this project while daylighting as a graphics programmer.
 

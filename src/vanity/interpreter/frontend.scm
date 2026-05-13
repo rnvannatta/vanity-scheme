@@ -1,12 +1,15 @@
 (define-library (vanity interpreter frontend)
   (import (vanity core) (vanity bytecode) (vanity compiler getopt) (vanity compiler config)
     (vanity compiler expand)
+    (vanity compiler hygienic expand)
     (vanity compiler alpha-convert)
     (vanity compiler cps)
     (vanity compiler lower)
     (vanity compiler bytecode)
     (vanity compiler utils))
   (export ##vcore.vanity-main load)
+
+  (define hygiene #f)
 
   (define (extension file)
     (let extension-loop ((i (- (string-length file) 1)))
@@ -40,8 +43,14 @@
   (define paths (list (sprintf "~Ainclude" (get-install-root))))
   (define (eval-scheme expr path)
     (let* ((architecture (if (eqv? platform 'windows) "windows_amd64" "sysv_amd64"))
-           (expanded (expand-toplevel expr (if path (cons path paths) paths) architecture))
-           (alpha (map alpha-convert expanded))
+           (expanded
+             (if hygiene
+                 (expand-syntax expr)
+                 (expand-toplevel expr (if path (cons path paths) paths) architecture)))
+           (alpha
+             (if hygiene
+                 expanded
+                 (map alpha-convert expanded)))
            (cps (map (cute to-cps <> (if path (cons path paths) paths)) alpha))
            (opt (map (lambda (e) (optimize e #f)) cps))
            (bruijn (map bruijn-ify opt))
@@ -82,6 +91,7 @@
     (displayln "  -D<feature> Define a feature for use with cond-expand")
     (displayln "  --scheme    Interpret the file as a scheme source file regardless of file extension")
     (displayln "  --vasm      Interpret the file as a vanity bytecode assembly file regardless of file extension")
+    (displayln "  --hygiene   Use new hygienic macro-expander (still in development)")
     (displayln "  --help      You know about this")
     (displayln "  --version   Show version and build info"))
   (define (display-version)
@@ -91,7 +101,7 @@
   (define (##vcore.vanity-main)
     (define file #f)
     (define lang #f)
-    (let main-loop ((args (getopt "I:D:l:" (command-line) '((help #f help) (version #f version) (scheme #f scheme) (vasm #f vasm)))))
+    (let main-loop ((args (getopt "I:D:l:" (command-line) '((help #f help) (version #f version) (scheme #f scheme) (vasm #f vasm) (hygiene #f hygiene)))))
       (if (not (null? args))
           (begin
             (case (caar args)
@@ -101,6 +111,8 @@
               ((scheme vasm)
                (if lang (error "vanity: multiple languages declared"))
                (set! lang (caar args)))
+              ((hygiene)
+               (set! hygiene #t))
               ((version)
                (display-version) (exit 0))
               ((help)
