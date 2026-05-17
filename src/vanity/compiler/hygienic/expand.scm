@@ -7,7 +7,6 @@
   ; define-values toplevel
   ; define-constants toplevel
   ; case-lambda
-  ; macro-in-body
 
   ; set!
   ; and
@@ -306,59 +305,69 @@
       (if (and (syntax-pair? body)
                (syntax-pair? (syntax-car body))
                (identifier? (syntax-caar body)))
-          (case (resolve-identifier (syntax-caar body))
-            ((begin)
-             (loop defines constants (syntax-append (syntax-cdar body) (syntax-cdr body))))
-            ((define)
-             (let ((def (syntax-car body)))
-                (if (syntax-pair? (syntax-cadr def))
-                    (loop
-                      (cons
-                        `(,(syntax-car (syntax-cadr def))
-                          (,(introduce 'lambda)
-                              ,(syntax-cdr (syntax-cadr def))
-                              . ,(syntax-cddr def)))
-                        defines)
-                      constants
-                      (syntax-cdr body))
-                    (loop (cons (syntax-cdr def) defines) constants (syntax-cdr body)))))
-            ((define-constant)
-             (let ((def (syntax-car body)))
-                (if (syntax-pair? (syntax-cadr def))
-                    (loop
-                      defines
-                      (cons
-                        `(,(syntax-car (syntax-cadr def))
-                          (,(introduce 'lambda)
-                              ,(syntax-cdr (syntax-cadr def))
-                              . ,(syntax-cddr def)))
-                        constants)
-                      (syntax-cdr body))
-                    (loop defines (cons (syntax-cdr def) constants) (syntax-cdr body)))))
-            ((define-values)
-             (define def (syntax-car body))
-             (define formals (syntax-cadr def))
-             (define names (syntax-undot-list formals))
-             (define mangles (map (lambda (name) (introduce (generate-symbol 'tmp))) names))
-             (define def-body (syntax-car (syntax-cddr def)))
-             (loop
-               (append
-                 `((,(introduce (generate-symbol 'dummy))
-                   (,(introduce '##vcore.call-with-values)
-                    (,(introduce 'lambda) () ,def-body)
-                    (,(introduce 'lambda)
-                       ,(let loop ((formals formals) (mangles mangles))
-                             (cond
-                               ((syntax-pair? formals) (cons (car mangles) (loop (syntax-cdr formals) (cdr mangles))))
-                               ((syntax-null? formals) '())
-                               (else (car mangles))))
-                       #void
-                       . ,(map (lambda (name mangle) `(,(introduce 'set!) ,name ,mangle)) names mangles)))))
-                 (reverse (map (lambda (name) (list name #f)) names))
-                 defines)
-               constants
-               (syntax-cdr body)))
-            (else (finish defines constants body)))
+          (let ((binding (resolve-identifier (syntax-caar body))))
+            (case binding
+              ((begin)
+               (loop defines constants (syntax-append (syntax-cdar body) (syntax-cdr body))))
+              ((define)
+               (let ((def (syntax-car body)))
+                  (if (syntax-pair? (syntax-cadr def))
+                      (loop
+                        (cons
+                          `(,(syntax-car (syntax-cadr def))
+                            (,(introduce 'lambda)
+                                ,(syntax-cdr (syntax-cadr def))
+                                . ,(syntax-cddr def)))
+                          defines)
+                        constants
+                        (syntax-cdr body))
+                      (loop (cons (syntax-cdr def) defines) constants (syntax-cdr body)))))
+              ((define-constant)
+               (let ((def (syntax-car body)))
+                  (if (syntax-pair? (syntax-cadr def))
+                      (loop
+                        defines
+                        (cons
+                          `(,(syntax-car (syntax-cadr def))
+                            (,(introduce 'lambda)
+                                ,(syntax-cdr (syntax-cadr def))
+                                . ,(syntax-cddr def)))
+                          constants)
+                        (syntax-cdr body))
+                      (loop defines (cons (syntax-cdr def) constants) (syntax-cdr body)))))
+              ((define-values)
+               (define def (syntax-car body))
+               (define formals (syntax-cadr def))
+               (define names (syntax-undot-list formals))
+               (define mangles (map (lambda (name) (introduce (generate-symbol 'tmp))) names))
+               (define def-body (syntax-car (syntax-cddr def)))
+               (loop
+                 (append
+                   `((,(introduce (generate-symbol 'dummy))
+                     (,(introduce '##vcore.call-with-values)
+                      (,(introduce 'lambda) () ,def-body)
+                      (,(introduce 'lambda)
+                         ,(let loop ((formals formals) (mangles mangles))
+                               (cond
+                                 ((syntax-pair? formals) (cons (car mangles) (loop (syntax-cdr formals) (cdr mangles))))
+                                 ((syntax-null? formals) '())
+                                 (else (car mangles))))
+                         #void
+                         . ,(map (lambda (name mangle) `(,(introduce 'set!) ,name ,mangle)) names mangles)))))
+                   (reverse (map (lambda (name) (list name #f)) names))
+                   defines)
+                 constants
+                 (syntax-cdr body)))
+              (else
+                (define v (assoc binding env))
+                (cond
+                  ((and v (procedure? (cdr v)))
+                   (loop
+                     defines
+                     constants
+                     (cons (apply-transformer (get-syntax-data (syntax-caar body)) (cdr v) (syntax-car body)) (syntax-cdr body))))
+                  (else (finish defines constants body))))
+              #;(else )))
           (finish defines constants body))))
 
   (define (expand-lambda stx env)

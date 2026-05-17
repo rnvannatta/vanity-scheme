@@ -2,6 +2,7 @@
   (import (vanity core) (vanity list) (vanity compiler hygienic types))
   (export global-identifier global-forms toplevel-expand-env)
 
+  ; let loop
   ; let*
   ; let-values
   ; let*-values
