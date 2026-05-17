@@ -25,6 +25,12 @@
       ((eq? (car expr) 'lambda)
        (lambda args
          (eval (caddr expr) (bind-formals (cadr expr) args env))))
+      ((eq? (car expr) 'letrec)
+       (let* ((bindings (map (lambda (pair) (cons (car pair) #void)) (cadr expr)))
+              (env (append bindings env))
+              (vals (map (lambda (pair) (eval (cadr pair) env)) (cadr expr))))
+         (for-each (lambda (binding val) (set-cdr! binding val)) bindings vals)
+         (eval (caddr expr) env)))
       ((eq? (car expr) 'if)
        (if (eval (cadr expr) env)
            (eval (caddr expr) env)
