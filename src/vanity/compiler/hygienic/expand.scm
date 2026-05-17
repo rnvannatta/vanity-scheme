@@ -6,11 +6,6 @@
 
   ; define-values toplevel
   ; define-constants toplevel
-  ; case-lambda
-
-  ; set!
-  ; and
-  ; or
 
   ; define-library
   ; import
@@ -184,7 +179,7 @@
 
   ; let - missing internal defines + implied begin
   ; quasiquote - done?
-  (define special-forms '(begin define define-constant define-values lambda letrec letrec* let-syntax define-syntax quote syntax if))
+  (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax define-syntax quote syntax if and or set!))
   (define global-primitives '(datum->syntax-object syntax-object->datum get-syntax-data null? list cons car cdr caar cadr cdar cddr map))
   (for-each (lambda (sym) (add-binding! (make-syntax sym (list global-scope)) sym)) (append special-forms global-forms global-primitives))
 
@@ -276,7 +271,6 @@
                (eq? (get-syntax-data (syntax-car expr)) '##foreign.function)))
         #;(and (pair? expr) (eqv? (car expr) 'lambda) (null? (free-variables expr)))))
 
-  ; TODO internal definition macros
   (define (expand-body stx env)
     (define introduced-sc (make-scope))
     (define (introduce x) (introduced-identifier x introduced-sc))
@@ -371,11 +365,8 @@
           (finish defines constants body))))
 
   (define (expand-lambda stx env)
-    ; unpack (lambda args body)
-    (define lambda-id (syntax-car stx))
-    (define formals (syntax-cadr stx))
-    ;(define body (syntax-car (syntax-cddr stx)))
-    (define body (syntax-cddr stx))
+    (define formals (syntax-car stx))
+    (define body (syntax-cdr stx))
 
     (define dotted? (not (syntax-proper-list? formals)))
     (define sc (make-scope))
@@ -386,8 +377,7 @@
 
     (let* ((body-env (append (map (lambda (binding) (cons binding variable)) bindings) env))
            (exp-body (expand-body (flip-scope body sc) body-env)))
-      `(,lambda-id ,(if dotted? (append (drop-right ids 1) (car (take-right ids 1))) ids)
-          ,exp-body)))
+      `(,(if dotted? (append (drop-right ids 1) (car (take-right ids 1))) ids) ,exp-body)))
   (define (expand-app xs env)
     (syntax-map (lambda (x) (expand-impl x env)) xs))
 
@@ -412,52 +402,8 @@
           ((syntax-pair? val) (advanced-primitive-letrec val))
           (else (not (and (identifier? val) (member val xs free-identifier=?))))))))
 
-  (define (expand-letrec stx env)
-    (define letrec-id (syntax-car stx))
-    (define idvals (syntax-cadr stx))
-    (define body (syntax-cddr stx))
-
-    (define introduced-sc (make-scope))
-    (define (introduce x) (introduced-identifier x introduced-sc))
-
-    (define sc (make-scope))
-    (define ids (syntax-map (lambda (idval) (flip-scope (syntax-car idval) sc)) idvals))
-    (define bindings (map (lambda (e) (generate-symbol (get-syntax-data e))) ids))
-    (for-each (lambda (id binding) (add-binding! id binding)) ids bindings)
-
-    (let* ((letrec-env (append (map (lambda (binding) (cons binding variable)) bindings) env))
-           (exp-idvals (syntax-map (lambda (id idval) (list id (expand-impl (flip-scope (syntax-cadr idval) sc) letrec-env))) ids idvals))
-           (exp-body (expand-body (flip-scope body sc) letrec-env)))
-      (if (every? (cut primitive-letrec? <> ids) (map cadr exp-idvals))
-          `(,letrec-id ,exp-idvals ,exp-body)
-          (let loop ((count 0)
-                     (inner-ids '())
-                     (inner-vals '())
-                     (idvals '())
-                     (todo (reverse exp-idvals))
-                     (body exp-body))
-            (cond
-              ((null? todo)
-               `(,letrec-id ,idvals ((,(introduce 'lambda) ,inner-ids ,body) . ,inner-vals)))
-              ((primitive-letrec? (cadar todo) ids)
-                (loop
-                  count
-                  inner-ids
-                  inner-vals
-                  (cons (car todo) idvals)
-                  (cdr todo)
-                  body))
-              (else
-               (let ((tmp (introduce (string->symbol (sprintf "tmp~A" count)))))
-                 (add-binding! tmp (generate-symbol 'tmp))
-                 (loop
-                   (+ count 1)
-                   (cons tmp inner-ids)
-                   (cons (cadar todo) inner-vals)
-                   (cons (list (caar todo) #void) idvals)
-                   (cdr todo)
-                   `(,(introduce 'begin) (,(introduce 'set!) ,(caar todo) ,tmp) ,body)))))))))
-
+  ; also expands letrec, which is allowed by the spec
+  ; letrec*'s faithful expansion runs faster than letrec's
   (define (expand-letrec* stx env)
     (define idvals (syntax-cadr stx))
     (define body (syntax-cddr stx))
@@ -596,9 +542,10 @@
     (flip-scope transformed-s intro-scope))
   (define (expand-id-application-form expand stx binding env)
     (case binding
-      ((lambda) (expand-lambda stx env))
-      ((letrec) (expand-letrec stx env))
-      ((letrec*) (expand-letrec* stx env))
+      ((lambda) (cons (syntax-car stx) (expand-lambda (syntax-cdr stx) env)))
+      ((case-lambda)
+       (cons (syntax-car stx) (syntax-map (cut expand-lambda <> env) (syntax-cdr stx))))
+      ((letrec* letrec) (expand-letrec* stx env))
       ((let-syntax) (expand-let-syntax stx env))
       ((syntax quote) stx)
       ((begin)
@@ -614,7 +561,7 @@
           (list
             (syntax-car stx)
             (expand-impl (syntax-cadr stx) env)
-            (expand-impl (cons (syntax-car stx) (syntax-cddr stx)) env)))))
+            (expand-impl (cons (##global-quasisyntax begin) (syntax-cddr stx)) env)))))
       ((if)
        (if (= (syntax-length stx) 4)
            (list (syntax-car stx)
@@ -625,6 +572,45 @@
                  (expand-impl (syntax-cadr stx) env)
                  (expand-impl (syntax-car (syntax-cddr stx)) env)
                  #void)))
+      ((and)
+       (case (syntax-length stx)
+         ((1) #t)
+         ((2) (expand-impl (syntax-cadr stx) env))
+         ((3) (##global-quasisyntax (if ,(expand-impl (syntax-cadr stx) env) ,(expand-impl (syntax-caddr stx) env) #f)))
+         (else
+          (##global-quasisyntax
+            (if ,(expand-impl (syntax-cadr stx) env)
+                ,(expand-impl (##global-quasisyntax (and . ,(syntax-cddr stx))) env)
+                #f)))))
+      ((or)
+       (case (syntax-length stx)
+         ((1) #f)
+         ((2) (expand-impl (syntax-cadr stx) env))
+         ((3) (list (syntax-car stx) (expand-impl (syntax-cadr stx) env) (expand-impl (syntax-caddr stx) env)))
+         (else
+          (##global-quasisyntax
+            (or ,(expand-impl (syntax-cadr stx) env)
+                ,(expand-impl (##global-quasisyntax (or . ,(syntax-cddr stx))) env))))))
+      ((set!)
+       (if (> (syntax-length stx) 3)
+           (let ((place (syntax-caddr stx)))
+             (if (identifier? place)
+                 (##global-quasisyntax
+                    (set! ,place ,(expand-impl `(,(syntax-cadr stx) . ,(syntax-cddr stx)) env)))
+                 (let ((val (generate-symbol 'val)))
+                   (expand-impl
+                     (##global-quasisyntax
+                       ((##vcore.mutator ,(syntax-car place))
+                        ,@(syntax-cdr place)
+                        (lambda (,val) (,(syntax-cadr stx) ,val . ,(syntax-cdr (syntax-cddr stx))))))
+                     env))))
+           (let ((place (syntax-cadr stx)))
+             (if (identifier? place)
+                 `(,(syntax-car stx) ,place ,(expand-impl (syntax-caddr stx) env))
+                 (expand-impl
+                   (##global-quasisyntax
+                     ((##vcore.setter ,(syntax-car place)) ,@(syntax-cdr place) ,(syntax-caddr stx)))
+                   env)))))
       (else
         (define v (assoc binding env))
         (cond
