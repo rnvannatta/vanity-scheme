@@ -2,6 +2,30 @@
   (import (vanity core) (vanity list) (vanity compiler hygienic types))
   (export global-identifier global-forms toplevel-expand-env)
 
+  ; let*
+  ; let-values
+  ; let*-values
+  ; receive
+
+  ; cond
+  ; case
+
+  ; do
+  ; when
+  ; unless
+
+  ; delay
+  ; delay-force
+
+  ; parameterize
+  ; guard
+
+  ; cut
+  ; cute
+
+  ; match
+  ; do-loop
+
   (define (global-identifier expr)
     (make-syntax expr (list global-scope)))
 
@@ -12,7 +36,7 @@
 
   (define (expand-let form)
     (##global-quasisyntax
-      ((lambda ,(syntax-map syntax-car (syntax-cadr form)) ,(syntax-cadr (syntax-cdr form)))
+      ((lambda ,(syntax-map syntax-car (syntax-cadr form)) . ,(syntax-cddr form))
        . ,(syntax-map syntax-cadr (syntax-cadr form)))))
 
   (define (expand-quasiquote-impl quotation expr)
