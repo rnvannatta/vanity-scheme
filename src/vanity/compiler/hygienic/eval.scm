@@ -38,6 +38,9 @@
       ((eq? (car expr) 'begin)
        (eval (cadr expr) env)
        (eval (caddr expr) env))
+      ((eq? (car expr) 'or)
+       (let ((ret (eval (cadr expr) env)))
+         (if ret ret (eval (caddr expr) env))))
       (else
        (apply (eval (car expr) env) (map (lambda (e) (eval e env)) (cdr expr))))))
 )
