@@ -33,12 +33,14 @@ V_DECLARE_FUNC_MIN(VMultiImport, _var0, _var1, _var2);
 
 VEnv * _V60_V0vanity_V0compiler_V0config;
 
+static VPair _V10_Dpair_D16 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D15 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 VWEAK VWORD _V0linux;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0linux = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "linux" };
 VWEAK VWORD _V0platform;VWEAK struct { VBlob sym; char bytes[9]; } _VW_V0platform = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 9 }, "platform" };
 VWEAK VWORD _V0version;VWEAK struct { VBlob sym; char bytes[8]; } _VW_V0version = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 8 }, "version" };
 VWEAK VWORD _V0install__root;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0install__root = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "install-root" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D16 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "/usr/local/" };
-static struct { VBlob sym; char bytes[34]; } _V10_Dstring_D15 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 34 }, "_V0vanity_V0compiler_V0config_V20" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D14 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "/usr/local/" };
+static struct { VBlob sym; char bytes[34]; } _V10_Dstring_D13 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 34 }, "_V0vanity_V0compiler_V0config_V20" };
 VWEAK VWORD _V40VMultiImport;
 VWEAK VClosure _VW_V40VMultiImport = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMultiImport, NULL };
 static __attribute__((constructor)) void VDllMain1() {
@@ -46,6 +48,10 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0platform = VEncodePointer(VInternSymbol(546385074, &_VW_V0platform.sym), VPOINTER_OTHER);
   _V0version = VEncodePointer(VInternSymbol(-909072658, &_VW_V0version.sym), VPOINTER_OTHER);
   _V0install__root = VEncodePointer(VInternSymbol(-197696181, &_VW_V0install__root.sym), VPOINTER_OTHER);
+  _V10_Dpair_D16.first = VEncodeInt(0l);
+  _V10_Dpair_D16.rest = VEncodePointer(&_V10_Dpair_D15, VPOINTER_PAIR);
+  _V10_Dpair_D15.first = VEncodeInt(0l);
+  _V10_Dpair_D15.rest = VNULL;
   _V40VMultiImport = VEncodePointer(VLookupConstant("_V40VMultiImport", &_VW_V40VMultiImport), VPOINTER_CLOSURE);
 }
 static void _V0vanity_V0compiler_V0config_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -56,10 +62,10 @@ static void _V0vanity_V0compiler_V0config_V20_V0k1(VRuntime * runtime, VEnv * st
   "-- expected 1~N"
   , argc);
  }
-  // ((##intrinsic "VMultiImport") (bruijn ##.k.5 1 0) (##string ##.string.15) (bruijn ##.x.6 0 0))
+  // ((##intrinsic "VMultiImport") (bruijn ##.k.5 1 0) (##string ##.string.13) (bruijn ##.x.6 0 0))
     VCallFuncWithGC(runtime, (VFunc)VMultiImport, 3,
       statics->vars[0],
-      VEncodePointer(&_V10_Dstring_D15.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D13.sym, VPOINTER_OTHER),
       _var0);
 }
 static void _V0vanity_V0compiler_V0config_V20_V0lambda2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -119,7 +125,7 @@ static void _V0vanity_V0compiler_V0config_V20_V0lambda3(VRuntime * runtime, VEnv
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##letrec (vanity compiler config) 3 (#f (##string ##.string.16) #f) (set! (close _V0vanity_V0compiler_V0config_V20_V0k2) (bruijn ##.version.2 0 2) (##inline ##vcore.qcons '0 (##inline ##vcore.qcons '0 '()))))
+  // (##letrec (vanity compiler config) 3 (#f (##string ##.string.14) #f) (set! (close _V0vanity_V0compiler_V0config_V20_V0k2) (bruijn ##.version.2 0 2) '(##pair ##.pair.16)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[3]; } container;
@@ -127,17 +133,13 @@ static void _V0vanity_V0compiler_V0config_V20_V0lambda3(VRuntime * runtime, VEnv
     _V60_V0vanity_V0compiler_V0config = self;
     VInitEnv(self, 3, 3, statics);
     self->vars[0] = VEncodeBool(false);
-    self->vars[1] = VEncodePointer(&_V10_Dstring_D16.sym, VPOINTER_OTHER);
+    self->vars[1] = VEncodePointer(&_V10_Dstring_D14.sym, VPOINTER_OTHER);
     self->vars[2] = VEncodeBool(false);
     VRegisterStaticEnv("_V0vanity_V0compiler_V0config_V20", &_V60_V0vanity_V0compiler_V0config);
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)VSetEnvVar2, self)), 4,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0config_V20_V0k2, self)))),
       VEncodeInt(0l), VEncodeInt(2l),
-      VInlineCons2(runtime,
-        VEncodeInt(0l),
-        VInlineCons2(runtime,
-        VEncodeInt(0l),
-        VNULL))
+      VEncodePointer(&_V10_Dpair_D16, VPOINTER_PAIR)
     );
     }
 }

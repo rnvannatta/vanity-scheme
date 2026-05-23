@@ -49,7 +49,6 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0current__error__port = VEncodePointer(VInternSymbol(-1722675676, &_VW_V0current__error__port.sym), VPOINTER_OTHER);
   _V40VMultiImport = VEncodePointer(VLookupConstant("_V40VMultiImport", &_VW_V40VMultiImport), VPOINTER_CLOSURE);
 }
-V_DECLARE_FUNC(_V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13, _var0, _var1);
 V_DECLARE_FUNC_MIN(_V50_V0vanity_V0assert_V0assert__equal);
 static void _V0vanity_V0assert_V20_V0k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V0vanity_V0assert_V20_V0k2" };
@@ -153,30 +152,20 @@ VInlineNot2(runtime,
       VEncodeBool(false));
 }
 }
-static void _V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13_V0k6(VRuntime * runtime, VEnv * statics, int argc) {
+static void _V10_Dloop_D13_V0k6(VRuntime * runtime, VEnv * statics, int argc) {
   VEnv * self = statics;
   statics = self ? self->up : NULL;
-  // (##qualified-call (vanity assert assert-equal ##.loop.13) #f (bruijn ##.loop.13 1 0) (bruijn ##.k.26 0 0) (##inline ##vcore.cdr (bruijn ##.rest.14 0 1)))
-  {
-    VClosure * _closure = VDecodeClosure(statics->vars[0]);
-   VEnv * _closure_env = _closure->env;
-    VWORD _arg0 = 
-      self->vars[0];
-    VWORD _arg1 = 
+  // ((bruijn ##.loop.13 1 0) (bruijn ##.k.26 0 0) (##inline ##vcore.cdr (bruijn ##.rest.14 0 1)))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 2,
+      self->vars[0],
       VInlineCdr2(runtime,
-        self->vars[1]);
-    if(V_UNLIKELY(VStackOverflow(runtime))){
-      VGarbageCollect2Closure(runtime, _closure, 2, _arg0, _arg1);
-    } else {
-       _V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13(runtime, _closure_env, 2, _arg0, _arg1);
-    }
-  }
+        self->vars[1]));
 }
-void _V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
- static VDebugInfo dbg = { "_V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13" };
+static void _V10_Dloop_D13_V0lambda4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
+ static VDebugInfo dbg = { "_V10_Dloop_D13_V0lambda4" };
  VRecordCall2(runtime, &dbg);
  if(argc != 2) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V10_Dloop_D13_V0lambda4, got ~D~N"
   "-- expected 2~N"
   , argc);
  }
@@ -185,33 +174,23 @@ void _V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13(VRuntime * runtime, VE
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (if (##inline ##vcore.not (##inline ##vcore.null? (bruijn ##.rest.14 0 1))) (##qualified-call (vanity assert assert-equal) #t (bruijn ##.assert-equal.8 3 0) (close _V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13_V0k6) (bruijn ##.x.11 2 1) (##inline ##vcore.car (bruijn ##.rest.14 0 1))) ((bruijn ##.k.26 0 0) #f))
+  // (if (##inline ##vcore.not (##inline ##vcore.null? (bruijn ##.rest.14 0 1))) ((bruijn ##.assert-equal.8 3 0) (close _V10_Dloop_D13_V0k6) (bruijn ##.x.11 2 1) (##inline ##vcore.car (bruijn ##.rest.14 0 1))) ((bruijn ##.k.26 0 0) #f))
 if(VDecodeBool(
 VInlineNot2(runtime,
         VInlineNullP2(runtime,
         _var1)))) {
-  {
-   VEnv * _closure_env = _V60_V0vanity_V0assert;
-    VWORD _arg0 = 
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13_V0k6, self))));
-    VWORD _arg1 = 
-      statics->up->vars[1];
-    VWORD _arg2 = 
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 3,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V10_Dloop_D13_V0k6, self)))),
+      statics->up->vars[1],
       VInlineCar2(runtime,
-        _var1);
-    if(V_UNLIKELY(VStackOverflow(runtime))){
-      VGarbageCollect2Closure(runtime, (VClosure[]){VMakeClosure2((VFunc)_V50_V0vanity_V0assert_V0assert__equal, _V60_V0vanity_V0assert)}, 3, _arg0, _arg1, _arg2);
-    } else {
-       _V50_V0vanity_V0assert_V0assert__equal(runtime, _closure_env, 3, _arg0, _arg1, _arg2);
-    }
-  }
+        _var1));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(false));
 }
 }
 __attribute__((used)) static void _V20CaseError__V50_V0vanity_V0assert_V0assert__equal(VRuntime * runtime, VEnv * statics, int argc, ...) {
- // ("_V50_V0vanity_V0assert_V0assert__equal" #t (3 ((bruijn ##.equal?.2 2 3) (close _V10_Dassert__equal_D8_V0k3) (bruijn ##.x.9 0 1) (bruijn ##.y.10 0 2))) (2 + (letrec 1 ((close "_V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13")) (##qualified-call (vanity assert assert-equal ##.loop.13) #f (bruijn ##.loop.13 0 0) (bruijn ##.k.25 1 0) (bruijn ##.rest.12 1 2)))))
+ // ("_V50_V0vanity_V0assert_V0assert__equal" #t (3 ((bruijn ##.equal?.2 2 3) (close _V10_Dassert__equal_D8_V0k3) (bruijn ##.x.9 0 1) (bruijn ##.y.10 0 2))) (2 + (letrec 1 ((close _V10_Dloop_D13_V0lambda4)) ((bruijn ##.loop.13 0 0) (bruijn ##.k.25 1 0) (bruijn ##.rest.12 1 2)))))
  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0assert_V0assert__equal, got ~D~N"
  "-- expected 3~N"
  "-- expected 2 or more~N"
@@ -243,26 +222,16 @@ __attribute__((used)) static void _V20Case1__V50_V0vanity_V0assert_V0assert__equ
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _varargs;
-  // (letrec 1 ((close "_V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13")) (##qualified-call (vanity assert assert-equal ##.loop.13) #f (bruijn ##.loop.13 0 0) (bruijn ##.k.25 1 0) (bruijn ##.rest.12 1 2)))
+  // (letrec 1 ((close _V10_Dloop_D13_V0lambda4)) ((bruijn ##.loop.13 0 0) (bruijn ##.k.25 1 0) (bruijn ##.rest.12 1 2)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
     self = &container.self;
     VInitEnv(self, 1, 1, statics);
-    self->vars[0] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13, self))));
-  {
-    VClosure * _closure = VDecodeClosure(self->vars[0]);
-   VEnv * _closure_env = _closure->env;
-    VWORD _arg0 = 
-      statics->vars[0];
-    VWORD _arg1 = 
-      statics->vars[2];
-    if(V_UNLIKELY(VStackOverflow(runtime))){
-      VGarbageCollect2Closure(runtime, _closure, 2, _arg0, _arg1);
-    } else {
-       _V50_V0vanity_V0assert_V0assert__equal_V10_Dloop_D13(runtime, _closure_env, 2, _arg0, _arg1);
-    }
-  }
+    self->vars[0] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V10_Dloop_D13_V0lambda4, self))));
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, self->vars[0]), 2,
+      statics->vars[0],
+      statics->vars[2]);
     }
 }
 void _V50_V0vanity_V0assert_V0assert__equal(VRuntime * runtime, VEnv * statics, int argc, ...);
@@ -294,7 +263,7 @@ static void _V0vanity_V0assert_V20_V0lambda3(VRuntime * runtime, VEnv * statics,
   self->vars[1] = _var1;
   self->vars[2] = _var2;
   self->vars[3] = _var3;
-  // (##letrec (vanity assert) 1 ((close "_V50_V0vanity_V0assert_V0assert__equal" "_V60_V0vanity_V0assert")) ((bruijn ##.k.20 1 0) (##inline ##vcore.cons (##inline ##vcore.cons 'assert-equal (bruijn ##.assert-equal.8 0 0)) '())))
+  // (##letrec (vanity assert) 1 ((close "_V50_V0vanity_V0assert_V0assert__equal" (vanity assert))) ((bruijn ##.k.20 1 0) (##inline ##vcore.cons (##inline ##vcore.cons 'assert-equal (bruijn ##.assert-equal.8 0 0)) '())))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;

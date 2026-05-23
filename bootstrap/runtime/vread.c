@@ -50,6 +50,8 @@ enum lex_t {
   LEX_NUMBER,
   LEX_DOUBLE,
   LEX_SYMBOL,
+  LEX_SYNTAX,
+  LEX_QUASISYNTAX,
   LEX_STRING,
   LEX_STRING_ESCAPE,
   LEX_DOT,
@@ -213,6 +215,12 @@ SYSV_CALL static int VLexSharp(int c, bool * satisfied, bool * unget) {
       return LEX_VECTOR;
     case '\\':
       return LEX_CHAR;
+    case '\'':
+      *satisfied = true;
+      return LEX_SYNTAX;
+    case '`':
+      *satisfied = true;
+      return LEX_QUASISYNTAX;
     case '#':
       return LEX_SYMBOL;
     default:
@@ -787,6 +795,7 @@ SYSV_CALL static char DecodeEscape(VRuntime * runtime, char c, int line) {
   switch(c) {
     case 'a': return '\a';
     case 'b': return '\b';
+    case 'e': return (char)27;
     case 't': return '\t';
     case 'n': return '\n';
     case 'r': return '\r';
@@ -948,6 +957,8 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
       case LEX_QUASIQUOTE:
       case LEX_UNQUOTE:
       case LEX_UNQUOTE_SPLICING:
+      case LEX_SYNTAX:
+      case LEX_QUASISYNTAX:
       {
         char * str = NULL;
         switch(token) {
@@ -962,6 +973,12 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
             break;
           case LEX_UNQUOTE_SPLICING:
             str = "unquote-splicing";
+            break;
+          case LEX_SYNTAX:
+            str = "syntax";
+            break;
+          case LEX_QUASISYNTAX:
+            str = "quasisyntax";
             break;
         }
         size_t len = strlen(str)+1;

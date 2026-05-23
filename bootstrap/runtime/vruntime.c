@@ -62,6 +62,7 @@
 
 #include "vanity/dfile.h"
 #include "vscheme/vruntime.h"
+#include "vscheme/vlibrary.h"
 #include "vsetjmp_private.h"
 #include "vruntime_private.h"
 #include "vport_private.h"
@@ -457,6 +458,7 @@ static int VStaticEnvTableCapacity;
 typedef struct {
   char const * name;
   VEnv ** slot;
+  bool cleanup;
 } VStaticEnvEntry;
 
 static VStaticEnvEntry * VStaticEnvTable;
@@ -474,17 +476,37 @@ void VRegisterStaticEnv(char const * name, VEnv ** slot) {
     VStaticEnvTable = realloc(VStaticEnvTable, sizeof(VStaticEnvEntry[VStaticEnvTableCapacity]));
   }
   VStaticEnvTable[VStaticEnvTableSize].name = name;
+  VStaticEnvTable[VStaticEnvTableSize].cleanup = false;
   VStaticEnvTable[VStaticEnvTableSize++].slot = slot;
 }
 void VUnregisterStaticEnv(char const * name) {
   for(int i = 0; i < VStaticEnvTableSize; i++) {
     if(!strcmp(VStaticEnvTable[i].name, name)) {
+      if(VStaticEnvTable[i].cleanup)
+        free(VStaticEnvTable[i].slot);
+
       memmove(&VStaticEnvTable[i], &VStaticEnvTable[i+1], sizeof(VStaticEnvEntry[VStaticEnvTableSize - i - 1]));
       VStaticEnvTableSize--;
       return;
     }
   }
   fprintf(stderr, "Warning: unregistering a nonexistant static environment:  %s\n", name);
+}
+void VSetStaticEnvCleanup(const char * name) {
+  for(int i = 0; i < VStaticEnvTableSize; i++) {
+    if(!strcmp(VStaticEnvTable[i].name, name)) {
+      VStaticEnvTable[i].cleanup = true;
+      return;
+    }
+  }
+}
+VEnv ** VFindStaticEnv(const char * name) {
+  for(int i = 0; i < VStaticEnvTableSize; i++) {
+    if(!strcmp(VStaticEnvTable[i].name, name)) {
+      return VStaticEnvTable[i].slot;
+    }
+  }
+  return NULL;
 }
 
 // okay: so finalizers to managed memory can be detected as stale when they remain after a gc
@@ -2100,6 +2122,7 @@ static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val)
   } else {
     if(VWordType(pair) != VPOINTER_PAIR) VErrorC(runtime, "%s: arg 1 not a pair\n", proc);
     VPair * p = VDecodePair(pair);
+    if(p->base.flags & VFLAG_IMMUTABLE) VErrorC(runtime, "%s: pair is immutable", proc);
 
     VTrackMutation(runtime, p, bSetCar ? &p->first : &p->rest, val);
     
@@ -2130,6 +2153,7 @@ V_BEGIN_FUNC(VVectorSet2, "vector-set!", 4, k, v, i, val)
     VGarbageCollect2Args((VFunc)VVectorSet2, runtime, statics, 4, argc, k, v, i, val);
   } else {
     VVector * vector = VCheckedDecodeVector2(runtime, v, "vector-set!");
+    if(vector->base.flags & VFLAG_IMMUTABLE) VErrorC(runtime, "vector-set!: vector is immutable");
     if(VWordType(i) != VIMM_INT) VErrorC(runtime, "vector-set!: arg 2 not an int\n");
     int index = VDecodeInt(i);
     if(!(0 <= index && index < vector->len)) VErrorC(runtime, "vector-set!: out of range\n");
@@ -2645,13 +2669,13 @@ V_BEGIN_FUNC(VLoadLibrary2, "load-library", 2, k, name)
     libs = lookup->value;
   }
 
+  VBlob * nm = VDecodeBlob(name);
   VWORD libraries = libs;
   VWORD lib = VFALSE;
   while(!VIsEq(libs, VNULL)) {
     VPair * libs_dec = VDecodePair(libs);
     VPair * pair = VDecodePair(libs_dec->first);
     VBlob * str = VDecodeBlob(pair->first);
-    VBlob * nm = VDecodeBlob(name);
     if(str && nm && !strcmp(nm->buf, str->buf)) {
       lib = pair->rest;
       break;
@@ -2682,9 +2706,9 @@ V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
 #undef sym_str
 
   VBlob * nm = VDecodeBlob(name);
-  // why would this be null????
-  if(nm)
-    VUnregisterStaticEnv(nm->buf);
+  assert(nm);
+
+  VUnregisterStaticEnv(nm->buf);
 
   VWORD sym_word = VEncodePointer(sym, VPOINTER_OTHER);
   VGlobalEntry * lookup = VLookupGlobalEntry(runtime, sym_word);
@@ -2699,25 +2723,59 @@ V_BEGIN_FUNC(VUnloadLibrary2, "unload-library", 2, k, name)
   VPair * lib_entry = NULL;
   while(!VIsEq(libs, VNULL)) {
     VPair * libs_dec = VDecodePair(libs);
-    VPair * pair = VDecodePair(libs_dec->first);
-    VBlob * str = VDecodeBlob(pair->first);
-    // how can nm be null????
-    if(str && nm && !strcmp(nm->buf, str->buf)) {
-      lib_entry = pair;
+    VPair * keyval = VDecodePair(libs_dec->first);
+    VBlob * str = VDecodeBlob(keyval->first);
+    assert(str);
+    if(!strcmp(nm->buf, str->buf)) {
+      lib_entry = libs_dec;
       break;
     }
-    parent = pair;
+    parent = libs_dec;
 
     libs = libs_dec->rest;
   }
 
-  if(lib_entry && parent) {
-    parent->rest = lib_entry->rest;
-  }
-  else if(lib_entry && !parent) {
-    VDefineImpl(runtime, sym_word, lib_entry->rest, true);
+
+  if(lib_entry) {
+    if(parent) {
+      parent->rest = lib_entry->rest;
+    }
+    else {
+      VDefineImpl(runtime, sym_word, lib_entry->rest, true);
+    }
+  } else {
   }
   V_CALL(k, runtime, VVOID);
+V_END_FUNC
+
+V_BEGIN_FUNC(VRenameImports, "rename-imports", 3, k, imports, renames)
+  if(VStackOverflowNoInline(runtime) || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
+    VGarbageCollect2Args((VFunc)VRenameImports, runtime, statics, 2, argc, k, imports, renames);
+
+  VWORD ret = VNULL;
+  VWORD pair = renames;
+  while(!VIsEq(pair, VNULL)) {
+    VPair * _pair = VDecodePair(pair);
+    VPair * names = VDecodePair(_pair->first);
+    VWORD oldname = names->first;
+    VWORD newname = names->rest;
+
+    VWORD funcentry = _VBasic_VAssq(runtime, NULL, oldname, imports);
+    if(VIsEq(funcentry, VFALSE))
+      VErrorC(runtime, "rename-imports: procedure not found: ~S\n", _pair->first);
+
+    VWORD closure = VDecodePair(funcentry)->rest;
+    
+    VPair * newfuncentry = alloca(sizeof(VPair));
+    *newfuncentry = VMakePair(newname, closure);
+
+    VPair * newnode = alloca(sizeof(VPair));
+    *newnode = VMakePair(VEncodePair(newfuncentry), ret);
+    ret = VEncodePair(newnode);
+
+    pair = _pair->rest;
+  }
+  V_CALL(k, runtime, ret);
 V_END_FUNC
 
 #define IMPLEMENT_PRINT_VECTOR(Prefix, prefix, stride, ctype, fputi) \
@@ -3122,8 +3180,6 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
 
   r->declare_list = VNULL;
   r->library_list = VNULL;
-
-  (void)VCurrentJiffyImpl();
 }
 
 static VClosure next_closure = { .base = { .tag = VCLOSURE }, .func = (VFunc)VNext2, .env = NULL };
@@ -3944,48 +4000,6 @@ V_BEGIN_FUNC(VRegisterSigint, "register-sigint", 1, k)
   signal(SIGINT, sigint_handler);
   V_BOUNCE(k, runtime, VVOID);
 V_END_FUNC
-
-static bool jiffy_epoch_set;
-static uint64_t jiffy_epoch;
-static uint64_t one_billion = 1000ull * 1000 * 1000;
-uint64_t VCurrentJiffyImpl() {
-  (void)one_billion;
-#ifdef __linux__
-  struct timespec nanotime;
-  // using clock monotonic to avoid skew? the adjustments are allegedly gentle
-  clock_gettime(CLOCK_MONOTONIC, &nanotime);
-  uint64_t ret = nanotime.tv_nsec + one_billion * nanotime.tv_sec;
-#elif defined(_WIN64)
-  LARGE_INTEGER ticks;
-  QueryPerformanceCounter(&ticks);
-  uint64_t ret = ticks.QuadPart;
-#elif defined(__EMSCRIPTEN__)
-  double d = emscripten_get_now();
-  uint64_t ret = round(d * 1000);
-#else
-  uint64_t ret = 0;
-#endif
-  if(!jiffy_epoch_set)
-  {
-    jiffy_epoch_set = true;
-    jiffy_epoch = ret;
-  }
-  return ret - jiffy_epoch;
-}
-uint64_t VJiffiesPerSecondImpl() {
-#ifdef __linux__
-  return one_billion;
-#endif
-#ifdef _WIN64
-  LARGE_INTEGER ticks_per_second;
-  QueryPerformanceFrequency(&ticks_per_second);
-  return ticks_per_second.QuadPart;
-#endif
-#ifdef __EMSCRIPTEN__
-  return 1000 * 1000;
-#endif
-  return 0;
-}
 
 // ======================================================
 // ------------------- DEBUGGING STUFF ------------------
