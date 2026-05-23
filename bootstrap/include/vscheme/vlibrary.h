@@ -27,8 +27,8 @@
 
 #pragma once
 // math
-V_DECLARE_FUNC(VExact, k, x);
-V_DECLARE_FUNC(VInexact, k, x);
+V_DECLARE_FUNC_BASIC(VExact, x);
+V_DECLARE_FUNC_BASIC(VInexact, x);
 
 V_DECLARE_FUNC_MIN(VAdd2, k);
 V_DECLARE_FUNC_MIN(VSub2, k, x);
@@ -42,8 +42,8 @@ V_DECLARE_FUNC_MIN(VCmpEq, k, a, b);
 V_DECLARE_FUNC_MIN(VCmpGe, k, a, b);
 V_DECLARE_FUNC_MIN(VCmpGt, k, a, b);
 
-V_DECLARE_FUNC(VQuot2, k, x, y);
-V_DECLARE_FUNC(VRem2, k, x, y);
+V_DECLARE_FUNC_BASIC(VQuot2, x, y);
+V_DECLARE_FUNC_BASIC(VRem2, x, y);
 V_DECLARE_FUNC_MIN(VDiv2, k, x);
 
 // predicates
@@ -78,6 +78,9 @@ V_DECLARE_FUNC_BASIC(VNot2, x);
 V_DECLARE_FUNC(VCons2, k, x, y);
 V_DECLARE_FUNC(VCar2, k, x);
 V_DECLARE_FUNC(VCdr2, k, x);
+V_DECLARE_FUNC(VAppend, k, x, y);
+
+V_DECLARE_FUNC_BASIC(VAssq, x, lst);
 
 // vectors
 
@@ -175,6 +178,7 @@ V_DECLARE_FUNC(VGetOutputString2, k, port);
 
 // input
 V_DECLARE_FUNC_BASIC(VReadChar2, port);
+V_DECLARE_FUNC_BASIC(VPeekChar, port);
 V_DECLARE_FUNC(VReadLine2, k, port);
 V_DECLARE_FUNC(VReadLine3, k, port);
 V_DECLARE_FUNC(VRead2, k, port);
@@ -183,6 +187,7 @@ V_DECLARE_FUNC(VRead2, k, port);
 V_DECLARE_FUNC_BASIC(VDisplay2, val, port);
 V_DECLARE_FUNC_BASIC(VWrite2, val, port);
 V_DECLARE_FUNC_BASIC(VNewline2, port);
+V_DECLARE_FUNC_BASIC(VFlushOutputPort, port);
 
 V_DECLARE_FUNC_BASIC(VDisplayStdout, val);
 V_DECLARE_FUNC_BASIC(VWriteStdout, val);

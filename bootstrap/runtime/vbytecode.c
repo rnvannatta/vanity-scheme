@@ -96,14 +96,27 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
       // need to get closure pc
       VPair * data = VCheckedDecodePair2(runtime, ins->rest, "eval-vasm: malformed close");
       int closure_pc = VCheckedDecodeInt2(runtime, data->first, "eval-vasm: malformed close");
+
+      VEnv * closure_env = env;
+      if(!VIsEq(data->rest, VNULL)) {
+        VPair * path_node = VCheckedDecodePair2(runtime, data->rest, "eval-vasm: malformed close");
+        VWORD path = path_node->first;
+        char * name = VCheckedDecodeString2(runtime, path, "eval-vasm: malformed close")->buf;
+
+        // wrong mangle for FindStaticEnv, close is currently getting the static var mangle, not the library mangle
+        VEnv ** place = VFindStaticEnv(name);
+        if(!place) VErrorC(runtime, "eval-vasm: tried to make a closure over an unregistered library: ~A", path);
+        closure_env = *place;
+      }
+
       // then make a dummy closure to hold env
-      VEnv * closure_env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
-      VInitEnv(closure_env, 2, 2, env);
-      closure_env->vars[0] = VEncodePointer(tape, VPOINTER_OTHER);
-      closure_env->vars[1] = VEncodeInt(closure_pc);
+      VEnv * trampoline_env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+      VInitEnv(trampoline_env, 2, 2, closure_env);
+      trampoline_env->vars[0] = VEncodePointer(tape, VPOINTER_OTHER);
+      trampoline_env->vars[1] = VEncodeInt(closure_pc);
       //then push a closure of the trampoline and that env on the stack
       VClosure * closure = alloca(sizeof(VClosure));
-      *closure = VMakeClosure2(VEvalVasmLambdaTrampoline, closure_env);
+      *closure = VMakeClosure2(VEvalVasmLambdaTrampoline, trampoline_env);
       stack[stackptr++] = VEncodeClosure(closure);
     }
     else if(!strcmp(name, "foreign-function")) {
@@ -190,6 +203,16 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
       VInitEnv(newenv, numvars, numvars, env);
       for(int i = 0; i < numvars; i++) newenv->vars[i] = VFALSE;
       env = newenv;
+
+      if(!VIsEq(data->rest, VNULL)) {
+        VPair * path_node = VCheckedDecodePair2(runtime, data->rest, "eval-vasm: malformed letrec-begin");
+        char * name = VCheckedDecodeString2(runtime, path_node->first, "eval-vasm: malformed letrec-begin")->buf;
+
+        VEnv ** envplace = malloc(sizeof(VEnv*));
+        *envplace = env;
+        VRegisterStaticEnv(name, envplace);
+        VSetStaticEnvCleanup(name);
+      }
     }
     else if(!strcmp(name, "letrec-end")) {
       int numvars = env->num_vars;

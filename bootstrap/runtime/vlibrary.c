@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <limits.h>
+#include <time.h>
 #include "vanity/dfile.h"
 #include "vport_private.h"
 #include "intern_private.h"
@@ -63,25 +64,27 @@
 
 /////////////////////////////////////////////////////////
 
-V_BEGIN_FUNC(VExact, "exact", 2, k, x)
+V_BEGIN_FUNC_BASIC(VExact, "exact", 1, x)
   uint64_t type = VWordType(x);
   if(type == VIMM_INT) {
-    V_BOUNCE(k, runtime, x);
+    return x;
   } else if(type == VIMM_NUMBER) {
-    V_BOUNCE(k, runtime, VEncodeInt((int)VDecodeNumber(x)));
+    return VEncodeInt((int)VDecodeNumber(x));
   } else {
     VErrorC(runtime, "exact: not a number: ~S", x);
+    return VVOID;
   }
 V_END_FUNC
 
-V_BEGIN_FUNC(VInexact, "inexact", 2, k, x)
+V_BEGIN_FUNC_BASIC(VInexact, "inexact", 1, x)
   uint64_t type = VWordType(x);
   if(type == VIMM_INT) {
-    V_BOUNCE(k, runtime, VEncodeNumber((double)VDecodeInt(x)));
+    return VEncodeNumber((double)VDecodeInt(x));
   } else if(type == VIMM_NUMBER) {
-    V_BOUNCE(k, runtime, x);
+    return x;
   } else {
     VErrorC(runtime, "exact: not a number: ~S", x);
+    return VVOID;
   }
 V_END_FUNC
 
@@ -543,12 +546,12 @@ end:
     }
 V_END_FUNC
 
-V_BEGIN_FUNC(VQuot2, "quotient", 3, k, x, y)
-    V_BOUNCE(k, runtime, VEncodeInt(VCheckedDecodeInt2(runtime, x, "quotient") / VCheckedDecodeInt2(runtime, y, "quotient")));
+V_BEGIN_FUNC_BASIC(VQuot2, "quotient", 2, x, y)
+    return VEncodeInt(VCheckedDecodeInt2(runtime, x, "quotient") / VCheckedDecodeInt2(runtime, y, "quotient"));
 V_END_FUNC
 
-V_BEGIN_FUNC(VRem2, "remainder", 3, k, x, y)
-    V_BOUNCE(k, runtime, VEncodeInt(VCheckedDecodeInt2(runtime, x, "remainder") % VCheckedDecodeInt2(runtime, y, "remainder")));
+V_BEGIN_FUNC_BASIC(VRem2, "remainder", 2, x, y)
+    return VEncodeInt(VCheckedDecodeInt2(runtime, x, "remainder") % VCheckedDecodeInt2(runtime, y, "remainder"));
 V_END_FUNC
 
 // This feels fucking idiotic.
@@ -786,6 +789,27 @@ V_BEGIN_FUNC(VCdr2, "cdr", 2, k, x)
     V_BOUNCE(k, runtime, VInlineCdr2(runtime, x));
 V_END_FUNC
 
+V_BEGIN_FUNC(VAppendK, "append-k", 1, rest)
+  V_BOUNCE_FUNC(VCons2, NULL, runtime, statics->vars[0], VDecodePair(statics->vars[1])->first, rest);
+}
+
+// (cons (car x) (append (cdr x) y))
+// => (append (lambda (rest) (cons (car x) rest)) (cdr x) y)
+V_BEGIN_FUNC(VAppend, "append", 3, k, _x, y)
+  if(VIsEq(_x, VNULL))
+    V_BOUNCE(k, runtime, y);
+  if(VIsEq(y, VNULL))
+    V_BOUNCE(k, runtime, _x);
+
+  VEnv * env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
+  env->base = VMakeSmallObject(VENV); env->num_vars = 2; env->var_len = 2; env->up = NULL;
+  env->vars[0] = k;
+  env->vars[1] = _x;
+  VClosure * k_wrapped = V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)VAppendK, env));
+
+  VPair * x = VCheckedDecodePair2(runtime, _x, "append");
+  V_BOUNCE_FUNC(VAppend, NULL, runtime, VEncodeClosure(k_wrapped), x->rest, y);
+}
 
 // vectors
 
@@ -1355,6 +1379,8 @@ V_END_FUNC
 V_BEGIN_FUNC_BASIC(VStringSet2, "string-set!", 3, _str, _i, _c)
   VBlob * str = VCheckedDecodeString2(runtime, _str, "string-set!");
 
+  if(str->base.flags & VFLAG_IMMUTABLE) VErrorC(runtime, "string-set!: string is immutable");
+
   if(VWordType(_i) != VIMM_INT) VErrorC(runtime, "string-set!: not an int");
   int i = VDecodeInt(_i);
   // not exposing the null terminal
@@ -1662,6 +1688,20 @@ V_BEGIN_FUNC_BASIC(VReadChar2, "read-char", 1, _port)
   }
 V_END_FUNC
 
+V_BEGIN_FUNC_BASIC(VPeekChar, "peek-char", 1, _port)
+  VPort * port = (VPort*)VDecodePointer(_port);
+  if(!port || port->base.tag != VPORT) VErrorC(runtime, "peek-char: not a port ~S~N", _port);
+  if(!(port->flags & PFLAG_READ)) VErrorC(runtime, "peek-char: not an readable port ~S~N", _port);
+
+  char c = port_fgetc(port);
+  if(c < 0) {
+    return VEOF;
+  } else {
+    port_ungetc(c, port);
+    return VEncodeChar((char)c);
+  }
+V_END_FUNC
+
 V_BEGIN_FUNC(VReadLine2, "read-line", 2, k, _port)
   VPort * port = (VPort*)VDecodePointer(_port);
   if(!port || port->base.tag != VPORT) VErrorC(runtime, "read-line: not a port ~S~N", _port);
@@ -1724,6 +1764,12 @@ V_BEGIN_FUNC_BASIC(VNewline2, "newline", 1, port)
     VPort * p = VCheckedDecodePort2(runtime, port, "newline");
     if(!(p->flags & PFLAG_WRITE)) VErrorC(runtime, "newline: port's write end is closed~N");
     port_fputc('\n', p);
+    port_fflush(p);
+    return VVOID;
+}
+V_BEGIN_FUNC_BASIC(VFlushOutputPort, "flush-output-port", 1, port)
+    VPort * p = VCheckedDecodePort2(runtime, port, "flush-output-port");
+    if(!(p->flags & PFLAG_WRITE)) VErrorC(runtime, "flush-output-port: port's write end is closed~N");
     port_fflush(p);
     return VVOID;
 }
@@ -2244,6 +2290,7 @@ V_END_FUNC \
 V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorSet, #prefix "vector-set!", 3, _buf, _i, val) \
   int i = VCheckedDecodeInt2(runtime, _i, #prefix "vector-set!"); \
   VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, #prefix "vector-set!"); \
+  if(buf->base.flags & VFLAG_IMMUTABLE) VErrorC(runtime, #prefix "vector-set!: vector is immutable"); \
   if(buf->buf[0] != BUF_ ## Prefix) \
     VErrorC(runtime, #prefix "vector-set!: not a vector of the right type.", _buf); \
   Prefix ## Write(runtime, buf, elem_width*(i+1), val); \
@@ -2283,6 +2330,31 @@ IMPLEMENT_BUFFER(s32, S32, 4)
 
 IMPLEMENT_BUFFER(f32, F32, 4)
 IMPLEMENT_BUFFER(f64, F64, 8)
+
+V_BEGIN_FUNC(VCompileTypevector, "compile-typevector", 2, k, _vec)
+  VBlob * vec = VDecodeBlob(_vec);
+  int len = vec->len;
+  if(len >= (INT_MAX - 1) / 4)
+    VErrorC(runtime, "compile-typevector: typevector too long");
+
+  VBlob * ret = V_ALLOCA_BLOB2((void*)&runtime, runtime, len*4+1);
+  if(!ret) VGarbageCollect2Func(runtime, (VFunc)VCompileTypevector, argc, k, _vec);
+  ret->base = VMakeSmallObject(VSTRING);
+  ret->len = len*4+1;
+  for(int i = 0; i < len; i++) {
+    uint8_t byte = vec->buf[i];
+    uint8_t hi = (byte >> 4) & 15;
+    uint8_t lo = byte & 15;
+    char hex[] = "0123456789ABCDEF";
+
+    ret->buf[4*i+0] = '\\';
+    ret->buf[4*i+1] = 'x';
+    ret->buf[4*i+2] = hex[hi];
+    ret->buf[4*i+3] = hex[lo];
+  }
+  ret->buf[len*4] = '\0';
+  V_BOUNCE(k, runtime, VEncodePointer(ret, VPOINTER_OTHER));
+V_END_FUNC
 
 V_BEGIN_FUNC(VReadU8Vector, "read-u8vector", 3, k, _n, _port)
   VPort * port = VCheckedDecodePointer2(runtime, _port, VPORT, "read-u8vector");
@@ -2324,12 +2396,12 @@ V_BEGIN_FUNC(VReadU8Vector, "read-u8vector", 3, k, _n, _port)
   V_BOUNCE(k, runtime, VEncodePointer(ret, VPOINTER_OTHER));
 }
 
-uint64_t VCurrentJiffyImpl();
-uint64_t VJiffiesPerSecondImpl();
+uint64_t jiffies_per_second();
+uint64_t current_jiffy();
 
 V_BEGIN_FUNC(VCurrentJiffy, "current-jiffy", 1, k)
 #if defined(__linux) || defined(_WIN64) || defined(__EMSCRIPTEN__)
-  uint64_t ret = VCurrentJiffyImpl();
+  uint64_t ret = current_jiffy();
   V_BOUNCE(k, runtime, VEncodeNumber(ret));
 #endif
   VErrorC(runtime, "current-jiffy: unsupported platform");
@@ -2337,7 +2409,7 @@ V_BEGIN_FUNC(VCurrentJiffy, "current-jiffy", 1, k)
 
 V_BEGIN_FUNC(VJiffiesPerSecond, "jiffies-per-second", 1, k)
 #if defined(__linux) || defined(_WIN64) || defined(__EMSCRIPTEN__)
-  V_BOUNCE(k, runtime, VEncodeNumber(VJiffiesPerSecondImpl()));
+  V_BOUNCE(k, runtime, VEncodeNumber(jiffies_per_second()));
 #endif
   VErrorC(runtime, "jiffies-per-second: unsupported platform");
 }
@@ -2479,3 +2551,37 @@ V_BEGIN_FUNC_BASIC(VMemq, "memq", 2, x, lst)
   }
   return VFALSE;
 V_END_FUNC
+
+#if defined(_WIN32)
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
+double VCurrentSecond() {
+  FILETIME ft;
+  ULARGE_INTEGER uli;
+
+  GetSystemTimeAsFileTime(&ft);
+
+  uli.LowPart  = ft.dwLowDateTime;
+  uli.HighPart = ft.dwHighDateTime;
+
+  const unsigned long long WINDOWS_TICK = 10000000ULL;
+  const unsigned long long SEC_TO_UNIX_EPOCH = 11644473600ULL;
+
+  double seconds = (double)(uli.QuadPart / WINDOWS_TICK);
+  double fraction = (double)(uli.QuadPart % WINDOWS_TICK) / WINDOWS_TICK;
+
+  return (seconds - SEC_TO_UNIX_EPOCH) + fraction;
+}
+
+#else
+
+#include <sys/time.h>
+double VCurrentSecond() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (double)tv.tv_sec + (double)tv.tv_usec / 1e6;
+}
+
+#endif

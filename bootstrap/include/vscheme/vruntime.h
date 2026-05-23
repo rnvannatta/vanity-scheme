@@ -1234,6 +1234,9 @@ void * VLookupConstant(char * name, void * val);
 void VRegisterStaticEnv(char const * name, VEnv ** slot);
 // UnregisterStaticEnv exists to support reloading of libaries.
 void VUnregisterStaticEnv(char const * name);
+// Tells the runtime to free the slot. only call this if you malloc the slot, interpreter.
+void VSetStaticEnvCleanup(const char * name);
+VEnv ** VFindStaticEnv(const char * name);
 
 static inline bool VCheckSymbolEqv(VWORD a, VWORD b) {
   return VBits(a) == VBits(b);

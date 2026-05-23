@@ -29,6 +29,7 @@
 #include <stdarg.h>
 VBlob * VInternSymbol(int hash, VBlob * sym);
 
+V_DECLARE_FUNC(VAppend, _var0, _var1, _var2);
 V_DECLARE_FUNC_MIN(VMultiImport, _var0, _var1, _var2);
 
 VEnv * _V60_V0vanity_V0intrinsics;
@@ -37,218 +38,219 @@ VWEAK VWORD _V0is__basic__intrinsic_Q;VWEAK struct { VBlob sym; char bytes[20]; 
 VWEAK VWORD _V0lookup__intrinsic;VWEAK struct { VBlob sym; char bytes[17]; } _VW_V0lookup__intrinsic = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 17 }, "lookup-intrinsic" };
 VWEAK VWORD _V0lookup__intrinsic__name;VWEAK struct { VBlob sym; char bytes[22]; } _VW_V0lookup__intrinsic__name = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 22 }, "lookup-intrinsic-name" };
 VWEAK VWORD _V0lookup__inline__name;VWEAK struct { VBlob sym; char bytes[19]; } _VW_V0lookup__inline__name = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 19 }, "lookup-inline-name" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D737 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineCdr2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D736 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineCar2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D735 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VInlineCons2" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D734 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VInlineEq2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D733 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineNot2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D732 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VInlinePairP2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D731 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VInlineNullP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D730 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VBitCount" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D729 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VArithmeticShift" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D728 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseOrC2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D727 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseOrC1" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D726 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VBitwiseAndC2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D725 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VBitwiseAndC1" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D724 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseNor" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D723 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseNand" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D722 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseXnor" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D721 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseAnd" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D720 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseXor" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D719 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseIor" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D718 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseNot" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D717 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VJiffiesPerSecond" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D716 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCurrentJiffy" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D715 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAccess" };
-static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D714 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VMakeTemporaryFile2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D713 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRealpath" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D712 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAwait" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D711 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAsync" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D710 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VFiberForkList" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D709 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRandomAdvance" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D708 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VRandomSampleFloat" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D707 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VRandomSampleBounded" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D706 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VRandomSample" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D705 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRandomCopy" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D704 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VMakeRandom" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D703 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VRegisterSigint" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D744 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineCdr2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D743 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineCar2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D742 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VInlineCons2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D741 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VInlineEq2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D740 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VInlineNot2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D739 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VInlinePairP2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D738 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VInlineNullP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D737 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VBitCount" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D736 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VArithmeticShift" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D735 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseOrC2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D734 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseOrC1" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D733 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VBitwiseAndC2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D732 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VBitwiseAndC1" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D731 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseNor" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D730 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseNand" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D729 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseXnor" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D728 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseAnd" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D727 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseXor" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D726 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseIor" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D725 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseNot" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D724 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VJiffiesPerSecond" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D723 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCurrentJiffy" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D722 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAccess" };
+static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D721 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VMakeTemporaryFile2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D720 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRealpath" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D719 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAwait" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D718 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAsync" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D717 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VFiberForkList" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D716 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRandomAdvance" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D715 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VRandomSampleFloat" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D714 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VRandomSampleBounded" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D713 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VRandomSample" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D712 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRandomCopy" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D711 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VMakeRandom" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D710 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VRegisterSigint" };
 VWEAK VWORD _V10vcore_Dregister__sigint;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dregister__sigint = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.register-sigint" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D702 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCommandLine2" };
-static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D701 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VOpenOutputProcess2" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D700 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenInputProcess2" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D699 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSystem2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D698 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VYieldToHostMajor" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D697 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VYieldToHost" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D696 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VGarbageCollect" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D695 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VFinalize" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D694 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHasFinalizer" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D693 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VSetFinalizer" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D692 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VNewlineStdout" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D691 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VWriteStdout" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D690 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VDisplayStdout" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D689 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VNewline2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D688 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VWrite2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D687 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDisplay2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D686 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRead2" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D685 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadLine3" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D684 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadLine2" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D683 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadChar2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D682 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VEofP2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D681 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VGetOutputString2" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D680 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputString2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D679 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VTtyPortP" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D678 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCloseStream2" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D677 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputStream2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D676 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VOpenInputStream2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D675 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VDupStderr2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D674 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VDupStdout2" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D673 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VDupStdin2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D672 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStderrPort" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D671 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStdoutPort" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D670 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VStdinPort" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D669 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VIntChar" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D668 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VCharInt2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D667 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VGensym" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D666 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSymbolString2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D665 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringNumber2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D664 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringSymbol2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D663 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringLength2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D662 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringSet2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D661 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringRef2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D660 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VStringCopy2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D659 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSubstring2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D658 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeString2" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D657 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VHashTableDelete" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D656 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D655 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableRef" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D654 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VHashTableVector" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D653 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VHashTableHashFunc" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D652 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VHashTableEqvFunc" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D651 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeHashTable" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D650 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRecordLength2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D649 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordSet2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D648 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordRef2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D647 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VCreateRecord2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D646 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VReadU8Vector" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D645 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VS8VectorLength" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D644 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorSet" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D643 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorRef" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D642 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListS8Vector" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D641 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeS8Vector" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D640 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS8VectorP" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D639 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VS8Vector" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D638 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VU8VectorLength" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D637 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorSet" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D636 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorRef" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D635 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListU8Vector" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D634 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeU8Vector" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D633 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VU8VectorP" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D632 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VU8Vector" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D631 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS16VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D630 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D629 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D628 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS16Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D627 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS16Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D626 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS16VectorP" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D625 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS16Vector" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D624 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VU16VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D623 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D622 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D621 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListU16Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D620 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeU16Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D619 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VU16VectorP" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D618 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VU16Vector" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D617 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS32VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D616 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D615 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D614 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS32Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D613 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS32Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D612 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS32VectorP" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D611 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS32Vector" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D610 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF32VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D609 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D608 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D607 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF32Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D606 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF32Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D605 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF32VectorP" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D604 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VF32Vector" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D603 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF64VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D602 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D601 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D600 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF64Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D599 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF64Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D598 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF64VectorP" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D597 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VF64Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D596 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VVectorLength2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D595 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorSet2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D594 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorRef2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D593 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VListVector2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D592 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VMakeVector" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D591 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCreateVector" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D590 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCdr2" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D589 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCar2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D588 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCdr2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D587 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCar2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D586 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCons2" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D585 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VUnloadLibrary2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D584 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VLoadLibrary2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D583 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeImport2" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D582 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VLookupLibrary2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D581 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMultiDefine2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D580 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSetDeclare" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D709 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCommandLine2" };
+static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D708 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VOpenOutputProcess2" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D707 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenInputProcess2" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D706 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSystem2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D705 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VYieldToHostMajor" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D704 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VYieldToHost" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D703 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VGarbageCollect" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D702 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VFinalize" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D701 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHasFinalizer" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D700 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VSetFinalizer" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D699 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VNewlineStdout" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D698 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VWriteStdout" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D697 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VDisplayStdout" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D696 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VNewline2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D695 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VWrite2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D694 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDisplay2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D693 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRead2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D692 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadLine3" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D691 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadLine2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D690 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadChar2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D689 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VEofP2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D688 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VGetOutputString2" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D687 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputString2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D686 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VTtyPortP" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D685 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCloseStream2" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D684 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputStream2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D683 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VOpenInputStream2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D682 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VDupStderr2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D681 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VDupStdout2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D680 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VDupStdin2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D679 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStderrPort" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D678 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStdoutPort" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D677 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VStdinPort" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D676 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VIntChar" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D675 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VCharInt2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D674 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VGensym" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D673 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSymbolString2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D672 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringNumber2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D671 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringSymbol2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D670 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringLength2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D669 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringSet2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D668 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringRef2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D667 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VStringCopy2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D666 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSubstring2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D665 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeString2" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D664 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VHashTableDelete" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D663 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D662 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableRef" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D661 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VHashTableVector" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D660 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VHashTableHashFunc" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D659 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VHashTableEqvFunc" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D658 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeHashTable" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D657 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRecordLength2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D656 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordSet2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D655 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordRef2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D654 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VCreateRecord2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D653 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VReadU8Vector" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D652 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VS8VectorLength" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D651 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorSet" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D650 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorRef" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D649 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListS8Vector" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D648 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeS8Vector" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D647 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS8VectorP" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D646 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VS8Vector" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D645 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VU8VectorLength" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D644 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorSet" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D643 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorRef" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D642 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListU8Vector" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D641 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeU8Vector" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D640 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VU8VectorP" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D639 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VU8Vector" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D638 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS16VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D637 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D636 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D635 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS16Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D634 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS16Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D633 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS16VectorP" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D632 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS16Vector" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D631 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VU16VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D630 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D629 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D628 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListU16Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D627 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeU16Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D626 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VU16VectorP" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D625 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VU16Vector" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D624 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS32VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D623 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D622 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D621 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS32Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D620 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS32Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D619 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS32VectorP" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D618 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS32Vector" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D617 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF32VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D616 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D615 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D614 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF32Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D613 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF32Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D612 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF32VectorP" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D611 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VF32Vector" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D610 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF64VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D609 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D608 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D607 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF64Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D606 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF64Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D605 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF64VectorP" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D604 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VF64Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D603 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VVectorLength2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D602 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorSet2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D601 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorRef2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D600 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VListVector2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D599 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VMakeVector" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D598 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCreateVector" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D597 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAppend" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D596 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCdr2" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D595 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCar2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D594 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCdr2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D593 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCar2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D592 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCons2" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D591 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VUnloadLibrary2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D590 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VLoadLibrary2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D589 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeImport2" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D588 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VLookupLibrary2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D587 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMultiDefine2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D586 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSetDeclare" };
 VWEAK VWORD _V10vcore_Dset__declare_B;VWEAK struct { VBlob sym; char bytes[21]; } _VW_V10vcore_Dset__declare_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 21 }, "##vcore.set-declare!" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D579 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VFunction3" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D585 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VFunction3" };
 VWEAK VWORD _V10vcore_Dfunction3;VWEAK struct { VBlob sym; char bytes[18]; } _VW_V10vcore_Dfunction3 = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 18 }, "##vcore.function3" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D578 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VFunction2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D577 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSetGlobalVar2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D576 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VDefineGlobalVar2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D575 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VExit2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D574 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAbort2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D573 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VApplyCps" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D572 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VApply2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D571 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VCallValues2" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D570 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VCallCC2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D569 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VNext2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D568 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRaise" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D567 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VPopExceptionHandler" };
-static struct { VBlob sym; char bytes[22]; } _V10_Dstring_D566 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 22 }, "VPushExceptionHandler" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D565 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VGetExceptionHandler" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D564 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VPopDynamic" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D563 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VPushDynamic" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D562 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VGetDynamics" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D561 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VNot2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D560 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VBlobEqv2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D559 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSymbolEqv2" };
-static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D558 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "VEq2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D557 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VForeignPointerP2" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D556 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VNullptrP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D555 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VVoidP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D554 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VCharP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D553 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDoubleP2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D552 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VIntP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D551 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VStringP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D550 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VSymbolP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D549 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VBlobP2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D548 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VProcedureP2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D547 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VHashTableP" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D546 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VVectorP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D545 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRecordP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D544 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VPairP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D543 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VNullP2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D542 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VRem2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D541 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VQuot2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D540 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpGt" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D539 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpGe" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D538 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpEq" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D537 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpLt" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D536 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpLe" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D535 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCmp2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D534 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VDiv2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D533 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VMul2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D532 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VSub2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D531 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VAdd2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D530 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VExact" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D529 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VInexact" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D584 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VFunction2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D583 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSetGlobalVar2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D582 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VDefineGlobalVar2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D581 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VExit2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D580 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAbort2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D579 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VApplyCps" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D578 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VApply2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D577 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VCallValues2" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D576 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VCallCC2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D575 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VNext2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D574 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRaise" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D573 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VPopExceptionHandler" };
+static struct { VBlob sym; char bytes[22]; } _V10_Dstring_D572 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 22 }, "VPushExceptionHandler" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D571 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VGetExceptionHandler" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D570 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VPopDynamic" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D569 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VPushDynamic" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D568 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VGetDynamics" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D567 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VNot2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D566 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VBlobEqv2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D565 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSymbolEqv2" };
+static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D564 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "VEq2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D563 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VForeignPointerP2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D562 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VNullptrP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D561 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VVoidP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D560 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VCharP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D559 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDoubleP2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D558 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VIntP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D557 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VStringP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D556 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VSymbolP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D555 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VBlobP2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D554 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VProcedureP2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D553 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VHashTableP" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D552 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VVectorP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D551 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRecordP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D550 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VPairP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D549 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VNullP2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D548 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VRem2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D547 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VQuot2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D546 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpGt" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D545 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpGe" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D544 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpEq" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D543 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpLt" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D542 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpLe" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D541 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCmp2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D540 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VDiv2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D539 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VMul2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D538 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VSub2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D537 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VAdd2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D536 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VExact" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D535 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VInexact" };
 VWEAK VWORD _V10vcore_Dcons;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V10vcore_Dcons = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "##vcore.cons" };
 VWEAK VWORD _V40_V10vcore_Dbit__count;
 VWEAK VClosure _VW_V40_V10vcore_Dbit__count = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitCount, NULL };
@@ -655,6 +657,9 @@ VWEAK VWORD _V10vcore_Dmake__vector;VWEAK struct { VBlob sym; char bytes[20]; } 
 VWEAK VWORD _V40_V10vcore_Dvector;
 VWEAK VClosure _VW_V40_V10vcore_Dvector = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCreateVector, NULL };
 VWEAK VWORD _V10vcore_Dvector;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V10vcore_Dvector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "##vcore.vector" };
+VWEAK VWORD _V40VAppend;
+VWEAK VClosure _VW_V40VAppend = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VAppend, NULL };
+VWEAK VWORD _V10vcore_Dappend;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V10vcore_Dappend = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "##vcore.append" };
 VWEAK VWORD _V40_V10vcore_Dset__cdr_B;
 VWEAK VClosure _VW_V40_V10vcore_Dset__cdr_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VSetCdr2, NULL };
 VWEAK VWORD _V10vcore_Dset__cdr_B;VWEAK struct { VBlob sym; char bytes[17]; } _VW_V10vcore_Dset__cdr_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 17 }, "##vcore.set-cdr!" };
@@ -851,8 +856,8 @@ VWEAK VWORD _V10vcore_Dexact;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V10
 VWEAK VWORD _V40_V10vcore_Dinexact;
 VWEAK VClosure _VW_V40_V10vcore_Dinexact = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VInexact, NULL };
 VWEAK VWORD _V10vcore_Dinexact;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V10vcore_Dinexact = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "##vcore.inexact" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D528 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
-static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D527 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "_V0vanity_V0intrinsics_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D534 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
+static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D533 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "_V0vanity_V0intrinsics_V20" };
 VWEAK VWORD _V40VMultiImport;
 VWEAK VClosure _VW_V40VMultiImport = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMultiImport, NULL };
 static __attribute__((constructor)) void VDllMain1() {
@@ -864,407 +869,409 @@ static __attribute__((constructor)) void VDllMain1() {
   _V10vcore_Dset__declare_B = VEncodePointer(VInternSymbol(940374228, &_VW_V10vcore_Dset__declare_B.sym), VPOINTER_OTHER);
   _V10vcore_Dfunction3 = VEncodePointer(VInternSymbol(-501529761, &_VW_V10vcore_Dfunction3.sym), VPOINTER_OTHER);
   _V10vcore_Dcons = VEncodePointer(VInternSymbol(-774369668, &_VW_V10vcore_Dcons.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbit__count = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbit__count", &_VW_V40_V10vcore_Dbit__count), VPOINTER_CLOSURE);
   _V10vcore_Dbit__count = VEncodePointer(VInternSymbol(700512465, &_VW_V10vcore_Dbit__count.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Darithmetic__shift = VEncodePointer(VLookupConstant("_V40_V10vcore_Darithmetic__shift", &_VW_V40_V10vcore_Darithmetic__shift), VPOINTER_CLOSURE);
   _V10vcore_Darithmetic__shift = VEncodePointer(VInternSymbol(1115370201, &_VW_V10vcore_Darithmetic__shift.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbitwise__orc2 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__orc2", &_VW_V40_V10vcore_Dbitwise__orc2), VPOINTER_CLOSURE);
   _V10vcore_Dbitwise__orc2 = VEncodePointer(VInternSymbol(1312963638, &_VW_V10vcore_Dbitwise__orc2.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbitwise__orc1 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__orc1", &_VW_V40_V10vcore_Dbitwise__orc1), VPOINTER_CLOSURE);
   _V10vcore_Dbitwise__orc1 = VEncodePointer(VInternSymbol(-1464552358, &_VW_V10vcore_Dbitwise__orc1.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbitwise__andc2 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__andc2", &_VW_V40_V10vcore_Dbitwise__andc2), VPOINTER_CLOSURE);
   _V10vcore_Dbitwise__andc2 = VEncodePointer(VInternSymbol(1145448127, &_VW_V10vcore_Dbitwise__andc2.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbitwise__andc1 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__andc1", &_VW_V40_V10vcore_Dbitwise__andc1), VPOINTER_CLOSURE);
   _V10vcore_Dbitwise__andc1 = VEncodePointer(VInternSymbol(819454810, &_VW_V10vcore_Dbitwise__andc1.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbitwise__nor = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__nor", &_VW_V40_V10vcore_Dbitwise__nor), VPOINTER_CLOSURE);
   _V10vcore_Dbitwise__nor = VEncodePointer(VInternSymbol(-1685079465, &_VW_V10vcore_Dbitwise__nor.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbitwise__nand = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__nand", &_VW_V40_V10vcore_Dbitwise__nand), VPOINTER_CLOSURE);
   _V10vcore_Dbitwise__nand = VEncodePointer(VInternSymbol(-1295764500, &_VW_V10vcore_Dbitwise__nand.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbitwise__xnor = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__xnor", &_VW_V40_V10vcore_Dbitwise__xnor), VPOINTER_CLOSURE);
   _V10vcore_Dbitwise__xnor = VEncodePointer(VInternSymbol(1177501829, &_VW_V10vcore_Dbitwise__xnor.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbitwise__and = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__and", &_VW_V40_V10vcore_Dbitwise__and), VPOINTER_CLOSURE);
   _V10vcore_Dbitwise__and = VEncodePointer(VInternSymbol(-1896169105, &_VW_V10vcore_Dbitwise__and.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbitwise__xor = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__xor", &_VW_V40_V10vcore_Dbitwise__xor), VPOINTER_CLOSURE);
   _V10vcore_Dbitwise__xor = VEncodePointer(VInternSymbol(1245954163, &_VW_V10vcore_Dbitwise__xor.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbitwise__ior = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__ior", &_VW_V40_V10vcore_Dbitwise__ior), VPOINTER_CLOSURE);
   _V10vcore_Dbitwise__ior = VEncodePointer(VInternSymbol(-942170661, &_VW_V10vcore_Dbitwise__ior.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dbitwise__not = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__not", &_VW_V40_V10vcore_Dbitwise__not), VPOINTER_CLOSURE);
   _V10vcore_Dbitwise__not = VEncodePointer(VInternSymbol(1865478194, &_VW_V10vcore_Dbitwise__not.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Djiffies__per__second = VEncodePointer(VLookupConstant("_V40_V10vcore_Djiffies__per__second", &_VW_V40_V10vcore_Djiffies__per__second), VPOINTER_CLOSURE);
   _V10vcore_Djiffies__per__second = VEncodePointer(VInternSymbol(471812165, &_VW_V10vcore_Djiffies__per__second.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dcurrent__jiffy = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcurrent__jiffy", &_VW_V40_V10vcore_Dcurrent__jiffy), VPOINTER_CLOSURE);
   _V10vcore_Dcurrent__jiffy = VEncodePointer(VInternSymbol(671239984, &_VW_V10vcore_Dcurrent__jiffy.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Daccess = VEncodePointer(VLookupConstant("_V40_V10vcore_Daccess", &_VW_V40_V10vcore_Daccess), VPOINTER_CLOSURE);
   _V10vcore_Daccess = VEncodePointer(VInternSymbol(-102570934, &_VW_V10vcore_Daccess.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__temporary__file = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__temporary__file", &_VW_V40_V10vcore_Dmake__temporary__file), VPOINTER_CLOSURE);
   _V10vcore_Dmake__temporary__file = VEncodePointer(VInternSymbol(-2135995161, &_VW_V10vcore_Dmake__temporary__file.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Drealpath = VEncodePointer(VLookupConstant("_V40_V10vcore_Drealpath", &_VW_V40_V10vcore_Drealpath), VPOINTER_CLOSURE);
   _V10vcore_Drealpath = VEncodePointer(VInternSymbol(878551929, &_VW_V10vcore_Drealpath.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dawait = VEncodePointer(VLookupConstant("_V40_V10vcore_Dawait", &_VW_V40_V10vcore_Dawait), VPOINTER_CLOSURE);
   _V10vcore_Dawait = VEncodePointer(VInternSymbol(-3363662, &_VW_V10vcore_Dawait.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dasync = VEncodePointer(VLookupConstant("_V40_V10vcore_Dasync", &_VW_V40_V10vcore_Dasync), VPOINTER_CLOSURE);
   _V10vcore_Dasync = VEncodePointer(VInternSymbol(-2075391417, &_VW_V10vcore_Dasync.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dfiber__fork__list = VEncodePointer(VLookupConstant("_V40_V10vcore_Dfiber__fork__list", &_VW_V40_V10vcore_Dfiber__fork__list), VPOINTER_CLOSURE);
   _V10vcore_Dfiber__fork__list = VEncodePointer(VInternSymbol(1220448136, &_VW_V10vcore_Dfiber__fork__list.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Drandom__advance_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__advance_B", &_VW_V40_V10vcore_Drandom__advance_B), VPOINTER_CLOSURE);
   _V10vcore_Drandom__advance_B = VEncodePointer(VInternSymbol(-243223548, &_VW_V10vcore_Drandom__advance_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Drandom__sample__float_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__sample__float_B", &_VW_V40_V10vcore_Drandom__sample__float_B), VPOINTER_CLOSURE);
   _V10vcore_Drandom__sample__float_B = VEncodePointer(VInternSymbol(1607740539, &_VW_V10vcore_Drandom__sample__float_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Drandom__sample__bounded_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__sample__bounded_B", &_VW_V40_V10vcore_Drandom__sample__bounded_B), VPOINTER_CLOSURE);
   _V10vcore_Drandom__sample__bounded_B = VEncodePointer(VInternSymbol(-894981541, &_VW_V10vcore_Drandom__sample__bounded_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Drandom__sample_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__sample_B", &_VW_V40_V10vcore_Drandom__sample_B), VPOINTER_CLOSURE);
   _V10vcore_Drandom__sample_B = VEncodePointer(VInternSymbol(-952916642, &_VW_V10vcore_Drandom__sample_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Drandom__copy = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__copy", &_VW_V40_V10vcore_Drandom__copy), VPOINTER_CLOSURE);
   _V10vcore_Drandom__copy = VEncodePointer(VInternSymbol(-188815275, &_VW_V10vcore_Drandom__copy.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__random = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__random", &_VW_V40_V10vcore_Dmake__random), VPOINTER_CLOSURE);
   _V10vcore_Dmake__random = VEncodePointer(VInternSymbol(1229194915, &_VW_V10vcore_Dmake__random.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dcommand__line = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcommand__line", &_VW_V40_V10vcore_Dcommand__line), VPOINTER_CLOSURE);
   _V10vcore_Dcommand__line = VEncodePointer(VInternSymbol(648817384, &_VW_V10vcore_Dcommand__line.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dopen__output__process = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__output__process", &_VW_V40_V10vcore_Dopen__output__process), VPOINTER_CLOSURE);
   _V10vcore_Dopen__output__process = VEncodePointer(VInternSymbol(-882281378, &_VW_V10vcore_Dopen__output__process.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dopen__input__process = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__input__process", &_VW_V40_V10vcore_Dopen__input__process), VPOINTER_CLOSURE);
   _V10vcore_Dopen__input__process = VEncodePointer(VInternSymbol(-1182050525, &_VW_V10vcore_Dopen__input__process.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dsystem = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsystem", &_VW_V40_V10vcore_Dsystem), VPOINTER_CLOSURE);
   _V10vcore_Dsystem = VEncodePointer(VInternSymbol(935667990, &_VW_V10vcore_Dsystem.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dyield__to__host__major = VEncodePointer(VLookupConstant("_V40_V10vcore_Dyield__to__host__major", &_VW_V40_V10vcore_Dyield__to__host__major), VPOINTER_CLOSURE);
   _V10vcore_Dyield__to__host__major = VEncodePointer(VInternSymbol(1829697112, &_VW_V10vcore_Dyield__to__host__major.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dyield__to__host = VEncodePointer(VLookupConstant("_V40_V10vcore_Dyield__to__host", &_VW_V40_V10vcore_Dyield__to__host), VPOINTER_CLOSURE);
   _V10vcore_Dyield__to__host = VEncodePointer(VInternSymbol(282732110, &_VW_V10vcore_Dyield__to__host.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dgarbage__collect = VEncodePointer(VLookupConstant("_V40_V10vcore_Dgarbage__collect", &_VW_V40_V10vcore_Dgarbage__collect), VPOINTER_CLOSURE);
   _V10vcore_Dgarbage__collect = VEncodePointer(VInternSymbol(-1978291771, &_VW_V10vcore_Dgarbage__collect.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dfinalize_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dfinalize_B", &_VW_V40_V10vcore_Dfinalize_B), VPOINTER_CLOSURE);
   _V10vcore_Dfinalize_B = VEncodePointer(VInternSymbol(846452306, &_VW_V10vcore_Dfinalize_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dhas__finalizer_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhas__finalizer_Q", &_VW_V40_V10vcore_Dhas__finalizer_Q), VPOINTER_CLOSURE);
   _V10vcore_Dhas__finalizer_Q = VEncodePointer(VInternSymbol(-965442188, &_VW_V10vcore_Dhas__finalizer_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dset__finalizer_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__finalizer_B", &_VW_V40_V10vcore_Dset__finalizer_B), VPOINTER_CLOSURE);
   _V10vcore_Dset__finalizer_B = VEncodePointer(VInternSymbol(1182306547, &_VW_V10vcore_Dset__finalizer_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dnewline__stdout = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnewline__stdout", &_VW_V40_V10vcore_Dnewline__stdout), VPOINTER_CLOSURE);
   _V10vcore_Dnewline__stdout = VEncodePointer(VInternSymbol(2087695336, &_VW_V10vcore_Dnewline__stdout.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dwrite__stdout = VEncodePointer(VLookupConstant("_V40_V10vcore_Dwrite__stdout", &_VW_V40_V10vcore_Dwrite__stdout), VPOINTER_CLOSURE);
   _V10vcore_Dwrite__stdout = VEncodePointer(VInternSymbol(415233662, &_VW_V10vcore_Dwrite__stdout.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ddisplay__stdout = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddisplay__stdout", &_VW_V40_V10vcore_Ddisplay__stdout), VPOINTER_CLOSURE);
   _V10vcore_Ddisplay__stdout = VEncodePointer(VInternSymbol(1962598561, &_VW_V10vcore_Ddisplay__stdout.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dnewline = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnewline", &_VW_V40_V10vcore_Dnewline), VPOINTER_CLOSURE);
   _V10vcore_Dnewline = VEncodePointer(VInternSymbol(1495081256, &_VW_V10vcore_Dnewline.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dwrite = VEncodePointer(VLookupConstant("_V40_V10vcore_Dwrite", &_VW_V40_V10vcore_Dwrite), VPOINTER_CLOSURE);
   _V10vcore_Dwrite = VEncodePointer(VInternSymbol(470178830, &_VW_V10vcore_Dwrite.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ddisplay__word = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddisplay__word", &_VW_V40_V10vcore_Ddisplay__word), VPOINTER_CLOSURE);
   _V10vcore_Ddisplay__word = VEncodePointer(VInternSymbol(1671076545, &_VW_V10vcore_Ddisplay__word.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dread = VEncodePointer(VLookupConstant("_V40_V10vcore_Dread", &_VW_V40_V10vcore_Dread), VPOINTER_CLOSURE);
   _V10vcore_Dread = VEncodePointer(VInternSymbol(2066060051, &_VW_V10vcore_Dread.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dread__line2 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dread__line2", &_VW_V40_V10vcore_Dread__line2), VPOINTER_CLOSURE);
   _V10vcore_Dread__line2 = VEncodePointer(VInternSymbol(-368957830, &_VW_V10vcore_Dread__line2.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dread__line = VEncodePointer(VLookupConstant("_V40_V10vcore_Dread__line", &_VW_V40_V10vcore_Dread__line), VPOINTER_CLOSURE);
   _V10vcore_Dread__line = VEncodePointer(VInternSymbol(756554351, &_VW_V10vcore_Dread__line.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dread__char = VEncodePointer(VLookupConstant("_V40_V10vcore_Dread__char", &_VW_V40_V10vcore_Dread__char), VPOINTER_CLOSURE);
   _V10vcore_Dread__char = VEncodePointer(VInternSymbol(48955712, &_VW_V10vcore_Dread__char.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Deof__object_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Deof__object_Q", &_VW_V40_V10vcore_Deof__object_Q), VPOINTER_CLOSURE);
   _V10vcore_Deof__object_Q = VEncodePointer(VInternSymbol(1702741960, &_VW_V10vcore_Deof__object_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dget__output__string = VEncodePointer(VLookupConstant("_V40_V10vcore_Dget__output__string", &_VW_V40_V10vcore_Dget__output__string), VPOINTER_CLOSURE);
   _V10vcore_Dget__output__string = VEncodePointer(VInternSymbol(-1029405022, &_VW_V10vcore_Dget__output__string.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dopen__output__string = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__output__string", &_VW_V40_V10vcore_Dopen__output__string), VPOINTER_CLOSURE);
   _V10vcore_Dopen__output__string = VEncodePointer(VInternSymbol(-1362250334, &_VW_V10vcore_Dopen__output__string.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dtty__port_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dtty__port_Q", &_VW_V40_V10vcore_Dtty__port_Q), VPOINTER_CLOSURE);
   _V10vcore_Dtty__port_Q = VEncodePointer(VInternSymbol(-855771870, &_VW_V10vcore_Dtty__port_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dclose__stream = VEncodePointer(VLookupConstant("_V40_V10vcore_Dclose__stream", &_VW_V40_V10vcore_Dclose__stream), VPOINTER_CLOSURE);
   _V10vcore_Dclose__stream = VEncodePointer(VInternSymbol(568955533, &_VW_V10vcore_Dclose__stream.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dopen__output__stream = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__output__stream", &_VW_V40_V10vcore_Dopen__output__stream), VPOINTER_CLOSURE);
   _V10vcore_Dopen__output__stream = VEncodePointer(VInternSymbol(997507113, &_VW_V10vcore_Dopen__output__stream.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dopen__input__stream = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__input__stream", &_VW_V40_V10vcore_Dopen__input__stream), VPOINTER_CLOSURE);
   _V10vcore_Dopen__input__stream = VEncodePointer(VInternSymbol(-1954281109, &_VW_V10vcore_Dopen__input__stream.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ddup__stderr = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddup__stderr", &_VW_V40_V10vcore_Ddup__stderr), VPOINTER_CLOSURE);
   _V10vcore_Ddup__stderr = VEncodePointer(VInternSymbol(-1558335369, &_VW_V10vcore_Ddup__stderr.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ddup__stdout = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddup__stdout", &_VW_V40_V10vcore_Ddup__stdout), VPOINTER_CLOSURE);
   _V10vcore_Ddup__stdout = VEncodePointer(VInternSymbol(1431711582, &_VW_V10vcore_Ddup__stdout.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ddup__stdin = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddup__stdin", &_VW_V40_V10vcore_Ddup__stdin), VPOINTER_CLOSURE);
   _V10vcore_Ddup__stdin = VEncodePointer(VInternSymbol(1769759438, &_VW_V10vcore_Ddup__stdin.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dstderr___Gport = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstderr___Gport", &_VW_V40_V10vcore_Dstderr___Gport), VPOINTER_CLOSURE);
   _V10vcore_Dstderr___Gport = VEncodePointer(VInternSymbol(1200150723, &_VW_V10vcore_Dstderr___Gport.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dstdout___Gport = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstdout___Gport", &_VW_V40_V10vcore_Dstdout___Gport), VPOINTER_CLOSURE);
   _V10vcore_Dstdout___Gport = VEncodePointer(VInternSymbol(26194562, &_VW_V10vcore_Dstdout___Gport.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dstdin___Gport = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstdin___Gport", &_VW_V40_V10vcore_Dstdin___Gport), VPOINTER_CLOSURE);
   _V10vcore_Dstdin___Gport = VEncodePointer(VInternSymbol(787036741, &_VW_V10vcore_Dstdin___Gport.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dinteger___Gchar = VEncodePointer(VLookupConstant("_V40_V10vcore_Dinteger___Gchar", &_VW_V40_V10vcore_Dinteger___Gchar), VPOINTER_CLOSURE);
   _V10vcore_Dinteger___Gchar = VEncodePointer(VInternSymbol(-225562773, &_VW_V10vcore_Dinteger___Gchar.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dchar__integer = VEncodePointer(VLookupConstant("_V40_V10vcore_Dchar__integer", &_VW_V40_V10vcore_Dchar__integer), VPOINTER_CLOSURE);
   _V10vcore_Dchar__integer = VEncodePointer(VInternSymbol(-1709202038, &_VW_V10vcore_Dchar__integer.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dgensym = VEncodePointer(VLookupConstant("_V40_V10vcore_Dgensym", &_VW_V40_V10vcore_Dgensym), VPOINTER_CLOSURE);
   _V10vcore_Dgensym = VEncodePointer(VInternSymbol(-156380267, &_VW_V10vcore_Dgensym.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dsymbol___Gstring = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsymbol___Gstring", &_VW_V40_V10vcore_Dsymbol___Gstring), VPOINTER_CLOSURE);
   _V10vcore_Dsymbol___Gstring = VEncodePointer(VInternSymbol(-1755717450, &_VW_V10vcore_Dsymbol___Gstring.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dstring___Gnumber = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring___Gnumber", &_VW_V40_V10vcore_Dstring___Gnumber), VPOINTER_CLOSURE);
   _V10vcore_Dstring___Gnumber = VEncodePointer(VInternSymbol(1464887667, &_VW_V10vcore_Dstring___Gnumber.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dstring___Gsymbol = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring___Gsymbol", &_VW_V40_V10vcore_Dstring___Gsymbol), VPOINTER_CLOSURE);
   _V10vcore_Dstring___Gsymbol = VEncodePointer(VInternSymbol(653165939, &_VW_V10vcore_Dstring___Gsymbol.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dstring__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__length", &_VW_V40_V10vcore_Dstring__length), VPOINTER_CLOSURE);
   _V10vcore_Dstring__length = VEncodePointer(VInternSymbol(-1892902993, &_VW_V10vcore_Dstring__length.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dstring__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__set_B", &_VW_V40_V10vcore_Dstring__set_B), VPOINTER_CLOSURE);
   _V10vcore_Dstring__set_B = VEncodePointer(VInternSymbol(61416737, &_VW_V10vcore_Dstring__set_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dstring__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__ref", &_VW_V40_V10vcore_Dstring__ref), VPOINTER_CLOSURE);
   _V10vcore_Dstring__ref = VEncodePointer(VInternSymbol(1934412251, &_VW_V10vcore_Dstring__ref.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dstring__copy_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__copy_B", &_VW_V40_V10vcore_Dstring__copy_B), VPOINTER_CLOSURE);
   _V10vcore_Dstring__copy_B = VEncodePointer(VInternSymbol(1008644500, &_VW_V10vcore_Dstring__copy_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dsubstring = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsubstring", &_VW_V40_V10vcore_Dsubstring), VPOINTER_CLOSURE);
   _V10vcore_Dsubstring = VEncodePointer(VInternSymbol(-1499057758, &_VW_V10vcore_Dsubstring.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__string = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__string", &_VW_V40_V10vcore_Dmake__string), VPOINTER_CLOSURE);
   _V10vcore_Dmake__string = VEncodePointer(VInternSymbol(-812690547, &_VW_V10vcore_Dmake__string.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dhash__table__delete_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__delete_B", &_VW_V40_V10vcore_Dhash__table__delete_B), VPOINTER_CLOSURE);
   _V10vcore_Dhash__table__delete_B = VEncodePointer(VInternSymbol(235301299, &_VW_V10vcore_Dhash__table__delete_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dhash__table__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__set_B", &_VW_V40_V10vcore_Dhash__table__set_B), VPOINTER_CLOSURE);
   _V10vcore_Dhash__table__set_B = VEncodePointer(VInternSymbol(-1127922867, &_VW_V10vcore_Dhash__table__set_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dhash__table__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__ref", &_VW_V40_V10vcore_Dhash__table__ref), VPOINTER_CLOSURE);
   _V10vcore_Dhash__table__ref = VEncodePointer(VInternSymbol(962111802, &_VW_V10vcore_Dhash__table__ref.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dhash__table__vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__vector", &_VW_V40_V10vcore_Dhash__table__vector), VPOINTER_CLOSURE);
   _V10vcore_Dhash__table__vector = VEncodePointer(VInternSymbol(1800956393, &_VW_V10vcore_Dhash__table__vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dhash__table__hash__function = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__hash__function", &_VW_V40_V10vcore_Dhash__table__hash__function), VPOINTER_CLOSURE);
   _V10vcore_Dhash__table__hash__function = VEncodePointer(VInternSymbol(-65977091, &_VW_V10vcore_Dhash__table__hash__function.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dhash__table__equivalence__function = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__equivalence__function", &_VW_V40_V10vcore_Dhash__table__equivalence__function), VPOINTER_CLOSURE);
   _V10vcore_Dhash__table__equivalence__function = VEncodePointer(VInternSymbol(560212050, &_VW_V10vcore_Dhash__table__equivalence__function.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__hash__table = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__hash__table", &_VW_V40_V10vcore_Dmake__hash__table), VPOINTER_CLOSURE);
   _V10vcore_Dmake__hash__table = VEncodePointer(VInternSymbol(264423349, &_VW_V10vcore_Dmake__hash__table.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dread__u8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dread__u8vector", &_VW_V40_V10vcore_Dread__u8vector), VPOINTER_CLOSURE);
   _V10vcore_Dread__u8vector = VEncodePointer(VInternSymbol(1918205805, &_VW_V10vcore_Dread__u8vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds8vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__length", &_VW_V40_V10vcore_Ds8vector__length), VPOINTER_CLOSURE);
   _V10vcore_Ds8vector__length = VEncodePointer(VInternSymbol(-162998119, &_VW_V10vcore_Ds8vector__length.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds8vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__set_B", &_VW_V40_V10vcore_Ds8vector__set_B), VPOINTER_CLOSURE);
   _V10vcore_Ds8vector__set_B = VEncodePointer(VInternSymbol(626079132, &_VW_V10vcore_Ds8vector__set_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds8vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__ref", &_VW_V40_V10vcore_Ds8vector__ref), VPOINTER_CLOSURE);
   _V10vcore_Ds8vector__ref = VEncodePointer(VInternSymbol(-1870319227, &_VW_V10vcore_Ds8vector__ref.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dlist___Gs8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs8vector", &_VW_V40_V10vcore_Dlist___Gs8vector), VPOINTER_CLOSURE);
   _V10vcore_Dlist___Gs8vector = VEncodePointer(VInternSymbol(-1495667680, &_VW_V10vcore_Dlist___Gs8vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__s8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__s8vector", &_VW_V40_V10vcore_Dmake__s8vector), VPOINTER_CLOSURE);
   _V10vcore_Dmake__s8vector = VEncodePointer(VInternSymbol(-340586998, &_VW_V10vcore_Dmake__s8vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds8vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector_Q", &_VW_V40_V10vcore_Ds8vector_Q), VPOINTER_CLOSURE);
   _V10vcore_Ds8vector_Q = VEncodePointer(VInternSymbol(1757266961, &_VW_V10vcore_Ds8vector_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector", &_VW_V40_V10vcore_Ds8vector), VPOINTER_CLOSURE);
   _V10vcore_Ds8vector = VEncodePointer(VInternSymbol(1166815344, &_VW_V10vcore_Ds8vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Du8vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__length", &_VW_V40_V10vcore_Du8vector__length), VPOINTER_CLOSURE);
   _V10vcore_Du8vector__length = VEncodePointer(VInternSymbol(1393581960, &_VW_V10vcore_Du8vector__length.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Du8vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__set_B", &_VW_V40_V10vcore_Du8vector__set_B), VPOINTER_CLOSURE);
   _V10vcore_Du8vector__set_B = VEncodePointer(VInternSymbol(-984050941, &_VW_V10vcore_Du8vector__set_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Du8vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__ref", &_VW_V40_V10vcore_Du8vector__ref), VPOINTER_CLOSURE);
   _V10vcore_Du8vector__ref = VEncodePointer(VInternSymbol(-1146944916, &_VW_V10vcore_Du8vector__ref.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dlist___Gu8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gu8vector", &_VW_V40_V10vcore_Dlist___Gu8vector), VPOINTER_CLOSURE);
   _V10vcore_Dlist___Gu8vector = VEncodePointer(VInternSymbol(-398660499, &_VW_V10vcore_Dlist___Gu8vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__u8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__u8vector", &_VW_V40_V10vcore_Dmake__u8vector), VPOINTER_CLOSURE);
   _V10vcore_Dmake__u8vector = VEncodePointer(VInternSymbol(-1141430116, &_VW_V10vcore_Dmake__u8vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Du8vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector_Q", &_VW_V40_V10vcore_Du8vector_Q), VPOINTER_CLOSURE);
   _V10vcore_Du8vector_Q = VEncodePointer(VInternSymbol(456948252, &_VW_V10vcore_Du8vector_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Du8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector", &_VW_V40_V10vcore_Du8vector), VPOINTER_CLOSURE);
   _V10vcore_Du8vector = VEncodePointer(VInternSymbol(2084266384, &_VW_V10vcore_Du8vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds16vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__length", &_VW_V40_V10vcore_Ds16vector__length), VPOINTER_CLOSURE);
   _V10vcore_Ds16vector__length = VEncodePointer(VInternSymbol(-727070483, &_VW_V10vcore_Ds16vector__length.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds16vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__set_B", &_VW_V40_V10vcore_Ds16vector__set_B), VPOINTER_CLOSURE);
   _V10vcore_Ds16vector__set_B = VEncodePointer(VInternSymbol(-1250451481, &_VW_V10vcore_Ds16vector__set_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds16vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__ref", &_VW_V40_V10vcore_Ds16vector__ref), VPOINTER_CLOSURE);
   _V10vcore_Ds16vector__ref = VEncodePointer(VInternSymbol(-122569208, &_VW_V10vcore_Ds16vector__ref.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dlist___Gs16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs16vector", &_VW_V40_V10vcore_Dlist___Gs16vector), VPOINTER_CLOSURE);
   _V10vcore_Dlist___Gs16vector = VEncodePointer(VInternSymbol(-604043574, &_VW_V10vcore_Dlist___Gs16vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__s16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__s16vector", &_VW_V40_V10vcore_Dmake__s16vector), VPOINTER_CLOSURE);
   _V10vcore_Dmake__s16vector = VEncodePointer(VInternSymbol(-1689014685, &_VW_V10vcore_Dmake__s16vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds16vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector_Q", &_VW_V40_V10vcore_Ds16vector_Q), VPOINTER_CLOSURE);
   _V10vcore_Ds16vector_Q = VEncodePointer(VInternSymbol(-1488392107, &_VW_V10vcore_Ds16vector_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector", &_VW_V40_V10vcore_Ds16vector), VPOINTER_CLOSURE);
   _V10vcore_Ds16vector = VEncodePointer(VInternSymbol(1282603556, &_VW_V10vcore_Ds16vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Du16vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__length", &_VW_V40_V10vcore_Du16vector__length), VPOINTER_CLOSURE);
   _V10vcore_Du16vector__length = VEncodePointer(VInternSymbol(-1697358903, &_VW_V10vcore_Du16vector__length.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Du16vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__set_B", &_VW_V40_V10vcore_Du16vector__set_B), VPOINTER_CLOSURE);
   _V10vcore_Du16vector__set_B = VEncodePointer(VInternSymbol(1946309558, &_VW_V10vcore_Du16vector__set_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Du16vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__ref", &_VW_V40_V10vcore_Du16vector__ref), VPOINTER_CLOSURE);
   _V10vcore_Du16vector__ref = VEncodePointer(VInternSymbol(-776529331, &_VW_V10vcore_Du16vector__ref.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dlist___Gu16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gu16vector", &_VW_V40_V10vcore_Dlist___Gu16vector), VPOINTER_CLOSURE);
   _V10vcore_Dlist___Gu16vector = VEncodePointer(VInternSymbol(-288736869, &_VW_V10vcore_Dlist___Gu16vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__u16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__u16vector", &_VW_V40_V10vcore_Dmake__u16vector), VPOINTER_CLOSURE);
   _V10vcore_Dmake__u16vector = VEncodePointer(VInternSymbol(-912694225, &_VW_V10vcore_Dmake__u16vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Du16vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector_Q", &_VW_V40_V10vcore_Du16vector_Q), VPOINTER_CLOSURE);
   _V10vcore_Du16vector_Q = VEncodePointer(VInternSymbol(1581038774, &_VW_V10vcore_Du16vector_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Du16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector", &_VW_V40_V10vcore_Du16vector), VPOINTER_CLOSURE);
   _V10vcore_Du16vector = VEncodePointer(VInternSymbol(-106839034, &_VW_V10vcore_Du16vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds32vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__length", &_VW_V40_V10vcore_Ds32vector__length), VPOINTER_CLOSURE);
   _V10vcore_Ds32vector__length = VEncodePointer(VInternSymbol(1983587795, &_VW_V10vcore_Ds32vector__length.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds32vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__set_B", &_VW_V40_V10vcore_Ds32vector__set_B), VPOINTER_CLOSURE);
   _V10vcore_Ds32vector__set_B = VEncodePointer(VInternSymbol(-93372752, &_VW_V10vcore_Ds32vector__set_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds32vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__ref", &_VW_V40_V10vcore_Ds32vector__ref), VPOINTER_CLOSURE);
   _V10vcore_Ds32vector__ref = VEncodePointer(VInternSymbol(2094752532, &_VW_V10vcore_Ds32vector__ref.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dlist___Gs32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs32vector", &_VW_V40_V10vcore_Dlist___Gs32vector), VPOINTER_CLOSURE);
   _V10vcore_Dlist___Gs32vector = VEncodePointer(VInternSymbol(-1792200977, &_VW_V10vcore_Dlist___Gs32vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__s32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__s32vector", &_VW_V40_V10vcore_Dmake__s32vector), VPOINTER_CLOSURE);
   _V10vcore_Dmake__s32vector = VEncodePointer(VInternSymbol(-339457972, &_VW_V10vcore_Dmake__s32vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds32vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector_Q", &_VW_V40_V10vcore_Ds32vector_Q), VPOINTER_CLOSURE);
   _V10vcore_Ds32vector_Q = VEncodePointer(VInternSymbol(533915332, &_VW_V10vcore_Ds32vector_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ds32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector", &_VW_V40_V10vcore_Ds32vector), VPOINTER_CLOSURE);
   _V10vcore_Ds32vector = VEncodePointer(VInternSymbol(-826393434, &_VW_V10vcore_Ds32vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Df32vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__length", &_VW_V40_V10vcore_Df32vector__length), VPOINTER_CLOSURE);
   _V10vcore_Df32vector__length = VEncodePointer(VInternSymbol(-1972159185, &_VW_V10vcore_Df32vector__length.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Df32vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__set_B", &_VW_V40_V10vcore_Df32vector__set_B), VPOINTER_CLOSURE);
   _V10vcore_Df32vector__set_B = VEncodePointer(VInternSymbol(1089212958, &_VW_V10vcore_Df32vector__set_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Df32vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__ref", &_VW_V40_V10vcore_Df32vector__ref), VPOINTER_CLOSURE);
   _V10vcore_Df32vector__ref = VEncodePointer(VInternSymbol(252270527, &_VW_V10vcore_Df32vector__ref.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dlist___Gf32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gf32vector", &_VW_V40_V10vcore_Dlist___Gf32vector), VPOINTER_CLOSURE);
   _V10vcore_Dlist___Gf32vector = VEncodePointer(VInternSymbol(-797019339, &_VW_V10vcore_Dlist___Gf32vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__f32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__f32vector", &_VW_V40_V10vcore_Dmake__f32vector), VPOINTER_CLOSURE);
   _V10vcore_Dmake__f32vector = VEncodePointer(VInternSymbol(-1013795764, &_VW_V10vcore_Dmake__f32vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Df32vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector_Q", &_VW_V40_V10vcore_Df32vector_Q), VPOINTER_CLOSURE);
   _V10vcore_Df32vector_Q = VEncodePointer(VInternSymbol(-817990383, &_VW_V10vcore_Df32vector_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Df32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector", &_VW_V40_V10vcore_Df32vector), VPOINTER_CLOSURE);
   _V10vcore_Df32vector = VEncodePointer(VInternSymbol(417631813, &_VW_V10vcore_Df32vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Df64vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__length", &_VW_V40_V10vcore_Df64vector__length), VPOINTER_CLOSURE);
   _V10vcore_Df64vector__length = VEncodePointer(VInternSymbol(-1894634683, &_VW_V10vcore_Df64vector__length.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Df64vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__set_B", &_VW_V40_V10vcore_Df64vector__set_B), VPOINTER_CLOSURE);
   _V10vcore_Df64vector__set_B = VEncodePointer(VInternSymbol(1969529339, &_VW_V10vcore_Df64vector__set_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Df64vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__ref", &_VW_V40_V10vcore_Df64vector__ref), VPOINTER_CLOSURE);
   _V10vcore_Df64vector__ref = VEncodePointer(VInternSymbol(1036348913, &_VW_V10vcore_Df64vector__ref.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dlist___Gf64vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gf64vector", &_VW_V40_V10vcore_Dlist___Gf64vector), VPOINTER_CLOSURE);
   _V10vcore_Dlist___Gf64vector = VEncodePointer(VInternSymbol(-1111467472, &_VW_V10vcore_Dlist___Gf64vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__f64vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__f64vector", &_VW_V40_V10vcore_Dmake__f64vector), VPOINTER_CLOSURE);
   _V10vcore_Dmake__f64vector = VEncodePointer(VInternSymbol(829175144, &_VW_V10vcore_Dmake__f64vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Df64vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector_Q", &_VW_V40_V10vcore_Df64vector_Q), VPOINTER_CLOSURE);
   _V10vcore_Df64vector_Q = VEncodePointer(VInternSymbol(1475204336, &_VW_V10vcore_Df64vector_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Df64vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector", &_VW_V40_V10vcore_Df64vector), VPOINTER_CLOSURE);
   _V10vcore_Df64vector = VEncodePointer(VInternSymbol(-1067922825, &_VW_V10vcore_Df64vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dvector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__length", &_VW_V40_V10vcore_Dvector__length), VPOINTER_CLOSURE);
   _V10vcore_Dvector__length = VEncodePointer(VInternSymbol(2016980216, &_VW_V10vcore_Dvector__length.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dvector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__set_B", &_VW_V40_V10vcore_Dvector__set_B), VPOINTER_CLOSURE);
   _V10vcore_Dvector__set_B = VEncodePointer(VInternSymbol(1062100534, &_VW_V10vcore_Dvector__set_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dvector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__ref", &_VW_V40_V10vcore_Dvector__ref), VPOINTER_CLOSURE);
   _V10vcore_Dvector__ref = VEncodePointer(VInternSymbol(-487754107, &_VW_V10vcore_Dvector__ref.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dlist___Gvector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gvector", &_VW_V40_V10vcore_Dlist___Gvector), VPOINTER_CLOSURE);
   _V10vcore_Dlist___Gvector = VEncodePointer(VInternSymbol(484282061, &_VW_V10vcore_Dlist___Gvector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__vector", &_VW_V40_V10vcore_Dmake__vector), VPOINTER_CLOSURE);
   _V10vcore_Dmake__vector = VEncodePointer(VInternSymbol(-912906856, &_VW_V10vcore_Dmake__vector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dvector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector", &_VW_V40_V10vcore_Dvector), VPOINTER_CLOSURE);
   _V10vcore_Dvector = VEncodePointer(VInternSymbol(-1789602761, &_VW_V10vcore_Dvector.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dset__cdr_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__cdr_B", &_VW_V40_V10vcore_Dset__cdr_B), VPOINTER_CLOSURE);
+  _V10vcore_Dappend = VEncodePointer(VInternSymbol(1742285522, &_VW_V10vcore_Dappend.sym), VPOINTER_OTHER);
   _V10vcore_Dset__cdr_B = VEncodePointer(VInternSymbol(-1721050845, &_VW_V10vcore_Dset__cdr_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dset__car_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__car_B", &_VW_V40_V10vcore_Dset__car_B), VPOINTER_CLOSURE);
   _V10vcore_Dset__car_B = VEncodePointer(VInternSymbol(1079502229, &_VW_V10vcore_Dset__car_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dcdr = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcdr", &_VW_V40_V10vcore_Dcdr), VPOINTER_CLOSURE);
   _V10vcore_Dcdr = VEncodePointer(VInternSymbol(-1160051211, &_VW_V10vcore_Dcdr.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dcar = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcar", &_VW_V40_V10vcore_Dcar), VPOINTER_CLOSURE);
   _V10vcore_Dcar = VEncodePointer(VInternSymbol(976741304, &_VW_V10vcore_Dcar.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dcons = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcons", &_VW_V40_V10vcore_Dcons), VPOINTER_CLOSURE);
   _V10vcore_Dqcons = VEncodePointer(VInternSymbol(-1450939338, &_VW_V10vcore_Dqcons.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dunload__library = VEncodePointer(VLookupConstant("_V40_V10vcore_Dunload__library", &_VW_V40_V10vcore_Dunload__library), VPOINTER_CLOSURE);
   _V10vcore_Dunload__library = VEncodePointer(VInternSymbol(514499771, &_VW_V10vcore_Dunload__library.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dload__library = VEncodePointer(VLookupConstant("_V40_V10vcore_Dload__library", &_VW_V40_V10vcore_Dload__library), VPOINTER_CLOSURE);
   _V10vcore_Dload__library = VEncodePointer(VInternSymbol(-798060666, &_VW_V10vcore_Dload__library.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmake__import = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__import", &_VW_V40_V10vcore_Dmake__import), VPOINTER_CLOSURE);
   _V10vcore_Dmake__import = VEncodePointer(VInternSymbol(-743613550, &_VW_V10vcore_Dmake__import.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dlookup__library = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlookup__library", &_VW_V40_V10vcore_Dlookup__library), VPOINTER_CLOSURE);
   _V10vcore_Dlookup__library = VEncodePointer(VInternSymbol(891695491, &_VW_V10vcore_Dlookup__library.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dmultidefine = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmultidefine", &_VW_V40_V10vcore_Dmultidefine), VPOINTER_CLOSURE);
   _V10vcore_Dmultidefine = VEncodePointer(VInternSymbol(2021955755, &_VW_V10vcore_Dmultidefine.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ddefine = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddefine", &_VW_V40_V10vcore_Ddefine), VPOINTER_CLOSURE);
   _V10vcore_Ddefine = VEncodePointer(VInternSymbol(-65267310, &_VW_V10vcore_Ddefine.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dfunction = VEncodePointer(VLookupConstant("_V40_V10vcore_Dfunction", &_VW_V40_V10vcore_Dfunction), VPOINTER_CLOSURE);
   _V10vcore_Dfunction = VEncodePointer(VInternSymbol(995907794, &_VW_V10vcore_Dfunction.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Drecord__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__length", &_VW_V40_V10vcore_Drecord__length), VPOINTER_CLOSURE);
   _V10vcore_Drecord__length = VEncodePointer(VInternSymbol(-1182838825, &_VW_V10vcore_Drecord__length.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Drecord__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__set_B", &_VW_V40_V10vcore_Drecord__set_B), VPOINTER_CLOSURE);
   _V10vcore_Drecord__set_B = VEncodePointer(VInternSymbol(520756061, &_VW_V10vcore_Drecord__set_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Drecord__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__ref", &_VW_V40_V10vcore_Drecord__ref), VPOINTER_CLOSURE);
   _V10vcore_Drecord__ref = VEncodePointer(VInternSymbol(617706384, &_VW_V10vcore_Drecord__ref.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Drecord = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord", &_VW_V40_V10vcore_Drecord), VPOINTER_CLOSURE);
   _V10vcore_Drecord = VEncodePointer(VInternSymbol(743129318, &_VW_V10vcore_Drecord.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dset__global_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__global_B", &_VW_V40_V10vcore_Dset__global_B), VPOINTER_CLOSURE);
   _V10vcore_Dset__global_B = VEncodePointer(VInternSymbol(-121985904, &_VW_V10vcore_Dset__global_B.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ddefine__global = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddefine__global", &_VW_V40_V10vcore_Ddefine__global), VPOINTER_CLOSURE);
   _V10vcore_Ddefine__global = VEncodePointer(VInternSymbol(-346187274, &_VW_V10vcore_Ddefine__global.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dexit = VEncodePointer(VLookupConstant("_V40_V10vcore_Dexit", &_VW_V40_V10vcore_Dexit), VPOINTER_CLOSURE);
   _V10vcore_Dexit = VEncodePointer(VInternSymbol(1029128203, &_VW_V10vcore_Dexit.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dabort = VEncodePointer(VLookupConstant("_V40_V10vcore_Dabort", &_VW_V40_V10vcore_Dabort), VPOINTER_CLOSURE);
   _V10vcore_Dabort = VEncodePointer(VInternSymbol(-2005265993, &_VW_V10vcore_Dabort.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dapply__cps = VEncodePointer(VLookupConstant("_V40_V10vcore_Dapply__cps", &_VW_V40_V10vcore_Dapply__cps), VPOINTER_CLOSURE);
   _V10vcore_Dapply__cps = VEncodePointer(VInternSymbol(1050237310, &_VW_V10vcore_Dapply__cps.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dapply = VEncodePointer(VLookupConstant("_V40_V10vcore_Dapply", &_VW_V40_V10vcore_Dapply), VPOINTER_CLOSURE);
   _V10vcore_Dapply = VEncodePointer(VInternSymbol(1029936291, &_VW_V10vcore_Dapply.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dcall__with__values = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcall__with__values", &_VW_V40_V10vcore_Dcall__with__values), VPOINTER_CLOSURE);
   _V10vcore_Dcall__with__values = VEncodePointer(VInternSymbol(1537217383, &_VW_V10vcore_Dcall__with__values.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dcall_Wcc = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcall_Wcc", &_VW_V40_V10vcore_Dcall_Wcc), VPOINTER_CLOSURE);
   _V10vcore_Dcall_Wcc = VEncodePointer(VInternSymbol(482979242, &_VW_V10vcore_Dcall_Wcc.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dnext = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnext", &_VW_V40_V10vcore_Dnext), VPOINTER_CLOSURE);
   _V10vcore_Dnext = VEncodePointer(VInternSymbol(-652201311, &_VW_V10vcore_Dnext.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Draise = VEncodePointer(VLookupConstant("_V40_V10vcore_Draise", &_VW_V40_V10vcore_Draise), VPOINTER_CLOSURE);
   _V10vcore_Draise = VEncodePointer(VInternSymbol(1209083558, &_VW_V10vcore_Draise.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dpop__exception__handler = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpop__exception__handler", &_VW_V40_V10vcore_Dpop__exception__handler), VPOINTER_CLOSURE);
   _V10vcore_Dpop__exception__handler = VEncodePointer(VInternSymbol(1091879845, &_VW_V10vcore_Dpop__exception__handler.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dpush__exception__handler = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpush__exception__handler", &_VW_V40_V10vcore_Dpush__exception__handler), VPOINTER_CLOSURE);
   _V10vcore_Dpush__exception__handler = VEncodePointer(VInternSymbol(220440008, &_VW_V10vcore_Dpush__exception__handler.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dget__exception__handler = VEncodePointer(VLookupConstant("_V40_V10vcore_Dget__exception__handler", &_VW_V40_V10vcore_Dget__exception__handler), VPOINTER_CLOSURE);
   _V10vcore_Dget__exception__handler = VEncodePointer(VInternSymbol(636545418, &_VW_V10vcore_Dget__exception__handler.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dpop__dynamic = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpop__dynamic", &_VW_V40_V10vcore_Dpop__dynamic), VPOINTER_CLOSURE);
   _V10vcore_Dpop__dynamic = VEncodePointer(VInternSymbol(-1981597861, &_VW_V10vcore_Dpop__dynamic.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dpush__dynamic = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpush__dynamic", &_VW_V40_V10vcore_Dpush__dynamic), VPOINTER_CLOSURE);
   _V10vcore_Dpush__dynamic = VEncodePointer(VInternSymbol(1879853356, &_VW_V10vcore_Dpush__dynamic.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dget__dynamics = VEncodePointer(VLookupConstant("_V40_V10vcore_Dget__dynamics", &_VW_V40_V10vcore_Dget__dynamics), VPOINTER_CLOSURE);
   _V10vcore_Dget__dynamics = VEncodePointer(VInternSymbol(-905110170, &_VW_V10vcore_Dget__dynamics.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dnot = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnot", &_VW_V40_V10vcore_Dnot), VPOINTER_CLOSURE);
   _V10vcore_Dnot = VEncodePointer(VInternSymbol(904118690, &_VW_V10vcore_Dnot.sym), VPOINTER_OTHER);
   _V10vcore_Deqv_Q = VEncodePointer(VInternSymbol(-1972763382, &_VW_V10vcore_Deqv_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dblob_E_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dblob_E_Q", &_VW_V40_V10vcore_Dblob_E_Q), VPOINTER_CLOSURE);
   _V10vcore_Dblob_E_Q = VEncodePointer(VInternSymbol(36075437, &_VW_V10vcore_Dblob_E_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dsymbol_E_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsymbol_E_Q", &_VW_V40_V10vcore_Dsymbol_E_Q), VPOINTER_CLOSURE);
   _V10vcore_Dsymbol_E_Q = VEncodePointer(VInternSymbol(1730793190, &_VW_V10vcore_Dsymbol_E_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Deq_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Deq_Q", &_VW_V40_V10vcore_Deq_Q), VPOINTER_CLOSURE);
   _V10vcore_Deq_Q = VEncodePointer(VInternSymbol(434979212, &_VW_V10vcore_Deq_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dforeign__pointer_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dforeign__pointer_Q", &_VW_V40_V10vcore_Dforeign__pointer_Q), VPOINTER_CLOSURE);
   _V10vcore_Dforeign__pointer_Q = VEncodePointer(VInternSymbol(1994122350, &_VW_V10vcore_Dforeign__pointer_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dnullptr_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnullptr_Q", &_VW_V40_V10vcore_Dnullptr_Q), VPOINTER_CLOSURE);
   _V10vcore_Dnullptr_Q = VEncodePointer(VInternSymbol(-1069195546, &_VW_V10vcore_Dnullptr_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dvoid_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvoid_Q", &_VW_V40_V10vcore_Dvoid_Q), VPOINTER_CLOSURE);
   _V10vcore_Dvoid_Q = VEncodePointer(VInternSymbol(1114669637, &_VW_V10vcore_Dvoid_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dchar_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dchar_Q", &_VW_V40_V10vcore_Dchar_Q), VPOINTER_CLOSURE);
   _V10vcore_Dchar_Q = VEncodePointer(VInternSymbol(1043052971, &_VW_V10vcore_Dchar_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Ddouble_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddouble_Q", &_VW_V40_V10vcore_Ddouble_Q), VPOINTER_CLOSURE);
   _V10vcore_Ddouble_Q = VEncodePointer(VInternSymbol(-751088721, &_VW_V10vcore_Ddouble_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dint_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dint_Q", &_VW_V40_V10vcore_Dint_Q), VPOINTER_CLOSURE);
   _V10vcore_Dint_Q = VEncodePointer(VInternSymbol(-1033406073, &_VW_V10vcore_Dint_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dstring_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring_Q", &_VW_V40_V10vcore_Dstring_Q), VPOINTER_CLOSURE);
   _V10vcore_Dstring_Q = VEncodePointer(VInternSymbol(-1296233363, &_VW_V10vcore_Dstring_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dsymbol_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsymbol_Q", &_VW_V40_V10vcore_Dsymbol_Q), VPOINTER_CLOSURE);
   _V10vcore_Dsymbol_Q = VEncodePointer(VInternSymbol(1503200735, &_VW_V10vcore_Dsymbol_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dblob_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dblob_Q", &_VW_V40_V10vcore_Dblob_Q), VPOINTER_CLOSURE);
   _V10vcore_Dblob_Q = VEncodePointer(VInternSymbol(-854351002, &_VW_V10vcore_Dblob_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dprocedure_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dprocedure_Q", &_VW_V40_V10vcore_Dprocedure_Q), VPOINTER_CLOSURE);
   _V10vcore_Dprocedure_Q = VEncodePointer(VInternSymbol(-1159898044, &_VW_V10vcore_Dprocedure_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Drecord_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord_Q", &_VW_V40_V10vcore_Drecord_Q), VPOINTER_CLOSURE);
   _V10vcore_Drecord_Q = VEncodePointer(VInternSymbol(1032511328, &_VW_V10vcore_Drecord_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dhash__table_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table_Q", &_VW_V40_V10vcore_Dhash__table_Q), VPOINTER_CLOSURE);
   _V10vcore_Dhash__table_Q = VEncodePointer(VInternSymbol(1037822878, &_VW_V10vcore_Dhash__table_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dvector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector_Q", &_VW_V40_V10vcore_Dvector_Q), VPOINTER_CLOSURE);
   _V10vcore_Dvector_Q = VEncodePointer(VInternSymbol(1615080895, &_VW_V10vcore_Dvector_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dpair_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpair_Q", &_VW_V40_V10vcore_Dpair_Q), VPOINTER_CLOSURE);
   _V10vcore_Dpair_Q = VEncodePointer(VInternSymbol(-2140366458, &_VW_V10vcore_Dpair_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dnull_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnull_Q", &_VW_V40_V10vcore_Dnull_Q), VPOINTER_CLOSURE);
   _V10vcore_Dnull_Q = VEncodePointer(VInternSymbol(-577062031, &_VW_V10vcore_Dnull_Q.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dremainder = VEncodePointer(VLookupConstant("_V40_V10vcore_Dremainder", &_VW_V40_V10vcore_Dremainder), VPOINTER_CLOSURE);
   _V10vcore_Dremainder = VEncodePointer(VInternSymbol(1852746574, &_VW_V10vcore_Dremainder.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dquotient = VEncodePointer(VLookupConstant("_V40_V10vcore_Dquotient", &_VW_V40_V10vcore_Dquotient), VPOINTER_CLOSURE);
   _V10vcore_Dquotient = VEncodePointer(VInternSymbol(-885327668, &_VW_V10vcore_Dquotient.sym), VPOINTER_OTHER);
-  _V40_V10vcore_D_G = VEncodePointer(VLookupConstant("_V40_V10vcore_D_G", &_VW_V40_V10vcore_D_G), VPOINTER_CLOSURE);
   _V10vcore_D_G = VEncodePointer(VInternSymbol(2034575128, &_VW_V10vcore_D_G.sym), VPOINTER_OTHER);
-  _V40_V10vcore_D_G_E = VEncodePointer(VLookupConstant("_V40_V10vcore_D_G_E", &_VW_V40_V10vcore_D_G_E), VPOINTER_CLOSURE);
   _V10vcore_D_G_E = VEncodePointer(VInternSymbol(-649527264, &_VW_V10vcore_D_G_E.sym), VPOINTER_OTHER);
-  _V40_V10vcore_D_E = VEncodePointer(VLookupConstant("_V40_V10vcore_D_E", &_VW_V40_V10vcore_D_E), VPOINTER_CLOSURE);
   _V10vcore_D_E = VEncodePointer(VInternSymbol(-1575520747, &_VW_V10vcore_D_E.sym), VPOINTER_OTHER);
-  _V40_V10vcore_D_L = VEncodePointer(VLookupConstant("_V40_V10vcore_D_L", &_VW_V40_V10vcore_D_L), VPOINTER_CLOSURE);
   _V10vcore_D_L = VEncodePointer(VInternSymbol(1686200305, &_VW_V10vcore_D_L.sym), VPOINTER_OTHER);
-  _V40_V10vcore_D_L_E = VEncodePointer(VLookupConstant("_V40_V10vcore_D_L_E", &_VW_V40_V10vcore_D_L_E), VPOINTER_CLOSURE);
   _V10vcore_D_L_E = VEncodePointer(VInternSymbol(-443834917, &_VW_V10vcore_D_L_E.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dcmp = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcmp", &_VW_V40_V10vcore_Dcmp), VPOINTER_CLOSURE);
   _V10vcore_Dcmp = VEncodePointer(VInternSymbol(499420365, &_VW_V10vcore_Dcmp.sym), VPOINTER_OTHER);
-  _V40_V10vcore_D_W = VEncodePointer(VLookupConstant("_V40_V10vcore_D_W", &_VW_V40_V10vcore_D_W), VPOINTER_CLOSURE);
   _V10vcore_D_W = VEncodePointer(VInternSymbol(-1214622260, &_VW_V10vcore_D_W.sym), VPOINTER_OTHER);
-  _V40_V10vcore_D_S = VEncodePointer(VLookupConstant("_V40_V10vcore_D_S", &_VW_V40_V10vcore_D_S), VPOINTER_CLOSURE);
   _V10vcore_D_S = VEncodePointer(VInternSymbol(324676011, &_VW_V10vcore_D_S.sym), VPOINTER_OTHER);
-  _V40_V10vcore_D__ = VEncodePointer(VLookupConstant("_V40_V10vcore_D__", &_VW_V40_V10vcore_D__), VPOINTER_CLOSURE);
   _V10vcore_D__ = VEncodePointer(VInternSymbol(861910462, &_VW_V10vcore_D__.sym), VPOINTER_OTHER);
-  _V40_V10vcore_D_P = VEncodePointer(VLookupConstant("_V40_V10vcore_D_P", &_VW_V40_V10vcore_D_P), VPOINTER_CLOSURE);
   _V10vcore_D_P = VEncodePointer(VInternSymbol(419804493, &_VW_V10vcore_D_P.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dexact", &_VW_V40_V10vcore_Dexact), VPOINTER_CLOSURE);
   _V10vcore_Dexact = VEncodePointer(VInternSymbol(1125478527, &_VW_V10vcore_Dexact.sym), VPOINTER_OTHER);
-  _V40_V10vcore_Dinexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dinexact", &_VW_V40_V10vcore_Dinexact), VPOINTER_CLOSURE);
   _V10vcore_Dinexact = VEncodePointer(VInternSymbol(683811701, &_VW_V10vcore_Dinexact.sym), VPOINTER_OTHER);
+  _V40_V10vcore_Dbit__count = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbit__count", &_VW_V40_V10vcore_Dbit__count), VPOINTER_CLOSURE);
+  _V40_V10vcore_Darithmetic__shift = VEncodePointer(VLookupConstant("_V40_V10vcore_Darithmetic__shift", &_VW_V40_V10vcore_Darithmetic__shift), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__orc2 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__orc2", &_VW_V40_V10vcore_Dbitwise__orc2), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__orc1 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__orc1", &_VW_V40_V10vcore_Dbitwise__orc1), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__andc2 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__andc2", &_VW_V40_V10vcore_Dbitwise__andc2), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__andc1 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__andc1", &_VW_V40_V10vcore_Dbitwise__andc1), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__nor = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__nor", &_VW_V40_V10vcore_Dbitwise__nor), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__nand = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__nand", &_VW_V40_V10vcore_Dbitwise__nand), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__xnor = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__xnor", &_VW_V40_V10vcore_Dbitwise__xnor), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__and = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__and", &_VW_V40_V10vcore_Dbitwise__and), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__xor = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__xor", &_VW_V40_V10vcore_Dbitwise__xor), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__ior = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__ior", &_VW_V40_V10vcore_Dbitwise__ior), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dbitwise__not = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__not", &_VW_V40_V10vcore_Dbitwise__not), VPOINTER_CLOSURE);
+  _V40_V10vcore_Djiffies__per__second = VEncodePointer(VLookupConstant("_V40_V10vcore_Djiffies__per__second", &_VW_V40_V10vcore_Djiffies__per__second), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcurrent__jiffy = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcurrent__jiffy", &_VW_V40_V10vcore_Dcurrent__jiffy), VPOINTER_CLOSURE);
+  _V40_V10vcore_Daccess = VEncodePointer(VLookupConstant("_V40_V10vcore_Daccess", &_VW_V40_V10vcore_Daccess), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__temporary__file = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__temporary__file", &_VW_V40_V10vcore_Dmake__temporary__file), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drealpath = VEncodePointer(VLookupConstant("_V40_V10vcore_Drealpath", &_VW_V40_V10vcore_Drealpath), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dawait = VEncodePointer(VLookupConstant("_V40_V10vcore_Dawait", &_VW_V40_V10vcore_Dawait), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dasync = VEncodePointer(VLookupConstant("_V40_V10vcore_Dasync", &_VW_V40_V10vcore_Dasync), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dfiber__fork__list = VEncodePointer(VLookupConstant("_V40_V10vcore_Dfiber__fork__list", &_VW_V40_V10vcore_Dfiber__fork__list), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drandom__advance_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__advance_B", &_VW_V40_V10vcore_Drandom__advance_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drandom__sample__float_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__sample__float_B", &_VW_V40_V10vcore_Drandom__sample__float_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drandom__sample__bounded_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__sample__bounded_B", &_VW_V40_V10vcore_Drandom__sample__bounded_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drandom__sample_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__sample_B", &_VW_V40_V10vcore_Drandom__sample_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drandom__copy = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__copy", &_VW_V40_V10vcore_Drandom__copy), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__random = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__random", &_VW_V40_V10vcore_Dmake__random), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcommand__line = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcommand__line", &_VW_V40_V10vcore_Dcommand__line), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dopen__output__process = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__output__process", &_VW_V40_V10vcore_Dopen__output__process), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dopen__input__process = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__input__process", &_VW_V40_V10vcore_Dopen__input__process), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dsystem = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsystem", &_VW_V40_V10vcore_Dsystem), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dyield__to__host__major = VEncodePointer(VLookupConstant("_V40_V10vcore_Dyield__to__host__major", &_VW_V40_V10vcore_Dyield__to__host__major), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dyield__to__host = VEncodePointer(VLookupConstant("_V40_V10vcore_Dyield__to__host", &_VW_V40_V10vcore_Dyield__to__host), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dgarbage__collect = VEncodePointer(VLookupConstant("_V40_V10vcore_Dgarbage__collect", &_VW_V40_V10vcore_Dgarbage__collect), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dfinalize_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dfinalize_B", &_VW_V40_V10vcore_Dfinalize_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhas__finalizer_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhas__finalizer_Q", &_VW_V40_V10vcore_Dhas__finalizer_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dset__finalizer_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__finalizer_B", &_VW_V40_V10vcore_Dset__finalizer_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dnewline__stdout = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnewline__stdout", &_VW_V40_V10vcore_Dnewline__stdout), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dwrite__stdout = VEncodePointer(VLookupConstant("_V40_V10vcore_Dwrite__stdout", &_VW_V40_V10vcore_Dwrite__stdout), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ddisplay__stdout = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddisplay__stdout", &_VW_V40_V10vcore_Ddisplay__stdout), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dnewline = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnewline", &_VW_V40_V10vcore_Dnewline), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dwrite = VEncodePointer(VLookupConstant("_V40_V10vcore_Dwrite", &_VW_V40_V10vcore_Dwrite), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ddisplay__word = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddisplay__word", &_VW_V40_V10vcore_Ddisplay__word), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dread = VEncodePointer(VLookupConstant("_V40_V10vcore_Dread", &_VW_V40_V10vcore_Dread), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dread__line2 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dread__line2", &_VW_V40_V10vcore_Dread__line2), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dread__line = VEncodePointer(VLookupConstant("_V40_V10vcore_Dread__line", &_VW_V40_V10vcore_Dread__line), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dread__char = VEncodePointer(VLookupConstant("_V40_V10vcore_Dread__char", &_VW_V40_V10vcore_Dread__char), VPOINTER_CLOSURE);
+  _V40_V10vcore_Deof__object_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Deof__object_Q", &_VW_V40_V10vcore_Deof__object_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dget__output__string = VEncodePointer(VLookupConstant("_V40_V10vcore_Dget__output__string", &_VW_V40_V10vcore_Dget__output__string), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dopen__output__string = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__output__string", &_VW_V40_V10vcore_Dopen__output__string), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dtty__port_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dtty__port_Q", &_VW_V40_V10vcore_Dtty__port_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dclose__stream = VEncodePointer(VLookupConstant("_V40_V10vcore_Dclose__stream", &_VW_V40_V10vcore_Dclose__stream), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dopen__output__stream = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__output__stream", &_VW_V40_V10vcore_Dopen__output__stream), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dopen__input__stream = VEncodePointer(VLookupConstant("_V40_V10vcore_Dopen__input__stream", &_VW_V40_V10vcore_Dopen__input__stream), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ddup__stderr = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddup__stderr", &_VW_V40_V10vcore_Ddup__stderr), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ddup__stdout = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddup__stdout", &_VW_V40_V10vcore_Ddup__stdout), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ddup__stdin = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddup__stdin", &_VW_V40_V10vcore_Ddup__stdin), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstderr___Gport = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstderr___Gport", &_VW_V40_V10vcore_Dstderr___Gport), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstdout___Gport = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstdout___Gport", &_VW_V40_V10vcore_Dstdout___Gport), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstdin___Gport = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstdin___Gport", &_VW_V40_V10vcore_Dstdin___Gport), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dinteger___Gchar = VEncodePointer(VLookupConstant("_V40_V10vcore_Dinteger___Gchar", &_VW_V40_V10vcore_Dinteger___Gchar), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dchar__integer = VEncodePointer(VLookupConstant("_V40_V10vcore_Dchar__integer", &_VW_V40_V10vcore_Dchar__integer), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dgensym = VEncodePointer(VLookupConstant("_V40_V10vcore_Dgensym", &_VW_V40_V10vcore_Dgensym), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dsymbol___Gstring = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsymbol___Gstring", &_VW_V40_V10vcore_Dsymbol___Gstring), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring___Gnumber = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring___Gnumber", &_VW_V40_V10vcore_Dstring___Gnumber), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring___Gsymbol = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring___Gsymbol", &_VW_V40_V10vcore_Dstring___Gsymbol), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__length", &_VW_V40_V10vcore_Dstring__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__set_B", &_VW_V40_V10vcore_Dstring__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__ref", &_VW_V40_V10vcore_Dstring__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring__copy_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring__copy_B", &_VW_V40_V10vcore_Dstring__copy_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dsubstring = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsubstring", &_VW_V40_V10vcore_Dsubstring), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__string = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__string", &_VW_V40_V10vcore_Dmake__string), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhash__table__delete_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__delete_B", &_VW_V40_V10vcore_Dhash__table__delete_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhash__table__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__set_B", &_VW_V40_V10vcore_Dhash__table__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhash__table__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__ref", &_VW_V40_V10vcore_Dhash__table__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhash__table__vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__vector", &_VW_V40_V10vcore_Dhash__table__vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhash__table__hash__function = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__hash__function", &_VW_V40_V10vcore_Dhash__table__hash__function), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhash__table__equivalence__function = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table__equivalence__function", &_VW_V40_V10vcore_Dhash__table__equivalence__function), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__hash__table = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__hash__table", &_VW_V40_V10vcore_Dmake__hash__table), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dread__u8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dread__u8vector", &_VW_V40_V10vcore_Dread__u8vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds8vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__length", &_VW_V40_V10vcore_Ds8vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds8vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__set_B", &_VW_V40_V10vcore_Ds8vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds8vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector__ref", &_VW_V40_V10vcore_Ds8vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gs8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs8vector", &_VW_V40_V10vcore_Dlist___Gs8vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__s8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__s8vector", &_VW_V40_V10vcore_Dmake__s8vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds8vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector_Q", &_VW_V40_V10vcore_Ds8vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds8vector", &_VW_V40_V10vcore_Ds8vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du8vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__length", &_VW_V40_V10vcore_Du8vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du8vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__set_B", &_VW_V40_V10vcore_Du8vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du8vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector__ref", &_VW_V40_V10vcore_Du8vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gu8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gu8vector", &_VW_V40_V10vcore_Dlist___Gu8vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__u8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__u8vector", &_VW_V40_V10vcore_Dmake__u8vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du8vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector_Q", &_VW_V40_V10vcore_Du8vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du8vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Du8vector", &_VW_V40_V10vcore_Du8vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds16vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__length", &_VW_V40_V10vcore_Ds16vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds16vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__set_B", &_VW_V40_V10vcore_Ds16vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds16vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector__ref", &_VW_V40_V10vcore_Ds16vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gs16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs16vector", &_VW_V40_V10vcore_Dlist___Gs16vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__s16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__s16vector", &_VW_V40_V10vcore_Dmake__s16vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds16vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector_Q", &_VW_V40_V10vcore_Ds16vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds16vector", &_VW_V40_V10vcore_Ds16vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du16vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__length", &_VW_V40_V10vcore_Du16vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du16vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__set_B", &_VW_V40_V10vcore_Du16vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du16vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector__ref", &_VW_V40_V10vcore_Du16vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gu16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gu16vector", &_VW_V40_V10vcore_Dlist___Gu16vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__u16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__u16vector", &_VW_V40_V10vcore_Dmake__u16vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du16vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector_Q", &_VW_V40_V10vcore_Du16vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Du16vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Du16vector", &_VW_V40_V10vcore_Du16vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds32vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__length", &_VW_V40_V10vcore_Ds32vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds32vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__set_B", &_VW_V40_V10vcore_Ds32vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds32vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector__ref", &_VW_V40_V10vcore_Ds32vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gs32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gs32vector", &_VW_V40_V10vcore_Dlist___Gs32vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__s32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__s32vector", &_VW_V40_V10vcore_Dmake__s32vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds32vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector_Q", &_VW_V40_V10vcore_Ds32vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ds32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Ds32vector", &_VW_V40_V10vcore_Ds32vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df32vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__length", &_VW_V40_V10vcore_Df32vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df32vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__set_B", &_VW_V40_V10vcore_Df32vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df32vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector__ref", &_VW_V40_V10vcore_Df32vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gf32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gf32vector", &_VW_V40_V10vcore_Dlist___Gf32vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__f32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__f32vector", &_VW_V40_V10vcore_Dmake__f32vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df32vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector_Q", &_VW_V40_V10vcore_Df32vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df32vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Df32vector", &_VW_V40_V10vcore_Df32vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df64vector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__length", &_VW_V40_V10vcore_Df64vector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df64vector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__set_B", &_VW_V40_V10vcore_Df64vector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df64vector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector__ref", &_VW_V40_V10vcore_Df64vector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gf64vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gf64vector", &_VW_V40_V10vcore_Dlist___Gf64vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__f64vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__f64vector", &_VW_V40_V10vcore_Dmake__f64vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df64vector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector_Q", &_VW_V40_V10vcore_Df64vector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Df64vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Df64vector", &_VW_V40_V10vcore_Df64vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dvector__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__length", &_VW_V40_V10vcore_Dvector__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dvector__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__set_B", &_VW_V40_V10vcore_Dvector__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dvector__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector__ref", &_VW_V40_V10vcore_Dvector__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlist___Gvector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlist___Gvector", &_VW_V40_V10vcore_Dlist___Gvector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__vector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__vector", &_VW_V40_V10vcore_Dmake__vector), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dvector = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector", &_VW_V40_V10vcore_Dvector), VPOINTER_CLOSURE);
+  _V40VAppend = VEncodePointer(VLookupConstant("_V40VAppend", &_VW_V40VAppend), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dset__cdr_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__cdr_B", &_VW_V40_V10vcore_Dset__cdr_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dset__car_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__car_B", &_VW_V40_V10vcore_Dset__car_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcdr = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcdr", &_VW_V40_V10vcore_Dcdr), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcar = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcar", &_VW_V40_V10vcore_Dcar), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcons = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcons", &_VW_V40_V10vcore_Dcons), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dunload__library = VEncodePointer(VLookupConstant("_V40_V10vcore_Dunload__library", &_VW_V40_V10vcore_Dunload__library), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dload__library = VEncodePointer(VLookupConstant("_V40_V10vcore_Dload__library", &_VW_V40_V10vcore_Dload__library), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmake__import = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__import", &_VW_V40_V10vcore_Dmake__import), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dlookup__library = VEncodePointer(VLookupConstant("_V40_V10vcore_Dlookup__library", &_VW_V40_V10vcore_Dlookup__library), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dmultidefine = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmultidefine", &_VW_V40_V10vcore_Dmultidefine), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ddefine = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddefine", &_VW_V40_V10vcore_Ddefine), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dfunction = VEncodePointer(VLookupConstant("_V40_V10vcore_Dfunction", &_VW_V40_V10vcore_Dfunction), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drecord__length = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__length", &_VW_V40_V10vcore_Drecord__length), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drecord__set_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__set_B", &_VW_V40_V10vcore_Drecord__set_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drecord__ref = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord__ref", &_VW_V40_V10vcore_Drecord__ref), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drecord = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord", &_VW_V40_V10vcore_Drecord), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dset__global_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Dset__global_B", &_VW_V40_V10vcore_Dset__global_B), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ddefine__global = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddefine__global", &_VW_V40_V10vcore_Ddefine__global), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dexit = VEncodePointer(VLookupConstant("_V40_V10vcore_Dexit", &_VW_V40_V10vcore_Dexit), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dabort = VEncodePointer(VLookupConstant("_V40_V10vcore_Dabort", &_VW_V40_V10vcore_Dabort), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dapply__cps = VEncodePointer(VLookupConstant("_V40_V10vcore_Dapply__cps", &_VW_V40_V10vcore_Dapply__cps), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dapply = VEncodePointer(VLookupConstant("_V40_V10vcore_Dapply", &_VW_V40_V10vcore_Dapply), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcall__with__values = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcall__with__values", &_VW_V40_V10vcore_Dcall__with__values), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcall_Wcc = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcall_Wcc", &_VW_V40_V10vcore_Dcall_Wcc), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dnext = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnext", &_VW_V40_V10vcore_Dnext), VPOINTER_CLOSURE);
+  _V40_V10vcore_Draise = VEncodePointer(VLookupConstant("_V40_V10vcore_Draise", &_VW_V40_V10vcore_Draise), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dpop__exception__handler = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpop__exception__handler", &_VW_V40_V10vcore_Dpop__exception__handler), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dpush__exception__handler = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpush__exception__handler", &_VW_V40_V10vcore_Dpush__exception__handler), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dget__exception__handler = VEncodePointer(VLookupConstant("_V40_V10vcore_Dget__exception__handler", &_VW_V40_V10vcore_Dget__exception__handler), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dpop__dynamic = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpop__dynamic", &_VW_V40_V10vcore_Dpop__dynamic), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dpush__dynamic = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpush__dynamic", &_VW_V40_V10vcore_Dpush__dynamic), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dget__dynamics = VEncodePointer(VLookupConstant("_V40_V10vcore_Dget__dynamics", &_VW_V40_V10vcore_Dget__dynamics), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dnot = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnot", &_VW_V40_V10vcore_Dnot), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dblob_E_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dblob_E_Q", &_VW_V40_V10vcore_Dblob_E_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dsymbol_E_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsymbol_E_Q", &_VW_V40_V10vcore_Dsymbol_E_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Deq_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Deq_Q", &_VW_V40_V10vcore_Deq_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dforeign__pointer_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dforeign__pointer_Q", &_VW_V40_V10vcore_Dforeign__pointer_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dnullptr_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnullptr_Q", &_VW_V40_V10vcore_Dnullptr_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dvoid_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvoid_Q", &_VW_V40_V10vcore_Dvoid_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dchar_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dchar_Q", &_VW_V40_V10vcore_Dchar_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Ddouble_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Ddouble_Q", &_VW_V40_V10vcore_Ddouble_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dint_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dint_Q", &_VW_V40_V10vcore_Dint_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dstring_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dstring_Q", &_VW_V40_V10vcore_Dstring_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dsymbol_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dsymbol_Q", &_VW_V40_V10vcore_Dsymbol_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dblob_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dblob_Q", &_VW_V40_V10vcore_Dblob_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dprocedure_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dprocedure_Q", &_VW_V40_V10vcore_Dprocedure_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Drecord_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Drecord_Q", &_VW_V40_V10vcore_Drecord_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dhash__table_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dhash__table_Q", &_VW_V40_V10vcore_Dhash__table_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dvector_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dvector_Q", &_VW_V40_V10vcore_Dvector_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dpair_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dpair_Q", &_VW_V40_V10vcore_Dpair_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dnull_Q = VEncodePointer(VLookupConstant("_V40_V10vcore_Dnull_Q", &_VW_V40_V10vcore_Dnull_Q), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dremainder = VEncodePointer(VLookupConstant("_V40_V10vcore_Dremainder", &_VW_V40_V10vcore_Dremainder), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dquotient = VEncodePointer(VLookupConstant("_V40_V10vcore_Dquotient", &_VW_V40_V10vcore_Dquotient), VPOINTER_CLOSURE);
+  _V40_V10vcore_D_G = VEncodePointer(VLookupConstant("_V40_V10vcore_D_G", &_VW_V40_V10vcore_D_G), VPOINTER_CLOSURE);
+  _V40_V10vcore_D_G_E = VEncodePointer(VLookupConstant("_V40_V10vcore_D_G_E", &_VW_V40_V10vcore_D_G_E), VPOINTER_CLOSURE);
+  _V40_V10vcore_D_E = VEncodePointer(VLookupConstant("_V40_V10vcore_D_E", &_VW_V40_V10vcore_D_E), VPOINTER_CLOSURE);
+  _V40_V10vcore_D_L = VEncodePointer(VLookupConstant("_V40_V10vcore_D_L", &_VW_V40_V10vcore_D_L), VPOINTER_CLOSURE);
+  _V40_V10vcore_D_L_E = VEncodePointer(VLookupConstant("_V40_V10vcore_D_L_E", &_VW_V40_V10vcore_D_L_E), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dcmp = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcmp", &_VW_V40_V10vcore_Dcmp), VPOINTER_CLOSURE);
+  _V40_V10vcore_D_W = VEncodePointer(VLookupConstant("_V40_V10vcore_D_W", &_VW_V40_V10vcore_D_W), VPOINTER_CLOSURE);
+  _V40_V10vcore_D_S = VEncodePointer(VLookupConstant("_V40_V10vcore_D_S", &_VW_V40_V10vcore_D_S), VPOINTER_CLOSURE);
+  _V40_V10vcore_D__ = VEncodePointer(VLookupConstant("_V40_V10vcore_D__", &_VW_V40_V10vcore_D__), VPOINTER_CLOSURE);
+  _V40_V10vcore_D_P = VEncodePointer(VLookupConstant("_V40_V10vcore_D_P", &_VW_V40_V10vcore_D_P), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dexact", &_VW_V40_V10vcore_Dexact), VPOINTER_CLOSURE);
+  _V40_V10vcore_Dinexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dinexact", &_VW_V40_V10vcore_Dinexact), VPOINTER_CLOSURE);
   _V40VMultiImport = VEncodePointer(VLookupConstant("_V40VMultiImport", &_VW_V40VMultiImport), VPOINTER_CLOSURE);
 }
 V_DECLARE_FUNC(_V50_V0vanity_V0intrinsics_V0lookup__inline__name, _var0, _var1);
@@ -1279,10 +1286,10 @@ static void _V0vanity_V0intrinsics_V20_V0k2(VRuntime * runtime, VEnv * statics, 
   "-- expected 1~N"
   , argc);
  }
-  // ((##intrinsic "VMultiImport") (bruijn ##.k.19 2 0) (##string ##.string.527) (bruijn ##.x.20 0 0))
+  // ((##intrinsic "VMultiImport") (bruijn ##.k.19 2 0) (##string ##.string.533) (bruijn ##.x.20 0 0))
     VCallFuncWithGC(runtime, (VFunc)VMultiImport, 3,
       statics->up->vars[0],
-      VEncodePointer(&_V10_Dstring_D527.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D533.sym, VPOINTER_OTHER),
       _var0);
 }
 static void _V0vanity_V0intrinsics_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -1314,10 +1321,10 @@ static void _V0vanity_V0intrinsics_V20_V0lambda2(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0intrinsics_V20_V0k1) (##string ##.string.528))
+  // (##vcore.load-library (close _V0vanity_V0intrinsics_V20_V0k1) (##string ##.string.534))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0intrinsics_V20_V0k1, self)))),
-      VEncodePointer(&_V10_Dstring_D528.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D534.sym, VPOINTER_OTHER));
 }
 void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k4" };
@@ -1327,7 +1334,7 @@ void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k4(VRuntime * runtime, VEn
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.229 1 0) ((bruijn ##.k.230 0 0) (bruijn ##.p.229 1 0)) ((bruijn ##.k.230 0 0) (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.qcons)))
+  // (if (bruijn ##.p.230 1 0) ((bruijn ##.k.231 0 0) (bruijn ##.p.230 1 0)) ((bruijn ##.k.231 0 0) (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.qcons)))
 if(VDecodeBool(
 statics->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
@@ -1347,7 +1354,7 @@ void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k5(VRuntime * runtime, VEn
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.85 0 0) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.cons)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.car) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.car)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.cdr) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.cdr)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.set-car!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.set-car!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.set-cdr!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.set-cdr!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f64vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f64vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f64vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f64vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-f64vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-f64vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->f64vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->f64vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f64vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f64vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f64vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f64vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f64vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f64vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f32vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f32vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-f32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-f32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->f32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->f32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f32vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f32vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f32vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f32vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f32vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f32vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s32vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s32vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-s32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-s32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->s32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->s32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s32vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s32vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s32vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s32vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s32vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s32vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u16vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u16vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-u16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-u16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->u16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->u16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u16vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u16vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u16vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u16vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u16vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u16vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s16vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s16vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-s16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-s16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->s16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->s16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s16vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s16vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s16vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s16vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s16vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s16vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u8vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u8vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-u8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-u8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->u8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->u8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u8vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u8vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u8vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u8vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u8vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u8vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s8vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s8vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-s8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-s8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->s8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->s8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s8vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s8vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s8vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s8vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s8vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s8vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.read-u8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.read-u8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.record) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.record)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.record-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.record-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.record-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.record-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.record-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.record-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-hash-table) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-hash-table)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-equivalence-function) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-equivalence-function)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-hash-function) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-hash-function)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-delete!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-delete!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-string) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-string)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.substring) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.substring)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string-copy!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string-copy!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string->symbol) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string->symbol)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string->number) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string->number)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.symbol->string) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.symbol->string)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.gensym) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.gensym)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.char-integer) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.char-integer)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.integer->char) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.integer->char)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.stdin->port) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.stdin->port)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.stdout->port) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.stdout->port)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.stderr->port) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.stderr->port)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.dup-stdin) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.dup-stdin)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.dup-stdout) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.dup-stdout)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.dup-stderr) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.dup-stderr)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.open-input-stream) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.open-input-stream)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.open-output-stream) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.open-output-stream)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.close-stream) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.close-stream)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.tty-port?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.tty-port?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.open-output-string) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.open-output-string)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.get-output-string) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.get-output-string)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.eof-object?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.eof-object?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.read-char) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.read-char)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.read-line) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.read-line)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.read-line2) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.read-line2)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.read) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.read)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.display-word) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.display-word)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.write) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.write)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.newline) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.newline)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.display-stdout) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.display-stdout)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.write-stdout) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.write-stdout)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.newline-stdout) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.newline-stdout)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.set-finalizer!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.set-finalizer!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.has-finalizer?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.has-finalizer?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.finalize!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.finalize!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.garbage-collect) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.garbage-collect)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.yield-to-host) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.yield-to-host)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.yield-to-host-major) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.yield-to-host-major)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.system) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.system)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.open-input-process) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.open-input-process)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.open-output-process) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.open-output-process)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.command-line) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.command-line)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-random) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-random)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.random-copy) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.random-copy)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.random-sample!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.random-sample!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.random-sample-bounded!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.random-sample-bounded!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.random-sample-float!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.random-sample-float!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.random-advance!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.random-advance!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.fiber-fork-list) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.fiber-fork-list)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.async) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.async)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.await) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.await)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.realpath) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.realpath)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-temporary-file) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-temporary-file)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.access) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.access)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.current-jiffy) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.current-jiffy)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.jiffies-per-second) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.jiffies-per-second)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-not) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-not)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-ior) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-ior)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-xor) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-xor)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-and) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-and)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-xnor) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-xnor)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-nand) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-nand)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-nor) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-nor)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-andc1) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-andc1)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-andc2) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-andc2)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-orc1) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-orc1)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-orc2) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-orc2)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.arithmetic-shift) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.arithmetic-shift)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bit-count) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bit-count)) ((bruijn ##.k.23 2 0) #f)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+  // (if (bruijn ##.p.85 0 0) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.cons)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.car) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.car)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.cdr) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.cdr)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.set-car!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.set-car!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.set-cdr!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.set-cdr!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.append) ((bruijn ##.k.23 2 0) (##intrinsic "VAppend")) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f64vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f64vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f64vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f64vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-f64vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-f64vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->f64vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->f64vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f64vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f64vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f64vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f64vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f64vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f64vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f32vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f32vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-f32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-f32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->f32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->f32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f32vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f32vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f32vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f32vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.f32vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.f32vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s32vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s32vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-s32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-s32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->s32vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->s32vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s32vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s32vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s32vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s32vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s32vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s32vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u16vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u16vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-u16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-u16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->u16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->u16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u16vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u16vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u16vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u16vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u16vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u16vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s16vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s16vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-s16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-s16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->s16vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->s16vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s16vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s16vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s16vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s16vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s16vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s16vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u8vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u8vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-u8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-u8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->u8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->u8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u8vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u8vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u8vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u8vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.u8vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.u8vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s8vector?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s8vector?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-s8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-s8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.list->s8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.list->s8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s8vector-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s8vector-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s8vector-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s8vector-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.s8vector-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.s8vector-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.read-u8vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.read-u8vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.record) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.record)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.record-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.record-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.record-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.record-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.record-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.record-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-hash-table) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-hash-table)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-equivalence-function) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-equivalence-function)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-hash-function) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-hash-function)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-vector) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-vector)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.hash-table-delete!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.hash-table-delete!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-string) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-string)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.substring) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.substring)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string-copy!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string-copy!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string-ref) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string-ref)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string-set!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string-set!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string-length) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string-length)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string->symbol) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string->symbol)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.string->number) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.string->number)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.symbol->string) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.symbol->string)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.gensym) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.gensym)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.char-integer) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.char-integer)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.integer->char) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.integer->char)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.stdin->port) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.stdin->port)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.stdout->port) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.stdout->port)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.stderr->port) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.stderr->port)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.dup-stdin) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.dup-stdin)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.dup-stdout) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.dup-stdout)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.dup-stderr) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.dup-stderr)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.open-input-stream) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.open-input-stream)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.open-output-stream) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.open-output-stream)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.close-stream) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.close-stream)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.tty-port?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.tty-port?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.open-output-string) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.open-output-string)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.get-output-string) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.get-output-string)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.eof-object?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.eof-object?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.read-char) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.read-char)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.read-line) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.read-line)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.read-line2) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.read-line2)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.read) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.read)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.display-word) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.display-word)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.write) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.write)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.newline) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.newline)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.display-stdout) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.display-stdout)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.write-stdout) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.write-stdout)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.newline-stdout) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.newline-stdout)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.set-finalizer!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.set-finalizer!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.has-finalizer?) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.has-finalizer?)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.finalize!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.finalize!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.garbage-collect) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.garbage-collect)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.yield-to-host) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.yield-to-host)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.yield-to-host-major) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.yield-to-host-major)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.system) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.system)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.open-input-process) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.open-input-process)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.open-output-process) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.open-output-process)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.command-line) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.command-line)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-random) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-random)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.random-copy) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.random-copy)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.random-sample!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.random-sample!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.random-sample-bounded!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.random-sample-bounded!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.random-sample-float!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.random-sample-float!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.random-advance!) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.random-advance!)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.fiber-fork-list) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.fiber-fork-list)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.async) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.async)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.await) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.await)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.realpath) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.realpath)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.make-temporary-file) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.make-temporary-file)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.access) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.access)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.current-jiffy) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.current-jiffy)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.jiffies-per-second) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.jiffies-per-second)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-not) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-not)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-ior) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-ior)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-xor) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-xor)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-and) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-and)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-xnor) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-xnor)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-nand) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-nand)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-nor) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-nor)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-andc1) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-andc1)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-andc2) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-andc2)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-orc1) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-orc1)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bitwise-orc2) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bitwise-orc2)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.arithmetic-shift) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.arithmetic-shift)) (if (##inline ##vcore.eq? (bruijn ##.sym.9 2 1) '##vcore.bit-count) ((bruijn ##.k.23 2 0) (##intrinsic ##vcore.bit-count)) ((bruijn ##.k.23 2 0) #f))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
@@ -1380,6 +1387,13 @@ VInlineEq2(runtime,
         _V10vcore_Dset__cdr_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       _V40_V10vcore_Dset__cdr_B);
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        statics->up->vars[1],
+        _V10vcore_Dappend))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      _V40VAppend);
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
@@ -2501,6 +2515,7 @@ VInlineEq2(runtime,
 }
 }
 }
+}
 void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k3" };
  VRecordCall2(runtime, &dbg);
@@ -3032,7 +3047,21 @@ void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q(VRuntime * runtime, VEn
   "-- expected 2~N"
   , argc);
  }
-  // (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.+) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.-) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.*) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore./) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.<=) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.<) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.=) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.>=) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.>) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.null?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.pair?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.eof-object?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.vector?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.record?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.hash-table?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.procedure?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.blob?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.symbol?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.string?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.double?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.int?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.char?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.void?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.nullptr?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.foreign-pointer?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.not) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.vector-ref) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.vector-length) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f64vector?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f64vector-ref) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f64vector-set!) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f64vector-length) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f32vector?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f32vector-ref) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f32vector-set!) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f32vector-length) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s32vector?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s32vector-ref) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s32vector-set!) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s32vector-length) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s16vector?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s16vector-ref) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s16vector-set!) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s16vector-length) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u16vector?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u16vector-ref) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u16vector-set!) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u16vector-length) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s8vector?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s8vector-ref) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s8vector-set!) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s8vector-length) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u8vector?) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u8vector-ref) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u8vector-set!) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u8vector-length) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.record-ref) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.record-length) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.string-ref) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.string-set!) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.string-length) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.string->number) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.char-integer) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.read-char) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.display-word) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.write) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.newline) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.display-stdout) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.write-stdout) ((bruijn ##.k.231 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.newline-stdout) ((bruijn ##.k.231 0 0) #t) ((bruijn ##.k.231 0 0) #f)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+  // (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.inexact) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.exact) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.+) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.-) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.*) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore./) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.quotient) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.remainder) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.<=) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.<) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.=) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.>=) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.>) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.null?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.pair?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.eof-object?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.vector?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.record?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.hash-table?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.procedure?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.blob?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.symbol?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.string?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.double?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.int?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.char?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.void?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.nullptr?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.foreign-pointer?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.not) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.vector-ref) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.vector-length) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f64vector?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f64vector-ref) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f64vector-set!) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f64vector-length) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f32vector?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f32vector-ref) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f32vector-set!) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.f32vector-length) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s32vector?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s32vector-ref) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s32vector-set!) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s32vector-length) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s16vector?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s16vector-ref) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s16vector-set!) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s16vector-length) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u16vector?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u16vector-ref) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u16vector-set!) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u16vector-length) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s8vector?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s8vector-ref) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s8vector-set!) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.s8vector-length) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u8vector?) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u8vector-ref) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u8vector-set!) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.u8vector-length) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.record-ref) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.record-length) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.string-ref) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.string-set!) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.string-length) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.string->number) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.char-integer) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.read-char) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.display-word) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.write) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.newline) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.display-stdout) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.write-stdout) ((bruijn ##.k.232 0 0) #t) (if (##inline ##vcore.eq? (bruijn ##.sym.11 0 1) '##vcore.newline-stdout) ((bruijn ##.k.232 0 0) #t) ((bruijn ##.k.232 0 0) #f)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Dinexact))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(true));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Dexact))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(true));
+} else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
@@ -3058,6 +3087,20 @@ if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
         _V10vcore_D_W))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(true));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Dquotient))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodeBool(true));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Dremainder))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodeBool(true));
 } else {
@@ -3596,6 +3639,10 @@ VInlineEq2(runtime,
 }
 }
 }
+}
+}
+}
+}
 void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k7(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k7" };
  VRecordCall2(runtime, &dbg);
@@ -3604,7 +3651,7 @@ void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k7(VRuntime * runtim
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.508 1 0) ((bruijn ##.k.509 0 0) (bruijn ##.p.508 1 0)) ((bruijn ##.k.509 0 0) (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.qcons)))
+  // (if (bruijn ##.p.514 1 0) ((bruijn ##.k.515 0 0) (bruijn ##.p.514 1 0)) ((bruijn ##.k.515 0 0) (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.qcons)))
 if(VDecodeBool(
 statics->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
@@ -3624,1029 +3671,1037 @@ void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k8(VRuntime * runtim
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.362 0 0) ((bruijn ##.k.302 2 0) (##string ##.string.586)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.car) ((bruijn ##.k.302 2 0) (##string ##.string.587)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.cdr) ((bruijn ##.k.302 2 0) (##string ##.string.588)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.set-car!) ((bruijn ##.k.302 2 0) (##string ##.string.589)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.set-cdr!) ((bruijn ##.k.302 2 0) (##string ##.string.590)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.vector) ((bruijn ##.k.302 2 0) (##string ##.string.591)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-vector) ((bruijn ##.k.302 2 0) (##string ##.string.592)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->vector) ((bruijn ##.k.302 2 0) (##string ##.string.593)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->vector) ((bruijn ##.k.302 2 0) (##string ##.string.593)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.vector-ref) ((bruijn ##.k.302 2 0) (##string ##.string.594)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.vector-set!) ((bruijn ##.k.302 2 0) (##string ##.string.595)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.vector-length) ((bruijn ##.k.302 2 0) (##string ##.string.596)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f64vector) ((bruijn ##.k.302 2 0) (##string ##.string.597)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f64vector?) ((bruijn ##.k.302 2 0) (##string ##.string.598)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-f64vector) ((bruijn ##.k.302 2 0) (##string ##.string.599)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->f64vector) ((bruijn ##.k.302 2 0) (##string ##.string.600)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f64vector-ref) ((bruijn ##.k.302 2 0) (##string ##.string.601)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f64vector-set!) ((bruijn ##.k.302 2 0) (##string ##.string.602)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f64vector-length) ((bruijn ##.k.302 2 0) (##string ##.string.603)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f32vector) ((bruijn ##.k.302 2 0) (##string ##.string.604)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f32vector?) ((bruijn ##.k.302 2 0) (##string ##.string.605)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-f32vector) ((bruijn ##.k.302 2 0) (##string ##.string.606)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->f32vector) ((bruijn ##.k.302 2 0) (##string ##.string.607)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f32vector-ref) ((bruijn ##.k.302 2 0) (##string ##.string.608)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f32vector-set!) ((bruijn ##.k.302 2 0) (##string ##.string.609)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f32vector-length) ((bruijn ##.k.302 2 0) (##string ##.string.610)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s32vector) ((bruijn ##.k.302 2 0) (##string ##.string.611)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s32vector?) ((bruijn ##.k.302 2 0) (##string ##.string.612)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-s32vector) ((bruijn ##.k.302 2 0) (##string ##.string.613)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->s32vector) ((bruijn ##.k.302 2 0) (##string ##.string.614)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s32vector-ref) ((bruijn ##.k.302 2 0) (##string ##.string.615)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s32vector-set!) ((bruijn ##.k.302 2 0) (##string ##.string.616)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s32vector-length) ((bruijn ##.k.302 2 0) (##string ##.string.617)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u16vector) ((bruijn ##.k.302 2 0) (##string ##.string.618)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u16vector?) ((bruijn ##.k.302 2 0) (##string ##.string.619)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-u16vector) ((bruijn ##.k.302 2 0) (##string ##.string.620)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->u16vector) ((bruijn ##.k.302 2 0) (##string ##.string.621)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u16vector-ref) ((bruijn ##.k.302 2 0) (##string ##.string.622)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u16vector-set!) ((bruijn ##.k.302 2 0) (##string ##.string.623)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u16vector-length) ((bruijn ##.k.302 2 0) (##string ##.string.624)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s16vector) ((bruijn ##.k.302 2 0) (##string ##.string.625)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s16vector?) ((bruijn ##.k.302 2 0) (##string ##.string.626)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-s16vector) ((bruijn ##.k.302 2 0) (##string ##.string.627)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->s16vector) ((bruijn ##.k.302 2 0) (##string ##.string.628)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s16vector-ref) ((bruijn ##.k.302 2 0) (##string ##.string.629)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s16vector-set!) ((bruijn ##.k.302 2 0) (##string ##.string.630)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s16vector-length) ((bruijn ##.k.302 2 0) (##string ##.string.631)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u8vector) ((bruijn ##.k.302 2 0) (##string ##.string.632)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u8vector?) ((bruijn ##.k.302 2 0) (##string ##.string.633)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-u8vector) ((bruijn ##.k.302 2 0) (##string ##.string.634)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->u8vector) ((bruijn ##.k.302 2 0) (##string ##.string.635)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u8vector-ref) ((bruijn ##.k.302 2 0) (##string ##.string.636)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u8vector-set!) ((bruijn ##.k.302 2 0) (##string ##.string.637)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u8vector-length) ((bruijn ##.k.302 2 0) (##string ##.string.638)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s8vector) ((bruijn ##.k.302 2 0) (##string ##.string.639)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s8vector?) ((bruijn ##.k.302 2 0) (##string ##.string.640)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-s8vector) ((bruijn ##.k.302 2 0) (##string ##.string.641)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->s8vector) ((bruijn ##.k.302 2 0) (##string ##.string.642)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s8vector-ref) ((bruijn ##.k.302 2 0) (##string ##.string.643)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s8vector-set!) ((bruijn ##.k.302 2 0) (##string ##.string.644)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s8vector-length) ((bruijn ##.k.302 2 0) (##string ##.string.645)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.read-u8vector) ((bruijn ##.k.302 2 0) (##string ##.string.646)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.record) ((bruijn ##.k.302 2 0) (##string ##.string.647)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.record-ref) ((bruijn ##.k.302 2 0) (##string ##.string.648)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.record-set!) ((bruijn ##.k.302 2 0) (##string ##.string.649)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.record-length) ((bruijn ##.k.302 2 0) (##string ##.string.650)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-hash-table) ((bruijn ##.k.302 2 0) (##string ##.string.651)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-equivalence-function) ((bruijn ##.k.302 2 0) (##string ##.string.652)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-hash-function) ((bruijn ##.k.302 2 0) (##string ##.string.653)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-vector) ((bruijn ##.k.302 2 0) (##string ##.string.654)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-ref) ((bruijn ##.k.302 2 0) (##string ##.string.655)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-set!) ((bruijn ##.k.302 2 0) (##string ##.string.656)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-delete!) ((bruijn ##.k.302 2 0) (##string ##.string.657)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-string) ((bruijn ##.k.302 2 0) (##string ##.string.658)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.substring) ((bruijn ##.k.302 2 0) (##string ##.string.659)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string-copy!) ((bruijn ##.k.302 2 0) (##string ##.string.660)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string-ref) ((bruijn ##.k.302 2 0) (##string ##.string.661)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string-set!) ((bruijn ##.k.302 2 0) (##string ##.string.662)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string-length) ((bruijn ##.k.302 2 0) (##string ##.string.663)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string->symbol) ((bruijn ##.k.302 2 0) (##string ##.string.664)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string->number) ((bruijn ##.k.302 2 0) (##string ##.string.665)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.symbol->string) ((bruijn ##.k.302 2 0) (##string ##.string.666)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.gensym) ((bruijn ##.k.302 2 0) (##string ##.string.667)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.char-integer) ((bruijn ##.k.302 2 0) (##string ##.string.668)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.integer->char) ((bruijn ##.k.302 2 0) (##string ##.string.669)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.stdin->port) ((bruijn ##.k.302 2 0) (##string ##.string.670)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.stdout->port) ((bruijn ##.k.302 2 0) (##string ##.string.671)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.stderr->port) ((bruijn ##.k.302 2 0) (##string ##.string.672)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.dup-stdin) ((bruijn ##.k.302 2 0) (##string ##.string.673)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.dup-stdout) ((bruijn ##.k.302 2 0) (##string ##.string.674)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.dup-stderr) ((bruijn ##.k.302 2 0) (##string ##.string.675)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.open-input-stream) ((bruijn ##.k.302 2 0) (##string ##.string.676)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.open-output-stream) ((bruijn ##.k.302 2 0) (##string ##.string.677)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.close-stream) ((bruijn ##.k.302 2 0) (##string ##.string.678)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.tty-port?) ((bruijn ##.k.302 2 0) (##string ##.string.679)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.open-output-string) ((bruijn ##.k.302 2 0) (##string ##.string.680)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.get-output-string) ((bruijn ##.k.302 2 0) (##string ##.string.681)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.eof-object?) ((bruijn ##.k.302 2 0) (##string ##.string.682)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.read-char) ((bruijn ##.k.302 2 0) (##string ##.string.683)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.read-line) ((bruijn ##.k.302 2 0) (##string ##.string.684)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.read-line2) ((bruijn ##.k.302 2 0) (##string ##.string.685)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.read) ((bruijn ##.k.302 2 0) (##string ##.string.686)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.display-word) ((bruijn ##.k.302 2 0) (##string ##.string.687)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.write) ((bruijn ##.k.302 2 0) (##string ##.string.688)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.newline) ((bruijn ##.k.302 2 0) (##string ##.string.689)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.display-stdout) ((bruijn ##.k.302 2 0) (##string ##.string.690)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.write-stdout) ((bruijn ##.k.302 2 0) (##string ##.string.691)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.newline-stdout) ((bruijn ##.k.302 2 0) (##string ##.string.692)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.set-finalizer!) ((bruijn ##.k.302 2 0) (##string ##.string.693)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.has-finalizer?) ((bruijn ##.k.302 2 0) (##string ##.string.694)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.finalize!) ((bruijn ##.k.302 2 0) (##string ##.string.695)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.garbage-collect) ((bruijn ##.k.302 2 0) (##string ##.string.696)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.yield-to-host) ((bruijn ##.k.302 2 0) (##string ##.string.697)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.yield-to-host-major) ((bruijn ##.k.302 2 0) (##string ##.string.698)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.system) ((bruijn ##.k.302 2 0) (##string ##.string.699)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.open-input-process) ((bruijn ##.k.302 2 0) (##string ##.string.700)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.open-output-process) ((bruijn ##.k.302 2 0) (##string ##.string.701)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.command-line) ((bruijn ##.k.302 2 0) (##string ##.string.702)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.register-sigint) ((bruijn ##.k.302 2 0) (##string ##.string.703)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-random) ((bruijn ##.k.302 2 0) (##string ##.string.704)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.random-copy) ((bruijn ##.k.302 2 0) (##string ##.string.705)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.random-sample!) ((bruijn ##.k.302 2 0) (##string ##.string.706)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.random-sample-bounded!) ((bruijn ##.k.302 2 0) (##string ##.string.707)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.random-sample-float!) ((bruijn ##.k.302 2 0) (##string ##.string.708)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.random-advance!) ((bruijn ##.k.302 2 0) (##string ##.string.709)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.fiber-fork-list) ((bruijn ##.k.302 2 0) (##string ##.string.710)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.async) ((bruijn ##.k.302 2 0) (##string ##.string.711)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.await) ((bruijn ##.k.302 2 0) (##string ##.string.712)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.realpath) ((bruijn ##.k.302 2 0) (##string ##.string.713)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-temporary-file) ((bruijn ##.k.302 2 0) (##string ##.string.714)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.access) ((bruijn ##.k.302 2 0) (##string ##.string.715)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.current-jiffy) ((bruijn ##.k.302 2 0) (##string ##.string.716)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.jiffies-per-second) ((bruijn ##.k.302 2 0) (##string ##.string.717)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-not) ((bruijn ##.k.302 2 0) (##string ##.string.718)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-ior) ((bruijn ##.k.302 2 0) (##string ##.string.719)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-xor) ((bruijn ##.k.302 2 0) (##string ##.string.720)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-and) ((bruijn ##.k.302 2 0) (##string ##.string.721)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-xnor) ((bruijn ##.k.302 2 0) (##string ##.string.722)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-nand) ((bruijn ##.k.302 2 0) (##string ##.string.723)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-nor) ((bruijn ##.k.302 2 0) (##string ##.string.724)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-andc1) ((bruijn ##.k.302 2 0) (##string ##.string.725)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-andc2) ((bruijn ##.k.302 2 0) (##string ##.string.726)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-orc1) ((bruijn ##.k.302 2 0) (##string ##.string.727)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-orc2) ((bruijn ##.k.302 2 0) (##string ##.string.728)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.arithmetic-shift) ((bruijn ##.k.302 2 0) (##string ##.string.729)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bit-count) ((bruijn ##.k.302 2 0) (##string ##.string.730)) ((bruijn ##.k.302 2 0) #f)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+  // (if (bruijn ##.p.367 0 0) ((bruijn ##.k.307 2 0) (##string ##.string.592)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.car) ((bruijn ##.k.307 2 0) (##string ##.string.593)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.cdr) ((bruijn ##.k.307 2 0) (##string ##.string.594)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.set-car!) ((bruijn ##.k.307 2 0) (##string ##.string.595)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.set-cdr!) ((bruijn ##.k.307 2 0) (##string ##.string.596)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.append) ((bruijn ##.k.307 2 0) (##string ##.string.597)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.vector) ((bruijn ##.k.307 2 0) (##string ##.string.598)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-vector) ((bruijn ##.k.307 2 0) (##string ##.string.599)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->vector) ((bruijn ##.k.307 2 0) (##string ##.string.600)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->vector) ((bruijn ##.k.307 2 0) (##string ##.string.600)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.vector-ref) ((bruijn ##.k.307 2 0) (##string ##.string.601)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.vector-set!) ((bruijn ##.k.307 2 0) (##string ##.string.602)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.vector-length) ((bruijn ##.k.307 2 0) (##string ##.string.603)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f64vector) ((bruijn ##.k.307 2 0) (##string ##.string.604)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f64vector?) ((bruijn ##.k.307 2 0) (##string ##.string.605)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-f64vector) ((bruijn ##.k.307 2 0) (##string ##.string.606)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->f64vector) ((bruijn ##.k.307 2 0) (##string ##.string.607)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f64vector-ref) ((bruijn ##.k.307 2 0) (##string ##.string.608)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f64vector-set!) ((bruijn ##.k.307 2 0) (##string ##.string.609)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f64vector-length) ((bruijn ##.k.307 2 0) (##string ##.string.610)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f32vector) ((bruijn ##.k.307 2 0) (##string ##.string.611)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f32vector?) ((bruijn ##.k.307 2 0) (##string ##.string.612)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-f32vector) ((bruijn ##.k.307 2 0) (##string ##.string.613)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->f32vector) ((bruijn ##.k.307 2 0) (##string ##.string.614)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f32vector-ref) ((bruijn ##.k.307 2 0) (##string ##.string.615)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f32vector-set!) ((bruijn ##.k.307 2 0) (##string ##.string.616)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.f32vector-length) ((bruijn ##.k.307 2 0) (##string ##.string.617)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s32vector) ((bruijn ##.k.307 2 0) (##string ##.string.618)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s32vector?) ((bruijn ##.k.307 2 0) (##string ##.string.619)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-s32vector) ((bruijn ##.k.307 2 0) (##string ##.string.620)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->s32vector) ((bruijn ##.k.307 2 0) (##string ##.string.621)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s32vector-ref) ((bruijn ##.k.307 2 0) (##string ##.string.622)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s32vector-set!) ((bruijn ##.k.307 2 0) (##string ##.string.623)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s32vector-length) ((bruijn ##.k.307 2 0) (##string ##.string.624)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u16vector) ((bruijn ##.k.307 2 0) (##string ##.string.625)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u16vector?) ((bruijn ##.k.307 2 0) (##string ##.string.626)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-u16vector) ((bruijn ##.k.307 2 0) (##string ##.string.627)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->u16vector) ((bruijn ##.k.307 2 0) (##string ##.string.628)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u16vector-ref) ((bruijn ##.k.307 2 0) (##string ##.string.629)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u16vector-set!) ((bruijn ##.k.307 2 0) (##string ##.string.630)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u16vector-length) ((bruijn ##.k.307 2 0) (##string ##.string.631)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s16vector) ((bruijn ##.k.307 2 0) (##string ##.string.632)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s16vector?) ((bruijn ##.k.307 2 0) (##string ##.string.633)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-s16vector) ((bruijn ##.k.307 2 0) (##string ##.string.634)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->s16vector) ((bruijn ##.k.307 2 0) (##string ##.string.635)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s16vector-ref) ((bruijn ##.k.307 2 0) (##string ##.string.636)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s16vector-set!) ((bruijn ##.k.307 2 0) (##string ##.string.637)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s16vector-length) ((bruijn ##.k.307 2 0) (##string ##.string.638)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u8vector) ((bruijn ##.k.307 2 0) (##string ##.string.639)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u8vector?) ((bruijn ##.k.307 2 0) (##string ##.string.640)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-u8vector) ((bruijn ##.k.307 2 0) (##string ##.string.641)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->u8vector) ((bruijn ##.k.307 2 0) (##string ##.string.642)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u8vector-ref) ((bruijn ##.k.307 2 0) (##string ##.string.643)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u8vector-set!) ((bruijn ##.k.307 2 0) (##string ##.string.644)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.u8vector-length) ((bruijn ##.k.307 2 0) (##string ##.string.645)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s8vector) ((bruijn ##.k.307 2 0) (##string ##.string.646)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s8vector?) ((bruijn ##.k.307 2 0) (##string ##.string.647)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-s8vector) ((bruijn ##.k.307 2 0) (##string ##.string.648)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.list->s8vector) ((bruijn ##.k.307 2 0) (##string ##.string.649)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s8vector-ref) ((bruijn ##.k.307 2 0) (##string ##.string.650)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s8vector-set!) ((bruijn ##.k.307 2 0) (##string ##.string.651)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.s8vector-length) ((bruijn ##.k.307 2 0) (##string ##.string.652)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.read-u8vector) ((bruijn ##.k.307 2 0) (##string ##.string.653)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.record) ((bruijn ##.k.307 2 0) (##string ##.string.654)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.record-ref) ((bruijn ##.k.307 2 0) (##string ##.string.655)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.record-set!) ((bruijn ##.k.307 2 0) (##string ##.string.656)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.record-length) ((bruijn ##.k.307 2 0) (##string ##.string.657)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-hash-table) ((bruijn ##.k.307 2 0) (##string ##.string.658)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-equivalence-function) ((bruijn ##.k.307 2 0) (##string ##.string.659)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-hash-function) ((bruijn ##.k.307 2 0) (##string ##.string.660)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-vector) ((bruijn ##.k.307 2 0) (##string ##.string.661)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-ref) ((bruijn ##.k.307 2 0) (##string ##.string.662)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-set!) ((bruijn ##.k.307 2 0) (##string ##.string.663)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.hash-table-delete!) ((bruijn ##.k.307 2 0) (##string ##.string.664)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-string) ((bruijn ##.k.307 2 0) (##string ##.string.665)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.substring) ((bruijn ##.k.307 2 0) (##string ##.string.666)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string-copy!) ((bruijn ##.k.307 2 0) (##string ##.string.667)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string-ref) ((bruijn ##.k.307 2 0) (##string ##.string.668)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string-set!) ((bruijn ##.k.307 2 0) (##string ##.string.669)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string-length) ((bruijn ##.k.307 2 0) (##string ##.string.670)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string->symbol) ((bruijn ##.k.307 2 0) (##string ##.string.671)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.string->number) ((bruijn ##.k.307 2 0) (##string ##.string.672)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.symbol->string) ((bruijn ##.k.307 2 0) (##string ##.string.673)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.gensym) ((bruijn ##.k.307 2 0) (##string ##.string.674)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.char-integer) ((bruijn ##.k.307 2 0) (##string ##.string.675)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.integer->char) ((bruijn ##.k.307 2 0) (##string ##.string.676)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.stdin->port) ((bruijn ##.k.307 2 0) (##string ##.string.677)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.stdout->port) ((bruijn ##.k.307 2 0) (##string ##.string.678)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.stderr->port) ((bruijn ##.k.307 2 0) (##string ##.string.679)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.dup-stdin) ((bruijn ##.k.307 2 0) (##string ##.string.680)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.dup-stdout) ((bruijn ##.k.307 2 0) (##string ##.string.681)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.dup-stderr) ((bruijn ##.k.307 2 0) (##string ##.string.682)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.open-input-stream) ((bruijn ##.k.307 2 0) (##string ##.string.683)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.open-output-stream) ((bruijn ##.k.307 2 0) (##string ##.string.684)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.close-stream) ((bruijn ##.k.307 2 0) (##string ##.string.685)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.tty-port?) ((bruijn ##.k.307 2 0) (##string ##.string.686)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.open-output-string) ((bruijn ##.k.307 2 0) (##string ##.string.687)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.get-output-string) ((bruijn ##.k.307 2 0) (##string ##.string.688)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.eof-object?) ((bruijn ##.k.307 2 0) (##string ##.string.689)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.read-char) ((bruijn ##.k.307 2 0) (##string ##.string.690)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.read-line) ((bruijn ##.k.307 2 0) (##string ##.string.691)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.read-line2) ((bruijn ##.k.307 2 0) (##string ##.string.692)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.read) ((bruijn ##.k.307 2 0) (##string ##.string.693)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.display-word) ((bruijn ##.k.307 2 0) (##string ##.string.694)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.write) ((bruijn ##.k.307 2 0) (##string ##.string.695)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.newline) ((bruijn ##.k.307 2 0) (##string ##.string.696)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.display-stdout) ((bruijn ##.k.307 2 0) (##string ##.string.697)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.write-stdout) ((bruijn ##.k.307 2 0) (##string ##.string.698)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.newline-stdout) ((bruijn ##.k.307 2 0) (##string ##.string.699)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.set-finalizer!) ((bruijn ##.k.307 2 0) (##string ##.string.700)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.has-finalizer?) ((bruijn ##.k.307 2 0) (##string ##.string.701)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.finalize!) ((bruijn ##.k.307 2 0) (##string ##.string.702)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.garbage-collect) ((bruijn ##.k.307 2 0) (##string ##.string.703)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.yield-to-host) ((bruijn ##.k.307 2 0) (##string ##.string.704)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.yield-to-host-major) ((bruijn ##.k.307 2 0) (##string ##.string.705)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.system) ((bruijn ##.k.307 2 0) (##string ##.string.706)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.open-input-process) ((bruijn ##.k.307 2 0) (##string ##.string.707)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.open-output-process) ((bruijn ##.k.307 2 0) (##string ##.string.708)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.command-line) ((bruijn ##.k.307 2 0) (##string ##.string.709)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.register-sigint) ((bruijn ##.k.307 2 0) (##string ##.string.710)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-random) ((bruijn ##.k.307 2 0) (##string ##.string.711)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.random-copy) ((bruijn ##.k.307 2 0) (##string ##.string.712)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.random-sample!) ((bruijn ##.k.307 2 0) (##string ##.string.713)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.random-sample-bounded!) ((bruijn ##.k.307 2 0) (##string ##.string.714)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.random-sample-float!) ((bruijn ##.k.307 2 0) (##string ##.string.715)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.random-advance!) ((bruijn ##.k.307 2 0) (##string ##.string.716)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.fiber-fork-list) ((bruijn ##.k.307 2 0) (##string ##.string.717)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.async) ((bruijn ##.k.307 2 0) (##string ##.string.718)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.await) ((bruijn ##.k.307 2 0) (##string ##.string.719)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.realpath) ((bruijn ##.k.307 2 0) (##string ##.string.720)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.make-temporary-file) ((bruijn ##.k.307 2 0) (##string ##.string.721)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.access) ((bruijn ##.k.307 2 0) (##string ##.string.722)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.current-jiffy) ((bruijn ##.k.307 2 0) (##string ##.string.723)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.jiffies-per-second) ((bruijn ##.k.307 2 0) (##string ##.string.724)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-not) ((bruijn ##.k.307 2 0) (##string ##.string.725)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-ior) ((bruijn ##.k.307 2 0) (##string ##.string.726)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-xor) ((bruijn ##.k.307 2 0) (##string ##.string.727)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-and) ((bruijn ##.k.307 2 0) (##string ##.string.728)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-xnor) ((bruijn ##.k.307 2 0) (##string ##.string.729)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-nand) ((bruijn ##.k.307 2 0) (##string ##.string.730)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-nor) ((bruijn ##.k.307 2 0) (##string ##.string.731)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-andc1) ((bruijn ##.k.307 2 0) (##string ##.string.732)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-andc2) ((bruijn ##.k.307 2 0) (##string ##.string.733)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-orc1) ((bruijn ##.k.307 2 0) (##string ##.string.734)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bitwise-orc2) ((bruijn ##.k.307 2 0) (##string ##.string.735)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.arithmetic-shift) ((bruijn ##.k.307 2 0) (##string ##.string.736)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.bit-count) ((bruijn ##.k.307 2 0) (##string ##.string.737)) ((bruijn ##.k.307 2 0) #f))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D586.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        statics->up->vars[1],
-        _V10vcore_Dcar))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D587.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        statics->up->vars[1],
-        _V10vcore_Dcdr))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D588.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        statics->up->vars[1],
-        _V10vcore_Dset__car_B))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D589.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        statics->up->vars[1],
-        _V10vcore_Dset__cdr_B))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D590.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        statics->up->vars[1],
-        _V10vcore_Dvector))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D591.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        statics->up->vars[1],
-        _V10vcore_Dmake__vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D592.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dlist___Gvector))) {
+        _V10vcore_Dcar))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D593.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dlist___Gvector))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D593.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        statics->up->vars[1],
-        _V10vcore_Dvector__ref))) {
+        _V10vcore_Dcdr))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D594.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dvector__set_B))) {
+        _V10vcore_Dset__car_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D595.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dvector__length))) {
+        _V10vcore_Dset__cdr_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D596.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Df64vector))) {
+        _V10vcore_Dappend))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D597.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Df64vector_Q))) {
+        _V10vcore_Dvector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D598.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dmake__f64vector))) {
+        _V10vcore_Dmake__vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D599.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dlist___Gf64vector))) {
+        _V10vcore_Dlist___Gvector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D600.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Df64vector__ref))) {
+        _V10vcore_Dlist___Gvector))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodePointer(&_V10_Dstring_D600.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        statics->up->vars[1],
+        _V10vcore_Dvector__ref))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D601.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Df64vector__set_B))) {
+        _V10vcore_Dvector__set_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D602.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Df64vector__length))) {
+        _V10vcore_Dvector__length))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D603.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Df32vector))) {
+        _V10vcore_Df64vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D604.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Df32vector_Q))) {
+        _V10vcore_Df64vector_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D605.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dmake__f32vector))) {
+        _V10vcore_Dmake__f64vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D606.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dlist___Gf32vector))) {
+        _V10vcore_Dlist___Gf64vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D607.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Df32vector__ref))) {
+        _V10vcore_Df64vector__ref))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D608.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Df32vector__set_B))) {
+        _V10vcore_Df64vector__set_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D609.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Df32vector__length))) {
+        _V10vcore_Df64vector__length))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D610.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds32vector))) {
+        _V10vcore_Df32vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D611.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds32vector_Q))) {
+        _V10vcore_Df32vector_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D612.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dmake__s32vector))) {
+        _V10vcore_Dmake__f32vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D613.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dlist___Gs32vector))) {
+        _V10vcore_Dlist___Gf32vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D614.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds32vector__ref))) {
+        _V10vcore_Df32vector__ref))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D615.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds32vector__set_B))) {
+        _V10vcore_Df32vector__set_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D616.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds32vector__length))) {
+        _V10vcore_Df32vector__length))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D617.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Du16vector))) {
+        _V10vcore_Ds32vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D618.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Du16vector_Q))) {
+        _V10vcore_Ds32vector_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D619.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dmake__u16vector))) {
+        _V10vcore_Dmake__s32vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D620.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dlist___Gu16vector))) {
+        _V10vcore_Dlist___Gs32vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D621.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Du16vector__ref))) {
+        _V10vcore_Ds32vector__ref))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D622.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Du16vector__set_B))) {
+        _V10vcore_Ds32vector__set_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D623.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Du16vector__length))) {
+        _V10vcore_Ds32vector__length))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D624.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds16vector))) {
+        _V10vcore_Du16vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D625.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds16vector_Q))) {
+        _V10vcore_Du16vector_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D626.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dmake__s16vector))) {
+        _V10vcore_Dmake__u16vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D627.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dlist___Gs16vector))) {
+        _V10vcore_Dlist___Gu16vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D628.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds16vector__ref))) {
+        _V10vcore_Du16vector__ref))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D629.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds16vector__set_B))) {
+        _V10vcore_Du16vector__set_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D630.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds16vector__length))) {
+        _V10vcore_Du16vector__length))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D631.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Du8vector))) {
+        _V10vcore_Ds16vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D632.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Du8vector_Q))) {
+        _V10vcore_Ds16vector_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D633.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dmake__u8vector))) {
+        _V10vcore_Dmake__s16vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D634.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dlist___Gu8vector))) {
+        _V10vcore_Dlist___Gs16vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D635.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Du8vector__ref))) {
+        _V10vcore_Ds16vector__ref))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D636.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Du8vector__set_B))) {
+        _V10vcore_Ds16vector__set_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D637.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Du8vector__length))) {
+        _V10vcore_Ds16vector__length))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D638.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds8vector))) {
+        _V10vcore_Du8vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D639.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds8vector_Q))) {
+        _V10vcore_Du8vector_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D640.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dmake__s8vector))) {
+        _V10vcore_Dmake__u8vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D641.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dlist___Gs8vector))) {
+        _V10vcore_Dlist___Gu8vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D642.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds8vector__ref))) {
+        _V10vcore_Du8vector__ref))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D643.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds8vector__set_B))) {
+        _V10vcore_Du8vector__set_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D644.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ds8vector__length))) {
+        _V10vcore_Du8vector__length))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D645.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dread__u8vector))) {
+        _V10vcore_Ds8vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D646.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Drecord))) {
+        _V10vcore_Ds8vector_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D647.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Drecord__ref))) {
+        _V10vcore_Dmake__s8vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D648.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Drecord__set_B))) {
+        _V10vcore_Dlist___Gs8vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D649.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Drecord__length))) {
+        _V10vcore_Ds8vector__ref))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D650.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dmake__hash__table))) {
+        _V10vcore_Ds8vector__set_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D651.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dhash__table__equivalence__function))) {
+        _V10vcore_Ds8vector__length))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D652.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dhash__table__hash__function))) {
+        _V10vcore_Dread__u8vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D653.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dhash__table__vector))) {
+        _V10vcore_Drecord))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D654.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dhash__table__ref))) {
+        _V10vcore_Drecord__ref))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D655.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dhash__table__set_B))) {
+        _V10vcore_Drecord__set_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D656.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dhash__table__delete_B))) {
+        _V10vcore_Drecord__length))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D657.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dmake__string))) {
+        _V10vcore_Dmake__hash__table))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D658.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dsubstring))) {
+        _V10vcore_Dhash__table__equivalence__function))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D659.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dstring__copy_B))) {
+        _V10vcore_Dhash__table__hash__function))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D660.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dstring__ref))) {
+        _V10vcore_Dhash__table__vector))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D661.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dstring__set_B))) {
+        _V10vcore_Dhash__table__ref))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D662.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dstring__length))) {
+        _V10vcore_Dhash__table__set_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D663.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dstring___Gsymbol))) {
+        _V10vcore_Dhash__table__delete_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D664.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dstring___Gnumber))) {
+        _V10vcore_Dmake__string))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D665.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dsymbol___Gstring))) {
+        _V10vcore_Dsubstring))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D666.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dgensym))) {
+        _V10vcore_Dstring__copy_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D667.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dchar__integer))) {
+        _V10vcore_Dstring__ref))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D668.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dinteger___Gchar))) {
+        _V10vcore_Dstring__set_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D669.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dstdin___Gport))) {
+        _V10vcore_Dstring__length))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D670.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dstdout___Gport))) {
+        _V10vcore_Dstring___Gsymbol))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D671.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dstderr___Gport))) {
+        _V10vcore_Dstring___Gnumber))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D672.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ddup__stdin))) {
+        _V10vcore_Dsymbol___Gstring))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D673.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ddup__stdout))) {
+        _V10vcore_Dgensym))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D674.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ddup__stderr))) {
+        _V10vcore_Dchar__integer))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D675.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dopen__input__stream))) {
+        _V10vcore_Dinteger___Gchar))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D676.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dopen__output__stream))) {
+        _V10vcore_Dstdin___Gport))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D677.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dclose__stream))) {
+        _V10vcore_Dstdout___Gport))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D678.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dtty__port_Q))) {
+        _V10vcore_Dstderr___Gport))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D679.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dopen__output__string))) {
+        _V10vcore_Ddup__stdin))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D680.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dget__output__string))) {
+        _V10vcore_Ddup__stdout))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D681.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Deof__object_Q))) {
+        _V10vcore_Ddup__stderr))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D682.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dread__char))) {
+        _V10vcore_Dopen__input__stream))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D683.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dread__line))) {
+        _V10vcore_Dopen__output__stream))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D684.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dread__line2))) {
+        _V10vcore_Dclose__stream))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D685.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dread))) {
+        _V10vcore_Dtty__port_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D686.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ddisplay__word))) {
+        _V10vcore_Dopen__output__string))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D687.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dwrite))) {
+        _V10vcore_Dget__output__string))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D688.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dnewline))) {
+        _V10vcore_Deof__object_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D689.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Ddisplay__stdout))) {
+        _V10vcore_Dread__char))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D690.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dwrite__stdout))) {
+        _V10vcore_Dread__line))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D691.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dnewline__stdout))) {
+        _V10vcore_Dread__line2))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D692.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dset__finalizer_B))) {
+        _V10vcore_Dread))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D693.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dhas__finalizer_Q))) {
+        _V10vcore_Ddisplay__word))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D694.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dfinalize_B))) {
+        _V10vcore_Dwrite))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D695.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dgarbage__collect))) {
+        _V10vcore_Dnewline))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D696.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dyield__to__host))) {
+        _V10vcore_Ddisplay__stdout))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D697.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dyield__to__host__major))) {
+        _V10vcore_Dwrite__stdout))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D698.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dsystem))) {
+        _V10vcore_Dnewline__stdout))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D699.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dopen__input__process))) {
+        _V10vcore_Dset__finalizer_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D700.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dopen__output__process))) {
+        _V10vcore_Dhas__finalizer_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D701.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dcommand__line))) {
+        _V10vcore_Dfinalize_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D702.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dregister__sigint))) {
+        _V10vcore_Dgarbage__collect))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D703.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dmake__random))) {
+        _V10vcore_Dyield__to__host))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D704.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Drandom__copy))) {
+        _V10vcore_Dyield__to__host__major))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D705.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Drandom__sample_B))) {
+        _V10vcore_Dsystem))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D706.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Drandom__sample__bounded_B))) {
+        _V10vcore_Dopen__input__process))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D707.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Drandom__sample__float_B))) {
+        _V10vcore_Dopen__output__process))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D708.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Drandom__advance_B))) {
+        _V10vcore_Dcommand__line))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D709.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dfiber__fork__list))) {
+        _V10vcore_Dregister__sigint))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D710.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dasync))) {
+        _V10vcore_Dmake__random))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D711.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dawait))) {
+        _V10vcore_Drandom__copy))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D712.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Drealpath))) {
+        _V10vcore_Drandom__sample_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D713.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dmake__temporary__file))) {
+        _V10vcore_Drandom__sample__bounded_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D714.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Daccess))) {
+        _V10vcore_Drandom__sample__float_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D715.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dcurrent__jiffy))) {
+        _V10vcore_Drandom__advance_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D716.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Djiffies__per__second))) {
+        _V10vcore_Dfiber__fork__list))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D717.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbitwise__not))) {
+        _V10vcore_Dasync))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D718.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbitwise__ior))) {
+        _V10vcore_Dawait))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D719.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbitwise__xor))) {
+        _V10vcore_Drealpath))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D720.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbitwise__and))) {
+        _V10vcore_Dmake__temporary__file))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D721.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbitwise__xnor))) {
+        _V10vcore_Daccess))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D722.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbitwise__nand))) {
+        _V10vcore_Dcurrent__jiffy))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D723.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbitwise__nor))) {
+        _V10vcore_Djiffies__per__second))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D724.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbitwise__andc1))) {
+        _V10vcore_Dbitwise__not))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D725.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbitwise__andc2))) {
+        _V10vcore_Dbitwise__ior))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D726.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbitwise__orc1))) {
+        _V10vcore_Dbitwise__xor))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D727.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbitwise__orc2))) {
+        _V10vcore_Dbitwise__and))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D728.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Darithmetic__shift))) {
+        _V10vcore_Dbitwise__xnor))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D729.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
-        _V10vcore_Dbit__count))) {
+        _V10vcore_Dbitwise__nand))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodePointer(&_V10_Dstring_D730.sym, VPOINTER_OTHER));
 } else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        statics->up->vars[1],
+        _V10vcore_Dbitwise__nor))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodePointer(&_V10_Dstring_D731.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        statics->up->vars[1],
+        _V10vcore_Dbitwise__andc1))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodePointer(&_V10_Dstring_D732.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        statics->up->vars[1],
+        _V10vcore_Dbitwise__andc2))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodePointer(&_V10_Dstring_D733.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        statics->up->vars[1],
+        _V10vcore_Dbitwise__orc1))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodePointer(&_V10_Dstring_D734.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        statics->up->vars[1],
+        _V10vcore_Dbitwise__orc2))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodePointer(&_V10_Dstring_D735.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        statics->up->vars[1],
+        _V10vcore_Darithmetic__shift))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodePointer(&_V10_Dstring_D736.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        statics->up->vars[1],
+        _V10vcore_Dbit__count))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+      VEncodePointer(&_V10_Dstring_D737.sym, VPOINTER_OTHER));
+} else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
+}
 }
 }
 }
@@ -4823,419 +4878,419 @@ void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name(VRuntime * runtime, VE
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.inexact) ((bruijn ##.k.302 0 0) (##string ##.string.529)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.exact) ((bruijn ##.k.302 0 0) (##string ##.string.530)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.+) ((bruijn ##.k.302 0 0) (##string ##.string.531)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.-) ((bruijn ##.k.302 0 0) (##string ##.string.532)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.*) ((bruijn ##.k.302 0 0) (##string ##.string.533)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore./) ((bruijn ##.k.302 0 0) (##string ##.string.534)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.cmp) ((bruijn ##.k.302 0 0) (##string ##.string.535)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.<=) ((bruijn ##.k.302 0 0) (##string ##.string.536)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.<) ((bruijn ##.k.302 0 0) (##string ##.string.537)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.=) ((bruijn ##.k.302 0 0) (##string ##.string.538)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.>=) ((bruijn ##.k.302 0 0) (##string ##.string.539)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.>) ((bruijn ##.k.302 0 0) (##string ##.string.540)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.quotient) ((bruijn ##.k.302 0 0) (##string ##.string.541)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.remainder) ((bruijn ##.k.302 0 0) (##string ##.string.542)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.null?) ((bruijn ##.k.302 0 0) (##string ##.string.543)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.pair?) ((bruijn ##.k.302 0 0) (##string ##.string.544)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.record?) ((bruijn ##.k.302 0 0) (##string ##.string.545)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.vector?) ((bruijn ##.k.302 0 0) (##string ##.string.546)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.hash-table?) ((bruijn ##.k.302 0 0) (##string ##.string.547)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.procedure?) ((bruijn ##.k.302 0 0) (##string ##.string.548)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.blob?) ((bruijn ##.k.302 0 0) (##string ##.string.549)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.symbol?) ((bruijn ##.k.302 0 0) (##string ##.string.550)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.string?) ((bruijn ##.k.302 0 0) (##string ##.string.551)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.int?) ((bruijn ##.k.302 0 0) (##string ##.string.552)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.double?) ((bruijn ##.k.302 0 0) (##string ##.string.553)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.char?) ((bruijn ##.k.302 0 0) (##string ##.string.554)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.void?) ((bruijn ##.k.302 0 0) (##string ##.string.555)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.nullptr?) ((bruijn ##.k.302 0 0) (##string ##.string.556)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.foreign-pointer?) ((bruijn ##.k.302 0 0) (##string ##.string.557)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.eq?) ((bruijn ##.k.302 0 0) (##string ##.string.558)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.symbol=?) ((bruijn ##.k.302 0 0) (##string ##.string.559)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.blob=?) ((bruijn ##.k.302 0 0) (##string ##.string.560)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.eqv?) ((bruijn ##.k.302 0 0) (##string ##.string.558)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.not) ((bruijn ##.k.302 0 0) (##string ##.string.561)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.get-dynamics) ((bruijn ##.k.302 0 0) (##string ##.string.562)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.push-dynamic) ((bruijn ##.k.302 0 0) (##string ##.string.563)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.pop-dynamic) ((bruijn ##.k.302 0 0) (##string ##.string.564)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.get-exception-handler) ((bruijn ##.k.302 0 0) (##string ##.string.565)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.push-exception-handler) ((bruijn ##.k.302 0 0) (##string ##.string.566)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.pop-exception-handler) ((bruijn ##.k.302 0 0) (##string ##.string.567)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.raise) ((bruijn ##.k.302 0 0) (##string ##.string.568)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.next) ((bruijn ##.k.302 0 0) (##string ##.string.569)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.call/cc) ((bruijn ##.k.302 0 0) (##string ##.string.570)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.call-with-values) ((bruijn ##.k.302 0 0) (##string ##.string.571)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.apply) ((bruijn ##.k.302 0 0) (##string ##.string.572)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.apply-cps) ((bruijn ##.k.302 0 0) (##string ##.string.573)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.abort) ((bruijn ##.k.302 0 0) (##string ##.string.574)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.exit) ((bruijn ##.k.302 0 0) (##string ##.string.575)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.define-global) ((bruijn ##.k.302 0 0) (##string ##.string.576)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.set-global!) ((bruijn ##.k.302 0 0) (##string ##.string.577)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.function) ((bruijn ##.k.302 0 0) (##string ##.string.578)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.function3) ((bruijn ##.k.302 0 0) (##string ##.string.579)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.set-declare!) ((bruijn ##.k.302 0 0) (##string ##.string.580)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.define) ((bruijn ##.k.302 0 0) (##string ##.string.576)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.multidefine) ((bruijn ##.k.302 0 0) (##string ##.string.581)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.lookup-library) ((bruijn ##.k.302 0 0) (##string ##.string.582)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.make-import) ((bruijn ##.k.302 0 0) (##string ##.string.583)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.load-library) ((bruijn ##.k.302 0 0) (##string ##.string.584)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.unload-library) ((bruijn ##.k.302 0 0) (##string ##.string.585)) ((close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k6) (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.cons)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+  // (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.inexact) ((bruijn ##.k.307 0 0) (##string ##.string.535)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.exact) ((bruijn ##.k.307 0 0) (##string ##.string.536)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.+) ((bruijn ##.k.307 0 0) (##string ##.string.537)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.-) ((bruijn ##.k.307 0 0) (##string ##.string.538)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.*) ((bruijn ##.k.307 0 0) (##string ##.string.539)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore./) ((bruijn ##.k.307 0 0) (##string ##.string.540)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.cmp) ((bruijn ##.k.307 0 0) (##string ##.string.541)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.<=) ((bruijn ##.k.307 0 0) (##string ##.string.542)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.<) ((bruijn ##.k.307 0 0) (##string ##.string.543)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.=) ((bruijn ##.k.307 0 0) (##string ##.string.544)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.>=) ((bruijn ##.k.307 0 0) (##string ##.string.545)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.>) ((bruijn ##.k.307 0 0) (##string ##.string.546)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.quotient) ((bruijn ##.k.307 0 0) (##string ##.string.547)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.remainder) ((bruijn ##.k.307 0 0) (##string ##.string.548)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.null?) ((bruijn ##.k.307 0 0) (##string ##.string.549)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.pair?) ((bruijn ##.k.307 0 0) (##string ##.string.550)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.record?) ((bruijn ##.k.307 0 0) (##string ##.string.551)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.vector?) ((bruijn ##.k.307 0 0) (##string ##.string.552)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.hash-table?) ((bruijn ##.k.307 0 0) (##string ##.string.553)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.procedure?) ((bruijn ##.k.307 0 0) (##string ##.string.554)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.blob?) ((bruijn ##.k.307 0 0) (##string ##.string.555)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.symbol?) ((bruijn ##.k.307 0 0) (##string ##.string.556)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.string?) ((bruijn ##.k.307 0 0) (##string ##.string.557)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.int?) ((bruijn ##.k.307 0 0) (##string ##.string.558)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.double?) ((bruijn ##.k.307 0 0) (##string ##.string.559)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.char?) ((bruijn ##.k.307 0 0) (##string ##.string.560)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.void?) ((bruijn ##.k.307 0 0) (##string ##.string.561)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.nullptr?) ((bruijn ##.k.307 0 0) (##string ##.string.562)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.foreign-pointer?) ((bruijn ##.k.307 0 0) (##string ##.string.563)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.eq?) ((bruijn ##.k.307 0 0) (##string ##.string.564)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.symbol=?) ((bruijn ##.k.307 0 0) (##string ##.string.565)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.blob=?) ((bruijn ##.k.307 0 0) (##string ##.string.566)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.eqv?) ((bruijn ##.k.307 0 0) (##string ##.string.564)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.not) ((bruijn ##.k.307 0 0) (##string ##.string.567)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.get-dynamics) ((bruijn ##.k.307 0 0) (##string ##.string.568)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.push-dynamic) ((bruijn ##.k.307 0 0) (##string ##.string.569)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.pop-dynamic) ((bruijn ##.k.307 0 0) (##string ##.string.570)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.get-exception-handler) ((bruijn ##.k.307 0 0) (##string ##.string.571)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.push-exception-handler) ((bruijn ##.k.307 0 0) (##string ##.string.572)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.pop-exception-handler) ((bruijn ##.k.307 0 0) (##string ##.string.573)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.raise) ((bruijn ##.k.307 0 0) (##string ##.string.574)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.next) ((bruijn ##.k.307 0 0) (##string ##.string.575)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.call/cc) ((bruijn ##.k.307 0 0) (##string ##.string.576)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.call-with-values) ((bruijn ##.k.307 0 0) (##string ##.string.577)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.apply) ((bruijn ##.k.307 0 0) (##string ##.string.578)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.apply-cps) ((bruijn ##.k.307 0 0) (##string ##.string.579)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.abort) ((bruijn ##.k.307 0 0) (##string ##.string.580)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.exit) ((bruijn ##.k.307 0 0) (##string ##.string.581)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.define-global) ((bruijn ##.k.307 0 0) (##string ##.string.582)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.set-global!) ((bruijn ##.k.307 0 0) (##string ##.string.583)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.function) ((bruijn ##.k.307 0 0) (##string ##.string.584)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.function3) ((bruijn ##.k.307 0 0) (##string ##.string.585)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.set-declare!) ((bruijn ##.k.307 0 0) (##string ##.string.586)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.define) ((bruijn ##.k.307 0 0) (##string ##.string.582)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.multidefine) ((bruijn ##.k.307 0 0) (##string ##.string.587)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.lookup-library) ((bruijn ##.k.307 0 0) (##string ##.string.588)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.make-import) ((bruijn ##.k.307 0 0) (##string ##.string.589)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.load-library) ((bruijn ##.k.307 0 0) (##string ##.string.590)) (if (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.unload-library) ((bruijn ##.k.307 0 0) (##string ##.string.591)) ((close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k6) (##inline ##vcore.eq? (bruijn ##.sym.13 0 1) '##vcore.cons)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
         _V10vcore_Dinexact))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D529.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        _var1,
-        _V10vcore_Dexact))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D530.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        _var1,
-        _V10vcore_D_P))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D531.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        _var1,
-        _V10vcore_D__))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D532.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        _var1,
-        _V10vcore_D_S))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D533.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        _var1,
-        _V10vcore_D_W))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D534.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        _var1,
-        _V10vcore_Dcmp))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D535.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_D_L_E))) {
+        _V10vcore_Dexact))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D536.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_D_L))) {
+        _V10vcore_D_P))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D537.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_D_E))) {
+        _V10vcore_D__))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D538.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_D_G_E))) {
+        _V10vcore_D_S))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D539.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_D_G))) {
+        _V10vcore_D_W))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D540.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dquotient))) {
+        _V10vcore_Dcmp))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D541.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dremainder))) {
+        _V10vcore_D_L_E))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D542.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dnull_Q))) {
+        _V10vcore_D_L))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D543.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dpair_Q))) {
+        _V10vcore_D_E))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D544.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Drecord_Q))) {
+        _V10vcore_D_G_E))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D545.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dvector_Q))) {
+        _V10vcore_D_G))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D546.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dhash__table_Q))) {
+        _V10vcore_Dquotient))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D547.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dprocedure_Q))) {
+        _V10vcore_Dremainder))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D548.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dblob_Q))) {
+        _V10vcore_Dnull_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D549.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dsymbol_Q))) {
+        _V10vcore_Dpair_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D550.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dstring_Q))) {
+        _V10vcore_Drecord_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D551.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dint_Q))) {
+        _V10vcore_Dvector_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D552.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Ddouble_Q))) {
+        _V10vcore_Dhash__table_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D553.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dchar_Q))) {
+        _V10vcore_Dprocedure_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D554.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dvoid_Q))) {
+        _V10vcore_Dblob_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D555.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dnullptr_Q))) {
+        _V10vcore_Dsymbol_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D556.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dforeign__pointer_Q))) {
+        _V10vcore_Dstring_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D557.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Deq_Q))) {
+        _V10vcore_Dint_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D558.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dsymbol_E_Q))) {
+        _V10vcore_Ddouble_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D559.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dblob_E_Q))) {
+        _V10vcore_Dchar_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D560.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Deqv_Q))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D558.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        _var1,
-        _V10vcore_Dnot))) {
+        _V10vcore_Dvoid_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D561.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dget__dynamics))) {
+        _V10vcore_Dnullptr_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D562.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dpush__dynamic))) {
+        _V10vcore_Dforeign__pointer_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D563.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dpop__dynamic))) {
+        _V10vcore_Deq_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D564.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dget__exception__handler))) {
+        _V10vcore_Dsymbol_E_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D565.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dpush__exception__handler))) {
+        _V10vcore_Dblob_E_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D566.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dpop__exception__handler))) {
+        _V10vcore_Deqv_Q))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodePointer(&_V10_Dstring_D564.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Dnot))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D567.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Draise))) {
+        _V10vcore_Dget__dynamics))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D568.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dnext))) {
+        _V10vcore_Dpush__dynamic))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D569.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dcall_Wcc))) {
+        _V10vcore_Dpop__dynamic))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D570.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dcall__with__values))) {
+        _V10vcore_Dget__exception__handler))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D571.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dapply))) {
+        _V10vcore_Dpush__exception__handler))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D572.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dapply__cps))) {
+        _V10vcore_Dpop__exception__handler))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D573.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dabort))) {
+        _V10vcore_Draise))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D574.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dexit))) {
+        _V10vcore_Dnext))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D575.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Ddefine__global))) {
+        _V10vcore_Dcall_Wcc))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D576.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dset__global_B))) {
+        _V10vcore_Dcall__with__values))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D577.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dfunction))) {
+        _V10vcore_Dapply))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D578.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dfunction3))) {
+        _V10vcore_Dapply__cps))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D579.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dset__declare_B))) {
+        _V10vcore_Dabort))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D580.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Ddefine))) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D576.sym, VPOINTER_OTHER));
-} else {
-if(VDecodeBool(
-VInlineEq2(runtime,
-        _var1,
-        _V10vcore_Dmultidefine))) {
+        _V10vcore_Dexit))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D581.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dlookup__library))) {
+        _V10vcore_Ddefine__global))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D582.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dmake__import))) {
+        _V10vcore_Dset__global_B))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D583.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dload__library))) {
+        _V10vcore_Dfunction))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D584.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
-        _V10vcore_Dunload__library))) {
+        _V10vcore_Dfunction3))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
       VEncodePointer(&_V10_Dstring_D585.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Dset__declare_B))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodePointer(&_V10_Dstring_D586.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Ddefine))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodePointer(&_V10_Dstring_D582.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Dmultidefine))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodePointer(&_V10_Dstring_D587.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Dlookup__library))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodePointer(&_V10_Dstring_D588.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Dmake__import))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodePointer(&_V10_Dstring_D589.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Dload__library))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodePointer(&_V10_Dstring_D590.sym, VPOINTER_OTHER));
+} else {
+if(VDecodeBool(
+VInlineEq2(runtime,
+        _var1,
+        _V10vcore_Dunload__library))) {
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
+      VEncodePointer(&_V10_Dstring_D591.sym, VPOINTER_OTHER));
 } else {
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k6, self)), 1,
       VInlineEq2(runtime,
@@ -5309,7 +5364,7 @@ void _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k10(VRuntime * runtime,
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.518 1 0) ((bruijn ##.k.519 0 0) (bruijn ##.p.518 1 0)) ((bruijn ##.k.519 0 0) (##inline ##vcore.eq? (bruijn ##.sym.15 2 1) '##vcore.qcons)))
+  // (if (bruijn ##.p.524 1 0) ((bruijn ##.k.525 0 0) (bruijn ##.p.524 1 0)) ((bruijn ##.k.525 0 0) (##inline ##vcore.eq? (bruijn ##.sym.15 2 1) '##vcore.qcons)))
 if(VDecodeBool(
 statics->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
@@ -5329,25 +5384,25 @@ void _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k11(VRuntime * runtime,
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.p.515 0 0) ((bruijn ##.k.510 2 0) (##string ##.string.735)) (if (##inline ##vcore.eq? (bruijn ##.sym.15 2 1) '##vcore.car) ((bruijn ##.k.510 2 0) (##string ##.string.736)) (if (##inline ##vcore.eq? (bruijn ##.sym.15 2 1) '##vcore.cdr) ((bruijn ##.k.510 2 0) (##string ##.string.737)) ((bruijn ##.k.510 2 0) #f))))
+  // (if (bruijn ##.p.521 0 0) ((bruijn ##.k.516 2 0) (##string ##.string.742)) (if (##inline ##vcore.eq? (bruijn ##.sym.15 2 1) '##vcore.car) ((bruijn ##.k.516 2 0) (##string ##.string.743)) (if (##inline ##vcore.eq? (bruijn ##.sym.15 2 1) '##vcore.cdr) ((bruijn ##.k.516 2 0) (##string ##.string.744)) ((bruijn ##.k.516 2 0) #f))))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D735.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D742.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
         _V10vcore_Dcar))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D736.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D743.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         statics->up->vars[1],
         _V10vcore_Dcdr))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D737.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D744.sym, VPOINTER_OTHER));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
       VEncodeBool(false));
@@ -5384,34 +5439,34 @@ void _V50_V0vanity_V0intrinsics_V0lookup__inline__name(VRuntime * runtime, VEnv 
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (if (##inline ##vcore.eq? (bruijn ##.sym.15 0 1) '##vcore.null?) ((bruijn ##.k.510 0 0) (##string ##.string.731)) (if (##inline ##vcore.eq? (bruijn ##.sym.15 0 1) '##vcore.pair?) ((bruijn ##.k.510 0 0) (##string ##.string.732)) (if (##inline ##vcore.eq? (bruijn ##.sym.15 0 1) '##vcore.not) ((bruijn ##.k.510 0 0) (##string ##.string.733)) (if (##inline ##vcore.eq? (bruijn ##.sym.15 0 1) '##vcore.eq?) ((bruijn ##.k.510 0 0) (##string ##.string.734)) ((close _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k9) (##inline ##vcore.eq? (bruijn ##.sym.15 0 1) '##vcore.cons))))))
+  // (if (##inline ##vcore.eq? (bruijn ##.sym.15 0 1) '##vcore.null?) ((bruijn ##.k.516 0 0) (##string ##.string.738)) (if (##inline ##vcore.eq? (bruijn ##.sym.15 0 1) '##vcore.pair?) ((bruijn ##.k.516 0 0) (##string ##.string.739)) (if (##inline ##vcore.eq? (bruijn ##.sym.15 0 1) '##vcore.not) ((bruijn ##.k.516 0 0) (##string ##.string.740)) (if (##inline ##vcore.eq? (bruijn ##.sym.15 0 1) '##vcore.eq?) ((bruijn ##.k.516 0 0) (##string ##.string.741)) ((close _V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k9) (##inline ##vcore.eq? (bruijn ##.sym.15 0 1) '##vcore.cons))))))
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
         _V10vcore_Dnull_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D731.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D738.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
         _V10vcore_Dpair_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D732.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D739.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
         _V10vcore_Dnot))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D733.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D740.sym, VPOINTER_OTHER));
 } else {
 if(VDecodeBool(
 VInlineEq2(runtime,
         _var1,
         _V10vcore_Deq_Q))) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, _var0), 1,
-      VEncodePointer(&_V10_Dstring_D734.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D741.sym, VPOINTER_OTHER));
 } else {
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name_V0k9, self)), 1,
       VInlineEq2(runtime,
@@ -5434,7 +5489,7 @@ static void _V0vanity_V0intrinsics_V20_V0lambda3(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##letrec (vanity intrinsics) 4 ((close "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic" "_V60_V0vanity_V0intrinsics") (close "_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q" "_V60_V0vanity_V0intrinsics") (close "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name" "_V60_V0vanity_V0intrinsics") (close "_V50_V0vanity_V0intrinsics_V0lookup__inline__name" "_V60_V0vanity_V0intrinsics")) ((bruijn ##.k.22 1 0) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-inline-name (bruijn ##.lookup-inline-name.8 0 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-intrinsic-name (bruijn ##.lookup-intrinsic-name.7 0 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-intrinsic (bruijn ##.lookup-intrinsic.5 0 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'is-basic-intrinsic? (bruijn ##.is-basic-intrinsic?.6 0 1)) '()))))))
+  // (##letrec (vanity intrinsics) 4 ((close "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic" (vanity intrinsics)) (close "_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q" (vanity intrinsics)) (close "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name" (vanity intrinsics)) (close "_V50_V0vanity_V0intrinsics_V0lookup__inline__name" (vanity intrinsics))) ((bruijn ##.k.22 1 0) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-inline-name (bruijn ##.lookup-inline-name.8 0 3)) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-intrinsic-name (bruijn ##.lookup-intrinsic-name.7 0 2)) (##inline ##vcore.cons (##inline ##vcore.cons 'lookup-intrinsic (bruijn ##.lookup-intrinsic.5 0 0)) (##inline ##vcore.cons (##inline ##vcore.cons 'is-basic-intrinsic? (bruijn ##.is-basic-intrinsic?.6 0 1)) '()))))))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[4]; } container;
