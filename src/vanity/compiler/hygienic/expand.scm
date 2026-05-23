@@ -4,19 +4,13 @@
 
   ; WHAT REMAINS FOR A FUNCTIONABLE CORE
 
-  ; define-values toplevel
-  ; define-constants toplevel
-
   ; define-library
   ; import
   ; reimport
   ; ##vcore.declare
 
-  ; ##intrinsic
-  ; ##basic-intrinsic
-
-  ; foreign-function
-  ; foreign-import
+  ; ##foreign-function
+  ; ##foreign-import
 
   ; cond-expand
   ; features
@@ -33,13 +27,14 @@
   (define (literal-identifier=? a b)
     (eq? (get-syntax-data a) (get-syntax-data b)))
 
+  (define free-vars-allowed (make-parameter #t))
 
   (define (add-binding! id binding)
     ; We want to avoid the global scope to avoid cluttering it.
     ; It's not a correctness problem but is a perf one, and does result in a leak.
     (let* ((scopes (get-syntax-scopes id))
            (scope (car scopes))
-           (scope (if (and (eq? scope global-scope) (pair? (cdr scopes))) (cadr scopes) scope)))
+           (scope (if (and (eq? scope (global-scope)) (pair? (cdr scopes))) (cadr scopes) scope)))
       (set-scope-bindings! scope (cons (cons id binding) (get-scope-bindings scope)))))
 
   (define (datum->syntax-object template v)
@@ -166,22 +161,15 @@
       (##vcore.append . ,syntax-append)
       ))
 
-  ; begin - done
-  ; define - done
-  ; lambda - missing internal defines + implied begin
-  ; let-syntax - missing internal defines + implied begin
-  ; define-syntax - done
-  ; if - done
-  ; quote - done
-  ; syntax - done
+  (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax define-syntax quote syntax if and or set! ##intrinsic ##basic-intrinsic ##vcore.declare export import))
+  (define (init-global-forms)
+    (for-each (lambda (sym) (add-binding! (make-syntax sym (list (global-scope))) sym)) (append special-forms global-forms)))
+  (init-global-forms)
 
-  ; case-lambda
-
-  ; let - missing internal defines + implied begin
-  ; quasiquote - done?
-  (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax define-syntax quote syntax if and or set!))
-  (define global-primitives '(datum->syntax-object syntax-object->datum get-syntax-data null? list cons car cdr caar cadr cdar cddr map))
-  (for-each (lambda (sym) (add-binding! (make-syntax sym (list global-scope)) sym)) (append special-forms global-forms global-primitives))
+  (define (alist-copy alist)
+    (map (lambda (e) (cons (car e) (cdr e))) alist))
+  (define (fresh-toplevel-expand-env) (cons (cons #f #f) (alist-copy global-form-env)))
+  (define toplevel-expand-env (make-parameter (fresh-toplevel-expand-env)))
 
 
   (define variable (generate-symbol 'variable))
@@ -190,8 +178,9 @@
     (define binding (resolve-identifier stx))
     (cond
       ; free variable: we let them through because toplevel variables are free
-      ((not binding) stx)
-      ((member binding global-primitives) stx)
+      ((not binding)
+       (unless (free-vars-allowed) (compiler-error "free variable" (get-syntax-data stx)))
+       stx)
       ((member binding special-forms) (error "bad syntax" stx))
       (else
         (define v (assoc binding env))
@@ -199,7 +188,7 @@
           ((not v)
            (error "not in context" (get-syntax-data stx)))
           ((eq? (cdr v) variable) stx)
-          (else (error "bad syntax" stx))))))
+          (else (error "bad syntax" (get-syntax-data stx)))))))
 
 
   (define (resolve stx)
@@ -212,7 +201,7 @@
       ((identifier? stx)
        (or (resolve-identifier stx)
            ; free variable: we let them through because toplevel variables are free
-           (get-syntax-data stx)))
+           (and (free-vars-allowed) (get-syntax-data stx))))
       ((symbol? stx) (error "resolve: naked symbol in syntax" stx))
       ; vectors are self quoting. same behavior as quote which is further below
       ((syntax-vector? stx) (syntax-object->datum stx))
@@ -235,10 +224,10 @@
           (else (syntax-map resolve stx))))))
 
   (define (introduced-identifier x sc)
-    (make-syntax x (list global-scope sc)))
+    (make-syntax x (list (global-scope) sc)))
 
   (define (eval-for-syntax-binding rhs)
-    (define expanded (resolve (expand-impl rhs toplevel-expand-env)))
+    (define expanded (resolve (expand-impl rhs (toplevel-expand-env))))
     (eval expanded macro-expand-env))
 
   (define (expand-let-syntax stx env)
@@ -283,7 +272,7 @@
             (for-each
               (lambda (e)
                 (unless (constant-expr? (syntax-cadr e))
-                  (compiler-error "Not a constant expression" `(define-constant . ,(syntax-object->datum e)))))
+                  (compiler-error "expand: ot a constant expression" `(define-constant . ,(syntax-object->datum e)))))
               constants)
             expr)))
     (define (finish defines constants body)
@@ -453,13 +442,13 @@
       ; I am 98% certain we can avoid gensym for toplevel
       ;(set! binding (get-syntax-data var))
       (set! binding
-        (if (equal? (list global-scope) (get-syntax-scopes var))
+        (if (equal? (list (global-scope)) (get-syntax-scopes var))
             (get-syntax-data var)
             (generate-symbol (get-syntax-data var))))
-      (let* ((bindings (get-scope-bindings global-scope)))
-        (set-scope-bindings! global-scope (cons (cons var binding) bindings)))
+      (let* ((bindings (get-scope-bindings (global-scope))))
+        (set-scope-bindings! (global-scope) (cons (cons var binding) bindings)))
       ; a define is still in the toplevel scope.
-      (set! toplevel-expand-env (cons (cons binding value) toplevel-expand-env)))
+      (set-cdr! (toplevel-expand-env) (cons (cons binding value) (cdr (toplevel-expand-env)))))
     binding)
 
   (define (expand-toplevel-define stx)
@@ -468,7 +457,7 @@
     (define val (syntax-car (syntax-cddr stx)))
 
     (add-toplevel-binding! var variable)
-    `(,define-id ,var ,(expand-impl val toplevel-expand-env)))
+    (##global-quasisyntax (define ,var ,(expand-impl val (toplevel-expand-env)))))
 
   (define (syntax-proper-list? xs)
     (cond ((syntax-null? xs) #t)
@@ -524,9 +513,97 @@
            (format (current-error-port) "\e[1;31merror while compiling macro:\e[0m ~A~N" (get-syntax-data var))
            (raise exception)))
         (eval-for-syntax-binding raw-val)))
-    (set-cdr! (assq binding toplevel-expand-env) val)
+    (set-cdr! (assq binding (toplevel-expand-env)) val)
     '())
 
+  (define (export-rename e)
+    (if (identifier? e)
+        e
+        (begin
+          (unless (and (syntax-pair? e) (syntax-pair? (cdr e)) (eq? (get-syntax-data (syntax-car e)) 'rename))
+            (compiler-error "malformed exported variable" (syntax-object->datum e)))
+          (syntax-cadr e))))
+
+  #;(define (expand-define-library stx env)
+    (define libname (syntax-cadr lib))
+
+    (define (make-library-output exports)
+      (expand-impl (##global-quasisyntax (quasiquote ,(map (lambda (e) (cons e (list (global-quasisyntax unquote) e))) exports)))))
+
+    (define exports '())
+    (define imports '())
+    (define constant-imports '())
+    (define mangled-imports '())
+
+    (define declares '())
+    (define defines '())
+    (define constants '())
+    (define just-defines #t)
+
+    (define (expand-library-expr expr)
+      (cond
+        ((and (syntax-pair? expr) (identifier? (syntax-car expr)))
+         (case (resolve-identifier (syntax-car expr)) #;(get-syntax-data expr)
+           ((export)
+            (set! exports (append (syntax-map export-rename (syntax-cdr expr)) exports))
+            (list))
+           ((define)
+            (let ((def (desugar-define stx)))
+              (cond 
+                ((find-exact-binding (syntax-cadr expr))
+                 (set! just-defines #f)
+                 (list (##global-quasisyntax (set! ,(syntax-cadr def) ,(expand-impl (syntax-caddr def) env)))))
+                ((or (constant-expr? (syntax-caddr expr))
+                     (lambda-expr? (syntax-caddr expr)))
+                 (set! defines (cons (expand-toplevel-define stx) defines))
+                 (list))
+                (else
+                 (set! just-defines #f)
+                 (set! defines (cons (expand-toplevel-define (list (syntax-car stx) (syntax-cadr stx) #void)) defines))
+                 (list (##global-quasisyntax (set! ,(syntax-cadr def) ,(expand-impl (syntax-caddr def) env))))))))
+        ))
+        (else
+          (set! just-defines #f)
+          (list (expand-impl expr env)))))
+    (define (qualify defines all-defines body)
+      #f)
+    #;(define basic-library
+      (let* ((expanded (syntax-map expand-library-expr (syntax-cddr lib)))
+             (body (append (apply append expanded)
+                           (list (make-library-outputs exports))))
+             (defines (if #f (qualify defines defines body) defines)))
+        (##global-quasisyntax
+          (lambda ()
+            (letrec ,(map syntax-cdr defines)
+               ,(beginify body))))))
+    ;(define free-vars (free-variables basic-library))
+
+    (define unbound-vars '())
+    (define constant-vars '())
+    (define imported-vars '())
+
+    (register-library-interface! (header-from-library (syntax-object->datum lib) (library-paths)))
+    (let ((libname (mangle-library (syntax-object->datum libname))))
+      (##global-quasisyntax
+        (,@(reverse declares)
+         (##vcore.declare ,libname
+           (lambda ()
+             ,((lambda (x) x)
+               (global-quasisyntax
+                 (##vcore.call-with-values
+                   (lambda ()
+                     ((##intrinsic "VMultiImport" 3 +)
+                      ,libname
+                      (##vcore.vector
+                        . ,(map (lambda (i) (##global-quasisyntax (##vcore.load-library ,i))) mangled-imports))
+                      . ,(map (lambda (f) (list (##global-quasisyntax quote) (cdr f))) imported-vars)))
+                   (lambda ,(map car imported-vars)
+                     ((lambda ,(map car constant-vars)
+                        ,(fold-right
+                           (lambda (e acc) (##global-quasisyntax (begin ,e ,acc)))
+                           (car (take-right (cddr basic-library) 1))
+                           (drop-right (cddr basic-library) 1)))
+                      . ,(map cdr constant-vars))))))))))))
   (define (apply-transformer name t stx)
     (define intro-scope (make-scope))
     ; paint the macro color everything that isn't introduced
@@ -611,6 +688,7 @@
                    (##global-quasisyntax
                      ((##vcore.setter ,(syntax-car place)) ,@(syntax-cdr place) ,(syntax-caddr stx)))
                    env)))))
+      ((##intrinsic ##basic-intrinsic) stx)
       (else
         (define v (assoc binding env))
         (cond
@@ -632,7 +710,7 @@
        (expand-app stx env))))
   (define (expand-toplevel stx _)
     (cond
-      ((identifier? stx) (list (expand-identifier stx toplevel-expand-env)))
+      ((identifier? stx) (list (expand-identifier stx (toplevel-expand-env))))
       ((syntax-null? stx) (error "expand: stray () in program"))
       ; vectors are self quoting so handled here. quoted data just returns itself
       ; and other literals, like numbers, don't have syntaxhood. only symbols do.
@@ -645,22 +723,58 @@
           (append-map (cut expand-toplevel <> _) (syntax-cdr stx)))
          ((define)
           (list (expand-toplevel-define (desugar-define stx))))
+         ((define-constant)
+          (let ((def (desugar-define stx)))
+            (unless (constant-expr? (syntax-caddr stx))
+              (compiler-error "expand: ot a constant expression" (syntax-object->datum stx)))
+            (list (expand-toplevel-define def))))
+         ((define-values)
+          (define formals (syntax-cadr stx))
+          (define names (syntax-undot-list formals))
+          (define mangles (map (lambda (name) (make-syntax (generate-symbol 'tmp) (list (global-scope)))) names))
+          (expand-toplevel
+            (##global-quasisyntax
+              (begin
+                ,@(map (lambda (name) (##global-quasisyntax (define ,name #void))) names)
+                (##vcore.call-with-values
+                   (lambda () ,(syntax-caddr stx))
+                   (lambda
+                      ,(let loop ((formals formals) (mangles mangles))
+                         (cond
+                           ((syntax-pair? formals) (cons (car mangles) (loop (syntax-cdr formals) (cdr mangles))))
+                           ((syntax-null? formals) '())
+                           (else (car mangles))))
+                      #void
+                      ,@(map (lambda (name mangle) (##global-quasisyntax (set! ,name ,mangle))) names mangles)))))
+            #f))
          ((define-syntax)
           (expand-toplevel-define-syntax (desugar-define-syntax stx))
           '())
          ((import)
           ; No effect on expanders currently. global values are unmangled. and no macros to bind yet.
           (list stx))
+         ((##vcore.declare)
+          (parameterize ((toplevel-expand-env (fresh-toplevel-expand-env))
+                         (global-scope (make-scope))
+                         (free-vars-allowed #f))
+            (init-global-forms)
+            (list (list (syntax-car stx) (syntax-cadr stx) (expand-impl (syntax-caddr stx) (toplevel-expand-env))))))
+         #;((define-library)
+          (parameterize ((toplevel-expand-env (fresh-toplevel-expand-env))
+                         (global-scope (make-scope))
+                         #;(free-vars-allowed #f))
+            (init-global-forms)
+            (expand-define-library stx (toplevel-expand-env))))
          (else
           ; if a macro is evaluated, it returns a toplevel return, which is a list of expressions
           ; otherwise an expression is return which needs to be listified.
           ; call/cc to avoid double listification
           (call/cc
             (lambda (k)
-              (list (expand-id-application-form (lambda (x y) (k (expand-toplevel x y))) stx binding toplevel-expand-env))))
+              (list (expand-id-application-form (lambda (x y) (k (expand-toplevel x y))) stx binding (toplevel-expand-env)))))
           )))
       (else
-       (list (expand-app stx toplevel-expand-env)))))
+       (list (expand-app stx (toplevel-expand-env))))))
 
   (define (expand-syntax expr)
-    (map resolve (expand-toplevel (datum->syntax-object (make-syntax 'dummy (list global-scope)) expr) #f))))
+    (map resolve (expand-toplevel (datum->syntax-object (make-syntax 'dummy (list (global-scope))) expr) #f))))

@@ -21,7 +21,7 @@
   (define (make-scope)
     (make-scope-impl '()))
   (define-constant scope=? ##vcore.eq?)
-  (define global-scope (make-scope))
+  (define global-scope (make-parameter (make-scope)))
 
   ; we wrap syntax trees in this struct to defer flip operations
   (define-record-type syntax
