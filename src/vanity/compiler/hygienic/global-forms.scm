@@ -1,6 +1,6 @@
 (define-library (vanity compiler hygienic global-forms)
   (import (vanity core) (vanity list) (vanity compiler hygienic types))
-  (export global-identifier global-forms toplevel-expand-env)
+  (export global-identifier global-forms global-form-env)
 
   ; let loop
   ; let*
@@ -28,7 +28,7 @@
   ; do-loop
 
   (define (global-identifier expr)
-    (make-syntax expr (list global-scope)))
+    (make-syntax expr (list (global-scope))))
 
   (define (syntax-unpack x)
     (if (syntax? x)
@@ -118,7 +118,7 @@
  
 
   (define global-forms '(let quasiquote quasisyntax))
-  (define toplevel-expand-env
+  (define global-form-env
     `((let .  ,expand-let)
       (,'quasiquote . ,expand-quasiquote)
       (quasisyntax . ,expand-quasisyntax)))

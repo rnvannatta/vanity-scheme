@@ -555,7 +555,8 @@
        (let ((recordname (gensym name))
              (truepred (gensym pred)))
          `(begin
-            (define ,recordname (##vcore.cons ',(cons name field-names) '()))
+            (define ,recordname (##vcore.cons ',name ',field-names))
+            #;(define ,recordname (##vcore.cons ',(cons name field-names) '()))
             (define (,truepred x) (and (##vcore.record? x) (##vcore.eqv? (##vcore.record-ref x 0) ,recordname)))
             (define ,pred ,truepred)
             (define (,constructor . ,field-names) (##vcore.record ,recordname . ,field-names))
