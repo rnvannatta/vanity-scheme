@@ -979,7 +979,8 @@
       (('cute . noise) (compiler-error "malformed cute" `(cute . ,noise)))
 
       (('receive formals expr . body)
-       `(call-with-values (lambda () ,expr) (lambda ,formals . ,body)))
+       (expand-syntax
+         `(call-with-values (lambda () ,expr) (lambda ,formals . ,body))))
 
       (('do ((var init . step) ...)
             (test ret ...)
