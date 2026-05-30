@@ -187,8 +187,12 @@
 
 (define (handle-exception err)
   (parameterize ((current-output-port (current-error-port)))
-    (display "vsc: ")
-    (display err)
+    (printf "~A: " (car (command-line)))
+    (if (error-object? err)
+        (begin
+          (printf "\e[1;31m~A\e[0m: ~A: " (record-ref err 1) (error-object-message err))
+          (for-each (lambda (e) (printf "~A " e)) (error-object-irritants err)))
+        (display err))
     (newline)
     (exit 1)))
 
@@ -301,7 +305,7 @@
 ;;; RUN COMPILE: super messy
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(;with-exception-handler handle-exception
+(with-exception-handler handle-exception
   (lambda ()
     (define cc-files
       (if (or header? bytecode? transpile? expand?) (list out-file)

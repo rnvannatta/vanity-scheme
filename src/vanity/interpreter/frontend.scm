@@ -156,13 +156,20 @@
       (define is-tty? (and (not file) (##vcore.tty-port? (current-output-port))))
       (define first #t)
       (define restart #f)
+
       (define (handle-error err)
-        (if is-tty?
-            (begin
-              (printf "recovered from error: ~A~N" err)
-              (restart #f))
-            (begin
-              (error err))))
+        (parameterize ((current-output-port (current-error-port)))
+          (if is-tty?
+              (begin
+                (if (error-object? err)
+                    (begin
+                      (printf "recovered from \e[1;31m~A\e[0m: ~A: " (record-ref err 1) (error-object-message err))
+                      (for-each (lambda (e) (printf "~A " e)) (error-object-irritants err))
+                      (newline))
+                    (printf "recovered from error: ~A~N" err))
+                (restart #f))
+              (begin
+                (error err)))))
       (##vcore.register-sigint)
       (call/cc (lambda (k) (set! restart k)))
       ; FIXME too broad and a tad glitchy, need to just catch interrupts in this big net handler
