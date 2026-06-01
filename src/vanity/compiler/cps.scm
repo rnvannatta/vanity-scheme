@@ -673,9 +673,7 @@
         ; TODO account for cost with regards to ##inline cons
         ; but ##inline cons needs a rethinking tbh
         ((f k . xs)
-         (cond ((and inlining? (symbol? f) (lookup-inline-name f))
-                (optimize-apply `(,(optimize-atom k) (##inline ,f . ,(map optimize-atom xs)))))
-               ((and inlining? (or (and (symbol? f) (is-basic-intrinsic? f))
+         (cond ((and inlining? (or (and (symbol? f) (is-basic-intrinsic? f))
                                    (and (pair? f)
                                         (or
                                           (eqv? (car f) '##basic-intrinsic)
@@ -697,11 +695,6 @@
                               ,next-appl)))
                       (else
                         `(basic-block 1 ,reg ,appl))))))
-                #;(let ((reg (gensym "reg")))
-                  (add-ref! ref-table reg 1)
-                  `(basic-block 1
-                     (,reg (,f ,(map optimize-atom xs)))
-                     ,(optimize-apply `(,k ,reg))))
                (else (cons (optimize-atom f) (cons (optimize-atom k) (map optimize-atom xs))))))
         (else (compiler-error "optimize-apply: malformed application" expr))))
     (define (optimize-atom expr)

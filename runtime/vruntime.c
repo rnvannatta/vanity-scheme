@@ -2120,9 +2120,9 @@ static void VSetPair2(V_CORE_ARGS, bool bSetCar, VWORD k, VWORD pair, VWORD val)
   if(VStackOverflowNoInline(runtime)) {
     VGarbageCollect2Args((VFunc)(bSetCar ? VSetCar2 : VSetCdr2), runtime, statics, 3, argc, k, pair, val);
   } else {
-    if(VWordType(pair) != VPOINTER_PAIR) VErrorC(runtime, "%s: arg 1 not a pair\n", proc);
+    if(VWordType(pair) != VPOINTER_PAIR) VErrorC(runtime, "~Z: arg 1 not a pair: ~S\n", proc, pair);
     VPair * p = VDecodePair(pair);
-    if(p->base.flags & VFLAG_IMMUTABLE) VErrorC(runtime, "%s: pair is immutable", proc);
+    if(p->base.flags & VFLAG_IMMUTABLE) VErrorC(runtime, "~Z: pair is immutable: ~S", proc, pair);
 
     VTrackMutation(runtime, p, bSetCar ? &p->first : &p->rest, val);
     
