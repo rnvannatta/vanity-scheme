@@ -26,22 +26,7 @@
 (define-library (vanity intrinsics)
   (export lookup-inline-name lookup-intrinsic-name lookup-intrinsic is-basic-intrinsic?)
   (import (vanity core))
-  (define (lookup-inline-name sym)
-    (case sym
-      ; predicates
-      ((##vcore.null?) "VInlineNullP2")
-      ((##vcore.pair?) "VInlinePairP2")
-      ;((##vcore.symbol?) "VInlineSymbolP")
-      ;((##vcore.string?) "VInlineSymbolP")
-      ; logic
-      ((##vcore.not) "VInlineNot2")
-      ; equivalence
-      ((##vcore.eq?) "VInlineEq2")
-      ; lists
-      ((##vcore.cons ##vcore.qcons) "VInlineCons2")
-      ((##vcore.car) "VInlineCar2")
-      ((##vcore.cdr) "VInlineCdr2")
-      (else #f)))
+  (define (lookup-inline-name sym) #f)
   (define (lookup-intrinsic-name sym)
     (case sym
          ; Math
@@ -355,11 +340,14 @@
       ; logic
       ((##vcore.not) #t)
       ; equivalence
-      ;((##vcore.eq?) #t)
+      ((##vcore.eq?) #t)
+      ((##vcore.symbol=?) #t)
+      ((##vcore.blob=?) #t)
+      ((##vcore.eqv?) #t)
       ; lists
-      ;((##vcore.cons ##vcore.qcons) #t)
-      ;((##vcore.car) #t)
-      ;((##vcore.cdr) #t)
+      ((##vcore.cons ##vcore.qcons) #t)
+      ((##vcore.car) #t)
+      ((##vcore.cdr) #t)
       ; Vectors
       ((##vcore.vector-ref) #t)
       ; TODO ((##vcore.vector-set!) #t) ; TODO make tweaks to hazard tracking so this can be basic

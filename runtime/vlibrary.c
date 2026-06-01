@@ -741,15 +741,15 @@ V_END_FUNC
 
 
 // equality
-V_BEGIN_FUNC(VEq2, "eq?", 3, k, x, y)
-  V_BOUNCE(k, runtime, VInlineEq2(runtime, x, y));
+V_BEGIN_FUNC_BASIC(VEq2, "eq?", 2, x, y)
+  return VInlineEq2(runtime, x, y);
 V_END_FUNC
 
-V_BEGIN_FUNC(VSymbolEqv2, "symbol=?", 3, k, x, y)
-  V_BOUNCE(k, runtime, VInlineSymbolEqv2(runtime, x, y));
+V_BEGIN_FUNC_BASIC(VSymbolEqv2, "symbol=?", 2, x, y)
+  return VInlineSymbolEqv2(runtime, x, y);
 V_END_FUNC
 
-V_BEGIN_FUNC(VBlobEqv2, "blob=?", 3, k, x, y)
+V_BEGIN_FUNC_BASIC(VBlobEqv2, "blob=?", 2, x, y)
   bool ret = false;
   if(VIsEq(x, y)) {
     ret = true;
@@ -759,13 +759,7 @@ V_BEGIN_FUNC(VBlobEqv2, "blob=?", 3, k, x, y)
     if(blob_a->len == blob_b->len)
       ret = blob_a->base.tag == blob_b->base.tag && !memcmp(blob_a->buf, blob_b->buf, blob_a->len);
   }
-  V_BOUNCE(k, runtime, VEncodeBool(ret));
-V_END_FUNC
-
-// TODO REMOVE WITH PREJUDICE
-#undef VEqv
-V_BEGIN_FUNC(VEqv, "eqv?", 3, k, x, y)
-  V_BOUNCE(k, runtime, VInlineEqv2(runtime, x, y));
+  return VEncodeBool(ret);
 V_END_FUNC
 
 // logic
@@ -780,13 +774,13 @@ V_BEGIN_FUNC(VCons2, "cons", 3, k, x, y)
     V_BOUNCE(k, runtime, VInlineCons2(runtime, x, y));
 }
 
-V_BEGIN_FUNC(VCar2, "car", 2, k, x)
-    V_BOUNCE(k, runtime, VInlineCar2(runtime, x));
+V_BEGIN_FUNC_BASIC(VCar2, "car", 1, x)
+  return VInlineCar2(runtime, x);
 V_END_FUNC
 
 
-V_BEGIN_FUNC(VCdr2, "cdr", 2, k, x)
-    V_BOUNCE(k, runtime, VInlineCdr2(runtime, x));
+V_BEGIN_FUNC_BASIC(VCdr2, "cdr", 1, x)
+  return VInlineCdr2(runtime, x);
 V_END_FUNC
 
 V_BEGIN_FUNC(VAppendK, "append-k", 1, rest)
