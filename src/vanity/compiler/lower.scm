@@ -24,7 +24,7 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler lower)
-  (import (vanity pretty-print) (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi) (vanity intrinsics))
+  (import (vanity pretty-print) (vanity core) (vanity list) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity compiler ffi) (vanity compiler hush) (vanity intrinsics))
   (export bruijn-ify to-functions)
 ; Strips the names from bound variables and replaces them with indices
 ; free variables are assumed to be builtin functions
@@ -34,7 +34,13 @@
             ((p (car l)) i)
             (else (loop (cdr l) (+ i 1))))))
 
-  (define (bruijn-ify expr)
+  (define (improper-map f xs)
+    (cond
+      ((null? xs) '())
+      ((pair? xs) (cons (f (car xs)) (improper-map f (cdr xs))))
+      (else (f xs))))
+
+  (define (bruijn-ify expr debug?)
     (define (lookup depth env x)
       (cond
         ((null? env) x)
@@ -56,23 +62,23 @@
     (define (iter env expr)
       (match expr
         (('lambda (xs ...) body)
-         `(lambda ,(length xs) ,(iter (cons xs env) body)))
+         `(lambda ,(if debug? `((? ,(improper-map ungensym xs))) #f) ,(length xs) ,(iter (cons xs env) body)))
         (('lambda xs body)
          (let ((proper-xs (undot xs)))
-          `(lambda ,(- (length proper-xs) 1) + ,(iter (cons proper-xs env) body))))
+          `(lambda ,(if debug? `((? ,(improper-map ungensym xs))) #f) ,(- (length proper-xs) 1) + ,(iter (cons proper-xs env) body))))
         (('##qualified-lambda name static? (xs ...) body)
-         `(##qualified-lambda ,name ,static? ,(length xs) ,(iter (cons xs env) body)))
+         `(##qualified-lambda ,name ,static? ,(if debug? `((,name ,(improper-map ungensym xs))) #f) ,(length xs) ,(iter (cons xs env) body)))
         (('##qualified-lambda name static? xs body)
          (let ((proper-xs (undot xs)))
-          `(##qualified-lambda ,name ,static? ,(- (length proper-xs) 1) + ,(iter (cons proper-xs env) body))))
+          `(##qualified-lambda ,name ,static? ,(if debug? `((,name ,(improper-map ungensym xs))) #f) ,(- (length proper-xs) 1) + ,(iter (cons proper-xs env) body))))
         (('case-lambda . cases)
-         `(case-lambda . ,(map (lambda (e) (bruijn-lambda env e)) cases)))
+         `(case-lambda ,(if debug? `((? ,(map (lambda (e) (improper-map ungensym (car e))) cases))) #f) . ,(map (lambda (e) (bruijn-lambda env e)) cases)))
         (('##qualified-case-lambda name static? . cases)
-         `(##qualified-case-lambda ,name ,static? . ,(map (lambda (e) (bruijn-lambda env e)) cases)))
+         `(##qualified-case-lambda ,name ,static? ,(if debug? `((,name ,(map (lambda (e) (improper-map ungensym (car e))) cases))) #f) . ,(map (lambda (e) (bruijn-lambda env e)) cases)))
         (('continuation (x) body)
-         `(continuation 1 ,(iter (cons (list x) env) body)))
+         `(continuation ,(if debug? `((k? (,(ungensym x)))) #f) 1 ,(iter (cons (list x) env) body)))
         (('continuation body)
-         `(continuation #f ,(iter env body)))
+         `(continuation ,(if debug? '((k? _)) #f) #f ,(iter env body)))
         (('letrec ((xs vals) ...) body)
          `(letrec ,(length xs) ,xs ,(map (lambda (e) (iter (cons xs env) e)) vals) ,(iter (cons xs env) body)))
         (('##letrec path ((xs vals) ...) body)
@@ -103,7 +109,7 @@
   ; with references
   (define curlambda 0)
   (define curcont 0)
-  (define (to-functions exprs lifting-literals?)
+  (define (to-functions exprs lifting-literals? debug?)
     (define (genlambda fun)
         (set! curlambda (+ curlambda 1))
         (string->symbol (sprintf "~A_V0lambda~A" fun curlambda)))
@@ -115,20 +121,30 @@
     (define intrinsics '())
     (define functions '())
     (define literal-table '())
+
+    (define literal-hushtable (make-hush-table))
+
     (define static-environments '())
+
+    ; FIXME ASSOC DETECTED
+    (define (lookup-literal key)
+      (let ((val (hush-table-ref literal-hushtable key (lambda () #f))))
+        (if val (cons key val) #f))
+      #;(assoc key literal-table))
+    (define (register-literal! key val)
+      (hush-table-set! literal-hushtable key val)
+      (set! literal-table (cons (cons key val) literal-table)))
+
     (define (lift-intrinsic! sym intrin)
-      ; FIXME ASSOC DETECTED
       (if lifting-literals?
           (let* ((key (list '##intrinsic sym))
-                 (lookup (assoc key literal-table)))
+                 (lookup (lookup-literal key)))
             (if lookup
                 (car lookup)
                 (let ((lookup (cons key intrin)))
-                  (set! literal-table (cons lookup literal-table))
+                  (register-literal! key intrin)
                   (car lookup))))
           (list '##intrinsic sym)))
-    ; TODO drop the unnecessary quotes from nonsymbols, ie turn '"foo" into just "foo"
-    ; then split out lift-symbol into a seperate function
     (define (lift-literal x)
       (if lifting-literals?
           (cond ((integer? x) x)
@@ -140,43 +156,38 @@
                 ((eq? x #f) x)
                 ((null? x) x)
                 ((typevector? x)
-                 ; FIXME ASSOC DETECTED
-                 (let ((lookup (assoc x literal-table)))
+                 (let ((lookup (lookup-literal x)))
                    (if lookup
                        `(##typevector ,(cdr lookup))
                        (begin
-                         (set! literal-table (cons (cons x (gensym "typevector")) literal-table))
+                         (register-literal! x (gensym "typevector"))
                          `(##typevector ,(cdar literal-table))))))
                 ((string? x)
-                 ; FIXME ASSOC DETECTED
-                 (let ((lookup (assoc x literal-table)))
+                 (let ((lookup (lookup-literal x)))
                    (if lookup
                        `(##string ,(cdr lookup))
                        (begin
-                         (set! literal-table (cons (cons x (gensym "string")) literal-table))
+                         (register-literal! x (gensym "string"))
                          `(##string ,(cdar literal-table))))))
                 ((symbol? x)
-                 ; FIXME ASSOC DETECTED
-                 (if (not (assv x literal-table))
-                     (set! literal-table (cons (cons x '()) literal-table)))
+                 (if (not (lookup-literal x))
+                     (register-literal! x '()))
                  x)
                 ((pair? x)
-                 ; FIXME ASSOC DETECTED
                  (let* ((x (list '##pair (cons (lift-literal (car x)) (lift-literal (cdr x)))))
-                        (lookup (assoc x literal-table)))
+                        (lookup (lookup-literal x)))
                    (if lookup
                        `(##pair ,(cdr lookup))
                        (begin
-                         (set! literal-table (cons (cons x (gensym "pair")) literal-table))
+                         (register-literal! x (gensym "pair"))
                          `(##pair ,(cdar literal-table))))))
                 ((vector? x)
-                 ; FIXME ASSOC DETECTED
                  (let* ((x (vector-map lift-literal x))
-                        (lookup (assoc x literal-table)))
+                        (lookup (lookup-literal x)))
                    (if lookup
                        `(##vector ,(cdr lookup))
                        (begin
-                         (set! literal-table (cons (cons x (gensym "vector")) literal-table))
+                         (register-literal! x (gensym "vector"))
                          `(##vector ,(cdar literal-table))))))
                 (else (compiler-error "literal-lifting: unknown literal type" x)))
           x))
@@ -189,44 +200,44 @@
     (define (iter-atom fun expr func-position?)
       (match expr
         (('bruijn . _) expr)
-        (('lambda n body)
+        (('lambda debug-info n body)
          (let ((lamb (genlambda fun)))
-           (set! functions (cons `(,lamb #t (,n ,(iter-apply fun body))) functions))
+           (set! functions (cons `(,lamb #t ,(lift-literal debug-info) (,n ,(iter-apply fun body))) functions))
            `(close ,lamb)))
-        (('lambda n '+ body)
+        (('lambda debug-info n '+ body)
          (let ((lamb (genlambda fun)))
-           (set! functions (cons `(,lamb #t (,n + ,(iter-apply fun body))) functions))
+           (set! functions (cons `(,lamb #t ,(lift-literal debug-info) (,n + ,(iter-apply fun body))) functions))
            `(close ,lamb)))
-        (('##qualified-lambda name static? n body)
+        (('##qualified-lambda name static? debug-info n body)
          (let ((lamb (mangle-qualified-function name)))
            (set! qualified-functions (cons (list lamb n #f) qualified-functions))
-           (set! functions (cons `(,lamb #t (,n ,(iter-apply lamb body))) functions))
+           (set! functions (cons `(,lamb #t ,(lift-literal debug-info) (,n ,(iter-apply lamb body))) functions))
            (if static?
                `(close ,lamb ,(drop-right name 1))
                `(close ,lamb ))))
-        (('##qualified-lambda name static? n '+ body)
+        (('##qualified-lambda name static? debug-info n '+ body)
          (let ((lamb (mangle-qualified-function name)))
            (set! qualified-functions (cons (list lamb n #t) qualified-functions))
-           (set! functions (cons `(,lamb #t (,n + ,(iter-apply lamb body))) functions))
+           (set! functions (cons `(,lamb #t ,(lift-literal debug-info) (,n + ,(iter-apply lamb body))) functions))
            (if static?
                `(close ,lamb ,(drop-right name 1))
                `(close ,lamb))))
-        (('case-lambda . cases)
+        (('case-lambda debug-info . cases)
          (let ((lamb (genlambda fun)))
-           (set! functions (cons `(,lamb #t . ,(map (lambda (e) (iter-lambda fun e)) cases)) functions))
+           (set! functions (cons `(,lamb #t ,(lift-literal debug-info) . ,(map (lambda (e) (iter-lambda fun e)) cases)) functions))
            `(close ,lamb)))
-        (('##qualified-case-lambda name static? . cases)
+        (('##qualified-case-lambda name static? debug-info . cases)
          (if (null? (cdr cases))
              (iter-atom fun `(##qualified-lambda ,name ,static? . ,(car cases)) func-position?)
              (let ((lamb (mangle-qualified-function name)))
                (set! qualified-functions (cons (list lamb 0 #t) qualified-functions))
-               (set! functions (cons `(,lamb #t . ,(map (lambda (e) (iter-lambda fun e)) cases)) functions))
+               (set! functions (cons `(,lamb #t ,(lift-literal debug-info) . ,(map (lambda (e) (iter-lambda fun e)) cases)) functions))
                (if static?
                    `(close ,lamb ,(drop-right name 1))
                    `(close ,lamb)))))
-        (('continuation n body)
+        (('continuation debug-info n body)
          (let ((k (gencont fun)))
-           (set! functions (cons `(,k #t (,n ,(iter-apply fun body))) functions))
+           (set! functions (cons `(,k #t ,(lift-literal debug-info) (,n ,(iter-apply fun body))) functions))
            `(close ,k)))
         (('##foreign.function lang decl ret name . args)
          (let ((mangled (mangle-foreign name)))
@@ -269,14 +280,14 @@
          `(set! ,(iter-atom fun k #f) ,(lift-literal y) ,(iter-atom (mangle-symbol y) x #f)))
         (('if p x y)
          `(if ,(iter-atom fun p #f) ,(iter-apply fun x) ,(iter-apply fun y)))
-        ((('lambda n body) . xs)
+        ((('lambda debug-info n body) . xs)
          (let ((lamb (genlambda fun)))
-           (set! functions (cons `(,lamb #f (,n ,(iter-apply fun body))) functions))
+           (set! functions (cons `(,lamb #f ,(lift-literal debug-info) (,n ,(iter-apply fun body))) functions))
            `((close ,lamb) . ,(map (lambda (x) (iter-atom fun x #f)) xs))))
-        ((('##qualified-lambda name static? n body) . xs)
+        ((('##qualified-lambda name static? debug-info n body) . xs)
          (let ((lamb (mangle-qualified-function name)))
            (set! qualified-functions (cons (list lamb n #f) qualified-functions))
-           (set! functions (cons `(,lamb #f (,n ,(iter-apply lamb body))) functions))
+           (set! functions (cons `(,lamb #f ,(lift-literal debug-info) (,n ,(iter-apply lamb body))) functions))
            `((close ,lamb) . ,(map (lambda (x) (iter-atom lamb x #f)) xs))))
         (('letrec n xs vals body)
          `(letrec ,n ,(map (lambda (x val) (iter-atom (mangle-symbol x) val #f)) xs vals)

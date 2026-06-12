@@ -543,6 +543,8 @@ typedef struct {
   VWORD value;
 } VGlobalEntry;
 
+void VRegisterProcDebugInfo(VFunc f, VWORD v);
+
 #define V_CALL_HISTORY_LEN 16
 typedef struct VDebugInfo {
   char const * name;

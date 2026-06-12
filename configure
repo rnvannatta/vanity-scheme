@@ -10,6 +10,7 @@ read -p "Minor Version:" minor
 read -p "Install Dir:" install
 read -p "Emscripten Install Dir:" eminstall
 read -p "Debug Build? (y/N):" debug
+read -p "Optimize? (Y/n):" optimize
 
 if [ -z "$major" ]; then major=0; fi
 if [ -z "$minor" ]; then minor=0; fi
@@ -21,8 +22,10 @@ if [ -z "$eminstall" ]; then
     eminstall=$EM_CACHE/sysroot;
   fi
 fi
-if [ "$debug" = "y" ]; then cflags="-O0 -g"; else cflags="-O3"; fi
-if [ "$debug" = "y" ]; then scmflags="-O0 -g"; else scmflags="-O3"; fi
+if [ "$debug" = "y" ]; then cflags="-g "; else cflags=""; fi
+if [ "$debug" = "y" ]; then scmflags="-g "; else scmflags=""; fi
+if [ "$optimize" = "n" ]; then cflags+="-O0"; else cflags+="-O2"; fi
+if [ "$optimize" = "n" ]; then scmflags+="-O0"; else scmflags+="-O2"; fi
 
 install="${install/#\~/$HOME}"
 install=`realpath $install`

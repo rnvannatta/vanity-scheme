@@ -1,9 +1,9 @@
-SRC := $(addprefix vanity/compiler/, variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm lower.scm transpile.scm ffi.scm library.scm config.scm bytecode.scm alpha-convert.scm optimize.scm blasphemy.scm hygienic/types.scm hygienic/eval.scm hygienic/global-forms.scm hygienic/expand.scm)
+SRC := $(addprefix vanity/compiler/, variables.scm match.scm utils.scm getopt.scm expand.scm cps.scm lower.scm transpile.scm ffi.scm library.scm config.scm bytecode.scm alpha-convert.scm optimize.scm blasphemy.scm hush.scm hygienic/types.scm hygienic/eval.scm hygienic/global-forms.scm hygienic/expand.scm)
 COMPILE_SRC := $(addprefix vanity/compiler/, frontend.scm)
 INTERP_SRC := $(addprefix vanity/interpreter/, frontend.scm)
 
-RUNTIME_SRC := vruntime.c vlibrary.c vread.c vfiber.c vbytecode.c wacky.c intern.c jiffy.c
-WASM_SRC := vruntime.c vlibrary.c vread.c intern.c jiffy.c
+RUNTIME_SRC := vruntime.c vlibrary.c vread.c vfiber.c vbytecode.c wacky.c intern.c jiffy.c debug.c
+WASM_SRC := vruntime.c vlibrary.c vread.c intern.c jiffy.c debug.c
 
 PRIVATE_HEADERS := vruntime_private.h vqueue_private.h vsetjmp_private.h wacky_private.h vport_private.h intern_private.h xxhash.h
 ASSEMBLY_SRC := vapply-sysv-amd64.S vfiber-sysv-amd64.S sicko.S

@@ -1709,6 +1709,10 @@
     (if (pair? (record-ref x 0))
         (printout-record-nice x write? port)
         (printout-record-notnice x write? port)))
+  (define (printout-procedure x write? port)
+    (##vcore.display-word "#closure" port)
+    (let ((info ((##basic-intrinsic "VGetProcDebugInfo" 1) x)))
+      (if info (printout (car info) write? port))))
   (define (printout x write? port)
     (cond
       ((pair? x) (printout-pair x write? port))
@@ -1726,6 +1730,7 @@
            ((vector? x) (printout-vector x #f port))
            ((hash-table? x) (printout-hash-table x #f port))
            ((record? x) (printout-record x #f port))
+           ((procedure? x) (printout-procedure x #f port))
            (else (##vcore.display-word x port)))))
       ((x port)
        (cond
@@ -1733,6 +1738,7 @@
          ((vector? x) (printout-vector x #f port))
          ((hash-table? x) (printout-hash-table x #f port))
          ((record? x) (printout-record x #f port))
+         ((procedure? x) (printout-procedure x #f port))
          (else (##vcore.display-word x port))))))
   (define write
     (case-lambda
@@ -1743,6 +1749,7 @@
            ((vector? x) (printout-vector x #t port))
            ((hash-table? x) (printout-hash-table x #t port))
            ((record? x) (printout-record x #t port))
+           ((procedure? x) (printout-procedure x #t port))
            (else (##vcore.write x port)))))
       ((x port)
        (cond
@@ -1750,6 +1757,7 @@
          ((vector? x) (printout-vector x #t port))
          ((hash-table? x) (printout-hash-table x #t port))
          ((record? x) (printout-record x #t port))
+         ((procedure? x) (printout-procedure x #t port))
          (else (##vcore.write x port))))))
   (define write-simple write)
   (define write-char
