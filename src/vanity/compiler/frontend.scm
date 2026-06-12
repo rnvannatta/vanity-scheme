@@ -367,7 +367,7 @@
                                                    ((if (> optimization 0) qualify-callsites id)
                                                     (optimize expr (not bytecode?)))) cps)))))
                               (if (eq? expand? 2) (for-each pretty-print opt)
-                                  (let* ((funs (benchmark "extract" (lambda () (to-functions (map bruijn-ify opt) (not bytecode?))))))
+                                  (let* ((funs (benchmark "extract" (lambda () (to-functions (map (cut bruijn-ify <> debug?) opt) (not bytecode?) debug?)))))
                                     (benchmark "transpile"
                                       (lambda ()
                                         (if bytecode?

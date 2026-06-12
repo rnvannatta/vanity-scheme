@@ -128,7 +128,8 @@
   (define (process-fun-case fun)
     (let* ((name (car fun))
            (name (if (string? name) (string->symbol name) name))
-           (cases (cddr fun))
+           (debug-info (cadr fun))
+           (cases (cdddr fun))
            (cases (map (lambda (i e) `(,(if (= i 0) name (gensym "case")) ,e)) (iota (length cases)) cases))
            (error-label (gensym "case-error")))
       (let loop ((rest cases))
@@ -161,9 +162,9 @@
 
   (define (process-function fun)
     (match fun
-      ((name check-args? (num body))
+      ((name check-args? debug-info (num body))
        (process-fun-single name check-args? num #f body))
-      ((name check-args? (num '+ body))
+      ((name check-args? debug-info (num '+ body))
        (process-fun-single name check-args? num #t body))
       (else (process-fun-case fun))))
   (define (process-foreign-function expr)

@@ -151,7 +151,15 @@
                (printf "static struct { VVector sym; VWORD elems[~A]; } ~A = { { .base = { .tag = VVECTOR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, ~A }, };~N"
                 len mangled len)))
             (else (compiler-error "print-literal-table: unknown entry in literal table" lit))))
-    (define (print-dllmain literals)
+    (define (print-fun-debug fun)
+      (match fun
+       ((name check-args? debug-info . cases)
+        (when debug-info
+          (printf "  VRegisterProcDebugInfo((VFunc)~A, " name)
+          (print-literal debug-info)
+          (printf ");~N")))
+       (else (compiler-error "print-fun-debug: unknown entry in function table" fun))))
+    (define (print-dllmain literals functions)
       (define (print-init lit)
         (cond ((symbol? (car lit))
                (let ((mangled (mangle-symbol (car lit)))
@@ -185,6 +193,7 @@
       ; symbols are thankfully the only literal type that's interned, or this would be a lot gnarlier.
       (for-each print-init (filter (lambda (e) (symbol? (car e))) literals))
       (for-each print-init (filter (lambda (e) (not (symbol? (car e)))) literals))
+      (for-each print-fun-debug functions)
       ;(for-each print-init literals)
       (printf "}~N"))
     (define (closes? expr)
@@ -571,7 +580,8 @@
        (printf "}~N")))
     (define (print-fun-case fun)
       (let* ((name (car fun))
-             (cases (cddr fun))
+             (debug-info (cadr fun))
+             (cases (cdddr fun))
              (cases (map (lambda (i e) `(,(sprintf "_V20Case~A_~A" i name) #f ,e)) (iota (length cases)) cases)))
        (define is-static
         (let ((str (if (string? name) name (symbol->string name))))
@@ -646,11 +656,11 @@
              (printf ");~N")))))
     (define (print-fun fun)
       (match fun
-       ((name _ (#f body))
+       ((name _ debug-info (#f body))
         (print-begin-continuation name body))
-       ((name check-args? (num body))
+       ((name check-args? debug-info (num body))
         (print-fun-single name check-args? num #f body #f))
-       ((name check-args? (num '+ body))
+       ((name check-args? debug-info (num '+ body))
         (print-fun-single name check-args? num #t body #f))
        (else (print-fun-case fun))))
 
@@ -799,7 +809,6 @@
         static-environments)
       (newline)
       (for-each print-literal-declaration literal-table)
-      (print-dllmain literal-table)
       (for-each print-foreign-declare declares)
       (for-each (lambda (e) (print-qualified-declaration purec? e)) qualified-functions)
       (for-each (lambda (e) (print-foreign-function purec? e)) foreign-functions)
@@ -807,6 +816,7 @@
       (for-each print-declare declares)
       (if purec? (print-declaretable declares))
 
+      (print-dllmain literal-table functions)
       (if (and shared? print-main?)
           (compiler-error "shared library has toplevel expressions or defines" toplevels))
       (if print-main?

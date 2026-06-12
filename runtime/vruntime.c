@@ -1442,6 +1442,8 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     VFinalizerTable * table = &runtime->VHeapFinalizers[runtime->VActiveHeap];
     table->new_finalizers_start = table->num_finalizers;
   }
+  //printf("%d mutations\n", runtime->VNumTrackedMutations);
+
   runtime->VNumTrackedMutations = 0;
   runtime->num_tracked_hash_tables = 0;
 
@@ -1469,6 +1471,7 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   // These objects are normally extremely veteran. So maybe worth doing some trickery
   // So we only have to consider them in major collects. Eh. Only a handful of libraries at a time.
   // ~20.
+  //printf("%d static envs\n", VStaticEnvTableSize);
   for(int i = 0; i < VStaticEnvTableSize; i++) {
     *VStaticEnvTable[i].slot = VCheckedMoveEnv(runtime, *VStaticEnvTable[i].slot);
   }
@@ -1608,7 +1611,16 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     runtime->VMajorGCTime += diff_nsec;
   else
     runtime->VMinorGCTime += diff_nsec;
+
 #else
+#endif
+
+#if 0
+  if(is_major)
+    printf("avg major gc time: %f\n", runtime->VMajorGCTime / (double)runtime->VNumMajorGCs);
+  else
+    printf("avg minor gc time: %f\n", runtime->VMinorGCTime / (double)runtime->VNumMinorGCs);
+  printf("heap size after gc: %zu\n", runtime->VHeapPos - runtime->VHeap);
 #endif
 
 #ifdef VANITY_PURE_C

@@ -25,7 +25,7 @@
 
 (define-library (vanity compiler utils)
   (import (vanity core) (vanity compiler config))
-  (export read-all resolve-file-path search-open-input-file compiler-error compiler-warning gensym filter gcc-path set-feature-list! get-feature-list)
+  (export read-all resolve-file-path search-open-input-file compiler-error compiler-warning gensym filter gcc-path set-feature-list! get-feature-list ungensym)
   (define (read-all port)
     (let ((expr (read port)))
       (if (eof-object? expr) '()
@@ -61,4 +61,27 @@
   (define gensym ##vcore.gensym)
   (define feature-list '(r7rs ieee-float vanity-scheme vanity-scheme-0.0))
   (define (set-feature-list! lst) (set! feature-list lst))
-  (define (get-feature-list) feature-list))
+  (define (get-feature-list) feature-list)
+
+  (define (strchr str chr)
+    (do-loop
+      for i from 0 below (string-length str)
+      when (eq? (string-ref str i) chr)
+        return i
+      finally-return #f))
+
+  (define (strrchr str chr)
+    (do-loop
+      for i from (- (string-length str) 1) downto 0
+      when (eq? (string-ref str i) chr)
+        return i
+      finally-return #f))
+
+  (define (ungensym sym)
+    (let ((str (symbol->string sym)))
+      (if (and (> (string-length str) 3) (string=? (substring str 0 3) "##."))
+          (let* ((str (substring str 3))
+                 (i (strrchr str #\.)))
+            (if i (string->symbol (substring str 0 i)) sym))
+          sym)))
+  )
