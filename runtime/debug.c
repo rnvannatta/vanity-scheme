@@ -34,3 +34,66 @@ V_BEGIN_FUNC_BASIC(VHashBlob, "##hash-blob", 1, x)
   uint64_t seed = blob->base.tag;
   return VEncodeInt((uint32_t)vhash(blob->buf, blob->len, seed));
 }
+
+V_BEGIN_FUNC_BASIC(VClosureRef, "##closure-ref", 3, proc, _i, _j)
+  VClosure * c = VCheckedDecodeClosure2(runtime, proc, "##closure-ref");
+  int i = VCheckedDecodeInt2(runtime, _i, "##closure-ref");
+  int j = VCheckedDecodeInt2(runtime, _j, "##closure-ref");
+  VEnv * e = c->env;
+  while(e && i) {
+    e = e->up;
+    i--;
+  }
+
+  if(i == 0 && e && j < e->num_vars)
+    return e->vars[j];
+
+  VErrorC(runtime, "##closure-ref: indices out of range: ~A ~A", _i, _j);
+  return VVOID;
+}
+
+V_BEGIN_FUNC_BASIC(VClosureSet, "##closure-set!", 4, proc, _i, _j, val)
+  VClosure * c = VCheckedDecodeClosure2(runtime, proc, "##closure-set!");
+  int i = VCheckedDecodeInt2(runtime, _i, "##closure-set!");
+  int j = VCheckedDecodeInt2(runtime, _j, "##closure-set!");
+  VEnv * e = c->env;
+  while(e && i) {
+    e = e->up;
+    i--;
+  }
+
+  if(i == 0 && e && j < e->num_vars) {
+    e->vars[j] = val;
+    VTrackMutation(runtime, e, &e->vars[j], val);
+    return VVOID;
+  }
+
+  VErrorC(runtime, "##closure-set!: indices out of range: ~A ~A", _i, _j);
+  return VVOID;
+}
+
+V_BEGIN_FUNC_BASIC(VClosureEnvDepth, "##closure-env-depth", 1, proc)
+  VClosure * c = VCheckedDecodeClosure2(runtime, proc, "##closure-env-depth");
+  int i = 0;
+  VEnv * e = c->env;
+  while(e) {
+    i++;
+    e = e->up;
+  }
+  return VEncodeInt(i);
+}
+
+V_BEGIN_FUNC_BASIC(VClosureEnvFrameLength, "##closure-env-frame-length", 2, proc, _i)
+  VClosure * c = VCheckedDecodeClosure2(runtime, proc, "##closure-env-frame-length");
+  int i = VCheckedDecodeInt2(runtime, _i, "##closure-env-frame-length");
+  VEnv * e = c->env;
+  while(e && i) {
+    e = e->up;
+    i--;
+  }
+  if(i == 0 && e)
+    return VEncodeInt(e->num_vars);
+
+  VErrorC(runtime, "##closure-env-frame-length: index out of range: ~A", _i);
+  return VVOID;
+}
