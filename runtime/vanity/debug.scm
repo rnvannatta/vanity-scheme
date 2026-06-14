@@ -1,11 +1,18 @@
 (define-library (vanity debug)
   (import (vanity core))
-  (export closure-debug-info closure-name closure-formals closure-ref closure-set! closure-env-depth closure-env-frame-length closure-env closure-bt)
+  (export closure-debug-info closure-name closure-formals closure-ref closure-set! closure-env-depth closure-env-frame-length closure-env closure-bt current-signaling-procedure current-signaling-arguments)
   (define-constant closure-debug-info (##basic-intrinsic "VGetProcDebugInfo" 1))
   (define-constant closure-ref (##basic-intrinsic "VClosureRef" 3))
   (define-constant closure-set! (##basic-intrinsic "VClosureSet" 4))
   (define-constant closure-env-depth (##basic-intrinsic "VClosureEnvDepth" 1))
   (define-constant closure-env-frame-length (##basic-intrinsic "VClosureEnvFrameLength" 2))
+
+  (define-constant current-signaling-procedure (##intrinsic "VSignalingProcedure" 1 1))
+  (define-constant current-signaling-arguments-impl (##intrinsic "VSignalingArguments" 1 1))
+
+  (define (current-signaling-arguments)
+    (let ((ret (current-signaling-arguments-impl)))
+      (if ret (vector->list ret) #f)))
 
   (define (closure-name proc)
     (let ((ret (closure-debug-info proc)))

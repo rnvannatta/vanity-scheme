@@ -742,15 +742,21 @@ V_BEGIN_FUNC(VPopExceptionHandler, "pop-exception-handler", 2, k, handler)
 V_END_FUNC
 
 static V_BEGIN_FUNC_MIN(VRaiseK, "raise-k", 0)
-  VWORD x = statics->vars[0];
-  V_BOUNCE_FUNC(VRaise, NULL, runtime, VFALSE, x);
+  runtime->exception_location = NULL;
+  VWORD k = statics->vars[0];
+  VWORD x = statics->vars[1];
+  V_BOUNCE_FUNC(VRaise, NULL, runtime, k, x);
 V_END_FUNC
 
-V_BEGIN_FUNC(VRaise, "raise", 2, _, x)
-  VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[1]));
-  VInitEnv(env, 1, 1, NULL);
-  env->vars[0] = x;
-  VClosure raisek = VMakeClosure2(VRaiseK, env);
+V_BEGIN_FUNC(VRaise, "raise", 2, k, x)
+  VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+  VInitEnv(env, 2, 2, NULL);
+  env->vars[0] = k;
+  env->vars[1] = x;
+  VClosure raisek = VMakeClosure2((VFunc)VRaiseK, env);
+
+  VClosure exception_location = VMakeClosure2((VFunc)VRaise, env);
+  runtime->exception_location = &exception_location;
 
   VWORD handler = VGetExceptionHandlerImpl(runtime);
   V_CALL(handler, runtime, VEncodeClosure(&raisek), x);
@@ -943,6 +949,7 @@ SYSV_CALL static VEnv * VCheckedMoveEnv(VRuntime * runtime, VEnv * env) {
   return ret;
 }
 
+SYSV_CALL static VClosure * VMoveClosure(VRuntime * runtime, VClosure * closure);
 // Checks for forwarding and heap presence first
 SYSV_CALL static VEnvironment * VCheckedMoveEnviron(VRuntime * runtime, VEnvironment * env) {
   VEnvironment * ret = VCheckedMoveObject(runtime, env, sizeof(VEnvironment) + sizeof(VWORD[env->argc]));
@@ -958,6 +965,8 @@ SYSV_CALL static VEnvironment * VCheckedMoveEnviron(VRuntime * runtime, VEnviron
     ret->runtime->exception_handlers = VMoveDispatch(runtime, ret->runtime->exception_handlers);
     ret->runtime->declare_list = VMoveDispatch(runtime, ret->runtime->declare_list);
     ret->runtime->library_list = VMoveDispatch(runtime, ret->runtime->library_list);
+    if(ret->runtime->exception_location)
+      ret->runtime->exception_location = VMoveClosure(runtime, ret->runtime->exception_location);
   }
 
   return ret;
@@ -3153,6 +3162,7 @@ SYSV_CALL void VInitRuntime2(VRuntime ** runtime, int argc, char ** argv) {
 
   r->dynamics = VNULL;
   r->exception_handlers = VNULL;
+  r->exception_location = NULL;
 
   memset(&r->VHeapFinalizers, 0, sizeof r->VHeapFinalizers);
 
@@ -3555,6 +3565,7 @@ static void VInitFiberRuntime(VRuntime * r, VRuntime const * runtime, VFiber * f
 
   r->dynamics = runtime->dynamics;
   r->exception_handlers = VNULL;
+  r->exception_location = NULL;
 
   memset(&r->VHeapFinalizers, 0, sizeof r->VHeapFinalizers);
 
@@ -3871,6 +3882,7 @@ static uint64_t VLaunchAwaiter(VFiber * me, void * _data) {
 
   VInitFiberRuntime(data->my_runtime, data->base_runtime, me);
   data->my_runtime->exception_handlers = data->base_runtime->exception_handlers;
+  data->my_runtime->exception_location = data->base_runtime->exception_location;
   data->my_runtime->my_future = (VFuture*)VDecodePointer(data->future);
   VWORD ret = VStart3(data->my_runtime, 1, &thunk);
 
@@ -3922,6 +3934,7 @@ V_BEGIN_FUNC(VAsync, "async", 2, k, future_thunk)
     // Grab pieces of state not represented in the continuation
     runtime->dynamics = awaiter_data.my_runtime->dynamics;
     runtime->exception_handlers = awaiter_data.my_runtime->exception_handlers;
+    runtime->exception_location = awaiter_data.my_runtime->exception_location;
 
     VRuntime * runtimes[2] = {
       awaiter_data.my_runtime,
