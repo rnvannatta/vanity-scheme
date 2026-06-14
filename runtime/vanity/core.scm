@@ -1719,6 +1719,7 @@
       ((vector? x) (printout-vector x write? port))
       ((hash-table? x) (printout-hash-table x write? port))
       ((record? x) (printout-record x write? port))
+      ((procedure? x) (printout-procedure x write? port))
       (write? (##vcore.write x port))
       (else (##vcore.display-word x port))))
   (define display
