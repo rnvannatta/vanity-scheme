@@ -209,6 +209,7 @@ enum VTAG {
   VRUNTIME,
   VHASH_TABLE,
   VFUTURE,
+  VEPHEMERON,
   VTAG_END
 };
 static_assert(VTAG_END < 255, "");
@@ -235,6 +236,7 @@ enum VOBJECT_FLAGS {
   VFLAG_IMMUTABLE = 2,
   VFLAG_FINALIZER = 4,
   VFLAG_MARKED = 8,
+  VFLAG_BROKEN = 128,
 };
 
 typedef struct VObject {
@@ -462,6 +464,14 @@ typedef struct VPair {
   VWORD first;
   VWORD rest;
 } VPair;
+
+typedef struct VEphemeron {
+  VObject base;
+  VWORD key;
+  VWORD value;
+  struct VEphemeron * next;
+} VEphemeron;
+
 
 typedef struct VVector {
   VSmallObject base;

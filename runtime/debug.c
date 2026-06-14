@@ -1,5 +1,6 @@
 #include "vscheme/vhash.h"
 #include "vscheme/vruntime.h"
+#include "vruntime_private.h"
 #define HASHTABLE_IMPL
 #include "hashtable.h"
 
@@ -96,4 +97,28 @@ V_BEGIN_FUNC_BASIC(VClosureEnvFrameLength, "##closure-env-frame-length", 2, proc
 
   VErrorC(runtime, "##closure-env-frame-length: index out of range: ~A", _i);
   return VVOID;
+}
+
+V_BEGIN_FUNC(VSignalingProcedure, "##signaling-procedure", 1, k)
+  VClosure * loc = runtime->exception_location;
+  if(!loc)
+    V_BOUNCE(k, runtime, VFALSE);
+  VClosure proc = VMakeClosure2(loc->func, loc->env->up);
+  V_BOUNCE(k, runtime, VEncodeClosure(&proc));
+}
+
+V_BEGIN_FUNC(VSignalingArguments, "##signaling-arguments", 1, k)
+  VClosure * loc = runtime->exception_location;
+  if(!loc)
+    V_BOUNCE(k, runtime, VFALSE);
+  int len = loc->env->num_vars;
+
+  VVector * vec = V_ALLOCA_VECTOR2(&runtime, runtime, len);
+  if(!vec) VGarbageCollect2Func(runtime, (VFunc)VSignalingArguments, 1, k);
+  vec->base = VMakeSmallObject(VVECTOR);
+  vec->len = len;
+  for(int i = 0; i < len; i++)
+    vec->arr[i] = loc->env->vars[i];
+
+  V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER));
 }
