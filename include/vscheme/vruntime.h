@@ -387,7 +387,7 @@ typedef struct VEnv VEnv;
 #define V_BEGIN_FUNC_MIN(name, scmname, nargs, ...) \
   void name(VRuntime * runtime, VEnv * statics, int argc __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__)), ...) { \
     V_ARG_MIN3(runtime, scmname, nargs, argc); \
-    VEnv * self = alloca(sizeof(VEnv) + sizeof(VWORD[argc])); \
+    VEnv * self = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[argc])); \
     int _var_cursor = 0; \
     __VA_OPT__(MAP(V_INIT_VAR, __VA_ARGS__)) \
     va_list _args; va_start(_args, V_LAST_ARG(argc __VA_OPT__(,) __VA_ARGS__)); \
@@ -399,7 +399,7 @@ typedef struct VEnv VEnv;
 #define V_BEGIN_FUNC_RANGE(name, scmname, nargs_min, nargs_max, ...) \
   void name(VRuntime * runtime, VEnv * statics, int argc __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__))) { \
     V_ARG_RANGE3(runtime, scmname, nargs_min, nargs_max, argc); \
-    VEnv * self = alloca(sizeof(VEnv) + sizeof(VWORD[argc])); \
+    VEnv * self = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[argc])); \
     int _var_cursor = 0; \
     __VA_OPT__(MAP(V_INIT_VAR, __VA_ARGS__)) \
     VInitEnv(self, argc, argc, statics);
@@ -1312,7 +1312,6 @@ static inline VWORD VFillEncodePair(VPair * pair, VWORD a, VWORD b) {
   return VEncodePair(pair);
 }
 
-#define V_ALLOCA_BLOB(len) alloca(sizeof(VBlob) + len);
 static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned len, char const * dat) {
   blob->base = VMakeSmallObject(tag);
   blob->len = len;
@@ -1337,8 +1336,6 @@ static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned len, char co
   })
 
 #define V_STATIC_STRING(name, str) struct { VBlob b; char buf[sizeof str]; } name = { { .base = { .tag =VSTRING, .flags = 0, .pincount = 0, }, .len = sizeof str }, str };
-
-#define V_ALLOCA_VECTOR(len) alloca(sizeof(VVector) + sizeof(VWORD[len]))
 
 #define V_ALLOCA_SMALL_VECTOR(runtime, len) VAlloca(runtime, sizeof(VVector) + sizeof(VWORD[len]))
 #define V_ALLOCA_VECTOR2(last_alloced, runtime, len) \
@@ -1427,7 +1424,7 @@ static inline void VRecordCall2(VRuntime * _runtime, VDebugInfo * debug) {
   VPair _root_pair = VMakePair(VVOID, VNULL); \
   VPair * _cur = &_root_pair; \
   for(int i = numfixed; i < argc; i++) { \
-    VPair * p = alloca(sizeof(VPair)); \
+    VPair * p = VAlloca(runtime, sizeof(VPair)); \
     *p = VMakePair(va_arg(_vlist, VWORD), VNULL); \
     _cur->rest = VEncodePair(p); \
     _cur = p; \

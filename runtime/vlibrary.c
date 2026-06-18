@@ -925,17 +925,19 @@ V_BEGIN_FUNC_BASIC(VAnyTransportPairP, "any-transport-pair?", 1, eph)
 V_END_FUNC
 
 V_BEGIN_FUNC_RANGE(VMakeKeyDatumPair, "make-key-datum-pair", 2, 3, k, key, datum)
-  VPair p = {
+  VPair *p = VAlloca(runtime, sizeof(VPair));
+  *p = (VPair) {
     .base = VMakeObject(VPAIR),
     .key = key,
     .datum = argc == 3 ? datum : VFALSE,
   };
-  p.base.flags |= VFLAG_IMMUTABLE;
+  p->base.flags |= VFLAG_IMMUTABLE;
   V_BOUNCE(k, runtime, VEncodePointer(&p, VPOINTER_PAIR));
 V_END_FUNC
 
 V_BEGIN_FUNC(VMakeEphemeron, "make-ephemeron", 3, k, key, datum)
-  VEphemeron eph = {
+  VEphemeron *eph = VAlloca(runtime, sizeof(VEphemeron));
+  *eph = (VEphemeron) {
     .p = {
       .base = VMakeObject(VEPHEMERON),
       .key = key,
@@ -967,7 +969,8 @@ V_BEGIN_FUNC(VKeyDatumPairUnpack, "key-datum-pair-unpack", 2, k, _eph)
 V_END_FUNC
 
 V_BEGIN_FUNC(VMakeTransportEphemeron, "make-transport-ephemeron", 5, k, guardian, key, datum, luggage)
-  VTransportEphemeron te = {
+  VTransportEphemeron *te = VAlloca(runtime, sizeof(VTransportEphemeron));
+  *te = (VTransportEphemeron) {
     .e = {
       .p = {
         .base = VMakeObject(VTRANSPORT_EPHEMERON),
@@ -1889,7 +1892,7 @@ static V_BEGIN_FUNC_MIN(VCallCCLambda2, "call/cc-lambda", 1, k)
     // nested call-with-values evil
     VClosure * realk_real = VDecodeClosureApply2(runtime, realk);
 
-    VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc-1]));
+    VEnvironment * environ = VAlloca(runtime, sizeof(VEnvironment) + sizeof(VWORD[argc-1]));
     environ->base = VMakeObject(VENVIRONMENT);
     environ->argc = argc-1;
     environ->runtime = runtime;

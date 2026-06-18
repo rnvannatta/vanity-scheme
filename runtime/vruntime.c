@@ -730,7 +730,7 @@ static V_BEGIN_FUNC_MIN(VRaiseK, "raise-k", 0)
 V_END_FUNC
 
 V_BEGIN_FUNC(VRaise, "raise", 2, k, x)
-  VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+  VEnv * env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
   VInitEnv(env, 2, 2, NULL);
   env->vars[0] = k;
   env->vars[1] = x;
@@ -783,7 +783,7 @@ SYSV_CALL void VErrorC(VRuntime * runtime, const char * str, ...) {
   FILE * f = Windows_TmpFile();
   #endif
 #endif
-  VBlob * ret = alloca(sizeof(VBlob)+4096);
+  VBlob * ret = VAlloca(runtime, sizeof(VBlob)+4096);
   ret->base = VMakeSmallObject(VSTRING);
   ret->len = 4096;
   if(f) {
@@ -1556,7 +1556,7 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     runtime->VHeapEnd = runtime->VHeaps[runtime->VActiveHeap].end;
   }
 
-  VEnvironment * environ = alloca(environ_size);
+  VEnvironment * environ = VAlloca(runtime, environ_size);
   environ->base = VMakeObject(VENVIRONMENT);
   environ->runtime = runtime;
   environ->static_chain = statics;
@@ -2258,7 +2258,7 @@ static V_BEGIN_FUNC(VExitK, "exit-k", 1, before_finalizers)
   // The main thread needs to finalize anything stored in global variables
   // Which isn't a matter of simply unbinding the globals because that would
   // break the finalizers
-  VClosure * closure = alloca(sizeof(VClosure));
+  VClosure * closure = VAlloca(runtime, sizeof(VClosure));
   *closure = VMakeClosure2((VFunc)VExitK, NULL);
   VWORD k = VEncodeClosure(closure);
 
@@ -2276,14 +2276,14 @@ static V_BEGIN_FUNC(VExitK, "exit-k", 1, before_finalizers)
     any_finalizers = true;
     VWORD mem = entry->mem;
     
-    VEnv * e = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+    VEnv * e = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
     e->base = VMakeSmallObject(VENV);
     e->num_vars = 2;
     e->var_len = 2;
     e->up = NULL;
     e->vars[0] = k;
     e->vars[1] = mem;
-    closure = alloca(sizeof(VClosure));
+    closure = VAlloca(runtime, sizeof(VClosure));
     *closure = VMakeClosure2(VApplyFinalizer, e);
     k = VEncodeClosure(closure);
   }
@@ -2696,7 +2696,7 @@ V_BEGIN_FUNC_MIN(VMultiImport, "multi-import", 3, _k, lib, _imports)
   VClosure * k = VDecodeClosureApply2(runtime, _k);
   VVector * imports = VCheckedDecodeVector2(runtime, _imports, "multi-import");
 
-  VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc-3]));
+  VEnvironment * environ = VAlloca(runtime, sizeof(VEnvironment) + sizeof(VWORD[argc-3]));
   environ->base = VMakeObject(VENVIRONMENT);
   environ->argc = argc-3;
   environ->runtime = runtime;
@@ -3023,7 +3023,7 @@ V_BEGIN_FUNC(VLoadLibrary2, "load-library", 2, k, name)
     libs = libs_dec->rest;
   }
   if(!VDecodeBool(lib)) {
-    VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[4]));
+    VEnv * env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[4]));
     env->base = VMakeSmallObject(VENV); env->num_vars = 4; env->var_len = 4; env->up = NULL;
     env->vars[0] = k;
     env->vars[1] = name;
@@ -3106,10 +3106,10 @@ V_BEGIN_FUNC(VRenameImports, "rename-imports", 3, k, imports, renames)
 
     VWORD closure = VDecodePair(funcentry)->rest;
     
-    VPair * newfuncentry = alloca(sizeof(VPair));
+    VPair * newfuncentry = VAlloca(runtime, sizeof(VPair));
     *newfuncentry = VMakePair(newname, closure);
 
-    VPair * newnode = alloca(sizeof(VPair));
+    VPair * newnode = VAlloca(runtime, sizeof(VPair));
     *newnode = VMakePair(VEncodePair(newfuncentry), ret);
     ret = VEncodePair(newnode);
 
@@ -3622,7 +3622,7 @@ SYSV_CALL VWORD VStart3(VRuntime * runtime, int num_toplevels, VWORD const * top
       {
         ret = runtime->VExitCode;
         if(runtime->my_future) {
-          VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+          VEnv * env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
           VInitEnv(env, 2, 2, NULL);
           env->vars[0] = next;
           env->vars[1] = ret;
@@ -3753,10 +3753,10 @@ V_BEGIN_FUNC(VCommandLine2, "command-line", 1, k)
   VWORD ret = VNULL;
   int cmd_argc = runtime->VArgc;
   while(cmd_argc--) {
-    VPair * pair = alloca(sizeof(VPair));
+    VPair * pair = VAlloca(runtime, sizeof(VPair));
     char * arg = runtime->VArgv[cmd_argc];
     unsigned len = strlen(arg);
-    VBlob * str = alloca(sizeof(VBlob) + strlen(arg) + 1);
+    VBlob * str = VAlloca(runtime, sizeof(VBlob) + strlen(arg) + 1);
     str->base = VMakeSmallObject(VSTRING);
     str->len = len+1;
     memcpy(str->buf, arg, len+1);
@@ -4077,7 +4077,7 @@ static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfiber
 
   VWORD cur_wait = ret;
   VWORD cur_reap = ret;
-  char * stackstop = alloca(1);
+  char * stackstop = VAlloca(runtime, 1);
   bool reapoverflow = false;
   while(halfreapnum < numfibers) {
     // spin up a fiber
@@ -4106,7 +4106,7 @@ static uint64_t VWrappedFiberFork(VRuntime * runtime, VEnv * upenv, int numfiber
       VRuntime * fiber_runtime = datas[halfreapnum].my_runtime;
       size_t reapsize = VReapSpaceNeeded(fiber_ret, fiber_runtime);
       if(!reapoverflow && !VStackOverflowNoInline2(runtime, stackstop - reapsize)) {
-        char * buf = reapsize ? alloca(reapsize) : NULL;
+        char * buf = reapsize ? VAlloca(runtime, reapsize) : NULL;
         if(buf) stackstop = buf;
         VShiftWord(&reappair->first, fiber_runtime->VHeap, fiber_runtime->VHeapEnd, buf - (char*)fiber_runtime->VHeap);
         VReapFiberRuntime(runtime, buf, fiber_runtime);
@@ -4196,7 +4196,7 @@ static uint64_t VLaunchAwaiter(VFiber * me, void * _data) {
     data->my_runtime = malloc(sizeof(VRuntime));
   }
 
-  VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+  VEnv * env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
   VInitEnv(env, 2, 2, NULL);
   env->vars[0] = data->k;
   env->vars[1] = data->future;
@@ -4324,7 +4324,7 @@ V_BEGIN_FUNC(VAwait, "await", 2, k, _future)
   }
   if(join_threads) {
     // garbage collect with a resume to yield the future's value into k
-    VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+    VEnv * env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
     VInitEnv(env, 2, 2, NULL);
     env->vars[0] = k;
     env->vars[1] = future->val;
