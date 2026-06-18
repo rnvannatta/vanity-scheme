@@ -322,7 +322,9 @@
     (define cc-command-flags
       (string-append
         base-cc-flags
-        (sprintf " -O~A" optimization)
+        (if (and (equal? platform "emscripten") (eq? optimization 0))
+            " -Og"
+            (sprintf " -O~A" optimization))
         (if debug? " -g" "")
         (if shared? " -fPIC" "")))
     (define cc-command (apply string-append cc-command-flags c-options))

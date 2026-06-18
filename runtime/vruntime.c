@@ -1970,8 +1970,8 @@ static VWORD VScheduleFinalizers(VRuntime * runtime, VWORD k, VFinalizerTable * 
         } else {
           VErrorC(runtime, "Ran out of heap space while managing finalizers~N");
         }
-        VSetFinalizerImpl(runtime, new_table, entry->mem, entry->finalizer);
       }
+      VSetFinalizerImpl(runtime, new_table, entry->mem, entry->finalizer);
     }
     VWipeFinalizerTable(dead_table);
     dead_tables++;
