@@ -209,7 +209,11 @@ enum VTAG {
   VRUNTIME,
   VHASH_TABLE,
   VFUTURE,
+  VWEAK_PAIR, /* TODO */
   VEPHEMERON,
+  VTRANSPORT_PAIR, /* TODO */
+  VWEAK_TRANSPORT_PAIR, /* TODO */
+  VTRANSPORT_EPHEMERON,
   VTAG_END
 };
 static_assert(VTAG_END < 255, "");
@@ -461,17 +465,58 @@ typedef struct VClosure {
 
 typedef struct VPair {
   VObject base;
-  VWORD first;
-  VWORD rest;
+  union {
+    VWORD first;
+    VWORD key;
+  };
+  union {
+    VWORD rest;
+    VWORD datum;
+  };
 } VPair;
 
+// thoughts on optimizing ephemerons
+// downgrade to weak pair if ephemeron's datum is eternal
+// downgrade to normal pair if ephemeron's key is eternal
+//
+// on initial scan, add key to bloom filter if it is pointer-free
+// on ephemeron datum resurrection, consult bloom filter if it is pointer free
+// --> yes: you maybe resurrected an ephemeron
+// --> no: you didn't for sure
+// 
+// alternative: when creating ephemeron, mark key as "is in ephemeron"
+// when moving objects to gray set, if "is in ephemeron" need to iterate ephemerons
+// --> yes: you maybe resurrected an ephemeron
+// --> no: you didn't for sure
+// problem: is in ephemeron flag gets polluted over time?
+//          can't clear it easily
 typedef struct VEphemeron {
+  VPair p;
+  struct VEphemeron * gc_next;
+} VEphemeron;
+_Static_assert(sizeof(VEphemeron) == sizeof(VWORD[4]), "???");
+
+typedef struct VTransportEphemeron {
+  VEphemeron e;
+  VWORD luggage;
+  VWORD guardian_or_chain;
+} VTransportEphemeron;
+_Static_assert(sizeof(VTransportEphemeron) == sizeof(VWORD[6]), "???");
+
+#if 0
+typedef struct VTransportCell {
   VObject base;
   VWORD key;
   VWORD value;
-  struct VEphemeron * next;
-} VEphemeron;
-
+  // transport cells are chained together in a guardian
+  struct VTransportCell * prev_in_chain;
+  struct VTransportCell * next_in_chain;
+  struct VPair * guardian;
+  // chain of transport cells the GC builds while scanning
+  // that it has to check after GC. NULL outside of GC
+  struct VTransportCell * next_to_scan;
+} VTransportCell;
+#endif
 
 typedef struct VVector {
   VSmallObject base;
@@ -664,7 +709,7 @@ static inline bool VDecodeBool(VWORD v) {
   return VBits(v) != VBits(VFALSE);
 }
 #else
-#define VEncodeBool(_b) (_b ? VTRUE : VFALSE)
+#define VEncodeBool(_b) ((_b) ? VTRUE : VFALSE)
 #define VDecodeBool(_v) (VBits(_v) != VBits(VFALSE))
 #endif
 
@@ -857,6 +902,73 @@ static inline bool VIsFuture(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VFUTURE;
 }
 
+static inline bool VIsEphemeron(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VEPHEMERON;
+}
+
+static inline bool VIsTransportEphemeron(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VTRANSPORT_EPHEMERON;
+}
+
+static inline bool VIsAnyKeyDatumPair(VWORD v) {
+  VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
+  switch(tag) {
+    case VWEAK_PAIR:
+    case VWEAK_TRANSPORT_PAIR:
+    case VTRANSPORT_PAIR:
+    case VEPHEMERON:
+    case VTRANSPORT_EPHEMERON:
+      return true;
+    default:
+      return false;
+  }
+}
+
+static inline bool VIsWeak(VWORD v) {
+  VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
+  switch(tag) {
+    case VWEAK_PAIR:
+    case VWEAK_TRANSPORT_PAIR:
+      return true;
+    case VPAIR:
+    case VTRANSPORT_PAIR:
+    case VEPHEMERON:
+    case VTRANSPORT_EPHEMERON:
+    default:
+      return false;
+  }
+}
+
+static inline bool VIsEphemeral(VWORD v) {
+  VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
+  switch(tag) {
+    case VEPHEMERON:
+    case VTRANSPORT_EPHEMERON:
+      return true;
+    case VPAIR:
+    case VTRANSPORT_PAIR:
+    case VWEAK_PAIR:
+    case VWEAK_TRANSPORT_PAIR:
+    default:
+      return false;
+  }
+}
+
+static inline bool VIsAnyTransportPair(VWORD v) {
+  VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
+  switch(tag) {
+    case VTRANSPORT_PAIR:
+    case VWEAK_TRANSPORT_PAIR:
+    case VTRANSPORT_EPHEMERON:
+      return true;
+    case VPAIR:
+    case VWEAK_PAIR:
+    case VEPHEMERON:
+    default:
+      return false;
+  }
+}
+
 static inline bool VIsPointerTo(VWORD v, VNEWTAG tag) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == tag;
 }
@@ -957,6 +1069,30 @@ static inline VPort * VCheckedDecodePort2(VRuntime * runtime, VWORD v, char cons
 static inline VFuture * VCheckedDecodeFuture2(VRuntime * runtime, VWORD v, char const * proc) {
   if(VIsFuture(v)) return (VFuture*) VDecodePointer(v);
   VErrorC(runtime, "~Z: not a future: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VEphemeron * VCheckedDecodeEphemeron2(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsEphemeron(v)) return (VEphemeron*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not an ephemeron: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VTransportEphemeron * VCheckedDecodeTransportEphemeron2(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsTransportEphemeron(v)) return (VTransportEphemeron*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not a transport ephemeron: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VEphemeron * VCheckedDecodeAnyKeyDatumPair(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsAnyKeyDatumPair(v)) return (VEphemeron*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not any key-datum pair: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VTransportEphemeron * VCheckedDecodeAnyTransportPair(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsAnyTransportPair(v)) return (VTransportEphemeron*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not any transport-pair: ~S\n", proc, v);
   return NULL;
 }
 
