@@ -10,7 +10,7 @@ In addition, the api to work with ephemerons and transport-ephemeron guardians i
 
 # Background
 
-Ephemerons, weak pairs and transport guardians are datatypes which have been implemented in many scheme implementations as well as other programming languages. They provide seemingly orthogonal concepts of weak-references and object movement notification.
+Ephemerons, weak pairs and transport guardians are datatypes which have been implemented in many Scheme implementations as well as other programming languages. They provide seemingly orthogonal concepts of weak-references and object movement notification.
 
 An ephemeron is an object with a key and a datum, which differs from a normal pair in that if there are no references to the key except via the datum, the garbage collector may break the ephemeron, dropping its key and its datum. This is similar to a weak pair, except that the datum does not keep the key alive, which prevents a class of memory leaks. A major use of ephemerons is in implementing robust weak hashtables, which drop entries that become unreachable by key.
 
@@ -40,11 +40,11 @@ We avoid a time-of-check/time-of-use (TOCTOU) bug easily accidentally implementa
 
 See SRFI-124 for an explanation of why this procedure is buggy. While its fix of introducing a reference-barrier intrinsic addresses the issue, the real issue is that the 3 ephemeron accessors are not atomic with respect to each other and an optimizing compiler can rearrange the eq? check such that the key's lifetime ceases to be before the broken and datum fields are queried, and is inclined to do so to reduce the number of local variables. An example real world procedure that might do this is a situation where you pop a key from a list, and return any metadata associated with that key stored in ephemerons.
 
-We provide an ephemeron and transport-pair unpacking operator that is atomic to the garbage collector. This avoids the need for a reference-barrier intrinsic, not only simplifying implementation in optimizing scheme compilers, but also simplifying user code and making the TOCTOU bug much harder to accidentally write. The above code is:
+We provide an ephemeron and transport-pair unpacking operator that is atomic to the garbage collector. This avoids the need for a reference-barrier intrinsic, not only simplifying implementation in optimizing Scheme compilers, but also simplifying user code and making the TOCTOU bug much harder to accidentally write. The above code is:
 
 ```
 (define (ephemeron-ref ephemeron key)
-  (define-values (broken k d) (ephemeron-ref ephemeron))
+  (define-values (broken k d) (key-datum-pair-unpack ephemeron))
   (and (not broken) (eq? key k) d))
 ```
 
@@ -54,15 +54,13 @@ Implementing SRFI-254 transport guardians is still possible with this SRFI, but 
 
 This SRFI presents 6 variants of key-datum pair selection for a hash table:
 
-| Weakness \ Hash Stability | Stable    | Unstable            |
-| ------------------------- | --------- | ------------------- |
-| Strong                    | Pair      | Transport-Pair      |
-| Weak                      | Weak-Pair | Weak-Transport-Pair |
-| Ephemeral                 | Ephemeron | Transport-Ephemeron |
+| Weakness \ Hash Stability | Stable         | Unstable            |
+| ------------------------- | -------------- | ------------------- |
+| Strong                    | Key-Datum-Pair | Transport-Pair      |
+| Weak                      | Weak-Pair      | Weak-Transport-Pair |
+| Ephemeral                 | Ephemeron      | Transport-Ephemeron |
 
-A pair being just a standard cons cell, and the other 5 provided by this SRFI.
-
-Two helper procedures and several features are provided to allow users to query the implementation for details about how the scheme works:
+Two helper procedures and several features are provided to allow users to query the implementation for details about how the Scheme works:
 
 Procedure: (eternal-object? o). Returns #t if the object can never be reclaimed, and #f if the object is not clearly eternal. For example an object is eternal if the object does not exist in the heap, or exists in statically allocated memory. Any eternal object causes a weak pair or ephemeron to never break, and it is potentially desireable to use a pair instead. Some objects are effectively eternal, for example an heap object owned by a static object, but proving so is difficult, so `eternal-object?` is encouraged to return false negatives in such cases instead of exhaustively proving it.
 
@@ -105,23 +103,23 @@ Features:
 
 An example of what might make symbols noneternal is if there is an interned symbol table can be garbage collected, even if it rarely happens. And if that interned symbol table compacts during its garbage collection, then the symbols are moving.
 
-This SRFI provides feature bits for small integers and floating point numbers, which while not part of the R7RS numeric tower, are nonethless differentiatable in many scheme implementations, and worth testing for as a concept. For example, a scheme which has a concept of 'bigints' should not set the eternal-integers feature, but only the eternal-small-integers feature if it true.
+This SRFI provides feature bits for small integers and floating point numbers, which while not part of the R7RS numeric tower, are nonethless differentiatable in many Scheme implementations, and worth testing for as a concept. For example, a Scheme which has a concept of 'bigints' should not set the eternal-integers feature, but only the eternal-small-integers feature if it true.
 
-A scheme implementation should provide as many of these features as possible where it makes sense. If a datatype such as a floating point number or a complex number is not provided by the implementation, the scheme should not set that feature bit, even if it is vacuously true.
+A Scheme implementation should provide as many of these features as possible where it makes sense. If a datatype such as a floating point number or a complex number is not provided by the implementation, the Scheme should not set that feature bit, even if it is vacuously true.
 
-A scheme without a moving garbage collector should not set any moving features.
+A Scheme without a moving garbage collector should not set any moving features.
 
 ## Key-Datum Pairs
 
-An immutable pair of a key and a datum, with a strongly-held key and no transport sensitivity. This _may_ be the same underlying datatype as a standard pair created by cons, but is not required to be.
+An immutable pair of a key and a datum, with a strongly-held key and no transport sensitivity. This _may_ be the same underlying datatype as a standard pair created by cons, but it is not required to be.
+
+Rationale: Some schemes do data storage optimizations such as omitting data headers for pairs, and requring key-datum pairs to be identical to standard pairs may be too costly for the following polymorphic procedures.
 
 Procedure: (make-key-datum-pair key datum). Returns a fresh key-datum pair.
 
 Procedure: (make-key-datum-pair key). Returns a fresh key-datum pair, with datum #f. This is intended as a canonical reference for hash sets. This procedure in isolation looks silly, but a transport sensitive hash set can select which pair to use based on whether the key can move.
 
-Procedure: (key-datum-pair? key datum). Returns #t for key-datum pairs, and #f for the other 5 types of pair in this SRFI. It may, but is not required, to return #t for pairs created with cons.
-
-Rationale: Some schemes do data storage optimizations such as omitting data headers for pairs, and requring key-datum pairs to be identical to standard pairs may be too costly for these polymorphic procedures.
+Procedure: (key-datum-pair? key datum). Returns #t for key-datum pairs, and #f for the other 5 types of pair in this SRFI.
 
 ## Weak Pairs
 
@@ -151,7 +149,7 @@ For exmaple, for Vanity Scheme the downgrade rule to weak pair is if the datum i
 
 A transport pair is an immutable pair of a key and a datum. It contains an additional luggage field, which is intended to aid in handling the event where the key moves. For example, a hash table's key-datum-pair's luggage is its original hash.
 
-The pair can be created with a transport guardian. If the key of a transport pair is moved by the garbage collector, the collector sets the pair to a signaled state which indicates that the key moved, and inserts it into its registered transport guardian. The transport guardian will return any singaled transport pairs that registered to the guardian.
+The pair can be created with a transport guardian. If the key of a transport pair is moved by the garbage collector, the collector sets the pair to a signaled state which indicates that the key moved, and inserts it into its registered transport guardian. The transport guardian will return any singaled transport pairs that registered to the guardian. The garbage collector is required to insert signaled transport pairs at the end of a transport guardian, such that its queue is first-in-first-out, to guarantee forward progress when rummaging for a specific transport-pair in the event of frequent garbage collection.
 
 Unlike SRFI-254 transport cells, a transport guardian is not required to have a reference to the transport pair. So the user of transport pairs must store them somewhere. This happens naturally with hash tables, since this is a key-pair sutable for use storing the entries. If a transport pair is collected before it is signaled, the guardian will not gain the resurrected transport-pair if the key later moves.
 
@@ -183,17 +181,23 @@ Procedure: (transport-ephemeron? tp). Returns #t is the object is a transport-ep
 
 ## Transport Guardians
 
+Transport guardians work on all 3 transport-pair variants, and one transport guardian may have multiple kinds of transport-pairs under its protection. Unlike SRFI-254, transport guardians do not retain a reference to the transport pairs until they are signaled, and the user must prior to that hold a reference to the pair.
+
 Procedure: (make-transport-guardian). Returns a fresh transport guardian, which can accept any key-datum pair with the transport capability.
 
 Procedure: (transport-guardian? guardian). Returns #t if the object is a transport guardian, #f otherwise.
 
-Procedure: (transport-guardian-pop! guardian). Removes and returns one signaled transport pair from the transport guardian. If it is empty, #f is returned. Note, the transport pair may possibly be broken.
+Procedure: (transport-guardian-poll! guardian). Removes and returns one signaled transport pair from the transport guardian. If it is empty, #f is returned. Note, the transport pair may possibly be broken.
+
+Procedure: (transport-guardian-reset! guardian transport-pair luggage).  If the pair is in the guardian's queue, it is removed. Then it updates the transport pair's luggage, and resets its signaled status. It is an error to call this procedure with a different guardian than the one the transport-pair was created with.
+
+Procedure: (transport-guardian-drop! guardian transport-pair). The transport-pair ceases to be a ward of the guardian, and if signaled will not go to the guardian. If the pair is in the guardian's queue, it is removed. The dissolution is irrevokable: it is an error to later call transport-pair-reset! on the pair with the guardian.
 
 ## Universal Key-Datum Pair Procedures
 
 These procedures work on all 6 of the datatypes in this SRFI.
 
-Procedure: (key-datum-unpack pair). Returns three values: (broken? key datum). This procedure is required to be atomic to the garbage collector. It may not interleave a garbage collect or any other lifetime altering operation anywhere between fetching the brokenness state, the key, and the datum. broken? is trivially #f for the two strong key-datum pair variants.
+Procedure: (key-datum-pair-unpack pair). Returns three values: (broken? key datum). This procedure is required to be atomic to the garbage collector. It may not interleave a garbage collect or any other lifetime altering operation anywhere between fetching the brokenness state, the key, and the datum. broken? is trivially #f for the two strong key-datum pair variants.
 
 Note: key-datum-pair-key and key-datum-pair-datum are deliberately not provided to avoid the TOCTOU bug described in the rationale.
 
@@ -290,6 +294,6 @@ The gc\_next field is needed by any weakly held key in order to string them toge
 
 The guardian\_or\_chain field points to the guardian when the transport-pair is unsignaled, and formes a linked list of signaled transport-pairs from the guardian when it is signaled. Or #f if there is no guardian, and null when there is no guardian but the transport-pair is signaled. Determining signaled status is thus just checking the type of the object in the guardian\_or\_chain field. #f or a record type indicate an unsignaled pair, and anything else indicates a signaled pair.
 
-## Atomicity of Key-Datum-Unpack
+## Garbage Collector Atomicity of Key-Datum-Unpack
 
-Here's a brief description of implementing the atomic-to-the-garbage-collector requirement of key-datum-unpack. For a stop the world collector, this means that the garbage collection process must not be allowed to run at all during the dynamic extent of this procedure. For a concurrent collector, the mutator must atomically read all 3 fields in one step and the collector must atomically break all 3 fields in one step. Likewise, there must be compiler barriers on boths ends of this procedure, or the procedure must be uninlinable.
+For a stop the world collector, this means that the garbage collection process must not be allowed to run at all during the dynamic extent of this procedure. For a concurrent collector, the mutator must atomically read all 3 fields in one step and the collector must atomically break all 3 fields in one step.

@@ -330,7 +330,7 @@ SYSV_CALL static uint64_t VHashSymbol(VWORD sym) {
 // 3. interning
 // 4. value field in symbols
 
-static SYSV_CALL VGlobalEntry * VInsertGlobalEntry(VRuntime * runtime, uint64_t h, VWORD sym, VWORD val) {
+static VGlobalEntry * VInsertGlobalEntry(VRuntime * runtime, uint64_t h, VWORD sym, VWORD val) {
   size_t i = h & (runtime->VNumGlobalSlots-1);
   while(VBits(runtime->VGlobalTable[i].symbol) != VBits(VVOID))
   {
@@ -345,13 +345,13 @@ static SYSV_CALL VGlobalEntry * VInsertGlobalEntry(VRuntime * runtime, uint64_t 
   return &runtime->VGlobalTable[i];
 }
 
-static SYSV_CALL void VInitGlobalTable(VRuntime * runtime) {
+static void VInitGlobalTable(VRuntime * runtime) {
   runtime->VNumGlobalSlots = 1024;
   runtime->VGlobalTable = malloc(sizeof(VGlobalEntry[runtime->VNumGlobalSlots]));
   for(int i = 0; i < runtime->VNumGlobalSlots; i++) runtime->VGlobalTable[i].symbol = VVOID;
 }
 
-static SYSV_CALL void VResizeGlobalTable(VRuntime * runtime) {
+static void VResizeGlobalTable(VRuntime * runtime) {
   // FIXME: I'm convinced there is a memory issue here, because the mutation tracking
   // would drop the objects. I've kludged around it by making the global table huge
   VGlobalEntry * newtable = malloc(sizeof(VGlobalEntry[runtime->VNumGlobalSlots*2]));
@@ -508,25 +508,6 @@ VEnv ** VFindStaticEnv(const char * name) {
   }
   return NULL;
 }
-
-// okay: so finalizers to managed memory can be detected as stale when they remain after a gc
-// specifically, after gc, a finalizer to managed memory points to a forwarded address
-// -- finalizers to foreign memory are manually tended to during move
-// -- this requires checking the finalizer table any time we move a foreign pointer :(
-//
-// -- there's no way to avoid this without insane behavior. even if we alloc for holding
-// -- the type, it would still be insane to attach the finalizer to the alloc not the foreign
-// -- address
-
-// what does the alg look like? hmmmmm
-// 1. garbage collect
-// 2. scan finalizer set for moved and unmoved addresses
-// ---- moved addresses get their finalizers forward to next set
-// 3. unmoved addresses also get forwarded to next set...
-// 4. but unmoved addresses get a continuation stacked on
-// ---- (lambda _ (finalize! k addr)) where k is the gc continuation
-// ---- these keep getting tacked on ie (lambda _ (finalize! (lambda _ (finalize! k addr0))) addr1)
-// 5. and then gc resumes which causes the finalizers to do their thang
 
 SYSV_CALL static void VWipeFinalizerTable(VFinalizerTable * table) {
   table->num_finalizers = 0;
@@ -1003,6 +984,40 @@ SYSV_CALL static VPair * VMovePair(VRuntime * runtime, VPair * pair) {
   return ret;
 }
 
+static VEphemeron * VMoveEphemeron(VRuntime * runtime, VEphemeron * eph, bool is_transport) {
+  eph = VMoveObject(runtime, eph, is_transport ? sizeof(VTransportEphemeron) : sizeof(VEphemeron));
+  if(!(eph->p.base.flags & VFLAG_BROKEN)) {
+    // TODO: do NOT add eph to the ephemeron gray set if the key is not condemned
+    eph->gc_next = runtime->ephemerons;
+    runtime->ephemerons = eph;
+  }
+  return eph;
+}
+
+#if 0
+SYSV_CALL static VTransportCell * VMoveTransportCell(VRuntime * runtime, VTransportCell * pair) {
+  VTransportCell * ret = VMoveObject(runtime, pair, sizeof(VTransportCell));
+
+  VTransportCell * old = ret;
+  while(old->next_in_chain) {
+    void * next_in_chain = old->next_in_chain;
+
+    void * forward = VForwarded(next_in_chain);
+    if(forward) {
+      old->next_in_chain = forward;
+      break;
+    }
+    if(!VNeedsMove(runtime, next_in_chain))
+      break;
+
+    next_in_chain = VMoveObject(runtime, next_in_chain, sizeof(VTransportCell));
+    old->next_in_chain = next_in_chain;
+    old = next_in_chain;
+  }
+  return ret;
+}
+#endif
+
 SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
   if(!VIsPointer(word)) {
     if(VIsForeignPointer(word))
@@ -1088,6 +1103,30 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
           VFuture * f = ptr;
           return VEncodePointer(VMoveObject(runtime, f, sizeof(VFuture)), VPOINTER_OTHER);
         }
+        case VEPHEMERON:
+        {
+          VEphemeron * eph = ptr;
+          eph = VMoveEphemeron(runtime, eph, false);
+          return VEncodePointer(eph, VPOINTER_OTHER);
+        }
+        case VTRANSPORT_EPHEMERON:
+        {
+          VEphemeron * eph = ptr;
+          eph = VMoveEphemeron(runtime, eph, true);
+          return VEncodePointer(eph, VPOINTER_OTHER);
+        }
+#if 0
+        case VTRANSPORT_CELL:
+        {
+          VTransportCell * tc = ptr;
+          tc = VMoveTransportCell(runtime, tc);
+          if(!(tc->base.flags & VFLAG_BROKEN) && tc->guardian) {
+            tc->next_to_scan = runtime->transport_cells;
+            runtime->transport_cells = tc;
+          }
+          return VEncodePointer(tc, VPOINTER_OTHER);
+        }
+#endif
         default:
           fprintf(stderr, "Unknown tag %u in VMoveDispatch. Heap corruption?\n", tag);
           VAbortC(NULL, VERROR);
@@ -1164,6 +1203,26 @@ SYSV_CALL static void VCheneyFuture(VRuntime * runtime, VFuture * future) {
   }
 }
 
+SYSV_CALL static void VCheneyTransportEphemeron(VRuntime * runtime, VTransportEphemeron * te, bool scan_key, bool scan_datum) {
+  if(scan_key)
+    te->e.p.key = VMoveDispatch(runtime, te->e.p.key);
+  if(scan_datum)
+    te->e.p.datum = VMoveDispatch(runtime, te->e.p.datum);
+
+  te->luggage = VMoveDispatch(runtime, te->luggage);
+  te->guardian_or_chain = VMoveDispatch(runtime, te->guardian_or_chain);
+}
+#if 0
+SYSV_CALL static void VCheneyTransportCell(VRuntime * runtime, VTransportCell * tc) {
+  /* Defer scanning key, since key is weakly held. Plainly so unlike ephemerons. */
+  tc->value = VMoveDispatch(runtime, tc->value);
+  tc->prev_in_chain = (void*)VDecodePointer(VMoveDispatch(runtime, VEncodePointer(tc->prev_in_chain, VPOINTER_OTHER)));
+  // next in chain handled by VMoveTransportCell
+  tc->guardian = VMovePair(runtime, tc->guardian);
+  // next to scan only exists during gc
+}
+#endif
+
 SYSV_CALL static VWORD * VCheneyScan(VRuntime * runtime, VWORD * cur) {
   switch(*(VNEWTAG*)cur) {
     case VENVIRONMENT:
@@ -1225,6 +1284,29 @@ SYSV_CALL static VWORD * VCheneyScan(VRuntime * runtime, VWORD * cur) {
       return cur + (sizeof(VFuture))/sizeof(VWORD);
       break;
     }
+    case VEPHEMERON:
+    {
+      /* We don't scan ephemerons immediately, but defer doing so til everything else is scanned */
+      return cur + (sizeof(VEphemeron))/sizeof(VWORD);
+      break;
+    }
+    case VTRANSPORT_EPHEMERON:
+    {
+      /* need to scan the transport cell blobs, but still not the ephemeral blobs */
+      VTransportEphemeron * te = ((VTransportEphemeron*)cur);
+      VCheneyTransportEphemeron(runtime, te, false, false);
+      return cur + (sizeof(VTransportEphemeron))/sizeof(VWORD);
+      break;
+    }
+#if 0
+    case VTRANSPORT_CELL:
+    {
+      VTransportCell * tc = ((VTransportCell*)cur);
+      VCheneyTransportCell(runtime, tc);
+      return cur + (sizeof(VTransportCell))/sizeof(VWORD);
+      break;
+    }
+#endif
   }
   fprintf(stderr, "Unknown tag %u in VCheneyScan. Heap Corruption? -CheneyScan\n", (int)(*(VNEWTAG*)cur));
   VPrintCallHistory(runtime);
@@ -1303,9 +1385,105 @@ SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics,
   va_end(list);
   VGarbageCollect2(f, runtime, statics, argc, argv);
 }
-SYSV_CALL static VWORD VCleanupFinalizers(VRuntime * runtime, VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables);
+static bool VScanFinalizers(VRuntime * runtime, VFinalizerTable * new_table, VFinalizerTable ** dead_tables);
+static VWORD VScheduleFinalizers(VRuntime * runtime, VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables);
+
+static void VSignalTransportEphemeron(VRuntime * runtime, VTransportEphemeron * te);
+static bool VScanEphemerons(VRuntime * runtime) {
+  bool resurrected_values = false;
+  VEphemeron * ephs = runtime->ephemerons;
+  VEphemeron ** parent_slot = &runtime->ephemerons;
+
+  while(ephs) {
+    VEphemeron * eph = ephs;
+    VWORD _key = eph->p.key;
+
+    bool needs_move = VIsPointer(_key);
+    if(needs_move) {
+      void * key = VDecodePointer(_key);
+      void * forward = VForwarded(key);
+      if(forward) {
+        key = forward;
+        // key was moved, references still exist
+        needs_move = false;
+        switch(*(VTAG*)key) {
+          case VCLOSURE:
+            eph->p.key = VEncodeClosure(key);
+            break;
+          case VPAIR:
+            eph->p.key = VEncodePair(key);
+            break;
+          default:
+            eph->p.key = VEncodePointer(key, VPOINTER_OTHER);
+            break;
+        }
+
+        if(eph->p.base.tag == VTRANSPORT_EPHEMERON) {
+          VTransportEphemeron * te = (VTransportEphemeron*)eph;
+          VSignalTransportEphemeron(NULL, te);
+        }
+      } else {
+        needs_move = VNeedsMove(runtime, key);
+      }
+    }
+
+    if(!needs_move) {
+      // either key is eternal or key is in older generation or key was moved
+      eph->p.datum = VMoveDispatch(runtime, eph->p.datum);
+      resurrected_values = true;
+
+      // remove this ephemeron from the list of ephemerons to process for breaking
+      *parent_slot = eph->gc_next;
+      ephs = eph->gc_next;
+      eph->gc_next = NULL;
+    } else {
+      parent_slot = &eph->gc_next;
+      ephs = eph->gc_next;
+    }
+  }
+  return resurrected_values;
+}
 
 volatile sig_atomic_t _Atomic VInterruptSignal;
+
+static void VSignalTransportEphemeron(VRuntime * runtime, VTransportEphemeron * te) {
+  assert(runtime == NULL);
+  assert(VIsEq(te->guardian_or_chain, VNULL) || VIsEq(te->guardian_or_chain, VFALSE));
+  te->guardian_or_chain = VNULL;
+}
+
+static VWORD * GC_EmptyGraySet(VRuntime * runtime, VWORD * cur)
+{
+  VWORD * stop = runtime->VHeapPos;
+  while(cur < stop) {
+    cur = VCheneyScan(runtime, cur);
+    stop = runtime->VHeapPos;
+  }
+  return cur;
+}
+
+static VWORD * VEphemeronFixedpoint(VRuntime * runtime, VWORD * cur, bool scan_finalizers, VFinalizerTable * new_table, VFinalizerTable ** dead_tables) {
+  bool resurrected_values = false;
+  do {
+    resurrected_values = false;
+    bool resurrected_ephemerons = VScanEphemerons(runtime);
+    if(resurrected_ephemerons)
+      resurrected_values = true;
+
+
+    if(scan_finalizers) {
+      bool resurrected_finalizers = VScanFinalizers(runtime, new_table, dead_tables);
+      if(resurrected_finalizers)
+        resurrected_values = true;
+    }
+
+    // Do cheney copy of the values
+    cur = GC_EmptyGraySet(runtime, cur);
+
+    // The scan of ephemerons may have found more ephemeron keys or ephemerons, so loop again
+  } while(resurrected_values);
+  return cur;
+}
 
 SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int argc, VWORD * argv) {
 #ifdef __linux__
@@ -1500,32 +1678,112 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     environ->runtime->VGCResumeCont = VEncodeClosure(k);
   }
 
-  {
-    VWORD * stop = runtime->VHeapPos;
-    // the space between cur and stop is the gray set, ie unscanned but moved objects
-    while(cur < stop) {
-      cur = VCheneyScan(runtime, cur);
-      stop = runtime->VHeapPos;
+  cur = GC_EmptyGraySet(runtime, cur);
+
+  int num_dead_tables = 1;
+  VFinalizerTable * dead_tables[num_dead_tables+1];
+  dead_tables[0] = &runtime->VHeapFinalizers[!runtime->VActiveHeap];
+  dead_tables[1] = NULL;
+
+
+  cur = VEphemeronFixedpoint(runtime, cur, is_major, &runtime->VHeapFinalizers[runtime->VActiveHeap], dead_tables);
+
+  if(is_major) {
+    // OK. Ephemerons have hit fixed point, now we resurrect objects for finalizers.
+    VWORD * oldcur = cur;
+
+    environ->runtime->VGCResumeCont = VScheduleFinalizers(runtime, environ->runtime->VGCResumeCont, &runtime->VHeapFinalizers[runtime->VActiveHeap], dead_tables);
+
+    cur = GC_EmptyGraySet(runtime, cur);
+
+    if(cur != oldcur) {
+      cur = VEphemeronFixedpoint(runtime, cur, false, NULL, NULL);
     }
   }
 
-  if(is_major)
   {
-    int num_dead_tables = 1;
-    VFinalizerTable * dead_tables[num_dead_tables+1];
-    dead_tables[0] = &runtime->VHeapFinalizers[!runtime->VActiveHeap];
-    dead_tables[1] = NULL;
-    environ->runtime->VGCResumeCont = VCleanupFinalizers(runtime, environ->runtime->VGCResumeCont, &runtime->VHeapFinalizers[runtime->VActiveHeap], dead_tables);
-  }
+    // Break any remaining ephemerons.
+    VEphemeron * ephemerons = runtime->ephemerons;
+    runtime->ephemerons = NULL;
+    while(ephemerons) {
+      VEphemeron * eph = ephemerons;
+      eph->p.key = VFALSE;
+      eph->p.datum = VFALSE;
+      eph->p.base.flags |= VFLAG_BROKEN;
 
-  {
-    VWORD * stop = runtime->VHeapPos;
-    // the space between cur and stop is the gray set, ie unscanned but moved objects
-    while(cur < stop) {
-      cur = VCheneyScan(runtime, cur);
-      stop = runtime->VHeapPos;
+      ephemerons = eph->gc_next;
+      eph->gc_next = NULL;
     }
   }
+
+#if 0
+  {
+    VTransportCell * cells = runtime->transport_cells;
+    runtime->transport_cells = NULL;
+
+    while(cells) {
+      VTransportCell * cell = cells;
+      VWORD _key = cell->key;
+
+      // TODO the mutations here should be tracked for consistency.
+
+      if(VIsPointer(_key)) {
+        void * key = VDecodePointer(_key);
+        void * forward = VForwarded(key);
+        if(forward) {
+          switch(*(VTAG*)key) {
+            case VCLOSURE:
+              cell->key = VEncodeClosure(key);
+              break;
+            case VPAIR:
+              cell->key = VEncodePair(key);
+              break;
+            default:
+              cell->key = VEncodePointer(key, VPOINTER_OTHER);
+              break;
+          }
+          // key has moved. remove it from the doubly linked list where it is (the car half of the pair)
+          // and move it to the cdr half of the pair
+          if(cell->next_in_chain)
+            cell->next_in_chain->prev_in_chain = cell->prev_in_chain;
+          if(cell->prev_in_chain)
+            cell->prev_in_chain = cell->next_in_chain;
+          else
+            cell->guardian->first = VEncodePointer(cell->next_in_chain, VPOINTER_OTHER);
+
+          cell->prev_in_chain = NULL;
+          if(VIsEq(cell->guardian->rest, VNULL)) {
+            cell->next_in_chain = NULL;
+          } else {
+            VTransportCell * next = (void*)VDecodePointer(cell->guardian->rest);
+            cell->next_in_chain = next;
+            next->prev_in_chain = cell;
+          }
+
+          cell->guardian->rest = VEncodePointer(cell, VPOINTER_OTHER);
+
+        } else if(VNeedsMove(runtime, key)) {
+          // key has died, clean it up and remove the cell from the guardian to declutter and prevent a leak
+          cell->key = VFALSE;
+          cell->base.flags |= VFLAG_BROKEN;
+          if(cell->next_in_chain)
+            cell->next_in_chain->prev_in_chain = cell->prev_in_chain;
+          if(cell->prev_in_chain)
+            cell->prev_in_chain = cell->next_in_chain;
+          else
+            cell->guardian->first = VEncodePointer(cell->next_in_chain, VPOINTER_OTHER);
+
+          cell->next_in_chain = NULL;
+          cell->prev_in_chain = NULL;
+        } else {
+          // Nothing, key didn't move.
+        }
+      }
+      cells = cell->next_to_scan;
+      cell->next_to_scan = NULL;
+    }
+  }
+#endif
 
   if(atomic_exchange(&VInterruptSignal, 0)) {
     VErrorC(runtime, "interrupted");
@@ -1641,8 +1899,44 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
   VLongJmp(runtime->VRoot, yield ? VJMP_YIELD : VJMP_GC);
 }
 
-// The last thing that happens in garbage collection before resuming
-SYSV_CALL static VWORD VCleanupFinalizers(VRuntime * runtime, VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables) {
+static bool VScanFinalizers(VRuntime * runtime, VFinalizerTable * new_table, VFinalizerTable ** dead_tables) {
+  bool resurrected = false;
+  while(*dead_tables) {
+    VFinalizerTable * dead_table = *dead_tables;
+    for(unsigned i = 0; i < dead_table->num_finalizers; i++) {
+      VFinalizerEntry * entry = dead_table->dense + i;
+      // tombstone, we can skip it
+      if(!VDecodeBool(entry->mem)) continue;
+
+      void * mem_ptr = VDecodePointer(entry->mem);
+      void * mem_forward = VIsManagedPointer(entry->mem) ? VForwarded(mem_ptr) : NULL;
+
+      bool move_closure = false;
+      
+      if(mem_forward) {
+        entry->mem = VEncodePointer(mem_forward, VWordType(entry->mem));
+        move_closure = true;
+      } else if(VMemLocation(runtime, mem_ptr) == HEAP_MEM || entry->foreign_marked) {
+        move_closure = true;
+      }
+
+      if(move_closure) {
+        VWORD oldfinalizer = entry->finalizer;
+        entry->finalizer = VMoveDispatch(runtime, entry->finalizer);
+        if(!VIsEq(oldfinalizer, entry->finalizer))
+          resurrected = true;
+
+        VSetFinalizerImpl(runtime, new_table, entry->mem, entry->finalizer);
+        entry->mem = VFALSE;
+        entry->finalizer = VFALSE;
+      }
+    }
+    dead_tables++;
+  }
+  return resurrected;
+}
+
+static VWORD VScheduleFinalizers(VRuntime * runtime, VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables) {
   while(*dead_tables) {
     VFinalizerTable * dead_table = *dead_tables;
     for(unsigned i = 0; i < dead_table->num_finalizers; i++) {
@@ -1651,17 +1945,16 @@ SYSV_CALL static VWORD VCleanupFinalizers(VRuntime * runtime, VWORD k, VFinalize
       if(!VDecodeBool(entry->mem)) continue;
 
 
-      VWORD finalizer = VMoveDispatch(runtime, entry->finalizer);
-      VWORD mem = entry->mem;
-      void * mem_ptr = VDecodePointer(mem);
-      void * mem_forward = VIsManagedPointer(mem) ? VForwarded(mem_ptr) : NULL;
+      entry->finalizer = VMoveDispatch(runtime, entry->finalizer);
+      void * mem_ptr = VDecodePointer(entry->mem);
+      void * mem_forward = VIsManagedPointer(entry->mem) ? VForwarded(mem_ptr) : NULL;
       
       if(mem_forward) {
-        mem = VEncodePointer(mem_forward, VWordType(mem));
+        entry->mem = VEncodePointer(mem_forward, VWordType(entry->mem));
       } else if(VMemLocation(runtime, mem_ptr) == HEAP_MEM || entry->foreign_marked) {
         /* nothing. all is good :) */
       } else {
-        mem = VMoveDispatch(runtime, mem);
+        entry->mem = VMoveDispatch(runtime, entry->mem);
         VEnv * e = VAllocHeap(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
         VClosure * newk = VAllocHeap(runtime, sizeof(VClosure));
         // no. it's not okay if the alloc fails
@@ -1671,14 +1964,14 @@ SYSV_CALL static VWORD VCleanupFinalizers(VRuntime * runtime, VWORD k, VFinalize
           e->var_len = 2;
           e->up = NULL;
           e->vars[0] = k;
-          e->vars[1] = mem;
+          e->vars[1] = entry->mem;
           *newk = VMakeClosure2(VApplyFinalizer, e);
           k = VEncodeClosure(newk);
         } else {
           VErrorC(runtime, "Ran out of heap space while managing finalizers~N");
         }
+        VSetFinalizerImpl(runtime, new_table, entry->mem, entry->finalizer);
       }
-      VSetFinalizerImpl(runtime, new_table, mem, finalizer);
     }
     VWipeFinalizerTable(dead_table);
     dead_tables++;
@@ -1737,6 +2030,10 @@ static inline size_t VObjectSize(VObject const * o) {
       return sizeof(VHashTable);
     case VFUTURE:
       return sizeof(VFuture);
+    case VEPHEMERON:
+      return sizeof(VEphemeron);
+    case VTRANSPORT_EPHEMERON:
+      return sizeof(VTransportEphemeron);
     default:
       fprintf(stderr, "Unknown object (tag: %hd) in heap.\n", o->tag);
       VAbortC(NULL, VERROR);
@@ -1815,6 +2112,23 @@ static inline void VShiftFuture(VObject * o, void const * old, void const * olde
     VShiftWord(&future->val, old, oldend, shift);
 }
 
+static inline void VShiftEphemeron(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  VEphemeron * eph = (VEphemeron*)o;
+  VShiftWord(&eph->p.key, old, oldend, shift);
+  VShiftWord(&eph->p.datum, old, oldend, shift);
+}
+static inline void VShiftTransportEphemeron(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  VTransportEphemeron * te = (VTransportEphemeron*)o;
+  VWORD oldkey = te->e.p.key;
+  VShiftEphemeron(o, old, oldend, shift);
+  if(!VIsEq(oldkey, te->e.p.key))
+    VSignalTransportEphemeron(NULL, te);
+
+  VShiftWord(&te->luggage, old, oldend, shift);
+  VShiftWord(&te->guardian_or_chain, old, oldend, shift);
+}
+
+
 // adds shift to all pointers inside o that fall within the range [old,oldend), nonrecursively
 static inline void VShiftObject(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
   switch(o->tag) {
@@ -1853,6 +2167,12 @@ static inline void VShiftObject(VObject * o, void const * old, void const * olde
       return;
     case VFUTURE:
       VShiftFuture(o, old, oldend, shift);
+      return;
+    case VEPHEMERON:
+      VShiftEphemeron(o, old, oldend, shift);
+      return;
+    case VTRANSPORT_EPHEMERON:
+      VShiftTransportEphemeron(o, old, oldend, shift);
       return;
     default:
       fprintf(stderr, "Unknown object (tag: %hd) in heap.\n", o->tag);
@@ -2094,7 +2414,7 @@ static SYSV_CALL void VFPrintfC(VRuntime * runtime, VPort * p, char const * str,
 // during GC
 // null is an acceptable value for container: the mutation will always be tracked
 SYSV_CALL void VTrackMutation(VRuntime * runtime, void * container, VWORD * slot, VWORD val) {
-  // TODO: USE A HASH TABLE TO AVOID DUPLICATE TRACKING
+  // TODO: use a hash table to avoid duplicate tracking
   if(runtime->VNumTrackedMutations >= runtime->VTrackedMutationsSize) {
     if(!runtime->VTrackedMutations)
       runtime->VTrackedMutationsSize = 128;
@@ -2231,7 +2551,6 @@ static bool VDefineImpl(VRuntime * runtime, VWORD sym, VWORD val, bool is_set) {
     if(is_set) return false;
 
     place = VInsertGlobalEntry(runtime, hash, sym, val);
-    // symbol table is never moved, no need to worry about forwards
     VTrackMutation(runtime, NULL, &place->symbol, sym);
   }
   
@@ -3049,6 +3368,11 @@ static void VDisplayWordImpl(VPort * port, VWORD v, bool write, int depth) {
         case VFUTURE:
         {
           port_fputs("#future", port);
+          break;
+        }
+        case VEPHEMERON:
+        {
+          port_fputs("#ephemeron", port);
           break;
         }
         default:

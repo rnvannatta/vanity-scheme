@@ -912,6 +912,89 @@ static uint64_t VEqHashImpl(VWORD x) {
   return vhash64_quick(VBits(x));
 }
 
+V_BEGIN_FUNC_BASIC(VAnyWeakPairP, "any-weak-pair?", 1, eph)
+  return VEncodeBool(VIsWeak(eph));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VAnyEphemeronP, "any-ephemeron?", 1, eph)
+  return VEncodeBool(VIsEphemeral(eph));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VAnyTransportPairP, "any-transport-pair?", 1, eph)
+  return VEncodeBool(VIsAnyTransportPair(eph));
+V_END_FUNC
+
+V_BEGIN_FUNC_RANGE(VMakeKeyDatumPair, "make-key-datum-pair", 2, 3, k, key, datum)
+  VPair p = {
+    .base = VMakeObject(VPAIR),
+    .key = key,
+    .datum = argc == 3 ? datum : VFALSE,
+  };
+  p.base.flags |= VFLAG_IMMUTABLE;
+  V_BOUNCE(k, runtime, VEncodePointer(&p, VPOINTER_PAIR));
+V_END_FUNC
+
+V_BEGIN_FUNC(VMakeEphemeron, "make-ephemeron", 3, k, key, datum)
+  VEphemeron eph = {
+    .p = {
+      .base = VMakeObject(VEPHEMERON),
+      .key = key,
+      .datum = datum,
+    },
+  };
+  V_BOUNCE(k, runtime, VEncodePointer(&eph, VPOINTER_OTHER));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VEphemeronP, "ephemeron?", 1, eph)
+  return VEncodeBool(VIsEphemeron(eph));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VKeyDatumPairBrokenP, "key-datum-pair-broken?", 1, _eph)
+  if(VWordType(_eph) == VPOINTER_PAIR)
+    return VFALSE;
+  VEphemeron * kd = VCheckedDecodeAnyKeyDatumPair(runtime, _eph, "key-datum-pair-broken?");
+  return VEncodeBool(kd->p.base.flags & VFLAG_BROKEN);
+V_END_FUNC
+
+V_BEGIN_FUNC(VKeyDatumPairUnpack, "key-datum-pair-unpack", 2, k, _eph)
+  if(VWordType(_eph) == VPOINTER_PAIR) {
+    VPair * p = VDecodePair(_eph);
+    V_BOUNCE(k, runtime, VFALSE, p->key, p->datum);
+  } else {
+    VEphemeron * eph = VCheckedDecodeAnyKeyDatumPair(runtime, _eph, "key-datum-pair-unpack");
+    V_BOUNCE(k, runtime, VEncodeBool(eph->p.base.flags & VFLAG_BROKEN), eph->p.key, eph->p.datum);
+  }
+V_END_FUNC
+
+V_BEGIN_FUNC(VMakeTransportEphemeron, "make-transport-ephemeron", 5, k, guardian, key, datum, luggage)
+  VTransportEphemeron te = {
+    .e = {
+      .p = {
+        .base = VMakeObject(VTRANSPORT_EPHEMERON),
+        .key = key,
+        .datum = datum,
+      },
+    },
+    .guardian_or_chain = guardian,
+    .luggage = luggage,
+  };
+  V_BOUNCE(k, runtime, VEncodePointer(&te, VPOINTER_OTHER));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VTransportEphemeronP, "transport-ephemeron?", 1, eph)
+  return VEncodeBool(VIsTransportEphemeron(eph));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VTransportPairSignaledP, "transport-pair-signaled?", 1, _tp)
+  VTransportEphemeron * tp = VCheckedDecodeAnyTransportPair(runtime, _tp, "transport-pair-signaled?");
+  return VEncodeBool(VIsEq(tp->guardian_or_chain, VNULL) || VWordType(tp->guardian_or_chain) == VPOINTER_PAIR);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VTransportPairLuggage, "transport-pair-luggage", 1, _tp)
+  VTransportEphemeron * tp = VCheckedDecodeAnyTransportPair(runtime, _tp, "transport-pair-luggage");
+  return tp->luggage;
+V_END_FUNC
+
 // hash tables
 SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VHashTable * table, VVector * vec, VWORD key, VWORD val, unsigned flags) {
   uint64_t capacity = vec->len / 3;
