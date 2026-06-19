@@ -103,7 +103,8 @@ V_BEGIN_FUNC(VSignalingProcedure, "##signaling-procedure", 1, k)
   VClosure * loc = runtime->exception_location;
   if(!loc)
     V_BOUNCE(k, runtime, VFALSE);
-  VClosure proc = VMakeClosure2(loc->func, loc->env->up);
+  VClosure * proc = VAlloca(runtime, sizeof(VClosure));
+  *proc = VMakeClosure2(loc->func, loc->env->up);
   V_BOUNCE(k, runtime, VEncodeClosure(&proc));
 }
 
@@ -120,5 +121,5 @@ V_BEGIN_FUNC(VSignalingArguments, "##signaling-arguments", 1, k)
   for(int i = 0; i < len; i++)
     vec->arr[i] = loc->env->vars[i];
 
-  V_CALL(k, runtime, VEncodePointer(vec, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(vec, VPOINTER_OTHER));
 }

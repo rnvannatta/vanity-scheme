@@ -34,7 +34,7 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
       if(env->num_vars < req_argc)
         VErrorC(runtime, "not enough arguments to lambda: expected ~D or more, got ~D~N", req_argc, env->num_vars);
       if(env->num_vars == req_argc) {
-        VEnv * newenv = alloca(sizeof(VEnv)+sizeof(VWORD[req_argc+1]));
+        VEnv * newenv = VAlloca(runtime, sizeof(VEnv)+sizeof(VWORD[req_argc+1]));
         VInitEnv(newenv, req_argc+1, req_argc+1, env->up);
         memcpy(newenv->vars, env->vars, sizeof(VWORD[req_argc]));
         newenv->vars[req_argc] = VNULL;
@@ -44,7 +44,7 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
         env->num_vars = req_argc+1;
         VWORD lst = VNULL;
         for(int i = nvars-1; i >= req_argc; i--) {
-          VPair * p = alloca(sizeof(VPair));
+          VPair * p = VAlloca(runtime, sizeof(VPair));
           *p = VMakePair(env->vars[i], lst);
           lst = VEncodePair(p);
         }
@@ -68,7 +68,7 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
         pc += fail;
       } else {
         if(env->num_vars == req_argc) {
-          VEnv * newenv = alloca(sizeof(VEnv)+sizeof(VWORD[req_argc+1]));
+          VEnv * newenv = VAlloca(runtime, sizeof(VEnv)+sizeof(VWORD[req_argc+1]));
           VInitEnv(newenv, req_argc+1, req_argc+1, env->up);
           memcpy(newenv->vars, env->vars, sizeof(VWORD[req_argc]));
           newenv->vars[req_argc] = VNULL;
@@ -77,7 +77,7 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
           env->num_vars = req_argc+1;
           VWORD lst = VNULL;
           for(int i = nvars-1; i >= req_argc; i--) {
-            VPair * p = alloca(sizeof(VPair));
+            VPair * p = VAlloca(runtime, sizeof(VPair));
             *p = VMakePair(env->vars[i], lst);
             lst = VEncodePair(p);
           }
@@ -110,12 +110,12 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
       }
 
       // then make a dummy closure to hold env
-      VEnv * trampoline_env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+      VEnv * trampoline_env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
       VInitEnv(trampoline_env, 2, 2, closure_env);
       trampoline_env->vars[0] = VEncodePointer(tape, VPOINTER_OTHER);
       trampoline_env->vars[1] = VEncodeInt(closure_pc);
       //then push a closure of the trampoline and that env on the stack
-      VClosure * closure = alloca(sizeof(VClosure));
+      VClosure * closure = VAlloca(runtime, sizeof(VClosure));
       *closure = VMakeClosure2(VEvalVasmLambdaTrampoline, trampoline_env);
       stack[stackptr++] = VEncodeClosure(closure);
     }
@@ -133,17 +133,17 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
       void * lookup = VLoadFunction(runtime, data_name->first);
       VWORD foreign_func = VEncodeForeignPointer(lookup);
 
-      VEnv * closure_env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+      VEnv * closure_env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
       VInitEnv(closure_env, 3, 3, NULL);
       closure_env->vars[0] = foreign_func;
       closure_env->vars[1] = data_ret->first;
       closure_env->vars[2] = data_name->rest;
-      VClosure * closure = alloca(sizeof(VClosure));
+      VClosure * closure = VAlloca(runtime, sizeof(VClosure));
       *closure = VMakeClosure2(VEvalVasmForeignLambda, closure_env);
       stack[stackptr++] = VEncodeClosure(closure);
     }
     else if(!strcmp(name, "push-set!")) {
-      VClosure * closure = alloca(sizeof(VClosure));
+      VClosure * closure = VAlloca(runtime, sizeof(VClosure));
       *closure = VMakeClosure2((VFunc)VSetEnvVar2, env);
       stack[stackptr++] = VEncodeClosure(closure);
     }
@@ -185,7 +185,7 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
       if(start < 0)
         VErrorC(runtime, "eval-vasm: not enough args for call, have ~D, expecting ~D~N", stackptr, nargs);
       VClosure * f = VDecodeClosureApply2(runtime, stack[start]);
-      VEnvironment * environ = alloca(sizeof(VEnvironment)+sizeof(VWORD[nargs-1]));
+      VEnvironment * environ = VAlloca(runtime, sizeof(VEnvironment)+sizeof(VWORD[nargs-1]));
       *environ = (VEnvironment){
         .base = { .tag = VENVIRONMENT },
         .runtime = runtime,
@@ -199,7 +199,7 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
       VPair * data = VCheckedDecodePair2(runtime, ins->rest, "eval-vasm: malformed letrec-begin");
       int numvars = VCheckedDecodeInt2(runtime, data->first, "eval-vasm: malformed letrec-end");
 
-      VEnv * newenv = alloca(sizeof(VEnv)+sizeof(VWORD[numvars]));
+      VEnv * newenv = VAlloca(runtime, sizeof(VEnv)+sizeof(VWORD[numvars]));
       VInitEnv(newenv, numvars, numvars, env);
       for(int i = 0; i < numvars; i++) newenv->vars[i] = VFALSE;
       env = newenv;
@@ -247,7 +247,7 @@ void VEvalVasmLambdaTrampoline(V_CORE_ARGS, ...) {
     VWORD pc = statics->vars[1];
     VEnv * upenv = statics->up;
 
-    VEnv * env = alloca(sizeof(VEnv) + sizeof(VWORD[argc]));
+    VEnv * env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[argc]));
     *env = (VEnv){ .base = { .tag = VENV }, .num_vars = argc, .var_len = argc, .up = upenv };
     for(int i = 0; i < argc; i++) {
       env->vars[i] = va_arg(argv, VWORD);
@@ -272,7 +272,7 @@ void VEvalVasmForeignLambda(V_CORE_ARGS, ...) {
     VPair args_root = VMakePair(VNULL, VNULL);
     VPair * args_cur = &args_root;
     for(int i = 1; i < argc; i++) {
-      VPair * pair = alloca(sizeof(VPair));
+      VPair * pair = VAlloca(runtime, sizeof(VPair));
       *pair = VMakePair(va_arg(argv, VWORD), VNULL);
       args_cur->rest = VEncodePair(pair);
       args_cur = pair;
@@ -299,12 +299,12 @@ static void VMakeVasmLambdaImpl(V_CORE_ARGS, VWORD k, VWORD tape, VWORD pc) {
   V_ARG_CHECK3(runtime, "make-vasm-lambda", 3, argc);
   V_GC_CHECK2_VARARGS((VFunc)VEvalVasmToplevelImpl, runtime, statics, 3, argc, k, tape, pc) {
     // make a dummy closure to hold env
-    VEnv * closure_env = alloca(sizeof(VEnv) + sizeof(VWORD[2]));
+    VEnv * closure_env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
     VInitEnv(closure_env, 2, 2, NULL);
     closure_env->vars[0] = tape;
     closure_env->vars[1] = pc;
     //then push a closure of the trampoline and that env on the stack
-    VClosure * closure = alloca(sizeof(VClosure));
+    VClosure * closure = VAlloca(runtime, sizeof(VClosure));
     *closure = VMakeClosure2(VEvalVasmLambdaTrampoline, closure_env);
     V_CALL(k, runtime, VEncodeClosure(closure));
   }
