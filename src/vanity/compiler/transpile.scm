@@ -553,7 +553,7 @@
                   (printf " VWORD _varargs = VNULL;~N")
                   (printf " V_GATHER_VARARGS_PUREC(&_varargs, ~A, argc);~N" num)
                   (printf " if(argc == ~A) {~N" num)
-                  (printf "   VEnv * newself = alloca(sizeof(VEnv) + sizeof(VWORD[~A+1]));~N" num)
+                  (printf "   VEnv * newself = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[~A+1]));~N" num)
                   (printf "   memcpy(newself, self, sizeof(VEnv) + sizeof(VWORD[~A]));~N" num)
                   (printf "   self = newself; newself->var_len = ~A+1;~N" num)
                   (printf " }~N")
