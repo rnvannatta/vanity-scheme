@@ -994,30 +994,6 @@ static VEphemeron * VMoveEphemeron(VRuntime * runtime, VEphemeron * eph, bool is
   return eph;
 }
 
-#if 0
-SYSV_CALL static VTransportCell * VMoveTransportCell(VRuntime * runtime, VTransportCell * pair) {
-  VTransportCell * ret = VMoveObject(runtime, pair, sizeof(VTransportCell));
-
-  VTransportCell * old = ret;
-  while(old->next_in_chain) {
-    void * next_in_chain = old->next_in_chain;
-
-    void * forward = VForwarded(next_in_chain);
-    if(forward) {
-      old->next_in_chain = forward;
-      break;
-    }
-    if(!VNeedsMove(runtime, next_in_chain))
-      break;
-
-    next_in_chain = VMoveObject(runtime, next_in_chain, sizeof(VTransportCell));
-    old->next_in_chain = next_in_chain;
-    old = next_in_chain;
-  }
-  return ret;
-}
-#endif
-
 SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
   if(!VIsPointer(word)) {
     if(VIsForeignPointer(word))
@@ -1077,26 +1053,23 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
           VBlob * b = ptr;
           size_t size = sizeof(VBlob) + (b->len + sizeof(VWORD) - 1)/sizeof(VWORD) * sizeof(VWORD);
           return VEncodePointer(VMoveObject(runtime, b, size), VPOINTER_OTHER);
-          break;
         }
         case VVECTOR:
         case VRECORD:
+        case VTRANSPORT_GUARDIAN:
         {
           VVector * v = ptr;
           return VEncodePointer(VMoveObject(runtime, v, sizeof(VVector) + sizeof(VWORD[v->len])), VPOINTER_OTHER);
-          break;
         }
         case VHASH_TABLE:
         {
           VHashTable * v = ptr;
           return VEncodePointer(VMoveObject(runtime, v, sizeof(VHashTable)), VPOINTER_OTHER);
-          break;
         }
         case VPORT:
         {
           VPort * p = ptr;
           return VEncodePointer(VMoveObject(runtime, p, sizeof(VPort)), VPOINTER_OTHER);
-          break;
         }
         case VFUTURE:
         {
@@ -1109,24 +1082,17 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
           eph = VMoveEphemeron(runtime, eph, false);
           return VEncodePointer(eph, VPOINTER_OTHER);
         }
+        case VTRANSPORT_PAIR:
+        {
+          VTransportEphemeron * tp = ptr;
+          return VEncodePointer(VMoveObject(runtime, tp, sizeof(VTransportEphemeron)), VPOINTER_OTHER);
+        }
         case VTRANSPORT_EPHEMERON:
         {
           VEphemeron * eph = ptr;
           eph = VMoveEphemeron(runtime, eph, true);
           return VEncodePointer(eph, VPOINTER_OTHER);
         }
-#if 0
-        case VTRANSPORT_CELL:
-        {
-          VTransportCell * tc = ptr;
-          tc = VMoveTransportCell(runtime, tc);
-          if(!(tc->base.flags & VFLAG_BROKEN) && tc->guardian) {
-            tc->next_to_scan = runtime->transport_cells;
-            runtime->transport_cells = tc;
-          }
-          return VEncodePointer(tc, VPOINTER_OTHER);
-        }
-#endif
         default:
           fprintf(stderr, "Unknown tag %u in VMoveDispatch. Heap corruption?\n", tag);
           VAbortC(NULL, VERROR);
@@ -1203,25 +1169,21 @@ SYSV_CALL static void VCheneyFuture(VRuntime * runtime, VFuture * future) {
   }
 }
 
+static void VEnqueueSignalingTransportEphemeron(VRuntime * runtime, VTransportEphemeron * te);
 SYSV_CALL static void VCheneyTransportEphemeron(VRuntime * runtime, VTransportEphemeron * te, bool scan_key, bool scan_datum) {
-  if(scan_key)
-    te->e.p.key = VMoveDispatch(runtime, te->e.p.key);
   if(scan_datum)
     te->e.p.datum = VMoveDispatch(runtime, te->e.p.datum);
 
   te->luggage = VMoveDispatch(runtime, te->luggage);
   te->guardian_or_chain = VMoveDispatch(runtime, te->guardian_or_chain);
+
+  if(scan_key) {
+    VWORD old_key = te->e.p.key;
+    te->e.p.key = VMoveDispatch(runtime, te->e.p.key);
+    if(!VIsEq(old_key, te->e.p.key))
+      VEnqueueSignalingTransportEphemeron(runtime, te);
+  }
 }
-#if 0
-SYSV_CALL static void VCheneyTransportCell(VRuntime * runtime, VTransportCell * tc) {
-  /* Defer scanning key, since key is weakly held. Plainly so unlike ephemerons. */
-  tc->value = VMoveDispatch(runtime, tc->value);
-  tc->prev_in_chain = (void*)VDecodePointer(VMoveDispatch(runtime, VEncodePointer(tc->prev_in_chain, VPOINTER_OTHER)));
-  // next in chain handled by VMoveTransportCell
-  tc->guardian = VMovePair(runtime, tc->guardian);
-  // next to scan only exists during gc
-}
-#endif
 
 SYSV_CALL static VWORD * VCheneyScan(VRuntime * runtime, VWORD * cur) {
   switch(*(VNEWTAG*)cur) {
@@ -1253,6 +1215,7 @@ SYSV_CALL static VWORD * VCheneyScan(VRuntime * runtime, VWORD * cur) {
     }
     case VVECTOR:
     case VRECORD:
+    case VTRANSPORT_GUARDIAN:
     {
       VVector * v = ((VVector*)cur);
       VCheneyVector(runtime, v);
@@ -1298,15 +1261,13 @@ SYSV_CALL static VWORD * VCheneyScan(VRuntime * runtime, VWORD * cur) {
       return cur + (sizeof(VTransportEphemeron))/sizeof(VWORD);
       break;
     }
-#if 0
-    case VTRANSPORT_CELL:
+    case VTRANSPORT_PAIR:
     {
-      VTransportCell * tc = ((VTransportCell*)cur);
-      VCheneyTransportCell(runtime, tc);
-      return cur + (sizeof(VTransportCell))/sizeof(VWORD);
+      VTransportEphemeron * te = ((VTransportEphemeron*)cur);
+      VCheneyTransportEphemeron(runtime, te, true, true);
+      return cur + (sizeof(VTransportEphemeron))/sizeof(VWORD);
       break;
     }
-#endif
   }
   fprintf(stderr, "Unknown tag %u in VCheneyScan. Heap Corruption? -CheneyScan\n", (int)(*(VNEWTAG*)cur));
   VPrintCallHistory(runtime);
@@ -1388,7 +1349,6 @@ SYSV_CALL void VGarbageCollect2Args(VFunc f, VRuntime * runtime, VEnv * statics,
 static bool VScanFinalizers(VRuntime * runtime, VFinalizerTable * new_table, VFinalizerTable ** dead_tables);
 static VWORD VScheduleFinalizers(VRuntime * runtime, VWORD k, VFinalizerTable * new_table, VFinalizerTable ** dead_tables);
 
-static void VSignalTransportEphemeron(VRuntime * runtime, VTransportEphemeron * te);
 static bool VScanEphemerons(VRuntime * runtime) {
   bool resurrected_values = false;
   VEphemeron * ephs = runtime->ephemerons;
@@ -1399,10 +1359,12 @@ static bool VScanEphemerons(VRuntime * runtime) {
     VWORD _key = eph->p.key;
 
     bool needs_move = VIsPointer(_key);
+    bool forwarded = false;
     if(needs_move) {
       void * key = VDecodePointer(_key);
       void * forward = VForwarded(key);
       if(forward) {
+        forwarded = true;
         key = forward;
         // key was moved, references still exist
         needs_move = false;
@@ -1416,11 +1378,6 @@ static bool VScanEphemerons(VRuntime * runtime) {
           default:
             eph->p.key = VEncodePointer(key, VPOINTER_OTHER);
             break;
-        }
-
-        if(eph->p.base.tag == VTRANSPORT_EPHEMERON) {
-          VTransportEphemeron * te = (VTransportEphemeron*)eph;
-          VSignalTransportEphemeron(NULL, te);
         }
       } else {
         needs_move = VNeedsMove(runtime, key);
@@ -1436,6 +1393,11 @@ static bool VScanEphemerons(VRuntime * runtime) {
       *parent_slot = eph->gc_next;
       ephs = eph->gc_next;
       eph->gc_next = NULL;
+      
+      if(forwarded && eph->p.base.tag == VTRANSPORT_EPHEMERON) {
+        VTransportEphemeron * te = (VTransportEphemeron*)eph;
+        VEnqueueSignalingTransportEphemeron(runtime, te);
+      }
     } else {
       parent_slot = &eph->gc_next;
       ephs = eph->gc_next;
@@ -1446,10 +1408,86 @@ static bool VScanEphemerons(VRuntime * runtime) {
 
 volatile sig_atomic_t _Atomic VInterruptSignal;
 
-static void VSignalTransportEphemeron(VRuntime * runtime, VTransportEphemeron * te) {
-  assert(runtime == NULL);
-  assert(VIsEq(te->guardian_or_chain, VNULL) || VIsEq(te->guardian_or_chain, VFALSE));
-  te->guardian_or_chain = VNULL;
+static void VEnqueueSignalingTransportEphemeron(VRuntime * runtime, VTransportEphemeron * te) {
+  assert(runtime != NULL);
+  // only allowed in main
+  if(!VIsMain(runtime)) {
+    fprintf(stderr, "transport pairs not allowed in fibers atm.\n");
+    VAbortC(NULL, VERROR);
+  }
+
+  // no guardian, just signal
+  if(VIsEq(te->guardian_or_chain, VFALSE)) {
+    te->guardian_or_chain = VNULL;
+    return;
+  }
+  // already signaled
+  if(VIsEq(te->guardian_or_chain, VNULL)) {
+    return;
+  }
+
+  // logic assert that this is ready to use and we're not trampling anything
+  assert(!te->e.gc_next);
+  te->e.gc_next = (VEphemeron*)runtime->signaling_transport_ephemerons;
+  runtime->signaling_transport_ephemerons = te;
+}
+
+static void VSignalTransportEphemerons(VRuntime * runtime) {
+  VTransportEphemeron * tes = runtime->signaling_transport_ephemerons;
+  runtime->signaling_transport_ephemerons = NULL;
+  VTransportEphemeron * te = NULL;
+  while(tes) {
+    te = tes;
+    // check if already signaled
+    // annoying to check mid-scan because of pointer forwarding
+    if(!VIsAnyTransportPair(te->guardian_or_chain)) {
+      if(!VIsPointer(te->guardian_or_chain)) {
+        goto invalid_guardian;
+      }
+      void * ptr = VDecodePointer(te->guardian_or_chain);
+      VNEWTAG tag = *(VNEWTAG*)ptr;
+      if(tag != VTRANSPORT_GUARDIAN) {
+        goto invalid_guardian;
+      }
+      VVector * guardian = ptr;
+      if(guardian->len != 3) {
+        VFPrintfC(runtime, (VPort[]){get_port_stderr()}, "Malformed guardian in transport pair: ~A~N", te->guardian_or_chain);
+        VAbortC(NULL, VERROR);
+      }
+      // 0: reserved
+      // 1: start of queue
+      // 2: end of queue
+      VWORD teword = VEncodePointer(te, VPOINTER_OTHER);
+      VWORD * end_of_queue = &guardian->arr[2];
+
+      if(VIsAnyTransportPair(*end_of_queue)) {
+        VTransportEphemeron * last_te = (void*)VDecodePointer(*end_of_queue);
+        last_te->guardian_or_chain = teword;
+        VTrackMutation(runtime, last_te, &last_te->guardian_or_chain, teword);
+
+        *end_of_queue = teword;
+        VTrackMutation(runtime, guardian, end_of_queue, teword);
+        te->guardian_or_chain = VNULL;
+      } else if(VIsEq(*end_of_queue, VNULL)) {
+        VWORD * start_of_queue = &guardian->arr[1];
+
+        *start_of_queue = teword;
+        *end_of_queue = teword;
+        VTrackMutation(runtime, guardian, start_of_queue, teword);
+        VTrackMutation(runtime, guardian, end_of_queue, teword);
+        te->guardian_or_chain = VNULL;
+      } else {
+        VFPrintfC(runtime, (VPort[]){get_port_stderr()}, "Invalid object in transport-guardian queue: ~A~N", *end_of_queue);
+        VAbortC(NULL, VERROR);
+      }
+    }
+    tes = (VTransportEphemeron*)te->e.gc_next;
+    te->e.gc_next = NULL;
+  }
+  return;
+invalid_guardian:
+  VFPrintfC(runtime, (VPort[]){get_port_stderr()}, "Invalid guardian in transport pair: ~A~N", te->guardian_or_chain);
+  VAbortC(NULL, VERROR);
 }
 
 static VWORD * GC_EmptyGraySet(VRuntime * runtime, VWORD * cur)
@@ -1577,6 +1615,8 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
         runtime->tracked_hash_tables[i]->flags |= HFLAG_DIRTY;
       }
     }
+    runtime->num_tracked_hash_tables = 0;
+
     if(runtime->VTrackedMutations) {
       for(unsigned i = 0; i < runtime->VNumTrackedMutations; i++) {
         // of interest is that because container is in the heap
@@ -1595,6 +1635,7 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
         *slot = VMoveDispatch(runtime, *slot);
       }
     }
+    runtime->VNumTrackedMutations = 0;
 
     // Finalizers are only processed during major gcs, so we need
     // to manually copy them over during minor gcs
@@ -1609,7 +1650,11 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
         VSetFinalizerImpl(runtime, table, mem, finalizer);
       }
     }
+  } else {
+    runtime->VNumTrackedMutations = 0;
+    runtime->num_tracked_hash_tables = 0;
   }
+
   // all finalizers returned from a fiber are living, but it's tricky to handle them anyway
   if(runtime->num_unreaped_arenas) {
     VFinalizerTable * table = &runtime->VHeapFinalizers[runtime->VActiveHeap];
@@ -1629,10 +1674,6 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
     VFinalizerTable * table = &runtime->VHeapFinalizers[runtime->VActiveHeap];
     table->new_finalizers_start = table->num_finalizers;
   }
-  //printf("%d mutations\n", runtime->VNumTrackedMutations);
-
-  runtime->VNumTrackedMutations = 0;
-  runtime->num_tracked_hash_tables = 0;
 
   if(runtime->VGrowSymtable || runtime->VNumGlobals >= runtime->VNumGlobalSlots * 0.8)
   {
@@ -1715,6 +1756,8 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
       eph->gc_next = NULL;
     }
   }
+
+  VSignalTransportEphemerons(runtime);
 
 #if 0
   {
@@ -2006,7 +2049,8 @@ static inline size_t VObjectSize(VObject const * o) {
     case VENV:
       return VEnvSize(o);
     case VCONTENV:
-      assert(0);
+      fprintf(stderr, "internal error in garbage collection. heap corruption?\n");
+      VAbortC(NULL, VERROR);
       return 0;
     case VCLOSURE:
       return sizeof(VClosure);
@@ -2015,6 +2059,7 @@ static inline size_t VObjectSize(VObject const * o) {
       return sizeof(VPair);
     case VVECTOR:
     case VRECORD:
+    case VTRANSPORT_GUARDIAN:
       return VVectorSize(o);
     case VSYMBOL:
     case VSTRING:
@@ -2032,6 +2077,7 @@ static inline size_t VObjectSize(VObject const * o) {
       return sizeof(VFuture);
     case VEPHEMERON:
       return sizeof(VEphemeron);
+    case VTRANSPORT_PAIR:
     case VTRANSPORT_EPHEMERON:
       return sizeof(VTransportEphemeron);
     default:
@@ -2121,11 +2167,11 @@ static inline void VShiftTransportEphemeron(VObject * o, void const * old, void 
   VTransportEphemeron * te = (VTransportEphemeron*)o;
   VWORD oldkey = te->e.p.key;
   VShiftEphemeron(o, old, oldend, shift);
-  if(!VIsEq(oldkey, te->e.p.key))
-    VSignalTransportEphemeron(NULL, te);
-
   VShiftWord(&te->luggage, old, oldend, shift);
   VShiftWord(&te->guardian_or_chain, old, oldend, shift);
+
+  if(!VIsEq(oldkey, te->e.p.key))
+    VEnqueueSignalingTransportEphemeron(NULL, te);
 }
 
 
@@ -2146,7 +2192,8 @@ static inline void VShiftObject(VObject * o, void const * old, void const * olde
       VShiftEnv(o, old, oldend, shift);
       return;
     case VCONTENV:
-      assert(0);
+      fprintf(stderr, "internal error in garbage collection. heap corruption?\n");
+      VAbortC(NULL, VERROR);
       return;
     case VCLOSURE:
       VShiftClosure(o, old, oldend, shift);
@@ -2157,6 +2204,7 @@ static inline void VShiftObject(VObject * o, void const * old, void const * olde
       return;
     case VVECTOR:
     case VRECORD:
+    case VTRANSPORT_GUARDIAN:
       VShiftVector(o, old, oldend, shift);
       return;
     case VRUNTIME:
@@ -2171,7 +2219,10 @@ static inline void VShiftObject(VObject * o, void const * old, void const * olde
     case VEPHEMERON:
       VShiftEphemeron(o, old, oldend, shift);
       return;
+    case VTRANSPORT_PAIR:
     case VTRANSPORT_EPHEMERON:
+      fprintf(stderr, "transport pairs in fibers not allowed\n");
+      VAbortC(NULL, VERROR);
       VShiftTransportEphemeron(o, old, oldend, shift);
       return;
     default:
@@ -3375,6 +3426,21 @@ static void VDisplayWordImpl(VPort * port, VWORD v, bool write, int depth) {
           port_fputs("#ephemeron", port);
           break;
         }
+        case VTRANSPORT_PAIR:
+        {
+          port_fputs("#transport-pair", port);
+          break;
+        }
+        case VTRANSPORT_EPHEMERON:
+        {
+          port_fputs("#transport-ephemeron", port);
+          break;
+        }
+        case VTRANSPORT_GUARDIAN:
+        {
+          port_fputs("#transport-guardian", port);
+          break;
+        }
         default:
           port_fputs("#pointer", port);
           break;
@@ -4228,41 +4294,44 @@ V_BEGIN_FUNC(VAsync, "async", 2, k, future_thunk)
     }
     if(VWordType(future_thunk) != VPOINTER_CLOSURE)
       VErrorC(runtime, "async: not a procedure ~S\n", future_thunk);
-    VLaunchFiberData thunk_data = {
+    VLaunchFiberData * thunk_data = VAlloca(runtime, sizeof(VLaunchFiberData));
+    *thunk_data = (VLaunchFiberData) {
       .thunk = future_thunk,
       .base_runtime = runtime,
       .my_runtime = NULL,
     };
-    VFiber * future_fiber = VPushFiber(runtime->fiber_context, runtime->my_fiber, VLaunchFiber, &thunk_data);
-    VFuture future = {
+    VFiber * future_fiber = VPushFiber(runtime->fiber_context, runtime->my_fiber, VLaunchFiber, thunk_data);
+    VFuture * future = VAlloca(runtime, sizeof(VFuture));
+    *future = (VFuture) {
       .base = { .tag = VFUTURE, .flags = 0, .pincount = 0, .forward_offset = 0 },
       .lock = NULL,
       .val = VVOID,
     };
-    atomic_init(&future.fiber, future_fiber);
-    VFiberLockCreate(&future.lock);
+    atomic_init(&future->fiber, future_fiber);
+    VFiberLockCreate(&future->lock);
 
-    VLaunchAwaiterData awaiter_data = {
+    VLaunchAwaiterData * awaiter_data = VAlloca(runtime, sizeof(VLaunchAwaiterData)); 
+    *awaiter_data = (VLaunchAwaiterData) {
       .k = k,
-      .future = VEncodePointer(&future, VPOINTER_OTHER),
+      .future = VEncodePointer(future, VPOINTER_OTHER),
       .base_runtime = runtime,
       .my_runtime = NULL,
     };
-    VFiber * awaiter_fiber = VPushFiber(runtime->fiber_context, runtime->my_fiber, VLaunchAwaiter, &awaiter_data);
+    VFiber * awaiter_fiber = VPushFiber(runtime->fiber_context, runtime->my_fiber, VLaunchAwaiter, awaiter_data);
 
     VWORD resume_thunk = VWord(VFiberWait(runtime->fiber_context, awaiter_fiber, runtime->my_fiber));
 
-    if(atomic_load(&future.fiber))
+    if(atomic_load(&future->fiber))
       VErrorC(runtime, "async control flow error: async-join occured even though the future hasn't been awaited\n");
 
     // Grab pieces of state not represented in the continuation
-    runtime->dynamics = awaiter_data.my_runtime->dynamics;
-    runtime->exception_handlers = awaiter_data.my_runtime->exception_handlers;
-    runtime->exception_location = awaiter_data.my_runtime->exception_location;
+    runtime->dynamics = awaiter_data->my_runtime->dynamics;
+    runtime->exception_handlers = awaiter_data->my_runtime->exception_handlers;
+    runtime->exception_location = awaiter_data->my_runtime->exception_location;
 
     VRuntime * runtimes[2] = {
-      awaiter_data.my_runtime,
-      thunk_data.my_runtime,
+      awaiter_data->my_runtime,
+      thunk_data->my_runtime,
     };
 
     VPushHalfReapedRuntimes(runtime, 2, runtimes);

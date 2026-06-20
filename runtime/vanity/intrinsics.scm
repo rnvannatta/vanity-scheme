@@ -222,10 +222,6 @@
          ((##vcore.stdout->port) "VStdoutPort")
          ((##vcore.stderr->port) "VStderrPort")
 
-         ((##vcore.dup-stdin) "VDupStdin2")
-         ((##vcore.dup-stdout) "VDupStdout2")
-         ((##vcore.dup-stderr) "VDupStderr2")
-
          ((##vcore.open-input-stream) "VOpenInputStream2")
          ((##vcore.open-output-stream) "VOpenOutputStream2")
          ((##vcore.close-stream) "VCloseStream2")
@@ -611,10 +607,6 @@
          ((##vcore.stdin->port) ##vcore.stdin->port)
          ((##vcore.stdout->port) ##vcore.stdout->port)
          ((##vcore.stderr->port) ##vcore.stderr->port)
-
-         ((##vcore.dup-stdin) ##vcore.dup-stdin)
-         ((##vcore.dup-stdout) ##vcore.dup-stdout)
-         ((##vcore.dup-stderr) ##vcore.dup-stderr)
 
          ((##vcore.open-input-stream) ##vcore.open-input-stream)
          ((##vcore.open-output-stream) ##vcore.open-output-stream)

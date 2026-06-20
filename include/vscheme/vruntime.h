@@ -211,9 +211,10 @@ enum VTAG {
   VFUTURE,
   VWEAK_PAIR, /* TODO */
   VEPHEMERON,
-  VTRANSPORT_PAIR, /* TODO */
+  VTRANSPORT_PAIR,
   VWEAK_TRANSPORT_PAIR, /* TODO */
   VTRANSPORT_EPHEMERON,
+  VTRANSPORT_GUARDIAN,
   VTAG_END
 };
 static_assert(VTAG_END < 255, "");
@@ -492,6 +493,9 @@ typedef struct VPair {
 //          can't clear it easily
 typedef struct VEphemeron {
   VPair p;
+  // used to thread ephemeron lists and weak lists
+  // after a key is proved alive, if it is a transport pair, used to thread the
+  // to-be-signaled list
   struct VEphemeron * gc_next;
 } VEphemeron;
 _Static_assert(sizeof(VEphemeron) == sizeof(VWORD[4]), "???");
@@ -502,21 +506,6 @@ typedef struct VTransportEphemeron {
   VWORD guardian_or_chain;
 } VTransportEphemeron;
 _Static_assert(sizeof(VTransportEphemeron) == sizeof(VWORD[6]), "???");
-
-#if 0
-typedef struct VTransportCell {
-  VObject base;
-  VWORD key;
-  VWORD value;
-  // transport cells are chained together in a guardian
-  struct VTransportCell * prev_in_chain;
-  struct VTransportCell * next_in_chain;
-  struct VPair * guardian;
-  // chain of transport cells the GC builds while scanning
-  // that it has to check after GC. NULL outside of GC
-  struct VTransportCell * next_to_scan;
-} VTransportCell;
-#endif
 
 typedef struct VVector {
   VSmallObject base;
@@ -906,8 +895,16 @@ static inline bool VIsEphemeron(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VEPHEMERON;
 }
 
+static inline bool VIsTransportPair(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VTRANSPORT_PAIR;
+}
+
 static inline bool VIsTransportEphemeron(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VTRANSPORT_EPHEMERON;
+}
+
+static inline bool VIsTransportGuardian(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VTRANSPORT_GUARDIAN;
 }
 
 static inline bool VIsAnyKeyDatumPair(VWORD v) {
@@ -1093,6 +1090,12 @@ static inline VEphemeron * VCheckedDecodeAnyKeyDatumPair(VRuntime * runtime, VWO
 static inline VTransportEphemeron * VCheckedDecodeAnyTransportPair(VRuntime * runtime, VWORD v, char const * proc) {
   if(VIsAnyTransportPair(v)) return (VTransportEphemeron*) VDecodePointer(v);
   VErrorC(runtime, "~Z: not any transport-pair: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VVector * VCheckedDecodeTransportGuardian(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsTransportGuardian(v)) return (VVector*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not a transport-guardian: ~S\n", proc, v);
   return NULL;
 }
 

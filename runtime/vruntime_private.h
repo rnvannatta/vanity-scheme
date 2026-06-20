@@ -106,7 +106,8 @@ typedef struct VRuntime {
   VClosure * exception_location; // not actually a closure. Don't call it!
   // finalizers & gc stuff
   VEphemeron * ephemerons;
-  void * weak_black_set;
+  VEphemeron * weak_black_set;
+  VTransportEphemeron * signaling_transport_ephemerons;
   VFinalizerTable VHeapFinalizers[2];
   // gc info
   unsigned VNumMinorGCs;

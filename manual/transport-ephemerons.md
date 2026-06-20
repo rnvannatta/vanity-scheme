@@ -189,10 +189,6 @@ Procedure: (transport-guardian? guardian). Returns #t if the object is a transpo
 
 Procedure: (transport-guardian-poll! guardian). Removes and returns one signaled transport pair from the transport guardian. If it is empty, #f is returned. Note, the transport pair may possibly be broken.
 
-Procedure: (transport-guardian-reset! guardian transport-pair luggage).  If the pair is in the guardian's queue, it is removed. Then it updates the transport pair's luggage, and resets its signaled status. It is an error to call this procedure with a different guardian than the one the transport-pair was created with.
-
-Procedure: (transport-guardian-drop! guardian transport-pair). The transport-pair ceases to be a ward of the guardian, and if signaled will not go to the guardian. If the pair is in the guardian's queue, it is removed. The dissolution is irrevokable: it is an error to later call transport-pair-reset! on the pair with the guardian.
-
 ## Universal Key-Datum Pair Procedures
 
 These procedures work on all 6 of the datatypes in this SRFI.
