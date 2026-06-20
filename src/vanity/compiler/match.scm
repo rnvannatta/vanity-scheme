@@ -100,7 +100,7 @@
             ; and pushing (drop-right expr (num-pairs b)) and (take-right expr (num-pairs b)) onto the pattern stack
             (let* ((head (gensym "head"))
                    (tail (gensym "tail")))
-              `(if (##vcore.eq? (##vcore.cmp (num-pairs ,(car expr-stack)) ,len) -1) ; (< (num-pairs expr) len)
+              `(if (##vcore.< (num-pairs ,(car expr-stack)) ,len) ; (< (num-pairs expr) len)
                    #f
                    (##vcore.call-with-values
                      (lambda () (split-at-right ,(car expr-stack) ,len))

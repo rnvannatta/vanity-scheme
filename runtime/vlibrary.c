@@ -932,7 +932,7 @@ V_BEGIN_FUNC_RANGE(VMakeKeyDatumPair, "make-key-datum-pair", 2, 3, k, key, datum
     .datum = argc == 3 ? datum : VFALSE,
   };
   p->base.flags |= VFLAG_IMMUTABLE;
-  V_BOUNCE(k, runtime, VEncodePointer(&p, VPOINTER_PAIR));
+  V_BOUNCE(k, runtime, VEncodePointer(p, VPOINTER_PAIR));
 V_END_FUNC
 
 V_BEGIN_FUNC(VMakeEphemeron, "make-ephemeron", 3, k, key, datum)
@@ -944,7 +944,7 @@ V_BEGIN_FUNC(VMakeEphemeron, "make-ephemeron", 3, k, key, datum)
       .datum = datum,
     },
   };
-  V_BOUNCE(k, runtime, VEncodePointer(&eph, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(eph, VPOINTER_OTHER));
 V_END_FUNC
 
 V_BEGIN_FUNC_BASIC(VEphemeronP, "ephemeron?", 1, eph)
@@ -968,12 +968,17 @@ V_BEGIN_FUNC(VKeyDatumPairUnpack, "key-datum-pair-unpack", 2, k, _eph)
   }
 V_END_FUNC
 
-V_BEGIN_FUNC(VMakeTransportEphemeron, "make-transport-ephemeron", 5, k, guardian, key, datum, luggage)
+static void MakeTransportEphemeronImpl(VRuntime * runtime, VWORD k, VWORD guardian, VWORD key, VWORD datum, VWORD luggage, VNEWTAG tag) {
+  if(!VIsEq(guardian, VFALSE) &&
+     !VIsTransportGuardian(guardian)) {
+    VErrorC(runtime, "make-transport-pair-impl: not a transport guardian: ~A", guardian);
+  }
+
   VTransportEphemeron *te = VAlloca(runtime, sizeof(VTransportEphemeron));
   *te = (VTransportEphemeron) {
     .e = {
       .p = {
-        .base = VMakeObject(VTRANSPORT_EPHEMERON),
+        .base = VMakeObject(tag),
         .key = key,
         .datum = datum,
       },
@@ -981,7 +986,23 @@ V_BEGIN_FUNC(VMakeTransportEphemeron, "make-transport-ephemeron", 5, k, guardian
     .guardian_or_chain = guardian,
     .luggage = luggage,
   };
-  V_BOUNCE(k, runtime, VEncodePointer(&te, VPOINTER_OTHER));
+  V_BOUNCE(k, runtime, VEncodePointer(te, VPOINTER_OTHER));
+}
+
+V_BEGIN_FUNC_RANGE(VMakeTransportPair, "make-transport-pair", 4, 5, k, guardian, key, datum, luggage)
+  if(argc == 4) {
+    luggage = datum;
+    datum = VFALSE;
+  }
+  MakeTransportEphemeronImpl(runtime, k, guardian, key, datum, luggage, VTRANSPORT_PAIR);
+V_END_FUNC
+
+V_BEGIN_FUNC(VMakeTransportEphemeron, "make-transport-ephemeron", 5, k, guardian, key, datum, luggage)
+  MakeTransportEphemeronImpl(runtime, k, guardian, key, datum, luggage, VTRANSPORT_EPHEMERON);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VTransportPairP, "transport-pair?", 1, tp)
+  return VEncodeBool(VIsTransportPair(tp));
 V_END_FUNC
 
 V_BEGIN_FUNC_BASIC(VTransportEphemeronP, "transport-ephemeron?", 1, eph)
@@ -990,12 +1011,45 @@ V_END_FUNC
 
 V_BEGIN_FUNC_BASIC(VTransportPairSignaledP, "transport-pair-signaled?", 1, _tp)
   VTransportEphemeron * tp = VCheckedDecodeAnyTransportPair(runtime, _tp, "transport-pair-signaled?");
-  return VEncodeBool(VIsEq(tp->guardian_or_chain, VNULL) || VWordType(tp->guardian_or_chain) == VPOINTER_PAIR);
+  return VEncodeBool(VIsEq(tp->guardian_or_chain, VNULL) ||
+                     VIsAnyTransportPair(tp->guardian_or_chain));
 V_END_FUNC
 
 V_BEGIN_FUNC_BASIC(VTransportPairLuggage, "transport-pair-luggage", 1, _tp)
   VTransportEphemeron * tp = VCheckedDecodeAnyTransportPair(runtime, _tp, "transport-pair-luggage");
   return tp->luggage;
+V_END_FUNC
+
+V_BEGIN_FUNC(VMakeTransportGuardian, "make-transport-guardian", 1, k)
+  VVector *tg = V_ALLOCA_SMALL_VECTOR(runtime, 3);
+  tg->base = VMakeSmallObject(VTRANSPORT_GUARDIAN);
+  tg->len = 3;
+  tg->arr[0] = VFALSE;
+  tg->arr[1] = VNULL;
+  tg->arr[2] = VNULL;
+
+  V_BOUNCE(k, runtime, VEncodePointer(tg, VPOINTER_OTHER));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VTransportGuardianP, "transport-guardian?", 1, tg)
+  return VEncodeBool(VIsTransportGuardian(tg));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VTransportGuardianPoll, "transport-guardian-poll!", 1, _tg)
+  VVector * tg = VCheckedDecodeTransportGuardian(runtime, _tg, "transport-guardian-poll!");
+  VWORD _tp = tg->arr[1];
+  if(!VIsEq(_tp, VNULL)) {
+    VTransportEphemeron * tp = VCheckedDecodeAnyTransportPair(runtime, _tp, "transport-guardian-poll!");
+    tg->arr[1] = tp->guardian_or_chain;
+    if(VIsEq(tg->arr[1], VNULL)) {
+      tg->arr[2] = VNULL;
+    } else if(VIsAnyTransportPair(tg->arr[1])) {
+      VTrackMutation(runtime, tg, &tg->arr[1], tg->arr[1]);
+    } else {
+      VErrorC(runtime, "transport-guardian-poll!: internal error: malformed queue of transport pairs");
+    }
+  }
+  return VIsEq(_tp, VNULL) ? VFALSE : _tp;
 V_END_FUNC
 
 // hash tables
