@@ -209,12 +209,14 @@ enum VTAG {
   VRUNTIME,
   VHASH_TABLE,
   VFUTURE,
-  VWEAK_PAIR, /* TODO */
-  VEPHEMERON,
-  VTRANSPORT_PAIR,
-  VWEAK_TRANSPORT_PAIR, /* TODO */
-  VTRANSPORT_EPHEMERON,
-  VTRANSPORT_GUARDIAN,
+  VSTRONG_WAYBILL,
+  VWEAK_WAYBILL, /* TODO */
+  VEPHEMERAL_WAYBILL,
+  VSTRONG_TRANSPORT_WAYBILL,
+  VWEAK_TRANSPORT_WAYBILL, /* TODO */
+  VEPHEMERAL_TRANSPORT_WAYBILL,
+  VCLEARINGHOUSE,
+  VNEW_HASH_TABLE,
   VTAG_END
 };
 static_assert(VTAG_END < 255, "");
@@ -466,14 +468,8 @@ typedef struct VClosure {
 
 typedef struct VPair {
   VObject base;
-  union {
-    VWORD first;
-    VWORD key;
-  };
-  union {
-    VWORD rest;
-    VWORD datum;
-  };
+  VWORD first;
+  VWORD rest;
 } VPair;
 
 // thoughts on optimizing ephemerons
@@ -491,21 +487,18 @@ typedef struct VPair {
 // --> no: you didn't for sure
 // problem: is in ephemeron flag gets polluted over time?
 //          can't clear it easily
-typedef struct VEphemeron {
-  VPair p;
-  // used to thread ephemeron lists and weak lists
-  // after a key is proved alive, if it is a transport pair, used to thread the
-  // to-be-signaled list
-  struct VEphemeron * gc_next;
-} VEphemeron;
-_Static_assert(sizeof(VEphemeron) == sizeof(VWORD[4]), "???");
-
-typedef struct VTransportEphemeron {
-  VEphemeron e;
-  VWORD luggage;
-  VWORD guardian_or_chain;
-} VTransportEphemeron;
-_Static_assert(sizeof(VTransportEphemeron) == sizeof(VWORD[6]), "???");
+typedef struct VWaybill {
+  VObject base;
+  // used to thread the ephemeron list or the weak list
+  // after a key is proved alive, if it is a transport pair and the key moved, used to thread the
+  // to-be-signaled list that's processed after gc
+  // (because processing it mid-gc is a nightmare due to unmoved and unforwarded pointers)
+  struct VWaybill * gc_next;
+  VWORD key;
+  VWORD datum;
+  VWORD address;
+  VWORD clearinghouse_or_chain;
+} VWaybill;
 
 typedef struct VVector {
   VSmallObject base;
@@ -884,6 +877,10 @@ static inline bool VIsHashTable(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VHASH_TABLE;
 }
 
+static inline bool VIsNewHashTable(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VNEW_HASH_TABLE;
+}
+
 static inline bool VIsPort(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VPORT;
 }
@@ -891,30 +888,35 @@ static inline bool VIsFuture(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VFUTURE;
 }
 
-static inline bool VIsEphemeron(VWORD v) {
-  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VEPHEMERON;
+static inline bool VIsEphemeralWaybill(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VEPHEMERAL_WAYBILL;
 }
 
-static inline bool VIsTransportPair(VWORD v) {
-  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VTRANSPORT_PAIR;
+static inline bool VIsStrongWaybill(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VSTRONG_WAYBILL;
 }
 
-static inline bool VIsTransportEphemeron(VWORD v) {
-  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VTRANSPORT_EPHEMERON;
+static inline bool VIsStrongTransportWaybill(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VSTRONG_TRANSPORT_WAYBILL;
 }
 
-static inline bool VIsTransportGuardian(VWORD v) {
-  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VTRANSPORT_GUARDIAN;
+static inline bool VIsEphemeralTransportWaybill(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VEPHEMERAL_TRANSPORT_WAYBILL;
 }
 
-static inline bool VIsAnyKeyDatumPair(VWORD v) {
+static inline bool VIsClearinghouse(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VCLEARINGHOUSE;
+}
+
+static inline bool VIsAnyWaybill(VWORD v) {
   VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
   switch(tag) {
-    case VWEAK_PAIR:
-    case VWEAK_TRANSPORT_PAIR:
-    case VTRANSPORT_PAIR:
-    case VEPHEMERON:
-    case VTRANSPORT_EPHEMERON:
+    case VSTRONG_WAYBILL:
+    case VSTRONG_TRANSPORT_WAYBILL:
+    case VWEAK_WAYBILL:
+    case VWEAK_TRANSPORT_WAYBILL:
+    case VEPHEMERAL_WAYBILL:
+    case VEPHEMERAL_TRANSPORT_WAYBILL:
       return true;
     default:
       return false;
@@ -924,13 +926,13 @@ static inline bool VIsAnyKeyDatumPair(VWORD v) {
 static inline bool VIsWeak(VWORD v) {
   VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
   switch(tag) {
-    case VWEAK_PAIR:
-    case VWEAK_TRANSPORT_PAIR:
+    case VWEAK_WAYBILL:
+    case VWEAK_TRANSPORT_WAYBILL:
       return true;
-    case VPAIR:
-    case VTRANSPORT_PAIR:
-    case VEPHEMERON:
-    case VTRANSPORT_EPHEMERON:
+    case VSTRONG_WAYBILL:
+    case VSTRONG_TRANSPORT_WAYBILL:
+    case VEPHEMERAL_WAYBILL:
+    case VEPHEMERAL_TRANSPORT_WAYBILL:
     default:
       return false;
   }
@@ -939,28 +941,28 @@ static inline bool VIsWeak(VWORD v) {
 static inline bool VIsEphemeral(VWORD v) {
   VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
   switch(tag) {
-    case VEPHEMERON:
-    case VTRANSPORT_EPHEMERON:
+    case VEPHEMERAL_WAYBILL:
+    case VEPHEMERAL_TRANSPORT_WAYBILL:
       return true;
-    case VPAIR:
-    case VTRANSPORT_PAIR:
-    case VWEAK_PAIR:
-    case VWEAK_TRANSPORT_PAIR:
+    case VSTRONG_WAYBILL:
+    case VSTRONG_TRANSPORT_WAYBILL:
+    case VWEAK_WAYBILL:
+    case VWEAK_TRANSPORT_WAYBILL:
     default:
       return false;
   }
 }
 
-static inline bool VIsAnyTransportPair(VWORD v) {
+static inline bool VIsAnyTransportWaybill(VWORD v) {
   VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
   switch(tag) {
-    case VTRANSPORT_PAIR:
-    case VWEAK_TRANSPORT_PAIR:
-    case VTRANSPORT_EPHEMERON:
+    case VSTRONG_TRANSPORT_WAYBILL:
+    case VWEAK_TRANSPORT_WAYBILL:
+    case VEPHEMERAL_TRANSPORT_WAYBILL:
       return true;
-    case VPAIR:
-    case VWEAK_PAIR:
-    case VEPHEMERON:
+    case VSTRONG_WAYBILL:
+    case VWEAK_WAYBILL:
+    case VEPHEMERAL_WAYBILL:
     default:
       return false;
   }
@@ -1057,6 +1059,13 @@ static inline VHashTable * VCheckedDecodeHashTable2(VRuntime * runtime, VWORD v,
   return NULL;
 }
 
+static inline VVector * VCheckedDecodeNewHashTable(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsNewHashTable(v)) return (VVector*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not a hash table: ~S\n", proc, v);
+  return NULL;
+}
+
+
 static inline VPort * VCheckedDecodePort2(VRuntime * runtime, VWORD v, char const * proc) {
   if(VIsPort(v)) return (VPort*) VDecodePointer(v);
   VErrorC(runtime, "~Z: not a port: ~S\n", proc, v);
@@ -1069,33 +1078,33 @@ static inline VFuture * VCheckedDecodeFuture2(VRuntime * runtime, VWORD v, char 
   return NULL;
 }
 
-static inline VEphemeron * VCheckedDecodeEphemeron2(VRuntime * runtime, VWORD v, char const * proc) {
-  if(VIsEphemeron(v)) return (VEphemeron*) VDecodePointer(v);
-  VErrorC(runtime, "~Z: not an ephemeron: ~S\n", proc, v);
+static inline VWaybill * VCheckedDecodeEphemeralWaybill2(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsEphemeralWaybill(v)) return (VWaybill*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not an ephemeral-waybill: ~S\n", proc, v);
   return NULL;
 }
 
-static inline VTransportEphemeron * VCheckedDecodeTransportEphemeron2(VRuntime * runtime, VWORD v, char const * proc) {
-  if(VIsTransportEphemeron(v)) return (VTransportEphemeron*) VDecodePointer(v);
-  VErrorC(runtime, "~Z: not a transport ephemeron: ~S\n", proc, v);
+static inline VWaybill * VCheckedDecodeEphemeralTransportWaybill2(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsEphemeralTransportWaybill(v)) return (VWaybill*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not an ephemeral-transport-waybill: ~S\n", proc, v);
   return NULL;
 }
 
-static inline VEphemeron * VCheckedDecodeAnyKeyDatumPair(VRuntime * runtime, VWORD v, char const * proc) {
-  if(VIsAnyKeyDatumPair(v)) return (VEphemeron*) VDecodePointer(v);
-  VErrorC(runtime, "~Z: not any key-datum pair: ~S\n", proc, v);
+static inline VWaybill * VCheckedDecodeAnyWaybill(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsAnyWaybill(v)) return (VWaybill*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not any waybill: ~S\n", proc, v);
   return NULL;
 }
 
-static inline VTransportEphemeron * VCheckedDecodeAnyTransportPair(VRuntime * runtime, VWORD v, char const * proc) {
-  if(VIsAnyTransportPair(v)) return (VTransportEphemeron*) VDecodePointer(v);
-  VErrorC(runtime, "~Z: not any transport-pair: ~S\n", proc, v);
+static inline VWaybill * VCheckedDecodeAnyTransportWaybill(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsAnyTransportWaybill(v)) return (VWaybill*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not any transport-waybill: ~S\n", proc, v);
   return NULL;
 }
 
-static inline VVector * VCheckedDecodeTransportGuardian(VRuntime * runtime, VWORD v, char const * proc) {
-  if(VIsTransportGuardian(v)) return (VVector*) VDecodePointer(v);
-  VErrorC(runtime, "~Z: not a transport-guardian: ~S\n", proc, v);
+static inline VVector * VCheckedDecodeClearinghouse(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsClearinghouse(v)) return (VVector*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not a clearinghouse: ~S\n", proc, v);
   return NULL;
 }
 

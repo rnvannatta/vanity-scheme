@@ -209,6 +209,14 @@ enum VTAG {
   VRUNTIME,
   VHASH_TABLE,
   VFUTURE,
+  VSTRONG_WAYBILL,
+  VWEAK_WAYBILL, /* TODO */
+  VEPHEMERAL_WAYBILL,
+  VSTRONG_TRANSPORT_WAYBILL,
+  VWEAK_TRANSPORT_WAYBILL, /* TODO */
+  VEPHEMERAL_TRANSPORT_WAYBILL,
+  VCLEARINGHOUSE,
+  VNEW_HASH_TABLE,
   VTAG_END
 };
 static_assert(VTAG_END < 255, "");
@@ -235,6 +243,7 @@ enum VOBJECT_FLAGS {
   VFLAG_IMMUTABLE = 2,
   VFLAG_FINALIZER = 4,
   VFLAG_MARKED = 8,
+  VFLAG_BROKEN = 128,
 };
 
 typedef struct VObject {
@@ -381,7 +390,7 @@ typedef struct VEnv VEnv;
 #define V_BEGIN_FUNC_MIN(name, scmname, nargs, ...) \
   void name(VRuntime * runtime, VEnv * statics, int argc __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__)), ...) { \
     V_ARG_MIN3(runtime, scmname, nargs, argc); \
-    VEnv * self = alloca(sizeof(VEnv) + sizeof(VWORD[argc])); \
+    VEnv * self = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[argc])); \
     int _var_cursor = 0; \
     __VA_OPT__(MAP(V_INIT_VAR, __VA_ARGS__)) \
     va_list _args; va_start(_args, V_LAST_ARG(argc __VA_OPT__(,) __VA_ARGS__)); \
@@ -393,7 +402,7 @@ typedef struct VEnv VEnv;
 #define V_BEGIN_FUNC_RANGE(name, scmname, nargs_min, nargs_max, ...) \
   void name(VRuntime * runtime, VEnv * statics, int argc __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__))) { \
     V_ARG_RANGE3(runtime, scmname, nargs_min, nargs_max, argc); \
-    VEnv * self = alloca(sizeof(VEnv) + sizeof(VWORD[argc])); \
+    VEnv * self = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[argc])); \
     int _var_cursor = 0; \
     __VA_OPT__(MAP(V_INIT_VAR, __VA_ARGS__)) \
     VInitEnv(self, argc, argc, statics);
@@ -462,6 +471,34 @@ typedef struct VPair {
   VWORD first;
   VWORD rest;
 } VPair;
+
+// thoughts on optimizing ephemerons
+// downgrade to weak pair if ephemeron's datum is eternal
+// downgrade to normal pair if ephemeron's key is eternal
+//
+// on initial scan, add key to bloom filter if it is pointer-free
+// on ephemeron datum resurrection, consult bloom filter if it is pointer free
+// --> yes: you maybe resurrected an ephemeron
+// --> no: you didn't for sure
+// 
+// alternative: when creating ephemeron, mark key as "is in ephemeron"
+// when moving objects to gray set, if "is in ephemeron" need to iterate ephemerons
+// --> yes: you maybe resurrected an ephemeron
+// --> no: you didn't for sure
+// problem: is in ephemeron flag gets polluted over time?
+//          can't clear it easily
+typedef struct VWaybill {
+  VObject base;
+  // used to thread the ephemeron list or the weak list
+  // after a key is proved alive, if it is a transport pair and the key moved, used to thread the
+  // to-be-signaled list that's processed after gc
+  // (because processing it mid-gc is a nightmare due to unmoved and unforwarded pointers)
+  struct VWaybill * gc_next;
+  VWORD key;
+  VWORD datum;
+  VWORD address;
+  VWORD clearinghouse_or_chain;
+} VWaybill;
 
 typedef struct VVector {
   VSmallObject base;
@@ -542,6 +579,8 @@ typedef struct {
   VWORD symbol;
   VWORD value;
 } VGlobalEntry;
+
+void VRegisterProcDebugInfo(VFunc f, VWORD v);
 
 #define V_CALL_HISTORY_LEN 16
 typedef struct VDebugInfo {
@@ -652,7 +691,7 @@ static inline bool VDecodeBool(VWORD v) {
   return VBits(v) != VBits(VFALSE);
 }
 #else
-#define VEncodeBool(_b) (_b ? VTRUE : VFALSE)
+#define VEncodeBool(_b) ((_b) ? VTRUE : VFALSE)
 #define VDecodeBool(_v) (VBits(_v) != VBits(VFALSE))
 #endif
 
@@ -838,11 +877,95 @@ static inline bool VIsHashTable(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VHASH_TABLE;
 }
 
+static inline bool VIsNewHashTable(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VNEW_HASH_TABLE;
+}
+
 static inline bool VIsPort(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VPORT;
 }
 static inline bool VIsFuture(VWORD v) {
   return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VFUTURE;
+}
+
+static inline bool VIsEphemeralWaybill(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VEPHEMERAL_WAYBILL;
+}
+
+static inline bool VIsStrongWaybill(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VSTRONG_WAYBILL;
+}
+
+static inline bool VIsStrongTransportWaybill(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VSTRONG_TRANSPORT_WAYBILL;
+}
+
+static inline bool VIsEphemeralTransportWaybill(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VEPHEMERAL_TRANSPORT_WAYBILL;
+}
+
+static inline bool VIsClearinghouse(VWORD v) {
+  return VIsPointer(v) && *(VNEWTAG*)VDecodePointer(v) == VCLEARINGHOUSE;
+}
+
+static inline bool VIsAnyWaybill(VWORD v) {
+  VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
+  switch(tag) {
+    case VSTRONG_WAYBILL:
+    case VSTRONG_TRANSPORT_WAYBILL:
+    case VWEAK_WAYBILL:
+    case VWEAK_TRANSPORT_WAYBILL:
+    case VEPHEMERAL_WAYBILL:
+    case VEPHEMERAL_TRANSPORT_WAYBILL:
+      return true;
+    default:
+      return false;
+  }
+}
+
+static inline bool VIsWeak(VWORD v) {
+  VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
+  switch(tag) {
+    case VWEAK_WAYBILL:
+    case VWEAK_TRANSPORT_WAYBILL:
+      return true;
+    case VSTRONG_WAYBILL:
+    case VSTRONG_TRANSPORT_WAYBILL:
+    case VEPHEMERAL_WAYBILL:
+    case VEPHEMERAL_TRANSPORT_WAYBILL:
+    default:
+      return false;
+  }
+}
+
+static inline bool VIsEphemeral(VWORD v) {
+  VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
+  switch(tag) {
+    case VEPHEMERAL_WAYBILL:
+    case VEPHEMERAL_TRANSPORT_WAYBILL:
+      return true;
+    case VSTRONG_WAYBILL:
+    case VSTRONG_TRANSPORT_WAYBILL:
+    case VWEAK_WAYBILL:
+    case VWEAK_TRANSPORT_WAYBILL:
+    default:
+      return false;
+  }
+}
+
+static inline bool VIsAnyTransportWaybill(VWORD v) {
+  VNEWTAG tag = VIsPointer(v) ? *(VNEWTAG*)VDecodePointer(v) : 0;
+  switch(tag) {
+    case VSTRONG_TRANSPORT_WAYBILL:
+    case VWEAK_TRANSPORT_WAYBILL:
+    case VEPHEMERAL_TRANSPORT_WAYBILL:
+      return true;
+    case VSTRONG_WAYBILL:
+    case VWEAK_WAYBILL:
+    case VEPHEMERAL_WAYBILL:
+    default:
+      return false;
+  }
 }
 
 static inline bool VIsPointerTo(VWORD v, VNEWTAG tag) {
@@ -936,6 +1059,13 @@ static inline VHashTable * VCheckedDecodeHashTable2(VRuntime * runtime, VWORD v,
   return NULL;
 }
 
+static inline VVector * VCheckedDecodeNewHashTable(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsNewHashTable(v)) return (VVector*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not a hash table: ~S\n", proc, v);
+  return NULL;
+}
+
+
 static inline VPort * VCheckedDecodePort2(VRuntime * runtime, VWORD v, char const * proc) {
   if(VIsPort(v)) return (VPort*) VDecodePointer(v);
   VErrorC(runtime, "~Z: not a port: ~S\n", proc, v);
@@ -945,6 +1075,36 @@ static inline VPort * VCheckedDecodePort2(VRuntime * runtime, VWORD v, char cons
 static inline VFuture * VCheckedDecodeFuture2(VRuntime * runtime, VWORD v, char const * proc) {
   if(VIsFuture(v)) return (VFuture*) VDecodePointer(v);
   VErrorC(runtime, "~Z: not a future: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VWaybill * VCheckedDecodeEphemeralWaybill2(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsEphemeralWaybill(v)) return (VWaybill*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not an ephemeral-waybill: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VWaybill * VCheckedDecodeEphemeralTransportWaybill2(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsEphemeralTransportWaybill(v)) return (VWaybill*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not an ephemeral-transport-waybill: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VWaybill * VCheckedDecodeAnyWaybill(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsAnyWaybill(v)) return (VWaybill*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not any waybill: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VWaybill * VCheckedDecodeAnyTransportWaybill(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsAnyTransportWaybill(v)) return (VWaybill*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not any transport-waybill: ~S\n", proc, v);
+  return NULL;
+}
+
+static inline VVector * VCheckedDecodeClearinghouse(VRuntime * runtime, VWORD v, char const * proc) {
+  if(VIsClearinghouse(v)) return (VVector*) VDecodePointer(v);
+  VErrorC(runtime, "~Z: not a clearinghouse: ~S\n", proc, v);
   return NULL;
 }
 
@@ -1164,7 +1324,6 @@ static inline VWORD VFillEncodePair(VPair * pair, VWORD a, VWORD b) {
   return VEncodePair(pair);
 }
 
-#define V_ALLOCA_BLOB(len) alloca(sizeof(VBlob) + len);
 static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned len, char const * dat) {
   blob->base = VMakeSmallObject(tag);
   blob->len = len;
@@ -1189,8 +1348,6 @@ static inline VBlob * VFillBlob(VBlob * blob, VNEWTAG tag, unsigned len, char co
   })
 
 #define V_STATIC_STRING(name, str) struct { VBlob b; char buf[sizeof str]; } name = { { .base = { .tag =VSTRING, .flags = 0, .pincount = 0, }, .len = sizeof str }, str };
-
-#define V_ALLOCA_VECTOR(len) alloca(sizeof(VVector) + sizeof(VWORD[len]))
 
 #define V_ALLOCA_SMALL_VECTOR(runtime, len) VAlloca(runtime, sizeof(VVector) + sizeof(VWORD[len]))
 #define V_ALLOCA_VECTOR2(last_alloced, runtime, len) \
@@ -1279,7 +1436,7 @@ static inline void VRecordCall2(VRuntime * _runtime, VDebugInfo * debug) {
   VPair _root_pair = VMakePair(VVOID, VNULL); \
   VPair * _cur = &_root_pair; \
   for(int i = numfixed; i < argc; i++) { \
-    VPair * p = alloca(sizeof(VPair)); \
+    VPair * p = VAlloca(runtime, sizeof(VPair)); \
     *p = VMakePair(va_arg(_vlist, VWORD), VNULL); \
     _cur->rest = VEncodePair(p); \
     _cur = p; \
