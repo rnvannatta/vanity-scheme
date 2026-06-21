@@ -887,7 +887,7 @@ static V_BEGIN_FUNC(VReadIter2, "##sys.read-iter", 6, k, _port, _depth, _read_mo
   VPair * const root = VDecodePair(_root);
 
   void * alloced = &depth;
-#define myalloca(x) (alloced = alloca(x))
+#define myalloca(x) (alloced = VAlloca(runtime, x))
   VWORD elem;
   do {
     if(VStackOverflowNoInline2(runtime, alloced)) {

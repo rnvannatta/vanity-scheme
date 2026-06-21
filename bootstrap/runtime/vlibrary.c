@@ -741,15 +741,15 @@ V_END_FUNC
 
 
 // equality
-V_BEGIN_FUNC(VEq2, "eq?", 3, k, x, y)
-  V_BOUNCE(k, runtime, VInlineEq2(runtime, x, y));
+V_BEGIN_FUNC_BASIC(VEq2, "eq?", 2, x, y)
+  return VInlineEq2(runtime, x, y);
 V_END_FUNC
 
-V_BEGIN_FUNC(VSymbolEqv2, "symbol=?", 3, k, x, y)
-  V_BOUNCE(k, runtime, VInlineSymbolEqv2(runtime, x, y));
+V_BEGIN_FUNC_BASIC(VSymbolEqv2, "symbol=?", 2, x, y)
+  return VInlineSymbolEqv2(runtime, x, y);
 V_END_FUNC
 
-V_BEGIN_FUNC(VBlobEqv2, "blob=?", 3, k, x, y)
+V_BEGIN_FUNC_BASIC(VBlobEqv2, "blob=?", 2, x, y)
   bool ret = false;
   if(VIsEq(x, y)) {
     ret = true;
@@ -759,13 +759,7 @@ V_BEGIN_FUNC(VBlobEqv2, "blob=?", 3, k, x, y)
     if(blob_a->len == blob_b->len)
       ret = blob_a->base.tag == blob_b->base.tag && !memcmp(blob_a->buf, blob_b->buf, blob_a->len);
   }
-  V_BOUNCE(k, runtime, VEncodeBool(ret));
-V_END_FUNC
-
-// TODO REMOVE WITH PREJUDICE
-#undef VEqv
-V_BEGIN_FUNC(VEqv, "eqv?", 3, k, x, y)
-  V_BOUNCE(k, runtime, VInlineEqv2(runtime, x, y));
+  return VEncodeBool(ret);
 V_END_FUNC
 
 // logic
@@ -780,13 +774,13 @@ V_BEGIN_FUNC(VCons2, "cons", 3, k, x, y)
     V_BOUNCE(k, runtime, VInlineCons2(runtime, x, y));
 }
 
-V_BEGIN_FUNC(VCar2, "car", 2, k, x)
-    V_BOUNCE(k, runtime, VInlineCar2(runtime, x));
+V_BEGIN_FUNC_BASIC(VCar2, "car", 1, x)
+  return VInlineCar2(runtime, x);
 V_END_FUNC
 
 
-V_BEGIN_FUNC(VCdr2, "cdr", 2, k, x)
-    V_BOUNCE(k, runtime, VInlineCdr2(runtime, x));
+V_BEGIN_FUNC_BASIC(VCdr2, "cdr", 1, x)
+  return VInlineCdr2(runtime, x);
 V_END_FUNC
 
 V_BEGIN_FUNC(VAppendK, "append-k", 1, rest)
@@ -917,6 +911,168 @@ V_END_FUNC
 static uint64_t VEqHashImpl(VWORD x) {
   return vhash64_quick(VBits(x));
 }
+
+V_BEGIN_FUNC_BASIC(VAnyWeakWaybillP, "any-weak-waybill?", 1, eph)
+  return VEncodeBool(VIsWeak(eph));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VAnyEphemeralWaybillP, "any-ephemeral-waybill?", 1, eph)
+  return VEncodeBool(VIsEphemeral(eph));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VAnyTransportWaybillP, "any-transport-waybill?", 1, eph)
+  return VEncodeBool(VIsAnyTransportWaybill(eph));
+V_END_FUNC
+
+static void MakeWaybillImpl(VRuntime * runtime, VWORD k, VWORD clearinghouse, VWORD key, VWORD datum, VWORD address, VNEWTAG tag) {
+  if(!VIsEq(clearinghouse, VFALSE) &&
+     !VIsClearinghouse(clearinghouse)) {
+    VErrorC(runtime, "make-transport-waybill-impl: not a transport clearinghouse: ~A", clearinghouse);
+  }
+
+  VWaybill *te = VAlloca(runtime, sizeof(VWaybill));
+  *te = (VWaybill) {
+    .base = VMakeObject(tag),
+    .key = key,
+    .datum = datum,
+    .clearinghouse_or_chain = clearinghouse,
+    .address = address,
+  };
+  V_BOUNCE(k, runtime, VEncodePointer(te, VPOINTER_OTHER));
+}
+
+V_BEGIN_FUNC_RANGE(VMakeStrongWaybill, "make-strong-waybill", 4, 5, k, clearinghouse, key, datum, address)
+  if(argc == 4) {
+    address = datum;
+    datum = VFALSE;
+  }
+  MakeWaybillImpl(runtime, k, clearinghouse, key, datum, address, VSTRONG_WAYBILL);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VStrongWaybillP, "strong-waybill?", 1, eph)
+  return VEncodeBool(VIsStrongWaybill(eph));
+V_END_FUNC
+
+V_BEGIN_FUNC(VMakeEphemeralWaybill, "make-ephemeral-waybill", 5, k, clearinghouse, key, datum, address)
+  MakeWaybillImpl(runtime, k, clearinghouse, key, datum, address, VEPHEMERAL_WAYBILL);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VEphemeralWaybillP, "ephemeral-waybill?", 1, eph)
+  return VEncodeBool(VIsEphemeralWaybill(eph));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VWaybillBrokenP, "waybill-broken?", 1, _eph)
+  if(VWordType(_eph) == VPOINTER_PAIR)
+    return VFALSE;
+  VWaybill * kd = VCheckedDecodeAnyWaybill(runtime, _eph, "waybill-broken?");
+  return VEncodeBool(kd->base.flags & VFLAG_BROKEN);
+V_END_FUNC
+
+V_BEGIN_FUNC(VWaybillUnpack, "waybill-unpack", 2, k, _eph)
+  VWaybill * eph = VCheckedDecodeAnyWaybill(runtime, _eph, "waybill-unpack");
+  V_BOUNCE(k, runtime, VEncodeBool(eph->base.flags & VFLAG_BROKEN), eph->key, eph->datum);
+V_END_FUNC
+
+V_BEGIN_FUNC_RANGE(VMakeStrongTransportWaybill, "make-strong-transport-waybill", 4, 5, k, clearinghouse, key, datum, address)
+  if(argc == 4) {
+    address = datum;
+    datum = VFALSE;
+  }
+  MakeWaybillImpl(runtime, k, clearinghouse, key, datum, address, VSTRONG_TRANSPORT_WAYBILL);
+V_END_FUNC
+
+V_BEGIN_FUNC(VMakeEphemeralTransportWaybill, "make-ephemeral-transport-waybill", 5, k, clearinghouse, key, datum, address)
+  MakeWaybillImpl(runtime, k, clearinghouse, key, datum, address, VEPHEMERAL_TRANSPORT_WAYBILL);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VStrongTransportWaybillP, "strong-transport-waybill?", 1, tp)
+  return VEncodeBool(VIsStrongTransportWaybill(tp));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VEphemeralTransportWaybillP, "ephemeral-transport-waybill?", 1, eph)
+  return VEncodeBool(VIsEphemeralTransportWaybill(eph));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VWaybillSignaledP, "waybill-signaled?", 1, _tp)
+  VWaybill * tp = VCheckedDecodeAnyWaybill(runtime, _tp, "waybill-signaled?");
+  return VEncodeBool(VIsEq(tp->clearinghouse_or_chain, VNULL) ||
+                     VIsAnyTransportWaybill(tp->clearinghouse_or_chain));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VWaybillAddress, "waybill-address", 1, _tp)
+  VWaybill * tp = VCheckedDecodeAnyWaybill(runtime, _tp, "waybill-address");
+  return tp->address;
+V_END_FUNC
+
+void VFillClearinghouse(VVector * clearinghouse) {
+  assert(clearinghouse->len == 3);
+  clearinghouse->arr[0] = VFALSE;
+  clearinghouse->arr[1] = VNULL;
+  clearinghouse->arr[2] = VNULL;
+}
+
+V_BEGIN_FUNC(VMakeClearinghouse, "make-clearinghouse", 1, k)
+  VVector *tg = V_ALLOCA_SMALL_VECTOR(runtime, 3);
+  tg->base = VMakeSmallObject(VCLEARINGHOUSE);
+  tg->len = 3;
+  VFillClearinghouse(tg);
+
+  V_BOUNCE(k, runtime, VEncodePointer(tg, VPOINTER_OTHER));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VClearinghouseP, "clearinghouse?", 1, tg)
+  return VEncodeBool(VIsClearinghouse(tg));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VClearinghousePoll, "clearinghouse-poll!", 1, _tg)
+  VVector * tg = VCheckedDecodeClearinghouse(runtime, _tg, "clearinghouse-poll!");
+  VWORD _tp = tg->arr[1];
+  if(!VIsEq(_tp, VNULL)) {
+    VWaybill * tp = VCheckedDecodeAnyWaybill(runtime, _tp, "clearinghouse-poll!");
+    tg->arr[1] = tp->clearinghouse_or_chain;
+    if(VIsEq(tg->arr[1], VNULL)) {
+      tg->arr[2] = VNULL;
+    } else if(VIsAnyWaybill(tg->arr[1])) {
+      VTrackMutation(runtime, tg, &tg->arr[1], tg->arr[1]);
+    } else {
+      VErrorC(runtime, "clearinghouse-poll!: internal error: malformed queue of transport pairs");
+    }
+  }
+  return VIsEq(_tp, VNULL) ? VFALSE : _tp;
+V_END_FUNC
+
+#if 0
+// NEW hash tables
+enum { HT_FLAGS_SLOT, HT_OCCUPANCY_SLOT, HT_LOAD_FACTOR_SLOT, HT_VECTOR_SLOT, HT_EQUAL_SLOT, HT_HASH_SLOT, HT_GUARDIAN_SLOT, HT_NUM_SLOTS };
+
+V_BEGIN_FUNC(VMakeNewHashTable, "make-hash-table", 5, k, eq, hash, _len, _stable_hash, _load_factor)
+  int len = VCheckedDecodeInt2(runtime, _len, "make-hash-table");
+  if(len <= 0) VErrorC(runtime, "hash tables need length > 0");
+  if(len & (len-1)) VErrorC(runtime, "hash table needs pow2 length ~D\n", len);
+
+  VWORD clearinghouse = VFALSE;
+  if(!VDecodeBool(_stable_hash)) {
+    VVector *ptr = V_ALLOCA_SMALL_VECTOR(runtime, 3);
+    ptr->base = VMakeSmallObject(VCLEARINGHOUSE);
+    ptr->len = 3;
+    VFillClearinghouse(ptr);
+    clearinghouse = VEncodePointer(ptr, VPOINTER_OTHER);
+  }
+  VVector * ht = V_ALLOCA_SMALL_VECTOR(runtime, HT_NUM_SLOTS);
+  ht->base = VMakeSmallObject(VCLEARINGHOUSE);
+  ht->len = HT_NUM_SLOTS;
+  ht->arr[HT_FLAGS_SLOT] = VEncodeInt(0);
+  ht->arr[HT_OCCUPANCY_SLOT] = VEncodeInt(0);
+  ht->arr[HT_LOAD_FACTOR_SLOT] = _load_factor;
+  ht->arr[HT_VECTOR_SLOT] = vec;
+  ht->arr[HT_EQUAL_SLOT] = equal;
+  ht->arr[HT_HASH_SLOT] = hash;
+  ht->arr[HT_GUARDIAN_SLOT] = clearinghouse;
+  _Static_assert(7 == HT_NUM_SLOTS, "update hash table");
+
+  V_BOUNCE(k, runtime, VEncodePointer(ht, VPOINTER_OTHER));
+V_END_FUNC
+#endif
 
 // hash tables
 SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VHashTable * table, VVector * vec, VWORD key, VWORD val, unsigned flags) {
@@ -1812,7 +1968,7 @@ static V_BEGIN_FUNC_MIN(VCallCCLambda2, "call/cc-lambda", 1, k)
     // nested call-with-values evil
     VClosure * realk_real = VDecodeClosureApply2(runtime, realk);
 
-    VEnvironment * environ = alloca(sizeof(VEnvironment) + sizeof(VWORD[argc-1]));
+    VEnvironment * environ = VAlloca(runtime, sizeof(VEnvironment) + sizeof(VWORD[argc-1]));
     environ->base = VMakeObject(VENVIRONMENT);
     environ->argc = argc-1;
     environ->runtime = runtime;

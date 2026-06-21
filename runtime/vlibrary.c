@@ -912,145 +912,167 @@ static uint64_t VEqHashImpl(VWORD x) {
   return vhash64_quick(VBits(x));
 }
 
-V_BEGIN_FUNC_BASIC(VAnyWeakPairP, "any-weak-pair?", 1, eph)
+V_BEGIN_FUNC_BASIC(VAnyWeakWaybillP, "any-weak-waybill?", 1, eph)
   return VEncodeBool(VIsWeak(eph));
 V_END_FUNC
 
-V_BEGIN_FUNC_BASIC(VAnyEphemeronP, "any-ephemeron?", 1, eph)
+V_BEGIN_FUNC_BASIC(VAnyEphemeralWaybillP, "any-ephemeral-waybill?", 1, eph)
   return VEncodeBool(VIsEphemeral(eph));
 V_END_FUNC
 
-V_BEGIN_FUNC_BASIC(VAnyTransportPairP, "any-transport-pair?", 1, eph)
-  return VEncodeBool(VIsAnyTransportPair(eph));
+V_BEGIN_FUNC_BASIC(VAnyTransportWaybillP, "any-transport-waybill?", 1, eph)
+  return VEncodeBool(VIsAnyTransportWaybill(eph));
 V_END_FUNC
 
-V_BEGIN_FUNC_RANGE(VMakeKeyDatumPair, "make-key-datum-pair", 2, 3, k, key, datum)
-  VPair *p = VAlloca(runtime, sizeof(VPair));
-  *p = (VPair) {
-    .base = VMakeObject(VPAIR),
+static void MakeWaybillImpl(VRuntime * runtime, VWORD k, VWORD clearinghouse, VWORD key, VWORD datum, VWORD address, VNEWTAG tag) {
+  if(!VIsEq(clearinghouse, VFALSE) &&
+     !VIsClearinghouse(clearinghouse)) {
+    VErrorC(runtime, "make-transport-waybill-impl: not a transport clearinghouse: ~A", clearinghouse);
+  }
+
+  VWaybill *te = VAlloca(runtime, sizeof(VWaybill));
+  *te = (VWaybill) {
+    .base = VMakeObject(tag),
     .key = key,
-    .datum = argc == 3 ? datum : VFALSE,
-  };
-  p->base.flags |= VFLAG_IMMUTABLE;
-  V_BOUNCE(k, runtime, VEncodePointer(p, VPOINTER_PAIR));
-V_END_FUNC
-
-V_BEGIN_FUNC(VMakeEphemeron, "make-ephemeron", 3, k, key, datum)
-  VEphemeron *eph = VAlloca(runtime, sizeof(VEphemeron));
-  *eph = (VEphemeron) {
-    .p = {
-      .base = VMakeObject(VEPHEMERON),
-      .key = key,
-      .datum = datum,
-    },
-  };
-  V_BOUNCE(k, runtime, VEncodePointer(eph, VPOINTER_OTHER));
-V_END_FUNC
-
-V_BEGIN_FUNC_BASIC(VEphemeronP, "ephemeron?", 1, eph)
-  return VEncodeBool(VIsEphemeron(eph));
-V_END_FUNC
-
-V_BEGIN_FUNC_BASIC(VKeyDatumPairBrokenP, "key-datum-pair-broken?", 1, _eph)
-  if(VWordType(_eph) == VPOINTER_PAIR)
-    return VFALSE;
-  VEphemeron * kd = VCheckedDecodeAnyKeyDatumPair(runtime, _eph, "key-datum-pair-broken?");
-  return VEncodeBool(kd->p.base.flags & VFLAG_BROKEN);
-V_END_FUNC
-
-V_BEGIN_FUNC(VKeyDatumPairUnpack, "key-datum-pair-unpack", 2, k, _eph)
-  if(VWordType(_eph) == VPOINTER_PAIR) {
-    VPair * p = VDecodePair(_eph);
-    V_BOUNCE(k, runtime, VFALSE, p->key, p->datum);
-  } else {
-    VEphemeron * eph = VCheckedDecodeAnyKeyDatumPair(runtime, _eph, "key-datum-pair-unpack");
-    V_BOUNCE(k, runtime, VEncodeBool(eph->p.base.flags & VFLAG_BROKEN), eph->p.key, eph->p.datum);
-  }
-V_END_FUNC
-
-static void MakeTransportEphemeronImpl(VRuntime * runtime, VWORD k, VWORD guardian, VWORD key, VWORD datum, VWORD luggage, VNEWTAG tag) {
-  if(!VIsEq(guardian, VFALSE) &&
-     !VIsTransportGuardian(guardian)) {
-    VErrorC(runtime, "make-transport-pair-impl: not a transport guardian: ~A", guardian);
-  }
-
-  VTransportEphemeron *te = VAlloca(runtime, sizeof(VTransportEphemeron));
-  *te = (VTransportEphemeron) {
-    .e = {
-      .p = {
-        .base = VMakeObject(tag),
-        .key = key,
-        .datum = datum,
-      },
-    },
-    .guardian_or_chain = guardian,
-    .luggage = luggage,
+    .datum = datum,
+    .clearinghouse_or_chain = clearinghouse,
+    .address = address,
   };
   V_BOUNCE(k, runtime, VEncodePointer(te, VPOINTER_OTHER));
 }
 
-V_BEGIN_FUNC_RANGE(VMakeTransportPair, "make-transport-pair", 4, 5, k, guardian, key, datum, luggage)
+V_BEGIN_FUNC_RANGE(VMakeStrongWaybill, "make-strong-waybill", 4, 5, k, clearinghouse, key, datum, address)
   if(argc == 4) {
-    luggage = datum;
+    address = datum;
     datum = VFALSE;
   }
-  MakeTransportEphemeronImpl(runtime, k, guardian, key, datum, luggage, VTRANSPORT_PAIR);
+  MakeWaybillImpl(runtime, k, clearinghouse, key, datum, address, VSTRONG_WAYBILL);
 V_END_FUNC
 
-V_BEGIN_FUNC(VMakeTransportEphemeron, "make-transport-ephemeron", 5, k, guardian, key, datum, luggage)
-  MakeTransportEphemeronImpl(runtime, k, guardian, key, datum, luggage, VTRANSPORT_EPHEMERON);
+V_BEGIN_FUNC_BASIC(VStrongWaybillP, "strong-waybill?", 1, eph)
+  return VEncodeBool(VIsStrongWaybill(eph));
 V_END_FUNC
 
-V_BEGIN_FUNC_BASIC(VTransportPairP, "transport-pair?", 1, tp)
-  return VEncodeBool(VIsTransportPair(tp));
+V_BEGIN_FUNC(VMakeEphemeralWaybill, "make-ephemeral-waybill", 5, k, clearinghouse, key, datum, address)
+  MakeWaybillImpl(runtime, k, clearinghouse, key, datum, address, VEPHEMERAL_WAYBILL);
 V_END_FUNC
 
-V_BEGIN_FUNC_BASIC(VTransportEphemeronP, "transport-ephemeron?", 1, eph)
-  return VEncodeBool(VIsTransportEphemeron(eph));
+V_BEGIN_FUNC_BASIC(VEphemeralWaybillP, "ephemeral-waybill?", 1, eph)
+  return VEncodeBool(VIsEphemeralWaybill(eph));
 V_END_FUNC
 
-V_BEGIN_FUNC_BASIC(VTransportPairSignaledP, "transport-pair-signaled?", 1, _tp)
-  VTransportEphemeron * tp = VCheckedDecodeAnyTransportPair(runtime, _tp, "transport-pair-signaled?");
-  return VEncodeBool(VIsEq(tp->guardian_or_chain, VNULL) ||
-                     VIsAnyTransportPair(tp->guardian_or_chain));
+V_BEGIN_FUNC_BASIC(VWaybillBrokenP, "waybill-broken?", 1, _eph)
+  if(VWordType(_eph) == VPOINTER_PAIR)
+    return VFALSE;
+  VWaybill * kd = VCheckedDecodeAnyWaybill(runtime, _eph, "waybill-broken?");
+  return VEncodeBool(kd->base.flags & VFLAG_BROKEN);
 V_END_FUNC
 
-V_BEGIN_FUNC_BASIC(VTransportPairLuggage, "transport-pair-luggage", 1, _tp)
-  VTransportEphemeron * tp = VCheckedDecodeAnyTransportPair(runtime, _tp, "transport-pair-luggage");
-  return tp->luggage;
+V_BEGIN_FUNC(VWaybillUnpack, "waybill-unpack", 2, k, _eph)
+  VWaybill * eph = VCheckedDecodeAnyWaybill(runtime, _eph, "waybill-unpack");
+  V_BOUNCE(k, runtime, VEncodeBool(eph->base.flags & VFLAG_BROKEN), eph->key, eph->datum);
 V_END_FUNC
 
-V_BEGIN_FUNC(VMakeTransportGuardian, "make-transport-guardian", 1, k)
+V_BEGIN_FUNC_RANGE(VMakeStrongTransportWaybill, "make-strong-transport-waybill", 4, 5, k, clearinghouse, key, datum, address)
+  if(argc == 4) {
+    address = datum;
+    datum = VFALSE;
+  }
+  MakeWaybillImpl(runtime, k, clearinghouse, key, datum, address, VSTRONG_TRANSPORT_WAYBILL);
+V_END_FUNC
+
+V_BEGIN_FUNC(VMakeEphemeralTransportWaybill, "make-ephemeral-transport-waybill", 5, k, clearinghouse, key, datum, address)
+  MakeWaybillImpl(runtime, k, clearinghouse, key, datum, address, VEPHEMERAL_TRANSPORT_WAYBILL);
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VStrongTransportWaybillP, "strong-transport-waybill?", 1, tp)
+  return VEncodeBool(VIsStrongTransportWaybill(tp));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VEphemeralTransportWaybillP, "ephemeral-transport-waybill?", 1, eph)
+  return VEncodeBool(VIsEphemeralTransportWaybill(eph));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VWaybillSignaledP, "waybill-signaled?", 1, _tp)
+  VWaybill * tp = VCheckedDecodeAnyWaybill(runtime, _tp, "waybill-signaled?");
+  return VEncodeBool(VIsEq(tp->clearinghouse_or_chain, VNULL) ||
+                     VIsAnyTransportWaybill(tp->clearinghouse_or_chain));
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VWaybillAddress, "waybill-address", 1, _tp)
+  VWaybill * tp = VCheckedDecodeAnyWaybill(runtime, _tp, "waybill-address");
+  return tp->address;
+V_END_FUNC
+
+void VFillClearinghouse(VVector * clearinghouse) {
+  assert(clearinghouse->len == 3);
+  clearinghouse->arr[0] = VFALSE;
+  clearinghouse->arr[1] = VNULL;
+  clearinghouse->arr[2] = VNULL;
+}
+
+V_BEGIN_FUNC(VMakeClearinghouse, "make-clearinghouse", 1, k)
   VVector *tg = V_ALLOCA_SMALL_VECTOR(runtime, 3);
-  tg->base = VMakeSmallObject(VTRANSPORT_GUARDIAN);
+  tg->base = VMakeSmallObject(VCLEARINGHOUSE);
   tg->len = 3;
-  tg->arr[0] = VFALSE;
-  tg->arr[1] = VNULL;
-  tg->arr[2] = VNULL;
+  VFillClearinghouse(tg);
 
   V_BOUNCE(k, runtime, VEncodePointer(tg, VPOINTER_OTHER));
 V_END_FUNC
 
-V_BEGIN_FUNC_BASIC(VTransportGuardianP, "transport-guardian?", 1, tg)
-  return VEncodeBool(VIsTransportGuardian(tg));
+V_BEGIN_FUNC_BASIC(VClearinghouseP, "clearinghouse?", 1, tg)
+  return VEncodeBool(VIsClearinghouse(tg));
 V_END_FUNC
 
-V_BEGIN_FUNC_BASIC(VTransportGuardianPoll, "transport-guardian-poll!", 1, _tg)
-  VVector * tg = VCheckedDecodeTransportGuardian(runtime, _tg, "transport-guardian-poll!");
+V_BEGIN_FUNC_BASIC(VClearinghousePoll, "clearinghouse-poll!", 1, _tg)
+  VVector * tg = VCheckedDecodeClearinghouse(runtime, _tg, "clearinghouse-poll!");
   VWORD _tp = tg->arr[1];
   if(!VIsEq(_tp, VNULL)) {
-    VTransportEphemeron * tp = VCheckedDecodeAnyTransportPair(runtime, _tp, "transport-guardian-poll!");
-    tg->arr[1] = tp->guardian_or_chain;
+    VWaybill * tp = VCheckedDecodeAnyWaybill(runtime, _tp, "clearinghouse-poll!");
+    tg->arr[1] = tp->clearinghouse_or_chain;
     if(VIsEq(tg->arr[1], VNULL)) {
       tg->arr[2] = VNULL;
-    } else if(VIsAnyTransportPair(tg->arr[1])) {
+    } else if(VIsAnyWaybill(tg->arr[1])) {
       VTrackMutation(runtime, tg, &tg->arr[1], tg->arr[1]);
     } else {
-      VErrorC(runtime, "transport-guardian-poll!: internal error: malformed queue of transport pairs");
+      VErrorC(runtime, "clearinghouse-poll!: internal error: malformed queue of transport pairs");
     }
   }
   return VIsEq(_tp, VNULL) ? VFALSE : _tp;
 V_END_FUNC
+
+#if 0
+// NEW hash tables
+enum { HT_FLAGS_SLOT, HT_OCCUPANCY_SLOT, HT_LOAD_FACTOR_SLOT, HT_VECTOR_SLOT, HT_EQUAL_SLOT, HT_HASH_SLOT, HT_GUARDIAN_SLOT, HT_NUM_SLOTS };
+
+V_BEGIN_FUNC(VMakeNewHashTable, "make-hash-table", 5, k, eq, hash, _len, _stable_hash, _load_factor)
+  int len = VCheckedDecodeInt2(runtime, _len, "make-hash-table");
+  if(len <= 0) VErrorC(runtime, "hash tables need length > 0");
+  if(len & (len-1)) VErrorC(runtime, "hash table needs pow2 length ~D\n", len);
+
+  VWORD clearinghouse = VFALSE;
+  if(!VDecodeBool(_stable_hash)) {
+    VVector *ptr = V_ALLOCA_SMALL_VECTOR(runtime, 3);
+    ptr->base = VMakeSmallObject(VCLEARINGHOUSE);
+    ptr->len = 3;
+    VFillClearinghouse(ptr);
+    clearinghouse = VEncodePointer(ptr, VPOINTER_OTHER);
+  }
+  VVector * ht = V_ALLOCA_SMALL_VECTOR(runtime, HT_NUM_SLOTS);
+  ht->base = VMakeSmallObject(VCLEARINGHOUSE);
+  ht->len = HT_NUM_SLOTS;
+  ht->arr[HT_FLAGS_SLOT] = VEncodeInt(0);
+  ht->arr[HT_OCCUPANCY_SLOT] = VEncodeInt(0);
+  ht->arr[HT_LOAD_FACTOR_SLOT] = _load_factor;
+  ht->arr[HT_VECTOR_SLOT] = vec;
+  ht->arr[HT_EQUAL_SLOT] = equal;
+  ht->arr[HT_HASH_SLOT] = hash;
+  ht->arr[HT_GUARDIAN_SLOT] = clearinghouse;
+  _Static_assert(7 == HT_NUM_SLOTS, "update hash table");
+
+  V_BOUNCE(k, runtime, VEncodePointer(ht, VPOINTER_OTHER));
+V_END_FUNC
+#endif
 
 // hash tables
 SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VHashTable * table, VVector * vec, VWORD key, VWORD val, unsigned flags) {

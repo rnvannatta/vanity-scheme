@@ -984,9 +984,9 @@ SYSV_CALL static VPair * VMovePair(VRuntime * runtime, VPair * pair) {
   return ret;
 }
 
-static VEphemeron * VMoveEphemeron(VRuntime * runtime, VEphemeron * eph, bool is_transport) {
-  eph = VMoveObject(runtime, eph, is_transport ? sizeof(VTransportEphemeron) : sizeof(VEphemeron));
-  if(!(eph->p.base.flags & VFLAG_BROKEN)) {
+static VWaybill * VMoveEphemeralWaybill(VRuntime * runtime, VWaybill * eph) {
+  eph = VMoveObject(runtime, eph, sizeof(VWaybill));
+  if(!(eph->base.flags & VFLAG_BROKEN)) {
     // TODO: do NOT add eph to the ephemeron gray set if the key is not condemned
     eph->gc_next = runtime->ephemerons;
     runtime->ephemerons = eph;
@@ -1056,7 +1056,8 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
         }
         case VVECTOR:
         case VRECORD:
-        case VTRANSPORT_GUARDIAN:
+        case VCLEARINGHOUSE:
+        case VNEW_HASH_TABLE:
         {
           VVector * v = ptr;
           return VEncodePointer(VMoveObject(runtime, v, sizeof(VVector) + sizeof(VWORD[v->len])), VPOINTER_OTHER);
@@ -1076,21 +1077,18 @@ SYSV_CALL static VWORD VMoveDispatch(VRuntime * runtime, VWORD word) {
           VFuture * f = ptr;
           return VEncodePointer(VMoveObject(runtime, f, sizeof(VFuture)), VPOINTER_OTHER);
         }
-        case VEPHEMERON:
+        case VSTRONG_WAYBILL:
+        case VSTRONG_TRANSPORT_WAYBILL:
         {
-          VEphemeron * eph = ptr;
-          eph = VMoveEphemeron(runtime, eph, false);
-          return VEncodePointer(eph, VPOINTER_OTHER);
+          VWaybill * tp = ptr;
+          return VEncodePointer(VMoveObject(runtime, tp, sizeof(VWaybill)), VPOINTER_OTHER);
         }
-        case VTRANSPORT_PAIR:
+        case VEPHEMERAL_WAYBILL:
+        case VEPHEMERAL_TRANSPORT_WAYBILL:
         {
-          VTransportEphemeron * tp = ptr;
-          return VEncodePointer(VMoveObject(runtime, tp, sizeof(VTransportEphemeron)), VPOINTER_OTHER);
-        }
-        case VTRANSPORT_EPHEMERON:
-        {
-          VEphemeron * eph = ptr;
-          eph = VMoveEphemeron(runtime, eph, true);
+          VWaybill * eph = ptr;
+          // add it to the ephemeron gray set
+          eph = VMoveEphemeralWaybill(runtime, eph);
           return VEncodePointer(eph, VPOINTER_OTHER);
         }
         default:
@@ -1169,19 +1167,20 @@ SYSV_CALL static void VCheneyFuture(VRuntime * runtime, VFuture * future) {
   }
 }
 
-static void VEnqueueSignalingTransportEphemeron(VRuntime * runtime, VTransportEphemeron * te);
-SYSV_CALL static void VCheneyTransportEphemeron(VRuntime * runtime, VTransportEphemeron * te, bool scan_key, bool scan_datum) {
-  if(scan_datum)
-    te->e.p.datum = VMoveDispatch(runtime, te->e.p.datum);
+static void VEnqueueSignalingWaybill(VRuntime * runtime, VWaybill * te);
 
-  te->luggage = VMoveDispatch(runtime, te->luggage);
-  te->guardian_or_chain = VMoveDispatch(runtime, te->guardian_or_chain);
+SYSV_CALL static void VCheneyWaybill(VRuntime * runtime, VWaybill * te, bool scan_key, bool scan_datum, bool signal_on_move) {
+  if(scan_datum)
+    te->datum = VMoveDispatch(runtime, te->datum);
+
+  te->address = VMoveDispatch(runtime, te->address);
+  te->clearinghouse_or_chain = VMoveDispatch(runtime, te->clearinghouse_or_chain);
 
   if(scan_key) {
-    VWORD old_key = te->e.p.key;
-    te->e.p.key = VMoveDispatch(runtime, te->e.p.key);
-    if(!VIsEq(old_key, te->e.p.key))
-      VEnqueueSignalingTransportEphemeron(runtime, te);
+    VWORD old_key = te->key;
+    te->key = VMoveDispatch(runtime, te->key);
+    if(signal_on_move && !VIsEq(old_key, te->key))
+      VEnqueueSignalingWaybill(runtime, te);
   }
 }
 
@@ -1215,7 +1214,8 @@ SYSV_CALL static VWORD * VCheneyScan(VRuntime * runtime, VWORD * cur) {
     }
     case VVECTOR:
     case VRECORD:
-    case VTRANSPORT_GUARDIAN:
+    case VCLEARINGHOUSE:
+    case VNEW_HASH_TABLE:
     {
       VVector * v = ((VVector*)cur);
       VCheneyVector(runtime, v);
@@ -1247,25 +1247,34 @@ SYSV_CALL static VWORD * VCheneyScan(VRuntime * runtime, VWORD * cur) {
       return cur + (sizeof(VFuture))/sizeof(VWORD);
       break;
     }
-    case VEPHEMERON:
+    case VSTRONG_WAYBILL:
+    {
+      VWaybill * te = ((VWaybill*)cur);
+      VCheneyWaybill(runtime, te, true, true, false);
+      return cur + (sizeof(VWaybill))/sizeof(VWORD);
+      break;
+    }
+    case VSTRONG_TRANSPORT_WAYBILL:
+    {
+      VWaybill * te = ((VWaybill*)cur);
+      VCheneyWaybill(runtime, te, true, true, true);
+      return cur + (sizeof(VWaybill))/sizeof(VWORD);
+      break;
+    }
+    case VEPHEMERAL_WAYBILL:
     {
       /* We don't scan ephemerons immediately, but defer doing so til everything else is scanned */
-      return cur + (sizeof(VEphemeron))/sizeof(VWORD);
+      VWaybill * te = ((VWaybill*)cur);
+      VCheneyWaybill(runtime, te, false, false, false);
+      return cur + (sizeof(VWaybill))/sizeof(VWORD);
       break;
     }
-    case VTRANSPORT_EPHEMERON:
+    case VEPHEMERAL_TRANSPORT_WAYBILL:
     {
       /* need to scan the transport cell blobs, but still not the ephemeral blobs */
-      VTransportEphemeron * te = ((VTransportEphemeron*)cur);
-      VCheneyTransportEphemeron(runtime, te, false, false);
-      return cur + (sizeof(VTransportEphemeron))/sizeof(VWORD);
-      break;
-    }
-    case VTRANSPORT_PAIR:
-    {
-      VTransportEphemeron * te = ((VTransportEphemeron*)cur);
-      VCheneyTransportEphemeron(runtime, te, true, true);
-      return cur + (sizeof(VTransportEphemeron))/sizeof(VWORD);
+      VWaybill * te = ((VWaybill*)cur);
+      VCheneyWaybill(runtime, te, false, false, true);
+      return cur + (sizeof(VWaybill))/sizeof(VWORD);
       break;
     }
   }
@@ -1351,12 +1360,12 @@ static VWORD VScheduleFinalizers(VRuntime * runtime, VWORD k, VFinalizerTable * 
 
 static bool VScanEphemerons(VRuntime * runtime) {
   bool resurrected_values = false;
-  VEphemeron * ephs = runtime->ephemerons;
-  VEphemeron ** parent_slot = &runtime->ephemerons;
+  VWaybill * ephs = runtime->ephemerons;
+  VWaybill ** parent_slot = &runtime->ephemerons;
 
   while(ephs) {
-    VEphemeron * eph = ephs;
-    VWORD _key = eph->p.key;
+    VWaybill * eph = ephs;
+    VWORD _key = eph->key;
 
     bool needs_move = VIsPointer(_key);
     bool forwarded = false;
@@ -1370,13 +1379,13 @@ static bool VScanEphemerons(VRuntime * runtime) {
         needs_move = false;
         switch(*(VTAG*)key) {
           case VCLOSURE:
-            eph->p.key = VEncodeClosure(key);
+            eph->key = VEncodeClosure(key);
             break;
           case VPAIR:
-            eph->p.key = VEncodePair(key);
+            eph->key = VEncodePair(key);
             break;
           default:
-            eph->p.key = VEncodePointer(key, VPOINTER_OTHER);
+            eph->key = VEncodePointer(key, VPOINTER_OTHER);
             break;
         }
       } else {
@@ -1386,7 +1395,7 @@ static bool VScanEphemerons(VRuntime * runtime) {
 
     if(!needs_move) {
       // either key is eternal or key is in older generation or key was moved
-      eph->p.datum = VMoveDispatch(runtime, eph->p.datum);
+      eph->datum = VMoveDispatch(runtime, eph->datum);
       resurrected_values = true;
 
       // remove this ephemeron from the list of ephemerons to process for breaking
@@ -1394,9 +1403,9 @@ static bool VScanEphemerons(VRuntime * runtime) {
       ephs = eph->gc_next;
       eph->gc_next = NULL;
       
-      if(forwarded && eph->p.base.tag == VTRANSPORT_EPHEMERON) {
-        VTransportEphemeron * te = (VTransportEphemeron*)eph;
-        VEnqueueSignalingTransportEphemeron(runtime, te);
+      if(forwarded && eph->base.tag == VEPHEMERAL_TRANSPORT_WAYBILL) {
+        VWaybill * te = (VWaybill*)eph;
+        VEnqueueSignalingWaybill(runtime, te);
       }
     } else {
       parent_slot = &eph->gc_next;
@@ -1408,7 +1417,7 @@ static bool VScanEphemerons(VRuntime * runtime) {
 
 volatile sig_atomic_t _Atomic VInterruptSignal;
 
-static void VEnqueueSignalingTransportEphemeron(VRuntime * runtime, VTransportEphemeron * te) {
+static void VEnqueueSignalingWaybill(VRuntime * runtime, VWaybill * te) {
   assert(runtime != NULL);
   // only allowed in main
   if(!VIsMain(runtime)) {
@@ -1416,77 +1425,77 @@ static void VEnqueueSignalingTransportEphemeron(VRuntime * runtime, VTransportEp
     VAbortC(NULL, VERROR);
   }
 
-  // no guardian, just signal
-  if(VIsEq(te->guardian_or_chain, VFALSE)) {
-    te->guardian_or_chain = VNULL;
+  // no clearinghouse, just signal
+  if(VIsEq(te->clearinghouse_or_chain, VFALSE)) {
+    te->clearinghouse_or_chain = VNULL;
     return;
   }
   // already signaled
-  if(VIsEq(te->guardian_or_chain, VNULL)) {
+  if(VIsEq(te->clearinghouse_or_chain, VNULL)) {
     return;
   }
 
   // logic assert that this is ready to use and we're not trampling anything
-  assert(!te->e.gc_next);
-  te->e.gc_next = (VEphemeron*)runtime->signaling_transport_ephemerons;
+  assert(!te->gc_next);
+  te->gc_next = (VWaybill*)runtime->signaling_transport_ephemerons;
   runtime->signaling_transport_ephemerons = te;
 }
 
-static void VSignalTransportEphemerons(VRuntime * runtime) {
-  VTransportEphemeron * tes = runtime->signaling_transport_ephemerons;
+static void VSignalEphemeralTransportWaybills(VRuntime * runtime) {
+  VWaybill * tes = runtime->signaling_transport_ephemerons;
   runtime->signaling_transport_ephemerons = NULL;
-  VTransportEphemeron * te = NULL;
+  VWaybill * te = NULL;
   while(tes) {
     te = tes;
     // check if already signaled
     // annoying to check mid-scan because of pointer forwarding
-    if(!VIsAnyTransportPair(te->guardian_or_chain)) {
-      if(!VIsPointer(te->guardian_or_chain)) {
-        goto invalid_guardian;
+    if(!VIsAnyTransportWaybill(te->clearinghouse_or_chain)) {
+      if(!VIsPointer(te->clearinghouse_or_chain)) {
+        goto invalid_clearinghouse;
       }
-      void * ptr = VDecodePointer(te->guardian_or_chain);
+      void * ptr = VDecodePointer(te->clearinghouse_or_chain);
       VNEWTAG tag = *(VNEWTAG*)ptr;
-      if(tag != VTRANSPORT_GUARDIAN) {
-        goto invalid_guardian;
+      if(tag != VCLEARINGHOUSE) {
+        goto invalid_clearinghouse;
       }
-      VVector * guardian = ptr;
-      if(guardian->len != 3) {
-        VFPrintfC(runtime, (VPort[]){get_port_stderr()}, "Malformed guardian in transport pair: ~A~N", te->guardian_or_chain);
+      VVector * clearinghouse = ptr;
+      if(clearinghouse->len != 3) {
+        VFPrintfC(runtime, (VPort[]){get_port_stderr()}, "Malformed clearinghouse in transport pair: ~A~N", te->clearinghouse_or_chain);
         VAbortC(NULL, VERROR);
       }
       // 0: reserved
       // 1: start of queue
       // 2: end of queue
       VWORD teword = VEncodePointer(te, VPOINTER_OTHER);
-      VWORD * end_of_queue = &guardian->arr[2];
+      VWORD * end_of_queue = &clearinghouse->arr[2];
 
-      if(VIsAnyTransportPair(*end_of_queue)) {
-        VTransportEphemeron * last_te = (void*)VDecodePointer(*end_of_queue);
-        last_te->guardian_or_chain = teword;
-        VTrackMutation(runtime, last_te, &last_te->guardian_or_chain, teword);
+      if(VIsAnyTransportWaybill(*end_of_queue)) {
+        VWaybill * last_te = (void*)VDecodePointer(*end_of_queue);
+        last_te->clearinghouse_or_chain = teword;
+        VTrackMutation(runtime, last_te, &last_te->clearinghouse_or_chain, teword);
 
         *end_of_queue = teword;
-        VTrackMutation(runtime, guardian, end_of_queue, teword);
-        te->guardian_or_chain = VNULL;
+        VTrackMutation(runtime, clearinghouse, end_of_queue, teword);
+        te->clearinghouse_or_chain = VNULL;
       } else if(VIsEq(*end_of_queue, VNULL)) {
-        VWORD * start_of_queue = &guardian->arr[1];
+        VWORD * start_of_queue = &clearinghouse->arr[1];
 
         *start_of_queue = teword;
         *end_of_queue = teword;
-        VTrackMutation(runtime, guardian, start_of_queue, teword);
-        VTrackMutation(runtime, guardian, end_of_queue, teword);
-        te->guardian_or_chain = VNULL;
+        VTrackMutation(runtime, clearinghouse, start_of_queue, teword);
+        VTrackMutation(runtime, clearinghouse, end_of_queue, teword);
+        te->clearinghouse_or_chain = VNULL;
       } else {
-        VFPrintfC(runtime, (VPort[]){get_port_stderr()}, "Invalid object in transport-guardian queue: ~A~N", *end_of_queue);
+        VFPrintfC(runtime, (VPort[]){get_port_stderr()}, "Invalid object in clearinghouse queue: ~A~N", *end_of_queue);
         VAbortC(NULL, VERROR);
       }
     }
-    tes = (VTransportEphemeron*)te->e.gc_next;
-    te->e.gc_next = NULL;
+    tes = (VWaybill*)te->gc_next;
+    te->gc_next = NULL;
   }
   return;
-invalid_guardian:
-  VFPrintfC(runtime, (VPort[]){get_port_stderr()}, "Invalid guardian in transport pair: ~A~N", te->guardian_or_chain);
+invalid_clearinghouse:
+  VFPrintfC(runtime, (VPort[]){get_port_stderr()}, "Invalid clearinghouse in transport pair: ~A~N", te->clearinghouse_or_chain);
   VAbortC(NULL, VERROR);
 }
 
@@ -1744,89 +1753,22 @@ SYSV_CALL void VGarbageCollect2(VFunc f, VRuntime * runtime, VEnv * statics, int
 
   {
     // Break any remaining ephemerons.
-    VEphemeron * ephemerons = runtime->ephemerons;
+    VWaybill * ephemerons = runtime->ephemerons;
     runtime->ephemerons = NULL;
     while(ephemerons) {
-      VEphemeron * eph = ephemerons;
-      eph->p.key = VFALSE;
-      eph->p.datum = VFALSE;
-      eph->p.base.flags |= VFLAG_BROKEN;
+      VWaybill * eph = ephemerons;
+      eph->key = VFALSE;
+      eph->datum = VFALSE;
+      eph->base.flags |= VFLAG_BROKEN;
 
       ephemerons = eph->gc_next;
       eph->gc_next = NULL;
+
+      VEnqueueSignalingWaybill(runtime, eph);
     }
   }
 
-  VSignalTransportEphemerons(runtime);
-
-#if 0
-  {
-    VTransportCell * cells = runtime->transport_cells;
-    runtime->transport_cells = NULL;
-
-    while(cells) {
-      VTransportCell * cell = cells;
-      VWORD _key = cell->key;
-
-      // TODO the mutations here should be tracked for consistency.
-
-      if(VIsPointer(_key)) {
-        void * key = VDecodePointer(_key);
-        void * forward = VForwarded(key);
-        if(forward) {
-          switch(*(VTAG*)key) {
-            case VCLOSURE:
-              cell->key = VEncodeClosure(key);
-              break;
-            case VPAIR:
-              cell->key = VEncodePair(key);
-              break;
-            default:
-              cell->key = VEncodePointer(key, VPOINTER_OTHER);
-              break;
-          }
-          // key has moved. remove it from the doubly linked list where it is (the car half of the pair)
-          // and move it to the cdr half of the pair
-          if(cell->next_in_chain)
-            cell->next_in_chain->prev_in_chain = cell->prev_in_chain;
-          if(cell->prev_in_chain)
-            cell->prev_in_chain = cell->next_in_chain;
-          else
-            cell->guardian->first = VEncodePointer(cell->next_in_chain, VPOINTER_OTHER);
-
-          cell->prev_in_chain = NULL;
-          if(VIsEq(cell->guardian->rest, VNULL)) {
-            cell->next_in_chain = NULL;
-          } else {
-            VTransportCell * next = (void*)VDecodePointer(cell->guardian->rest);
-            cell->next_in_chain = next;
-            next->prev_in_chain = cell;
-          }
-
-          cell->guardian->rest = VEncodePointer(cell, VPOINTER_OTHER);
-
-        } else if(VNeedsMove(runtime, key)) {
-          // key has died, clean it up and remove the cell from the guardian to declutter and prevent a leak
-          cell->key = VFALSE;
-          cell->base.flags |= VFLAG_BROKEN;
-          if(cell->next_in_chain)
-            cell->next_in_chain->prev_in_chain = cell->prev_in_chain;
-          if(cell->prev_in_chain)
-            cell->prev_in_chain = cell->next_in_chain;
-          else
-            cell->guardian->first = VEncodePointer(cell->next_in_chain, VPOINTER_OTHER);
-
-          cell->next_in_chain = NULL;
-          cell->prev_in_chain = NULL;
-        } else {
-          // Nothing, key didn't move.
-        }
-      }
-      cells = cell->next_to_scan;
-      cell->next_to_scan = NULL;
-    }
-  }
-#endif
+  VSignalEphemeralTransportWaybills(runtime);
 
   if(atomic_exchange(&VInterruptSignal, 0)) {
     VErrorC(runtime, "interrupted");
@@ -2059,7 +2001,8 @@ static inline size_t VObjectSize(VObject const * o) {
       return sizeof(VPair);
     case VVECTOR:
     case VRECORD:
-    case VTRANSPORT_GUARDIAN:
+    case VCLEARINGHOUSE:
+    case VNEW_HASH_TABLE:
       return VVectorSize(o);
     case VSYMBOL:
     case VSTRING:
@@ -2075,11 +2018,11 @@ static inline size_t VObjectSize(VObject const * o) {
       return sizeof(VHashTable);
     case VFUTURE:
       return sizeof(VFuture);
-    case VEPHEMERON:
-      return sizeof(VEphemeron);
-    case VTRANSPORT_PAIR:
-    case VTRANSPORT_EPHEMERON:
-      return sizeof(VTransportEphemeron);
+    case VSTRONG_WAYBILL:
+    case VSTRONG_TRANSPORT_WAYBILL:
+    case VEPHEMERAL_WAYBILL:
+    case VEPHEMERAL_TRANSPORT_WAYBILL:
+      return sizeof(VWaybill);
     default:
       fprintf(stderr, "Unknown object (tag: %hd) in heap.\n", o->tag);
       VAbortC(NULL, VERROR);
@@ -2158,20 +2101,16 @@ static inline void VShiftFuture(VObject * o, void const * old, void const * olde
     VShiftWord(&future->val, old, oldend, shift);
 }
 
-static inline void VShiftEphemeron(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
-  VEphemeron * eph = (VEphemeron*)o;
-  VShiftWord(&eph->p.key, old, oldend, shift);
-  VShiftWord(&eph->p.datum, old, oldend, shift);
-}
-static inline void VShiftTransportEphemeron(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
-  VTransportEphemeron * te = (VTransportEphemeron*)o;
-  VWORD oldkey = te->e.p.key;
-  VShiftEphemeron(o, old, oldend, shift);
-  VShiftWord(&te->luggage, old, oldend, shift);
-  VShiftWord(&te->guardian_or_chain, old, oldend, shift);
+static inline void VShiftWaybill(VObject * o, void const * old, void const * oldend, ptrdiff_t shift) {
+  VWaybill * te = (VWaybill*)o;
+  VWORD oldkey = te->key;
+  VShiftWord(&te->key, old, oldend, shift);
+  VShiftWord(&te->datum, old, oldend, shift);
+  VShiftWord(&te->address, old, oldend, shift);
+  VShiftWord(&te->clearinghouse_or_chain, old, oldend, shift);
 
-  if(!VIsEq(oldkey, te->e.p.key))
-    VEnqueueSignalingTransportEphemeron(NULL, te);
+  if(!VIsEq(oldkey, te->key))
+    VEnqueueSignalingWaybill(NULL, te);
 }
 
 
@@ -2204,7 +2143,8 @@ static inline void VShiftObject(VObject * o, void const * old, void const * olde
       return;
     case VVECTOR:
     case VRECORD:
-    case VTRANSPORT_GUARDIAN:
+    case VCLEARINGHOUSE:
+    case VNEW_HASH_TABLE:
       VShiftVector(o, old, oldend, shift);
       return;
     case VRUNTIME:
@@ -2216,14 +2156,15 @@ static inline void VShiftObject(VObject * o, void const * old, void const * olde
     case VFUTURE:
       VShiftFuture(o, old, oldend, shift);
       return;
-    case VEPHEMERON:
-      VShiftEphemeron(o, old, oldend, shift);
+    case VSTRONG_WAYBILL:
+    case VEPHEMERAL_WAYBILL:
+      VShiftWaybill(o, old, oldend, shift);
       return;
-    case VTRANSPORT_PAIR:
-    case VTRANSPORT_EPHEMERON:
+    case VSTRONG_TRANSPORT_WAYBILL:
+    case VEPHEMERAL_TRANSPORT_WAYBILL:
       fprintf(stderr, "transport pairs in fibers not allowed\n");
       VAbortC(NULL, VERROR);
-      VShiftTransportEphemeron(o, old, oldend, shift);
+      VShiftWaybill(o, old, oldend, shift);
       return;
     default:
       fprintf(stderr, "Unknown object (tag: %hd) in heap.\n", o->tag);
@@ -3421,24 +3362,34 @@ static void VDisplayWordImpl(VPort * port, VWORD v, bool write, int depth) {
           port_fputs("#future", port);
           break;
         }
-        case VEPHEMERON:
+        case VSTRONG_WAYBILL:
         {
-          port_fputs("#ephemeron", port);
+          port_fputs("#waybill", port);
           break;
         }
-        case VTRANSPORT_PAIR:
+        case VEPHEMERAL_WAYBILL:
         {
-          port_fputs("#transport-pair", port);
+          port_fputs("#ephemeral-waybill", port);
           break;
         }
-        case VTRANSPORT_EPHEMERON:
+        case VSTRONG_TRANSPORT_WAYBILL:
         {
-          port_fputs("#transport-ephemeron", port);
+          port_fputs("#transport-waybill", port);
           break;
         }
-        case VTRANSPORT_GUARDIAN:
+        case VEPHEMERAL_TRANSPORT_WAYBILL:
         {
-          port_fputs("#transport-guardian", port);
+          port_fputs("#ephemeral-transport-waybill", port);
+          break;
+        }
+        case VCLEARINGHOUSE:
+        {
+          port_fputs("#clearinghouse", port);
+          break;
+        }
+        case VNEW_HASH_TABLE:
+        {
+          port_fputs("#hash-table", port);
           break;
         }
         default:

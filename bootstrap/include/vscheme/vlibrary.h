@@ -66,9 +66,9 @@ V_DECLARE_FUNC_BASIC(VNullptrP2, x);
 V_DECLARE_FUNC_BASIC(VForeignPointerP2, x);
 
 // equality
-V_DECLARE_FUNC(VEq2, k, x, y);
-V_DECLARE_FUNC(VSymbolEqv2, k, x, y);
-V_DECLARE_FUNC(VBlobEqv2, k, x, y);
+V_DECLARE_FUNC_BASIC(VEq2, x, y);
+V_DECLARE_FUNC_BASIC(VSymbolEqv2, x, y);
+V_DECLARE_FUNC_BASIC(VBlobEqv2, x, y);
 #define VEqv VEq2
 
 // logic
@@ -76,8 +76,10 @@ V_DECLARE_FUNC_BASIC(VNot2, x);
 
 // lists
 V_DECLARE_FUNC(VCons2, k, x, y);
-V_DECLARE_FUNC(VCar2, k, x);
-V_DECLARE_FUNC(VCdr2, k, x);
+#define _VBasic_VCons2(runtime, statics, x, y) VInlineCons2(runtime, x, y)
+
+V_DECLARE_FUNC_BASIC(VCar2, x);
+V_DECLARE_FUNC_BASIC(VCdr2, x);
 V_DECLARE_FUNC(VAppend, k, x, y);
 
 V_DECLARE_FUNC_BASIC(VAssq, x, lst);

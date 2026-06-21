@@ -103,7 +103,11 @@ typedef struct VRuntime {
   // dynamic variables
   VWORD dynamics;
   VWORD exception_handlers;
-  // finalizers
+  VClosure * exception_location; // not actually a closure. Don't call it!
+  // finalizers & gc stuff
+  VWaybill * ephemerons;
+  VWaybill * weak_black_set;
+  VWaybill * signaling_transport_ephemerons;
   VFinalizerTable VHeapFinalizers[2];
   // gc info
   unsigned VNumMinorGCs;

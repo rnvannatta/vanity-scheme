@@ -264,7 +264,9 @@ When scanning the gray sets:
 5. All remaining ephemeron gray set objects are broken: both their keys and their datums are set to #f and they are marked broken. Thus, they are now all members of the black set.
 6. All weak pairs still in the weak object black set with keys in the white set are broken, assigning them to the primary black set.
 
-When a transport pair is scanned (in step 1 for strong and weak transport pairs or step 2 for ephemeral transport pairs), if its key has been observed to have physically moved when it was assigned, either because the transport pair induced it to be moved or because it found a forwarding address, then the transport pair is signaled and added to its guardian's queue. If the transport pair is weak or ephemeral, and it is broken because its key is in the white set, then the transport pair is *not* signaled.
+When a transport pair is scanned (in step 1 for strong and weak transport pairs or step 2 for ephemeral transport pairs), if its key has been observed to have physically moved when it was assigned, either because the transport pair induced it to be moved or because it found a forwarding address, then the transport pair is signaled and added to its guardian's queue by the collector. If the transport pair is weak or ephemeral, and it is broken because its key is in the white set, then the transport pair is *not* signaled.
+
+The insertion of the tranport pair into the guardian's queue and the movement of the key must together be atomic relative to the mutator's perspective. There should be no window where the mutator can observe the key moved before it is enqueued.
 
 This algorithm is simplified and there are plenty of possible optimizations to undertake, particularly with the criterion to stop scanning ephemerons in step 4.
 

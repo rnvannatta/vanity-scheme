@@ -10,7 +10,7 @@
 void VExePathImpl(V_CORE_ARGS, VWORD k) {
   V_ARG_CHECK3(runtime, "exe-path", 1, argc);
 
-  VBlob * path = V_ALLOCA_BLOB(MAX_PATH);
+  VBlob * path = V_ALLOCA_SMALL_BLOB(runtime, MAX_PATH);
   path->base = VMakeSmallObject(VSTRING);
   GetModuleFileNameA(NULL, path->buf, MAX_PATH);
   PathRemoveFileSpecA(path->buf);
@@ -36,7 +36,7 @@ void VApplyForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD func, VWORD return_ty
   lst = arg_types;
 
   size_t stacklen = sizeof(uint64_t[nargs+1]);
-  VFuncallRegisters * regs = alloca(sizeof(VFuncallRegisters) + stacklen);
+  VFuncallRegisters * regs = VAlloca(runtime, sizeof(VFuncallRegisters) + stacklen);
   regs->funptr = funptr;
 
   char * sp = regs->stack;
@@ -187,7 +187,7 @@ void VApplyForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD func, VWORD return_ty
   lst = arg_types;
 
   size_t stacklen = sizeof(uint64_t[nargs+1]);
-  VFuncallRegisters * regs = alloca(sizeof(VFuncallRegisters) + stacklen);
+  VFuncallRegisters * regs = VAlloca(runtime, sizeof(VFuncallRegisters) + stacklen);
   regs->funptr = funptr;
 
   char * sp = regs->stack;
