@@ -305,6 +305,8 @@
 ;;; RUN COMPILE: super messy
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(define compile-ret 0)
+(define link-ret 0)
 (with-exception-handler handle-exception
   (lambda ()
     (define cc-files
@@ -401,7 +403,7 @@
                 (if (and (not header?) (not bytecode?) (not transpile?) (not expand?))
                     (begin
                       (if verbose? (displayln cc-cmd))
-                      (system cc-cmd)))))
+                      (set! compile-ret (bitwise-ior compile-ret (system cc-cmd)))))))
             scm-files
             cc-files
             cc-obj-files))))
@@ -435,10 +437,11 @@
           (set! link-command (string-append link-command link-command-flags))
 
           (if verbose? (displayln link-command))
-          (system link-command)))
+          (set! link-ret (system link-command))))
 
     ; 4. cleanup
     (if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not keep?))
         (for-each delete-file cc-files))
     (if (and (not header?) (not bytecode?) (not transpile?) (not expand?) (not object?) (not keep?))
         (for-each delete-file cc-obj-files))))
+(exit (if (and (= compile-ret 0) (= link-ret 0)) 0 1))
