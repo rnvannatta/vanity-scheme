@@ -1,6 +1,7 @@
 (import (vanity core))
+(import (vanity hashtable))
 
-(define table (make-hash-table))
+(define table (make-hash-table eq? current-hash #f #f))
 
 (hash-table-set! table 1 'one)
 (hash-table-set! table 2 'two)
@@ -25,7 +26,7 @@
 
 (hash-table-delete! table 9)
 
-(define eqv-table (make-hash-table eqv?))
+(define eqv-table (make-hash-table eqv? current-hash #f #f))
 
 (hash-table-set! eqv-table 'one 1)
 (hash-table-set! eqv-table 'two 2)

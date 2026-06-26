@@ -941,6 +941,37 @@ static void MakeWaybillImpl(VRuntime * runtime, VWORD k, VWORD clearinghouse, VW
   V_BOUNCE(k, runtime, VEncodePointer(te, VPOINTER_OTHER));
 }
 
+static VWORD weak_key_sym, ephemeral_key_sym;
+__attribute__((constructor)) static void InitKeySyms() {
+  weak_key_sym = VEncodePointer(VCreateSymbolSlow("weak-key", sizeof "weak-key" - 1), VPOINTER_OTHER);
+  ephemeral_key_sym = VEncodePointer(VCreateSymbolSlow("ephemeral-key", sizeof "ephemeral-key" - 1), VPOINTER_OTHER);
+}
+
+V_BEGIN_FUNC_RANGE(VMakeWaybill, "make-waybill", 6, 7, k, weakness, stability, clearinghouse, key, datum, address)
+  if(argc == 4) {
+    address = datum;
+    datum = VFALSE;
+  }
+  bool stable = VDecodeBool(stability);
+
+  VNEWTAG tag;
+  if(VDecodeBool(weakness)) {
+    if(VIsEq(weakness, weak_key_sym))
+      tag = 0, VErrorC(runtime, "make-waybill: weak keys not supported yet: ~S\n", weakness);
+      //tag = stable ? VWEAK_WAYBILL : VWEAK_TRANSPORT_WAYBILL;
+    else if(VIsEq(weakness, ephemeral_key_sym))
+      tag = stable ? VEPHEMERAL_WAYBILL : VEPHEMERAL_TRANSPORT_WAYBILL;
+    else {
+      VErrorC(runtime, "make-waybill: unknown key weakness: ~S\n", weakness);
+      tag = VSTRONG_TRANSPORT_WAYBILL;
+    }
+  } else {
+    tag = stable ? VSTRONG_WAYBILL : VSTRONG_TRANSPORT_WAYBILL;
+  }
+
+  MakeWaybillImpl(runtime, k, clearinghouse, key, datum, address, tag);
+V_END_FUNC
+
 V_BEGIN_FUNC_RANGE(VMakeStrongWaybill, "make-strong-waybill", 4, 5, k, clearinghouse, key, datum, address)
   if(argc == 4) {
     address = datum;
@@ -1041,38 +1072,64 @@ V_BEGIN_FUNC_BASIC(VClearinghousePoll, "clearinghouse-poll!", 1, _tg)
   return VIsEq(_tp, VNULL) ? VFALSE : _tp;
 V_END_FUNC
 
-#if 0
 // NEW hash tables
-enum { HT_FLAGS_SLOT, HT_OCCUPANCY_SLOT, HT_LOAD_FACTOR_SLOT, HT_VECTOR_SLOT, HT_EQUAL_SLOT, HT_HASH_SLOT, HT_GUARDIAN_SLOT, HT_NUM_SLOTS };
+enum { HT_FLAGS_SLOT, HT_OCCUPANCY_SLOT, HT_LOAD_FACTOR_SLOT, HT_VECTOR_SLOT, HT_EQUAL_SLOT, HT_HASH_SLOT, HT_CLEARINGHOUSE_SLOT, HT_NUM_SLOTS };
 
-V_BEGIN_FUNC(VMakeNewHashTable, "make-hash-table", 5, k, eq, hash, _len, _stable_hash, _load_factor)
-  int len = VCheckedDecodeInt2(runtime, _len, "make-hash-table");
+V_BEGIN_FUNC(VMakeHashTableImpl, "make-hash-table-impl", 7, k, equal, hash, _len, weakness, _stable_hash, _load_factor)
+  int len = VCheckedDecodeInt2(runtime, _len, "make-hash-table-impl");
   if(len <= 0) VErrorC(runtime, "hash tables need length > 0");
   if(len & (len-1)) VErrorC(runtime, "hash table needs pow2 length ~D\n", len);
+  VVector * vec = V_ALLOCA_VECTOR2(&runtime, runtime, len);
+  if(!vec) VGarbageCollect2Func(runtime, (VFunc)VMakeHashTableImpl, 7, k, equal, hash, _len, weakness, _stable_hash, _load_factor);
+  vec->base = VMakeSmallObject(VVECTOR);
+  vec->len = len;
+  for(int i = 0; i < len; i++)
+    vec->arr[i] = VFALSE;
 
   VWORD clearinghouse = VFALSE;
-  if(!VDecodeBool(_stable_hash)) {
+  if(!VDecodeBool(_stable_hash) || !VDecodeBool(weakness)) {
     VVector *ptr = V_ALLOCA_SMALL_VECTOR(runtime, 3);
     ptr->base = VMakeSmallObject(VCLEARINGHOUSE);
     ptr->len = 3;
     VFillClearinghouse(ptr);
     clearinghouse = VEncodePointer(ptr, VPOINTER_OTHER);
   }
+
+  VPair * flags = VAlloca(runtime, sizeof(VPair));
+  *flags = VMakePair(weakness, _stable_hash);
+
   VVector * ht = V_ALLOCA_SMALL_VECTOR(runtime, HT_NUM_SLOTS);
-  ht->base = VMakeSmallObject(VCLEARINGHOUSE);
+  ht->base = VMakeSmallObject(VNEW_HASH_TABLE);
   ht->len = HT_NUM_SLOTS;
-  ht->arr[HT_FLAGS_SLOT] = VEncodeInt(0);
+  ht->arr[HT_FLAGS_SLOT] = VEncodePointer(flags, VPOINTER_PAIR);
   ht->arr[HT_OCCUPANCY_SLOT] = VEncodeInt(0);
   ht->arr[HT_LOAD_FACTOR_SLOT] = _load_factor;
-  ht->arr[HT_VECTOR_SLOT] = vec;
+  ht->arr[HT_VECTOR_SLOT] = VEncodePointer(vec, VPOINTER_OTHER);
   ht->arr[HT_EQUAL_SLOT] = equal;
   ht->arr[HT_HASH_SLOT] = hash;
-  ht->arr[HT_GUARDIAN_SLOT] = clearinghouse;
+  ht->arr[HT_CLEARINGHOUSE_SLOT] = clearinghouse;
   _Static_assert(7 == HT_NUM_SLOTS, "update hash table");
 
   V_BOUNCE(k, runtime, VEncodePointer(ht, VPOINTER_OTHER));
 V_END_FUNC
-#endif
+
+V_BEGIN_FUNC_BASIC(VHashTableSlot, "hash-table-slot", 2, _ht, _i)
+  int i = VCheckedDecodeInt2(runtime, _i, "hash-table-slot");
+  if(!(0 <= i && i < HT_NUM_SLOTS))
+    VErrorC(runtime, "hash table slot index out of bounds");
+  VVector * ht = VCheckedDecodeNewHashTable(runtime, _ht, "hash-table-slot");
+  return ht->arr[i];
+V_END_FUNC
+
+V_BEGIN_FUNC_BASIC(VHashTableSlotSet, "hash-table-slot-set!", 3, _ht, _i, _val)
+  int i = VCheckedDecodeInt2(runtime, _i, "hash-table-slot");
+  if(!(0 <= i && i < HT_NUM_SLOTS))
+    VErrorC(runtime, "hash table slot index out of bounds");
+  VVector * ht = VCheckedDecodeNewHashTable(runtime, _ht, "hash-table-slot");
+  ht->arr[i] = _val;
+  VTrackMutation(runtime, ht, &ht->arr[i], _val);
+  return VVOID;
+V_END_FUNC
 
 // hash tables
 SYSV_CALL static bool VHashTableSetImpl(VRuntime * runtime, VHashTable * table, VVector * vec, VWORD key, VWORD val, unsigned flags) {

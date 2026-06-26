@@ -11,6 +11,7 @@
     clearinghouse?
 
     make-clearinghouse
+    make-waybill
     make-strong-waybill
     make-ephemeral-waybill
     make-strong-transport-waybill
@@ -36,6 +37,7 @@
   (define-constant clearinghouse? (##basic-intrinsic "VClearinghouseP" 1))
 
   (define-constant make-clearinghouse (##intrinsic "VMakeClearinghouse" 1 1))
+  (define-constant make-waybill (##intrinsic "VMakeWaybill" 6 7))
   (define-constant make-strong-waybill (##intrinsic "VMakeStrongWaybill" 4 5))
   (define-constant make-ephemeral-waybill (##intrinsic "VMakeEphemeralWaybill" 5 5))
   (define-constant make-strong-transport-waybill (##intrinsic "VMakeStrongTransportWaybill" 4 5))
