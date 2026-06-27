@@ -27,7 +27,7 @@
   (import (vanity seed))
   (export
     ; predicates
-    null? eof-object? boolean? pair? vector? hash-table? record? procedure? port? binary-port? textual-port? symbol? string? exact? exact-integer? inexact? real? integer? char?
+    null? eof-object? boolean? pair? vector? record? procedure? port? binary-port? textual-port? symbol? string? exact? exact-integer? inexact? real? integer? char?
     nullptr? foreign-pointer?
     ; equality
     eq? eqv? equal?
@@ -82,8 +82,6 @@
 
     ; records
     record record-ref record-set! record-length
-    ; hash table
-    make-hash-table hash-table-ref hash-table-set! hash-table-delete! hash-table->alist
     ; chars
     char->integer integer->char digit-value number->string
     char-numeric? char-alphabetic? char-upper-case? char-lower-case? char-whitespace?
@@ -139,7 +137,6 @@
   (define-constant eof-object? ##vcore.eof-object?)
   (define-constant pair? ##vcore.pair?)
   (define-constant vector? ##vcore.vector?)
-  (define-constant hash-table? ##vcore.hash-table?)
   (define-constant record? ##vcore.record?)
   (define-constant procedure? ##vcore.procedure?)
   (define-constant port? (##basic-intrinsic "VPortP" 1))
@@ -1223,34 +1220,6 @@
   (define-constant record-set! ##vcore.record-set!)
   (define-constant record-length ##vcore.record-length)
 
-  ; hash tables
-
-  (define make-hash-table
-    (case-lambda
-      (() (##vcore.make-hash-table ##vcore.eq? #f 32))
-      ((eq) (##vcore.make-hash-table eq #f 32))
-      ((eq hash) (##vcore.make-hash-table eq hash 32))
-      ((eq hash len) (##vcore.make-hash-table eq hash len))))
-  (define-constant hash-table-equivalence-function ##vcore.hash-table-equivalence-function)
-  (define-constant hash-table-hash-function ##vcore.hash-table-hash-function)
-  (define hash-table-ref
-    (case-lambda
-      ((table key) (##vcore.hash-table-ref table key (lambda () (error "No such key in hash table" key))))
-      ((table key thunk) (##vcore.hash-table-ref table key thunk))))
-  (define (hash-table-set! table key val)
-    (##vcore.hash-table-set! table key val))
-  (define-constant hash-table-delete! ##vcore.hash-table-delete!)
-  (define (hash-table->alist table)
-    (let ((vec (##vcore.hash-table-vector table)))
-      (let loop ((i 0))
-        (if (< i (vector-length vec))
-            (if (##vcore.void? (vector-ref vec i))
-                (loop (+ i 3))
-                (cons
-                  (cons (vector-ref vec i) (vector-ref vec (+ i 2)))
-                  (loop (+ i 3))))
-            '()))))
-
   ; chars
 
   (define-constant char->integer ##vcore.char-integer)
@@ -1652,11 +1621,32 @@
             (printout (vector-ref x i) write? port)
             (loop (+ i 1)))))
       (##vcore.display-word ")" port)))
+
+  (define-constant hash-table? (##basic-intrinsic "VHashTableP2" 1))
+  (define-constant flags-slot 0)
+  (define-constant occupancy-slot 1)
+  (define-constant load-factor-slot 2)
+  (define-constant vector-slot 3)
+  (define-constant equal-slot 4)
+  (define-constant hash-slot 5)
+  (define-constant clearinghouse-slot 6)
+  (define-constant hash-table-slot (##basic-intrinsic "VHashTableSlot" 2))
+  (define-constant waybill-unpack (##intrinsic "VWaybillUnpack" 2 2))
+  (define (hash-table->alist ht)
+    (define acc '())
+    (do-loop
+      with vec = (hash-table-slot ht vector-slot)
+      for waybill across vec
+      when waybill
+        do (receive (broke? key datum) (waybill-unpack waybill)
+             (if (not broke?) (set! acc (cons (cons key datum) acc)))))
+    acc)
+
   (define (printout-hash-table x write? port)
-    (let ((eq (hash-table-equivalence-function x)))
-         (cond ((eq? eq eq?) (##vcore.display-word "#hasheq" port))
-               ((eq? eq eqv?) (##vcore.display-word "#hasheqv" port))
-               (else (##vcore.display-word "#hash" port))))
+    (let ((eq (hash-table-slot x equal-slot)))
+      (cond ((eq? eq eq?) (##vcore.display-word "#hasheq" port))
+            ((eq? eq eqv?) (##vcore.display-word "#hasheqv" port))
+            (else (##vcore.display-word "#hash" port))))
     (printout (hash-table->alist x) write? port))
   (define (printout-record-notnice x write? port)
     (##vcore.display-word "#record" port)

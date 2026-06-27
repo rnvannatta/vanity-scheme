@@ -24,7 +24,16 @@
 ; If not, visit <https://github.com/rnvannatta>
 
 (define-library (vanity compiler cps)
-  (import (vanity core) (vanity list) (vanity compiler library) (vanity compiler utils) (vanity compiler match) (vanity compiler variables) (vanity intrinsics) (vanity pretty-print))
+  (import
+    (except (vanity core) hash-table? make-hash-table hash-table-ref hash-table-set! hash-table-delete! hash-table->alist)
+    (vanity hashtable)
+    (vanity list)
+    (vanity compiler library)
+    (vanity compiler utils)
+    (vanity compiler match)
+    (vanity compiler variables)
+    (vanity intrinsics)
+    (vanity pretty-print))
   (export to-cps optimize)
   (define (application? x)
     (and (pair? x) (not (memv (car x) '(quote lambda ##qualified-lambda ##qualified-case-lambda continuation case-lambda ##intrinsic ##basic-intrinsic ##foreign.function ##inline)))))
@@ -457,8 +466,8 @@
       (lambda (keyval) (sub-ref! arefs (car keyval) (cdr keyval)))
       (hash-table->alist brefs)))
   (define (count-refs expr)
-    (define count-table (make-hash-table eqv?))
-    (define impure-table (make-hash-table eqv?))
+    (define count-table (make-hash-table eq? current-hash))
+    (define impure-table (make-hash-table eq? current-hash))
     (define (count-refs-atom expr)
       (match expr
         (('quote . _) #f)

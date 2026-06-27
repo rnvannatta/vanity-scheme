@@ -1,5 +1,6 @@
 (define-library (vanity compiler hush)
-  (import (vanity core))
+  (import (except (vanity core) hash-table? make-hash-table hash-table-ref hash-table-set! hash-table-delete! hash-table->alist))
+  (import (vanity hashtable))
   (export hush make-hush-table hush-table-set! hush-table-ref)
 
   (cond-expand
@@ -19,7 +20,7 @@
 
   (define (make-hush-table)
     (make-hush-table-impl
-      (make-hash-table)))
+      (make-hash-table eq? current-hash)))
 
   (define (hush x)
     (cond
