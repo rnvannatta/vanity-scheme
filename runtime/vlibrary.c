@@ -695,6 +695,10 @@ V_BEGIN_FUNC_BASIC(VHashTableP, "hash-table?", 1, x)
   return VEncodeBool(VIsHashTable(x));
 V_END_FUNC
 
+V_BEGIN_FUNC_BASIC(VHashTableP2, "hash-table?", 1, x)
+  return VEncodeBool(VIsNewHashTable(x));
+V_END_FUNC
+
 V_BEGIN_FUNC_BASIC(VProcedureP2, "procedure?", 1, x)
   return VEncodeBool(VWordType(x) == VPOINTER_CLOSURE);
 V_END_FUNC
