@@ -865,7 +865,9 @@ V_BEGIN_FUNC_BASIC(VVectorRef2, "vector-ref", 2, vector, index)
   VVector * vec = VCheckedDecodeVector2(runtime, vector, "vector-ref");
   if(VWordType(index) != VIMM_INT) VErrorC(runtime, "vector-ref: arg 2 not an int\n");
   int i = VDecodeInt(index);
-  if(!(0 <= i && i < vec->len)) VErrorC(runtime, "vector-ref: out of range\n");
+  int veclen = vec->len;
+  if(!(0 <= i && i < veclen))
+    VErrorC(runtime, "vector-ref: out of range\n");
 
   return vec->arr[i];
 V_END_FUNC
@@ -2749,22 +2751,31 @@ V_BEGIN_FUNC(VBitCount, "bit-count", 2, k, _a)
 // to implement l00ps
 
 V_BEGIN_FUNC_BASIC(VAssq, "assq", 2, x, lst)
-  while(!VIsEq(lst, VNULL)) {
-    VPair * p = VCheckedDecodePair2(runtime, lst, "assq");
+  while(VIsPair(lst)) {
+    VPair * p = VDecodePair(lst);
+    lst = p->rest;
     VPair * keyval = VCheckedDecodePair2(runtime, p->first, "assq");
     if(VIsEq(keyval->first, x))
       return p->first;
-    lst = p->rest;
+  }
+  if(!VIsEq(lst, VNULL)) {
+    VErrorC(runtime, "~Z: not a pair: ~S\n", "assq", lst);
+    __builtin_unreachable();
   }
   return VFALSE;
 V_END_FUNC
 
 V_BEGIN_FUNC_BASIC(VMemq, "memq", 2, x, lst)
-  while(!VIsEq(lst, VNULL)) {
-    VPair * p = VCheckedDecodePair2(runtime, lst, "memq");
-    if(VIsEq(p->first, x))
-      return lst;
+  while(VIsPair(lst)) {
+    VPair * p = VDecodePair(lst);
+    VWORD oldlst = lst;
     lst = p->rest;
+    if(VIsEq(p->first, x))
+      return oldlst;
+  }
+  if(!VIsEq(lst, VNULL)) {
+    VErrorC(runtime, "memq: not a pair: ~S\n", lst);
+    __builtin_unreachable();
   }
   return VFALSE;
 V_END_FUNC

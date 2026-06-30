@@ -582,6 +582,7 @@ static V_BEGIN_FUNC(VTreeify, "##sys.treeify", 4, k, _port, _root, _cur)
   root->rest = p->rest; \
   cur = new_cur; \
   *blob = (VBlob){ .base = { .tag = VBUFFER }, .len = size }; \
+  memset(&blob->buf[0], 0, sizeof(ctype)); \
   blob->buf[0] = BUF_ ## Prefix; \
   int i = 0; \
   iter = list; \
