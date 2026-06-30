@@ -160,8 +160,8 @@ the C type info is interned.
 // TTTP
 // nonpointer types: false, true, NAN, NULL, int, char
 
-#define TAG_BIAS         0x0001000000000000ul
-#define POINTER_TEST_BIT 0x0001000000000000ul
+#define TAG_BIAS         0x0001000000000000ull
+#define POINTER_TEST_BIT 0x0001000000000000ull
 enum VPOINTER_T { VPOINTER_CLOSURE = 1*TAG_BIAS, VPOINTER_PAIR = 3*TAG_BIAS, VPOINTER_UNUSED = 5*TAG_BIAS, VPOINTER_OTHER = 7*TAG_BIAS,
 // yuck
 VPOINTER_FOREIGN = 8*TAG_BIAS, };
@@ -278,11 +278,11 @@ typedef struct VSmallObject {
 enum VJMP { VJMP_START, VJMP_FINISH, VJMP_GC, VJMP_ERROR, VJMP_EXIT, VJMP_AWAIT, VJMP_YIELD };
 enum VRETURN_CODE { VUNDEFINED, VEXITED, VFINISHED, VYIELDED };
 
-#define LITERAL_TYPE_MASK (15ul*TAG_BIAS)
+#define LITERAL_TYPE_MASK (15ull*TAG_BIAS)
 
-#define LITERAL_HEADER  0x7FF0000000000000ul
-#define LITERAL_PAYLOAD 0x000FFFFFFFFFFFFFul
-#define POINTER_MIRROR  0xFFFF000000000000ul
+#define LITERAL_HEADER  0x7FF0000000000000ull
+#define LITERAL_PAYLOAD 0x000FFFFFFFFFFFFFull
+#define POINTER_MIRROR  0xFFFF000000000000ull
 
 #if 0
 // 4 bits. NPXX
@@ -723,6 +723,32 @@ static inline double VDecodeNumber(VWORD v) {
 
 // Pointer types
 
+static_assert(-1ll == -1ll >> 63ll, "");
+static inline void * VDecodePointer(VWORD v) {
+#if defined(__linux__) || defined(_WIN64)
+  uint64_t bits = VBits(v);
+  bits &= ~(LITERAL_HEADER | LITERAL_TYPE_MASK);
+  return (void*)(uintptr_t)bits;
+#else
+  int64_t bits = (int64_t)VBits(v);
+  bits = (bits << 16) >> 16;
+  return (void*)(intptr_t)bits;
+#endif
+}
+
+static inline VPair * VDecodePair(VWORD v) {
+#if defined(__linux__) || defined(_WIN64)
+  // this saves one instruction to build or load ~(LITERAL_HEADER | LITERAL_TYPE_MASK)
+  // as we know the header is exactly LITERAL_HEADER | VPOINTER_PAIR so we can xor it away
+  // and we already have LITERAL_HEADER | VPOINTER_PAIR hanging around somewhere in practice because of the type check.
+  uint64_t bits = VBits(v);
+  bits ^= LITERAL_HEADER | VPOINTER_PAIR;
+  return (VPair*)(uintptr_t)bits;
+#else
+  return (VPair*)VDecodePointer(v);
+#endif
+}
+
 #ifdef DONT_INLINE
 static inline VWORD VEncodePointer(void * v, enum VPOINTER_T type) {
   uint64_t bits = (uint64_t)(intptr_t)v;
@@ -730,13 +756,6 @@ static inline VWORD VEncodePointer(void * v, enum VPOINTER_T type) {
   bits |= type;
   bits |= LITERAL_HEADER;
   return VWord(bits);
-}
-
-static_assert(-1ll == -1ll >> 63ll, "");
-static inline VWORD * VDecodePointer(VWORD v) {
-  int64_t bits = (int64_t)VBits(v);
-  bits = (bits << 16) >> 16;
-  return (VWORD*)(intptr_t)bits;
 }
 
 static inline VWORD VEncodeClosure(VClosure * c) {
@@ -750,18 +769,13 @@ static inline VClosure * VDecodeClosure(VWORD v) {
 static inline VWORD VEncodePair(VPair * p) {
   return VEncodePointer(p, VPOINTER_PAIR);
 }
-static inline VPair * VDecodePair(VWORD v) {
-  return (VPair*)VDecodePointer(v);
-}
 #else
 #define VEncodePointer(_v, _type) VWord( (((uint64_t)(intptr_t)_v) & ~POINTER_MIRROR) | _type | LITERAL_HEADER)
-#define VDecodePointer(_v) ((VWORD*)(intptr_t)( ((int64_t)VBits(_v) << 16) >> 16))
 
 #define VEncodeClosure(_c) (VEncodePointer(_c, VPOINTER_CLOSURE))
 #define VDecodeClosure(_c) ((VClosure*)VDecodePointer(_c))
 
 #define VEncodePair(_p) (VEncodePointer(_p, VPOINTER_PAIR))
-#define VDecodePair(_p) ((VPair*)VDecodePointer(_p))
 #endif
 
 static inline VWORD VEncodeForeignPointer(void * v) {
@@ -805,6 +819,7 @@ static inline bool VIsNumber(VWORD v) {
 static inline bool VIsDouble(VWORD v) {
   return VIsNumber(v);
 }
+#define VIsWordType(v, type) ({ _Static_assert((uint64_t)(type) != (uint64_t)VIMM_DOUBLE, "doubles don't work with VIsWordType"); uint64_t bits = (v).integer; (bits & (LITERAL_HEADER | LITERAL_TYPE_MASK)) == (LITERAL_HEADER | (type)); })
 
 static inline uint64_t VWordType(VWORD v) {
   uint64_t bits = VBits(v);
@@ -825,6 +840,16 @@ static inline bool VIsForeignPointer(VWORD v) {
 static inline bool VIsAnyPointer(VWORD v) {
   uint64_t bits = VBits(v);
   return !VIsDouble(v) && ((bits & POINTER_TEST_BIT) || (bits & VPOINTER_FOREIGN) == VPOINTER_FOREIGN);
+}
+
+static inline bool VIsPair(VWORD v) {
+  return VIsWordType(v, VPOINTER_PAIR);
+}
+static inline bool VIsClosure(VWORD v) {
+  return VIsWordType(v, VPOINTER_CLOSURE);
+}
+static inline bool VIsOtherPointer(VWORD v) {
+  return VIsWordType(v, VPOINTER_OTHER);
 }
 
 static inline bool VIsBlob(VWORD v) {
@@ -997,16 +1022,16 @@ static inline char VCheckedDecodeChar2(VRuntime * runtime, VWORD v, char const *
 }
 
 static inline VClosure * VCheckedDecodeClosure2(VRuntime * runtime, VWORD v, char const * proc) {
-  if(VWordType(v) != VPOINTER_CLOSURE) VErrorC(runtime, "~Z: not a closure: ~S\n", proc, v);
+  if(V_UNLIKELY(!VIsClosure(v))) VErrorC(runtime, "~Z: not a closure: ~S\n", proc, v);
   return (VClosure*)VDecodePointer(v);
 }
 static inline VClosure * VDecodeClosureApply2(VRuntime * runtime, VWORD v) {
-  if(VWordType(v) != VPOINTER_CLOSURE) VErrorC(runtime, "tried to call non-closure: ~s\n", v);
+  if(V_UNLIKELY(!VIsClosure(v))) VErrorC(runtime, "tried to call non-closure: ~s\n", v);
   return (VClosure*)VDecodePointer(v);
 }
 static inline VPair * VCheckedDecodePair2(VRuntime * runtime, VWORD v, char const * proc) {
-  if(VWordType(v) != VPOINTER_PAIR) VErrorC(runtime, "~Z: not a pair: ~S\n", proc, v);
-  return (VPair*)VDecodePointer(v);
+  if(V_UNLIKELY(!VIsPair(v))) VErrorC(runtime, "~Z: not a pair: ~S\n", proc, v);
+  return VDecodePair(v);
 }
 
 static inline void * VCheckedDecodePointer2(VRuntime * runtime, VWORD v, VNEWTAG tag, char const * proc) {
