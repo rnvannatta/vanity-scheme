@@ -32,7 +32,7 @@ make tests -j8           # linux + windows (wine) smoke test
 
 ## Compiler pipeline
 
-Driver: `src/vanity/compiler/frontend.scm` (see the pipeline at its `RUN COMPILE` section). Stages, each a `(vanity compiler ...)` library in `src/vanity/compiler/`:
+Driver: `src/vanity/compiler/frontend.scm` (see the pipeline at its `RUN COMPILE` section). **Before editing anything under `src/vanity/compiler/`, read `docs/machine-generated/compiler/overview.md`** — it defines the shared vocabulary (`continuation`, `##qualified-lambda`, `basic-block`, static environments), the IR grammars, and the cross-pass invariants (atom/application discipline, ref-table bookkeeping, purity requirements), and has a routing table to the per-stage docs in the same directory (`expand.md`, `hygienic.md`, `cps.md`, `backend.md`) — read the one for the file you're touching. Pure runtime work (`runtime/`, `include/`) generally doesn't need these; the exception is transpiler↔runtime ABI work (the `V_*` macros, calling convention, literal interning), where `backend.md` documents what the emitted C expects. Stages, each a `(vanity compiler ...)` library in `src/vanity/compiler/`:
 
 1. `expand.scm` — macro expansion / library resolution (`expand-toplevel`), then `alpha-convert.scm`
 2. `cps.scm` — `to-cps`, plus `optimize` (which fuses basic-intrinsic calls into `basic-block` nodes)
@@ -42,7 +42,7 @@ Driver: `src/vanity/compiler/frontend.scm` (see the pipeline at its `RUN COMPILE
 
 Debugging aids: `vsc -E0/-E1/-E2` dumps post-expand / post-CPS / post-optimize IR; `-t` emits C; `--keep-temps` keeps intermediates; `--benchmark` times stages. The interpreter (`src/vanity/interpreter/frontend.scm`) runs the identical pipeline to bytecode and feeds `eval-vasm`.
 
-Supporting modules: `variables.scm` (name mangling — `_V0` var, `_V40` FFI shim, `_V50` qualified function, etc., documented at top of file), `library.scm` (`.scmh` interface headers), `ffi.scm` + `src/ffi.y`/`ffi.l` (bison/flex C-header parser for `##foreign-import`), `blasphemy.scm` (the CL-LOOP-style `do-loop` expander), `hush.scm` (compile-time hashing for literal interning), `match.scm` (the pattern matcher used pervasively in the compiler).
+Supporting modules: `variables.scm` (name mangling — `_V0` var, `_V30` FFI shim, `_V40` intrinsic cell, `_V50` qualified function, `_V60` static env, etc., documented at top of file), `library.scm` (`.scmh` interface headers), `ffi.scm` + `src/ffi.y`/`ffi.l` (bison/flex C-header parser for `##foreign-import`), `blasphemy.scm` (the CL-LOOP-style `do-loop` expander), `hush.scm` (compile-time hashing for literal interning), `match.scm` (the pattern matcher used pervasively in the compiler).
 
 **Two expanders:** `expand.scm` is the maintained path but under a feature moratorium — bugfixes only. New expansion features go to the in-progress hygienic scope-sets expander (`src/vanity/compiler/hygienic/`, SRFI-72-based, enabled via `--hygiene`), which will eventually replace it.
 
