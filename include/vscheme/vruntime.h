@@ -249,11 +249,8 @@ enum VOBJECT_FLAGS {
 typedef struct VObject {
   unsigned short tag;
   unsigned char flags;
-  unsigned char pincount;
-  // used for a couple purposes in mark and compact gc
-  // first, during mark it holds offset information for pointer-reversal
-  // second, during compact it holds the future location of the object
-  int forward_offset;
+  unsigned char pincount; // unused, planned for mark-sweep?
+  int forward_offset; // unused, planned for mark-sweep?
 } VObject;
 // temporary stopgap
 // used in 4 objects: env, blob, vector, hash table
@@ -262,7 +259,7 @@ typedef struct VObject {
 typedef struct VSmallObject {
   unsigned short tag;
   unsigned char flags;
-  unsigned char pincount;
+  unsigned char pincount; // unused, planned for mark-sweep?
 } VSmallObject;
 
 #ifdef __linux__
@@ -503,8 +500,14 @@ typedef struct VWaybill {
 typedef struct VVector {
   VSmallObject base;
   unsigned len;
+  // Reserved so an empty vector is >= 16 bytes. When an object is moved,
+  // VForward (vruntime.c) overwrites its first 16 bytes with a forwarding record
+  // In C23 we can do union { VWORD padding; VWORD arr[]; }; but gcc 14 doesn't support it yet
+  // That would eliminate the waste this fix introduces
+  VWORD _padding;
   VWORD arr[];
 } VVector;
+static_assert(sizeof(VVector) >= 16, "heap objects must be >= the 16-byte VForward record");
 
 enum HASH_FLAGS_T {
   HFLAG_CHAINED = 1,
@@ -526,8 +529,14 @@ typedef struct VHashTable {
 typedef struct VBlob {
   VSmallObject base;
   unsigned len;
+  // Reserved so an empty blob is >= 16 bytes. When an object is moved,
+  // VForward (vruntime.c) overwrites its first 16 bytes with a forwarding record
+  // In C23 we can do union { VWORD padding; VWORD arr[]; }; but gcc 14 doesn't support it yet
+  // That would eliminate the waste this fix introduces
+  VWORD _padding;
   char buf[];
 } VBlob;
+static_assert(sizeof(VBlob) >= 16, "heap objects must be >= the 16-byte VForward record");
 
 enum PORT_FLAG_T {
   PFLAG_READ = 1,

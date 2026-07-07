@@ -198,6 +198,7 @@ V_DECLARE_FUNC_BASIC(VNewlineStdout);
 // control flow
 V_DECLARE_FUNC(VCallCC2, k, proc);
 V_DECLARE_FUNC(VCallValues2, k, producer, consumer);
+V_DECLARE_FUNC_MIN(VValues2, k);
 V_DECLARE_FUNC_MIN(VApply2, k, proc);
 V_DECLARE_FUNC(VApplyCps, k, proc, lst);
 

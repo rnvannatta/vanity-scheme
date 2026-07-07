@@ -853,7 +853,7 @@
            (let loop ((tmps tmps) (producer producer))
              (if (null? tmps)
                  (gen-bindings)
-                 `(call-with-values
+                 `(##vcore.call-with-values
                     (lambda () ,(car producer))
                     (lambda ,(car tmps)
                        ,(loop (cdr tmps) (cdr producer)))))))))
@@ -877,12 +877,12 @@
                                   `(cond . ,clauses)
                                   `(cond ,@clauses (else (,handler-k (lambda () (raise-continuable ,condition)))))))))))))
                 (lambda ()
-                  (call-with-values
+                  (##vcore.call-with-values
                     (lambda () . ,body)
                     (lambda ,args (,guard-k (lambda () (apply values ,args)))))))))))))
 
       (('let*-values ((xs producer) . rest) . body)
-       (expand-syntax `(call-with-values (lambda () ,producer) (lambda ,xs (let*-values ,rest . ,body)))))
+       (expand-syntax `(##vcore.call-with-values (lambda () ,producer) (lambda ,xs (let*-values ,rest . ,body)))))
       (('let*-values () . body) (expand-syntax `(let () . ,body)))
       (('let*-values . noise) (compiler-error "malformed let-values*" `(let*-values . ,noise)))
 
@@ -980,7 +980,7 @@
 
       (('receive formals expr . body)
        (expand-syntax
-         `(call-with-values (lambda () ,expr) (lambda ,formals . ,body))))
+         `(##vcore.call-with-values (lambda () ,expr) (lambda ,formals . ,body))))
 
       (('do ((var init . step) ...)
             (test ret ...)

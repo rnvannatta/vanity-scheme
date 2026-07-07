@@ -33,11 +33,11 @@ V_DECLARE_FUNC_MIN(VMultiImport, _var0, _var1, _var2);
 
 VEnv * _V60_V0vanity_V0hash;
 
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D67 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0hash_V20" };
 VWEAK VWORD _V40_V10vcore_Dmake__random;
 VWEAK VClosure _VW_V40_V10vcore_Dmake__random = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMakeRandom, NULL };
 VWEAK VWORD _V40_V10vcore_Drandom__copy;
 VWEAK VClosure _VW_V40_V10vcore_Drandom__copy = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRandomCopy, NULL };
-static VPair _V10_Dpair_D67 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D66 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D65 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D64 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -45,23 +45,25 @@ static VPair _V10_Dpair_D63 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | 
 static VPair _V10_Dpair_D62 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D61 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D60 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D59 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D58 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 VWEAK VWORD _V0make__random;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0make__random = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "make-random" };
 VWEAK VWORD _V0random__copy;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0random__copy = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "random-copy" };
 VWEAK VWORD _V0random__sample__float_B;VWEAK struct { VBlob sym; char bytes[21]; } _VW_V0random__sample__float_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 21 }, "random-sample-float!" };
 VWEAK VWORD _V0random__advance_B;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0random__advance_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "random-advance!" };
-static VPair _V10_Dpair_D59 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D58 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D57 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D56 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D55 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D54 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0end;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0end = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "end" };
 static VPair _V10_Dpair_D53 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D52 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0rng;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0rng = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "rng" };
+VWEAK VWORD _V0end;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0end = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "end" };
 static VPair _V10_Dpair_D51 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D50 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0rng;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0rng = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "rng" };
 static VPair _V10_Dpair_D49 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D48 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D47 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 VWEAK VWORD _V0random__sample_B;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V0random__sample_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "random-sample!" };
 VWEAK VWORD _V0hash;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0hash = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "hash" };
 VWEAK VWORD _V0vanity;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0vanity = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "vanity" };
@@ -69,57 +71,27 @@ VWEAK VWORD _V40_V10vcore_Drandom__sample__float_B;
 VWEAK VClosure _VW_V40_V10vcore_Drandom__sample__float_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRandomSampleFloat, NULL };
 VWEAK VWORD _V40_V10vcore_Drandom__advance_B;
 VWEAK VClosure _VW_V40_V10vcore_Drandom__advance_B = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VRandomAdvance, NULL };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D48 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0hash_V20" };
-VWEAK VWORD _V40VMultiImport;
-VWEAK VClosure _VW_V40VMultiImport = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMultiImport, NULL };
-static VPair _V10_Dpair_D47 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D46 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D45 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D44 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D43 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V40VMultiImport;
+VWEAK VClosure _VW_V40VMultiImport = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMultiImport, NULL };
 static VPair _V10_Dpair_D42 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0_Mx;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mx = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%x" };
 static VPair _V10_Dpair_D41 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D40 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D39 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D38 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0_Mx;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mx = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%x" };
 static VPair _V10_Dpair_D37 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D36 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D35 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D34 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D33 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 VWEAK VWORD _V0_Mk;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mk = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%k" };
 V_DECLARE_FUNC_MIN(_V50_V0vanity_V0hash_V0random__sample_B);
-static void _V0vanity_V0hash_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0hash_V20_V0k1" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0hash_V20_V0k1, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((##intrinsic "VMultiImport") (bruijn ##.%k.11 1 0) (##string ##.string.48) (bruijn ##.%x.12 0 0))
-    VCallFuncWithGC(runtime, (VFunc)VMultiImport, 3,
-      statics->vars[0],
-      VEncodePointer(&_V10_Dstring_D48.sym, VPOINTER_OTHER),
-      _var0);
-}
-static void _V0vanity_V0hash_V20_V0lambda2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0hash_V20_V0lambda2" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0hash_V20_V0lambda2, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (##vcore.vector (close _V0vanity_V0hash_V20_V0k1))
-    VCallFuncWithGC(runtime, (VFunc)VCreateVector, 1,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0hash_V20_V0k1, self)))));
-}
 __attribute__((used)) static void _V20CaseError__V50_V0vanity_V0hash_V0random__sample_B(VRuntime * runtime, VEnv * statics, int argc, ...) {
- // ("_V50_V0vanity_V0hash_V0random__sample_B" #t (##pair ##.pair.67) (2 (##vcore.random-sample! (bruijn ##.%k.14 0 0) (bruijn ##.rng.6 0 1))) (3 (##vcore.random-sample-bounded! (bruijn ##.%k.15 0 0) (bruijn ##.rng.7 0 1) (bruijn ##.end.8 0 2))))
+ // ("_V50_V0vanity_V0hash_V0random__sample_B" #t (##pair ##.pair.66) (2 (##vcore.random-sample! (bruijn ##.%k.11 0 0) (bruijn ##.rng.6 0 1))) (3 (##vcore.random-sample-bounded! (bruijn ##.%k.12 0 0) (bruijn ##.rng.7 0 1) (bruijn ##.end.8 0 2))))
  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0hash_V0random__sample_B, got ~D~N"
  "-- expected 2~N"
  "-- expected 3~N"
@@ -128,7 +100,7 @@ __attribute__((used)) static void _V20CaseError__V50_V0vanity_V0hash_V0random__s
 __attribute__((used)) static void _V20Case0__V50_V0vanity_V0hash_V0random__sample_B(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
  static VDebugInfo dbg = { "_V20Case0__V50_V0vanity_V0hash_V0random__sample_B" };
  VRecordCall2(runtime, &dbg);
-  // (##vcore.random-sample! (bruijn ##.%k.14 0 0) (bruijn ##.rng.6 0 1))
+  // (##vcore.random-sample! (bruijn ##.%k.11 0 0) (bruijn ##.rng.6 0 1))
     VCallFuncWithGC(runtime, (VFunc)VRandomSample, 2,
       _var0,
       _var1);
@@ -136,7 +108,7 @@ __attribute__((used)) static void _V20Case0__V50_V0vanity_V0hash_V0random__sampl
 __attribute__((used)) static void _V20Case1__V50_V0vanity_V0hash_V0random__sample_B(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  static VDebugInfo dbg = { "_V20Case1__V50_V0vanity_V0hash_V0random__sample_B" };
  VRecordCall2(runtime, &dbg);
-  // (##vcore.random-sample-bounded! (bruijn ##.%k.15 0 0) (bruijn ##.rng.7 0 1) (bruijn ##.end.8 0 2))
+  // (##vcore.random-sample-bounded! (bruijn ##.%k.12 0 0) (bruijn ##.rng.7 0 1) (bruijn ##.end.8 0 2))
     VCallFuncWithGC(runtime, (VFunc)VRandomSampleBounded, 3,
       _var0,
       _var1,
@@ -156,19 +128,18 @@ asm(
 "    je _V20Case1__V50_V0vanity_V0hash_V0random__sample_B\n"
 "    jmp _V20CaseError__V50_V0vanity_V0hash_V0random__sample_B\n"
 );
-static void _V0vanity_V0hash_V20_V0lambda3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0hash_V20_V0lambda3" };
+static void _V0vanity_V0hash_V20_V0lambda2(VRuntime * runtime, VEnv * statics, int argc) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_V0lambda2" };
  VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0hash_V20_V0lambda3, got ~D~N"
-  "-- expected 1~N"
+ if(argc != 0) {
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0hash_V20_V0lambda2, got ~D~N"
+  "-- expected 0~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[1]; } container;
+  struct { VEnv self; VWORD argv[0]; } container;
   VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (##letrec (vanity hash) 5 ((##intrinsic ##vcore.random-advance!) (##intrinsic ##vcore.random-sample-float!) (close "_V50_V0vanity_V0hash_V0random__sample_B" (vanity hash)) (##intrinsic ##vcore.random-copy) (##intrinsic ##vcore.make-random)) (basic-block 10 10 (##.%x.25 ##.%x.26 ##.%x.27 ##.%x.28 ##.%x.29 ##.%x.30 ##.%x.31 ##.%x.32 ##.%x.33 ##.%r.34) ((##vcore.cons 'make-random (bruijn ##.make-random.5 1 4)) (##vcore.cons 'random-copy (bruijn ##.random-copy.4 1 3)) (##vcore.cons 'random-sample! (bruijn ##.random-sample!.3 1 2)) (##vcore.cons 'random-sample-float! (bruijn ##.random-sample-float!.2 1 1)) (##vcore.cons 'random-advance! (bruijn ##.random-advance!.1 1 0)) (##vcore.cons (bruijn ##.%x.29 0 4) '()) (##vcore.cons (bruijn ##.%x.28 0 3) (bruijn ##.%x.30 0 5)) (##vcore.cons (bruijn ##.%x.27 0 2) (bruijn ##.%x.31 0 6)) (##vcore.cons (bruijn ##.%x.26 0 1) (bruijn ##.%x.32 0 7)) (##vcore.cons (bruijn ##.%x.25 0 0) (bruijn ##.%x.33 0 8))) ((bruijn ##.%k.13 2 0) (bruijn ##.%r.34 0 9))))
+  VInitEnv(self, 0, 0, statics);
+  // (##letrec (vanity hash) 5 ((##intrinsic ##vcore.random-advance!) (##intrinsic ##vcore.random-sample-float!) (close "_V50_V0vanity_V0hash_V0random__sample_B" (vanity hash)) (##intrinsic ##vcore.random-copy) (##intrinsic ##vcore.make-random)) (basic-block 10 10 (##.%x.23 ##.%x.24 ##.%x.25 ##.%x.26 ##.%x.27 ##.%x.28 ##.%x.29 ##.%x.30 ##.%x.31 ##.%r.32) ((##vcore.cons 'make-random (bruijn ##.make-random.5 1 4)) (##vcore.cons 'random-copy (bruijn ##.random-copy.4 1 3)) (##vcore.cons 'random-sample! (bruijn ##.random-sample!.3 1 2)) (##vcore.cons 'random-sample-float! (bruijn ##.random-sample-float!.2 1 1)) (##vcore.cons 'random-advance! (bruijn ##.random-advance!.1 1 0)) (##vcore.cons (bruijn ##.%x.27 0 4) '()) (##vcore.cons (bruijn ##.%x.26 0 3) (bruijn ##.%x.28 0 5)) (##vcore.cons (bruijn ##.%x.25 0 2) (bruijn ##.%x.29 0 6)) (##vcore.cons (bruijn ##.%x.24 0 1) (bruijn ##.%x.30 0 7)) (##vcore.cons (bruijn ##.%x.23 0 0) (bruijn ##.%x.31 0 8))) ((bruijn ##.%k.10 4 0) (bruijn ##.%r.32 0 9))))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[5]; } container;
@@ -216,10 +187,28 @@ static void _V0vanity_V0hash_V20_V0lambda3(VRuntime * runtime, VEnv * statics, i
     self->vars[9] = _VBasic_VCons2(runtime, NULL,
       self->vars[0],
       self->vars[8]);
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
       self->vars[9]);
     }
     }
+}
+static void _V0vanity_V0hash_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0hash_V20_V0k1" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0hash_V20_V0k1, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((##intrinsic "VMultiImport") (close _V0vanity_V0hash_V20_V0lambda2) (##string ##.string.67) (bruijn ##.%x.22 0 0))
+    VCallFuncWithGC(runtime, (VFunc)VMultiImport, 3,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0hash_V20_V0lambda2, self)))),
+      VEncodePointer(&_V10_Dstring_D67.sym, VPOINTER_OTHER),
+      _var0);
 }
 static void _V0vanity_V0hash_V20_V0lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V0vanity_V0hash_V20_V0lambda1" };
@@ -233,11 +222,9 @@ static void _V0vanity_V0hash_V20_V0lambda1(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.%k.10 0 0) (close _V0vanity_V0hash_V20_V0lambda2) (close _V0vanity_V0hash_V20_V0lambda3))
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      _var0,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0hash_V20_V0lambda2, self)))),
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0hash_V20_V0lambda3, self)))));
+  // (##vcore.vector (close _V0vanity_V0hash_V20_V0k1))
+    VCallFuncWithGC(runtime, (VFunc)VCreateVector, 1,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0hash_V20_V0k1, self)))));
 }
 VFunc _V0vanity_V0hash_V20 = (VFunc)_V0vanity_V0hash_V20_V0lambda1;
 static __attribute__((constructor)) void VDllMain1() {
@@ -254,76 +241,79 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0_Mk = VEncodePointer(VInternSymbol(-865914236, &_VW_V0_Mk.sym), VPOINTER_OTHER);
   _V40_V10vcore_Dmake__random = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__random", &_VW_V40_V10vcore_Dmake__random), VPOINTER_CLOSURE);
   _V40_V10vcore_Drandom__copy = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__copy", &_VW_V40_V10vcore_Drandom__copy), VPOINTER_CLOSURE);
-  _V10_Dpair_D67.first = VEncodePointer(&_V10_Dpair_D59, VPOINTER_PAIR);
-  _V10_Dpair_D67.rest = VEncodePointer(&_V10_Dpair_D66, VPOINTER_PAIR);
-  _V10_Dpair_D66.first = VEncodePointer(&_V10_Dpair_D65, VPOINTER_PAIR);
-  _V10_Dpair_D66.rest = VNULL;
+  _V10_Dpair_D66.first = VEncodePointer(&_V10_Dpair_D57, VPOINTER_PAIR);
+  _V10_Dpair_D66.rest = VEncodePointer(&_V10_Dpair_D65, VPOINTER_PAIR);
   _V10_Dpair_D65.first = VEncodePointer(&_V10_Dpair_D64, VPOINTER_PAIR);
-  _V10_Dpair_D65.rest = VEncodePointer(&_V10_Dpair_D45, VPOINTER_PAIR);
-  _V10_Dpair_D64.first = _V0random__advance_B;
+  _V10_Dpair_D65.rest = VNULL;
+  _V10_Dpair_D64.first = VEncodePointer(&_V10_Dpair_D62, VPOINTER_PAIR);
   _V10_Dpair_D64.rest = VEncodePointer(&_V10_Dpair_D63, VPOINTER_PAIR);
-  _V10_Dpair_D63.first = _V0random__sample__float_B;
-  _V10_Dpair_D63.rest = VEncodePointer(&_V10_Dpair_D62, VPOINTER_PAIR);
-  _V10_Dpair_D62.first = _V0random__sample_B;
+  _V10_Dpair_D63.first = VNULL;
+  _V10_Dpair_D63.rest = VEncodePointer(&_V10_Dpair_D44, VPOINTER_PAIR);
+  _V10_Dpair_D62.first = _V0random__advance_B;
   _V10_Dpair_D62.rest = VEncodePointer(&_V10_Dpair_D61, VPOINTER_PAIR);
-  _V10_Dpair_D61.first = _V0random__copy;
+  _V10_Dpair_D61.first = _V0random__sample__float_B;
   _V10_Dpair_D61.rest = VEncodePointer(&_V10_Dpair_D60, VPOINTER_PAIR);
-  _V10_Dpair_D60.first = _V0make__random;
-  _V10_Dpair_D60.rest = VNULL;
-  _V10_Dpair_D59.first = VEncodePointer(&_V10_Dpair_D51, VPOINTER_PAIR);
+  _V10_Dpair_D60.first = _V0random__sample_B;
+  _V10_Dpair_D60.rest = VEncodePointer(&_V10_Dpair_D59, VPOINTER_PAIR);
+  _V10_Dpair_D59.first = _V0random__copy;
   _V10_Dpair_D59.rest = VEncodePointer(&_V10_Dpair_D58, VPOINTER_PAIR);
-  _V10_Dpair_D58.first = VEncodePointer(&_V10_Dpair_D53, VPOINTER_PAIR);
-  _V10_Dpair_D58.rest = VEncodePointer(&_V10_Dpair_D57, VPOINTER_PAIR);
-  _V10_Dpair_D57.first = VEncodePointer(&_V10_Dpair_D56, VPOINTER_PAIR);
-  _V10_Dpair_D57.rest = VNULL;
-  _V10_Dpair_D56.first = _V0_Mk;
+  _V10_Dpair_D58.first = _V0make__random;
+  _V10_Dpair_D58.rest = VNULL;
+  _V10_Dpair_D57.first = VEncodePointer(&_V10_Dpair_D49, VPOINTER_PAIR);
+  _V10_Dpair_D57.rest = VEncodePointer(&_V10_Dpair_D56, VPOINTER_PAIR);
+  _V10_Dpair_D56.first = VEncodePointer(&_V10_Dpair_D51, VPOINTER_PAIR);
   _V10_Dpair_D56.rest = VEncodePointer(&_V10_Dpair_D55, VPOINTER_PAIR);
-  _V10_Dpair_D55.first = _V0rng;
-  _V10_Dpair_D55.rest = VEncodePointer(&_V10_Dpair_D54, VPOINTER_PAIR);
-  _V10_Dpair_D54.first = _V0end;
-  _V10_Dpair_D54.rest = VNULL;
-  _V10_Dpair_D53.first = _V0_Mk;
+  _V10_Dpair_D55.first = VEncodePointer(&_V10_Dpair_D54, VPOINTER_PAIR);
+  _V10_Dpair_D55.rest = VNULL;
+  _V10_Dpair_D54.first = _V0_Mk;
+  _V10_Dpair_D54.rest = VEncodePointer(&_V10_Dpair_D53, VPOINTER_PAIR);
+  _V10_Dpair_D53.first = _V0rng;
   _V10_Dpair_D53.rest = VEncodePointer(&_V10_Dpair_D52, VPOINTER_PAIR);
-  _V10_Dpair_D52.first = _V0rng;
+  _V10_Dpair_D52.first = _V0end;
   _V10_Dpair_D52.rest = VNULL;
-  _V10_Dpair_D51.first = _V0vanity;
+  _V10_Dpair_D51.first = _V0_Mk;
   _V10_Dpair_D51.rest = VEncodePointer(&_V10_Dpair_D50, VPOINTER_PAIR);
-  _V10_Dpair_D50.first = _V0hash;
-  _V10_Dpair_D50.rest = VEncodePointer(&_V10_Dpair_D49, VPOINTER_PAIR);
-  _V10_Dpair_D49.first = _V0random__sample_B;
-  _V10_Dpair_D49.rest = VNULL;
+  _V10_Dpair_D50.first = _V0rng;
+  _V10_Dpair_D50.rest = VNULL;
+  _V10_Dpair_D49.first = _V0vanity;
+  _V10_Dpair_D49.rest = VEncodePointer(&_V10_Dpair_D48, VPOINTER_PAIR);
+  _V10_Dpair_D48.first = _V0hash;
+  _V10_Dpair_D48.rest = VEncodePointer(&_V10_Dpair_D47, VPOINTER_PAIR);
+  _V10_Dpair_D47.first = _V0random__sample_B;
+  _V10_Dpair_D47.rest = VNULL;
   _V40_V10vcore_Drandom__sample__float_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__sample__float_B", &_VW_V40_V10vcore_Drandom__sample__float_B), VPOINTER_CLOSURE);
   _V40_V10vcore_Drandom__advance_B = VEncodePointer(VLookupConstant("_V40_V10vcore_Drandom__advance_B", &_VW_V40_V10vcore_Drandom__advance_B), VPOINTER_CLOSURE);
+  _V10_Dpair_D46.first = VEncodePointer(&_V10_Dpair_D43, VPOINTER_PAIR);
+  _V10_Dpair_D46.rest = VEncodePointer(&_V10_Dpair_D45, VPOINTER_PAIR);
+  _V10_Dpair_D45.first = VEncodePointer(&_V10_Dpair_D44, VPOINTER_PAIR);
+  _V10_Dpair_D45.rest = VNULL;
+  _V10_Dpair_D44.first = VEncodePointer(&_V10_Dpair_D38, VPOINTER_PAIR);
+  _V10_Dpair_D44.rest = VEncodePointer(&_V10_Dpair_D34, VPOINTER_PAIR);
+  _V10_Dpair_D43.first = VEncodeBool(false);
+  _V10_Dpair_D43.rest = VEncodePointer(&_V10_Dpair_D36, VPOINTER_PAIR);
   _V40VMultiImport = VEncodePointer(VLookupConstant("_V40VMultiImport", &_VW_V40VMultiImport), VPOINTER_CLOSURE);
-  _V10_Dpair_D47.first = VEncodePointer(&_V10_Dpair_D44, VPOINTER_PAIR);
-  _V10_Dpair_D47.rest = VEncodePointer(&_V10_Dpair_D46, VPOINTER_PAIR);
-  _V10_Dpair_D46.first = VEncodePointer(&_V10_Dpair_D45, VPOINTER_PAIR);
-  _V10_Dpair_D46.rest = VNULL;
-  _V10_Dpair_D45.first = VEncodePointer(&_V10_Dpair_D35, VPOINTER_PAIR);
-  _V10_Dpair_D45.rest = VEncodePointer(&_V10_Dpair_D36, VPOINTER_PAIR);
-  _V10_Dpair_D44.first = VEncodeBool(false);
-  _V10_Dpair_D44.rest = VEncodePointer(&_V10_Dpair_D43, VPOINTER_PAIR);
-  _V10_Dpair_D43.first = VEncodePointer(&_V10_Dpair_D42, VPOINTER_PAIR);
-  _V10_Dpair_D43.rest = VNULL;
-  _V10_Dpair_D42.first = _V0_Mx;
-  _V10_Dpair_D42.rest = VNULL;
-  _V10_Dpair_D41.first = VEncodePointer(&_V10_Dpair_D37, VPOINTER_PAIR);
-  _V10_Dpair_D41.rest = VEncodePointer(&_V10_Dpair_D40, VPOINTER_PAIR);
-  _V10_Dpair_D40.first = VEncodePointer(&_V10_Dpair_D36, VPOINTER_PAIR);
-  _V10_Dpair_D40.rest = VNULL;
-  _V10_Dpair_D39.first = VEncodePointer(&_V10_Dpair_D37, VPOINTER_PAIR);
-  _V10_Dpair_D39.rest = VEncodePointer(&_V10_Dpair_D38, VPOINTER_PAIR);
-  _V10_Dpair_D38.first = VNULL;
+  _V10_Dpair_D42.first = VEncodePointer(&_V10_Dpair_D40, VPOINTER_PAIR);
+  _V10_Dpair_D42.rest = VEncodePointer(&_V10_Dpair_D41, VPOINTER_PAIR);
+  _V10_Dpair_D41.first = VEncodePointer(&_V10_Dpair_D34, VPOINTER_PAIR);
+  _V10_Dpair_D41.rest = VNULL;
+  _V10_Dpair_D40.first = VEncodeBool(false);
+  _V10_Dpair_D40.rest = VEncodePointer(&_V10_Dpair_D39, VPOINTER_PAIR);
+  _V10_Dpair_D39.first = VEncodePointer(&_V10_Dpair_D38, VPOINTER_PAIR);
+  _V10_Dpair_D39.rest = VNULL;
+  _V10_Dpair_D38.first = _V0_Mx;
   _V10_Dpair_D38.rest = VNULL;
-  _V10_Dpair_D37.first = VEncodeBool(false);
+  _V10_Dpair_D37.first = VEncodePointer(&_V10_Dpair_D35, VPOINTER_PAIR);
   _V10_Dpair_D37.rest = VEncodePointer(&_V10_Dpair_D36, VPOINTER_PAIR);
-  _V10_Dpair_D36.first = VEncodePointer(&_V10_Dpair_D35, VPOINTER_PAIR);
+  _V10_Dpair_D36.first = VNULL;
   _V10_Dpair_D36.rest = VNULL;
-  _V10_Dpair_D35.first = _V0_Mk;
-  _V10_Dpair_D35.rest = VNULL;
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0hash_V20_V0k1, VEncodePointer(&_V10_Dpair_D47, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0hash_V20_V0lambda2, VEncodePointer(&_V10_Dpair_D41, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0hash_V0random__sample_B, VEncodePointer(&_V10_Dpair_D67, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0hash_V20_V0lambda3, VEncodePointer(&_V10_Dpair_D41, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0hash_V20_V0lambda1, VEncodePointer(&_V10_Dpair_D39, VPOINTER_PAIR));
+  _V10_Dpair_D35.first = VEncodeBool(false);
+  _V10_Dpair_D35.rest = VEncodePointer(&_V10_Dpair_D34, VPOINTER_PAIR);
+  _V10_Dpair_D34.first = VEncodePointer(&_V10_Dpair_D33, VPOINTER_PAIR);
+  _V10_Dpair_D34.rest = VNULL;
+  _V10_Dpair_D33.first = _V0_Mk;
+  _V10_Dpair_D33.rest = VNULL;
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0hash_V0random__sample_B, VEncodePointer(&_V10_Dpair_D66, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V0vanity_V0hash_V20_V0lambda2, VEncodePointer(&_V10_Dpair_D46, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V0vanity_V0hash_V20_V0k1, VEncodePointer(&_V10_Dpair_D42, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V0vanity_V0hash_V20_V0lambda1, VEncodePointer(&_V10_Dpair_D37, VPOINTER_PAIR));
 }
