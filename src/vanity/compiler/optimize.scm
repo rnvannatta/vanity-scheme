@@ -43,6 +43,12 @@
                #f
                . ,lambda-rest)
              #f))
+      ; xs may be variadic or, which can happen with
+      ; (call-with-values producer (lambda args (consume args)))
+      ; Once xs is the rest param, there are no further individual
+      ; bindings to qualify, return them unqualified.
+      (if (not (pair? xs))
+          (values (fold cons rest-vals new-vals) qualified-funcs)
       (match rest-vals
         ((('##qualified-lambda name static? . _) . rest)
          (scan-bindings-loop
@@ -91,7 +97,7 @@
         (_
          (values
            (fold cons rest-vals new-vals)
-           qualified-funcs)))))
+           qualified-funcs))))))
   ; changes (f x y) into (##qualified-call (vanity core map) f x y) if say f is bound to map.
   ; and this is possible because the whole idea of qualified functions is they're bound in a way that
   ; makes them well known

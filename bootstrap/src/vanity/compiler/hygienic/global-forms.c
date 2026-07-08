@@ -33,26 +33,22 @@ V_DECLARE_FUNC_MIN(VMultiImport, _var0, _var1, _var2);
 
 VEnv * _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
 
-static VPair _V10_Dpair_D1063 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1062 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1061 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0let;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0let = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "let" };
-static VPair _V10_Dpair_D1060 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1059 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1058 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1057 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0unmangled__env;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V0unmangled__env = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 14 }, "unmangled-env" };
-static VPair _V10_Dpair_D1056 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D1059 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D1058 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0list_V20" };
+static struct { VBlob sym; char bytes[44]; } _V10_Dstring_D1057 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 44 }, "_V0vanity_V0compiler_V0hygienic_V0types_V20" };
+static struct { VBlob sym; char bytes[52]; } _V10_Dstring_D1056 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 52 }, "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20" };
 static VPair _V10_Dpair_D1055 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0_U;VWEAK struct { VBlob sym; char bytes[2]; } _VW_V0_U = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 2 }, "_" };
 static VPair _V10_Dpair_D1054 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1053 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0let;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0let = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "let" };
 static VPair _V10_Dpair_D1052 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1051 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1050 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1049 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0unmangled__env;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V0unmangled__env = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 14 }, "unmangled-env" };
 static VPair _V10_Dpair_D1048 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1047 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0_U;VWEAK struct { VBlob sym; char bytes[2]; } _VW_V0_U = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 2 }, "_" };
 static VPair _V10_Dpair_D1046 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1045 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1044 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -71,7 +67,6 @@ static VPair _V10_Dpair_D1032 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC 
 static VPair _V10_Dpair_D1031 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1030 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1029 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0lambda;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0lambda = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "lambda" };
 static VPair _V10_Dpair_D1028 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1027 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1026 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -80,6 +75,7 @@ static VPair _V10_Dpair_D1024 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC 
 static VPair _V10_Dpair_D1023 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1022 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1021 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0lambda;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0lambda = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "lambda" };
 static VPair _V10_Dpair_D1020 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1019 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D1018 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -264,27 +260,26 @@ static VPair _V10_Dpair_D840 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D839 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D838 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D837 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0quasiquote;VWEAK struct { VBlob sym; char bytes[11]; } _VW_V0quasiquote = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 11 }, "quasiquote" };
 static VPair _V10_Dpair_D836 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D835 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D834 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D833 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0x_D1;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0x_D1 = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "x.1" };
 static VPair _V10_Dpair_D832 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D831 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D830 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D829 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0quasiquote;VWEAK struct { VBlob sym; char bytes[11]; } _VW_V0quasiquote = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 11 }, "quasiquote" };
 static VPair _V10_Dpair_D828 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D827 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D826 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D825 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0x_D1;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0x_D1 = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "x.1" };
 static VPair _V10_Dpair_D824 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D823 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D822 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D821 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D820 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D819 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0syntax;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0syntax = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "syntax" };
 static VPair _V10_Dpair_D818 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D817 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D816 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -293,6 +288,7 @@ static VPair _V10_Dpair_D814 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D813 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D812 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D811 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0syntax;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0syntax = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "syntax" };
 static VPair _V10_Dpair_D810 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D809 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D808 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -338,7 +334,6 @@ static VPair _V10_Dpair_D769 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D768 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D767 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D766 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V10vcore_Dappend;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V10vcore_Dappend = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "##vcore.append" };
 static VPair _V10_Dpair_D765 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D764 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D763 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -347,6 +342,7 @@ static VPair _V10_Dpair_D761 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D760 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D759 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D758 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V10vcore_Dappend;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V10vcore_Dappend = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "##vcore.append" };
 static VPair _V10_Dpair_D757 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D756 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D755 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -356,7 +352,6 @@ static VPair _V10_Dpair_D752 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D751 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D750 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D749 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0unquote__splicing;VWEAK struct { VBlob sym; char bytes[17]; } _VW_V0unquote__splicing = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 17 }, "unquote-splicing" };
 static VPair _V10_Dpair_D748 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D747 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D746 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -365,6 +360,7 @@ static VPair _V10_Dpair_D744 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D743 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D742 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D741 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0unquote__splicing;VWEAK struct { VBlob sym; char bytes[17]; } _VW_V0unquote__splicing = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 17 }, "unquote-splicing" };
 static VPair _V10_Dpair_D740 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D739 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D738 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -395,74 +391,70 @@ static VPair _V10_Dpair_D714 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D713 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D712 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D711 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V10vcore_Dlist___Gs8vector;VWEAK struct { VBlob sym; char bytes[23]; } _VW_V10vcore_Dlist___Gs8vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 23 }, "##vcore.list->s8vector" };
 static VPair _V10_Dpair_D710 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D709 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D708 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D707 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D706 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D705 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V10vcore_Dlist___Gu8vector;VWEAK struct { VBlob sym; char bytes[23]; } _VW_V10vcore_Dlist___Gu8vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 23 }, "##vcore.list->u8vector" };
 static VPair _V10_Dpair_D704 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D703 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V10vcore_Dlist___Gs8vector;VWEAK struct { VBlob sym; char bytes[23]; } _VW_V10vcore_Dlist___Gs8vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 23 }, "##vcore.list->s8vector" };
 static VPair _V10_Dpair_D702 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D701 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D700 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D699 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V10vcore_Dlist___Gs16vector;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dlist___Gs16vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.list->s16vector" };
 static VPair _V10_Dpair_D698 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D697 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V10vcore_Dlist___Gu8vector;VWEAK struct { VBlob sym; char bytes[23]; } _VW_V10vcore_Dlist___Gu8vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 23 }, "##vcore.list->u8vector" };
 static VPair _V10_Dpair_D696 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D695 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D694 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D693 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V10vcore_Dlist___Gu16vector;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dlist___Gu16vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.list->u16vector" };
 static VPair _V10_Dpair_D692 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D691 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V10vcore_Dlist___Gs16vector;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dlist___Gs16vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.list->s16vector" };
 static VPair _V10_Dpair_D690 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D689 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D688 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D687 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V10vcore_Dlist___Gs32vector;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dlist___Gs32vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.list->s32vector" };
 static VPair _V10_Dpair_D686 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D685 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V10vcore_Dlist___Gu16vector;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dlist___Gu16vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.list->u16vector" };
 static VPair _V10_Dpair_D684 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D683 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D682 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D681 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V10vcore_Dlist___Gf32vector;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dlist___Gf32vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.list->f32vector" };
 static VPair _V10_Dpair_D680 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D679 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V10vcore_Dlist___Gs32vector;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dlist___Gs32vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.list->s32vector" };
 static VPair _V10_Dpair_D678 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D677 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D676 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D675 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V10vcore_Dlist___Gf64vector;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dlist___Gf64vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.list->f64vector" };
 static VPair _V10_Dpair_D674 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D673 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V10vcore_Dlist___Gf32vector;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dlist___Gf32vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.list->f32vector" };
 static VPair _V10_Dpair_D672 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D671 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D670 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D669 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V10vcore_Dlist___Gvector;VWEAK struct { VBlob sym; char bytes[21]; } _VW_V10vcore_Dlist___Gvector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 21 }, "##vcore.list->vector" };
 static VPair _V10_Dpair_D668 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D667 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V10vcore_Dlist___Gf64vector;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dlist___Gf64vector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.list->f64vector" };
 static VPair _V10_Dpair_D666 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D665 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D664 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D663 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D662 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D661 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V10vcore_Dlist___Gvector;VWEAK struct { VBlob sym; char bytes[21]; } _VW_V10vcore_Dlist___Gvector = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 21 }, "##vcore.list->vector" };
 static VPair _V10_Dpair_D660 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D659 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D658 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D657 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D656 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D655 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0x;VWEAK struct { VBlob sym; char bytes[2]; } _VW_V0x = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 2 }, "x" };
-VWEAK VWORD _V0unquote;VWEAK struct { VBlob sym; char bytes[8]; } _VW_V0unquote = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 8 }, "unquote" };
-VWEAK VWORD _V10vcore_Dcons;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V10vcore_Dcons = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "##vcore.cons" };
-VWEAK VWORD _V0quote;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0quote = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "quote" };
 static VPair _V10_Dpair_D654 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D653 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D652 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -471,6 +463,10 @@ static VPair _V10_Dpair_D650 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D649 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D648 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D647 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0x;VWEAK struct { VBlob sym; char bytes[2]; } _VW_V0x = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 2 }, "x" };
+VWEAK VWORD _V0unquote;VWEAK struct { VBlob sym; char bytes[8]; } _VW_V0unquote = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 8 }, "unquote" };
+VWEAK VWORD _V10vcore_Dcons;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V10vcore_Dcons = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "##vcore.cons" };
+VWEAK VWORD _V0quote;VWEAK struct { VBlob sym; char bytes[6]; } _VW_V0quote = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 6 }, "quote" };
 static VPair _V10_Dpair_D646 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D645 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D644 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -488,20 +484,20 @@ static VPair _V10_Dpair_D633 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D632 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D631 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D630 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0quasisyntax;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0quasisyntax = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "quasisyntax" };
 static VPair _V10_Dpair_D629 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D628 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D627 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D626 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0x_D2;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0x_D2 = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "x.2" };
 static VPair _V10_Dpair_D625 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D624 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D623 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D622 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0quasisyntax;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0quasisyntax = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "quasisyntax" };
 static VPair _V10_Dpair_D621 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D620 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D619 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D618 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0x_D2;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0x_D2 = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "x.2" };
 static VPair _V10_Dpair_D617 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D616 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D615 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -512,23 +508,23 @@ static VPair _V10_Dpair_D611 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D610 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D609 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D608 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0_Mp;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mp = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%p" };
 static VPair _V10_Dpair_D607 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D606 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D605 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D604 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D603 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D602 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0expr;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0expr = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "expr" };
-VWEAK VWORD _V0quotation;VWEAK struct { VBlob sym; char bytes[10]; } _VW_V0quotation = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 10 }, "quotation" };
 static VPair _V10_Dpair_D601 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D600 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0_Mp;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mp = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%p" };
 static VPair _V10_Dpair_D599 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D598 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D597 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D596 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D595 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D594 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0expr;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0expr = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "expr" };
+VWEAK VWORD _V0quotation;VWEAK struct { VBlob sym; char bytes[10]; } _VW_V0quotation = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 10 }, "quotation" };
 static VPair _V10_Dpair_D593 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D592 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D591 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -542,6 +538,14 @@ static VPair _V10_Dpair_D584 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D583 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D582 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D581 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D580 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D579 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D578 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D577 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D576 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D575 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D574 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D573 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 VWEAK VWORD _V0global__identifier;VWEAK struct { VBlob sym; char bytes[18]; } _VW_V0global__identifier = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 18 }, "global-identifier" };
 VWEAK VWORD _V0syntax__unpack;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V0syntax__unpack = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 14 }, "syntax-unpack" };
 VWEAK VWORD _V0expand__let;VWEAK struct { VBlob sym; char bytes[11]; } _VW_V0expand__let = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 11 }, "expand-let" };
@@ -549,29 +553,21 @@ VWEAK VWORD _V0expand__quasiquote__impl;VWEAK struct { VBlob sym; char bytes[23]
 VWEAK VWORD _V0expand__quasiquote;VWEAK struct { VBlob sym; char bytes[18]; } _VW_V0expand__quasiquote = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 18 }, "expand-quasiquote" };
 VWEAK VWORD _V0expand__quasisyntax__impl;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V0expand__quasisyntax__impl = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "expand-quasisyntax-impl" };
 VWEAK VWORD _V0global__form__env;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0global__form__env = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "global-form-env" };
-static VPair _V10_Dpair_D580 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D579 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D578 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D577 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0form;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0form = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "form" };
-static VPair _V10_Dpair_D576 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D575 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D574 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D573 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D572 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0expand__quasisyntax;VWEAK struct { VBlob sym; char bytes[19]; } _VW_V0expand__quasisyntax = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 19 }, "expand-quasisyntax" };
-VWEAK VWORD _V0global__forms;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0global__forms = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "global-forms" };
-VWEAK VWORD _V0hygienic;VWEAK struct { VBlob sym; char bytes[9]; } _VW_V0hygienic = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 9 }, "hygienic" };
-VWEAK VWORD _V0compiler;VWEAK struct { VBlob sym; char bytes[9]; } _VW_V0compiler = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 9 }, "compiler" };
-VWEAK VWORD _V0vanity;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0vanity = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "vanity" };
 static VPair _V10_Dpair_D571 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D570 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D569 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0form;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0form = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "form" };
 static VPair _V10_Dpair_D568 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D567 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D566 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D565 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D564 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0expand__quasisyntax;VWEAK struct { VBlob sym; char bytes[19]; } _VW_V0expand__quasisyntax = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 19 }, "expand-quasisyntax" };
+VWEAK VWORD _V0global__forms;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0global__forms = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "global-forms" };
+VWEAK VWORD _V0hygienic;VWEAK struct { VBlob sym; char bytes[9]; } _VW_V0hygienic = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 9 }, "hygienic" };
+VWEAK VWORD _V0compiler;VWEAK struct { VBlob sym; char bytes[9]; } _VW_V0compiler = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 9 }, "compiler" };
+VWEAK VWORD _V0vanity;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0vanity = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "vanity" };
 static VPair _V10_Dpair_D563 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D562 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D561 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -590,9 +586,15 @@ static VPair _V10_Dpair_D549 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D548 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D547 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D546 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D545 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D544 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0list_V20" };
-static struct { VBlob sym; char bytes[44]; } _V10_Dstring_D543 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 44 }, "_V0vanity_V0compiler_V0hygienic_V0types_V20" };
+static VPair _V10_Dpair_D545 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D544 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D543 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D542 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D541 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D540 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D539 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D538 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D537 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 VWEAK VWORD _V0list;VWEAK struct { VBlob sym; char bytes[5]; } _VW_V0list = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 5 }, "list" };
 VWEAK VWORD _V0global__scope;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0global__scope = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "global-scope" };
 VWEAK VWORD _V0make__syntax;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0make__syntax = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "make-syntax" };
@@ -615,14 +617,8 @@ VWEAK VWORD _V0f64vector___Glist;VWEAK struct { VBlob sym; char bytes[16]; } _VW
 VWEAK VWORD _V0vector___Glist;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0vector___Glist = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "vector->list" };
 VWEAK VWORD _V0syntax__vector_Q;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V0syntax__vector_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "syntax-vector\?" };
 VWEAK VWORD _V0syntax__cadr;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V0syntax__cadr = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "syntax-cadr" };
-static struct { VBlob sym; char bytes[52]; } _V10_Dstring_D542 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 52 }, "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20" };
 VWEAK VWORD _V40VMultiImport;
 VWEAK VClosure _VW_V40VMultiImport = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMultiImport, NULL };
-static VPair _V10_Dpair_D541 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D540 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D539 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D538 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D537 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D536 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D535 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D534 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
@@ -633,14 +629,16 @@ static VPair _V10_Dpair_D530 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC |
 static VPair _V10_Dpair_D529 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D528 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D527 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0_Mx;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mx = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%x" };
 static VPair _V10_Dpair_D526 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D525 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D524 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D523 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+VWEAK VWORD _V0_Mx;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mx = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%x" };
 static VPair _V10_Dpair_D522 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D521 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 static VPair _V10_Dpair_D520 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D519 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static VPair _V10_Dpair_D518 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 VWEAK VWORD _V0_Mk;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mk = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%k" };
 V_DECLARE_FUNC(_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier, _var0, _var1);
 V_DECLARE_FUNC(_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack, _var0, _var1);
@@ -649,112 +647,6 @@ V_DECLARE_FUNC(_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__qua
 V_DECLARE_FUNC(_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote, _var0, _var1);
 V_DECLARE_FUNC(_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl, _var0, _var1, _var2);
 V_DECLARE_FUNC(_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax, _var0, _var1);
-static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  // ((##intrinsic "VMultiImport") (bruijn ##.%k.62 4 0) (##string ##.string.542) (bruijn ##.%x.63 0 0) 'syntax-cadr 'syntax-vector? 'vector->list 'f64vector->list 'f32vector->list 's32vector->list 'u16vector->list 's16vector->list 'u8vector->list 's8vector->list 'identifier? 'get-syntax-data 'syntax-caar 'syntax-pair? 'syntax-car 'syntax-cdr 'syntax-map 'syntax-cddr 'syntax? 'make-syntax 'global-scope 'list)
-    VCallFuncWithGC(runtime, (VFunc)VMultiImport, 25,
-      statics->up->up->up->vars[0],
-      VEncodePointer(&_V10_Dstring_D542.sym, VPOINTER_OTHER),
-      _var0,
-      _V0syntax__cadr,
-      _V0syntax__vector_Q,
-      _V0vector___Glist,
-      _V0f64vector___Glist,
-      _V0f32vector___Glist,
-      _V0s32vector___Glist,
-      _V0u16vector___Glist,
-      _V0s16vector___Glist,
-      _V0u8vector___Glist,
-      _V0s8vector___Glist,
-      _V0identifier_Q,
-      _V0get__syntax__data,
-      _V0syntax__caar,
-      _V0syntax__pair_Q,
-      _V0syntax__car,
-      _V0syntax__cdr,
-      _V0syntax__map,
-      _V0syntax__cddr,
-      _V0syntax_Q,
-      _V0make__syntax,
-      _V0global__scope,
-      _V0list);
-}
-static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (##vcore.vector (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4) (bruijn ##.%x.64 2 0) (bruijn ##.%x.65 1 0) (bruijn ##.%x.66 0 0))
-    VCallFuncWithGC(runtime, (VFunc)VCreateVector, 4,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4, self)))),
-      statics->up->vars[0],
-      statics->vars[0],
-      _var0);
-}
-static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3) (##string ##.string.543))
-    VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3, self)))),
-      VEncodePointer(&_V10_Dstring_D543.sym, VPOINTER_OTHER));
-}
-static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2) (##string ##.string.544))
-    VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2, self)))),
-      VEncodePointer(&_V10_Dstring_D544.sym, VPOINTER_OTHER));
-}
-static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2" };
- VRecordCall2(runtime, &dbg);
- if(argc != 1) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2, got ~D~N"
-  "-- expected 1~N"
-  , argc);
- }
-  struct { VEnv self; VWORD argv[1]; } container;
-  VEnv * self = &container.self;
-  VInitEnv(self, 1, 1, statics);
-  self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1) (##string ##.string.545))
-    VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1, self)))),
-      VEncodePointer(&_V10_Dstring_D545.sym, VPOINTER_OTHER));
-}
 void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax_V0k5(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax_V0k5" };
  VRecordCall2(runtime, &dbg);
@@ -763,7 +655,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax_V
   "-- expected 1~N"
   , argc);
  }
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 2 3) (bruijn ##.%k.68 1 0) 1 (bruijn ##.%x.69 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 2 3) (bruijn ##.%k.62 1 0) 1 (bruijn ##.%x.63 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -792,8 +684,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax(V
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.syntax-cadr.3 2 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax_V0k5) (bruijn ##.form.47 0 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[1]), 2,
+  // ((bruijn ##.syntax-cadr.3 2 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax_V0k5) (bruijn ##.form.47 0 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax_V0k5, self)))),
       _var1);
 }
@@ -805,8 +697,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.get-syntax-data.14 7 12) (bruijn ##.%k.188 1 0) (bruijn ##.%x.189 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 12)), 2,
+  // ((bruijn ##.get-syntax-data.14 7 11) (bruijn ##.%k.182 1 0) (bruijn ##.%x.183 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 11)), 2,
       statics->vars[0],
       _var0);
 }
@@ -822,10 +714,10 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.187 1 0) ((bruijn ##.syntax-car.17 6 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k10) (bruijn ##.expr.49 4 2)) ((bruijn ##.%k.188 0 0) #f))
+  // (if (bruijn ##.%p.181 1 0) ((bruijn ##.syntax-car.17 6 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k10) (bruijn ##.expr.49 4 2)) ((bruijn ##.%k.182 0 0) #f))
 if(VDecodeBool(
 statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 15)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 14)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k10, self)))),
       statics->up->up->up->vars[2]);
 } else {
@@ -845,7 +737,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 8 8 (##.%x.359 ##.%x.360 ##.%x.361 ##.%x.362 ##.%x.363 ##.%x.364 ##.%x.365 ##.%r.366) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.83 1 0) (bruijn ##.%x.359 0 0)) (##vcore.cons (bruijn ##.%x.360 0 1) '()) (##vcore.cons (bruijn ##.%x.80 2 0) (bruijn ##.%x.361 0 2)) (##vcore.cons (bruijn ##.%x.78 5 0) (bruijn ##.%x.362 0 3)) (##vcore.cons (bruijn ##.%x.363 0 4) '()) (##vcore.cons (bruijn ##.%x.357 6 1) (bruijn ##.%x.364 0 5)) (##vcore.cons (bruijn ##.%x.73 9 0) (bruijn ##.%x.365 0 6))) ((bruijn ##.%k.70 15 0) (bruijn ##.%r.366 0 7)))
+  // (basic-block 8 8 (##.%x.357 ##.%x.358 ##.%x.359 ##.%x.360 ##.%x.361 ##.%x.362 ##.%x.363 ##.%r.364) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.77 1 0) (bruijn ##.%x.357 0 0)) (##vcore.cons (bruijn ##.%x.358 0 1) '()) (##vcore.cons (bruijn ##.%x.74 2 0) (bruijn ##.%x.359 0 2)) (##vcore.cons (bruijn ##.%x.72 5 0) (bruijn ##.%x.360 0 3)) (##vcore.cons (bruijn ##.%x.361 0 4) '()) (##vcore.cons (bruijn ##.%x.355 6 1) (bruijn ##.%x.362 0 5)) (##vcore.cons (bruijn ##.%x.67 9 0) (bruijn ##.%x.363 0 6))) ((bruijn ##.%k.64 15 0) (bruijn ##.%r.364 0 7)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[8]; } container;
@@ -917,7 +809,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 13 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k17) (bruijn ##.%x.358 1 0) (bruijn ##.%x.86 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 13 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k17) (bruijn ##.%x.356 1 0) (bruijn ##.%x.80 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -945,7 +837,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%x.358) ((##vcore.+ (bruijn ##.quotation.48 11 1) 1)) ((bruijn ##.syntax-cadr.3 13 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k16) (bruijn ##.expr.49 11 2)))
+  // (basic-block 1 1 (##.%x.356) ((##vcore.+ (bruijn ##.quotation.48 11 1) 1)) ((bruijn ##.syntax-cadr.3 13 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k16) (bruijn ##.expr.49 11 2)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -954,7 +846,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
     self->vars[0] = _VBasic_VAdd2(runtime, NULL,
       VGetArg(statics, 11-1, 1),
       VEncodeInt(1l));
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 1)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k16, self)))),
       VGetArg(statics, 11-1, 2));
     }
@@ -971,7 +863,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.356 ##.%x.357) ((##vcore.cons (bruijn ##.%x.89 1 0) '()) (##vcore.cons (bruijn ##.%x.87 2 0) (bruijn ##.%x.356 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k15) '##vcore.cons))
+  // (basic-block 2 2 (##.%x.354 ##.%x.355) ((##vcore.cons (bruijn ##.%x.83 1 0) '()) (##vcore.cons (bruijn ##.%x.81 2 0) (bruijn ##.%x.354 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k15) '##vcore.cons))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -1061,7 +953,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.370 ##.%r.371) ((##vcore.cons (bruijn ##.%x.95 1 0) '()) (##vcore.cons (bruijn ##.%x.93 2 0) (bruijn ##.%x.370 0 0))) ((bruijn ##.%k.70 12 0) (bruijn ##.%r.371 0 1)))
+  // (basic-block 2 2 (##.%x.368 ##.%r.369) ((##vcore.cons (bruijn ##.%x.89 1 0) '()) (##vcore.cons (bruijn ##.%x.87 2 0) (bruijn ##.%x.368 0 0))) ((bruijn ##.%k.64 12 0) (bruijn ##.%r.369 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -1089,8 +981,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.vector->list.5 12 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k21) (bruijn ##.x.51 3 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 3)), 2,
+  // ((bruijn ##.vector->list.5 12 2) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k21) (bruijn ##.x.51 3 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 2)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k21, self)))),
       statics->up->up->vars[0]);
 }
@@ -1106,7 +998,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.373 ##.%r.374) ((##vcore.cons (bruijn ##.%x.99 1 0) '()) (##vcore.cons (bruijn ##.%x.97 2 0) (bruijn ##.%x.373 0 0))) ((bruijn ##.%k.70 13 0) (bruijn ##.%r.374 0 1)))
+  // (basic-block 2 2 (##.%x.371 ##.%r.372) ((##vcore.cons (bruijn ##.%x.93 1 0) '()) (##vcore.cons (bruijn ##.%x.91 2 0) (bruijn ##.%x.371 0 0))) ((bruijn ##.%k.64 13 0) (bruijn ##.%r.372 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -1134,8 +1026,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.f64vector->list.6 13 4) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k23) (bruijn ##.x.51 4 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 4)), 2,
+  // ((bruijn ##.f64vector->list.6 13 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k23) (bruijn ##.x.51 4 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 3)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k23, self)))),
       statics->up->up->up->vars[0]);
 }
@@ -1151,7 +1043,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.376 ##.%r.377) ((##vcore.cons (bruijn ##.%x.103 1 0) '()) (##vcore.cons (bruijn ##.%x.101 2 0) (bruijn ##.%x.376 0 0))) ((bruijn ##.%k.70 14 0) (bruijn ##.%r.377 0 1)))
+  // (basic-block 2 2 (##.%x.374 ##.%r.375) ((##vcore.cons (bruijn ##.%x.97 1 0) '()) (##vcore.cons (bruijn ##.%x.95 2 0) (bruijn ##.%x.374 0 0))) ((bruijn ##.%k.64 14 0) (bruijn ##.%r.375 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -1179,8 +1071,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.f32vector->list.7 14 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k25) (bruijn ##.x.51 5 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 5)), 2,
+  // ((bruijn ##.f32vector->list.7 14 4) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k25) (bruijn ##.x.51 5 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 4)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k25, self)))),
       VGetArg(statics, 5-1, 0));
 }
@@ -1196,7 +1088,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.379 ##.%r.380) ((##vcore.cons (bruijn ##.%x.107 1 0) '()) (##vcore.cons (bruijn ##.%x.105 2 0) (bruijn ##.%x.379 0 0))) ((bruijn ##.%k.70 15 0) (bruijn ##.%r.380 0 1)))
+  // (basic-block 2 2 (##.%x.377 ##.%r.378) ((##vcore.cons (bruijn ##.%x.101 1 0) '()) (##vcore.cons (bruijn ##.%x.99 2 0) (bruijn ##.%x.377 0 0))) ((bruijn ##.%k.64 15 0) (bruijn ##.%r.378 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -1224,8 +1116,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.s32vector->list.8 15 6) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k27) (bruijn ##.x.51 6 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 6)), 2,
+  // ((bruijn ##.s32vector->list.8 15 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k27) (bruijn ##.x.51 6 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 5)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k27, self)))),
       VGetArg(statics, 6-1, 0));
 }
@@ -1241,7 +1133,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.382 ##.%r.383) ((##vcore.cons (bruijn ##.%x.111 1 0) '()) (##vcore.cons (bruijn ##.%x.109 2 0) (bruijn ##.%x.382 0 0))) ((bruijn ##.%k.70 16 0) (bruijn ##.%r.383 0 1)))
+  // (basic-block 2 2 (##.%x.380 ##.%r.381) ((##vcore.cons (bruijn ##.%x.105 1 0) '()) (##vcore.cons (bruijn ##.%x.103 2 0) (bruijn ##.%x.380 0 0))) ((bruijn ##.%k.64 16 0) (bruijn ##.%r.381 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -1269,8 +1161,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.u16vector->list.9 16 7) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k29) (bruijn ##.x.51 7 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 7)), 2,
+  // ((bruijn ##.u16vector->list.9 16 6) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k29) (bruijn ##.x.51 7 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 6)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k29, self)))),
       VGetArg(statics, 7-1, 0));
 }
@@ -1286,7 +1178,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.385 ##.%r.386) ((##vcore.cons (bruijn ##.%x.115 1 0) '()) (##vcore.cons (bruijn ##.%x.113 2 0) (bruijn ##.%x.385 0 0))) ((bruijn ##.%k.70 17 0) (bruijn ##.%r.386 0 1)))
+  // (basic-block 2 2 (##.%x.383 ##.%r.384) ((##vcore.cons (bruijn ##.%x.109 1 0) '()) (##vcore.cons (bruijn ##.%x.107 2 0) (bruijn ##.%x.383 0 0))) ((bruijn ##.%k.64 17 0) (bruijn ##.%r.384 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -1314,8 +1206,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.s16vector->list.10 17 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k31) (bruijn ##.x.51 8 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 8)), 2,
+  // ((bruijn ##.s16vector->list.10 17 7) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k31) (bruijn ##.x.51 8 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 7)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k31, self)))),
       VGetArg(statics, 8-1, 0));
 }
@@ -1331,7 +1223,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.388 ##.%r.389) ((##vcore.cons (bruijn ##.%x.119 1 0) '()) (##vcore.cons (bruijn ##.%x.117 2 0) (bruijn ##.%x.388 0 0))) ((bruijn ##.%k.70 18 0) (bruijn ##.%r.389 0 1)))
+  // (basic-block 2 2 (##.%x.386 ##.%r.387) ((##vcore.cons (bruijn ##.%x.113 1 0) '()) (##vcore.cons (bruijn ##.%x.111 2 0) (bruijn ##.%x.386 0 0))) ((bruijn ##.%k.64 18 0) (bruijn ##.%r.387 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -1359,8 +1251,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.u8vector->list.11 18 9) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k33) (bruijn ##.x.51 9 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 9)), 2,
+  // ((bruijn ##.u8vector->list.11 18 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k33) (bruijn ##.x.51 9 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 8)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k33, self)))),
       VGetArg(statics, 9-1, 0));
 }
@@ -1376,7 +1268,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.391 ##.%r.392) ((##vcore.cons (bruijn ##.%x.123 1 0) '()) (##vcore.cons (bruijn ##.%x.121 2 0) (bruijn ##.%x.391 0 0))) ((bruijn ##.%k.70 19 0) (bruijn ##.%r.392 0 1)))
+  // (basic-block 2 2 (##.%x.389 ##.%r.390) ((##vcore.cons (bruijn ##.%x.117 1 0) '()) (##vcore.cons (bruijn ##.%x.115 2 0) (bruijn ##.%x.389 0 0))) ((bruijn ##.%k.64 19 0) (bruijn ##.%r.390 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -1404,8 +1296,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.s8vector->list.12 19 10) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k35) (bruijn ##.x.51 10 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 10)), 2,
+  // ((bruijn ##.s8vector->list.12 19 9) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k35) (bruijn ##.x.51 10 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 9)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k35, self)))),
       VGetArg(statics, 10-1, 0));
 }
@@ -1421,7 +1313,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 8 8 (##.%x.396 ##.%x.397 ##.%x.398 ##.%x.399 ##.%x.400 ##.%x.401 ##.%x.402 ##.%r.403) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.134 1 0) (bruijn ##.%x.396 0 0)) (##vcore.cons (bruijn ##.%x.397 0 1) '()) (##vcore.cons (bruijn ##.%x.131 2 0) (bruijn ##.%x.398 0 2)) (##vcore.cons (bruijn ##.%x.129 4 0) (bruijn ##.%x.399 0 3)) (##vcore.cons (bruijn ##.%x.400 0 4) '()) (##vcore.cons (bruijn ##.%x.394 5 1) (bruijn ##.%x.401 0 5)) (##vcore.cons (bruijn ##.%x.124 8 0) (bruijn ##.%x.402 0 6))) ((bruijn ##.%k.70 17 0) (bruijn ##.%r.403 0 7)))
+  // (basic-block 8 8 (##.%x.394 ##.%x.395 ##.%x.396 ##.%x.397 ##.%x.398 ##.%x.399 ##.%x.400 ##.%r.401) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.128 1 0) (bruijn ##.%x.394 0 0)) (##vcore.cons (bruijn ##.%x.395 0 1) '()) (##vcore.cons (bruijn ##.%x.125 2 0) (bruijn ##.%x.396 0 2)) (##vcore.cons (bruijn ##.%x.123 4 0) (bruijn ##.%x.397 0 3)) (##vcore.cons (bruijn ##.%x.398 0 4) '()) (##vcore.cons (bruijn ##.%x.392 5 1) (bruijn ##.%x.399 0 5)) (##vcore.cons (bruijn ##.%x.118 8 0) (bruijn ##.%x.400 0 6))) ((bruijn ##.%k.64 17 0) (bruijn ##.%r.401 0 7)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[8]; } container;
@@ -1493,7 +1385,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%x.395) ((##vcore.- (bruijn ##.quotation.48 14 1) 1)) (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 15 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k40) (bruijn ##.%x.395 0 0) (bruijn ##.x.51 7 0)))
+  // (basic-block 1 1 (##.%x.393) ((##vcore.- (bruijn ##.quotation.48 14 1) 1)) (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 15 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k40) (bruijn ##.%x.393 0 0) (bruijn ##.x.51 7 0)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -1530,7 +1422,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.393 ##.%x.394) ((##vcore.cons (bruijn ##.%x.139 1 0) '()) (##vcore.cons (bruijn ##.%x.137 2 0) (bruijn ##.%x.393 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 13 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k39) '##vcore.cons))
+  // (basic-block 2 2 (##.%x.391 ##.%x.392) ((##vcore.cons (bruijn ##.%x.133 1 0) '()) (##vcore.cons (bruijn ##.%x.131 2 0) (bruijn ##.%x.391 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 13 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k39) '##vcore.cons))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -1620,7 +1512,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%p.368) ((##vcore.= (bruijn ##.quotation.48 8 1) 1)) (if (bruijn ##.%p.368 0 0) (basic-block 1 1 (##.%p.369) ((##vcore.vector? (bruijn ##.x.51 2 0))) (if (bruijn ##.%p.369 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k20) '##vcore.list->vector) (basic-block 1 1 (##.%p.372) ((##vcore.f64vector? (bruijn ##.x.51 3 0))) (if (bruijn ##.%p.372 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k22) '##vcore.list->f64vector) (basic-block 1 1 (##.%p.375) ((##vcore.f32vector? (bruijn ##.x.51 4 0))) (if (bruijn ##.%p.375 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 12 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k24) '##vcore.list->f32vector) (basic-block 1 1 (##.%p.378) ((##vcore.s32vector? (bruijn ##.x.51 5 0))) (if (bruijn ##.%p.378 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 13 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k26) '##vcore.list->s32vector) (basic-block 1 1 (##.%p.381) ((##vcore.u16vector? (bruijn ##.x.51 6 0))) (if (bruijn ##.%p.381 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 14 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k28) '##vcore.list->u16vector) (basic-block 1 1 (##.%p.384) ((##vcore.s16vector? (bruijn ##.x.51 7 0))) (if (bruijn ##.%p.384 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 15 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k30) '##vcore.list->s16vector) (basic-block 1 1 (##.%p.387) ((##vcore.u8vector? (bruijn ##.x.51 8 0))) (if (bruijn ##.%p.387 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 16 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k32) '##vcore.list->u8vector) (basic-block 1 1 (##.%p.390) ((##vcore.s8vector? (bruijn ##.x.51 9 0))) (if (bruijn ##.%p.390 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 17 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k34) '##vcore.list->s8vector) ((bruijn ##.%k.70 16 0) (bruijn ##.x.51 9 0)))))))))))))))))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 9 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k36) '##vcore.cons)))
+  // (basic-block 1 1 (##.%p.366) ((##vcore.= (bruijn ##.quotation.48 8 1) 1)) (if (bruijn ##.%p.366 0 0) (basic-block 1 1 (##.%p.367) ((##vcore.vector? (bruijn ##.x.51 2 0))) (if (bruijn ##.%p.367 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k20) '##vcore.list->vector) (basic-block 1 1 (##.%p.370) ((##vcore.f64vector? (bruijn ##.x.51 3 0))) (if (bruijn ##.%p.370 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k22) '##vcore.list->f64vector) (basic-block 1 1 (##.%p.373) ((##vcore.f32vector? (bruijn ##.x.51 4 0))) (if (bruijn ##.%p.373 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 12 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k24) '##vcore.list->f32vector) (basic-block 1 1 (##.%p.376) ((##vcore.s32vector? (bruijn ##.x.51 5 0))) (if (bruijn ##.%p.376 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 13 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k26) '##vcore.list->s32vector) (basic-block 1 1 (##.%p.379) ((##vcore.u16vector? (bruijn ##.x.51 6 0))) (if (bruijn ##.%p.379 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 14 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k28) '##vcore.list->u16vector) (basic-block 1 1 (##.%p.382) ((##vcore.s16vector? (bruijn ##.x.51 7 0))) (if (bruijn ##.%p.382 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 15 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k30) '##vcore.list->s16vector) (basic-block 1 1 (##.%p.385) ((##vcore.u8vector? (bruijn ##.x.51 8 0))) (if (bruijn ##.%p.385 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 16 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k32) '##vcore.list->u8vector) (basic-block 1 1 (##.%p.388) ((##vcore.s8vector? (bruijn ##.x.51 9 0))) (if (bruijn ##.%p.388 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 17 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k34) '##vcore.list->s8vector) ((bruijn ##.%k.64 16 0) (bruijn ##.x.51 9 0)))))))))))))))))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 9 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k36) '##vcore.cons)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -1853,7 +1745,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%r.425) ((##vcore.eq? (bruijn ##.%x.183 1 0) 'unquote-splicing)) ((bruijn ##.%k.181 5 0) (bruijn ##.%r.425 0 0)))
+  // (basic-block 1 1 (##.%r.423) ((##vcore.eq? (bruijn ##.%x.177 1 0) 'unquote-splicing)) ((bruijn ##.%k.175 5 0) (bruijn ##.%r.423 0 0)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -1878,8 +1770,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.get-syntax-data.14 14 12) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k48) (bruijn ##.%x.184 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 12)), 2,
+  // ((bruijn ##.get-syntax-data.14 14 11) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k48) (bruijn ##.%x.178 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 11)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k48, self)))),
       _var0);
 }
@@ -1895,10 +1787,10 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.182 0 0) ((bruijn ##.syntax-caar.15 13 13) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k47) (bruijn ##.expr.49 11 2)) ((bruijn ##.%k.181 2 0) #f))
+  // (if (bruijn ##.%p.176 0 0) ((bruijn ##.syntax-caar.15 13 12) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k47) (bruijn ##.expr.49 11 2)) ((bruijn ##.%k.175 2 0) #f))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 13)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 12)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k47, self)))),
       VGetArg(statics, 11-1, 2));
 } else {
@@ -1918,8 +1810,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.identifier?.13 12 11) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k46) (bruijn ##.%x.185 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 11)), 2,
+  // ((bruijn ##.identifier?.13 12 10) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k46) (bruijn ##.%x.179 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 10)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k46, self)))),
       _var0);
 }
@@ -1935,10 +1827,10 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.180 1 0) ((bruijn ##.syntax-caar.15 11 13) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k45) (bruijn ##.expr.49 9 2)) ((bruijn ##.%k.181 0 0) #f))
+  // (if (bruijn ##.%p.174 1 0) ((bruijn ##.syntax-caar.15 11 12) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k45) (bruijn ##.expr.49 9 2)) ((bruijn ##.%k.175 0 0) #f))
 if(VDecodeBool(
 statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 13)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 12)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k45, self)))),
       VGetArg(statics, 9-1, 2));
 } else {
@@ -1958,7 +1850,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 3 3 (##.%x.405 ##.%x.406 ##.%r.407) ((##vcore.cons (bruijn ##.%x.146 1 0) '()) (##vcore.cons (bruijn ##.%x.144 3 0) (bruijn ##.%x.405 0 0)) (##vcore.cons (bruijn ##.%x.142 5 0) (bruijn ##.%x.406 0 1))) ((bruijn ##.%k.70 16 0) (bruijn ##.%r.407 0 2)))
+  // (basic-block 3 3 (##.%x.403 ##.%x.404 ##.%r.405) ((##vcore.cons (bruijn ##.%x.140 1 0) '()) (##vcore.cons (bruijn ##.%x.138 3 0) (bruijn ##.%x.403 0 0)) (##vcore.cons (bruijn ##.%x.136 5 0) (bruijn ##.%x.404 0 1))) ((bruijn ##.%k.64 16 0) (bruijn ##.%r.405 0 2)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[3]; } container;
@@ -1989,7 +1881,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 15 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k54) (bruijn ##.quotation.48 14 1) (bruijn ##.%x.147 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 15 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k54) (bruijn ##.quotation.48 14 1) (bruijn ##.%x.141 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -2017,8 +1909,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-cdr.18 15 16) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k53) (bruijn ##.expr.49 13 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 16)), 2,
+  // ((bruijn ##.syntax-cdr.18 15 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k53) (bruijn ##.expr.49 13 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 15)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k53, self)))),
       VGetArg(statics, 13-1, 2));
 }
@@ -2034,8 +1926,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-cadr.3 14 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k52) (bruijn ##.%x.148 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 1)), 2,
+  // ((bruijn ##.syntax-cadr.3 14 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k52) (bruijn ##.%x.142 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k52, self)))),
       _var0);
 }
@@ -2051,8 +1943,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-car.17 13 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k51) (bruijn ##.expr.49 11 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 15)), 2,
+  // ((bruijn ##.syntax-car.17 13 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k51) (bruijn ##.expr.49 11 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 14)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k51, self)))),
       VGetArg(statics, 11-1, 2));
 }
@@ -2068,7 +1960,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 6 6 (##.%x.416 ##.%x.417 ##.%x.418 ##.%x.419 ##.%x.420 ##.%r.421) ((##vcore.cons (bruijn ##.%x.158 1 0) '()) (##vcore.cons (bruijn ##.%x.415 3 4) (bruijn ##.%x.416 0 0)) (##vcore.cons (bruijn ##.%x.409 10 1) (bruijn ##.%x.417 0 1)) (##vcore.cons (bruijn ##.%x.152 13 0) (bruijn ##.%x.418 0 2)) (##vcore.cons (bruijn ##.%x.419 0 3) '()) (##vcore.cons (bruijn ##.%x.149 14 0) (bruijn ##.%x.420 0 4))) ((bruijn ##.%k.70 25 0) (bruijn ##.%r.421 0 5)))
+  // (basic-block 6 6 (##.%x.414 ##.%x.415 ##.%x.416 ##.%x.417 ##.%x.418 ##.%r.419) ((##vcore.cons (bruijn ##.%x.152 1 0) '()) (##vcore.cons (bruijn ##.%x.413 3 4) (bruijn ##.%x.414 0 0)) (##vcore.cons (bruijn ##.%x.407 10 1) (bruijn ##.%x.415 0 1)) (##vcore.cons (bruijn ##.%x.146 13 0) (bruijn ##.%x.416 0 2)) (##vcore.cons (bruijn ##.%x.417 0 3) '()) (##vcore.cons (bruijn ##.%x.143 14 0) (bruijn ##.%x.418 0 4))) ((bruijn ##.%k.64 25 0) (bruijn ##.%r.419 0 5)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[6]; } container;
@@ -2108,7 +2000,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 24 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k65) (bruijn ##.quotation.48 23 1) (bruijn ##.%x.159 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 24 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k65) (bruijn ##.quotation.48 23 1) (bruijn ##.%x.153 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -2136,7 +2028,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 5 5 (##.%x.411 ##.%x.412 ##.%x.413 ##.%x.414 ##.%x.415) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.165 1 0) (bruijn ##.%x.411 0 0)) (##vcore.cons (bruijn ##.%x.412 0 1) '()) (##vcore.cons (bruijn ##.%x.162 2 0) (bruijn ##.%x.413 0 2)) (##vcore.cons (bruijn ##.%x.160 6 0) (bruijn ##.%x.414 0 3))) ((bruijn ##.syntax-cdr.18 24 16) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k64) (bruijn ##.expr.49 22 2)))
+  // (basic-block 5 5 (##.%x.409 ##.%x.410 ##.%x.411 ##.%x.412 ##.%x.413) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.159 1 0) (bruijn ##.%x.409 0 0)) (##vcore.cons (bruijn ##.%x.410 0 1) '()) (##vcore.cons (bruijn ##.%x.156 2 0) (bruijn ##.%x.411 0 2)) (##vcore.cons (bruijn ##.%x.154 6 0) (bruijn ##.%x.412 0 3))) ((bruijn ##.syntax-cdr.18 24 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k64) (bruijn ##.expr.49 22 2)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[5]; } container;
@@ -2157,7 +2049,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
     self->vars[4] = _VBasic_VCons2(runtime, NULL,
       VGetArg(statics, 6-1, 0),
       self->vars[3]);
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 16)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 15)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k64, self)))),
       VGetArg(statics, 22-1, 2));
     }
@@ -2200,7 +2092,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 20 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k62) (bruijn ##.%x.410 2 0) (bruijn ##.%x.168 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 20 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k62) (bruijn ##.%x.408 2 0) (bruijn ##.%x.162 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -2228,8 +2120,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-cadr.3 20 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k61) (bruijn ##.%x.169 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 1)), 2,
+  // ((bruijn ##.syntax-cadr.3 20 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k61) (bruijn ##.%x.163 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k61, self)))),
       _var0);
 }
@@ -2245,7 +2137,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%x.410) ((##vcore.- (bruijn ##.quotation.48 17 1) 1)) ((bruijn ##.syntax-car.17 19 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k60) (bruijn ##.expr.49 17 2)))
+  // (basic-block 1 1 (##.%x.408) ((##vcore.- (bruijn ##.quotation.48 17 1) 1)) ((bruijn ##.syntax-car.17 19 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k60) (bruijn ##.expr.49 17 2)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -2254,7 +2146,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
     self->vars[0] = _VBasic_VSub2(runtime, NULL,
       VGetArg(statics, 17-1, 1),
       VEncodeInt(1l));
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 15)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 14)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k60, self)))),
       VGetArg(statics, 17-1, 2));
     }
@@ -2271,7 +2163,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.408 ##.%x.409) ((##vcore.cons (bruijn ##.%x.172 1 0) '()) (##vcore.cons (bruijn ##.%x.170 2 0) (bruijn ##.%x.408 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 16 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k59) '##vcore.cons))
+  // (basic-block 2 2 (##.%x.406 ##.%x.407) ((##vcore.cons (bruijn ##.%x.166 1 0) '()) (##vcore.cons (bruijn ##.%x.164 2 0) (bruijn ##.%x.406 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 16 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k59) '##vcore.cons))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -2387,7 +2279,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 3 3 (##.%x.422 ##.%x.423 ##.%r.424) ((##vcore.cons (bruijn ##.%x.177 1 0) '()) (##vcore.cons (bruijn ##.%x.175 3 0) (bruijn ##.%x.422 0 0)) (##vcore.cons (bruijn ##.%x.173 5 0) (bruijn ##.%x.423 0 1))) ((bruijn ##.%k.70 15 0) (bruijn ##.%r.424 0 2)))
+  // (basic-block 3 3 (##.%x.420 ##.%x.421 ##.%r.422) ((##vcore.cons (bruijn ##.%x.171 1 0) '()) (##vcore.cons (bruijn ##.%x.169 3 0) (bruijn ##.%x.420 0 0)) (##vcore.cons (bruijn ##.%x.167 5 0) (bruijn ##.%x.421 0 1))) ((bruijn ##.%k.64 15 0) (bruijn ##.%r.422 0 2)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[3]; } container;
@@ -2418,7 +2310,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 14 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k70) (bruijn ##.quotation.48 13 1) (bruijn ##.%x.178 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 14 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k70) (bruijn ##.quotation.48 13 1) (bruijn ##.%x.172 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -2446,8 +2338,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-cdr.18 14 16) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k69) (bruijn ##.expr.49 12 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 16)), 2,
+  // ((bruijn ##.syntax-cdr.18 14 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k69) (bruijn ##.expr.49 12 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 15)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k69, self)))),
       VGetArg(statics, 12-1, 2));
 }
@@ -2463,7 +2355,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 12 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k68) (bruijn ##.quotation.48 11 1) (bruijn ##.%x.179 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 12 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k68) (bruijn ##.quotation.48 11 1) (bruijn ##.%x.173 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -2491,8 +2383,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-car.17 12 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k67) (bruijn ##.expr.49 10 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 15)), 2,
+  // ((bruijn ##.syntax-car.17 12 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k67) (bruijn ##.expr.49 10 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 14)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k67, self)))),
       VGetArg(statics, 10-1, 2));
 }
@@ -2508,7 +2400,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.140 0 0) (basic-block 1 1 (##.%p.404) ((##vcore.= (bruijn ##.quotation.48 10 1) 1)) (if (bruijn ##.%p.404 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k50) '##vcore.append) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k55) '##vcore.cons))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k66) '##vcore.cons))
+  // (if (bruijn ##.%p.134 0 0) (basic-block 1 1 (##.%p.402) ((##vcore.= (bruijn ##.quotation.48 10 1) 1)) (if (bruijn ##.%p.402 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k50) '##vcore.append) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k55) '##vcore.cons))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k66) '##vcore.cons))
 if(VDecodeBool(
 _var0)) {
     {
@@ -2591,8 +2483,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-pair?.16 9 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k43) (bruijn ##.%x.186 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 14)), 2,
+  // ((bruijn ##.syntax-pair?.16 9 13) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k43) (bruijn ##.%x.180 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 13)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k43, self)))),
       _var0);
 }
@@ -2608,7 +2500,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%p.355) ((##vcore.eq? (bruijn ##.x.2.50 1 0) 'quasisyntax)) (if (bruijn ##.%p.355 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 6 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k12) '##vcore.cons) (basic-block 1 1 (##.%p.367) ((##vcore.eq? (bruijn ##.x.2.50 2 0) 'unquote)) (if (bruijn ##.%p.367 0 0) ((bruijn ##.syntax-cadr.3 8 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k19) (bruijn ##.expr.49 6 2)) ((bruijn ##.syntax-car.17 8 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k42) (bruijn ##.expr.49 6 2))))))
+  // (basic-block 1 1 (##.%p.353) ((##vcore.eq? (bruijn ##.x.2.50 1 0) 'quasisyntax)) (if (bruijn ##.%p.353 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 6 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k12) '##vcore.cons) (basic-block 1 1 (##.%p.365) ((##vcore.eq? (bruijn ##.x.2.50 2 0) 'unquote)) (if (bruijn ##.%p.365 0 0) ((bruijn ##.syntax-cadr.3 8 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k19) (bruijn ##.expr.49 6 2)) ((bruijn ##.syntax-car.17 8 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k42) (bruijn ##.expr.49 6 2))))))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -2642,11 +2534,11 @@ self->vars[0])) {
       _V0unquote);
 if(VDecodeBool(
 self->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 1)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k19, self)))),
       VGetArg(statics, 6-1, 2));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 15)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 14)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k42, self)))),
       VGetArg(statics, 6-1, 2));
 }
@@ -2682,8 +2574,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.identifier?.13 4 11) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k8) (bruijn ##.%x.190 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[11]), 2,
+  // ((bruijn ##.identifier?.13 4 10) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k8) (bruijn ##.%x.184 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[10]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k8, self)))),
       _var0);
 }
@@ -2699,7 +2591,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.426 ##.%r.427) ((##vcore.cons (bruijn ##.%x.194 1 0) '()) (##vcore.cons (bruijn ##.%x.192 4 0) (bruijn ##.%x.426 0 0))) ((bruijn ##.%k.70 7 0) (bruijn ##.%r.427 0 1)))
+  // (basic-block 2 2 (##.%x.424 ##.%r.425) ((##vcore.cons (bruijn ##.%x.188 1 0) '()) (##vcore.cons (bruijn ##.%x.186 4 0) (bruijn ##.%x.424 0 0))) ((bruijn ##.%k.64 7 0) (bruijn ##.%r.425 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -2727,7 +2619,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 6 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k75) (bruijn ##.quotation.48 5 1) (bruijn ##.%x.195 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasisyntax-impl) #t (bruijn ##.expand-quasisyntax-impl.41 6 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k75) (bruijn ##.quotation.48 5 1) (bruijn ##.%x.189 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -2755,8 +2647,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.vector->list.5 6 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k74) (bruijn ##.%x.196 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 3)), 2,
+  // ((bruijn ##.vector->list.5 6 2) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k74) (bruijn ##.%x.190 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 2)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k74, self)))),
       _var0);
 }
@@ -2798,7 +2690,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.428 ##.%r.429) ((##vcore.cons (bruijn ##.expr.49 4 2) '()) (##vcore.cons (bruijn ##.%x.197 1 0) (bruijn ##.%x.428 0 0))) ((bruijn ##.%k.70 4 0) (bruijn ##.%r.429 0 1)))
+  // (basic-block 2 2 (##.%x.426 ##.%r.427) ((##vcore.cons (bruijn ##.expr.49 4 2) '()) (##vcore.cons (bruijn ##.%x.191 1 0) (bruijn ##.%x.426 0 0))) ((bruijn ##.%k.64 4 0) (bruijn ##.%r.427 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -2826,7 +2718,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.191 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 3 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k72) '##vcore.list->vector) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 3 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k76) 'syntax))
+  // (if (bruijn ##.%p.185 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 3 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k72) '##vcore.list->vector) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 3 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k76) 'syntax))
 if(VDecodeBool(
 _var0)) {
   {
@@ -2868,14 +2760,14 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.71 0 0) ((bruijn ##.syntax-car.17 3 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k7) (bruijn ##.expr.49 1 2)) ((bruijn ##.syntax-vector?.4 3 2) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k71) (bruijn ##.expr.49 1 2)))
+  // (if (bruijn ##.%p.65 0 0) ((bruijn ##.syntax-car.17 3 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k7) (bruijn ##.expr.49 1 2)) ((bruijn ##.syntax-vector?.4 3 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k71) (bruijn ##.expr.49 1 2)))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[15]), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[14]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k7, self)))),
       statics->vars[2]);
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[2]), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[1]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k71, self)))),
       statics->vars[2]);
 }
@@ -2894,8 +2786,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((bruijn ##.syntax-pair?.16 2 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k6) (bruijn ##.expr.49 0 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[14]), 2,
+  // ((bruijn ##.syntax-pair?.16 2 13) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k6) (bruijn ##.expr.49 0 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[13]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k6, self)))),
       _var2);
 }
@@ -2907,7 +2799,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote_V0
   "-- expected 1~N"
   , argc);
  }
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 2 5) (bruijn ##.%k.199 1 0) 1 (bruijn ##.%x.200 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 2 5) (bruijn ##.%k.193 1 0) 1 (bruijn ##.%x.194 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -2936,8 +2828,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote(VR
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.syntax-cadr.3 2 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote_V0k77) (bruijn ##.form.52 0 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[1]), 2,
+  // ((bruijn ##.syntax-cadr.3 2 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote_V0k77) (bruijn ##.form.52 0 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote_V0k77, self)))),
       _var1);
 }
@@ -2949,8 +2841,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.get-syntax-data.14 7 12) (bruijn ##.%k.319 1 0) (bruijn ##.%x.320 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 12)), 2,
+  // ((bruijn ##.get-syntax-data.14 7 11) (bruijn ##.%k.313 1 0) (bruijn ##.%x.314 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 11)), 2,
       statics->vars[0],
       _var0);
 }
@@ -2966,10 +2858,10 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.318 1 0) ((bruijn ##.syntax-car.17 6 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k82) (bruijn ##.expr.54 4 2)) ((bruijn ##.%k.319 0 0) #f))
+  // (if (bruijn ##.%p.312 1 0) ((bruijn ##.syntax-car.17 6 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k82) (bruijn ##.expr.54 4 2)) ((bruijn ##.%k.313 0 0) #f))
 if(VDecodeBool(
 statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 15)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 14)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k82, self)))),
       statics->up->up->up->vars[2]);
 } else {
@@ -2989,7 +2881,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 8 8 (##.%x.434 ##.%x.435 ##.%x.436 ##.%x.437 ##.%x.438 ##.%x.439 ##.%x.440 ##.%r.441) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.214 1 0) (bruijn ##.%x.434 0 0)) (##vcore.cons (bruijn ##.%x.435 0 1) '()) (##vcore.cons (bruijn ##.%x.211 2 0) (bruijn ##.%x.436 0 2)) (##vcore.cons (bruijn ##.%x.209 5 0) (bruijn ##.%x.437 0 3)) (##vcore.cons (bruijn ##.%x.438 0 4) '()) (##vcore.cons (bruijn ##.%x.432 6 1) (bruijn ##.%x.439 0 5)) (##vcore.cons (bruijn ##.%x.204 9 0) (bruijn ##.%x.440 0 6))) ((bruijn ##.%k.201 15 0) (bruijn ##.%r.441 0 7)))
+  // (basic-block 8 8 (##.%x.432 ##.%x.433 ##.%x.434 ##.%x.435 ##.%x.436 ##.%x.437 ##.%x.438 ##.%r.439) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.208 1 0) (bruijn ##.%x.432 0 0)) (##vcore.cons (bruijn ##.%x.433 0 1) '()) (##vcore.cons (bruijn ##.%x.205 2 0) (bruijn ##.%x.434 0 2)) (##vcore.cons (bruijn ##.%x.203 5 0) (bruijn ##.%x.435 0 3)) (##vcore.cons (bruijn ##.%x.436 0 4) '()) (##vcore.cons (bruijn ##.%x.430 6 1) (bruijn ##.%x.437 0 5)) (##vcore.cons (bruijn ##.%x.198 9 0) (bruijn ##.%x.438 0 6))) ((bruijn ##.%k.195 15 0) (bruijn ##.%r.439 0 7)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[8]; } container;
@@ -3061,7 +2953,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 13 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k89) (bruijn ##.%x.433 1 0) (bruijn ##.%x.217 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 13 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k89) (bruijn ##.%x.431 1 0) (bruijn ##.%x.211 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -3089,7 +2981,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%x.433) ((##vcore.+ (bruijn ##.quotation.53 11 1) 1)) ((bruijn ##.syntax-cadr.3 13 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k88) (bruijn ##.expr.54 11 2)))
+  // (basic-block 1 1 (##.%x.431) ((##vcore.+ (bruijn ##.quotation.53 11 1) 1)) ((bruijn ##.syntax-cadr.3 13 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k88) (bruijn ##.expr.54 11 2)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -3098,7 +2990,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
     self->vars[0] = _VBasic_VAdd2(runtime, NULL,
       VGetArg(statics, 11-1, 1),
       VEncodeInt(1l));
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 1)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k88, self)))),
       VGetArg(statics, 11-1, 2));
     }
@@ -3115,7 +3007,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.431 ##.%x.432) ((##vcore.cons (bruijn ##.%x.220 1 0) '()) (##vcore.cons (bruijn ##.%x.218 2 0) (bruijn ##.%x.431 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k87) '##vcore.cons))
+  // (basic-block 2 2 (##.%x.429 ##.%x.430) ((##vcore.cons (bruijn ##.%x.214 1 0) '()) (##vcore.cons (bruijn ##.%x.212 2 0) (bruijn ##.%x.429 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k87) '##vcore.cons))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -3205,7 +3097,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.445 ##.%r.446) ((##vcore.cons (bruijn ##.%x.226 1 0) '()) (##vcore.cons (bruijn ##.%x.224 2 0) (bruijn ##.%x.445 0 0))) ((bruijn ##.%k.201 12 0) (bruijn ##.%r.446 0 1)))
+  // (basic-block 2 2 (##.%x.443 ##.%r.444) ((##vcore.cons (bruijn ##.%x.220 1 0) '()) (##vcore.cons (bruijn ##.%x.218 2 0) (bruijn ##.%x.443 0 0))) ((bruijn ##.%k.195 12 0) (bruijn ##.%r.444 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -3233,8 +3125,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.vector->list.5 12 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k93) (bruijn ##.x.56 3 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 3)), 2,
+  // ((bruijn ##.vector->list.5 12 2) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k93) (bruijn ##.x.56 3 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 2)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k93, self)))),
       statics->up->up->vars[0]);
 }
@@ -3250,7 +3142,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.448 ##.%r.449) ((##vcore.cons (bruijn ##.%x.230 1 0) '()) (##vcore.cons (bruijn ##.%x.228 2 0) (bruijn ##.%x.448 0 0))) ((bruijn ##.%k.201 13 0) (bruijn ##.%r.449 0 1)))
+  // (basic-block 2 2 (##.%x.446 ##.%r.447) ((##vcore.cons (bruijn ##.%x.224 1 0) '()) (##vcore.cons (bruijn ##.%x.222 2 0) (bruijn ##.%x.446 0 0))) ((bruijn ##.%k.195 13 0) (bruijn ##.%r.447 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -3278,8 +3170,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.f64vector->list.6 13 4) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k95) (bruijn ##.x.56 4 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 4)), 2,
+  // ((bruijn ##.f64vector->list.6 13 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k95) (bruijn ##.x.56 4 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 3)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k95, self)))),
       statics->up->up->up->vars[0]);
 }
@@ -3295,7 +3187,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.451 ##.%r.452) ((##vcore.cons (bruijn ##.%x.234 1 0) '()) (##vcore.cons (bruijn ##.%x.232 2 0) (bruijn ##.%x.451 0 0))) ((bruijn ##.%k.201 14 0) (bruijn ##.%r.452 0 1)))
+  // (basic-block 2 2 (##.%x.449 ##.%r.450) ((##vcore.cons (bruijn ##.%x.228 1 0) '()) (##vcore.cons (bruijn ##.%x.226 2 0) (bruijn ##.%x.449 0 0))) ((bruijn ##.%k.195 14 0) (bruijn ##.%r.450 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -3323,8 +3215,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.f32vector->list.7 14 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k97) (bruijn ##.x.56 5 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 5)), 2,
+  // ((bruijn ##.f32vector->list.7 14 4) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k97) (bruijn ##.x.56 5 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 4)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k97, self)))),
       VGetArg(statics, 5-1, 0));
 }
@@ -3340,7 +3232,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.454 ##.%r.455) ((##vcore.cons (bruijn ##.%x.238 1 0) '()) (##vcore.cons (bruijn ##.%x.236 2 0) (bruijn ##.%x.454 0 0))) ((bruijn ##.%k.201 15 0) (bruijn ##.%r.455 0 1)))
+  // (basic-block 2 2 (##.%x.452 ##.%r.453) ((##vcore.cons (bruijn ##.%x.232 1 0) '()) (##vcore.cons (bruijn ##.%x.230 2 0) (bruijn ##.%x.452 0 0))) ((bruijn ##.%k.195 15 0) (bruijn ##.%r.453 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -3368,8 +3260,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.s32vector->list.8 15 6) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k99) (bruijn ##.x.56 6 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 6)), 2,
+  // ((bruijn ##.s32vector->list.8 15 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k99) (bruijn ##.x.56 6 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 5)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k99, self)))),
       VGetArg(statics, 6-1, 0));
 }
@@ -3385,7 +3277,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.457 ##.%r.458) ((##vcore.cons (bruijn ##.%x.242 1 0) '()) (##vcore.cons (bruijn ##.%x.240 2 0) (bruijn ##.%x.457 0 0))) ((bruijn ##.%k.201 16 0) (bruijn ##.%r.458 0 1)))
+  // (basic-block 2 2 (##.%x.455 ##.%r.456) ((##vcore.cons (bruijn ##.%x.236 1 0) '()) (##vcore.cons (bruijn ##.%x.234 2 0) (bruijn ##.%x.455 0 0))) ((bruijn ##.%k.195 16 0) (bruijn ##.%r.456 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -3413,8 +3305,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.u16vector->list.9 16 7) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k101) (bruijn ##.x.56 7 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 7)), 2,
+  // ((bruijn ##.u16vector->list.9 16 6) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k101) (bruijn ##.x.56 7 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 6)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k101, self)))),
       VGetArg(statics, 7-1, 0));
 }
@@ -3430,7 +3322,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.460 ##.%r.461) ((##vcore.cons (bruijn ##.%x.246 1 0) '()) (##vcore.cons (bruijn ##.%x.244 2 0) (bruijn ##.%x.460 0 0))) ((bruijn ##.%k.201 17 0) (bruijn ##.%r.461 0 1)))
+  // (basic-block 2 2 (##.%x.458 ##.%r.459) ((##vcore.cons (bruijn ##.%x.240 1 0) '()) (##vcore.cons (bruijn ##.%x.238 2 0) (bruijn ##.%x.458 0 0))) ((bruijn ##.%k.195 17 0) (bruijn ##.%r.459 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -3458,8 +3350,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.s16vector->list.10 17 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k103) (bruijn ##.x.56 8 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 8)), 2,
+  // ((bruijn ##.s16vector->list.10 17 7) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k103) (bruijn ##.x.56 8 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 7)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k103, self)))),
       VGetArg(statics, 8-1, 0));
 }
@@ -3475,7 +3367,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.463 ##.%r.464) ((##vcore.cons (bruijn ##.%x.250 1 0) '()) (##vcore.cons (bruijn ##.%x.248 2 0) (bruijn ##.%x.463 0 0))) ((bruijn ##.%k.201 18 0) (bruijn ##.%r.464 0 1)))
+  // (basic-block 2 2 (##.%x.461 ##.%r.462) ((##vcore.cons (bruijn ##.%x.244 1 0) '()) (##vcore.cons (bruijn ##.%x.242 2 0) (bruijn ##.%x.461 0 0))) ((bruijn ##.%k.195 18 0) (bruijn ##.%r.462 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -3503,8 +3395,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.u8vector->list.11 18 9) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k105) (bruijn ##.x.56 9 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 9)), 2,
+  // ((bruijn ##.u8vector->list.11 18 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k105) (bruijn ##.x.56 9 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 8)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k105, self)))),
       VGetArg(statics, 9-1, 0));
 }
@@ -3520,7 +3412,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.466 ##.%r.467) ((##vcore.cons (bruijn ##.%x.254 1 0) '()) (##vcore.cons (bruijn ##.%x.252 2 0) (bruijn ##.%x.466 0 0))) ((bruijn ##.%k.201 19 0) (bruijn ##.%r.467 0 1)))
+  // (basic-block 2 2 (##.%x.464 ##.%r.465) ((##vcore.cons (bruijn ##.%x.248 1 0) '()) (##vcore.cons (bruijn ##.%x.246 2 0) (bruijn ##.%x.464 0 0))) ((bruijn ##.%k.195 19 0) (bruijn ##.%r.465 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -3548,8 +3440,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.s8vector->list.12 19 10) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k107) (bruijn ##.x.56 10 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 10)), 2,
+  // ((bruijn ##.s8vector->list.12 19 9) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k107) (bruijn ##.x.56 10 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 9)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k107, self)))),
       VGetArg(statics, 10-1, 0));
 }
@@ -3565,7 +3457,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 8 8 (##.%x.471 ##.%x.472 ##.%x.473 ##.%x.474 ##.%x.475 ##.%x.476 ##.%x.477 ##.%r.478) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.265 1 0) (bruijn ##.%x.471 0 0)) (##vcore.cons (bruijn ##.%x.472 0 1) '()) (##vcore.cons (bruijn ##.%x.262 2 0) (bruijn ##.%x.473 0 2)) (##vcore.cons (bruijn ##.%x.260 4 0) (bruijn ##.%x.474 0 3)) (##vcore.cons (bruijn ##.%x.475 0 4) '()) (##vcore.cons (bruijn ##.%x.469 5 1) (bruijn ##.%x.476 0 5)) (##vcore.cons (bruijn ##.%x.255 8 0) (bruijn ##.%x.477 0 6))) ((bruijn ##.%k.201 17 0) (bruijn ##.%r.478 0 7)))
+  // (basic-block 8 8 (##.%x.469 ##.%x.470 ##.%x.471 ##.%x.472 ##.%x.473 ##.%x.474 ##.%x.475 ##.%r.476) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.259 1 0) (bruijn ##.%x.469 0 0)) (##vcore.cons (bruijn ##.%x.470 0 1) '()) (##vcore.cons (bruijn ##.%x.256 2 0) (bruijn ##.%x.471 0 2)) (##vcore.cons (bruijn ##.%x.254 4 0) (bruijn ##.%x.472 0 3)) (##vcore.cons (bruijn ##.%x.473 0 4) '()) (##vcore.cons (bruijn ##.%x.467 5 1) (bruijn ##.%x.474 0 5)) (##vcore.cons (bruijn ##.%x.249 8 0) (bruijn ##.%x.475 0 6))) ((bruijn ##.%k.195 17 0) (bruijn ##.%r.476 0 7)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[8]; } container;
@@ -3637,7 +3529,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%x.470) ((##vcore.- (bruijn ##.quotation.53 14 1) 1)) (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 15 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k112) (bruijn ##.%x.470 0 0) (bruijn ##.x.56 7 0)))
+  // (basic-block 1 1 (##.%x.468) ((##vcore.- (bruijn ##.quotation.53 14 1) 1)) (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 15 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k112) (bruijn ##.%x.468 0 0) (bruijn ##.x.56 7 0)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -3674,7 +3566,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.468 ##.%x.469) ((##vcore.cons (bruijn ##.%x.270 1 0) '()) (##vcore.cons (bruijn ##.%x.268 2 0) (bruijn ##.%x.468 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 13 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k111) '##vcore.cons))
+  // (basic-block 2 2 (##.%x.466 ##.%x.467) ((##vcore.cons (bruijn ##.%x.264 1 0) '()) (##vcore.cons (bruijn ##.%x.262 2 0) (bruijn ##.%x.466 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 13 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k111) '##vcore.cons))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -3764,7 +3656,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%p.443) ((##vcore.= (bruijn ##.quotation.53 8 1) 1)) (if (bruijn ##.%p.443 0 0) (basic-block 1 1 (##.%p.444) ((##vcore.vector? (bruijn ##.x.56 2 0))) (if (bruijn ##.%p.444 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k92) '##vcore.list->vector) (basic-block 1 1 (##.%p.447) ((##vcore.f64vector? (bruijn ##.x.56 3 0))) (if (bruijn ##.%p.447 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k94) '##vcore.list->f64vector) (basic-block 1 1 (##.%p.450) ((##vcore.f32vector? (bruijn ##.x.56 4 0))) (if (bruijn ##.%p.450 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 12 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k96) '##vcore.list->f32vector) (basic-block 1 1 (##.%p.453) ((##vcore.s32vector? (bruijn ##.x.56 5 0))) (if (bruijn ##.%p.453 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 13 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k98) '##vcore.list->s32vector) (basic-block 1 1 (##.%p.456) ((##vcore.u16vector? (bruijn ##.x.56 6 0))) (if (bruijn ##.%p.456 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 14 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k100) '##vcore.list->u16vector) (basic-block 1 1 (##.%p.459) ((##vcore.s16vector? (bruijn ##.x.56 7 0))) (if (bruijn ##.%p.459 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 15 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k102) '##vcore.list->s16vector) (basic-block 1 1 (##.%p.462) ((##vcore.u8vector? (bruijn ##.x.56 8 0))) (if (bruijn ##.%p.462 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 16 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k104) '##vcore.list->u8vector) (basic-block 1 1 (##.%p.465) ((##vcore.s8vector? (bruijn ##.x.56 9 0))) (if (bruijn ##.%p.465 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 17 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k106) '##vcore.list->s8vector) ((bruijn ##.%k.201 16 0) (bruijn ##.x.56 9 0)))))))))))))))))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 9 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k108) '##vcore.cons)))
+  // (basic-block 1 1 (##.%p.441) ((##vcore.= (bruijn ##.quotation.53 8 1) 1)) (if (bruijn ##.%p.441 0 0) (basic-block 1 1 (##.%p.442) ((##vcore.vector? (bruijn ##.x.56 2 0))) (if (bruijn ##.%p.442 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k92) '##vcore.list->vector) (basic-block 1 1 (##.%p.445) ((##vcore.f64vector? (bruijn ##.x.56 3 0))) (if (bruijn ##.%p.445 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k94) '##vcore.list->f64vector) (basic-block 1 1 (##.%p.448) ((##vcore.f32vector? (bruijn ##.x.56 4 0))) (if (bruijn ##.%p.448 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 12 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k96) '##vcore.list->f32vector) (basic-block 1 1 (##.%p.451) ((##vcore.s32vector? (bruijn ##.x.56 5 0))) (if (bruijn ##.%p.451 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 13 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k98) '##vcore.list->s32vector) (basic-block 1 1 (##.%p.454) ((##vcore.u16vector? (bruijn ##.x.56 6 0))) (if (bruijn ##.%p.454 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 14 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k100) '##vcore.list->u16vector) (basic-block 1 1 (##.%p.457) ((##vcore.s16vector? (bruijn ##.x.56 7 0))) (if (bruijn ##.%p.457 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 15 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k102) '##vcore.list->s16vector) (basic-block 1 1 (##.%p.460) ((##vcore.u8vector? (bruijn ##.x.56 8 0))) (if (bruijn ##.%p.460 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 16 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k104) '##vcore.list->u8vector) (basic-block 1 1 (##.%p.463) ((##vcore.s8vector? (bruijn ##.x.56 9 0))) (if (bruijn ##.%p.463 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 17 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k106) '##vcore.list->s8vector) ((bruijn ##.%k.195 16 0) (bruijn ##.x.56 9 0)))))))))))))))))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 9 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k108) '##vcore.cons)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -3997,7 +3889,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%r.500) ((##vcore.eq? (bruijn ##.%x.314 1 0) 'unquote-splicing)) ((bruijn ##.%k.312 5 0) (bruijn ##.%r.500 0 0)))
+  // (basic-block 1 1 (##.%r.498) ((##vcore.eq? (bruijn ##.%x.308 1 0) 'unquote-splicing)) ((bruijn ##.%k.306 5 0) (bruijn ##.%r.498 0 0)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -4022,8 +3914,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.get-syntax-data.14 14 12) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k120) (bruijn ##.%x.315 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 12)), 2,
+  // ((bruijn ##.get-syntax-data.14 14 11) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k120) (bruijn ##.%x.309 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 11)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k120, self)))),
       _var0);
 }
@@ -4039,10 +3931,10 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.313 0 0) ((bruijn ##.syntax-caar.15 13 13) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k119) (bruijn ##.expr.54 11 2)) ((bruijn ##.%k.312 2 0) #f))
+  // (if (bruijn ##.%p.307 0 0) ((bruijn ##.syntax-caar.15 13 12) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k119) (bruijn ##.expr.54 11 2)) ((bruijn ##.%k.306 2 0) #f))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 13)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 12)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k119, self)))),
       VGetArg(statics, 11-1, 2));
 } else {
@@ -4062,8 +3954,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.identifier?.13 12 11) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k118) (bruijn ##.%x.316 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 11)), 2,
+  // ((bruijn ##.identifier?.13 12 10) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k118) (bruijn ##.%x.310 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 10)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k118, self)))),
       _var0);
 }
@@ -4079,10 +3971,10 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.311 1 0) ((bruijn ##.syntax-caar.15 11 13) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k117) (bruijn ##.expr.54 9 2)) ((bruijn ##.%k.312 0 0) #f))
+  // (if (bruijn ##.%p.305 1 0) ((bruijn ##.syntax-caar.15 11 12) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k117) (bruijn ##.expr.54 9 2)) ((bruijn ##.%k.306 0 0) #f))
 if(VDecodeBool(
 statics->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 13)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 12)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k117, self)))),
       VGetArg(statics, 9-1, 2));
 } else {
@@ -4102,7 +3994,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 3 3 (##.%x.480 ##.%x.481 ##.%r.482) ((##vcore.cons (bruijn ##.%x.277 1 0) '()) (##vcore.cons (bruijn ##.%x.275 3 0) (bruijn ##.%x.480 0 0)) (##vcore.cons (bruijn ##.%x.273 5 0) (bruijn ##.%x.481 0 1))) ((bruijn ##.%k.201 16 0) (bruijn ##.%r.482 0 2)))
+  // (basic-block 3 3 (##.%x.478 ##.%x.479 ##.%r.480) ((##vcore.cons (bruijn ##.%x.271 1 0) '()) (##vcore.cons (bruijn ##.%x.269 3 0) (bruijn ##.%x.478 0 0)) (##vcore.cons (bruijn ##.%x.267 5 0) (bruijn ##.%x.479 0 1))) ((bruijn ##.%k.195 16 0) (bruijn ##.%r.480 0 2)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[3]; } container;
@@ -4133,7 +4025,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 15 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k126) (bruijn ##.quotation.53 14 1) (bruijn ##.%x.278 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 15 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k126) (bruijn ##.quotation.53 14 1) (bruijn ##.%x.272 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -4161,8 +4053,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-cdr.18 15 16) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k125) (bruijn ##.expr.54 13 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 16)), 2,
+  // ((bruijn ##.syntax-cdr.18 15 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k125) (bruijn ##.expr.54 13 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 15)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k125, self)))),
       VGetArg(statics, 13-1, 2));
 }
@@ -4178,8 +4070,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-cadr.3 14 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k124) (bruijn ##.%x.279 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 1)), 2,
+  // ((bruijn ##.syntax-cadr.3 14 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k124) (bruijn ##.%x.273 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k124, self)))),
       _var0);
 }
@@ -4195,8 +4087,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-car.17 13 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k123) (bruijn ##.expr.54 11 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 15)), 2,
+  // ((bruijn ##.syntax-car.17 13 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k123) (bruijn ##.expr.54 11 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 14)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k123, self)))),
       VGetArg(statics, 11-1, 2));
 }
@@ -4212,7 +4104,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 6 6 (##.%x.491 ##.%x.492 ##.%x.493 ##.%x.494 ##.%x.495 ##.%r.496) ((##vcore.cons (bruijn ##.%x.289 1 0) '()) (##vcore.cons (bruijn ##.%x.490 3 4) (bruijn ##.%x.491 0 0)) (##vcore.cons (bruijn ##.%x.484 10 1) (bruijn ##.%x.492 0 1)) (##vcore.cons (bruijn ##.%x.283 13 0) (bruijn ##.%x.493 0 2)) (##vcore.cons (bruijn ##.%x.494 0 3) '()) (##vcore.cons (bruijn ##.%x.280 14 0) (bruijn ##.%x.495 0 4))) ((bruijn ##.%k.201 25 0) (bruijn ##.%r.496 0 5)))
+  // (basic-block 6 6 (##.%x.489 ##.%x.490 ##.%x.491 ##.%x.492 ##.%x.493 ##.%r.494) ((##vcore.cons (bruijn ##.%x.283 1 0) '()) (##vcore.cons (bruijn ##.%x.488 3 4) (bruijn ##.%x.489 0 0)) (##vcore.cons (bruijn ##.%x.482 10 1) (bruijn ##.%x.490 0 1)) (##vcore.cons (bruijn ##.%x.277 13 0) (bruijn ##.%x.491 0 2)) (##vcore.cons (bruijn ##.%x.492 0 3) '()) (##vcore.cons (bruijn ##.%x.274 14 0) (bruijn ##.%x.493 0 4))) ((bruijn ##.%k.195 25 0) (bruijn ##.%r.494 0 5)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[6]; } container;
@@ -4252,7 +4144,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 24 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k137) (bruijn ##.quotation.53 23 1) (bruijn ##.%x.290 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 24 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k137) (bruijn ##.quotation.53 23 1) (bruijn ##.%x.284 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -4280,7 +4172,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 5 5 (##.%x.486 ##.%x.487 ##.%x.488 ##.%x.489 ##.%x.490) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.296 1 0) (bruijn ##.%x.486 0 0)) (##vcore.cons (bruijn ##.%x.487 0 1) '()) (##vcore.cons (bruijn ##.%x.293 2 0) (bruijn ##.%x.488 0 2)) (##vcore.cons (bruijn ##.%x.291 6 0) (bruijn ##.%x.489 0 3))) ((bruijn ##.syntax-cdr.18 24 16) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k136) (bruijn ##.expr.54 22 2)))
+  // (basic-block 5 5 (##.%x.484 ##.%x.485 ##.%x.486 ##.%x.487 ##.%x.488) ((##vcore.cons '() '()) (##vcore.cons (bruijn ##.%x.290 1 0) (bruijn ##.%x.484 0 0)) (##vcore.cons (bruijn ##.%x.485 0 1) '()) (##vcore.cons (bruijn ##.%x.287 2 0) (bruijn ##.%x.486 0 2)) (##vcore.cons (bruijn ##.%x.285 6 0) (bruijn ##.%x.487 0 3))) ((bruijn ##.syntax-cdr.18 24 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k136) (bruijn ##.expr.54 22 2)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[5]; } container;
@@ -4301,7 +4193,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
     self->vars[4] = _VBasic_VCons2(runtime, NULL,
       VGetArg(statics, 6-1, 0),
       self->vars[3]);
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 16)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 15)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k136, self)))),
       VGetArg(statics, 22-1, 2));
     }
@@ -4344,7 +4236,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 20 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k134) (bruijn ##.%x.485 2 0) (bruijn ##.%x.299 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 20 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k134) (bruijn ##.%x.483 2 0) (bruijn ##.%x.293 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -4372,8 +4264,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-cadr.3 20 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k133) (bruijn ##.%x.300 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 1)), 2,
+  // ((bruijn ##.syntax-cadr.3 20 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k133) (bruijn ##.%x.294 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k133, self)))),
       _var0);
 }
@@ -4389,7 +4281,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%x.485) ((##vcore.- (bruijn ##.quotation.53 17 1) 1)) ((bruijn ##.syntax-car.17 19 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k132) (bruijn ##.expr.54 17 2)))
+  // (basic-block 1 1 (##.%x.483) ((##vcore.- (bruijn ##.quotation.53 17 1) 1)) ((bruijn ##.syntax-car.17 19 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k132) (bruijn ##.expr.54 17 2)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -4398,7 +4290,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
     self->vars[0] = _VBasic_VSub2(runtime, NULL,
       VGetArg(statics, 17-1, 1),
       VEncodeInt(1l));
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 15)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 14)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k132, self)))),
       VGetArg(statics, 17-1, 2));
     }
@@ -4415,7 +4307,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.483 ##.%x.484) ((##vcore.cons (bruijn ##.%x.303 1 0) '()) (##vcore.cons (bruijn ##.%x.301 2 0) (bruijn ##.%x.483 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 16 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k131) '##vcore.cons))
+  // (basic-block 2 2 (##.%x.481 ##.%x.482) ((##vcore.cons (bruijn ##.%x.297 1 0) '()) (##vcore.cons (bruijn ##.%x.295 2 0) (bruijn ##.%x.481 0 0))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 16 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k131) '##vcore.cons))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -4531,7 +4423,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 3 3 (##.%x.497 ##.%x.498 ##.%r.499) ((##vcore.cons (bruijn ##.%x.308 1 0) '()) (##vcore.cons (bruijn ##.%x.306 3 0) (bruijn ##.%x.497 0 0)) (##vcore.cons (bruijn ##.%x.304 5 0) (bruijn ##.%x.498 0 1))) ((bruijn ##.%k.201 15 0) (bruijn ##.%r.499 0 2)))
+  // (basic-block 3 3 (##.%x.495 ##.%x.496 ##.%r.497) ((##vcore.cons (bruijn ##.%x.302 1 0) '()) (##vcore.cons (bruijn ##.%x.300 3 0) (bruijn ##.%x.495 0 0)) (##vcore.cons (bruijn ##.%x.298 5 0) (bruijn ##.%x.496 0 1))) ((bruijn ##.%k.195 15 0) (bruijn ##.%r.497 0 2)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[3]; } container;
@@ -4562,7 +4454,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 14 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k142) (bruijn ##.quotation.53 13 1) (bruijn ##.%x.309 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 14 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k142) (bruijn ##.quotation.53 13 1) (bruijn ##.%x.303 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -4590,8 +4482,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-cdr.18 14 16) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k141) (bruijn ##.expr.54 12 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 16)), 2,
+  // ((bruijn ##.syntax-cdr.18 14 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k141) (bruijn ##.expr.54 12 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 15)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k141, self)))),
       VGetArg(statics, 12-1, 2));
 }
@@ -4607,7 +4499,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 12 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k140) (bruijn ##.quotation.53 11 1) (bruijn ##.%x.310 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 12 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k140) (bruijn ##.quotation.53 11 1) (bruijn ##.%x.304 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -4635,8 +4527,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-car.17 12 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k139) (bruijn ##.expr.54 10 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 15)), 2,
+  // ((bruijn ##.syntax-car.17 12 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k139) (bruijn ##.expr.54 10 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 14)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k139, self)))),
       VGetArg(statics, 10-1, 2));
 }
@@ -4652,7 +4544,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.271 0 0) (basic-block 1 1 (##.%p.479) ((##vcore.= (bruijn ##.quotation.53 10 1) 1)) (if (bruijn ##.%p.479 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k122) '##vcore.append) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k127) '##vcore.cons))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k138) '##vcore.cons))
+  // (if (bruijn ##.%p.265 0 0) (basic-block 1 1 (##.%p.477) ((##vcore.= (bruijn ##.quotation.53 10 1) 1)) (if (bruijn ##.%p.477 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k122) '##vcore.append) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 11 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k127) '##vcore.cons))) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 10 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k138) '##vcore.cons))
 if(VDecodeBool(
 _var0)) {
     {
@@ -4735,8 +4627,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-pair?.16 9 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k115) (bruijn ##.%x.317 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 14)), 2,
+  // ((bruijn ##.syntax-pair?.16 9 13) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k115) (bruijn ##.%x.311 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 13)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k115, self)))),
       _var0);
 }
@@ -4752,7 +4644,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%p.430) ((##vcore.eq? (bruijn ##.x.1.55 1 0) 'quasiquote)) (if (bruijn ##.%p.430 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 6 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k84) '##vcore.cons) (basic-block 1 1 (##.%p.442) ((##vcore.eq? (bruijn ##.x.1.55 2 0) 'unquote)) (if (bruijn ##.%p.442 0 0) ((bruijn ##.syntax-cadr.3 8 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k91) (bruijn ##.expr.54 6 2)) ((bruijn ##.syntax-car.17 8 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k114) (bruijn ##.expr.54 6 2))))))
+  // (basic-block 1 1 (##.%p.428) ((##vcore.eq? (bruijn ##.x.1.55 1 0) 'quasiquote)) (if (bruijn ##.%p.428 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 6 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k84) '##vcore.cons) (basic-block 1 1 (##.%p.440) ((##vcore.eq? (bruijn ##.x.1.55 2 0) 'unquote)) (if (bruijn ##.%p.440 0 0) ((bruijn ##.syntax-cadr.3 8 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k91) (bruijn ##.expr.54 6 2)) ((bruijn ##.syntax-car.17 8 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k114) (bruijn ##.expr.54 6 2))))))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -4786,11 +4678,11 @@ self->vars[0])) {
       _V0unquote);
 if(VDecodeBool(
 self->vars[0])) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 1)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k91, self)))),
       VGetArg(statics, 6-1, 2));
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 15)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 14)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k114, self)))),
       VGetArg(statics, 6-1, 2));
 }
@@ -4826,8 +4718,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.identifier?.13 4 11) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k80) (bruijn ##.%x.321 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[11]), 2,
+  // ((bruijn ##.identifier?.13 4 10) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k80) (bruijn ##.%x.315 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[10]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k80, self)))),
       _var0);
 }
@@ -4843,7 +4735,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.501 ##.%r.502) ((##vcore.cons (bruijn ##.%x.325 1 0) '()) (##vcore.cons (bruijn ##.%x.323 4 0) (bruijn ##.%x.501 0 0))) ((bruijn ##.%k.201 7 0) (bruijn ##.%r.502 0 1)))
+  // (basic-block 2 2 (##.%x.499 ##.%r.500) ((##vcore.cons (bruijn ##.%x.319 1 0) '()) (##vcore.cons (bruijn ##.%x.317 4 0) (bruijn ##.%x.499 0 0))) ((bruijn ##.%k.195 7 0) (bruijn ##.%r.500 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -4871,7 +4763,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 6 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k147) (bruijn ##.quotation.53 5 1) (bruijn ##.%x.326 0 0))
+  // (##qualified-call (vanity compiler hygienic global-forms expand-quasiquote-impl) #t (bruijn ##.expand-quasiquote-impl.43 6 5) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k147) (bruijn ##.quotation.53 5 1) (bruijn ##.%x.320 0 0))
   {
    VEnv * _closure_env = _V60_V0vanity_V0compiler_V0hygienic_V0global__forms;
     VWORD _arg0 = 
@@ -4899,8 +4791,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.vector->list.5 6 3) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k146) (bruijn ##.%x.327 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 3)), 2,
+  // ((bruijn ##.vector->list.5 6 2) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k146) (bruijn ##.%x.321 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 2)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k146, self)))),
       _var0);
 }
@@ -4942,7 +4834,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.503 ##.%r.504) ((##vcore.cons (bruijn ##.expr.54 4 2) '()) (##vcore.cons (bruijn ##.%x.328 1 0) (bruijn ##.%x.503 0 0))) ((bruijn ##.%k.201 4 0) (bruijn ##.%r.504 0 1)))
+  // (basic-block 2 2 (##.%x.501 ##.%r.502) ((##vcore.cons (bruijn ##.expr.54 4 2) '()) (##vcore.cons (bruijn ##.%x.322 1 0) (bruijn ##.%x.501 0 0))) ((bruijn ##.%k.195 4 0) (bruijn ##.%r.502 0 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -4970,7 +4862,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.322 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 3 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k144) '##vcore.list->vector) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 3 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k148) 'quote))
+  // (if (bruijn ##.%p.316 0 0) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 3 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k144) '##vcore.list->vector) (##qualified-call (vanity compiler hygienic global-forms global-identifier) #t (bruijn ##.global-identifier.46 3 8) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k148) 'quote))
 if(VDecodeBool(
 _var0)) {
   {
@@ -5012,14 +4904,14 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.202 0 0) ((bruijn ##.syntax-car.17 3 15) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k79) (bruijn ##.expr.54 1 2)) ((bruijn ##.syntax-vector?.4 3 2) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k143) (bruijn ##.expr.54 1 2)))
+  // (if (bruijn ##.%p.196 0 0) ((bruijn ##.syntax-car.17 3 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k79) (bruijn ##.expr.54 1 2)) ((bruijn ##.syntax-vector?.4 3 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k143) (bruijn ##.expr.54 1 2)))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[15]), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[14]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k79, self)))),
       statics->vars[2]);
 } else {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[2]), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[1]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k143, self)))),
       statics->vars[2]);
 }
@@ -5038,8 +4930,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__i
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
-  // ((bruijn ##.syntax-pair?.16 2 14) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k78) (bruijn ##.expr.54 0 2))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[14]), 2,
+  // ((bruijn ##.syntax-pair?.16 2 13) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k78) (bruijn ##.expr.54 0 2))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[13]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k78, self)))),
       _var2);
 }
@@ -5055,7 +4947,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k154(VR
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 1 1 (##.%r.507) ((##vcore.cons (bruijn ##.%x.506 3 1) (bruijn ##.%x.332 1 0))) ((bruijn ##.%k.330 8 0) (bruijn ##.%r.507 0 0)))
+  // (basic-block 1 1 (##.%r.505) ((##vcore.cons (bruijn ##.%x.504 3 1) (bruijn ##.%x.326 1 0))) ((bruijn ##.%k.324 8 0) (bruijn ##.%r.505 0 0)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -5080,10 +4972,10 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k153(VR
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-map.19 8 17) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k154) (bruijn ##.syntax-cadr.3 8 1) (bruijn ##.%x.333 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 17)), 3,
+  // ((bruijn ##.syntax-map.19 8 16) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k154) (bruijn ##.syntax-cadr.3 8 0) (bruijn ##.%x.327 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 16)), 3,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k154, self)))),
-      VGetArg(statics, 8-1, 1),
+      VGetArg(statics, 8-1, 0),
       _var0);
 }
 void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k152(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -5098,7 +4990,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k152(VR
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (basic-block 2 2 (##.%x.505 ##.%x.506) ((##vcore.cons (bruijn ##.%x.336 2 0) (bruijn ##.%x.337 1 0)) (##vcore.cons (bruijn ##.%x.334 4 0) (bruijn ##.%x.505 0 0))) ((bruijn ##.syntax-cadr.3 7 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k153) (bruijn ##.form.57 5 1)))
+  // (basic-block 2 2 (##.%x.503 ##.%x.504) ((##vcore.cons (bruijn ##.%x.330 2 0) (bruijn ##.%x.331 1 0)) (##vcore.cons (bruijn ##.%x.328 4 0) (bruijn ##.%x.503 0 0))) ((bruijn ##.syntax-cadr.3 7 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k153) (bruijn ##.form.57 5 1)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[2]; } container;
@@ -5110,7 +5002,7 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k152(VR
     self->vars[1] = _VBasic_VCons2(runtime, NULL,
       statics->up->up->up->vars[0],
       self->vars[0]);
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 1)), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k153, self)))),
       VGetArg(statics, 5-1, 1));
     }
@@ -5127,8 +5019,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k151(VR
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-cddr.20 5 18) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k152) (bruijn ##.form.57 3 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 18)), 2,
+  // ((bruijn ##.syntax-cddr.20 5 17) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k152) (bruijn ##.form.57 3 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 17)), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k152, self)))),
       statics->up->up->vars[1]);
 }
@@ -5144,10 +5036,10 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k150(VR
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-map.19 4 17) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k151) (bruijn ##.syntax-car.17 4 15) (bruijn ##.%x.338 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[17]), 3,
+  // ((bruijn ##.syntax-map.19 4 16) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k151) (bruijn ##.syntax-car.17 4 14) (bruijn ##.%x.332 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[16]), 3,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k151, self)))),
-      statics->up->up->up->vars[15],
+      statics->up->up->up->vars[14],
       _var0);
 }
 void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k149(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
@@ -5162,8 +5054,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k149(VR
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.syntax-cadr.3 3 1) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k150) (bruijn ##.form.57 1 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[1]), 2,
+  // ((bruijn ##.syntax-cadr.3 3 0) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k150) (bruijn ##.form.57 1 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k150, self)))),
       statics->vars[1]);
 }
@@ -5202,10 +5094,10 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack_V0k155
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.%p.340 0 0) ((bruijn ##.get-syntax-data.14 3 12) (bruijn ##.%k.339 1 0) (bruijn ##.x.58 1 1)) ((bruijn ##.%k.339 1 0) (bruijn ##.x.58 1 1)))
+  // (if (bruijn ##.%p.334 0 0) ((bruijn ##.get-syntax-data.14 3 11) (bruijn ##.%k.333 1 0) (bruijn ##.x.58 1 1)) ((bruijn ##.%k.333 1 0) (bruijn ##.x.58 1 1)))
 if(VDecodeBool(
 _var0)) {
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[12]), 2,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[11]), 2,
       statics->vars[0],
       statics->vars[1]);
 } else {
@@ -5226,8 +5118,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack(VRunti
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.syntax?.21 2 19) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack_V0k155) (bruijn ##.x.58 0 1))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[19]), 2,
+  // ((bruijn ##.syntax?.21 2 18) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack_V0k155) (bruijn ##.x.58 0 1))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[18]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack_V0k155, self)))),
       _var1);
 }
@@ -5239,8 +5131,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0
   "-- expected 1~N"
   , argc);
  }
-  // ((bruijn ##.make-syntax.22 4 20) (bruijn ##.%k.341 2 0) (bruijn ##.expr.59 2 1) (bruijn ##.%x.342 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[20]), 3,
+  // ((bruijn ##.make-syntax.22 4 19) (bruijn ##.%k.335 2 0) (bruijn ##.expr.59 2 1) (bruijn ##.%x.336 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[19]), 3,
       statics->up->vars[0],
       statics->up->vars[1],
       _var0);
@@ -5257,8 +5149,8 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((bruijn ##.list.24 3 22) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0k157) (bruijn ##.%x.343 0 0))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[22]), 2,
+  // ((bruijn ##.list.24 3 21) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0k157) (bruijn ##.%x.337 0 0))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[21]), 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0k157, self)))),
       _var0);
 }
@@ -5275,14 +5167,14 @@ void _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier(VR
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // ((bruijn ##.global-scope.23 2 21) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0k156))
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[21]), 1,
+  // ((bruijn ##.global-scope.23 2 20) (close _V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0k156))
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[20]), 1,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0k156, self)))));
 }
 static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k159(VRuntime * runtime, VEnv * statics, int argc) {
   VEnv * self = statics;
   statics = self ? self->up : NULL;
-  // (basic-block 6 6 (##.%x.514 ##.%x.515 ##.%x.516 ##.%x.517 ##.%x.518 ##.%r.519) ((##vcore.cons 'global-identifier (bruijn ##.global-identifier.46 2 8)) (##vcore.cons 'global-forms (bruijn ##.global-forms.39 2 1)) (##vcore.cons 'global-form-env (bruijn ##.global-form-env.38 2 0)) (##vcore.cons (bruijn ##.%x.516 0 2) '()) (##vcore.cons (bruijn ##.%x.515 0 1) (bruijn ##.%x.517 0 3)) (##vcore.cons (bruijn ##.%x.514 0 0) (bruijn ##.%x.518 0 4))) ((bruijn ##.%k.67 3 0) (bruijn ##.%r.519 0 5)))
+  // (basic-block 6 6 (##.%x.512 ##.%x.513 ##.%x.514 ##.%x.515 ##.%x.516 ##.%r.517) ((##vcore.cons 'global-identifier (bruijn ##.global-identifier.46 2 8)) (##vcore.cons 'global-forms (bruijn ##.global-forms.39 2 1)) (##vcore.cons 'global-form-env (bruijn ##.global-form-env.38 2 0)) (##vcore.cons (bruijn ##.%x.514 0 2) '()) (##vcore.cons (bruijn ##.%x.513 0 1) (bruijn ##.%x.515 0 3)) (##vcore.cons (bruijn ##.%x.512 0 0) (bruijn ##.%x.516 0 4))) ((bruijn ##.%k.61 8 0) (bruijn ##.%r.517 0 5)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[6]; } container;
@@ -5306,14 +5198,14 @@ static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k159(VRuntime 
     self->vars[5] = _VBasic_VCons2(runtime, NULL,
       self->vars[0],
       self->vars[4]);
-    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
+    VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 1,
       self->vars[5]);
     }
 }
 static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k158(VRuntime * runtime, VEnv * statics, int argc) {
   VEnv * self = statics;
   statics = self ? self->up : NULL;
-  // (basic-block 6 6 (##.%x.508 ##.%x.509 ##.%x.510 ##.%x.511 ##.%x.512 ##.%x.513) ((##vcore.cons 'let (bruijn ##.expand-let.44 1 6)) (##vcore.cons 'quasiquote (bruijn ##.expand-quasiquote.42 1 4)) (##vcore.cons 'quasisyntax (bruijn ##.expand-quasisyntax.40 1 2)) (##vcore.cons (bruijn ##.%x.510 0 2) '()) (##vcore.cons (bruijn ##.%x.509 0 1) (bruijn ##.%x.511 0 3)) (##vcore.cons (bruijn ##.%x.508 0 0) (bruijn ##.%x.512 0 4))) (set! (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k159) (bruijn ##.global-form-env.38 1 0) (bruijn ##.%x.513 0 5)))
+  // (basic-block 6 6 (##.%x.506 ##.%x.507 ##.%x.508 ##.%x.509 ##.%x.510 ##.%x.511) ((##vcore.cons 'let (bruijn ##.expand-let.44 1 6)) (##vcore.cons 'quasiquote (bruijn ##.expand-quasiquote.42 1 4)) (##vcore.cons 'quasisyntax (bruijn ##.expand-quasisyntax.40 1 2)) (##vcore.cons (bruijn ##.%x.508 0 2) '()) (##vcore.cons (bruijn ##.%x.507 0 1) (bruijn ##.%x.509 0 3)) (##vcore.cons (bruijn ##.%x.506 0 0) (bruijn ##.%x.510 0 4))) (set! (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k159) (bruijn ##.global-form-env.38 1 0) (bruijn ##.%x.511 0 5)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[6]; } container;
@@ -5344,17 +5236,17 @@ static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k158(VRuntime 
     );
     }
 }
-static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6, VWORD _var7, VWORD _var8, VWORD _var9, VWORD _var10, VWORD _var11, VWORD _var12, VWORD _var13, VWORD _var14, VWORD _var15, VWORD _var16, VWORD _var17, VWORD _var18, VWORD _var19, VWORD _var20, VWORD _var21, VWORD _var22) {
- static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda3" };
+static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6, VWORD _var7, VWORD _var8, VWORD _var9, VWORD _var10, VWORD _var11, VWORD _var12, VWORD _var13, VWORD _var14, VWORD _var15, VWORD _var16, VWORD _var17, VWORD _var18, VWORD _var19, VWORD _var20, VWORD _var21) {
+ static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2" };
  VRecordCall2(runtime, &dbg);
- if(argc != 23) {
-  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda3, got ~D~N"
-  "-- expected 23~N"
+ if(argc != 22) {
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2, got ~D~N"
+  "-- expected 22~N"
   , argc);
  }
-  struct { VEnv self; VWORD argv[23]; } container;
+  struct { VEnv self; VWORD argv[22]; } container;
   VEnv * self = &container.self;
-  VInitEnv(self, 23, 23, statics);
+  VInitEnv(self, 22, 22, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
   self->vars[2] = _var2;
@@ -5377,8 +5269,7 @@ static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda3(VRunti
   self->vars[19] = _var19;
   self->vars[20] = _var20;
   self->vars[21] = _var21;
-  self->vars[22] = _var22;
-  // (##letrec (vanity compiler hygienic global-forms) 9 (#f #f (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier" (vanity compiler hygienic global-forms))) (set! (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k158) (bruijn ##.global-forms.39 0 1) '(##pair ##.pair.1063)))
+  // (##letrec (vanity compiler hygienic global-forms) 9 (#f #f (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack" (vanity compiler hygienic global-forms)) (close "_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier" (vanity compiler hygienic global-forms))) (set! (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k158) (bruijn ##.global-forms.39 0 1) '(##pair ##.pair.1055)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[9]; } container;
@@ -5398,9 +5289,102 @@ static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda3(VRunti
     VCallDecodedWithGC(runtime, V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)VSetEnvVar2, self)), 4,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k158, self)))),
       VEncodeInt(0l), VEncodeInt(1l),
-      VEncodePointer(&_V10_Dpair_D1063, VPOINTER_PAIR)
+      VEncodePointer(&_V10_Dpair_D1055, VPOINTER_PAIR)
     );
     }
+}
+static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // ((##intrinsic "VMultiImport") (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2) (##string ##.string.1056) (bruijn ##.%x.349 0 0) 'syntax-cadr 'syntax-vector? 'vector->list 'f64vector->list 'f32vector->list 's32vector->list 'u16vector->list 's16vector->list 'u8vector->list 's8vector->list 'identifier? 'get-syntax-data 'syntax-caar 'syntax-pair? 'syntax-car 'syntax-cdr 'syntax-map 'syntax-cddr 'syntax? 'make-syntax 'global-scope 'list)
+    VCallFuncWithGC(runtime, (VFunc)VMultiImport, 25,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2, self)))),
+      VEncodePointer(&_V10_Dstring_D1056.sym, VPOINTER_OTHER),
+      _var0,
+      _V0syntax__cadr,
+      _V0syntax__vector_Q,
+      _V0vector___Glist,
+      _V0f64vector___Glist,
+      _V0f32vector___Glist,
+      _V0s32vector___Glist,
+      _V0u16vector___Glist,
+      _V0s16vector___Glist,
+      _V0u8vector___Glist,
+      _V0s8vector___Glist,
+      _V0identifier_Q,
+      _V0get__syntax__data,
+      _V0syntax__caar,
+      _V0syntax__pair_Q,
+      _V0syntax__car,
+      _V0syntax__cdr,
+      _V0syntax__map,
+      _V0syntax__cddr,
+      _V0syntax_Q,
+      _V0make__syntax,
+      _V0global__scope,
+      _V0list);
+}
+static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (##vcore.vector (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4) (bruijn ##.%x.350 2 0) (bruijn ##.%x.351 1 0) (bruijn ##.%x.352 0 0))
+    VCallFuncWithGC(runtime, (VFunc)VCreateVector, 4,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4, self)))),
+      statics->up->vars[0],
+      statics->vars[0],
+      _var0);
+}
+static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3) (##string ##.string.1057))
+    VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3, self)))),
+      VEncodePointer(&_V10_Dstring_D1057.sym, VPOINTER_OTHER));
+}
+static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
+ static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1" };
+ VRecordCall2(runtime, &dbg);
+ if(argc != 1) {
+  VErrorC(runtime, "Not enough arguments to _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1, got ~D~N"
+  "-- expected 1~N"
+  , argc);
+ }
+  struct { VEnv self; VWORD argv[1]; } container;
+  VEnv * self = &container.self;
+  VInitEnv(self, 1, 1, statics);
+  self->vars[0] = _var0;
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2) (##string ##.string.1058))
+    VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2, self)))),
+      VEncodePointer(&_V10_Dstring_D1058.sym, VPOINTER_OTHER));
 }
 static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
  static VDebugInfo dbg = { "_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda1" };
@@ -5414,11 +5398,10 @@ static void _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda1(VRunti
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.call-with-values (bruijn ##.%k.61 0 0) (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2) (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda3))
-    VCallFuncWithGC(runtime, (VFunc)VCallValues2, 3,
-      _var0,
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2, self)))),
-      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda3, self)))));
+  // (##vcore.load-library (close _V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1) (##string ##.string.1059))
+    VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
+      (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1, self)))),
+      VEncodePointer(&_V10_Dstring_D1059.sym, VPOINTER_OTHER));
 }
 VFunc _V0vanity_V0compiler_V0hygienic_V0global__forms_V20 = (VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda1;
 static __attribute__((constructor)) void VDllMain1() {
@@ -5485,1254 +5468,1249 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0syntax__cadr = VEncodePointer(VInternSymbol(-176119071, &_VW_V0syntax__cadr.sym), VPOINTER_OTHER);
   _V0_Mx = VEncodePointer(VInternSymbol(-1853698215, &_VW_V0_Mx.sym), VPOINTER_OTHER);
   _V0_Mk = VEncodePointer(VInternSymbol(-865914236, &_VW_V0_Mk.sym), VPOINTER_OTHER);
-  _V10_Dpair_D1063.first = _V0let;
-  _V10_Dpair_D1063.rest = VEncodePointer(&_V10_Dpair_D1062, VPOINTER_PAIR);
-  _V10_Dpair_D1062.first = _V0quasiquote;
-  _V10_Dpair_D1062.rest = VEncodePointer(&_V10_Dpair_D1061, VPOINTER_PAIR);
-  _V10_Dpair_D1061.first = _V0quasisyntax;
-  _V10_Dpair_D1061.rest = VNULL;
-  _V10_Dpair_D1060.first = VEncodePointer(&_V10_Dpair_D1056, VPOINTER_PAIR);
-  _V10_Dpair_D1060.rest = VEncodePointer(&_V10_Dpair_D1059, VPOINTER_PAIR);
-  _V10_Dpair_D1059.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1059.rest = VNULL;
-  _V10_Dpair_D1058.first = _V0unquote;
-  _V10_Dpair_D1058.rest = VEncodePointer(&_V10_Dpair_D1057, VPOINTER_PAIR);
-  _V10_Dpair_D1057.first = _V0unmangled__env;
-  _V10_Dpair_D1057.rest = VNULL;
-  _V10_Dpair_D1056.first = VEncodeBool(false);
-  _V10_Dpair_D1056.rest = VEncodePointer(&_V10_Dpair_D1055, VPOINTER_PAIR);
-  _V10_Dpair_D1055.first = _V0_U;
-  _V10_Dpair_D1055.rest = VNULL;
-  _V10_Dpair_D1054.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D1055.first = _V0let;
+  _V10_Dpair_D1055.rest = VEncodePointer(&_V10_Dpair_D1054, VPOINTER_PAIR);
+  _V10_Dpair_D1054.first = _V0quasiquote;
   _V10_Dpair_D1054.rest = VEncodePointer(&_V10_Dpair_D1053, VPOINTER_PAIR);
-  _V10_Dpair_D1053.first = VEncodePointer(&_V10_Dpair_D1052, VPOINTER_PAIR);
+  _V10_Dpair_D1053.first = _V0quasisyntax;
   _V10_Dpair_D1053.rest = VNULL;
-  _V10_Dpair_D1052.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D1052.rest = VEncodePointer(&_V10_Dpair_D1049, VPOINTER_PAIR);
-  _V10_Dpair_D1051.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D1051.rest = VEncodePointer(&_V10_Dpair_D1050, VPOINTER_PAIR);
-  _V10_Dpair_D1050.first = VEncodePointer(&_V10_Dpair_D1049, VPOINTER_PAIR);
-  _V10_Dpair_D1050.rest = VNULL;
-  _V10_Dpair_D1049.first = VEncodePointer(&_V10_Dpair_D1045, VPOINTER_PAIR);
-  _V10_Dpair_D1049.rest = VEncodePointer(&_V10_Dpair_D591, VPOINTER_PAIR);
-  _V10_Dpair_D1048.first = VEncodePointer(&_V10_Dpair_D1047, VPOINTER_PAIR);
-  _V10_Dpair_D1048.rest = VEncodePointer(&_V10_Dpair_D592, VPOINTER_PAIR);
-  _V10_Dpair_D1047.first = VEncodePointer(&_V10_Dpair_D1044, VPOINTER_PAIR);
-  _V10_Dpair_D1047.rest = VEncodePointer(&_V10_Dpair_D1046, VPOINTER_PAIR);
-  _V10_Dpair_D1046.first = VEncodePointer(&_V10_Dpair_D1045, VPOINTER_PAIR);
-  _V10_Dpair_D1046.rest = VNULL;
-  _V10_Dpair_D1045.first = _V0_Mk;
-  _V10_Dpair_D1045.rest = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
-  _V10_Dpair_D1044.first = _V0vanity;
-  _V10_Dpair_D1044.rest = VEncodePointer(&_V10_Dpair_D1043, VPOINTER_PAIR);
-  _V10_Dpair_D1043.first = _V0compiler;
+  _V10_Dpair_D1052.first = VEncodePointer(&_V10_Dpair_D1048, VPOINTER_PAIR);
+  _V10_Dpair_D1052.rest = VEncodePointer(&_V10_Dpair_D1051, VPOINTER_PAIR);
+  _V10_Dpair_D1051.first = VEncodePointer(&_V10_Dpair_D1050, VPOINTER_PAIR);
+  _V10_Dpair_D1051.rest = VNULL;
+  _V10_Dpair_D1050.first = _V0unquote;
+  _V10_Dpair_D1050.rest = VEncodePointer(&_V10_Dpair_D1049, VPOINTER_PAIR);
+  _V10_Dpair_D1049.first = _V0unmangled__env;
+  _V10_Dpair_D1049.rest = VNULL;
+  _V10_Dpair_D1048.first = VEncodeBool(false);
+  _V10_Dpair_D1048.rest = VEncodePointer(&_V10_Dpair_D1047, VPOINTER_PAIR);
+  _V10_Dpair_D1047.first = _V0_U;
+  _V10_Dpair_D1047.rest = VNULL;
+  _V10_Dpair_D1046.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D1046.rest = VEncodePointer(&_V10_Dpair_D1045, VPOINTER_PAIR);
+  _V10_Dpair_D1045.first = VEncodePointer(&_V10_Dpair_D1044, VPOINTER_PAIR);
+  _V10_Dpair_D1045.rest = VNULL;
+  _V10_Dpair_D1044.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D1044.rest = VEncodePointer(&_V10_Dpair_D1041, VPOINTER_PAIR);
+  _V10_Dpair_D1043.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D1043.rest = VEncodePointer(&_V10_Dpair_D1042, VPOINTER_PAIR);
-  _V10_Dpair_D1042.first = _V0hygienic;
-  _V10_Dpair_D1042.rest = VEncodePointer(&_V10_Dpair_D1041, VPOINTER_PAIR);
-  _V10_Dpair_D1041.first = _V0global__forms;
-  _V10_Dpair_D1041.rest = VEncodePointer(&_V10_Dpair_D581, VPOINTER_PAIR);
-  _V10_Dpair_D1040.first = VEncodePointer(&_V10_Dpair_D610, VPOINTER_PAIR);
-  _V10_Dpair_D1040.rest = VEncodePointer(&_V10_Dpair_D1039, VPOINTER_PAIR);
-  _V10_Dpair_D1039.first = VEncodePointer(&_V10_Dpair_D1038, VPOINTER_PAIR);
-  _V10_Dpair_D1039.rest = VNULL;
-  _V10_Dpair_D1038.first = VEncodePointer(&_V10_Dpair_D1034, VPOINTER_PAIR);
-  _V10_Dpair_D1038.rest = VEncodePointer(&_V10_Dpair_D591, VPOINTER_PAIR);
-  _V10_Dpair_D1037.first = VEncodePointer(&_V10_Dpair_D1036, VPOINTER_PAIR);
-  _V10_Dpair_D1037.rest = VEncodePointer(&_V10_Dpair_D592, VPOINTER_PAIR);
-  _V10_Dpair_D1036.first = VEncodePointer(&_V10_Dpair_D1033, VPOINTER_PAIR);
+  _V10_Dpair_D1042.first = VEncodePointer(&_V10_Dpair_D1041, VPOINTER_PAIR);
+  _V10_Dpair_D1042.rest = VNULL;
+  _V10_Dpair_D1041.first = VEncodePointer(&_V10_Dpair_D1037, VPOINTER_PAIR);
+  _V10_Dpair_D1041.rest = VEncodePointer(&_V10_Dpair_D583, VPOINTER_PAIR);
+  _V10_Dpair_D1040.first = VEncodePointer(&_V10_Dpair_D1039, VPOINTER_PAIR);
+  _V10_Dpair_D1040.rest = VEncodePointer(&_V10_Dpair_D584, VPOINTER_PAIR);
+  _V10_Dpair_D1039.first = VEncodePointer(&_V10_Dpair_D1036, VPOINTER_PAIR);
+  _V10_Dpair_D1039.rest = VEncodePointer(&_V10_Dpair_D1038, VPOINTER_PAIR);
+  _V10_Dpair_D1038.first = VEncodePointer(&_V10_Dpair_D1037, VPOINTER_PAIR);
+  _V10_Dpair_D1038.rest = VNULL;
+  _V10_Dpair_D1037.first = _V0_Mk;
+  _V10_Dpair_D1037.rest = VEncodePointer(&_V10_Dpair_D594, VPOINTER_PAIR);
+  _V10_Dpair_D1036.first = _V0vanity;
   _V10_Dpair_D1036.rest = VEncodePointer(&_V10_Dpair_D1035, VPOINTER_PAIR);
-  _V10_Dpair_D1035.first = VEncodePointer(&_V10_Dpair_D1034, VPOINTER_PAIR);
-  _V10_Dpair_D1035.rest = VNULL;
-  _V10_Dpair_D1034.first = _V0_Mk;
-  _V10_Dpair_D1034.rest = VEncodePointer(&_V10_Dpair_D655, VPOINTER_PAIR);
-  _V10_Dpair_D1033.first = _V0vanity;
-  _V10_Dpair_D1033.rest = VEncodePointer(&_V10_Dpair_D1032, VPOINTER_PAIR);
-  _V10_Dpair_D1032.first = _V0compiler;
+  _V10_Dpair_D1035.first = _V0compiler;
+  _V10_Dpair_D1035.rest = VEncodePointer(&_V10_Dpair_D1034, VPOINTER_PAIR);
+  _V10_Dpair_D1034.first = _V0hygienic;
+  _V10_Dpair_D1034.rest = VEncodePointer(&_V10_Dpair_D1033, VPOINTER_PAIR);
+  _V10_Dpair_D1033.first = _V0global__forms;
+  _V10_Dpair_D1033.rest = VEncodePointer(&_V10_Dpair_D573, VPOINTER_PAIR);
+  _V10_Dpair_D1032.first = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
   _V10_Dpair_D1032.rest = VEncodePointer(&_V10_Dpair_D1031, VPOINTER_PAIR);
-  _V10_Dpair_D1031.first = _V0hygienic;
-  _V10_Dpair_D1031.rest = VEncodePointer(&_V10_Dpair_D1030, VPOINTER_PAIR);
-  _V10_Dpair_D1030.first = _V0global__forms;
-  _V10_Dpair_D1030.rest = VEncodePointer(&_V10_Dpair_D1029, VPOINTER_PAIR);
-  _V10_Dpair_D1029.first = _V0syntax__unpack;
-  _V10_Dpair_D1029.rest = VNULL;
-  _V10_Dpair_D1028.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D1031.first = VEncodePointer(&_V10_Dpair_D1030, VPOINTER_PAIR);
+  _V10_Dpair_D1031.rest = VNULL;
+  _V10_Dpair_D1030.first = VEncodePointer(&_V10_Dpair_D1026, VPOINTER_PAIR);
+  _V10_Dpair_D1030.rest = VEncodePointer(&_V10_Dpair_D583, VPOINTER_PAIR);
+  _V10_Dpair_D1029.first = VEncodePointer(&_V10_Dpair_D1028, VPOINTER_PAIR);
+  _V10_Dpair_D1029.rest = VEncodePointer(&_V10_Dpair_D584, VPOINTER_PAIR);
+  _V10_Dpair_D1028.first = VEncodePointer(&_V10_Dpair_D1025, VPOINTER_PAIR);
   _V10_Dpair_D1028.rest = VEncodePointer(&_V10_Dpair_D1027, VPOINTER_PAIR);
   _V10_Dpair_D1027.first = VEncodePointer(&_V10_Dpair_D1026, VPOINTER_PAIR);
   _V10_Dpair_D1027.rest = VNULL;
-  _V10_Dpair_D1026.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D1026.rest = VEncodePointer(&_V10_Dpair_D1023, VPOINTER_PAIR);
-  _V10_Dpair_D1025.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D1026.first = _V0_Mk;
+  _V10_Dpair_D1026.rest = VEncodePointer(&_V10_Dpair_D647, VPOINTER_PAIR);
+  _V10_Dpair_D1025.first = _V0vanity;
   _V10_Dpair_D1025.rest = VEncodePointer(&_V10_Dpair_D1024, VPOINTER_PAIR);
-  _V10_Dpair_D1024.first = VEncodePointer(&_V10_Dpair_D1023, VPOINTER_PAIR);
-  _V10_Dpair_D1024.rest = VNULL;
-  _V10_Dpair_D1023.first = VEncodePointer(&_V10_Dpair_D640, VPOINTER_PAIR);
+  _V10_Dpair_D1024.first = _V0compiler;
+  _V10_Dpair_D1024.rest = VEncodePointer(&_V10_Dpair_D1023, VPOINTER_PAIR);
+  _V10_Dpair_D1023.first = _V0hygienic;
   _V10_Dpair_D1023.rest = VEncodePointer(&_V10_Dpair_D1022, VPOINTER_PAIR);
-  _V10_Dpair_D1022.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D1022.rest = VEncodePointer(&_V10_Dpair_D1019, VPOINTER_PAIR);
-  _V10_Dpair_D1021.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D1021.rest = VEncodePointer(&_V10_Dpair_D1020, VPOINTER_PAIR);
-  _V10_Dpair_D1020.first = VEncodePointer(&_V10_Dpair_D1019, VPOINTER_PAIR);
-  _V10_Dpair_D1020.rest = VNULL;
-  _V10_Dpair_D1019.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D1019.rest = VEncodePointer(&_V10_Dpair_D1016, VPOINTER_PAIR);
-  _V10_Dpair_D1018.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D1018.rest = VEncodePointer(&_V10_Dpair_D1017, VPOINTER_PAIR);
-  _V10_Dpair_D1017.first = VEncodePointer(&_V10_Dpair_D1016, VPOINTER_PAIR);
-  _V10_Dpair_D1017.rest = VNULL;
-  _V10_Dpair_D1016.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D1016.rest = VEncodePointer(&_V10_Dpair_D1013, VPOINTER_PAIR);
-  _V10_Dpair_D1015.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D1022.first = _V0global__forms;
+  _V10_Dpair_D1022.rest = VEncodePointer(&_V10_Dpair_D1021, VPOINTER_PAIR);
+  _V10_Dpair_D1021.first = _V0syntax__unpack;
+  _V10_Dpair_D1021.rest = VNULL;
+  _V10_Dpair_D1020.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D1020.rest = VEncodePointer(&_V10_Dpair_D1019, VPOINTER_PAIR);
+  _V10_Dpair_D1019.first = VEncodePointer(&_V10_Dpair_D1018, VPOINTER_PAIR);
+  _V10_Dpair_D1019.rest = VNULL;
+  _V10_Dpair_D1018.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D1018.rest = VEncodePointer(&_V10_Dpair_D1015, VPOINTER_PAIR);
+  _V10_Dpair_D1017.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D1017.rest = VEncodePointer(&_V10_Dpair_D1016, VPOINTER_PAIR);
+  _V10_Dpair_D1016.first = VEncodePointer(&_V10_Dpair_D1015, VPOINTER_PAIR);
+  _V10_Dpair_D1016.rest = VNULL;
+  _V10_Dpair_D1015.first = VEncodePointer(&_V10_Dpair_D632, VPOINTER_PAIR);
   _V10_Dpair_D1015.rest = VEncodePointer(&_V10_Dpair_D1014, VPOINTER_PAIR);
-  _V10_Dpair_D1014.first = VEncodePointer(&_V10_Dpair_D1013, VPOINTER_PAIR);
-  _V10_Dpair_D1014.rest = VNULL;
-  _V10_Dpair_D1013.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D1013.rest = VEncodePointer(&_V10_Dpair_D594, VPOINTER_PAIR);
+  _V10_Dpair_D1014.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D1014.rest = VEncodePointer(&_V10_Dpair_D1011, VPOINTER_PAIR);
+  _V10_Dpair_D1013.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D1013.rest = VEncodePointer(&_V10_Dpair_D1012, VPOINTER_PAIR);
   _V10_Dpair_D1012.first = VEncodePointer(&_V10_Dpair_D1011, VPOINTER_PAIR);
-  _V10_Dpair_D1012.rest = VEncodePointer(&_V10_Dpair_D592, VPOINTER_PAIR);
-  _V10_Dpair_D1011.first = VEncodePointer(&_V10_Dpair_D1010, VPOINTER_PAIR);
-  _V10_Dpair_D1011.rest = VEncodePointer(&_V10_Dpair_D579, VPOINTER_PAIR);
-  _V10_Dpair_D1010.first = _V0vanity;
+  _V10_Dpair_D1012.rest = VNULL;
+  _V10_Dpair_D1011.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D1011.rest = VEncodePointer(&_V10_Dpair_D1008, VPOINTER_PAIR);
+  _V10_Dpair_D1010.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D1010.rest = VEncodePointer(&_V10_Dpair_D1009, VPOINTER_PAIR);
-  _V10_Dpair_D1009.first = _V0compiler;
-  _V10_Dpair_D1009.rest = VEncodePointer(&_V10_Dpair_D1008, VPOINTER_PAIR);
-  _V10_Dpair_D1008.first = _V0hygienic;
-  _V10_Dpair_D1008.rest = VEncodePointer(&_V10_Dpair_D1007, VPOINTER_PAIR);
-  _V10_Dpair_D1007.first = _V0global__forms;
+  _V10_Dpair_D1009.first = VEncodePointer(&_V10_Dpair_D1008, VPOINTER_PAIR);
+  _V10_Dpair_D1009.rest = VNULL;
+  _V10_Dpair_D1008.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D1008.rest = VEncodePointer(&_V10_Dpair_D1005, VPOINTER_PAIR);
+  _V10_Dpair_D1007.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D1007.rest = VEncodePointer(&_V10_Dpair_D1006, VPOINTER_PAIR);
-  _V10_Dpair_D1006.first = _V0expand__let;
+  _V10_Dpair_D1006.first = VEncodePointer(&_V10_Dpair_D1005, VPOINTER_PAIR);
   _V10_Dpair_D1006.rest = VNULL;
-  _V10_Dpair_D1005.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D1005.rest = VEncodePointer(&_V10_Dpair_D1004, VPOINTER_PAIR);
+  _V10_Dpair_D1005.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D1005.rest = VEncodePointer(&_V10_Dpair_D586, VPOINTER_PAIR);
   _V10_Dpair_D1004.first = VEncodePointer(&_V10_Dpair_D1003, VPOINTER_PAIR);
-  _V10_Dpair_D1004.rest = VNULL;
-  _V10_Dpair_D1003.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D1003.rest = VEncodePointer(&_V10_Dpair_D1000, VPOINTER_PAIR);
-  _V10_Dpair_D1002.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D1004.rest = VEncodePointer(&_V10_Dpair_D584, VPOINTER_PAIR);
+  _V10_Dpair_D1003.first = VEncodePointer(&_V10_Dpair_D1002, VPOINTER_PAIR);
+  _V10_Dpair_D1003.rest = VEncodePointer(&_V10_Dpair_D571, VPOINTER_PAIR);
+  _V10_Dpair_D1002.first = _V0vanity;
   _V10_Dpair_D1002.rest = VEncodePointer(&_V10_Dpair_D1001, VPOINTER_PAIR);
-  _V10_Dpair_D1001.first = VEncodePointer(&_V10_Dpair_D1000, VPOINTER_PAIR);
-  _V10_Dpair_D1001.rest = VNULL;
-  _V10_Dpair_D1000.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D1000.rest = VEncodePointer(&_V10_Dpair_D997, VPOINTER_PAIR);
-  _V10_Dpair_D999.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D1001.first = _V0compiler;
+  _V10_Dpair_D1001.rest = VEncodePointer(&_V10_Dpair_D1000, VPOINTER_PAIR);
+  _V10_Dpair_D1000.first = _V0hygienic;
+  _V10_Dpair_D1000.rest = VEncodePointer(&_V10_Dpair_D999, VPOINTER_PAIR);
+  _V10_Dpair_D999.first = _V0global__forms;
   _V10_Dpair_D999.rest = VEncodePointer(&_V10_Dpair_D998, VPOINTER_PAIR);
-  _V10_Dpair_D998.first = VEncodePointer(&_V10_Dpair_D997, VPOINTER_PAIR);
+  _V10_Dpair_D998.first = _V0expand__let;
   _V10_Dpair_D998.rest = VNULL;
-  _V10_Dpair_D997.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D997.rest = VEncodePointer(&_V10_Dpair_D994, VPOINTER_PAIR);
-  _V10_Dpair_D996.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D996.rest = VEncodePointer(&_V10_Dpair_D995, VPOINTER_PAIR);
-  _V10_Dpair_D995.first = VEncodePointer(&_V10_Dpair_D994, VPOINTER_PAIR);
-  _V10_Dpair_D995.rest = VNULL;
-  _V10_Dpair_D994.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D994.rest = VEncodePointer(&_V10_Dpair_D953, VPOINTER_PAIR);
-  _V10_Dpair_D993.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D993.rest = VEncodePointer(&_V10_Dpair_D992, VPOINTER_PAIR);
-  _V10_Dpair_D992.first = VEncodePointer(&_V10_Dpair_D953, VPOINTER_PAIR);
-  _V10_Dpair_D992.rest = VNULL;
-  _V10_Dpair_D991.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D997.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D997.rest = VEncodePointer(&_V10_Dpair_D996, VPOINTER_PAIR);
+  _V10_Dpair_D996.first = VEncodePointer(&_V10_Dpair_D995, VPOINTER_PAIR);
+  _V10_Dpair_D996.rest = VNULL;
+  _V10_Dpair_D995.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D995.rest = VEncodePointer(&_V10_Dpair_D992, VPOINTER_PAIR);
+  _V10_Dpair_D994.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D994.rest = VEncodePointer(&_V10_Dpair_D993, VPOINTER_PAIR);
+  _V10_Dpair_D993.first = VEncodePointer(&_V10_Dpair_D992, VPOINTER_PAIR);
+  _V10_Dpair_D993.rest = VNULL;
+  _V10_Dpair_D992.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D992.rest = VEncodePointer(&_V10_Dpair_D989, VPOINTER_PAIR);
+  _V10_Dpair_D991.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D991.rest = VEncodePointer(&_V10_Dpair_D990, VPOINTER_PAIR);
   _V10_Dpair_D990.first = VEncodePointer(&_V10_Dpair_D989, VPOINTER_PAIR);
   _V10_Dpair_D990.rest = VNULL;
-  _V10_Dpair_D989.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D989.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D989.rest = VEncodePointer(&_V10_Dpair_D986, VPOINTER_PAIR);
-  _V10_Dpair_D988.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D988.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D988.rest = VEncodePointer(&_V10_Dpair_D987, VPOINTER_PAIR);
   _V10_Dpair_D987.first = VEncodePointer(&_V10_Dpair_D986, VPOINTER_PAIR);
   _V10_Dpair_D987.rest = VNULL;
-  _V10_Dpair_D986.first = VEncodePointer(&_V10_Dpair_D784, VPOINTER_PAIR);
-  _V10_Dpair_D986.rest = VEncodePointer(&_V10_Dpair_D985, VPOINTER_PAIR);
-  _V10_Dpair_D985.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D985.rest = VEncodePointer(&_V10_Dpair_D982, VPOINTER_PAIR);
-  _V10_Dpair_D984.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D984.rest = VEncodePointer(&_V10_Dpair_D983, VPOINTER_PAIR);
-  _V10_Dpair_D983.first = VEncodePointer(&_V10_Dpair_D982, VPOINTER_PAIR);
-  _V10_Dpair_D983.rest = VNULL;
-  _V10_Dpair_D982.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D982.rest = VEncodePointer(&_V10_Dpair_D979, VPOINTER_PAIR);
-  _V10_Dpair_D981.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D981.rest = VEncodePointer(&_V10_Dpair_D980, VPOINTER_PAIR);
-  _V10_Dpair_D980.first = VEncodePointer(&_V10_Dpair_D979, VPOINTER_PAIR);
-  _V10_Dpair_D980.rest = VNULL;
-  _V10_Dpair_D979.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D979.rest = VEncodePointer(&_V10_Dpair_D976, VPOINTER_PAIR);
-  _V10_Dpair_D978.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D986.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D986.rest = VEncodePointer(&_V10_Dpair_D945, VPOINTER_PAIR);
+  _V10_Dpair_D985.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D985.rest = VEncodePointer(&_V10_Dpair_D984, VPOINTER_PAIR);
+  _V10_Dpair_D984.first = VEncodePointer(&_V10_Dpair_D945, VPOINTER_PAIR);
+  _V10_Dpair_D984.rest = VNULL;
+  _V10_Dpair_D983.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D983.rest = VEncodePointer(&_V10_Dpair_D982, VPOINTER_PAIR);
+  _V10_Dpair_D982.first = VEncodePointer(&_V10_Dpair_D981, VPOINTER_PAIR);
+  _V10_Dpair_D982.rest = VNULL;
+  _V10_Dpair_D981.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D981.rest = VEncodePointer(&_V10_Dpair_D978, VPOINTER_PAIR);
+  _V10_Dpair_D980.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D980.rest = VEncodePointer(&_V10_Dpair_D979, VPOINTER_PAIR);
+  _V10_Dpair_D979.first = VEncodePointer(&_V10_Dpair_D978, VPOINTER_PAIR);
+  _V10_Dpair_D979.rest = VNULL;
+  _V10_Dpair_D978.first = VEncodePointer(&_V10_Dpair_D776, VPOINTER_PAIR);
   _V10_Dpair_D978.rest = VEncodePointer(&_V10_Dpair_D977, VPOINTER_PAIR);
-  _V10_Dpair_D977.first = VEncodePointer(&_V10_Dpair_D976, VPOINTER_PAIR);
-  _V10_Dpair_D977.rest = VNULL;
-  _V10_Dpair_D976.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D976.rest = VEncodePointer(&_V10_Dpair_D973, VPOINTER_PAIR);
-  _V10_Dpair_D975.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D975.rest = VEncodePointer(&_V10_Dpair_D974, VPOINTER_PAIR);
-  _V10_Dpair_D974.first = VEncodePointer(&_V10_Dpair_D973, VPOINTER_PAIR);
-  _V10_Dpair_D974.rest = VNULL;
-  _V10_Dpair_D973.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D977.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D977.rest = VEncodePointer(&_V10_Dpair_D974, VPOINTER_PAIR);
+  _V10_Dpair_D976.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D976.rest = VEncodePointer(&_V10_Dpair_D975, VPOINTER_PAIR);
+  _V10_Dpair_D975.first = VEncodePointer(&_V10_Dpair_D974, VPOINTER_PAIR);
+  _V10_Dpair_D975.rest = VNULL;
+  _V10_Dpair_D974.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D974.rest = VEncodePointer(&_V10_Dpair_D971, VPOINTER_PAIR);
+  _V10_Dpair_D973.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D973.rest = VEncodePointer(&_V10_Dpair_D972, VPOINTER_PAIR);
-  _V10_Dpair_D972.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D972.rest = VEncodePointer(&_V10_Dpair_D969, VPOINTER_PAIR);
-  _V10_Dpair_D971.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D971.rest = VEncodePointer(&_V10_Dpair_D970, VPOINTER_PAIR);
-  _V10_Dpair_D970.first = VEncodePointer(&_V10_Dpair_D969, VPOINTER_PAIR);
-  _V10_Dpair_D970.rest = VNULL;
-  _V10_Dpair_D969.first = VEncodePointer(&_V10_Dpair_D640, VPOINTER_PAIR);
-  _V10_Dpair_D969.rest = VEncodePointer(&_V10_Dpair_D966, VPOINTER_PAIR);
-  _V10_Dpair_D968.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D968.rest = VEncodePointer(&_V10_Dpair_D967, VPOINTER_PAIR);
-  _V10_Dpair_D967.first = VEncodePointer(&_V10_Dpair_D966, VPOINTER_PAIR);
-  _V10_Dpair_D967.rest = VNULL;
-  _V10_Dpair_D966.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D966.rest = VEncodePointer(&_V10_Dpair_D963, VPOINTER_PAIR);
-  _V10_Dpair_D965.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D972.first = VEncodePointer(&_V10_Dpair_D971, VPOINTER_PAIR);
+  _V10_Dpair_D972.rest = VNULL;
+  _V10_Dpair_D971.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D971.rest = VEncodePointer(&_V10_Dpair_D968, VPOINTER_PAIR);
+  _V10_Dpair_D970.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D970.rest = VEncodePointer(&_V10_Dpair_D969, VPOINTER_PAIR);
+  _V10_Dpair_D969.first = VEncodePointer(&_V10_Dpair_D968, VPOINTER_PAIR);
+  _V10_Dpair_D969.rest = VNULL;
+  _V10_Dpair_D968.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D968.rest = VEncodePointer(&_V10_Dpair_D965, VPOINTER_PAIR);
+  _V10_Dpair_D967.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D967.rest = VEncodePointer(&_V10_Dpair_D966, VPOINTER_PAIR);
+  _V10_Dpair_D966.first = VEncodePointer(&_V10_Dpair_D965, VPOINTER_PAIR);
+  _V10_Dpair_D966.rest = VNULL;
+  _V10_Dpair_D965.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D965.rest = VEncodePointer(&_V10_Dpair_D964, VPOINTER_PAIR);
-  _V10_Dpair_D964.first = VEncodePointer(&_V10_Dpair_D963, VPOINTER_PAIR);
-  _V10_Dpair_D964.rest = VNULL;
-  _V10_Dpair_D963.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D963.rest = VEncodePointer(&_V10_Dpair_D960, VPOINTER_PAIR);
-  _V10_Dpair_D962.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D962.rest = VEncodePointer(&_V10_Dpair_D961, VPOINTER_PAIR);
-  _V10_Dpair_D961.first = VEncodePointer(&_V10_Dpair_D960, VPOINTER_PAIR);
-  _V10_Dpair_D961.rest = VNULL;
-  _V10_Dpair_D960.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D960.rest = VEncodePointer(&_V10_Dpair_D957, VPOINTER_PAIR);
-  _V10_Dpair_D959.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D959.rest = VEncodePointer(&_V10_Dpair_D958, VPOINTER_PAIR);
-  _V10_Dpair_D958.first = VEncodePointer(&_V10_Dpair_D957, VPOINTER_PAIR);
-  _V10_Dpair_D958.rest = VNULL;
-  _V10_Dpair_D957.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D957.rest = VEncodePointer(&_V10_Dpair_D954, VPOINTER_PAIR);
-  _V10_Dpair_D956.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D956.rest = VEncodePointer(&_V10_Dpair_D955, VPOINTER_PAIR);
-  _V10_Dpair_D955.first = VEncodePointer(&_V10_Dpair_D954, VPOINTER_PAIR);
-  _V10_Dpair_D955.rest = VNULL;
-  _V10_Dpair_D954.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
+  _V10_Dpair_D964.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D964.rest = VEncodePointer(&_V10_Dpair_D961, VPOINTER_PAIR);
+  _V10_Dpair_D963.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D963.rest = VEncodePointer(&_V10_Dpair_D962, VPOINTER_PAIR);
+  _V10_Dpair_D962.first = VEncodePointer(&_V10_Dpair_D961, VPOINTER_PAIR);
+  _V10_Dpair_D962.rest = VNULL;
+  _V10_Dpair_D961.first = VEncodePointer(&_V10_Dpair_D632, VPOINTER_PAIR);
+  _V10_Dpair_D961.rest = VEncodePointer(&_V10_Dpair_D958, VPOINTER_PAIR);
+  _V10_Dpair_D960.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D960.rest = VEncodePointer(&_V10_Dpair_D959, VPOINTER_PAIR);
+  _V10_Dpair_D959.first = VEncodePointer(&_V10_Dpair_D958, VPOINTER_PAIR);
+  _V10_Dpair_D959.rest = VNULL;
+  _V10_Dpair_D958.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D958.rest = VEncodePointer(&_V10_Dpair_D955, VPOINTER_PAIR);
+  _V10_Dpair_D957.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D957.rest = VEncodePointer(&_V10_Dpair_D956, VPOINTER_PAIR);
+  _V10_Dpair_D956.first = VEncodePointer(&_V10_Dpair_D955, VPOINTER_PAIR);
+  _V10_Dpair_D956.rest = VNULL;
+  _V10_Dpair_D955.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D955.rest = VEncodePointer(&_V10_Dpair_D952, VPOINTER_PAIR);
+  _V10_Dpair_D954.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D954.rest = VEncodePointer(&_V10_Dpair_D953, VPOINTER_PAIR);
-  _V10_Dpair_D953.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D953.rest = VEncodePointer(&_V10_Dpair_D937, VPOINTER_PAIR);
-  _V10_Dpair_D952.first = VEncodePointer(&_V10_Dpair_D610, VPOINTER_PAIR);
-  _V10_Dpair_D952.rest = VEncodePointer(&_V10_Dpair_D938, VPOINTER_PAIR);
-  _V10_Dpair_D951.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D953.first = VEncodePointer(&_V10_Dpair_D952, VPOINTER_PAIR);
+  _V10_Dpair_D953.rest = VNULL;
+  _V10_Dpair_D952.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D952.rest = VEncodePointer(&_V10_Dpair_D949, VPOINTER_PAIR);
+  _V10_Dpair_D951.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D951.rest = VEncodePointer(&_V10_Dpair_D950, VPOINTER_PAIR);
   _V10_Dpair_D950.first = VEncodePointer(&_V10_Dpair_D949, VPOINTER_PAIR);
   _V10_Dpair_D950.rest = VNULL;
-  _V10_Dpair_D949.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D949.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D949.rest = VEncodePointer(&_V10_Dpair_D946, VPOINTER_PAIR);
-  _V10_Dpair_D948.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D948.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D948.rest = VEncodePointer(&_V10_Dpair_D947, VPOINTER_PAIR);
   _V10_Dpair_D947.first = VEncodePointer(&_V10_Dpair_D946, VPOINTER_PAIR);
   _V10_Dpair_D947.rest = VNULL;
-  _V10_Dpair_D946.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D946.rest = VEncodePointer(&_V10_Dpair_D943, VPOINTER_PAIR);
-  _V10_Dpair_D945.first = VEncodePointer(&_V10_Dpair_D610, VPOINTER_PAIR);
-  _V10_Dpair_D945.rest = VEncodePointer(&_V10_Dpair_D944, VPOINTER_PAIR);
-  _V10_Dpair_D944.first = VEncodePointer(&_V10_Dpair_D943, VPOINTER_PAIR);
-  _V10_Dpair_D944.rest = VNULL;
-  _V10_Dpair_D943.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D943.rest = VEncodePointer(&_V10_Dpair_D940, VPOINTER_PAIR);
-  _V10_Dpair_D942.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D942.rest = VEncodePointer(&_V10_Dpair_D941, VPOINTER_PAIR);
-  _V10_Dpair_D941.first = VEncodePointer(&_V10_Dpair_D940, VPOINTER_PAIR);
-  _V10_Dpair_D941.rest = VNULL;
-  _V10_Dpair_D940.first = VEncodePointer(&_V10_Dpair_D520, VPOINTER_PAIR);
-  _V10_Dpair_D940.rest = VEncodePointer(&_V10_Dpair_D937, VPOINTER_PAIR);
-  _V10_Dpair_D939.first = VEncodePointer(&_V10_Dpair_D522, VPOINTER_PAIR);
-  _V10_Dpair_D939.rest = VEncodePointer(&_V10_Dpair_D938, VPOINTER_PAIR);
-  _V10_Dpair_D938.first = VEncodePointer(&_V10_Dpair_D937, VPOINTER_PAIR);
-  _V10_Dpair_D938.rest = VNULL;
-  _V10_Dpair_D937.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D937.rest = VEncodePointer(&_V10_Dpair_D934, VPOINTER_PAIR);
-  _V10_Dpair_D936.first = VEncodePointer(&_V10_Dpair_D610, VPOINTER_PAIR);
-  _V10_Dpair_D936.rest = VEncodePointer(&_V10_Dpair_D935, VPOINTER_PAIR);
-  _V10_Dpair_D935.first = VEncodePointer(&_V10_Dpair_D934, VPOINTER_PAIR);
-  _V10_Dpair_D935.rest = VNULL;
-  _V10_Dpair_D934.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D934.rest = VEncodePointer(&_V10_Dpair_D861, VPOINTER_PAIR);
-  _V10_Dpair_D933.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D933.rest = VEncodePointer(&_V10_Dpair_D862, VPOINTER_PAIR);
-  _V10_Dpair_D932.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D932.rest = VEncodePointer(&_V10_Dpair_D931, VPOINTER_PAIR);
-  _V10_Dpair_D931.first = VEncodePointer(&_V10_Dpair_D930, VPOINTER_PAIR);
-  _V10_Dpair_D931.rest = VNULL;
-  _V10_Dpair_D930.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D930.rest = VEncodePointer(&_V10_Dpair_D927, VPOINTER_PAIR);
-  _V10_Dpair_D929.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D929.rest = VEncodePointer(&_V10_Dpair_D928, VPOINTER_PAIR);
-  _V10_Dpair_D928.first = VEncodePointer(&_V10_Dpair_D927, VPOINTER_PAIR);
-  _V10_Dpair_D928.rest = VNULL;
-  _V10_Dpair_D927.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D927.rest = VEncodePointer(&_V10_Dpair_D926, VPOINTER_PAIR);
-  _V10_Dpair_D926.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D926.rest = VEncodePointer(&_V10_Dpair_D923, VPOINTER_PAIR);
-  _V10_Dpair_D925.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D925.rest = VEncodePointer(&_V10_Dpair_D924, VPOINTER_PAIR);
-  _V10_Dpair_D924.first = VEncodePointer(&_V10_Dpair_D923, VPOINTER_PAIR);
-  _V10_Dpair_D924.rest = VNULL;
-  _V10_Dpair_D923.first = VEncodePointer(&_V10_Dpair_D640, VPOINTER_PAIR);
-  _V10_Dpair_D923.rest = VEncodePointer(&_V10_Dpair_D922, VPOINTER_PAIR);
-  _V10_Dpair_D922.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D946.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D946.rest = VEncodePointer(&_V10_Dpair_D945, VPOINTER_PAIR);
+  _V10_Dpair_D945.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D945.rest = VEncodePointer(&_V10_Dpair_D929, VPOINTER_PAIR);
+  _V10_Dpair_D944.first = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
+  _V10_Dpair_D944.rest = VEncodePointer(&_V10_Dpair_D930, VPOINTER_PAIR);
+  _V10_Dpair_D943.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D943.rest = VEncodePointer(&_V10_Dpair_D942, VPOINTER_PAIR);
+  _V10_Dpair_D942.first = VEncodePointer(&_V10_Dpair_D941, VPOINTER_PAIR);
+  _V10_Dpair_D942.rest = VNULL;
+  _V10_Dpair_D941.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D941.rest = VEncodePointer(&_V10_Dpair_D938, VPOINTER_PAIR);
+  _V10_Dpair_D940.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D940.rest = VEncodePointer(&_V10_Dpair_D939, VPOINTER_PAIR);
+  _V10_Dpair_D939.first = VEncodePointer(&_V10_Dpair_D938, VPOINTER_PAIR);
+  _V10_Dpair_D939.rest = VNULL;
+  _V10_Dpair_D938.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D938.rest = VEncodePointer(&_V10_Dpair_D935, VPOINTER_PAIR);
+  _V10_Dpair_D937.first = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
+  _V10_Dpair_D937.rest = VEncodePointer(&_V10_Dpair_D936, VPOINTER_PAIR);
+  _V10_Dpair_D936.first = VEncodePointer(&_V10_Dpair_D935, VPOINTER_PAIR);
+  _V10_Dpair_D936.rest = VNULL;
+  _V10_Dpair_D935.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D935.rest = VEncodePointer(&_V10_Dpair_D932, VPOINTER_PAIR);
+  _V10_Dpair_D934.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D934.rest = VEncodePointer(&_V10_Dpair_D933, VPOINTER_PAIR);
+  _V10_Dpair_D933.first = VEncodePointer(&_V10_Dpair_D932, VPOINTER_PAIR);
+  _V10_Dpair_D933.rest = VNULL;
+  _V10_Dpair_D932.first = VEncodePointer(&_V10_Dpair_D518, VPOINTER_PAIR);
+  _V10_Dpair_D932.rest = VEncodePointer(&_V10_Dpair_D929, VPOINTER_PAIR);
+  _V10_Dpair_D931.first = VEncodePointer(&_V10_Dpair_D520, VPOINTER_PAIR);
+  _V10_Dpair_D931.rest = VEncodePointer(&_V10_Dpair_D930, VPOINTER_PAIR);
+  _V10_Dpair_D930.first = VEncodePointer(&_V10_Dpair_D929, VPOINTER_PAIR);
+  _V10_Dpair_D930.rest = VNULL;
+  _V10_Dpair_D929.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D929.rest = VEncodePointer(&_V10_Dpair_D926, VPOINTER_PAIR);
+  _V10_Dpair_D928.first = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
+  _V10_Dpair_D928.rest = VEncodePointer(&_V10_Dpair_D927, VPOINTER_PAIR);
+  _V10_Dpair_D927.first = VEncodePointer(&_V10_Dpair_D926, VPOINTER_PAIR);
+  _V10_Dpair_D927.rest = VNULL;
+  _V10_Dpair_D926.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D926.rest = VEncodePointer(&_V10_Dpair_D853, VPOINTER_PAIR);
+  _V10_Dpair_D925.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D925.rest = VEncodePointer(&_V10_Dpair_D854, VPOINTER_PAIR);
+  _V10_Dpair_D924.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D924.rest = VEncodePointer(&_V10_Dpair_D923, VPOINTER_PAIR);
+  _V10_Dpair_D923.first = VEncodePointer(&_V10_Dpair_D922, VPOINTER_PAIR);
+  _V10_Dpair_D923.rest = VNULL;
+  _V10_Dpair_D922.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D922.rest = VEncodePointer(&_V10_Dpair_D919, VPOINTER_PAIR);
-  _V10_Dpair_D921.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D921.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D921.rest = VEncodePointer(&_V10_Dpair_D920, VPOINTER_PAIR);
   _V10_Dpair_D920.first = VEncodePointer(&_V10_Dpair_D919, VPOINTER_PAIR);
   _V10_Dpair_D920.rest = VNULL;
-  _V10_Dpair_D919.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D919.rest = VEncodePointer(&_V10_Dpair_D916, VPOINTER_PAIR);
-  _V10_Dpair_D918.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D918.rest = VEncodePointer(&_V10_Dpair_D917, VPOINTER_PAIR);
-  _V10_Dpair_D917.first = VEncodePointer(&_V10_Dpair_D916, VPOINTER_PAIR);
-  _V10_Dpair_D917.rest = VNULL;
-  _V10_Dpair_D916.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D916.rest = VEncodePointer(&_V10_Dpair_D865, VPOINTER_PAIR);
-  _V10_Dpair_D915.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D919.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D919.rest = VEncodePointer(&_V10_Dpair_D918, VPOINTER_PAIR);
+  _V10_Dpair_D918.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D918.rest = VEncodePointer(&_V10_Dpair_D915, VPOINTER_PAIR);
+  _V10_Dpair_D917.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D917.rest = VEncodePointer(&_V10_Dpair_D916, VPOINTER_PAIR);
+  _V10_Dpair_D916.first = VEncodePointer(&_V10_Dpair_D915, VPOINTER_PAIR);
+  _V10_Dpair_D916.rest = VNULL;
+  _V10_Dpair_D915.first = VEncodePointer(&_V10_Dpair_D632, VPOINTER_PAIR);
   _V10_Dpair_D915.rest = VEncodePointer(&_V10_Dpair_D914, VPOINTER_PAIR);
-  _V10_Dpair_D914.first = VEncodePointer(&_V10_Dpair_D865, VPOINTER_PAIR);
-  _V10_Dpair_D914.rest = VNULL;
-  _V10_Dpair_D913.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D914.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D914.rest = VEncodePointer(&_V10_Dpair_D911, VPOINTER_PAIR);
+  _V10_Dpair_D913.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D913.rest = VEncodePointer(&_V10_Dpair_D912, VPOINTER_PAIR);
   _V10_Dpair_D912.first = VEncodePointer(&_V10_Dpair_D911, VPOINTER_PAIR);
   _V10_Dpair_D912.rest = VNULL;
-  _V10_Dpair_D911.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D911.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D911.rest = VEncodePointer(&_V10_Dpair_D908, VPOINTER_PAIR);
-  _V10_Dpair_D910.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D910.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D910.rest = VEncodePointer(&_V10_Dpair_D909, VPOINTER_PAIR);
   _V10_Dpair_D909.first = VEncodePointer(&_V10_Dpair_D908, VPOINTER_PAIR);
   _V10_Dpair_D909.rest = VNULL;
-  _V10_Dpair_D908.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D908.rest = VEncodePointer(&_V10_Dpair_D902, VPOINTER_PAIR);
-  _V10_Dpair_D907.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D908.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D908.rest = VEncodePointer(&_V10_Dpair_D857, VPOINTER_PAIR);
+  _V10_Dpair_D907.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D907.rest = VEncodePointer(&_V10_Dpair_D906, VPOINTER_PAIR);
-  _V10_Dpair_D906.first = VEncodePointer(&_V10_Dpair_D905, VPOINTER_PAIR);
+  _V10_Dpair_D906.first = VEncodePointer(&_V10_Dpair_D857, VPOINTER_PAIR);
   _V10_Dpair_D906.rest = VNULL;
-  _V10_Dpair_D905.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D905.rest = VEncodePointer(&_V10_Dpair_D902, VPOINTER_PAIR);
-  _V10_Dpair_D904.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D904.rest = VEncodePointer(&_V10_Dpair_D903, VPOINTER_PAIR);
-  _V10_Dpair_D903.first = VEncodePointer(&_V10_Dpair_D902, VPOINTER_PAIR);
-  _V10_Dpair_D903.rest = VNULL;
-  _V10_Dpair_D902.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D902.rest = VEncodePointer(&_V10_Dpair_D896, VPOINTER_PAIR);
-  _V10_Dpair_D901.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D901.rest = VEncodePointer(&_V10_Dpair_D900, VPOINTER_PAIR);
-  _V10_Dpair_D900.first = VEncodePointer(&_V10_Dpair_D899, VPOINTER_PAIR);
-  _V10_Dpair_D900.rest = VNULL;
-  _V10_Dpair_D899.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D899.rest = VEncodePointer(&_V10_Dpair_D896, VPOINTER_PAIR);
-  _V10_Dpair_D898.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D898.rest = VEncodePointer(&_V10_Dpair_D897, VPOINTER_PAIR);
-  _V10_Dpair_D897.first = VEncodePointer(&_V10_Dpair_D896, VPOINTER_PAIR);
-  _V10_Dpair_D897.rest = VNULL;
-  _V10_Dpair_D896.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D896.rest = VEncodePointer(&_V10_Dpair_D890, VPOINTER_PAIR);
-  _V10_Dpair_D895.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D895.rest = VEncodePointer(&_V10_Dpair_D894, VPOINTER_PAIR);
-  _V10_Dpair_D894.first = VEncodePointer(&_V10_Dpair_D893, VPOINTER_PAIR);
-  _V10_Dpair_D894.rest = VNULL;
-  _V10_Dpair_D893.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D893.rest = VEncodePointer(&_V10_Dpair_D890, VPOINTER_PAIR);
-  _V10_Dpair_D892.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D892.rest = VEncodePointer(&_V10_Dpair_D891, VPOINTER_PAIR);
-  _V10_Dpair_D891.first = VEncodePointer(&_V10_Dpair_D890, VPOINTER_PAIR);
-  _V10_Dpair_D891.rest = VNULL;
-  _V10_Dpair_D890.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D890.rest = VEncodePointer(&_V10_Dpair_D884, VPOINTER_PAIR);
-  _V10_Dpair_D889.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D889.rest = VEncodePointer(&_V10_Dpair_D888, VPOINTER_PAIR);
-  _V10_Dpair_D888.first = VEncodePointer(&_V10_Dpair_D887, VPOINTER_PAIR);
-  _V10_Dpair_D888.rest = VNULL;
-  _V10_Dpair_D887.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D887.rest = VEncodePointer(&_V10_Dpair_D884, VPOINTER_PAIR);
-  _V10_Dpair_D886.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D886.rest = VEncodePointer(&_V10_Dpair_D885, VPOINTER_PAIR);
-  _V10_Dpair_D885.first = VEncodePointer(&_V10_Dpair_D884, VPOINTER_PAIR);
-  _V10_Dpair_D885.rest = VNULL;
-  _V10_Dpair_D884.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D884.rest = VEncodePointer(&_V10_Dpair_D878, VPOINTER_PAIR);
-  _V10_Dpair_D883.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D883.rest = VEncodePointer(&_V10_Dpair_D882, VPOINTER_PAIR);
-  _V10_Dpair_D882.first = VEncodePointer(&_V10_Dpair_D881, VPOINTER_PAIR);
-  _V10_Dpair_D882.rest = VNULL;
-  _V10_Dpair_D881.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D881.rest = VEncodePointer(&_V10_Dpair_D878, VPOINTER_PAIR);
-  _V10_Dpair_D880.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D880.rest = VEncodePointer(&_V10_Dpair_D879, VPOINTER_PAIR);
-  _V10_Dpair_D879.first = VEncodePointer(&_V10_Dpair_D878, VPOINTER_PAIR);
-  _V10_Dpair_D879.rest = VNULL;
-  _V10_Dpair_D878.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D878.rest = VEncodePointer(&_V10_Dpair_D872, VPOINTER_PAIR);
-  _V10_Dpair_D877.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D877.rest = VEncodePointer(&_V10_Dpair_D876, VPOINTER_PAIR);
-  _V10_Dpair_D876.first = VEncodePointer(&_V10_Dpair_D875, VPOINTER_PAIR);
-  _V10_Dpair_D876.rest = VNULL;
-  _V10_Dpair_D875.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D875.rest = VEncodePointer(&_V10_Dpair_D872, VPOINTER_PAIR);
-  _V10_Dpair_D874.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D874.rest = VEncodePointer(&_V10_Dpair_D873, VPOINTER_PAIR);
-  _V10_Dpair_D873.first = VEncodePointer(&_V10_Dpair_D872, VPOINTER_PAIR);
-  _V10_Dpair_D873.rest = VNULL;
-  _V10_Dpair_D872.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D872.rest = VEncodePointer(&_V10_Dpair_D866, VPOINTER_PAIR);
-  _V10_Dpair_D871.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D871.rest = VEncodePointer(&_V10_Dpair_D870, VPOINTER_PAIR);
-  _V10_Dpair_D870.first = VEncodePointer(&_V10_Dpair_D869, VPOINTER_PAIR);
-  _V10_Dpair_D870.rest = VNULL;
-  _V10_Dpair_D869.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D869.rest = VEncodePointer(&_V10_Dpair_D866, VPOINTER_PAIR);
-  _V10_Dpair_D868.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D868.rest = VEncodePointer(&_V10_Dpair_D867, VPOINTER_PAIR);
-  _V10_Dpair_D867.first = VEncodePointer(&_V10_Dpair_D866, VPOINTER_PAIR);
-  _V10_Dpair_D867.rest = VNULL;
-  _V10_Dpair_D866.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
+  _V10_Dpair_D905.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D905.rest = VEncodePointer(&_V10_Dpair_D904, VPOINTER_PAIR);
+  _V10_Dpair_D904.first = VEncodePointer(&_V10_Dpair_D903, VPOINTER_PAIR);
+  _V10_Dpair_D904.rest = VNULL;
+  _V10_Dpair_D903.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D903.rest = VEncodePointer(&_V10_Dpair_D900, VPOINTER_PAIR);
+  _V10_Dpair_D902.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D902.rest = VEncodePointer(&_V10_Dpair_D901, VPOINTER_PAIR);
+  _V10_Dpair_D901.first = VEncodePointer(&_V10_Dpair_D900, VPOINTER_PAIR);
+  _V10_Dpair_D901.rest = VNULL;
+  _V10_Dpair_D900.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D900.rest = VEncodePointer(&_V10_Dpair_D894, VPOINTER_PAIR);
+  _V10_Dpair_D899.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D899.rest = VEncodePointer(&_V10_Dpair_D898, VPOINTER_PAIR);
+  _V10_Dpair_D898.first = VEncodePointer(&_V10_Dpair_D897, VPOINTER_PAIR);
+  _V10_Dpair_D898.rest = VNULL;
+  _V10_Dpair_D897.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D897.rest = VEncodePointer(&_V10_Dpair_D894, VPOINTER_PAIR);
+  _V10_Dpair_D896.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D896.rest = VEncodePointer(&_V10_Dpair_D895, VPOINTER_PAIR);
+  _V10_Dpair_D895.first = VEncodePointer(&_V10_Dpair_D894, VPOINTER_PAIR);
+  _V10_Dpair_D895.rest = VNULL;
+  _V10_Dpair_D894.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D894.rest = VEncodePointer(&_V10_Dpair_D888, VPOINTER_PAIR);
+  _V10_Dpair_D893.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D893.rest = VEncodePointer(&_V10_Dpair_D892, VPOINTER_PAIR);
+  _V10_Dpair_D892.first = VEncodePointer(&_V10_Dpair_D891, VPOINTER_PAIR);
+  _V10_Dpair_D892.rest = VNULL;
+  _V10_Dpair_D891.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D891.rest = VEncodePointer(&_V10_Dpair_D888, VPOINTER_PAIR);
+  _V10_Dpair_D890.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D890.rest = VEncodePointer(&_V10_Dpair_D889, VPOINTER_PAIR);
+  _V10_Dpair_D889.first = VEncodePointer(&_V10_Dpair_D888, VPOINTER_PAIR);
+  _V10_Dpair_D889.rest = VNULL;
+  _V10_Dpair_D888.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D888.rest = VEncodePointer(&_V10_Dpair_D882, VPOINTER_PAIR);
+  _V10_Dpair_D887.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D887.rest = VEncodePointer(&_V10_Dpair_D886, VPOINTER_PAIR);
+  _V10_Dpair_D886.first = VEncodePointer(&_V10_Dpair_D885, VPOINTER_PAIR);
+  _V10_Dpair_D886.rest = VNULL;
+  _V10_Dpair_D885.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D885.rest = VEncodePointer(&_V10_Dpair_D882, VPOINTER_PAIR);
+  _V10_Dpair_D884.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D884.rest = VEncodePointer(&_V10_Dpair_D883, VPOINTER_PAIR);
+  _V10_Dpair_D883.first = VEncodePointer(&_V10_Dpair_D882, VPOINTER_PAIR);
+  _V10_Dpair_D883.rest = VNULL;
+  _V10_Dpair_D882.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D882.rest = VEncodePointer(&_V10_Dpair_D876, VPOINTER_PAIR);
+  _V10_Dpair_D881.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D881.rest = VEncodePointer(&_V10_Dpair_D880, VPOINTER_PAIR);
+  _V10_Dpair_D880.first = VEncodePointer(&_V10_Dpair_D879, VPOINTER_PAIR);
+  _V10_Dpair_D880.rest = VNULL;
+  _V10_Dpair_D879.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D879.rest = VEncodePointer(&_V10_Dpair_D876, VPOINTER_PAIR);
+  _V10_Dpair_D878.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D878.rest = VEncodePointer(&_V10_Dpair_D877, VPOINTER_PAIR);
+  _V10_Dpair_D877.first = VEncodePointer(&_V10_Dpair_D876, VPOINTER_PAIR);
+  _V10_Dpair_D877.rest = VNULL;
+  _V10_Dpair_D876.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D876.rest = VEncodePointer(&_V10_Dpair_D870, VPOINTER_PAIR);
+  _V10_Dpair_D875.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D875.rest = VEncodePointer(&_V10_Dpair_D874, VPOINTER_PAIR);
+  _V10_Dpair_D874.first = VEncodePointer(&_V10_Dpair_D873, VPOINTER_PAIR);
+  _V10_Dpair_D874.rest = VNULL;
+  _V10_Dpair_D873.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D873.rest = VEncodePointer(&_V10_Dpair_D870, VPOINTER_PAIR);
+  _V10_Dpair_D872.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D872.rest = VEncodePointer(&_V10_Dpair_D871, VPOINTER_PAIR);
+  _V10_Dpair_D871.first = VEncodePointer(&_V10_Dpair_D870, VPOINTER_PAIR);
+  _V10_Dpair_D871.rest = VNULL;
+  _V10_Dpair_D870.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D870.rest = VEncodePointer(&_V10_Dpair_D864, VPOINTER_PAIR);
+  _V10_Dpair_D869.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D869.rest = VEncodePointer(&_V10_Dpair_D868, VPOINTER_PAIR);
+  _V10_Dpair_D868.first = VEncodePointer(&_V10_Dpair_D867, VPOINTER_PAIR);
+  _V10_Dpair_D868.rest = VNULL;
+  _V10_Dpair_D867.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D867.rest = VEncodePointer(&_V10_Dpair_D864, VPOINTER_PAIR);
+  _V10_Dpair_D866.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D866.rest = VEncodePointer(&_V10_Dpair_D865, VPOINTER_PAIR);
-  _V10_Dpair_D865.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D865.rest = VEncodePointer(&_V10_Dpair_D864, VPOINTER_PAIR);
-  _V10_Dpair_D864.first = VEncodePointer(&_V10_Dpair_D655, VPOINTER_PAIR);
-  _V10_Dpair_D864.rest = VEncodePointer(&_V10_Dpair_D861, VPOINTER_PAIR);
-  _V10_Dpair_D863.first = VEncodePointer(&_V10_Dpair_D657, VPOINTER_PAIR);
+  _V10_Dpair_D865.first = VEncodePointer(&_V10_Dpair_D864, VPOINTER_PAIR);
+  _V10_Dpair_D865.rest = VNULL;
+  _V10_Dpair_D864.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D864.rest = VEncodePointer(&_V10_Dpair_D858, VPOINTER_PAIR);
+  _V10_Dpair_D863.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D863.rest = VEncodePointer(&_V10_Dpair_D862, VPOINTER_PAIR);
   _V10_Dpair_D862.first = VEncodePointer(&_V10_Dpair_D861, VPOINTER_PAIR);
   _V10_Dpair_D862.rest = VNULL;
-  _V10_Dpair_D861.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D861.rest = VEncodePointer(&_V10_Dpair_D838, VPOINTER_PAIR);
-  _V10_Dpair_D860.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D861.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D861.rest = VEncodePointer(&_V10_Dpair_D858, VPOINTER_PAIR);
+  _V10_Dpair_D860.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D860.rest = VEncodePointer(&_V10_Dpair_D859, VPOINTER_PAIR);
   _V10_Dpair_D859.first = VEncodePointer(&_V10_Dpair_D858, VPOINTER_PAIR);
   _V10_Dpair_D859.rest = VNULL;
-  _V10_Dpair_D858.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D858.rest = VEncodePointer(&_V10_Dpair_D855, VPOINTER_PAIR);
-  _V10_Dpair_D857.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D858.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D858.rest = VEncodePointer(&_V10_Dpair_D857, VPOINTER_PAIR);
+  _V10_Dpair_D857.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
   _V10_Dpair_D857.rest = VEncodePointer(&_V10_Dpair_D856, VPOINTER_PAIR);
-  _V10_Dpair_D856.first = VEncodePointer(&_V10_Dpair_D855, VPOINTER_PAIR);
-  _V10_Dpair_D856.rest = VNULL;
-  _V10_Dpair_D855.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D855.rest = VEncodePointer(&_V10_Dpair_D852, VPOINTER_PAIR);
-  _V10_Dpair_D854.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D854.rest = VEncodePointer(&_V10_Dpair_D853, VPOINTER_PAIR);
-  _V10_Dpair_D853.first = VEncodePointer(&_V10_Dpair_D852, VPOINTER_PAIR);
-  _V10_Dpair_D853.rest = VNULL;
-  _V10_Dpair_D852.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D856.first = VEncodePointer(&_V10_Dpair_D647, VPOINTER_PAIR);
+  _V10_Dpair_D856.rest = VEncodePointer(&_V10_Dpair_D853, VPOINTER_PAIR);
+  _V10_Dpair_D855.first = VEncodePointer(&_V10_Dpair_D649, VPOINTER_PAIR);
+  _V10_Dpair_D855.rest = VEncodePointer(&_V10_Dpair_D854, VPOINTER_PAIR);
+  _V10_Dpair_D854.first = VEncodePointer(&_V10_Dpair_D853, VPOINTER_PAIR);
+  _V10_Dpair_D854.rest = VNULL;
+  _V10_Dpair_D853.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D853.rest = VEncodePointer(&_V10_Dpair_D830, VPOINTER_PAIR);
+  _V10_Dpair_D852.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D852.rest = VEncodePointer(&_V10_Dpair_D851, VPOINTER_PAIR);
-  _V10_Dpair_D851.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D851.rest = VEncodePointer(&_V10_Dpair_D848, VPOINTER_PAIR);
-  _V10_Dpair_D850.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D850.rest = VEncodePointer(&_V10_Dpair_D849, VPOINTER_PAIR);
-  _V10_Dpair_D849.first = VEncodePointer(&_V10_Dpair_D848, VPOINTER_PAIR);
-  _V10_Dpair_D849.rest = VNULL;
-  _V10_Dpair_D848.first = VEncodePointer(&_V10_Dpair_D640, VPOINTER_PAIR);
-  _V10_Dpair_D848.rest = VEncodePointer(&_V10_Dpair_D847, VPOINTER_PAIR);
-  _V10_Dpair_D847.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D851.first = VEncodePointer(&_V10_Dpair_D850, VPOINTER_PAIR);
+  _V10_Dpair_D851.rest = VNULL;
+  _V10_Dpair_D850.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D850.rest = VEncodePointer(&_V10_Dpair_D847, VPOINTER_PAIR);
+  _V10_Dpair_D849.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D849.rest = VEncodePointer(&_V10_Dpair_D848, VPOINTER_PAIR);
+  _V10_Dpair_D848.first = VEncodePointer(&_V10_Dpair_D847, VPOINTER_PAIR);
+  _V10_Dpair_D848.rest = VNULL;
+  _V10_Dpair_D847.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D847.rest = VEncodePointer(&_V10_Dpair_D844, VPOINTER_PAIR);
-  _V10_Dpair_D846.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D846.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D846.rest = VEncodePointer(&_V10_Dpair_D845, VPOINTER_PAIR);
   _V10_Dpair_D845.first = VEncodePointer(&_V10_Dpair_D844, VPOINTER_PAIR);
   _V10_Dpair_D845.rest = VNULL;
-  _V10_Dpair_D844.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D844.rest = VEncodePointer(&_V10_Dpair_D841, VPOINTER_PAIR);
-  _V10_Dpair_D843.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D843.rest = VEncodePointer(&_V10_Dpair_D842, VPOINTER_PAIR);
-  _V10_Dpair_D842.first = VEncodePointer(&_V10_Dpair_D841, VPOINTER_PAIR);
-  _V10_Dpair_D842.rest = VNULL;
-  _V10_Dpair_D841.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D841.rest = VEncodePointer(&_V10_Dpair_D838, VPOINTER_PAIR);
-  _V10_Dpair_D840.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D844.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D844.rest = VEncodePointer(&_V10_Dpair_D843, VPOINTER_PAIR);
+  _V10_Dpair_D843.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D843.rest = VEncodePointer(&_V10_Dpair_D840, VPOINTER_PAIR);
+  _V10_Dpair_D842.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D842.rest = VEncodePointer(&_V10_Dpair_D841, VPOINTER_PAIR);
+  _V10_Dpair_D841.first = VEncodePointer(&_V10_Dpair_D840, VPOINTER_PAIR);
+  _V10_Dpair_D841.rest = VNULL;
+  _V10_Dpair_D840.first = VEncodePointer(&_V10_Dpair_D632, VPOINTER_PAIR);
   _V10_Dpair_D840.rest = VEncodePointer(&_V10_Dpair_D839, VPOINTER_PAIR);
-  _V10_Dpair_D839.first = VEncodePointer(&_V10_Dpair_D838, VPOINTER_PAIR);
-  _V10_Dpair_D839.rest = VNULL;
-  _V10_Dpair_D838.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
+  _V10_Dpair_D839.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D839.rest = VEncodePointer(&_V10_Dpair_D836, VPOINTER_PAIR);
+  _V10_Dpair_D838.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D838.rest = VEncodePointer(&_V10_Dpair_D837, VPOINTER_PAIR);
-  _V10_Dpair_D837.first = VEncodePointer(&_V10_Dpair_D833, VPOINTER_PAIR);
-  _V10_Dpair_D837.rest = VEncodePointer(&_V10_Dpair_D620, VPOINTER_PAIR);
-  _V10_Dpair_D836.first = VEncodePointer(&_V10_Dpair_D835, VPOINTER_PAIR);
-  _V10_Dpair_D836.rest = VEncodePointer(&_V10_Dpair_D621, VPOINTER_PAIR);
-  _V10_Dpair_D835.first = VEncodeBool(false);
+  _V10_Dpair_D837.first = VEncodePointer(&_V10_Dpair_D836, VPOINTER_PAIR);
+  _V10_Dpair_D837.rest = VNULL;
+  _V10_Dpair_D836.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D836.rest = VEncodePointer(&_V10_Dpair_D833, VPOINTER_PAIR);
+  _V10_Dpair_D835.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D835.rest = VEncodePointer(&_V10_Dpair_D834, VPOINTER_PAIR);
   _V10_Dpair_D834.first = VEncodePointer(&_V10_Dpair_D833, VPOINTER_PAIR);
   _V10_Dpair_D834.rest = VNULL;
-  _V10_Dpair_D833.first = _V0x_D1;
-  _V10_Dpair_D833.rest = VNULL;
-  _V10_Dpair_D832.first = VEncodePointer(&_V10_Dpair_D831, VPOINTER_PAIR);
-  _V10_Dpair_D832.rest = VEncodePointer(&_V10_Dpair_D592, VPOINTER_PAIR);
+  _V10_Dpair_D833.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D833.rest = VEncodePointer(&_V10_Dpair_D830, VPOINTER_PAIR);
+  _V10_Dpair_D832.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D832.rest = VEncodePointer(&_V10_Dpair_D831, VPOINTER_PAIR);
   _V10_Dpair_D831.first = VEncodePointer(&_V10_Dpair_D830, VPOINTER_PAIR);
-  _V10_Dpair_D831.rest = VEncodePointer(&_V10_Dpair_D605, VPOINTER_PAIR);
-  _V10_Dpair_D830.first = _V0vanity;
+  _V10_Dpair_D831.rest = VNULL;
+  _V10_Dpair_D830.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
   _V10_Dpair_D830.rest = VEncodePointer(&_V10_Dpair_D829, VPOINTER_PAIR);
-  _V10_Dpair_D829.first = _V0compiler;
-  _V10_Dpair_D829.rest = VEncodePointer(&_V10_Dpair_D828, VPOINTER_PAIR);
-  _V10_Dpair_D828.first = _V0hygienic;
-  _V10_Dpair_D828.rest = VEncodePointer(&_V10_Dpair_D827, VPOINTER_PAIR);
-  _V10_Dpair_D827.first = _V0global__forms;
+  _V10_Dpair_D829.first = VEncodePointer(&_V10_Dpair_D825, VPOINTER_PAIR);
+  _V10_Dpair_D829.rest = VEncodePointer(&_V10_Dpair_D612, VPOINTER_PAIR);
+  _V10_Dpair_D828.first = VEncodePointer(&_V10_Dpair_D827, VPOINTER_PAIR);
+  _V10_Dpair_D828.rest = VEncodePointer(&_V10_Dpair_D613, VPOINTER_PAIR);
+  _V10_Dpair_D827.first = VEncodeBool(false);
   _V10_Dpair_D827.rest = VEncodePointer(&_V10_Dpair_D826, VPOINTER_PAIR);
-  _V10_Dpair_D826.first = _V0expand__quasiquote__impl;
+  _V10_Dpair_D826.first = VEncodePointer(&_V10_Dpair_D825, VPOINTER_PAIR);
   _V10_Dpair_D826.rest = VNULL;
-  _V10_Dpair_D825.first = VEncodePointer(&_V10_Dpair_D824, VPOINTER_PAIR);
-  _V10_Dpair_D825.rest = VEncodePointer(&_V10_Dpair_D592, VPOINTER_PAIR);
+  _V10_Dpair_D825.first = _V0x_D1;
+  _V10_Dpair_D825.rest = VNULL;
   _V10_Dpair_D824.first = VEncodePointer(&_V10_Dpair_D823, VPOINTER_PAIR);
-  _V10_Dpair_D824.rest = VEncodePointer(&_V10_Dpair_D579, VPOINTER_PAIR);
-  _V10_Dpair_D823.first = _V0vanity;
-  _V10_Dpair_D823.rest = VEncodePointer(&_V10_Dpair_D822, VPOINTER_PAIR);
-  _V10_Dpair_D822.first = _V0compiler;
+  _V10_Dpair_D824.rest = VEncodePointer(&_V10_Dpair_D584, VPOINTER_PAIR);
+  _V10_Dpair_D823.first = VEncodePointer(&_V10_Dpair_D822, VPOINTER_PAIR);
+  _V10_Dpair_D823.rest = VEncodePointer(&_V10_Dpair_D597, VPOINTER_PAIR);
+  _V10_Dpair_D822.first = _V0vanity;
   _V10_Dpair_D822.rest = VEncodePointer(&_V10_Dpair_D821, VPOINTER_PAIR);
-  _V10_Dpair_D821.first = _V0hygienic;
+  _V10_Dpair_D821.first = _V0compiler;
   _V10_Dpair_D821.rest = VEncodePointer(&_V10_Dpair_D820, VPOINTER_PAIR);
-  _V10_Dpair_D820.first = _V0global__forms;
+  _V10_Dpair_D820.first = _V0hygienic;
   _V10_Dpair_D820.rest = VEncodePointer(&_V10_Dpair_D819, VPOINTER_PAIR);
-  _V10_Dpair_D819.first = _V0expand__quasiquote;
-  _V10_Dpair_D819.rest = VNULL;
-  _V10_Dpair_D818.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D818.rest = VEncodePointer(&_V10_Dpair_D817, VPOINTER_PAIR);
+  _V10_Dpair_D819.first = _V0global__forms;
+  _V10_Dpair_D819.rest = VEncodePointer(&_V10_Dpair_D818, VPOINTER_PAIR);
+  _V10_Dpair_D818.first = _V0expand__quasiquote__impl;
+  _V10_Dpair_D818.rest = VNULL;
   _V10_Dpair_D817.first = VEncodePointer(&_V10_Dpair_D816, VPOINTER_PAIR);
-  _V10_Dpair_D817.rest = VNULL;
-  _V10_Dpair_D816.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D816.rest = VEncodePointer(&_V10_Dpair_D813, VPOINTER_PAIR);
-  _V10_Dpair_D815.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D817.rest = VEncodePointer(&_V10_Dpair_D584, VPOINTER_PAIR);
+  _V10_Dpair_D816.first = VEncodePointer(&_V10_Dpair_D815, VPOINTER_PAIR);
+  _V10_Dpair_D816.rest = VEncodePointer(&_V10_Dpair_D571, VPOINTER_PAIR);
+  _V10_Dpair_D815.first = _V0vanity;
   _V10_Dpair_D815.rest = VEncodePointer(&_V10_Dpair_D814, VPOINTER_PAIR);
-  _V10_Dpair_D814.first = VEncodePointer(&_V10_Dpair_D813, VPOINTER_PAIR);
-  _V10_Dpair_D814.rest = VNULL;
-  _V10_Dpair_D813.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D813.rest = VEncodePointer(&_V10_Dpair_D810, VPOINTER_PAIR);
-  _V10_Dpair_D812.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D814.first = _V0compiler;
+  _V10_Dpair_D814.rest = VEncodePointer(&_V10_Dpair_D813, VPOINTER_PAIR);
+  _V10_Dpair_D813.first = _V0hygienic;
+  _V10_Dpair_D813.rest = VEncodePointer(&_V10_Dpair_D812, VPOINTER_PAIR);
+  _V10_Dpair_D812.first = _V0global__forms;
   _V10_Dpair_D812.rest = VEncodePointer(&_V10_Dpair_D811, VPOINTER_PAIR);
-  _V10_Dpair_D811.first = VEncodePointer(&_V10_Dpair_D810, VPOINTER_PAIR);
+  _V10_Dpair_D811.first = _V0expand__quasiquote;
   _V10_Dpair_D811.rest = VNULL;
-  _V10_Dpair_D810.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D810.rest = VEncodePointer(&_V10_Dpair_D807, VPOINTER_PAIR);
-  _V10_Dpair_D809.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D809.rest = VEncodePointer(&_V10_Dpair_D808, VPOINTER_PAIR);
-  _V10_Dpair_D808.first = VEncodePointer(&_V10_Dpair_D807, VPOINTER_PAIR);
-  _V10_Dpair_D808.rest = VNULL;
-  _V10_Dpair_D807.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D807.rest = VEncodePointer(&_V10_Dpair_D614, VPOINTER_PAIR);
-  _V10_Dpair_D806.first = VEncodePointer(&_V10_Dpair_D610, VPOINTER_PAIR);
-  _V10_Dpair_D806.rest = VEncodePointer(&_V10_Dpair_D615, VPOINTER_PAIR);
-  _V10_Dpair_D805.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D805.rest = VEncodePointer(&_V10_Dpair_D804, VPOINTER_PAIR);
-  _V10_Dpair_D804.first = VEncodePointer(&_V10_Dpair_D803, VPOINTER_PAIR);
-  _V10_Dpair_D804.rest = VNULL;
-  _V10_Dpair_D803.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D803.rest = VEncodePointer(&_V10_Dpair_D800, VPOINTER_PAIR);
-  _V10_Dpair_D802.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D802.rest = VEncodePointer(&_V10_Dpair_D801, VPOINTER_PAIR);
-  _V10_Dpair_D801.first = VEncodePointer(&_V10_Dpair_D800, VPOINTER_PAIR);
-  _V10_Dpair_D801.rest = VNULL;
-  _V10_Dpair_D800.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D800.rest = VEncodePointer(&_V10_Dpair_D797, VPOINTER_PAIR);
-  _V10_Dpair_D799.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D799.rest = VEncodePointer(&_V10_Dpair_D798, VPOINTER_PAIR);
-  _V10_Dpair_D798.first = VEncodePointer(&_V10_Dpair_D797, VPOINTER_PAIR);
-  _V10_Dpair_D798.rest = VNULL;
-  _V10_Dpair_D797.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D797.rest = VEncodePointer(&_V10_Dpair_D794, VPOINTER_PAIR);
-  _V10_Dpair_D796.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D796.rest = VEncodePointer(&_V10_Dpair_D795, VPOINTER_PAIR);
-  _V10_Dpair_D795.first = VEncodePointer(&_V10_Dpair_D794, VPOINTER_PAIR);
-  _V10_Dpair_D795.rest = VNULL;
-  _V10_Dpair_D794.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D794.rest = VEncodePointer(&_V10_Dpair_D750, VPOINTER_PAIR);
-  _V10_Dpair_D793.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D793.rest = VEncodePointer(&_V10_Dpair_D792, VPOINTER_PAIR);
-  _V10_Dpair_D792.first = VEncodePointer(&_V10_Dpair_D750, VPOINTER_PAIR);
-  _V10_Dpair_D792.rest = VNULL;
-  _V10_Dpair_D791.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D810.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D810.rest = VEncodePointer(&_V10_Dpair_D809, VPOINTER_PAIR);
+  _V10_Dpair_D809.first = VEncodePointer(&_V10_Dpair_D808, VPOINTER_PAIR);
+  _V10_Dpair_D809.rest = VNULL;
+  _V10_Dpair_D808.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D808.rest = VEncodePointer(&_V10_Dpair_D805, VPOINTER_PAIR);
+  _V10_Dpair_D807.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D807.rest = VEncodePointer(&_V10_Dpair_D806, VPOINTER_PAIR);
+  _V10_Dpair_D806.first = VEncodePointer(&_V10_Dpair_D805, VPOINTER_PAIR);
+  _V10_Dpair_D806.rest = VNULL;
+  _V10_Dpair_D805.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D805.rest = VEncodePointer(&_V10_Dpair_D802, VPOINTER_PAIR);
+  _V10_Dpair_D804.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D804.rest = VEncodePointer(&_V10_Dpair_D803, VPOINTER_PAIR);
+  _V10_Dpair_D803.first = VEncodePointer(&_V10_Dpair_D802, VPOINTER_PAIR);
+  _V10_Dpair_D803.rest = VNULL;
+  _V10_Dpair_D802.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D802.rest = VEncodePointer(&_V10_Dpair_D799, VPOINTER_PAIR);
+  _V10_Dpair_D801.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D801.rest = VEncodePointer(&_V10_Dpair_D800, VPOINTER_PAIR);
+  _V10_Dpair_D800.first = VEncodePointer(&_V10_Dpair_D799, VPOINTER_PAIR);
+  _V10_Dpair_D800.rest = VNULL;
+  _V10_Dpair_D799.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D799.rest = VEncodePointer(&_V10_Dpair_D606, VPOINTER_PAIR);
+  _V10_Dpair_D798.first = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
+  _V10_Dpair_D798.rest = VEncodePointer(&_V10_Dpair_D607, VPOINTER_PAIR);
+  _V10_Dpair_D797.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D797.rest = VEncodePointer(&_V10_Dpair_D796, VPOINTER_PAIR);
+  _V10_Dpair_D796.first = VEncodePointer(&_V10_Dpair_D795, VPOINTER_PAIR);
+  _V10_Dpair_D796.rest = VNULL;
+  _V10_Dpair_D795.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D795.rest = VEncodePointer(&_V10_Dpair_D792, VPOINTER_PAIR);
+  _V10_Dpair_D794.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D794.rest = VEncodePointer(&_V10_Dpair_D793, VPOINTER_PAIR);
+  _V10_Dpair_D793.first = VEncodePointer(&_V10_Dpair_D792, VPOINTER_PAIR);
+  _V10_Dpair_D793.rest = VNULL;
+  _V10_Dpair_D792.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D792.rest = VEncodePointer(&_V10_Dpair_D789, VPOINTER_PAIR);
+  _V10_Dpair_D791.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D791.rest = VEncodePointer(&_V10_Dpair_D790, VPOINTER_PAIR);
   _V10_Dpair_D790.first = VEncodePointer(&_V10_Dpair_D789, VPOINTER_PAIR);
   _V10_Dpair_D790.rest = VNULL;
-  _V10_Dpair_D789.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D789.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D789.rest = VEncodePointer(&_V10_Dpair_D786, VPOINTER_PAIR);
-  _V10_Dpair_D788.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D788.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D788.rest = VEncodePointer(&_V10_Dpair_D787, VPOINTER_PAIR);
   _V10_Dpair_D787.first = VEncodePointer(&_V10_Dpair_D786, VPOINTER_PAIR);
   _V10_Dpair_D787.rest = VNULL;
-  _V10_Dpair_D786.first = VEncodePointer(&_V10_Dpair_D784, VPOINTER_PAIR);
-  _V10_Dpair_D786.rest = VEncodePointer(&_V10_Dpair_D785, VPOINTER_PAIR);
-  _V10_Dpair_D785.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D785.rest = VEncodePointer(&_V10_Dpair_D779, VPOINTER_PAIR);
-  _V10_Dpair_D784.first = _V0_Mx;
-  _V10_Dpair_D784.rest = VEncodePointer(&_V10_Dpair_D783, VPOINTER_PAIR);
-  _V10_Dpair_D783.first = _V0_Mx;
+  _V10_Dpair_D786.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D786.rest = VEncodePointer(&_V10_Dpair_D742, VPOINTER_PAIR);
+  _V10_Dpair_D785.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D785.rest = VEncodePointer(&_V10_Dpair_D784, VPOINTER_PAIR);
+  _V10_Dpair_D784.first = VEncodePointer(&_V10_Dpair_D742, VPOINTER_PAIR);
+  _V10_Dpair_D784.rest = VNULL;
+  _V10_Dpair_D783.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D783.rest = VEncodePointer(&_V10_Dpair_D782, VPOINTER_PAIR);
-  _V10_Dpair_D782.first = _V0_Mx;
-  _V10_Dpair_D782.rest = VEncodePointer(&_V10_Dpair_D640, VPOINTER_PAIR);
-  _V10_Dpair_D781.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D781.rest = VEncodePointer(&_V10_Dpair_D780, VPOINTER_PAIR);
-  _V10_Dpair_D780.first = VEncodePointer(&_V10_Dpair_D779, VPOINTER_PAIR);
-  _V10_Dpair_D780.rest = VNULL;
-  _V10_Dpair_D779.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D779.rest = VEncodePointer(&_V10_Dpair_D776, VPOINTER_PAIR);
-  _V10_Dpair_D778.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D782.first = VEncodePointer(&_V10_Dpair_D781, VPOINTER_PAIR);
+  _V10_Dpair_D782.rest = VNULL;
+  _V10_Dpair_D781.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D781.rest = VEncodePointer(&_V10_Dpair_D778, VPOINTER_PAIR);
+  _V10_Dpair_D780.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D780.rest = VEncodePointer(&_V10_Dpair_D779, VPOINTER_PAIR);
+  _V10_Dpair_D779.first = VEncodePointer(&_V10_Dpair_D778, VPOINTER_PAIR);
+  _V10_Dpair_D779.rest = VNULL;
+  _V10_Dpair_D778.first = VEncodePointer(&_V10_Dpair_D776, VPOINTER_PAIR);
   _V10_Dpair_D778.rest = VEncodePointer(&_V10_Dpair_D777, VPOINTER_PAIR);
-  _V10_Dpair_D777.first = VEncodePointer(&_V10_Dpair_D776, VPOINTER_PAIR);
-  _V10_Dpair_D777.rest = VNULL;
-  _V10_Dpair_D776.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D776.rest = VEncodePointer(&_V10_Dpair_D773, VPOINTER_PAIR);
-  _V10_Dpair_D775.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D777.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D777.rest = VEncodePointer(&_V10_Dpair_D771, VPOINTER_PAIR);
+  _V10_Dpair_D776.first = _V0_Mx;
+  _V10_Dpair_D776.rest = VEncodePointer(&_V10_Dpair_D775, VPOINTER_PAIR);
+  _V10_Dpair_D775.first = _V0_Mx;
   _V10_Dpair_D775.rest = VEncodePointer(&_V10_Dpair_D774, VPOINTER_PAIR);
-  _V10_Dpair_D774.first = VEncodePointer(&_V10_Dpair_D773, VPOINTER_PAIR);
-  _V10_Dpair_D774.rest = VNULL;
-  _V10_Dpair_D773.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D773.rest = VEncodePointer(&_V10_Dpair_D770, VPOINTER_PAIR);
-  _V10_Dpair_D772.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D772.rest = VEncodePointer(&_V10_Dpair_D771, VPOINTER_PAIR);
-  _V10_Dpair_D771.first = VEncodePointer(&_V10_Dpair_D770, VPOINTER_PAIR);
-  _V10_Dpair_D771.rest = VNULL;
-  _V10_Dpair_D770.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D774.first = _V0_Mx;
+  _V10_Dpair_D774.rest = VEncodePointer(&_V10_Dpair_D632, VPOINTER_PAIR);
+  _V10_Dpair_D773.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D773.rest = VEncodePointer(&_V10_Dpair_D772, VPOINTER_PAIR);
+  _V10_Dpair_D772.first = VEncodePointer(&_V10_Dpair_D771, VPOINTER_PAIR);
+  _V10_Dpair_D772.rest = VNULL;
+  _V10_Dpair_D771.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D771.rest = VEncodePointer(&_V10_Dpair_D768, VPOINTER_PAIR);
+  _V10_Dpair_D770.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D770.rest = VEncodePointer(&_V10_Dpair_D769, VPOINTER_PAIR);
-  _V10_Dpair_D769.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D769.rest = VEncodePointer(&_V10_Dpair_D766, VPOINTER_PAIR);
-  _V10_Dpair_D768.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D768.rest = VEncodePointer(&_V10_Dpair_D767, VPOINTER_PAIR);
-  _V10_Dpair_D767.first = VEncodePointer(&_V10_Dpair_D766, VPOINTER_PAIR);
-  _V10_Dpair_D767.rest = VNULL;
-  _V10_Dpair_D766.first = VEncodePointer(&_V10_Dpair_D640, VPOINTER_PAIR);
-  _V10_Dpair_D766.rest = VEncodePointer(&_V10_Dpair_D763, VPOINTER_PAIR);
-  _V10_Dpair_D765.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D765.rest = VEncodePointer(&_V10_Dpair_D764, VPOINTER_PAIR);
-  _V10_Dpair_D764.first = VEncodePointer(&_V10_Dpair_D763, VPOINTER_PAIR);
-  _V10_Dpair_D764.rest = VNULL;
-  _V10_Dpair_D763.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D763.rest = VEncodePointer(&_V10_Dpair_D760, VPOINTER_PAIR);
-  _V10_Dpair_D762.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D769.first = VEncodePointer(&_V10_Dpair_D768, VPOINTER_PAIR);
+  _V10_Dpair_D769.rest = VNULL;
+  _V10_Dpair_D768.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D768.rest = VEncodePointer(&_V10_Dpair_D765, VPOINTER_PAIR);
+  _V10_Dpair_D767.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D767.rest = VEncodePointer(&_V10_Dpair_D766, VPOINTER_PAIR);
+  _V10_Dpair_D766.first = VEncodePointer(&_V10_Dpair_D765, VPOINTER_PAIR);
+  _V10_Dpair_D766.rest = VNULL;
+  _V10_Dpair_D765.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D765.rest = VEncodePointer(&_V10_Dpair_D762, VPOINTER_PAIR);
+  _V10_Dpair_D764.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D764.rest = VEncodePointer(&_V10_Dpair_D763, VPOINTER_PAIR);
+  _V10_Dpair_D763.first = VEncodePointer(&_V10_Dpair_D762, VPOINTER_PAIR);
+  _V10_Dpair_D763.rest = VNULL;
+  _V10_Dpair_D762.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D762.rest = VEncodePointer(&_V10_Dpair_D761, VPOINTER_PAIR);
-  _V10_Dpair_D761.first = VEncodePointer(&_V10_Dpair_D760, VPOINTER_PAIR);
-  _V10_Dpair_D761.rest = VNULL;
-  _V10_Dpair_D760.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D760.rest = VEncodePointer(&_V10_Dpair_D757, VPOINTER_PAIR);
-  _V10_Dpair_D759.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D759.rest = VEncodePointer(&_V10_Dpair_D758, VPOINTER_PAIR);
-  _V10_Dpair_D758.first = VEncodePointer(&_V10_Dpair_D757, VPOINTER_PAIR);
-  _V10_Dpair_D758.rest = VNULL;
-  _V10_Dpair_D757.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D757.rest = VEncodePointer(&_V10_Dpair_D754, VPOINTER_PAIR);
-  _V10_Dpair_D756.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D756.rest = VEncodePointer(&_V10_Dpair_D755, VPOINTER_PAIR);
-  _V10_Dpair_D755.first = VEncodePointer(&_V10_Dpair_D754, VPOINTER_PAIR);
-  _V10_Dpair_D755.rest = VNULL;
-  _V10_Dpair_D754.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D754.rest = VEncodePointer(&_V10_Dpair_D751, VPOINTER_PAIR);
-  _V10_Dpair_D753.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D753.rest = VEncodePointer(&_V10_Dpair_D752, VPOINTER_PAIR);
-  _V10_Dpair_D752.first = VEncodePointer(&_V10_Dpair_D751, VPOINTER_PAIR);
-  _V10_Dpair_D752.rest = VNULL;
-  _V10_Dpair_D751.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
+  _V10_Dpair_D761.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D761.rest = VEncodePointer(&_V10_Dpair_D758, VPOINTER_PAIR);
+  _V10_Dpair_D760.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D760.rest = VEncodePointer(&_V10_Dpair_D759, VPOINTER_PAIR);
+  _V10_Dpair_D759.first = VEncodePointer(&_V10_Dpair_D758, VPOINTER_PAIR);
+  _V10_Dpair_D759.rest = VNULL;
+  _V10_Dpair_D758.first = VEncodePointer(&_V10_Dpair_D632, VPOINTER_PAIR);
+  _V10_Dpair_D758.rest = VEncodePointer(&_V10_Dpair_D755, VPOINTER_PAIR);
+  _V10_Dpair_D757.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D757.rest = VEncodePointer(&_V10_Dpair_D756, VPOINTER_PAIR);
+  _V10_Dpair_D756.first = VEncodePointer(&_V10_Dpair_D755, VPOINTER_PAIR);
+  _V10_Dpair_D756.rest = VNULL;
+  _V10_Dpair_D755.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D755.rest = VEncodePointer(&_V10_Dpair_D752, VPOINTER_PAIR);
+  _V10_Dpair_D754.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D754.rest = VEncodePointer(&_V10_Dpair_D753, VPOINTER_PAIR);
+  _V10_Dpair_D753.first = VEncodePointer(&_V10_Dpair_D752, VPOINTER_PAIR);
+  _V10_Dpair_D753.rest = VNULL;
+  _V10_Dpair_D752.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D752.rest = VEncodePointer(&_V10_Dpair_D749, VPOINTER_PAIR);
+  _V10_Dpair_D751.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D751.rest = VEncodePointer(&_V10_Dpair_D750, VPOINTER_PAIR);
-  _V10_Dpair_D750.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D750.rest = VEncodePointer(&_V10_Dpair_D734, VPOINTER_PAIR);
-  _V10_Dpair_D749.first = VEncodePointer(&_V10_Dpair_D610, VPOINTER_PAIR);
-  _V10_Dpair_D749.rest = VEncodePointer(&_V10_Dpair_D735, VPOINTER_PAIR);
-  _V10_Dpair_D748.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D750.first = VEncodePointer(&_V10_Dpair_D749, VPOINTER_PAIR);
+  _V10_Dpair_D750.rest = VNULL;
+  _V10_Dpair_D749.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D749.rest = VEncodePointer(&_V10_Dpair_D746, VPOINTER_PAIR);
+  _V10_Dpair_D748.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D748.rest = VEncodePointer(&_V10_Dpair_D747, VPOINTER_PAIR);
   _V10_Dpair_D747.first = VEncodePointer(&_V10_Dpair_D746, VPOINTER_PAIR);
   _V10_Dpair_D747.rest = VNULL;
-  _V10_Dpair_D746.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D746.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D746.rest = VEncodePointer(&_V10_Dpair_D743, VPOINTER_PAIR);
-  _V10_Dpair_D745.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D745.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D745.rest = VEncodePointer(&_V10_Dpair_D744, VPOINTER_PAIR);
   _V10_Dpair_D744.first = VEncodePointer(&_V10_Dpair_D743, VPOINTER_PAIR);
   _V10_Dpair_D744.rest = VNULL;
-  _V10_Dpair_D743.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D743.rest = VEncodePointer(&_V10_Dpair_D740, VPOINTER_PAIR);
-  _V10_Dpair_D742.first = VEncodePointer(&_V10_Dpair_D610, VPOINTER_PAIR);
-  _V10_Dpair_D742.rest = VEncodePointer(&_V10_Dpair_D741, VPOINTER_PAIR);
-  _V10_Dpair_D741.first = VEncodePointer(&_V10_Dpair_D740, VPOINTER_PAIR);
-  _V10_Dpair_D741.rest = VNULL;
-  _V10_Dpair_D740.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D740.rest = VEncodePointer(&_V10_Dpair_D737, VPOINTER_PAIR);
-  _V10_Dpair_D739.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D739.rest = VEncodePointer(&_V10_Dpair_D738, VPOINTER_PAIR);
-  _V10_Dpair_D738.first = VEncodePointer(&_V10_Dpair_D737, VPOINTER_PAIR);
-  _V10_Dpair_D738.rest = VNULL;
-  _V10_Dpair_D737.first = VEncodePointer(&_V10_Dpair_D520, VPOINTER_PAIR);
-  _V10_Dpair_D737.rest = VEncodePointer(&_V10_Dpair_D734, VPOINTER_PAIR);
-  _V10_Dpair_D736.first = VEncodePointer(&_V10_Dpair_D522, VPOINTER_PAIR);
-  _V10_Dpair_D736.rest = VEncodePointer(&_V10_Dpair_D735, VPOINTER_PAIR);
-  _V10_Dpair_D735.first = VEncodePointer(&_V10_Dpair_D734, VPOINTER_PAIR);
-  _V10_Dpair_D735.rest = VNULL;
-  _V10_Dpair_D734.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D734.rest = VEncodePointer(&_V10_Dpair_D731, VPOINTER_PAIR);
-  _V10_Dpair_D733.first = VEncodePointer(&_V10_Dpair_D610, VPOINTER_PAIR);
-  _V10_Dpair_D733.rest = VEncodePointer(&_V10_Dpair_D732, VPOINTER_PAIR);
-  _V10_Dpair_D732.first = VEncodePointer(&_V10_Dpair_D731, VPOINTER_PAIR);
-  _V10_Dpair_D732.rest = VNULL;
-  _V10_Dpair_D731.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D731.rest = VEncodePointer(&_V10_Dpair_D658, VPOINTER_PAIR);
-  _V10_Dpair_D730.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D730.rest = VEncodePointer(&_V10_Dpair_D659, VPOINTER_PAIR);
-  _V10_Dpair_D729.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D729.rest = VEncodePointer(&_V10_Dpair_D728, VPOINTER_PAIR);
-  _V10_Dpair_D728.first = VEncodePointer(&_V10_Dpair_D727, VPOINTER_PAIR);
-  _V10_Dpair_D728.rest = VNULL;
-  _V10_Dpair_D727.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D727.rest = VEncodePointer(&_V10_Dpair_D724, VPOINTER_PAIR);
-  _V10_Dpair_D726.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D726.rest = VEncodePointer(&_V10_Dpair_D725, VPOINTER_PAIR);
-  _V10_Dpair_D725.first = VEncodePointer(&_V10_Dpair_D724, VPOINTER_PAIR);
-  _V10_Dpair_D725.rest = VNULL;
-  _V10_Dpair_D724.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D724.rest = VEncodePointer(&_V10_Dpair_D723, VPOINTER_PAIR);
-  _V10_Dpair_D723.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D723.rest = VEncodePointer(&_V10_Dpair_D720, VPOINTER_PAIR);
-  _V10_Dpair_D722.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D722.rest = VEncodePointer(&_V10_Dpair_D721, VPOINTER_PAIR);
-  _V10_Dpair_D721.first = VEncodePointer(&_V10_Dpair_D720, VPOINTER_PAIR);
-  _V10_Dpair_D721.rest = VNULL;
-  _V10_Dpair_D720.first = VEncodePointer(&_V10_Dpair_D640, VPOINTER_PAIR);
-  _V10_Dpair_D720.rest = VEncodePointer(&_V10_Dpair_D719, VPOINTER_PAIR);
-  _V10_Dpair_D719.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D743.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D743.rest = VEncodePointer(&_V10_Dpair_D742, VPOINTER_PAIR);
+  _V10_Dpair_D742.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D742.rest = VEncodePointer(&_V10_Dpair_D726, VPOINTER_PAIR);
+  _V10_Dpair_D741.first = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
+  _V10_Dpair_D741.rest = VEncodePointer(&_V10_Dpair_D727, VPOINTER_PAIR);
+  _V10_Dpair_D740.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D740.rest = VEncodePointer(&_V10_Dpair_D739, VPOINTER_PAIR);
+  _V10_Dpair_D739.first = VEncodePointer(&_V10_Dpair_D738, VPOINTER_PAIR);
+  _V10_Dpair_D739.rest = VNULL;
+  _V10_Dpair_D738.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D738.rest = VEncodePointer(&_V10_Dpair_D735, VPOINTER_PAIR);
+  _V10_Dpair_D737.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D737.rest = VEncodePointer(&_V10_Dpair_D736, VPOINTER_PAIR);
+  _V10_Dpair_D736.first = VEncodePointer(&_V10_Dpair_D735, VPOINTER_PAIR);
+  _V10_Dpair_D736.rest = VNULL;
+  _V10_Dpair_D735.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D735.rest = VEncodePointer(&_V10_Dpair_D732, VPOINTER_PAIR);
+  _V10_Dpair_D734.first = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
+  _V10_Dpair_D734.rest = VEncodePointer(&_V10_Dpair_D733, VPOINTER_PAIR);
+  _V10_Dpair_D733.first = VEncodePointer(&_V10_Dpair_D732, VPOINTER_PAIR);
+  _V10_Dpair_D733.rest = VNULL;
+  _V10_Dpair_D732.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D732.rest = VEncodePointer(&_V10_Dpair_D729, VPOINTER_PAIR);
+  _V10_Dpair_D731.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D731.rest = VEncodePointer(&_V10_Dpair_D730, VPOINTER_PAIR);
+  _V10_Dpair_D730.first = VEncodePointer(&_V10_Dpair_D729, VPOINTER_PAIR);
+  _V10_Dpair_D730.rest = VNULL;
+  _V10_Dpair_D729.first = VEncodePointer(&_V10_Dpair_D518, VPOINTER_PAIR);
+  _V10_Dpair_D729.rest = VEncodePointer(&_V10_Dpair_D726, VPOINTER_PAIR);
+  _V10_Dpair_D728.first = VEncodePointer(&_V10_Dpair_D520, VPOINTER_PAIR);
+  _V10_Dpair_D728.rest = VEncodePointer(&_V10_Dpair_D727, VPOINTER_PAIR);
+  _V10_Dpair_D727.first = VEncodePointer(&_V10_Dpair_D726, VPOINTER_PAIR);
+  _V10_Dpair_D727.rest = VNULL;
+  _V10_Dpair_D726.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D726.rest = VEncodePointer(&_V10_Dpair_D723, VPOINTER_PAIR);
+  _V10_Dpair_D725.first = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
+  _V10_Dpair_D725.rest = VEncodePointer(&_V10_Dpair_D724, VPOINTER_PAIR);
+  _V10_Dpair_D724.first = VEncodePointer(&_V10_Dpair_D723, VPOINTER_PAIR);
+  _V10_Dpair_D724.rest = VNULL;
+  _V10_Dpair_D723.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D723.rest = VEncodePointer(&_V10_Dpair_D650, VPOINTER_PAIR);
+  _V10_Dpair_D722.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D722.rest = VEncodePointer(&_V10_Dpair_D651, VPOINTER_PAIR);
+  _V10_Dpair_D721.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D721.rest = VEncodePointer(&_V10_Dpair_D720, VPOINTER_PAIR);
+  _V10_Dpair_D720.first = VEncodePointer(&_V10_Dpair_D719, VPOINTER_PAIR);
+  _V10_Dpair_D720.rest = VNULL;
+  _V10_Dpair_D719.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D719.rest = VEncodePointer(&_V10_Dpair_D716, VPOINTER_PAIR);
-  _V10_Dpair_D718.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D718.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D718.rest = VEncodePointer(&_V10_Dpair_D717, VPOINTER_PAIR);
   _V10_Dpair_D717.first = VEncodePointer(&_V10_Dpair_D716, VPOINTER_PAIR);
   _V10_Dpair_D717.rest = VNULL;
-  _V10_Dpair_D716.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D716.rest = VEncodePointer(&_V10_Dpair_D713, VPOINTER_PAIR);
-  _V10_Dpair_D715.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D715.rest = VEncodePointer(&_V10_Dpair_D714, VPOINTER_PAIR);
-  _V10_Dpair_D714.first = VEncodePointer(&_V10_Dpair_D713, VPOINTER_PAIR);
-  _V10_Dpair_D714.rest = VNULL;
-  _V10_Dpair_D713.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D713.rest = VEncodePointer(&_V10_Dpair_D662, VPOINTER_PAIR);
-  _V10_Dpair_D712.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D716.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D716.rest = VEncodePointer(&_V10_Dpair_D715, VPOINTER_PAIR);
+  _V10_Dpair_D715.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D715.rest = VEncodePointer(&_V10_Dpair_D712, VPOINTER_PAIR);
+  _V10_Dpair_D714.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D714.rest = VEncodePointer(&_V10_Dpair_D713, VPOINTER_PAIR);
+  _V10_Dpair_D713.first = VEncodePointer(&_V10_Dpair_D712, VPOINTER_PAIR);
+  _V10_Dpair_D713.rest = VNULL;
+  _V10_Dpair_D712.first = VEncodePointer(&_V10_Dpair_D632, VPOINTER_PAIR);
   _V10_Dpair_D712.rest = VEncodePointer(&_V10_Dpair_D711, VPOINTER_PAIR);
-  _V10_Dpair_D711.first = VEncodePointer(&_V10_Dpair_D662, VPOINTER_PAIR);
-  _V10_Dpair_D711.rest = VNULL;
-  _V10_Dpair_D710.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D711.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D711.rest = VEncodePointer(&_V10_Dpair_D708, VPOINTER_PAIR);
+  _V10_Dpair_D710.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D710.rest = VEncodePointer(&_V10_Dpair_D709, VPOINTER_PAIR);
   _V10_Dpair_D709.first = VEncodePointer(&_V10_Dpair_D708, VPOINTER_PAIR);
   _V10_Dpair_D709.rest = VNULL;
-  _V10_Dpair_D708.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D708.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D708.rest = VEncodePointer(&_V10_Dpair_D705, VPOINTER_PAIR);
-  _V10_Dpair_D707.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D707.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D707.rest = VEncodePointer(&_V10_Dpair_D706, VPOINTER_PAIR);
   _V10_Dpair_D706.first = VEncodePointer(&_V10_Dpair_D705, VPOINTER_PAIR);
   _V10_Dpair_D706.rest = VNULL;
-  _V10_Dpair_D705.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D705.rest = VEncodePointer(&_V10_Dpair_D699, VPOINTER_PAIR);
-  _V10_Dpair_D704.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D705.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D705.rest = VEncodePointer(&_V10_Dpair_D654, VPOINTER_PAIR);
+  _V10_Dpair_D704.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D704.rest = VEncodePointer(&_V10_Dpair_D703, VPOINTER_PAIR);
-  _V10_Dpair_D703.first = VEncodePointer(&_V10_Dpair_D702, VPOINTER_PAIR);
+  _V10_Dpair_D703.first = VEncodePointer(&_V10_Dpair_D654, VPOINTER_PAIR);
   _V10_Dpair_D703.rest = VNULL;
-  _V10_Dpair_D702.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D702.rest = VEncodePointer(&_V10_Dpair_D699, VPOINTER_PAIR);
-  _V10_Dpair_D701.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D701.rest = VEncodePointer(&_V10_Dpair_D700, VPOINTER_PAIR);
-  _V10_Dpair_D700.first = VEncodePointer(&_V10_Dpair_D699, VPOINTER_PAIR);
-  _V10_Dpair_D700.rest = VNULL;
-  _V10_Dpair_D699.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D699.rest = VEncodePointer(&_V10_Dpair_D693, VPOINTER_PAIR);
-  _V10_Dpair_D698.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D698.rest = VEncodePointer(&_V10_Dpair_D697, VPOINTER_PAIR);
-  _V10_Dpair_D697.first = VEncodePointer(&_V10_Dpair_D696, VPOINTER_PAIR);
-  _V10_Dpair_D697.rest = VNULL;
-  _V10_Dpair_D696.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D696.rest = VEncodePointer(&_V10_Dpair_D693, VPOINTER_PAIR);
-  _V10_Dpair_D695.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D695.rest = VEncodePointer(&_V10_Dpair_D694, VPOINTER_PAIR);
-  _V10_Dpair_D694.first = VEncodePointer(&_V10_Dpair_D693, VPOINTER_PAIR);
-  _V10_Dpair_D694.rest = VNULL;
-  _V10_Dpair_D693.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D693.rest = VEncodePointer(&_V10_Dpair_D687, VPOINTER_PAIR);
-  _V10_Dpair_D692.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D692.rest = VEncodePointer(&_V10_Dpair_D691, VPOINTER_PAIR);
-  _V10_Dpair_D691.first = VEncodePointer(&_V10_Dpair_D690, VPOINTER_PAIR);
-  _V10_Dpair_D691.rest = VNULL;
-  _V10_Dpair_D690.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D690.rest = VEncodePointer(&_V10_Dpair_D687, VPOINTER_PAIR);
-  _V10_Dpair_D689.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D689.rest = VEncodePointer(&_V10_Dpair_D688, VPOINTER_PAIR);
-  _V10_Dpair_D688.first = VEncodePointer(&_V10_Dpair_D687, VPOINTER_PAIR);
-  _V10_Dpair_D688.rest = VNULL;
-  _V10_Dpair_D687.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D687.rest = VEncodePointer(&_V10_Dpair_D681, VPOINTER_PAIR);
-  _V10_Dpair_D686.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D686.rest = VEncodePointer(&_V10_Dpair_D685, VPOINTER_PAIR);
-  _V10_Dpair_D685.first = VEncodePointer(&_V10_Dpair_D684, VPOINTER_PAIR);
-  _V10_Dpair_D685.rest = VNULL;
-  _V10_Dpair_D684.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D684.rest = VEncodePointer(&_V10_Dpair_D681, VPOINTER_PAIR);
-  _V10_Dpair_D683.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D683.rest = VEncodePointer(&_V10_Dpair_D682, VPOINTER_PAIR);
-  _V10_Dpair_D682.first = VEncodePointer(&_V10_Dpair_D681, VPOINTER_PAIR);
-  _V10_Dpair_D682.rest = VNULL;
-  _V10_Dpair_D681.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D681.rest = VEncodePointer(&_V10_Dpair_D675, VPOINTER_PAIR);
-  _V10_Dpair_D680.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D680.rest = VEncodePointer(&_V10_Dpair_D679, VPOINTER_PAIR);
-  _V10_Dpair_D679.first = VEncodePointer(&_V10_Dpair_D678, VPOINTER_PAIR);
-  _V10_Dpair_D679.rest = VNULL;
-  _V10_Dpair_D678.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D678.rest = VEncodePointer(&_V10_Dpair_D675, VPOINTER_PAIR);
-  _V10_Dpair_D677.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D677.rest = VEncodePointer(&_V10_Dpair_D676, VPOINTER_PAIR);
-  _V10_Dpair_D676.first = VEncodePointer(&_V10_Dpair_D675, VPOINTER_PAIR);
-  _V10_Dpair_D676.rest = VNULL;
-  _V10_Dpair_D675.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D675.rest = VEncodePointer(&_V10_Dpair_D669, VPOINTER_PAIR);
-  _V10_Dpair_D674.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D674.rest = VEncodePointer(&_V10_Dpair_D673, VPOINTER_PAIR);
-  _V10_Dpair_D673.first = VEncodePointer(&_V10_Dpair_D672, VPOINTER_PAIR);
-  _V10_Dpair_D673.rest = VNULL;
-  _V10_Dpair_D672.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D672.rest = VEncodePointer(&_V10_Dpair_D669, VPOINTER_PAIR);
-  _V10_Dpair_D671.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D671.rest = VEncodePointer(&_V10_Dpair_D670, VPOINTER_PAIR);
-  _V10_Dpair_D670.first = VEncodePointer(&_V10_Dpair_D669, VPOINTER_PAIR);
-  _V10_Dpair_D670.rest = VNULL;
-  _V10_Dpair_D669.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D669.rest = VEncodePointer(&_V10_Dpair_D663, VPOINTER_PAIR);
-  _V10_Dpair_D668.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D668.rest = VEncodePointer(&_V10_Dpair_D667, VPOINTER_PAIR);
-  _V10_Dpair_D667.first = VEncodePointer(&_V10_Dpair_D666, VPOINTER_PAIR);
-  _V10_Dpair_D667.rest = VNULL;
-  _V10_Dpair_D666.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D666.rest = VEncodePointer(&_V10_Dpair_D663, VPOINTER_PAIR);
-  _V10_Dpair_D665.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D665.rest = VEncodePointer(&_V10_Dpair_D664, VPOINTER_PAIR);
-  _V10_Dpair_D664.first = VEncodePointer(&_V10_Dpair_D663, VPOINTER_PAIR);
-  _V10_Dpair_D664.rest = VNULL;
-  _V10_Dpair_D663.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
+  _V10_Dpair_D702.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D702.rest = VEncodePointer(&_V10_Dpair_D701, VPOINTER_PAIR);
+  _V10_Dpair_D701.first = VEncodePointer(&_V10_Dpair_D700, VPOINTER_PAIR);
+  _V10_Dpair_D701.rest = VNULL;
+  _V10_Dpair_D700.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D700.rest = VEncodePointer(&_V10_Dpair_D697, VPOINTER_PAIR);
+  _V10_Dpair_D699.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D699.rest = VEncodePointer(&_V10_Dpair_D698, VPOINTER_PAIR);
+  _V10_Dpair_D698.first = VEncodePointer(&_V10_Dpair_D697, VPOINTER_PAIR);
+  _V10_Dpair_D698.rest = VNULL;
+  _V10_Dpair_D697.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D697.rest = VEncodePointer(&_V10_Dpair_D691, VPOINTER_PAIR);
+  _V10_Dpair_D696.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D696.rest = VEncodePointer(&_V10_Dpair_D695, VPOINTER_PAIR);
+  _V10_Dpair_D695.first = VEncodePointer(&_V10_Dpair_D694, VPOINTER_PAIR);
+  _V10_Dpair_D695.rest = VNULL;
+  _V10_Dpair_D694.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D694.rest = VEncodePointer(&_V10_Dpair_D691, VPOINTER_PAIR);
+  _V10_Dpair_D693.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D693.rest = VEncodePointer(&_V10_Dpair_D692, VPOINTER_PAIR);
+  _V10_Dpair_D692.first = VEncodePointer(&_V10_Dpair_D691, VPOINTER_PAIR);
+  _V10_Dpair_D692.rest = VNULL;
+  _V10_Dpair_D691.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D691.rest = VEncodePointer(&_V10_Dpair_D685, VPOINTER_PAIR);
+  _V10_Dpair_D690.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D690.rest = VEncodePointer(&_V10_Dpair_D689, VPOINTER_PAIR);
+  _V10_Dpair_D689.first = VEncodePointer(&_V10_Dpair_D688, VPOINTER_PAIR);
+  _V10_Dpair_D689.rest = VNULL;
+  _V10_Dpair_D688.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D688.rest = VEncodePointer(&_V10_Dpair_D685, VPOINTER_PAIR);
+  _V10_Dpair_D687.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D687.rest = VEncodePointer(&_V10_Dpair_D686, VPOINTER_PAIR);
+  _V10_Dpair_D686.first = VEncodePointer(&_V10_Dpair_D685, VPOINTER_PAIR);
+  _V10_Dpair_D686.rest = VNULL;
+  _V10_Dpair_D685.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D685.rest = VEncodePointer(&_V10_Dpair_D679, VPOINTER_PAIR);
+  _V10_Dpair_D684.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D684.rest = VEncodePointer(&_V10_Dpair_D683, VPOINTER_PAIR);
+  _V10_Dpair_D683.first = VEncodePointer(&_V10_Dpair_D682, VPOINTER_PAIR);
+  _V10_Dpair_D683.rest = VNULL;
+  _V10_Dpair_D682.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D682.rest = VEncodePointer(&_V10_Dpair_D679, VPOINTER_PAIR);
+  _V10_Dpair_D681.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D681.rest = VEncodePointer(&_V10_Dpair_D680, VPOINTER_PAIR);
+  _V10_Dpair_D680.first = VEncodePointer(&_V10_Dpair_D679, VPOINTER_PAIR);
+  _V10_Dpair_D680.rest = VNULL;
+  _V10_Dpair_D679.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D679.rest = VEncodePointer(&_V10_Dpair_D673, VPOINTER_PAIR);
+  _V10_Dpair_D678.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D678.rest = VEncodePointer(&_V10_Dpair_D677, VPOINTER_PAIR);
+  _V10_Dpair_D677.first = VEncodePointer(&_V10_Dpair_D676, VPOINTER_PAIR);
+  _V10_Dpair_D677.rest = VNULL;
+  _V10_Dpair_D676.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D676.rest = VEncodePointer(&_V10_Dpair_D673, VPOINTER_PAIR);
+  _V10_Dpair_D675.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D675.rest = VEncodePointer(&_V10_Dpair_D674, VPOINTER_PAIR);
+  _V10_Dpair_D674.first = VEncodePointer(&_V10_Dpair_D673, VPOINTER_PAIR);
+  _V10_Dpair_D674.rest = VNULL;
+  _V10_Dpair_D673.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D673.rest = VEncodePointer(&_V10_Dpair_D667, VPOINTER_PAIR);
+  _V10_Dpair_D672.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D672.rest = VEncodePointer(&_V10_Dpair_D671, VPOINTER_PAIR);
+  _V10_Dpair_D671.first = VEncodePointer(&_V10_Dpair_D670, VPOINTER_PAIR);
+  _V10_Dpair_D671.rest = VNULL;
+  _V10_Dpair_D670.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D670.rest = VEncodePointer(&_V10_Dpair_D667, VPOINTER_PAIR);
+  _V10_Dpair_D669.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D669.rest = VEncodePointer(&_V10_Dpair_D668, VPOINTER_PAIR);
+  _V10_Dpair_D668.first = VEncodePointer(&_V10_Dpair_D667, VPOINTER_PAIR);
+  _V10_Dpair_D668.rest = VNULL;
+  _V10_Dpair_D667.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D667.rest = VEncodePointer(&_V10_Dpair_D661, VPOINTER_PAIR);
+  _V10_Dpair_D666.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D666.rest = VEncodePointer(&_V10_Dpair_D665, VPOINTER_PAIR);
+  _V10_Dpair_D665.first = VEncodePointer(&_V10_Dpair_D664, VPOINTER_PAIR);
+  _V10_Dpair_D665.rest = VNULL;
+  _V10_Dpair_D664.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D664.rest = VEncodePointer(&_V10_Dpair_D661, VPOINTER_PAIR);
+  _V10_Dpair_D663.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D663.rest = VEncodePointer(&_V10_Dpair_D662, VPOINTER_PAIR);
-  _V10_Dpair_D662.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D662.rest = VEncodePointer(&_V10_Dpair_D661, VPOINTER_PAIR);
-  _V10_Dpair_D661.first = VEncodePointer(&_V10_Dpair_D655, VPOINTER_PAIR);
-  _V10_Dpair_D661.rest = VEncodePointer(&_V10_Dpair_D658, VPOINTER_PAIR);
-  _V10_Dpair_D660.first = VEncodePointer(&_V10_Dpair_D657, VPOINTER_PAIR);
+  _V10_Dpair_D662.first = VEncodePointer(&_V10_Dpair_D661, VPOINTER_PAIR);
+  _V10_Dpair_D662.rest = VNULL;
+  _V10_Dpair_D661.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D661.rest = VEncodePointer(&_V10_Dpair_D655, VPOINTER_PAIR);
+  _V10_Dpair_D660.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D660.rest = VEncodePointer(&_V10_Dpair_D659, VPOINTER_PAIR);
   _V10_Dpair_D659.first = VEncodePointer(&_V10_Dpair_D658, VPOINTER_PAIR);
   _V10_Dpair_D659.rest = VNULL;
-  _V10_Dpair_D658.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D658.rest = VEncodePointer(&_V10_Dpair_D631, VPOINTER_PAIR);
-  _V10_Dpair_D657.first = VEncodeBool(false);
+  _V10_Dpair_D658.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D658.rest = VEncodePointer(&_V10_Dpair_D655, VPOINTER_PAIR);
+  _V10_Dpair_D657.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D657.rest = VEncodePointer(&_V10_Dpair_D656, VPOINTER_PAIR);
   _V10_Dpair_D656.first = VEncodePointer(&_V10_Dpair_D655, VPOINTER_PAIR);
   _V10_Dpair_D656.rest = VNULL;
-  _V10_Dpair_D655.first = _V0x;
-  _V10_Dpair_D655.rest = VNULL;
-  _V10_Dpair_D654.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D655.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D655.rest = VEncodePointer(&_V10_Dpair_D654, VPOINTER_PAIR);
+  _V10_Dpair_D654.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
   _V10_Dpair_D654.rest = VEncodePointer(&_V10_Dpair_D653, VPOINTER_PAIR);
-  _V10_Dpair_D653.first = VEncodePointer(&_V10_Dpair_D652, VPOINTER_PAIR);
-  _V10_Dpair_D653.rest = VNULL;
-  _V10_Dpair_D652.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D652.rest = VEncodePointer(&_V10_Dpair_D649, VPOINTER_PAIR);
-  _V10_Dpair_D651.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D651.rest = VEncodePointer(&_V10_Dpair_D650, VPOINTER_PAIR);
-  _V10_Dpair_D650.first = VEncodePointer(&_V10_Dpair_D649, VPOINTER_PAIR);
-  _V10_Dpair_D650.rest = VNULL;
-  _V10_Dpair_D649.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D649.rest = VEncodePointer(&_V10_Dpair_D646, VPOINTER_PAIR);
-  _V10_Dpair_D648.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D648.rest = VEncodePointer(&_V10_Dpair_D647, VPOINTER_PAIR);
-  _V10_Dpair_D647.first = VEncodePointer(&_V10_Dpair_D646, VPOINTER_PAIR);
+  _V10_Dpair_D653.first = VEncodePointer(&_V10_Dpair_D647, VPOINTER_PAIR);
+  _V10_Dpair_D653.rest = VEncodePointer(&_V10_Dpair_D650, VPOINTER_PAIR);
+  _V10_Dpair_D652.first = VEncodePointer(&_V10_Dpair_D649, VPOINTER_PAIR);
+  _V10_Dpair_D652.rest = VEncodePointer(&_V10_Dpair_D651, VPOINTER_PAIR);
+  _V10_Dpair_D651.first = VEncodePointer(&_V10_Dpair_D650, VPOINTER_PAIR);
+  _V10_Dpair_D651.rest = VNULL;
+  _V10_Dpair_D650.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D650.rest = VEncodePointer(&_V10_Dpair_D623, VPOINTER_PAIR);
+  _V10_Dpair_D649.first = VEncodeBool(false);
+  _V10_Dpair_D649.rest = VEncodePointer(&_V10_Dpair_D648, VPOINTER_PAIR);
+  _V10_Dpair_D648.first = VEncodePointer(&_V10_Dpair_D647, VPOINTER_PAIR);
+  _V10_Dpair_D648.rest = VNULL;
+  _V10_Dpair_D647.first = _V0x;
   _V10_Dpair_D647.rest = VNULL;
-  _V10_Dpair_D646.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D646.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D646.rest = VEncodePointer(&_V10_Dpair_D645, VPOINTER_PAIR);
-  _V10_Dpair_D645.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D645.rest = VEncodePointer(&_V10_Dpair_D642, VPOINTER_PAIR);
-  _V10_Dpair_D644.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D644.rest = VEncodePointer(&_V10_Dpair_D643, VPOINTER_PAIR);
-  _V10_Dpair_D643.first = VEncodePointer(&_V10_Dpair_D642, VPOINTER_PAIR);
-  _V10_Dpair_D643.rest = VNULL;
-  _V10_Dpair_D642.first = VEncodePointer(&_V10_Dpair_D640, VPOINTER_PAIR);
-  _V10_Dpair_D642.rest = VEncodePointer(&_V10_Dpair_D641, VPOINTER_PAIR);
-  _V10_Dpair_D641.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D641.rest = VEncodePointer(&_V10_Dpair_D637, VPOINTER_PAIR);
-  _V10_Dpair_D640.first = _V0_Mx;
-  _V10_Dpair_D640.rest = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D639.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D639.rest = VEncodePointer(&_V10_Dpair_D638, VPOINTER_PAIR);
-  _V10_Dpair_D638.first = VEncodePointer(&_V10_Dpair_D637, VPOINTER_PAIR);
-  _V10_Dpair_D638.rest = VNULL;
-  _V10_Dpair_D637.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
+  _V10_Dpair_D645.first = VEncodePointer(&_V10_Dpair_D644, VPOINTER_PAIR);
+  _V10_Dpair_D645.rest = VNULL;
+  _V10_Dpair_D644.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D644.rest = VEncodePointer(&_V10_Dpair_D641, VPOINTER_PAIR);
+  _V10_Dpair_D643.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D643.rest = VEncodePointer(&_V10_Dpair_D642, VPOINTER_PAIR);
+  _V10_Dpair_D642.first = VEncodePointer(&_V10_Dpair_D641, VPOINTER_PAIR);
+  _V10_Dpair_D642.rest = VNULL;
+  _V10_Dpair_D641.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D641.rest = VEncodePointer(&_V10_Dpair_D638, VPOINTER_PAIR);
+  _V10_Dpair_D640.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D640.rest = VEncodePointer(&_V10_Dpair_D639, VPOINTER_PAIR);
+  _V10_Dpair_D639.first = VEncodePointer(&_V10_Dpair_D638, VPOINTER_PAIR);
+  _V10_Dpair_D639.rest = VNULL;
+  _V10_Dpair_D638.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D638.rest = VEncodePointer(&_V10_Dpair_D637, VPOINTER_PAIR);
+  _V10_Dpair_D637.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
   _V10_Dpair_D637.rest = VEncodePointer(&_V10_Dpair_D634, VPOINTER_PAIR);
-  _V10_Dpair_D636.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D636.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D636.rest = VEncodePointer(&_V10_Dpair_D635, VPOINTER_PAIR);
   _V10_Dpair_D635.first = VEncodePointer(&_V10_Dpair_D634, VPOINTER_PAIR);
   _V10_Dpair_D635.rest = VNULL;
-  _V10_Dpair_D634.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D634.rest = VEncodePointer(&_V10_Dpair_D631, VPOINTER_PAIR);
-  _V10_Dpair_D633.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D633.rest = VEncodePointer(&_V10_Dpair_D632, VPOINTER_PAIR);
-  _V10_Dpair_D632.first = VEncodePointer(&_V10_Dpair_D631, VPOINTER_PAIR);
-  _V10_Dpair_D632.rest = VNULL;
-  _V10_Dpair_D631.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
+  _V10_Dpair_D634.first = VEncodePointer(&_V10_Dpair_D632, VPOINTER_PAIR);
+  _V10_Dpair_D634.rest = VEncodePointer(&_V10_Dpair_D633, VPOINTER_PAIR);
+  _V10_Dpair_D633.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D633.rest = VEncodePointer(&_V10_Dpair_D629, VPOINTER_PAIR);
+  _V10_Dpair_D632.first = _V0_Mx;
+  _V10_Dpair_D632.rest = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D631.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D631.rest = VEncodePointer(&_V10_Dpair_D630, VPOINTER_PAIR);
-  _V10_Dpair_D630.first = VEncodePointer(&_V10_Dpair_D626, VPOINTER_PAIR);
-  _V10_Dpair_D630.rest = VEncodePointer(&_V10_Dpair_D620, VPOINTER_PAIR);
-  _V10_Dpair_D629.first = VEncodePointer(&_V10_Dpair_D628, VPOINTER_PAIR);
-  _V10_Dpair_D629.rest = VEncodePointer(&_V10_Dpair_D621, VPOINTER_PAIR);
-  _V10_Dpair_D628.first = VEncodeBool(false);
+  _V10_Dpair_D630.first = VEncodePointer(&_V10_Dpair_D629, VPOINTER_PAIR);
+  _V10_Dpair_D630.rest = VNULL;
+  _V10_Dpair_D629.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D629.rest = VEncodePointer(&_V10_Dpair_D626, VPOINTER_PAIR);
+  _V10_Dpair_D628.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D628.rest = VEncodePointer(&_V10_Dpair_D627, VPOINTER_PAIR);
   _V10_Dpair_D627.first = VEncodePointer(&_V10_Dpair_D626, VPOINTER_PAIR);
   _V10_Dpair_D627.rest = VNULL;
-  _V10_Dpair_D626.first = _V0x_D2;
-  _V10_Dpair_D626.rest = VNULL;
-  _V10_Dpair_D625.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D626.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D626.rest = VEncodePointer(&_V10_Dpair_D623, VPOINTER_PAIR);
+  _V10_Dpair_D625.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D625.rest = VEncodePointer(&_V10_Dpair_D624, VPOINTER_PAIR);
   _V10_Dpair_D624.first = VEncodePointer(&_V10_Dpair_D623, VPOINTER_PAIR);
   _V10_Dpair_D624.rest = VNULL;
-  _V10_Dpair_D623.first = VEncodePointer(&_V10_Dpair_D520, VPOINTER_PAIR);
-  _V10_Dpair_D623.rest = VEncodePointer(&_V10_Dpair_D620, VPOINTER_PAIR);
-  _V10_Dpair_D622.first = VEncodePointer(&_V10_Dpair_D522, VPOINTER_PAIR);
-  _V10_Dpair_D622.rest = VEncodePointer(&_V10_Dpair_D621, VPOINTER_PAIR);
+  _V10_Dpair_D623.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D623.rest = VEncodePointer(&_V10_Dpair_D622, VPOINTER_PAIR);
+  _V10_Dpair_D622.first = VEncodePointer(&_V10_Dpair_D618, VPOINTER_PAIR);
+  _V10_Dpair_D622.rest = VEncodePointer(&_V10_Dpair_D612, VPOINTER_PAIR);
   _V10_Dpair_D621.first = VEncodePointer(&_V10_Dpair_D620, VPOINTER_PAIR);
-  _V10_Dpair_D621.rest = VNULL;
-  _V10_Dpair_D620.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D620.rest = VEncodePointer(&_V10_Dpair_D617, VPOINTER_PAIR);
-  _V10_Dpair_D619.first = VEncodePointer(&_V10_Dpair_D610, VPOINTER_PAIR);
-  _V10_Dpair_D619.rest = VEncodePointer(&_V10_Dpair_D618, VPOINTER_PAIR);
-  _V10_Dpair_D618.first = VEncodePointer(&_V10_Dpair_D617, VPOINTER_PAIR);
+  _V10_Dpair_D621.rest = VEncodePointer(&_V10_Dpair_D613, VPOINTER_PAIR);
+  _V10_Dpair_D620.first = VEncodeBool(false);
+  _V10_Dpair_D620.rest = VEncodePointer(&_V10_Dpair_D619, VPOINTER_PAIR);
+  _V10_Dpair_D619.first = VEncodePointer(&_V10_Dpair_D618, VPOINTER_PAIR);
+  _V10_Dpair_D619.rest = VNULL;
+  _V10_Dpair_D618.first = _V0x_D2;
   _V10_Dpair_D618.rest = VNULL;
-  _V10_Dpair_D617.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D617.rest = VEncodePointer(&_V10_Dpair_D614, VPOINTER_PAIR);
-  _V10_Dpair_D616.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D616.rest = VEncodePointer(&_V10_Dpair_D615, VPOINTER_PAIR);
-  _V10_Dpair_D615.first = VEncodePointer(&_V10_Dpair_D614, VPOINTER_PAIR);
-  _V10_Dpair_D615.rest = VNULL;
-  _V10_Dpair_D614.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D614.rest = VEncodePointer(&_V10_Dpair_D611, VPOINTER_PAIR);
-  _V10_Dpair_D613.first = VEncodePointer(&_V10_Dpair_D610, VPOINTER_PAIR);
-  _V10_Dpair_D613.rest = VEncodePointer(&_V10_Dpair_D612, VPOINTER_PAIR);
-  _V10_Dpair_D612.first = VEncodePointer(&_V10_Dpair_D611, VPOINTER_PAIR);
-  _V10_Dpair_D612.rest = VNULL;
-  _V10_Dpair_D611.first = VEncodePointer(&_V10_Dpair_D604, VPOINTER_PAIR);
-  _V10_Dpair_D611.rest = VEncodePointer(&_V10_Dpair_D591, VPOINTER_PAIR);
-  _V10_Dpair_D610.first = VEncodeBool(false);
-  _V10_Dpair_D610.rest = VEncodePointer(&_V10_Dpair_D609, VPOINTER_PAIR);
-  _V10_Dpair_D609.first = VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR);
-  _V10_Dpair_D609.rest = VNULL;
-  _V10_Dpair_D608.first = _V0_Mp;
-  _V10_Dpair_D608.rest = VNULL;
+  _V10_Dpair_D617.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D617.rest = VEncodePointer(&_V10_Dpair_D616, VPOINTER_PAIR);
+  _V10_Dpair_D616.first = VEncodePointer(&_V10_Dpair_D615, VPOINTER_PAIR);
+  _V10_Dpair_D616.rest = VNULL;
+  _V10_Dpair_D615.first = VEncodePointer(&_V10_Dpair_D518, VPOINTER_PAIR);
+  _V10_Dpair_D615.rest = VEncodePointer(&_V10_Dpair_D612, VPOINTER_PAIR);
+  _V10_Dpair_D614.first = VEncodePointer(&_V10_Dpair_D520, VPOINTER_PAIR);
+  _V10_Dpair_D614.rest = VEncodePointer(&_V10_Dpair_D613, VPOINTER_PAIR);
+  _V10_Dpair_D613.first = VEncodePointer(&_V10_Dpair_D612, VPOINTER_PAIR);
+  _V10_Dpair_D613.rest = VNULL;
+  _V10_Dpair_D612.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D612.rest = VEncodePointer(&_V10_Dpair_D609, VPOINTER_PAIR);
+  _V10_Dpair_D611.first = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
+  _V10_Dpair_D611.rest = VEncodePointer(&_V10_Dpair_D610, VPOINTER_PAIR);
+  _V10_Dpair_D610.first = VEncodePointer(&_V10_Dpair_D609, VPOINTER_PAIR);
+  _V10_Dpair_D610.rest = VNULL;
+  _V10_Dpair_D609.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D609.rest = VEncodePointer(&_V10_Dpair_D606, VPOINTER_PAIR);
+  _V10_Dpair_D608.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D608.rest = VEncodePointer(&_V10_Dpair_D607, VPOINTER_PAIR);
   _V10_Dpair_D607.first = VEncodePointer(&_V10_Dpair_D606, VPOINTER_PAIR);
-  _V10_Dpair_D607.rest = VEncodePointer(&_V10_Dpair_D592, VPOINTER_PAIR);
-  _V10_Dpair_D606.first = VEncodePointer(&_V10_Dpair_D601, VPOINTER_PAIR);
-  _V10_Dpair_D606.rest = VEncodePointer(&_V10_Dpair_D605, VPOINTER_PAIR);
-  _V10_Dpair_D605.first = VEncodePointer(&_V10_Dpair_D604, VPOINTER_PAIR);
-  _V10_Dpair_D605.rest = VNULL;
-  _V10_Dpair_D604.first = _V0_Mk;
-  _V10_Dpair_D604.rest = VEncodePointer(&_V10_Dpair_D603, VPOINTER_PAIR);
-  _V10_Dpair_D603.first = _V0quotation;
-  _V10_Dpair_D603.rest = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
-  _V10_Dpair_D602.first = _V0expr;
-  _V10_Dpair_D602.rest = VNULL;
-  _V10_Dpair_D601.first = _V0vanity;
-  _V10_Dpair_D601.rest = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
-  _V10_Dpair_D600.first = _V0compiler;
-  _V10_Dpair_D600.rest = VEncodePointer(&_V10_Dpair_D599, VPOINTER_PAIR);
-  _V10_Dpair_D599.first = _V0hygienic;
-  _V10_Dpair_D599.rest = VEncodePointer(&_V10_Dpair_D598, VPOINTER_PAIR);
-  _V10_Dpair_D598.first = _V0global__forms;
+  _V10_Dpair_D607.rest = VNULL;
+  _V10_Dpair_D606.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D606.rest = VEncodePointer(&_V10_Dpair_D603, VPOINTER_PAIR);
+  _V10_Dpair_D605.first = VEncodePointer(&_V10_Dpair_D602, VPOINTER_PAIR);
+  _V10_Dpair_D605.rest = VEncodePointer(&_V10_Dpair_D604, VPOINTER_PAIR);
+  _V10_Dpair_D604.first = VEncodePointer(&_V10_Dpair_D603, VPOINTER_PAIR);
+  _V10_Dpair_D604.rest = VNULL;
+  _V10_Dpair_D603.first = VEncodePointer(&_V10_Dpair_D596, VPOINTER_PAIR);
+  _V10_Dpair_D603.rest = VEncodePointer(&_V10_Dpair_D583, VPOINTER_PAIR);
+  _V10_Dpair_D602.first = VEncodeBool(false);
+  _V10_Dpair_D602.rest = VEncodePointer(&_V10_Dpair_D601, VPOINTER_PAIR);
+  _V10_Dpair_D601.first = VEncodePointer(&_V10_Dpair_D600, VPOINTER_PAIR);
+  _V10_Dpair_D601.rest = VNULL;
+  _V10_Dpair_D600.first = _V0_Mp;
+  _V10_Dpair_D600.rest = VNULL;
+  _V10_Dpair_D599.first = VEncodePointer(&_V10_Dpair_D598, VPOINTER_PAIR);
+  _V10_Dpair_D599.rest = VEncodePointer(&_V10_Dpair_D584, VPOINTER_PAIR);
+  _V10_Dpair_D598.first = VEncodePointer(&_V10_Dpair_D593, VPOINTER_PAIR);
   _V10_Dpair_D598.rest = VEncodePointer(&_V10_Dpair_D597, VPOINTER_PAIR);
-  _V10_Dpair_D597.first = _V0expand__quasisyntax__impl;
+  _V10_Dpair_D597.first = VEncodePointer(&_V10_Dpair_D596, VPOINTER_PAIR);
   _V10_Dpair_D597.rest = VNULL;
-  _V10_Dpair_D596.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D596.first = _V0_Mk;
   _V10_Dpair_D596.rest = VEncodePointer(&_V10_Dpair_D595, VPOINTER_PAIR);
-  _V10_Dpair_D595.first = VEncodePointer(&_V10_Dpair_D594, VPOINTER_PAIR);
-  _V10_Dpair_D595.rest = VNULL;
-  _V10_Dpair_D594.first = VEncodePointer(&_V10_Dpair_D578, VPOINTER_PAIR);
-  _V10_Dpair_D594.rest = VEncodePointer(&_V10_Dpair_D591, VPOINTER_PAIR);
-  _V10_Dpair_D593.first = VEncodePointer(&_V10_Dpair_D580, VPOINTER_PAIR);
+  _V10_Dpair_D595.first = _V0quotation;
+  _V10_Dpair_D595.rest = VEncodePointer(&_V10_Dpair_D594, VPOINTER_PAIR);
+  _V10_Dpair_D594.first = _V0expr;
+  _V10_Dpair_D594.rest = VNULL;
+  _V10_Dpair_D593.first = _V0vanity;
   _V10_Dpair_D593.rest = VEncodePointer(&_V10_Dpair_D592, VPOINTER_PAIR);
-  _V10_Dpair_D592.first = VEncodePointer(&_V10_Dpair_D591, VPOINTER_PAIR);
-  _V10_Dpair_D592.rest = VNULL;
-  _V10_Dpair_D591.first = VEncodePointer(&_V10_Dpair_D589, VPOINTER_PAIR);
+  _V10_Dpair_D592.first = _V0compiler;
+  _V10_Dpair_D592.rest = VEncodePointer(&_V10_Dpair_D591, VPOINTER_PAIR);
+  _V10_Dpair_D591.first = _V0hygienic;
   _V10_Dpair_D591.rest = VEncodePointer(&_V10_Dpair_D590, VPOINTER_PAIR);
-  _V10_Dpair_D590.first = VEncodePointer(&_V10_Dpair_D568, VPOINTER_PAIR);
-  _V10_Dpair_D590.rest = VEncodePointer(&_V10_Dpair_D521, VPOINTER_PAIR);
-  _V10_Dpair_D589.first = _V0global__form__env;
-  _V10_Dpair_D589.rest = VEncodePointer(&_V10_Dpair_D588, VPOINTER_PAIR);
-  _V10_Dpair_D588.first = _V0global__forms;
+  _V10_Dpair_D590.first = _V0global__forms;
+  _V10_Dpair_D590.rest = VEncodePointer(&_V10_Dpair_D589, VPOINTER_PAIR);
+  _V10_Dpair_D589.first = _V0expand__quasisyntax__impl;
+  _V10_Dpair_D589.rest = VNULL;
+  _V10_Dpair_D588.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
   _V10_Dpair_D588.rest = VEncodePointer(&_V10_Dpair_D587, VPOINTER_PAIR);
-  _V10_Dpair_D587.first = _V0expand__quasisyntax;
-  _V10_Dpair_D587.rest = VEncodePointer(&_V10_Dpair_D586, VPOINTER_PAIR);
-  _V10_Dpair_D586.first = _V0expand__quasisyntax__impl;
-  _V10_Dpair_D586.rest = VEncodePointer(&_V10_Dpair_D585, VPOINTER_PAIR);
-  _V10_Dpair_D585.first = _V0expand__quasiquote;
+  _V10_Dpair_D587.first = VEncodePointer(&_V10_Dpair_D586, VPOINTER_PAIR);
+  _V10_Dpair_D587.rest = VNULL;
+  _V10_Dpair_D586.first = VEncodePointer(&_V10_Dpair_D570, VPOINTER_PAIR);
+  _V10_Dpair_D586.rest = VEncodePointer(&_V10_Dpair_D583, VPOINTER_PAIR);
+  _V10_Dpair_D585.first = VEncodePointer(&_V10_Dpair_D572, VPOINTER_PAIR);
   _V10_Dpair_D585.rest = VEncodePointer(&_V10_Dpair_D584, VPOINTER_PAIR);
-  _V10_Dpair_D584.first = _V0expand__quasiquote__impl;
-  _V10_Dpair_D584.rest = VEncodePointer(&_V10_Dpair_D583, VPOINTER_PAIR);
-  _V10_Dpair_D583.first = _V0expand__let;
+  _V10_Dpair_D584.first = VEncodePointer(&_V10_Dpair_D583, VPOINTER_PAIR);
+  _V10_Dpair_D584.rest = VNULL;
+  _V10_Dpair_D583.first = VEncodePointer(&_V10_Dpair_D581, VPOINTER_PAIR);
   _V10_Dpair_D583.rest = VEncodePointer(&_V10_Dpair_D582, VPOINTER_PAIR);
-  _V10_Dpair_D582.first = _V0syntax__unpack;
-  _V10_Dpair_D582.rest = VEncodePointer(&_V10_Dpair_D581, VPOINTER_PAIR);
-  _V10_Dpair_D581.first = _V0global__identifier;
-  _V10_Dpair_D581.rest = VNULL;
-  _V10_Dpair_D580.first = VEncodePointer(&_V10_Dpair_D576, VPOINTER_PAIR);
+  _V10_Dpair_D582.first = VEncodePointer(&_V10_Dpair_D558, VPOINTER_PAIR);
+  _V10_Dpair_D582.rest = VEncodePointer(&_V10_Dpair_D561, VPOINTER_PAIR);
+  _V10_Dpair_D581.first = _V0global__form__env;
+  _V10_Dpair_D581.rest = VEncodePointer(&_V10_Dpair_D580, VPOINTER_PAIR);
+  _V10_Dpair_D580.first = _V0global__forms;
   _V10_Dpair_D580.rest = VEncodePointer(&_V10_Dpair_D579, VPOINTER_PAIR);
-  _V10_Dpair_D579.first = VEncodePointer(&_V10_Dpair_D578, VPOINTER_PAIR);
-  _V10_Dpair_D579.rest = VNULL;
-  _V10_Dpair_D578.first = _V0_Mk;
+  _V10_Dpair_D579.first = _V0expand__quasisyntax;
+  _V10_Dpair_D579.rest = VEncodePointer(&_V10_Dpair_D578, VPOINTER_PAIR);
+  _V10_Dpair_D578.first = _V0expand__quasisyntax__impl;
   _V10_Dpair_D578.rest = VEncodePointer(&_V10_Dpair_D577, VPOINTER_PAIR);
-  _V10_Dpair_D577.first = _V0form;
-  _V10_Dpair_D577.rest = VNULL;
-  _V10_Dpair_D576.first = _V0vanity;
+  _V10_Dpair_D577.first = _V0expand__quasiquote;
+  _V10_Dpair_D577.rest = VEncodePointer(&_V10_Dpair_D576, VPOINTER_PAIR);
+  _V10_Dpair_D576.first = _V0expand__quasiquote__impl;
   _V10_Dpair_D576.rest = VEncodePointer(&_V10_Dpair_D575, VPOINTER_PAIR);
-  _V10_Dpair_D575.first = _V0compiler;
+  _V10_Dpair_D575.first = _V0expand__let;
   _V10_Dpair_D575.rest = VEncodePointer(&_V10_Dpair_D574, VPOINTER_PAIR);
-  _V10_Dpair_D574.first = _V0hygienic;
+  _V10_Dpair_D574.first = _V0syntax__unpack;
   _V10_Dpair_D574.rest = VEncodePointer(&_V10_Dpair_D573, VPOINTER_PAIR);
-  _V10_Dpair_D573.first = _V0global__forms;
-  _V10_Dpair_D573.rest = VEncodePointer(&_V10_Dpair_D572, VPOINTER_PAIR);
-  _V10_Dpair_D572.first = _V0expand__quasisyntax;
-  _V10_Dpair_D572.rest = VNULL;
+  _V10_Dpair_D573.first = _V0global__identifier;
+  _V10_Dpair_D573.rest = VNULL;
+  _V10_Dpair_D572.first = VEncodePointer(&_V10_Dpair_D568, VPOINTER_PAIR);
+  _V10_Dpair_D572.rest = VEncodePointer(&_V10_Dpair_D571, VPOINTER_PAIR);
   _V10_Dpair_D571.first = VEncodePointer(&_V10_Dpair_D570, VPOINTER_PAIR);
-  _V10_Dpair_D571.rest = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
-  _V10_Dpair_D570.first = VEncodeBool(false);
+  _V10_Dpair_D571.rest = VNULL;
+  _V10_Dpair_D570.first = _V0_Mk;
   _V10_Dpair_D570.rest = VEncodePointer(&_V10_Dpair_D569, VPOINTER_PAIR);
-  _V10_Dpair_D569.first = VEncodePointer(&_V10_Dpair_D568, VPOINTER_PAIR);
+  _V10_Dpair_D569.first = _V0form;
   _V10_Dpair_D569.rest = VNULL;
-  _V10_Dpair_D568.first = _V0_Mk;
+  _V10_Dpair_D568.first = _V0vanity;
   _V10_Dpair_D568.rest = VEncodePointer(&_V10_Dpair_D567, VPOINTER_PAIR);
-  _V10_Dpair_D567.first = _V0syntax__cadr;
+  _V10_Dpair_D567.first = _V0compiler;
   _V10_Dpair_D567.rest = VEncodePointer(&_V10_Dpair_D566, VPOINTER_PAIR);
-  _V10_Dpair_D566.first = _V0syntax__vector_Q;
+  _V10_Dpair_D566.first = _V0hygienic;
   _V10_Dpair_D566.rest = VEncodePointer(&_V10_Dpair_D565, VPOINTER_PAIR);
-  _V10_Dpair_D565.first = _V0vector___Glist;
+  _V10_Dpair_D565.first = _V0global__forms;
   _V10_Dpair_D565.rest = VEncodePointer(&_V10_Dpair_D564, VPOINTER_PAIR);
-  _V10_Dpair_D564.first = _V0f64vector___Glist;
-  _V10_Dpair_D564.rest = VEncodePointer(&_V10_Dpair_D563, VPOINTER_PAIR);
-  _V10_Dpair_D563.first = _V0f32vector___Glist;
+  _V10_Dpair_D564.first = _V0expand__quasisyntax;
+  _V10_Dpair_D564.rest = VNULL;
+  _V10_Dpair_D563.first = VEncodePointer(&_V10_Dpair_D560, VPOINTER_PAIR);
   _V10_Dpair_D563.rest = VEncodePointer(&_V10_Dpair_D562, VPOINTER_PAIR);
-  _V10_Dpair_D562.first = _V0s32vector___Glist;
-  _V10_Dpair_D562.rest = VEncodePointer(&_V10_Dpair_D561, VPOINTER_PAIR);
-  _V10_Dpair_D561.first = _V0u16vector___Glist;
-  _V10_Dpair_D561.rest = VEncodePointer(&_V10_Dpair_D560, VPOINTER_PAIR);
-  _V10_Dpair_D560.first = _V0s16vector___Glist;
+  _V10_Dpair_D562.first = VEncodePointer(&_V10_Dpair_D561, VPOINTER_PAIR);
+  _V10_Dpair_D562.rest = VNULL;
+  _V10_Dpair_D561.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D561.rest = VEncodePointer(&_V10_Dpair_D534, VPOINTER_PAIR);
+  _V10_Dpair_D560.first = VEncodeBool(false);
   _V10_Dpair_D560.rest = VEncodePointer(&_V10_Dpair_D559, VPOINTER_PAIR);
-  _V10_Dpair_D559.first = _V0u8vector___Glist;
-  _V10_Dpair_D559.rest = VEncodePointer(&_V10_Dpair_D558, VPOINTER_PAIR);
-  _V10_Dpair_D558.first = _V0s8vector___Glist;
+  _V10_Dpair_D559.first = VEncodePointer(&_V10_Dpair_D558, VPOINTER_PAIR);
+  _V10_Dpair_D559.rest = VNULL;
+  _V10_Dpair_D558.first = _V0syntax__cadr;
   _V10_Dpair_D558.rest = VEncodePointer(&_V10_Dpair_D557, VPOINTER_PAIR);
-  _V10_Dpair_D557.first = _V0identifier_Q;
+  _V10_Dpair_D557.first = _V0syntax__vector_Q;
   _V10_Dpair_D557.rest = VEncodePointer(&_V10_Dpair_D556, VPOINTER_PAIR);
-  _V10_Dpair_D556.first = _V0get__syntax__data;
+  _V10_Dpair_D556.first = _V0vector___Glist;
   _V10_Dpair_D556.rest = VEncodePointer(&_V10_Dpair_D555, VPOINTER_PAIR);
-  _V10_Dpair_D555.first = _V0syntax__caar;
+  _V10_Dpair_D555.first = _V0f64vector___Glist;
   _V10_Dpair_D555.rest = VEncodePointer(&_V10_Dpair_D554, VPOINTER_PAIR);
-  _V10_Dpair_D554.first = _V0syntax__pair_Q;
+  _V10_Dpair_D554.first = _V0f32vector___Glist;
   _V10_Dpair_D554.rest = VEncodePointer(&_V10_Dpair_D553, VPOINTER_PAIR);
-  _V10_Dpair_D553.first = _V0syntax__car;
+  _V10_Dpair_D553.first = _V0s32vector___Glist;
   _V10_Dpair_D553.rest = VEncodePointer(&_V10_Dpair_D552, VPOINTER_PAIR);
-  _V10_Dpair_D552.first = _V0syntax__cdr;
+  _V10_Dpair_D552.first = _V0u16vector___Glist;
   _V10_Dpair_D552.rest = VEncodePointer(&_V10_Dpair_D551, VPOINTER_PAIR);
-  _V10_Dpair_D551.first = _V0syntax__map;
+  _V10_Dpair_D551.first = _V0s16vector___Glist;
   _V10_Dpair_D551.rest = VEncodePointer(&_V10_Dpair_D550, VPOINTER_PAIR);
-  _V10_Dpair_D550.first = _V0syntax__cddr;
+  _V10_Dpair_D550.first = _V0u8vector___Glist;
   _V10_Dpair_D550.rest = VEncodePointer(&_V10_Dpair_D549, VPOINTER_PAIR);
-  _V10_Dpair_D549.first = _V0syntax_Q;
+  _V10_Dpair_D549.first = _V0s8vector___Glist;
   _V10_Dpair_D549.rest = VEncodePointer(&_V10_Dpair_D548, VPOINTER_PAIR);
-  _V10_Dpair_D548.first = _V0make__syntax;
+  _V10_Dpair_D548.first = _V0identifier_Q;
   _V10_Dpair_D548.rest = VEncodePointer(&_V10_Dpair_D547, VPOINTER_PAIR);
-  _V10_Dpair_D547.first = _V0global__scope;
+  _V10_Dpair_D547.first = _V0get__syntax__data;
   _V10_Dpair_D547.rest = VEncodePointer(&_V10_Dpair_D546, VPOINTER_PAIR);
-  _V10_Dpair_D546.first = _V0list;
-  _V10_Dpair_D546.rest = VNULL;
-  _V40VMultiImport = VEncodePointer(VLookupConstant("_V40VMultiImport", &_VW_V40VMultiImport), VPOINTER_CLOSURE);
-  _V10_Dpair_D541.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D546.first = _V0syntax__caar;
+  _V10_Dpair_D546.rest = VEncodePointer(&_V10_Dpair_D545, VPOINTER_PAIR);
+  _V10_Dpair_D545.first = _V0syntax__pair_Q;
+  _V10_Dpair_D545.rest = VEncodePointer(&_V10_Dpair_D544, VPOINTER_PAIR);
+  _V10_Dpair_D544.first = _V0syntax__car;
+  _V10_Dpair_D544.rest = VEncodePointer(&_V10_Dpair_D543, VPOINTER_PAIR);
+  _V10_Dpair_D543.first = _V0syntax__cdr;
+  _V10_Dpair_D543.rest = VEncodePointer(&_V10_Dpair_D542, VPOINTER_PAIR);
+  _V10_Dpair_D542.first = _V0syntax__map;
+  _V10_Dpair_D542.rest = VEncodePointer(&_V10_Dpair_D541, VPOINTER_PAIR);
+  _V10_Dpair_D541.first = _V0syntax__cddr;
   _V10_Dpair_D541.rest = VEncodePointer(&_V10_Dpair_D540, VPOINTER_PAIR);
-  _V10_Dpair_D540.first = VEncodePointer(&_V10_Dpair_D539, VPOINTER_PAIR);
-  _V10_Dpair_D540.rest = VNULL;
-  _V10_Dpair_D539.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D539.rest = VEncodePointer(&_V10_Dpair_D536, VPOINTER_PAIR);
-  _V10_Dpair_D538.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D540.first = _V0syntax_Q;
+  _V10_Dpair_D540.rest = VEncodePointer(&_V10_Dpair_D539, VPOINTER_PAIR);
+  _V10_Dpair_D539.first = _V0make__syntax;
+  _V10_Dpair_D539.rest = VEncodePointer(&_V10_Dpair_D538, VPOINTER_PAIR);
+  _V10_Dpair_D538.first = _V0global__scope;
   _V10_Dpair_D538.rest = VEncodePointer(&_V10_Dpair_D537, VPOINTER_PAIR);
-  _V10_Dpair_D537.first = VEncodePointer(&_V10_Dpair_D536, VPOINTER_PAIR);
+  _V10_Dpair_D537.first = _V0list;
   _V10_Dpair_D537.rest = VNULL;
-  _V10_Dpair_D536.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D536.rest = VEncodePointer(&_V10_Dpair_D533, VPOINTER_PAIR);
-  _V10_Dpair_D535.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D535.rest = VEncodePointer(&_V10_Dpair_D534, VPOINTER_PAIR);
-  _V10_Dpair_D534.first = VEncodePointer(&_V10_Dpair_D533, VPOINTER_PAIR);
-  _V10_Dpair_D534.rest = VNULL;
-  _V10_Dpair_D533.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D533.rest = VEncodePointer(&_V10_Dpair_D530, VPOINTER_PAIR);
-  _V10_Dpair_D532.first = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
-  _V10_Dpair_D532.rest = VEncodePointer(&_V10_Dpair_D531, VPOINTER_PAIR);
-  _V10_Dpair_D531.first = VEncodePointer(&_V10_Dpair_D530, VPOINTER_PAIR);
-  _V10_Dpair_D531.rest = VNULL;
-  _V10_Dpair_D530.first = VEncodePointer(&_V10_Dpair_D520, VPOINTER_PAIR);
-  _V10_Dpair_D530.rest = VEncodePointer(&_V10_Dpair_D521, VPOINTER_PAIR);
-  _V10_Dpair_D529.first = VEncodeBool(false);
-  _V10_Dpair_D529.rest = VEncodePointer(&_V10_Dpair_D528, VPOINTER_PAIR);
-  _V10_Dpair_D528.first = VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR);
-  _V10_Dpair_D528.rest = VNULL;
-  _V10_Dpair_D527.first = _V0_Mx;
-  _V10_Dpair_D527.rest = VNULL;
-  _V10_Dpair_D526.first = VEncodePointer(&_V10_Dpair_D522, VPOINTER_PAIR);
-  _V10_Dpair_D526.rest = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
-  _V10_Dpair_D525.first = VEncodePointer(&_V10_Dpair_D521, VPOINTER_PAIR);
-  _V10_Dpair_D525.rest = VNULL;
-  _V10_Dpair_D524.first = VEncodePointer(&_V10_Dpair_D522, VPOINTER_PAIR);
-  _V10_Dpair_D524.rest = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
-  _V10_Dpair_D523.first = VNULL;
+  _V40VMultiImport = VEncodePointer(VLookupConstant("_V40VMultiImport", &_VW_V40VMultiImport), VPOINTER_CLOSURE);
+  _V10_Dpair_D536.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D536.rest = VEncodePointer(&_V10_Dpair_D535, VPOINTER_PAIR);
+  _V10_Dpair_D535.first = VEncodePointer(&_V10_Dpair_D534, VPOINTER_PAIR);
+  _V10_Dpair_D535.rest = VNULL;
+  _V10_Dpair_D534.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D534.rest = VEncodePointer(&_V10_Dpair_D531, VPOINTER_PAIR);
+  _V10_Dpair_D533.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D533.rest = VEncodePointer(&_V10_Dpair_D532, VPOINTER_PAIR);
+  _V10_Dpair_D532.first = VEncodePointer(&_V10_Dpair_D531, VPOINTER_PAIR);
+  _V10_Dpair_D532.rest = VNULL;
+  _V10_Dpair_D531.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D531.rest = VEncodePointer(&_V10_Dpair_D528, VPOINTER_PAIR);
+  _V10_Dpair_D530.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D530.rest = VEncodePointer(&_V10_Dpair_D529, VPOINTER_PAIR);
+  _V10_Dpair_D529.first = VEncodePointer(&_V10_Dpair_D528, VPOINTER_PAIR);
+  _V10_Dpair_D529.rest = VNULL;
+  _V10_Dpair_D528.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D528.rest = VEncodePointer(&_V10_Dpair_D519, VPOINTER_PAIR);
+  _V10_Dpair_D527.first = VEncodePointer(&_V10_Dpair_D525, VPOINTER_PAIR);
+  _V10_Dpair_D527.rest = VEncodePointer(&_V10_Dpair_D526, VPOINTER_PAIR);
+  _V10_Dpair_D526.first = VEncodePointer(&_V10_Dpair_D519, VPOINTER_PAIR);
+  _V10_Dpair_D526.rest = VNULL;
+  _V10_Dpair_D525.first = VEncodeBool(false);
+  _V10_Dpair_D525.rest = VEncodePointer(&_V10_Dpair_D524, VPOINTER_PAIR);
+  _V10_Dpair_D524.first = VEncodePointer(&_V10_Dpair_D523, VPOINTER_PAIR);
+  _V10_Dpair_D524.rest = VNULL;
+  _V10_Dpair_D523.first = _V0_Mx;
   _V10_Dpair_D523.rest = VNULL;
-  _V10_Dpair_D522.first = VEncodeBool(false);
+  _V10_Dpair_D522.first = VEncodePointer(&_V10_Dpair_D520, VPOINTER_PAIR);
   _V10_Dpair_D522.rest = VEncodePointer(&_V10_Dpair_D521, VPOINTER_PAIR);
-  _V10_Dpair_D521.first = VEncodePointer(&_V10_Dpair_D520, VPOINTER_PAIR);
+  _V10_Dpair_D521.first = VNULL;
   _V10_Dpair_D521.rest = VNULL;
-  _V10_Dpair_D520.first = _V0_Mk;
-  _V10_Dpair_D520.rest = VNULL;
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4, VEncodePointer(&_V10_Dpair_D541, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3, VEncodePointer(&_V10_Dpair_D538, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2, VEncodePointer(&_V10_Dpair_D535, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1, VEncodePointer(&_V10_Dpair_D532, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2, VEncodePointer(&_V10_Dpair_D526, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax_V0k5, VEncodePointer(&_V10_Dpair_D596, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax, VEncodePointer(&_V10_Dpair_D593, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k10, VEncodePointer(&_V10_Dpair_D625, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k9, VEncodePointer(&_V10_Dpair_D622, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k18, VEncodePointer(&_V10_Dpair_D654, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k17, VEncodePointer(&_V10_Dpair_D651, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k16, VEncodePointer(&_V10_Dpair_D648, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k15, VEncodePointer(&_V10_Dpair_D644, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k14, VEncodePointer(&_V10_Dpair_D639, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k13, VEncodePointer(&_V10_Dpair_D636, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k12, VEncodePointer(&_V10_Dpair_D633, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k21, VEncodePointer(&_V10_Dpair_D668, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k20, VEncodePointer(&_V10_Dpair_D665, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k23, VEncodePointer(&_V10_Dpair_D674, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k22, VEncodePointer(&_V10_Dpair_D671, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k25, VEncodePointer(&_V10_Dpair_D680, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k24, VEncodePointer(&_V10_Dpair_D677, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k27, VEncodePointer(&_V10_Dpair_D686, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k26, VEncodePointer(&_V10_Dpair_D683, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k29, VEncodePointer(&_V10_Dpair_D692, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k28, VEncodePointer(&_V10_Dpair_D689, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k31, VEncodePointer(&_V10_Dpair_D698, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k30, VEncodePointer(&_V10_Dpair_D695, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k33, VEncodePointer(&_V10_Dpair_D704, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k32, VEncodePointer(&_V10_Dpair_D701, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k35, VEncodePointer(&_V10_Dpair_D710, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k34, VEncodePointer(&_V10_Dpair_D707, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k41, VEncodePointer(&_V10_Dpair_D729, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k40, VEncodePointer(&_V10_Dpair_D726, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k39, VEncodePointer(&_V10_Dpair_D722, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k38, VEncodePointer(&_V10_Dpair_D718, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k37, VEncodePointer(&_V10_Dpair_D715, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k36, VEncodePointer(&_V10_Dpair_D712, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k19, VEncodePointer(&_V10_Dpair_D660, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k48, VEncodePointer(&_V10_Dpair_D748, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k47, VEncodePointer(&_V10_Dpair_D745, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k46, VEncodePointer(&_V10_Dpair_D742, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k45, VEncodePointer(&_V10_Dpair_D739, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k44, VEncodePointer(&_V10_Dpair_D736, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k54, VEncodePointer(&_V10_Dpair_D765, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k53, VEncodePointer(&_V10_Dpair_D762, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k52, VEncodePointer(&_V10_Dpair_D759, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k51, VEncodePointer(&_V10_Dpair_D756, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k50, VEncodePointer(&_V10_Dpair_D753, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k65, VEncodePointer(&_V10_Dpair_D791, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k64, VEncodePointer(&_V10_Dpair_D788, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k63, VEncodePointer(&_V10_Dpair_D781, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k62, VEncodePointer(&_V10_Dpair_D778, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k61, VEncodePointer(&_V10_Dpair_D775, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k60, VEncodePointer(&_V10_Dpair_D772, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k59, VEncodePointer(&_V10_Dpair_D768, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k58, VEncodePointer(&_V10_Dpair_D762, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k57, VEncodePointer(&_V10_Dpair_D759, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k56, VEncodePointer(&_V10_Dpair_D756, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k55, VEncodePointer(&_V10_Dpair_D753, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k70, VEncodePointer(&_V10_Dpair_D805, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k69, VEncodePointer(&_V10_Dpair_D802, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k68, VEncodePointer(&_V10_Dpair_D799, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k67, VEncodePointer(&_V10_Dpair_D796, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k66, VEncodePointer(&_V10_Dpair_D793, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k49, VEncodePointer(&_V10_Dpair_D749, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k43, VEncodePointer(&_V10_Dpair_D733, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k42, VEncodePointer(&_V10_Dpair_D730, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k11, VEncodePointer(&_V10_Dpair_D629, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k8, VEncodePointer(&_V10_Dpair_D619, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k7, VEncodePointer(&_V10_Dpair_D616, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k75, VEncodePointer(&_V10_Dpair_D818, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k74, VEncodePointer(&_V10_Dpair_D815, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k73, VEncodePointer(&_V10_Dpair_D812, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k72, VEncodePointer(&_V10_Dpair_D809, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k76, VEncodePointer(&_V10_Dpair_D809, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k71, VEncodePointer(&_V10_Dpair_D806, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k6, VEncodePointer(&_V10_Dpair_D613, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl, VEncodePointer(&_V10_Dpair_D607, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote_V0k77, VEncodePointer(&_V10_Dpair_D596, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote, VEncodePointer(&_V10_Dpair_D825, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k82, VEncodePointer(&_V10_Dpair_D625, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k81, VEncodePointer(&_V10_Dpair_D622, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k90, VEncodePointer(&_V10_Dpair_D860, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k89, VEncodePointer(&_V10_Dpair_D857, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k88, VEncodePointer(&_V10_Dpair_D854, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k87, VEncodePointer(&_V10_Dpair_D850, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k86, VEncodePointer(&_V10_Dpair_D846, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k85, VEncodePointer(&_V10_Dpair_D843, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k84, VEncodePointer(&_V10_Dpair_D840, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k93, VEncodePointer(&_V10_Dpair_D871, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k92, VEncodePointer(&_V10_Dpair_D868, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k95, VEncodePointer(&_V10_Dpair_D877, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k94, VEncodePointer(&_V10_Dpair_D874, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k97, VEncodePointer(&_V10_Dpair_D883, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k96, VEncodePointer(&_V10_Dpair_D880, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k99, VEncodePointer(&_V10_Dpair_D889, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k98, VEncodePointer(&_V10_Dpair_D886, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k101, VEncodePointer(&_V10_Dpair_D895, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k100, VEncodePointer(&_V10_Dpair_D892, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k103, VEncodePointer(&_V10_Dpair_D901, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k102, VEncodePointer(&_V10_Dpair_D898, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k105, VEncodePointer(&_V10_Dpair_D907, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k104, VEncodePointer(&_V10_Dpair_D904, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k107, VEncodePointer(&_V10_Dpair_D913, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k106, VEncodePointer(&_V10_Dpair_D910, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k113, VEncodePointer(&_V10_Dpair_D932, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k112, VEncodePointer(&_V10_Dpair_D929, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k111, VEncodePointer(&_V10_Dpair_D925, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k110, VEncodePointer(&_V10_Dpair_D921, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k109, VEncodePointer(&_V10_Dpair_D918, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k108, VEncodePointer(&_V10_Dpair_D915, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k91, VEncodePointer(&_V10_Dpair_D863, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k120, VEncodePointer(&_V10_Dpair_D951, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k119, VEncodePointer(&_V10_Dpair_D948, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k118, VEncodePointer(&_V10_Dpair_D945, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k117, VEncodePointer(&_V10_Dpair_D942, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k116, VEncodePointer(&_V10_Dpair_D939, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k126, VEncodePointer(&_V10_Dpair_D968, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k125, VEncodePointer(&_V10_Dpair_D965, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k124, VEncodePointer(&_V10_Dpair_D962, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k123, VEncodePointer(&_V10_Dpair_D959, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k122, VEncodePointer(&_V10_Dpair_D956, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k137, VEncodePointer(&_V10_Dpair_D991, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k136, VEncodePointer(&_V10_Dpair_D988, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k135, VEncodePointer(&_V10_Dpair_D984, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k134, VEncodePointer(&_V10_Dpair_D981, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k133, VEncodePointer(&_V10_Dpair_D978, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k132, VEncodePointer(&_V10_Dpair_D975, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k131, VEncodePointer(&_V10_Dpair_D971, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k130, VEncodePointer(&_V10_Dpair_D965, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k129, VEncodePointer(&_V10_Dpair_D962, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k128, VEncodePointer(&_V10_Dpair_D959, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k127, VEncodePointer(&_V10_Dpair_D956, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k142, VEncodePointer(&_V10_Dpair_D1005, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k141, VEncodePointer(&_V10_Dpair_D1002, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k140, VEncodePointer(&_V10_Dpair_D999, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k139, VEncodePointer(&_V10_Dpair_D996, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k138, VEncodePointer(&_V10_Dpair_D993, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k121, VEncodePointer(&_V10_Dpair_D952, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k115, VEncodePointer(&_V10_Dpair_D936, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k114, VEncodePointer(&_V10_Dpair_D933, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k83, VEncodePointer(&_V10_Dpair_D836, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k80, VEncodePointer(&_V10_Dpair_D619, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k79, VEncodePointer(&_V10_Dpair_D616, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k147, VEncodePointer(&_V10_Dpair_D818, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k146, VEncodePointer(&_V10_Dpair_D815, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k145, VEncodePointer(&_V10_Dpair_D812, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k144, VEncodePointer(&_V10_Dpair_D809, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k148, VEncodePointer(&_V10_Dpair_D809, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k143, VEncodePointer(&_V10_Dpair_D806, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k78, VEncodePointer(&_V10_Dpair_D613, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl, VEncodePointer(&_V10_Dpair_D832, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k154, VEncodePointer(&_V10_Dpair_D1028, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k153, VEncodePointer(&_V10_Dpair_D1025, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k152, VEncodePointer(&_V10_Dpair_D1021, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k151, VEncodePointer(&_V10_Dpair_D1018, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k150, VEncodePointer(&_V10_Dpair_D1015, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k149, VEncodePointer(&_V10_Dpair_D596, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let, VEncodePointer(&_V10_Dpair_D1012, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack_V0k155, VEncodePointer(&_V10_Dpair_D1040, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack, VEncodePointer(&_V10_Dpair_D1037, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0k157, VEncodePointer(&_V10_Dpair_D1054, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0k156, VEncodePointer(&_V10_Dpair_D1051, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier, VEncodePointer(&_V10_Dpair_D1048, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k159, VEncodePointer(&_V10_Dpair_D1060, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k158, VEncodePointer(&_V10_Dpair_D1060, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda3, VEncodePointer(&_V10_Dpair_D571, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda1, VEncodePointer(&_V10_Dpair_D524, VPOINTER_PAIR));
+  _V10_Dpair_D520.first = VEncodeBool(false);
+  _V10_Dpair_D520.rest = VEncodePointer(&_V10_Dpair_D519, VPOINTER_PAIR);
+  _V10_Dpair_D519.first = VEncodePointer(&_V10_Dpair_D518, VPOINTER_PAIR);
+  _V10_Dpair_D519.rest = VNULL;
+  _V10_Dpair_D518.first = _V0_Mk;
+  _V10_Dpair_D518.rest = VNULL;
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax_V0k5, VEncodePointer(&_V10_Dpair_D588, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax, VEncodePointer(&_V10_Dpair_D585, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k10, VEncodePointer(&_V10_Dpair_D617, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k9, VEncodePointer(&_V10_Dpair_D614, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k18, VEncodePointer(&_V10_Dpair_D646, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k17, VEncodePointer(&_V10_Dpair_D643, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k16, VEncodePointer(&_V10_Dpair_D640, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k15, VEncodePointer(&_V10_Dpair_D636, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k14, VEncodePointer(&_V10_Dpair_D631, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k13, VEncodePointer(&_V10_Dpair_D628, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k12, VEncodePointer(&_V10_Dpair_D625, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k21, VEncodePointer(&_V10_Dpair_D660, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k20, VEncodePointer(&_V10_Dpair_D657, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k23, VEncodePointer(&_V10_Dpair_D666, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k22, VEncodePointer(&_V10_Dpair_D663, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k25, VEncodePointer(&_V10_Dpair_D672, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k24, VEncodePointer(&_V10_Dpair_D669, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k27, VEncodePointer(&_V10_Dpair_D678, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k26, VEncodePointer(&_V10_Dpair_D675, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k29, VEncodePointer(&_V10_Dpair_D684, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k28, VEncodePointer(&_V10_Dpair_D681, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k31, VEncodePointer(&_V10_Dpair_D690, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k30, VEncodePointer(&_V10_Dpair_D687, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k33, VEncodePointer(&_V10_Dpair_D696, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k32, VEncodePointer(&_V10_Dpair_D693, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k35, VEncodePointer(&_V10_Dpair_D702, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k34, VEncodePointer(&_V10_Dpair_D699, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k41, VEncodePointer(&_V10_Dpair_D721, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k40, VEncodePointer(&_V10_Dpair_D718, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k39, VEncodePointer(&_V10_Dpair_D714, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k38, VEncodePointer(&_V10_Dpair_D710, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k37, VEncodePointer(&_V10_Dpair_D707, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k36, VEncodePointer(&_V10_Dpair_D704, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k19, VEncodePointer(&_V10_Dpair_D652, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k48, VEncodePointer(&_V10_Dpair_D740, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k47, VEncodePointer(&_V10_Dpair_D737, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k46, VEncodePointer(&_V10_Dpair_D734, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k45, VEncodePointer(&_V10_Dpair_D731, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k44, VEncodePointer(&_V10_Dpair_D728, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k54, VEncodePointer(&_V10_Dpair_D757, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k53, VEncodePointer(&_V10_Dpair_D754, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k52, VEncodePointer(&_V10_Dpair_D751, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k51, VEncodePointer(&_V10_Dpair_D748, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k50, VEncodePointer(&_V10_Dpair_D745, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k65, VEncodePointer(&_V10_Dpair_D783, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k64, VEncodePointer(&_V10_Dpair_D780, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k63, VEncodePointer(&_V10_Dpair_D773, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k62, VEncodePointer(&_V10_Dpair_D770, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k61, VEncodePointer(&_V10_Dpair_D767, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k60, VEncodePointer(&_V10_Dpair_D764, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k59, VEncodePointer(&_V10_Dpair_D760, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k58, VEncodePointer(&_V10_Dpair_D754, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k57, VEncodePointer(&_V10_Dpair_D751, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k56, VEncodePointer(&_V10_Dpair_D748, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k55, VEncodePointer(&_V10_Dpair_D745, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k70, VEncodePointer(&_V10_Dpair_D797, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k69, VEncodePointer(&_V10_Dpair_D794, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k68, VEncodePointer(&_V10_Dpair_D791, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k67, VEncodePointer(&_V10_Dpair_D788, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k66, VEncodePointer(&_V10_Dpair_D785, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k49, VEncodePointer(&_V10_Dpair_D741, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k43, VEncodePointer(&_V10_Dpair_D725, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k42, VEncodePointer(&_V10_Dpair_D722, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k11, VEncodePointer(&_V10_Dpair_D621, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k8, VEncodePointer(&_V10_Dpair_D611, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k7, VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k75, VEncodePointer(&_V10_Dpair_D810, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k74, VEncodePointer(&_V10_Dpair_D807, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k73, VEncodePointer(&_V10_Dpair_D804, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k72, VEncodePointer(&_V10_Dpair_D801, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k76, VEncodePointer(&_V10_Dpair_D801, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k71, VEncodePointer(&_V10_Dpair_D798, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl_V0k6, VEncodePointer(&_V10_Dpair_D605, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasisyntax__impl, VEncodePointer(&_V10_Dpair_D599, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote_V0k77, VEncodePointer(&_V10_Dpair_D588, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote, VEncodePointer(&_V10_Dpair_D817, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k82, VEncodePointer(&_V10_Dpair_D617, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k81, VEncodePointer(&_V10_Dpair_D614, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k90, VEncodePointer(&_V10_Dpair_D852, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k89, VEncodePointer(&_V10_Dpair_D849, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k88, VEncodePointer(&_V10_Dpair_D846, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k87, VEncodePointer(&_V10_Dpair_D842, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k86, VEncodePointer(&_V10_Dpair_D838, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k85, VEncodePointer(&_V10_Dpair_D835, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k84, VEncodePointer(&_V10_Dpair_D832, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k93, VEncodePointer(&_V10_Dpair_D863, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k92, VEncodePointer(&_V10_Dpair_D860, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k95, VEncodePointer(&_V10_Dpair_D869, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k94, VEncodePointer(&_V10_Dpair_D866, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k97, VEncodePointer(&_V10_Dpair_D875, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k96, VEncodePointer(&_V10_Dpair_D872, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k99, VEncodePointer(&_V10_Dpair_D881, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k98, VEncodePointer(&_V10_Dpair_D878, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k101, VEncodePointer(&_V10_Dpair_D887, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k100, VEncodePointer(&_V10_Dpair_D884, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k103, VEncodePointer(&_V10_Dpair_D893, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k102, VEncodePointer(&_V10_Dpair_D890, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k105, VEncodePointer(&_V10_Dpair_D899, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k104, VEncodePointer(&_V10_Dpair_D896, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k107, VEncodePointer(&_V10_Dpair_D905, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k106, VEncodePointer(&_V10_Dpair_D902, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k113, VEncodePointer(&_V10_Dpair_D924, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k112, VEncodePointer(&_V10_Dpair_D921, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k111, VEncodePointer(&_V10_Dpair_D917, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k110, VEncodePointer(&_V10_Dpair_D913, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k109, VEncodePointer(&_V10_Dpair_D910, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k108, VEncodePointer(&_V10_Dpair_D907, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k91, VEncodePointer(&_V10_Dpair_D855, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k120, VEncodePointer(&_V10_Dpair_D943, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k119, VEncodePointer(&_V10_Dpair_D940, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k118, VEncodePointer(&_V10_Dpair_D937, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k117, VEncodePointer(&_V10_Dpair_D934, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k116, VEncodePointer(&_V10_Dpair_D931, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k126, VEncodePointer(&_V10_Dpair_D960, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k125, VEncodePointer(&_V10_Dpair_D957, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k124, VEncodePointer(&_V10_Dpair_D954, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k123, VEncodePointer(&_V10_Dpair_D951, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k122, VEncodePointer(&_V10_Dpair_D948, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k137, VEncodePointer(&_V10_Dpair_D983, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k136, VEncodePointer(&_V10_Dpair_D980, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k135, VEncodePointer(&_V10_Dpair_D976, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k134, VEncodePointer(&_V10_Dpair_D973, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k133, VEncodePointer(&_V10_Dpair_D970, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k132, VEncodePointer(&_V10_Dpair_D967, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k131, VEncodePointer(&_V10_Dpair_D963, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k130, VEncodePointer(&_V10_Dpair_D957, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k129, VEncodePointer(&_V10_Dpair_D954, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k128, VEncodePointer(&_V10_Dpair_D951, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k127, VEncodePointer(&_V10_Dpair_D948, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k142, VEncodePointer(&_V10_Dpair_D997, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k141, VEncodePointer(&_V10_Dpair_D994, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k140, VEncodePointer(&_V10_Dpair_D991, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k139, VEncodePointer(&_V10_Dpair_D988, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k138, VEncodePointer(&_V10_Dpair_D985, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k121, VEncodePointer(&_V10_Dpair_D944, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k115, VEncodePointer(&_V10_Dpair_D928, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k114, VEncodePointer(&_V10_Dpair_D925, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k83, VEncodePointer(&_V10_Dpair_D828, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k80, VEncodePointer(&_V10_Dpair_D611, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k79, VEncodePointer(&_V10_Dpair_D608, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k147, VEncodePointer(&_V10_Dpair_D810, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k146, VEncodePointer(&_V10_Dpair_D807, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k145, VEncodePointer(&_V10_Dpair_D804, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k144, VEncodePointer(&_V10_Dpair_D801, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k148, VEncodePointer(&_V10_Dpair_D801, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k143, VEncodePointer(&_V10_Dpair_D798, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl_V0k78, VEncodePointer(&_V10_Dpair_D605, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__quasiquote__impl, VEncodePointer(&_V10_Dpair_D824, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k154, VEncodePointer(&_V10_Dpair_D1020, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k153, VEncodePointer(&_V10_Dpair_D1017, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k152, VEncodePointer(&_V10_Dpair_D1013, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k151, VEncodePointer(&_V10_Dpair_D1010, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k150, VEncodePointer(&_V10_Dpair_D1007, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let_V0k149, VEncodePointer(&_V10_Dpair_D588, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0expand__let, VEncodePointer(&_V10_Dpair_D1004, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack_V0k155, VEncodePointer(&_V10_Dpair_D1032, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0syntax__unpack, VEncodePointer(&_V10_Dpair_D1029, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0k157, VEncodePointer(&_V10_Dpair_D1046, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier_V0k156, VEncodePointer(&_V10_Dpair_D1043, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0compiler_V0hygienic_V0global__forms_V0global__identifier, VEncodePointer(&_V10_Dpair_D1040, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k159, VEncodePointer(&_V10_Dpair_D1052, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k158, VEncodePointer(&_V10_Dpair_D1052, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda2, VEncodePointer(&_V10_Dpair_D563, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k4, VEncodePointer(&_V10_Dpair_D536, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k3, VEncodePointer(&_V10_Dpair_D533, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k2, VEncodePointer(&_V10_Dpair_D530, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0k1, VEncodePointer(&_V10_Dpair_D527, VPOINTER_PAIR));
+  VRegisterProcDebugInfo((VFunc)_V0vanity_V0compiler_V0hygienic_V0global__forms_V20_V0lambda1, VEncodePointer(&_V10_Dpair_D522, VPOINTER_PAIR));
 }

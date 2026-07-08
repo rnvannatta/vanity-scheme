@@ -695,6 +695,10 @@ V_BEGIN_FUNC_BASIC(VHashTableP, "hash-table?", 1, x)
   return VEncodeBool(VIsHashTable(x));
 V_END_FUNC
 
+V_BEGIN_FUNC_BASIC(VHashTableP2, "hash-table?", 1, x)
+  return VEncodeBool(VIsNewHashTable(x));
+V_END_FUNC
+
 V_BEGIN_FUNC_BASIC(VProcedureP2, "procedure?", 1, x)
   return VEncodeBool(VWordType(x) == VPOINTER_CLOSURE);
 V_END_FUNC
@@ -861,7 +865,9 @@ V_BEGIN_FUNC_BASIC(VVectorRef2, "vector-ref", 2, vector, index)
   VVector * vec = VCheckedDecodeVector2(runtime, vector, "vector-ref");
   if(VWordType(index) != VIMM_INT) VErrorC(runtime, "vector-ref: arg 2 not an int\n");
   int i = VDecodeInt(index);
-  if(!(0 <= i && i < vec->len)) VErrorC(runtime, "vector-ref: out of range\n");
+  int veclen = vec->len;
+  if(!(0 <= i && i < veclen))
+    VErrorC(runtime, "vector-ref: out of range\n");
 
   return vec->arr[i];
 V_END_FUNC
@@ -2083,6 +2089,45 @@ V_BEGIN_FUNC(VCallValues2, "call-with-values", 3, _k, _producer, _consumer)
   V_BOUNCE(_producer, runtime, VEncodeClosure(consume));
 }
 
+V_BEGIN_FUNC_MIN(VValues2, "values", 1, k)
+  // (lambda (k . xs) (apply k xs))
+  // continuations take their values directly, so no wrapper is needed:
+  // just forward the args to k
+  switch(argc) {
+    case 1:
+      V_BOUNCE(k, runtime);
+      break;
+    case 2:
+      // 99.99% of use cases, returning single value
+      V_BOUNCE(k, runtime, self->vars[1]);
+      break;
+    case 3:
+      V_BOUNCE(k, runtime, self->vars[1], self->vars[2]);
+      break;
+    case 4:
+      V_BOUNCE(k, runtime, self->vars[1], self->vars[2], self->vars[3]);
+      break;
+    case 5:
+      V_BOUNCE(k, runtime, self->vars[1], self->vars[2], self->vars[3], self->vars[4]);
+      break;
+    default:
+    {
+      VClosure * k_real = VDecodeClosureApply2(runtime, k);
+
+      VEnvironment * environ = VAlloca(runtime, sizeof(VEnvironment) + sizeof(VWORD[argc-1]));
+      environ->base = VMakeObject(VENVIRONMENT);
+      environ->argc = argc-1;
+      environ->runtime = runtime;
+      environ->static_chain = k_real->env;
+
+      for(int i = 1; i < argc; i++) {
+        environ->argv[i-1] = self->vars[i];
+      }
+      VSysApplyBounce(k_real->func, environ);
+    }
+  }
+}
+
 V_BEGIN_FUNC_MIN(VApply2, "apply", 2, k, _proc)
   V_ARG_MIN3(runtime, "apply", 3, argc);
 
@@ -2745,22 +2790,31 @@ V_BEGIN_FUNC(VBitCount, "bit-count", 2, k, _a)
 // to implement l00ps
 
 V_BEGIN_FUNC_BASIC(VAssq, "assq", 2, x, lst)
-  while(!VIsEq(lst, VNULL)) {
-    VPair * p = VCheckedDecodePair2(runtime, lst, "assq");
+  while(VIsPair(lst)) {
+    VPair * p = VDecodePair(lst);
+    lst = p->rest;
     VPair * keyval = VCheckedDecodePair2(runtime, p->first, "assq");
     if(VIsEq(keyval->first, x))
       return p->first;
-    lst = p->rest;
+  }
+  if(!VIsEq(lst, VNULL)) {
+    VErrorC(runtime, "~Z: not a pair: ~S\n", "assq", lst);
+    __builtin_unreachable();
   }
   return VFALSE;
 V_END_FUNC
 
 V_BEGIN_FUNC_BASIC(VMemq, "memq", 2, x, lst)
-  while(!VIsEq(lst, VNULL)) {
-    VPair * p = VCheckedDecodePair2(runtime, lst, "memq");
-    if(VIsEq(p->first, x))
-      return lst;
+  while(VIsPair(lst)) {
+    VPair * p = VDecodePair(lst);
+    VWORD oldlst = lst;
     lst = p->rest;
+    if(VIsEq(p->first, x))
+      return oldlst;
+  }
+  if(!VIsEq(lst, VNULL)) {
+    VErrorC(runtime, "memq: not a pair: ~S\n", lst);
+    __builtin_unreachable();
   }
   return VFALSE;
 V_END_FUNC
