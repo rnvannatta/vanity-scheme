@@ -76,6 +76,13 @@
     u8vector? list->u8vector u8vector->list make-u8vector u8vector u8vector-ref u8vector-set! u8vector-length u8vector-copy u8vector-copy!
     s8vector? list->s8vector s8vector->list make-s8vector s8vector s8vector-ref s8vector-set! s8vector-length s8vector-copy s8vector-copy!
     bytevector? list->bytevector bytevector->list make-bytevector bytevector bytevector-u8-ref bytevector-u8-set! bytevector-length bytevector-copy bytevector-copy!
+    ; typed reinterpret-cast accessors on u8vectors / bytevectors
+    u8vector-ref-boolean u8vector-set-boolean! u8vector-ref-s8 u8vector-set-s8! u8vector-ref-u8 u8vector-set-u8!
+    u8vector-ref-s16 u8vector-set-s16! u8vector-ref-u16 u8vector-set-u16! u8vector-ref-s32 u8vector-set-s32!
+    u8vector-ref-f32 u8vector-set-f32! u8vector-ref-f64 u8vector-set-f64! u8vector-ref-pointer u8vector-set-pointer!
+    bytevector-ref-boolean bytevector-set-boolean! bytevector-ref-s8 bytevector-set-s8! bytevector-ref-u8 bytevector-set-u8!
+    bytevector-ref-s16 bytevector-set-s16! bytevector-ref-u16 bytevector-set-u16! bytevector-ref-s32 bytevector-set-s32!
+    bytevector-ref-f32 bytevector-set-f32! bytevector-ref-f64 bytevector-set-f64! bytevector-ref-pointer bytevector-set-pointer!
     read-u8vector read-bytevector read-bytevector!
 
     typevector?
@@ -871,6 +878,46 @@
   (define-constant bytevector-copy! (##intrinsic "VU8VectorCopy" 4 6))
   (define bytevector-copy u8vector-copy)
   (define bytevector->list u8vector->list)
+
+  ; typed reinterpret-cast accessors (HLSL ByteAddressBuffer style); i is a byte offset
+  (define-constant u8vector-ref-boolean  (##basic-intrinsic "VU8VectorRefBool" 2))
+  (define-constant u8vector-set-boolean! (##basic-intrinsic "VU8VectorSetBool" 3))
+  (define-constant u8vector-ref-s8   (##basic-intrinsic "VU8VectorRefS8" 2))
+  (define-constant u8vector-set-s8!  (##basic-intrinsic "VU8VectorSetS8" 3))
+  (define-constant u8vector-ref-u8   (##basic-intrinsic "VU8VectorRefU8" 2))
+  (define-constant u8vector-set-u8!  (##basic-intrinsic "VU8VectorSetU8" 3))
+  (define-constant u8vector-ref-s16  (##basic-intrinsic "VU8VectorRefS16" 2))
+  (define-constant u8vector-set-s16! (##basic-intrinsic "VU8VectorSetS16" 3))
+  (define-constant u8vector-ref-u16  (##basic-intrinsic "VU8VectorRefU16" 2))
+  (define-constant u8vector-set-u16! (##basic-intrinsic "VU8VectorSetU16" 3))
+  (define-constant u8vector-ref-s32  (##basic-intrinsic "VU8VectorRefS32" 2))
+  (define-constant u8vector-set-s32! (##basic-intrinsic "VU8VectorSetS32" 3))
+  (define-constant u8vector-ref-f32  (##basic-intrinsic "VU8VectorRefF32" 2))
+  (define-constant u8vector-set-f32! (##basic-intrinsic "VU8VectorSetF32" 3))
+  (define-constant u8vector-ref-f64  (##basic-intrinsic "VU8VectorRefF64" 2))
+  (define-constant u8vector-set-f64! (##basic-intrinsic "VU8VectorSetF64" 3))
+  ; foreign pointer: reads/writes sizeof(void*) raw bytes
+  (define-constant u8vector-ref-pointer  (##basic-intrinsic "VU8VectorRefPointer" 2))
+  (define-constant u8vector-set-pointer! (##basic-intrinsic "VU8VectorSetPointer" 3))
+
+  (define-constant bytevector-ref-boolean  (##basic-intrinsic "VU8VectorRefBool" 2))
+  (define-constant bytevector-set-boolean! (##basic-intrinsic "VU8VectorSetBool" 3))
+  (define-constant bytevector-ref-s8   (##basic-intrinsic "VU8VectorRefS8" 2))
+  (define-constant bytevector-set-s8!  (##basic-intrinsic "VU8VectorSetS8" 3))
+  (define-constant bytevector-ref-u8   (##basic-intrinsic "VU8VectorRefU8" 2))
+  (define-constant bytevector-set-u8!  (##basic-intrinsic "VU8VectorSetU8" 3))
+  (define-constant bytevector-ref-s16  (##basic-intrinsic "VU8VectorRefS16" 2))
+  (define-constant bytevector-set-s16! (##basic-intrinsic "VU8VectorSetS16" 3))
+  (define-constant bytevector-ref-u16  (##basic-intrinsic "VU8VectorRefU16" 2))
+  (define-constant bytevector-set-u16! (##basic-intrinsic "VU8VectorSetU16" 3))
+  (define-constant bytevector-ref-s32  (##basic-intrinsic "VU8VectorRefS32" 2))
+  (define-constant bytevector-set-s32! (##basic-intrinsic "VU8VectorSetS32" 3))
+  (define-constant bytevector-ref-f32  (##basic-intrinsic "VU8VectorRefF32" 2))
+  (define-constant bytevector-set-f32! (##basic-intrinsic "VU8VectorSetF32" 3))
+  (define-constant bytevector-ref-f64  (##basic-intrinsic "VU8VectorRefF64" 2))
+  (define-constant bytevector-set-f64! (##basic-intrinsic "VU8VectorSetF64" 3))
+  (define-constant bytevector-ref-pointer  (##basic-intrinsic "VU8VectorRefPointer" 2))
+  (define-constant bytevector-set-pointer! (##basic-intrinsic "VU8VectorSetPointer" 3))
 
   (define read-u8vector
     (case-lambda
