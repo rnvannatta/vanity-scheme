@@ -24,11 +24,16 @@ At the moment, x64 Linux is a requirement to run the compiler and thus to compil
 
 Linux Dependencies:
 * gcc preferred (or clang)
-* mingw-w64
-* gnumake
 * rsync
+* gnumake
+* binutils
+Strongly Recommended:
 * flex
 * bison
+Mingw Vanity Dependencies:
+* mingw-w64
+* wine
+Emscripten Vanity Dependencies:
 * emscripten
 
 For the pong demo:
