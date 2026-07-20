@@ -1,0 +1,1 @@
+(define-library-interface (vanity srfi263) (import (vanity core) (vanity list)) (export *the-root-object* slot? slot-getter slot-setter slot-type) (constant-export))
