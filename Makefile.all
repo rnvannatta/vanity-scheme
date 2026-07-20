@@ -1,19 +1,33 @@
 include Makefile.sources
+include config.mk
 
-.PHONY : deps all install compiler interpreter windows_interpreter runtime windows_runtime tests tests_linux tests_windows install_compiler lay_egg testffi
+ENABLE_WINDOWS ?= y
+ENABLE_WASM ?= y
+HAVE_BISON ?= y
+HAVE_LEX ?= y
+
+# lay_egg output must stay full-featured regardless of local configuration
+EGG_SCMFLAGS := $(SCMFLAGS)
+SCMFLAGS += $(FEATURE_SCMFLAGS)
+
+.PHONY : deps all install compiler interpreter windows_interpreter runtime windows_runtime tests tests_linux tests_windows install_compiler lay_egg
 
 CC = gcc
 # for when I fuck up the bootstrap
 #PATCH := LD_PRELOAD=~/vscheme/libpatch.so
 PATCH :=
 
+ifeq ($(ENABLE_WINDOWS),y)
 windows_runtime windows_interpreter : CC = /usr/bin/x86_64-w64-mingw32-gcc
 windows_runtime windows_interpreter : CFLAGS += -Wa,--no-warn -lshlwapi
 windows_runtime windows_interpreter : SCMFLAGS += --platform=windows -Wc,-lshlwapi
+endif
 
+ifeq ($(ENABLE_WASM),y)
 wasm_runtime : CC = emcc
 wasm_runtime : CFLAGS += -Wno-gnu -DVANITY_PURE_C -Wno-unused-variable -Wno-unused-command-line-argument
 wasm_runtime : SCMFLAGS += --platform=emscripten
+endif
 
 vpath %.h src $(INCLUDES)
 vpath %.scmh build/include $(INCLUDES)
@@ -28,7 +42,9 @@ RUNTIME_OBJ = $(addprefix build/, $(RUNTIME_SRC:.c=.o))
 RUNTIME_OBJ += $(addprefix build/, $(ASSEMBLY_SRC:.S=.o))
 RUNTIME_OBJ +=  $(addprefix build/, $(RUNTIME_LISP_SRC:.scm=.o))
 
+ifeq ($(ENABLE_WINDOWS),y)
 DEP += $(addprefix build/x86_64-w64-mingw32/, $(RUNTIME_SRC:.c=.d) $(RUNTIME_LISP_SRC:.scm=.d) $(SRC:.scm=.d) $(COMPILE_SRC:.scm=.d) $(INTERP_SRC:.scm=.d)) build/x86_64-w64-mingw32/ffi.tab.d build/x86_64-w64-mingw32/ffi.lex.d
+endif
 
 WINDOWS_OBJ = $(addprefix build/x86_64-w64-mingw32/, $(SRC:.scm=.o)) build/x86_64-w64-mingw32/ffi.tab.o build/x86_64-w64-mingw32/ffi.lex.o
 WINDOWS_INTERP_OBJ = $(addprefix build/x86_64-w64-mingw32/, $(INTERP_SRC:.scm=.o))
@@ -43,8 +59,6 @@ WASM_OBJ +=  $(addprefix build/wasm/, $(RUNTIME_LISP_SRC:.scm=.o))
 BOOT = $(addprefix bin/bootstrap/src/, $(SRC:.scm=.c) $(COMPILE_SRC:.scm=.c))
 BOOT += $(addprefix bin/bootstrap/runtime/, $(ASSEMBLY_SRC) $(RUNTIME_SRC) $(PRIVATE_HEADERS) $(RUNTIME_LISP_SRC:.scm=.c))
 
-include config.mk
-
 VSCHEME = libvscheme.so.$(MAJOR)
 VSC = vsc-$(MAJOR)
 VANITY = vanity-$(MAJOR)
@@ -52,31 +66,51 @@ VANITY = vanity-$(MAJOR)
 compiler : bin/vsc
 interpreter : bin/vanity
 runtime : lib/libvscheme.so
+tests : tests_linux interpreter
+all : compiler interpreter runtime
+install : compiler interpreter runtime
+
+ifeq ($(ENABLE_WINDOWS),y)
 windows_runtime : lib/x86_64-w64-mingw32/vscheme.dll
 windows_interpreter : bin/x86_64-w64-mingw32/vanity.exe
-wasm_runtime : lib/wasm/libvscheme.a
-tests : tests_linux tests_windows interpreter wasm_runtime
-all : compiler interpreter windows_interpreter runtime windows_runtime wasm_runtime
+tests : tests_windows
+all : windows_interpreter windows_runtime
+install : windows_runtime
+else
+windows_runtime windows_interpreter tests_windows :
+	@echo "Windows backend was disabled by ./configure (x86_64-w64-mingw32-gcc); re-run ./configure to enable" ; exit 1
+endif
 
-# the include copy doesn't have an -u on it because
-# include files aren't build. Can add the -u if we
-# copy the files to the bin directory
-install : compiler interpreter runtime windows_runtime wasm_runtime
-	cp -u lib/libvscheme.so $(INSTALL_DIR)/lib/$(VSCHEME)
+ifeq ($(ENABLE_WASM),y)
+wasm_runtime : lib/wasm/libvscheme.a
+tests : wasm_runtime
+all : wasm_runtime
+install : wasm_runtime
+else
+wasm_runtime :
+	@echo "WASM backend was disabled by ./configure (emcc); re-run ./configure to enable" ; exit 1
+endif
+
+install :
+	install -d $(INSTALL_DIR)/lib $(INSTALL_DIR)/bin $(INSTALL_DIR)/include
+	install -m755 lib/libvscheme.so $(INSTALL_DIR)/lib/$(VSCHEME)
 	ldconfig
-	cp -r include/* $(INSTALL_DIR)/include/.
-	cp -u bin/vsc $(INSTALL_DIR)/bin/$(VSC)
-	cp -u bin/vanity $(INSTALL_DIR)/bin/$(VANITY)
+	find include -type f -printf '%P\n' | while read -r f ; do install -Dm644 include/$$f $(INSTALL_DIR)/include/$$f ; done
+	install -m755 bin/vsc $(INSTALL_DIR)/bin/$(VSC)
+	install -m755 bin/vanity $(INSTALL_DIR)/bin/$(VANITY)
 	ln -sfn $(INSTALL_DIR)/bin/$(VSC) $(INSTALL_DIR)/bin/vsc
 	ln -sfn $(INSTALL_DIR)/bin/$(VANITY) $(INSTALL_DIR)/bin/vanity
-	mkdir -p $(INSTALL_DIR)/x86_64-w64-mingw32/include
-	mkdir -p $(INSTALL_DIR)/x86_64-w64-mingw32/lib
+ifeq ($(ENABLE_WINDOWS),y)
+	install -d $(INSTALL_DIR)/x86_64-w64-mingw32/include $(INSTALL_DIR)/x86_64-w64-mingw32/lib
 	ln -sfn $(INSTALL_DIR)/include/vscheme $(INSTALL_DIR)/x86_64-w64-mingw32/include/vscheme
-	mkdir -p $(EMSCRIPTEN_INSTALL_DIR)/lib/wasm32-emscripten/
-	cp -u lib/x86_64-w64-mingw32/vscheme.dll $(INSTALL_DIR)/x86_64-w64-mingw32/lib/
-	cp -u lib/wasm/libvscheme.a $(EMSCRIPTEN_INSTALL_DIR)/lib/wasm32-emscripten/libvscheme.a
-	cp -r include/* $(EMSCRIPTEN_INSTALL_DIR)/include/.
-	cp -u vendor/lib/wasm/* $(EMSCRIPTEN_INSTALL_DIR)/lib/wasm32-emscripten/
+	install -m755 lib/x86_64-w64-mingw32/vscheme.dll $(INSTALL_DIR)/x86_64-w64-mingw32/lib/vscheme.dll
+endif
+ifeq ($(ENABLE_WASM),y)
+	install -d $(EMSCRIPTEN_INSTALL_DIR)/lib/wasm32-emscripten/
+	install -m644 lib/wasm/libvscheme.a $(EMSCRIPTEN_INSTALL_DIR)/lib/wasm32-emscripten/libvscheme.a
+	find include -type f -printf '%P\n' | while read -r f ; do install -Dm644 include/$$f $(EMSCRIPTEN_INSTALL_DIR)/include/$$f ; done
+	install -m644 vendor/lib/wasm/* $(EMSCRIPTEN_INSTALL_DIR)/lib/wasm32-emscripten/
+endif
 
 tests_linux : compiler runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
@@ -97,6 +131,7 @@ tests_linux : compiler runtime
 	done ; \
 	wait
 
+ifeq ($(ENABLE_WINDOWS),y)
 tests_windows : compiler runtime windows_runtime
 	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
     ( EXE=`mktemp` ; \
@@ -117,6 +152,7 @@ tests_windows : compiler runtime windows_runtime
     \rm -f $$EXE ; ) & \
 	done ; \
 	wait
+endif
 
 lay_egg : $(BOOT)
 	cp -r include bin/bootstrap/.
@@ -127,15 +163,15 @@ lay_egg : $(BOOT)
 
 bin/bootstrap/runtime/%.c : runtime/%.scm
 	@mkdir -p `dirname $@`
-	$(PATCH) vsc -t $< -o $@ $(SCMFLAGS) --shared -Iinclude
+	$(PATCH) vsc -t $< -o $@ $(EGG_SCMFLAGS) --shared -Iinclude
 	@{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
 bin/bootstrap/src/%.c : src/%.scm
 	@mkdir -p `dirname $@`
-	$(PATCH) vsc -t $< -o $@ $(SCMFLAGS) -Ibuild/include
+	$(PATCH) vsc -t $< -o $@ $(EGG_SCMFLAGS) -Ibuild/include
 	@{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
 bin/bootstrap/src/%.c : config/%.scm
 	@mkdir -p `dirname $@`
-	$(PATCH) vsc -t $< -o $@ $(SCMFLAGS) -Ibuild/include
+	$(PATCH) vsc -t $< -o $@ $(EGG_SCMFLAGS) -Ibuild/include
 	@{ /bin/rm $@; cat misc/license_template - >$@; } <$@	
 bin/bootstrap/src/%.c : src/%.c
 	cp $< $@
@@ -184,23 +220,29 @@ bin/vsc : $(OBJ) $(COMPILE_OBJ)
 bin/vanity : $(OBJ) $(INTERP_OBJ)
 	vsc -o $@ $^ $(SCMFLAGS) -Wc,-Llib
 
+ifeq ($(ENABLE_WINDOWS),y)
 # I don't like this, any files vsc doesn't understand should just be passed to cc
 bin/x86_64-w64-mingw32/vanity.exe : $(WINDOWS_OBJ) $(WINDOWS_INTERP_OBJ) build/vanity.res
 	@mkdir -p `dirname $@`
 #	vsc -o $@ $^ $(SCMFLAGS)
 	/usr/bin/x86_64-w64-mingw32-gcc -o $@ $^ $(CFLAGS) -L$(INSTALL_DIR)/x86_64-w64-mingw32/lib/ -lvscheme -Wl,--no-as-needed -Wl,--export-all-symbols -Wl,--stack,8388608 -Wmissing-braces -masm=intel
+endif
 
 lib/libvscheme.so : $(RUNTIME_OBJ)
 	@mkdir -p `dirname $@`
 	gcc -o $@ $^ $(LIBS) $(CFLAGS) -shared
 
+ifeq ($(ENABLE_WINDOWS),y)
 lib/x86_64-w64-mingw32/vscheme.dll : $(WINDOWS_RUNTIME_OBJ)
 	@mkdir -p `dirname $@`
 	/usr/bin/x86_64-w64-mingw32-gcc -o $@ $^ $(CFLAGS) -shared -Wl,--export-all-symbols -Wl,--stack,8388608 -Lvendor/lib/x86_64-w64-mingw32 -ldfile
+endif
 
+ifeq ($(ENABLE_WASM),y)
 lib/wasm/libvscheme.a : $(WASM_OBJ)
 	@mkdir -p `dirname $@`
 	emar rcs $@ $^
+endif
 
 build/%.o : build/%.scm
 	$(PATCH) vsc -c $< -o $@ $(SCMFLAGS) -Wc,-fPIC -Iinclude -Ibuild/include
@@ -210,18 +252,32 @@ build/%.o : build/%.c
 build/%.o : build/%.S 
 	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS)
 
+ifeq ($(HAVE_LEX),y)
 build/%.lex.c : build/%.l
-	lex -o $@ $< 
+	lex -o $@ $<
+else
+build/ffi.lex.c build/x86_64-w64-mingw32/ffi.lex.c : bootstrap/src/ffi.lex.c
+	@mkdir -p $(dir $@)
+	cp $< $@
+endif
 
+ifeq ($(HAVE_BISON),y)
 build/%.tab.h build/%.tab.c &: build/%.y
 	bison -d -b build/$* $<
+else
+build/ffi.tab.c build/ffi.tab.h &: bootstrap/src/ffi.tab.c bootstrap/src/ffi.tab.h
+	@mkdir -p build
+	cp bootstrap/src/ffi.tab.c build/ffi.tab.c
+	cp bootstrap/src/ffi.tab.h build/ffi.tab.h
+build/x86_64-w64-mingw32/ffi.tab.c build/x86_64-w64-mingw32/ffi.tab.h &: bootstrap/src/ffi.tab.c bootstrap/src/ffi.tab.h
+	@mkdir -p build/x86_64-w64-mingw32
+	cp bootstrap/src/ffi.tab.c build/x86_64-w64-mingw32/ffi.tab.c
+	cp bootstrap/src/ffi.tab.h build/x86_64-w64-mingw32/ffi.tab.h
+endif
 
-bin/testffi : build/ffi.lex.o build/ffi.tab.o test/testffi.c
-	gcc -o $@ $^ $(CFLAGS) -lvscheme
-
-testffi : bin/testffi
-
+ifeq ($(ENABLE_WINDOWS),y)
 build/vanity.res : resources/vanity.rc resources/vanity.ico
 	/usr/bin/x86_64-w64-mingw32-windres -O coff -i $< -o $@
+endif
 
 .NOTINTERMEDIATE : $(addprefix build/, $(ASSEMBLY_SRC) $(COMPILE_SRC) $(INTERP_SRC) ffi.y ffi.l) $(addprefix build/x86_64-w64-mingw32/, $(WINDOWS_ASSEMBLY_SRC) $(COMPILE_SRC) $(INTERP_SRC) ffi.y ffi.l)

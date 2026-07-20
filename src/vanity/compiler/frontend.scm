@@ -54,6 +54,16 @@
 (define api 1)
 (define out-file #f)
 (define platform "linux")
+(cond-expand
+  (disable-platform-windows (define platform-windows-enabled? #f))
+  (else (define platform-windows-enabled? #t)))
+(cond-expand
+  (disable-platform-emscripten (define platform-emscripten-enabled? #f))
+  (else (define platform-emscripten-enabled? #t)))
+(define enabled-platforms
+  (append '("linux")
+          (if platform-windows-enabled? '("windows") '())
+          (if platform-emscripten-enabled? '("emscripten") '())))
 (define purec? #f)
 (define hygiene? #f)
 (define main "main")
@@ -173,7 +183,8 @@
   (displayln "  --keep-temps    Keep temporary compilation files, such as C intermediates")
   (displayln "  --hygiene       Use new hygienic macro-expander (still in development)")
   ;(displayln "  --api=<num>    Compile with major api version 0 or 1")
-  (displayln "  --platform=<os> Which OS to make executables for. Either 'linux' or 'windows' or 'emscripten'.")
+  (displayln (apply string-append "  --platform=<os> Which OS to make executables for. One of:"
+                    (map (lambda (p) (string-append " '" p "'")) enabled-platforms)))
   (displayln "  --main=<main>   What style of main to use. Either 'main' or 'winmain' or 'emscripten-loop' or 'none'.")
   (displayln "  --cc=<compiler> Use the C compiler of your choice. The default is gcc")
   (displayln "  --help          You know about this")
@@ -260,6 +271,10 @@
               ((hygiene) (set! hygiene? #t))
               (else (compiler-error "Unknown CLI option" (cdar args))))
             (loop (cdr args)))))
+    (if (not (member platform '("linux" "windows" "emscripten")))
+        (compiler-error "Unknown --platform, only 'linux' and 'windows' and 'emscripten' are valid" platform))
+    (if (not (member platform enabled-platforms))
+        (compiler-error "--platform support was disabled when this compiler was configured; re-run ./configure and reinstall to enable it" platform))
     (if (not cc)
         (set! cc
           (cond ((equal? platform "linux") "gcc")
