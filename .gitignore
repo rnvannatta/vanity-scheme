@@ -1,6 +1,7 @@
 bin/
 build/
 lib/
+preflight/
 scratch/
 mingw64/
 config/

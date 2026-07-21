@@ -17,6 +17,11 @@ CC = gcc
 #PATCH := LD_PRELOAD=~/vscheme/libpatch.so
 PATCH :=
 
+# VSC_DEP, when set to the path of the compiler, makes every
+# vsc-generated file depend on the compiler binary itself
+VSC ?= vsc
+VSC_DEP ?=
+
 ifeq ($(ENABLE_WINDOWS),y)
 windows_runtime windows_interpreter : CC = /usr/bin/x86_64-w64-mingw32-gcc
 windows_runtime windows_interpreter : CFLAGS += -Wa,--no-warn -lshlwapi
@@ -112,46 +117,51 @@ ifeq ($(ENABLE_WASM),y)
 	install -m644 vendor/lib/wasm/* $(EMSCRIPTEN_INSTALL_DIR)/lib/wasm32-emscripten/
 endif
 
-tests_linux : compiler runtime
-	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
-    ( EXE=`mktemp` ; \
-		echo "bin/vsc $$test && ./a.out" ; \
-    OVERRIDE=`realpath lib/` ; \
-		if ! ($(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -O2 -Wc,-Llib -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
-			echo "COMPILE FAILURE: $$test"; \
-      \rm -f $$EXE ; \
-			exit 1; \
-	  fi ; \
-		if ! (cd `dirname $$test` ; $(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH $$EXE) ; then \
-			echo "FAILURE: $$test"; \
-      \rm -f $$EXE ; \
-			exit 1; \
-		fi ; \
-    \rm -f $$EXE ; ) & \
-	done ; \
-	wait
+TESTRUN_LINUX := $(addprefix testrun_linux/, $(TEST_SRC))
+
+tests_linux : $(TESTRUN_LINUX)
+
+testrun_linux/% : compiler runtime
+	@EXE=`mktemp` ; \
+	echo "bin/vsc test/$* && ./a.out" ; \
+	OVERRIDE=`realpath lib/` ; \
+	if ! ($(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE test/$* -O2 -Wc,-Llib -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
+		echo "COMPILE FAILURE: test/$*"; \
+		\rm -f $$EXE ; \
+		exit 1; \
+	fi ; \
+	if ! (cd test/`dirname $*` ; $(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH $$EXE) ; then \
+		echo "FAILURE: test/$*"; \
+		\rm -f $$EXE ; \
+		exit 1; \
+	fi ; \
+	\rm -f $$EXE
+
+TESTRUN_WINDOWS := $(addprefix testrun_windows/, $(TEST_SRC))
 
 ifeq ($(ENABLE_WINDOWS),y)
-tests_windows : compiler runtime windows_runtime
-	@for test in $(addprefix test/, $(TEST_SRC)) ; do \
-    ( EXE=`mktemp` ; \
-		echo "bin/vsc $$test && wine ./a.exe" ; \
-    OVERRIDE="`realpath lib/`:`realpath vendor/lib/`" ; \
-		if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE $$test -Wc,-Llib/x86_64-w64-mingw32 -Wc,-Lvendor/lib/x86_64-w64-mingw32  -Wc,-Iinclude -Iinclude --platform=windows) ; then \
-			echo "COMPILE FAILURE: $$test"; \
-      \rm -f $$EXE ; \
-			exit 1; \
-	  fi ; \
-		ln -sf `realpath lib/x86_64-w64-mingw32/vscheme.dll` `dirname $$test`/; \
-		ln -sf `realpath vendor/lib/x86_64-w64-mingw32/dfile.dll` `dirname $$test`/; \
-		if ! (cd `dirname $$test` ; wine $$EXE) ; then \
-			echo "FAILURE: $$test"; \
-      \rm -f $$EXE ; \
-			exit 1; \
-		fi ; \
-    \rm -f $$EXE ; ) & \
-	done ; \
-	wait
+tests_windows : $(TESTRUN_WINDOWS)
+
+testrun_windows/% : compiler runtime windows_runtime
+	@EXE=`mktemp` ; \
+	echo "bin/vsc test/$* && wine ./a.exe" ; \
+	OVERRIDE="`realpath lib/`:`realpath vendor/lib/`" ; \
+	if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE test/$* -Wc,-Llib/x86_64-w64-mingw32 -Wc,-Lvendor/lib/x86_64-w64-mingw32  -Wc,-Iinclude -Iinclude --platform=windows) ; then \
+		echo "COMPILE FAILURE: test/$*"; \
+		\rm -f $$EXE ; \
+		exit 1; \
+	fi ; \
+	ln -sf `realpath lib/x86_64-w64-mingw32/vscheme.dll` test/`dirname $*`/; \
+	ln -sf `realpath vendor/lib/x86_64-w64-mingw32/dfile.dll` test/`dirname $*`/; \
+	if ! (cd test/`dirname $*` ; wine $$EXE) ; then \
+		echo "FAILURE: test/$*"; \
+		\rm -f $$EXE ; \
+		exit 1; \
+	fi ; \
+	\rm -f $$EXE
+else
+testrun_windows/% :
+	@echo "Windows backend was disabled by ./configure (x86_64-w64-mingw32-gcc); re-run ./configure to enable" ; exit 1
 endif
 
 lay_egg : $(BOOT)
@@ -198,6 +208,9 @@ build/x86_64-w64-mingw32/% : runtime/%
 build/x86_64-w64-mingw32/% : src/%
 	@mkdir -p $(dir $@)
 	ln -sfr $< $@
+build/x86_64-w64-mingw32/% : config/%
+	@mkdir -p $(dir $@)
+	ln -sfr $< $@
 build/wasm/% : runtime/%
 	@mkdir -p $(dir $@)
 	ln -sfr $< $@
@@ -208,17 +221,17 @@ build/% : config/%
 build/%.d : build/%.c
 	gcc $< -MG -MM -MF $@ -MT $@ -MT $(@:.d=.o) $(CFLAGS) $(IFLAGS) -Isrc -Iruntime
 
-build/%.d : build/%.scm
+build/%.d : build/%.scm $(VSC_DEP)
 	@mkdir -p `dirname build/headers/$*.scmh`
-	vsc --makefile $< -o $@ --maketarget $(@:.d=.o)
-	vsc --makefile $< -o build/headers/$*.d --maketarget $(@:.d=.scmh)
+	$(VSC) --makefile $< -o $@ --maketarget $(@:.d=.o)
+	$(VSC) --makefile $< -o build/headers/$*.d --maketarget $(@:.d=.scmh)
 
 -include $(DEP)
 
 bin/vsc : $(OBJ) $(COMPILE_OBJ)
-	vsc -o $@ $^ $(SCMFLAGS) -Wc,-Llib
+	$(VSC) -o $@ $^ $(SCMFLAGS) -Wc,-Llib -Wc,-Lvendor/lib
 bin/vanity : $(OBJ) $(INTERP_OBJ)
-	vsc -o $@ $^ $(SCMFLAGS) -Wc,-Llib
+	$(VSC) -o $@ $^ $(SCMFLAGS) -Wc,-Llib -Wc,-Lvendor/lib
 
 ifeq ($(ENABLE_WINDOWS),y)
 # I don't like this, any files vsc doesn't understand should just be passed to cc
@@ -244,8 +257,8 @@ lib/wasm/libvscheme.a : $(WASM_OBJ)
 	emar rcs $@ $^
 endif
 
-build/%.o : build/%.scm
-	$(PATCH) vsc -c $< -o $@ $(SCMFLAGS) -Wc,-fPIC -Iinclude -Ibuild/include
+build/%.o : build/%.scm $(VSC_DEP)
+	$(PATCH) $(VSC) -c $< -o $@ $(SCMFLAGS) -Wc,-fPIC -Iinclude -Ibuild/include
 build/%.o : build/%.c
 	$(CC) -c $< -o $@ $(CFLAGS) $(IFLAGS) -Iruntime -Isrc
 

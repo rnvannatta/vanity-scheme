@@ -54,12 +54,26 @@ feature_scmflags=""
 if [ "$windows" = "n" ]; then feature_scmflags+="-Ddisable-platform-windows "; fi
 if [ "$wasm" = "n" ]; then feature_scmflags+="-Ddisable-platform-emscripten "; fi
 
-if [ "$have_bison" = "n" ] && [ src/ffi.y -nt bootstrap/src/ffi.tab.c ]; then
-  echo "warning: bison not found and src/ffi.y is newer than bootstrap/src/ffi.tab.c;"
+# Is $1 (grammar source) newer than $2 (pre-generated output)?
+# Prefer git history over mtimes so fresh checkouts don't warn spuriously.
+is_stale() {
+  if command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    # uncommitted changes to the source mean the generated file can't be current
+    if ! git diff --quiet HEAD -- "$1" 2>/dev/null; then return 0; fi
+    src_time=$(git log -1 --format=%ct -- "$1")
+    gen_time=$(git log -1 --format=%ct -- "$2")
+    [ -n "$src_time" ] && [ -n "$gen_time" ] && [ "$src_time" -gt "$gen_time" ]
+  else
+    [ "$1" -nt "$2" ]
+  fi
+}
+
+if [ "$have_bison" = "n" ] && is_stale src/ffi.y bootstrap/src/ffi.tab.c; then
+  echo "warning: bison not found and src/ffi.y has changed since bootstrap/src/ffi.tab.c was generated;"
   echo "         the pre-generated parser may be stale"
 fi
-if [ "$have_lex" = "n" ] && [ src/ffi.l -nt bootstrap/src/ffi.lex.c ]; then
-  echo "warning: lex/flex not found and src/ffi.l is newer than bootstrap/src/ffi.lex.c;"
+if [ "$have_lex" = "n" ] && is_stale src/ffi.l bootstrap/src/ffi.lex.c; then
+  echo "warning: lex/flex not found and src/ffi.l has changed since bootstrap/src/ffi.lex.c was generated;"
   echo "         the pre-generated lexer may be stale"
 fi
 
