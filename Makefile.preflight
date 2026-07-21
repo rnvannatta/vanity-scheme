@@ -1,0 +1,69 @@
+# Pre-submission self-hosting check, no install and no root required:
+#   stage0: compiler + runtime built from the checked-in bootstrap/ C
+#   stage1: full build of HEAD sources, compiled BY the stage0 compiler
+#   stage2: full build of HEAD sources, compiled BY the stage1 compiler
+#   tests:  test/ suite compiled and run by the stage2 compiler
+#
+# Stages 1 and 2 are "symlink farms" under preflight/: mini-checkouts that
+# reuse the normal Makefile machinery via make -C, with VSC pointing at the
+# previous stage's compiler. Each farm gets its own generated
+# config/vanity/compiler/config.scm whose install-root is the farm directory,
+# so the stage compilers never consult the installed tree. (The stage0
+# compiler bakes the install-root recorded when bootstrap/ was laid, so
+# stage1 is only as hermetic as a build with the installed vsc; the
+# stage1 -> stage2 chain is fully self-contained.)
+
+include Makefile.sources
+include config.mk
+
+.PHONY : preflight preflight_boot preflight_stage1 preflight_stage2 preflight_tests preflight_clean
+
+STAGE0 := preflight/stage0
+
+FARM_LINKS := src runtime include vendor test misc bootstrap resources \
+              Makefile Makefile.all Makefile.headers Makefile.sources Makefile.bootstrap config.mk
+
+# $(call farm_setup,preflight/stageN)
+# Idempotent; the config.scm is only rewritten when its content changes so
+# that repeated preflight runs stay incremental.
+define farm_setup
+@mkdir -p $(1)/config/vanity/compiler
+@for l in $(FARM_LINKS); do ln -sfn $(CURDIR)/$$l $(1)/$$l; done
+@{ echo '(define-library (vanity compiler config)' ; \
+   echo '  (export install-root version platform)' ; \
+   echo "  (define version '($(MAJOR) $(MINOR)))" ; \
+   echo '  (define install-root "$(CURDIR)/$(1)/")' ; \
+   echo "  (define platform 'linux))" ; \
+ } > $(1)/config/vanity/compiler/config.scm.tmp
+@if cmp -s $(1)/config/vanity/compiler/config.scm.tmp $(1)/config/vanity/compiler/config.scm ; then \
+   rm $(1)/config/vanity/compiler/config.scm.tmp ; \
+ else \
+   mv $(1)/config/vanity/compiler/config.scm.tmp $(1)/config/vanity/compiler/config.scm ; \
+ fi
+endef
+
+# $(call stage_build,stagedir,prev_stage_dir,targets)
+define stage_build
+$(call farm_setup,$(1))
+LD_LIBRARY_PATH=$(CURDIR)/$(2)/lib:$(CURDIR)/vendor/lib:$$LD_LIBRARY_PATH \
+  $(MAKE) -C $(1) $(3) --no-print-directory --no-builtin-rules \
+    ENABLE_WINDOWS=n ENABLE_WASM=n \
+    VSC=$(CURDIR)/$(2)/bin/vsc VSC_DEP=$(CURDIR)/$(2)/bin/vsc
+endef
+
+preflight : preflight_tests
+
+preflight_boot :
+	@$(MAKE) boot -f Makefile.bootstrap BOOT_DIR=$(STAGE0) --no-print-directory --no-builtin-rules
+
+preflight_stage1 : preflight_boot
+	$(call stage_build,preflight/stage1,$(STAGE0),all)
+
+preflight_stage2 : preflight_stage1
+	$(call stage_build,preflight/stage2,preflight/stage1,all)
+
+preflight_tests : preflight_stage2
+	$(call stage_build,preflight/stage2,preflight/stage1,tests_linux)
+
+preflight_clean :
+	rm -rf preflight

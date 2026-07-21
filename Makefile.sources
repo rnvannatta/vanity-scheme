@@ -18,7 +18,7 @@ TEST_SRC := fact.scm ack.scm core.scm weak.scm multilib.scm list.scm listfunc.sc
 HOME_DIR := $(shell echo ~)
 INSTALL_DIR := $(HOME_DIR)/.local
 
-LIBS := -lm -ldl -lpthread -latomic -ldfile
+LIBS := -Lvendor/lib -lm -ldl -lpthread -latomic -ldfile
 CFLAGS := -fPIC -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=cast-function-type -Wno-missing-field-initializers -Werror=varargs -masm=intel -fno-strict-aliasing
 
 INCLUDES := vendor/include include $(HOME_DIR)/.local/include
