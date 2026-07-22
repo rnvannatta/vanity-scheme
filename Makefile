@@ -1,4 +1,4 @@
-.PHONY : clean deps cleandeps compiler interpreter windows_interpreter runtime windows_runtime wasm_runtime install tests tests_linux tests_windows config lay_egg boot_dirs preflight preflight_boot preflight_stage1 preflight_stage2 preflight_tests preflight_clean
+.PHONY : clean deps cleandeps compiler interpreter windows_interpreter runtime windows_runtime wasm_runtime install tests tests_linux tests_windows config lay_egg boot_dirs preflight preflight_boot preflight_stage1 preflight_stage2 preflight_tests preflight_quick preflight_clean
 
 all :
 
@@ -13,7 +13,7 @@ hatch :
 	@$(MAKE) $@ -f Makefile.bootstrap --no-print-directory --no-builtin-rules
 	@$(MAKE) clean --no-print-directory --no-builtin-rules
 
-preflight preflight_boot preflight_stage1 preflight_stage2 preflight_tests preflight_clean :
+preflight preflight_boot preflight_stage1 preflight_stage2 preflight_tests preflight_quick preflight_clean :
 	@$(MAKE) $@ -f Makefile.preflight --no-print-directory --no-builtin-rules
 
 define build_dispatch

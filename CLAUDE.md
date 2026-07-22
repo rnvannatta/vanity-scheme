@@ -1,7 +1,5 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## What this is
 
 Vanity Scheme: a self-hosting R7RS Scheme-to-C compiler (`vsc`), interpreter (`vanity`), and runtime (`libvscheme.so`), targeting Linux, Windows (mingw), and wasm (emscripten). Cheney-on-the-MTA design, similar to Chicken Scheme. ~4 years old with archeological layering — some idioms are legacy (noted below).
@@ -18,13 +16,15 @@ make interpreter -j8     # bin/vanity
 make runtime -j8         # lib/libvscheme.so
 make tests_linux -j8     # normal smoke test: compiles & runs everything in test/
 make tests -j8           # linux + windows (wine) smoke test
-make preflight -j8       # no-install self-hosting check: bootstrap-build (stage0) →
-                         # build HEAD with stage0 (stage1) → build HEAD with stage1
-                         # (stage2) → tests_linux under stage2. No sudo, doesn't touch
+make preflight -j8       # no-install self-hosting check: No sudo, doesn't touch
                          # the installed vsc or the normal build tree; artifacts live in
                          # preflight/stage{0,1,2}. Granular targets: preflight_boot,
                          # preflight_stage1, preflight_stage2, preflight_tests,
                          # preflight_clean.
+make preflight_quick -j8 # quick preflight for changes that almost surely don't
+                         # need a full bootstrap cycle: builds bin/vsc + runtime,
+                         # then bin/vsc builds a compiler into preflight/quick,
+                         # which compiles and runs tests_linux.
 ```
 
 - **NEVER run `make install`, `sudo make hatch`, or `make lay_egg`.** Installing a bad compiler can wedge the bootstrap; these are user-only actions. Propose them, don't execute.
