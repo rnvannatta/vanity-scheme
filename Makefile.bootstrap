@@ -11,19 +11,38 @@ VSC = vsc-$(MAJOR)
 
 include config.mk
 
-.PHONY : hatch
+BOOT_DIR ?= build/boot
 
-hatch :
-	mkdir -p bin
-	mkdir -p build
-	mkdir -p lib
+BOOT_RUNTIME_OBJ := $(patsubst bootstrap/%, $(BOOT_DIR)/obj/%.o, $(basename $(RUNTIME_STRAP)))
+BOOT_COMPILER_OBJ := $(patsubst bootstrap/%, $(BOOT_DIR)/obj/%.o, $(basename $(COMPILER_STRAP)))
+
+.PHONY : hatch boot
+
+$(BOOT_DIR)/obj/%.o : bootstrap/%.c
+	@mkdir -p $(dir $@)
+	gcc -c $< -o $@ $(CFLAGS) -Ivendor/include -Ibootstrap/include -fPIC -Wno-missing-braces
+
+$(BOOT_DIR)/obj/%.o : bootstrap/%.S
+	@mkdir -p $(dir $@)
+	gcc -c $< -o $@ $(CFLAGS) -Ivendor/include -Ibootstrap/include -fPIC
+
+$(BOOT_DIR)/lib/libvscheme.so : $(BOOT_RUNTIME_OBJ)
+	@mkdir -p $(dir $@)
+	gcc -rdynamic -o $@ $^ $(LIBS) $(CFLAGS) -fPIC -shared -Wno-missing-braces -masm=intel
+
+$(BOOT_DIR)/bin/vsc : $(BOOT_COMPILER_OBJ) $(BOOT_DIR)/lib/libvscheme.so
+	@mkdir -p $(dir $@)
+	gcc -rdynamic -o $@ $(BOOT_COMPILER_OBJ) $(CFLAGS) -L$(BOOT_DIR)/lib -Lvendor/lib -lvscheme -Wl,--no-as-needed -Wno-missing-braces
+
+# Build the bootstrap compiler & runtime without touching INSTALL_DIR.
+boot : $(BOOT_DIR)/bin/vsc
+
+hatch : boot
 	cp -u vendor/lib/libdfile.so $(INSTALL_DIR)/lib/.
 	ldconfig
 	ln -sf "$(INSTALL_DIR)/lib/$(VSCHEME)" $(INSTALL_DIR)/lib/libvscheme.so
 	ln -sf "$(INSTALL_DIR)/bin/vsc-$(MAJOR)" $(INSTALL_DIR)/bin/vsc
 	cp -ar bootstrap/include/* $(INSTALL_DIR)/include/
-	gcc -rdynamic -o lib/libvscheme.so $(RUNTIME_STRAP) -Ivendor/include -Ibootstrap/include $(LIBS) $(CFLAGS) -fPIC -shared -Wno-missing-braces -masm=intel
-	cp -a lib/libvscheme.so $(INSTALL_DIR)/lib/$(VSCHEME)
+	cp -a $(BOOT_DIR)/lib/libvscheme.so $(INSTALL_DIR)/lib/$(VSCHEME)
 	ldconfig
-	gcc -rdynamic -o bin/vsc $(COMPILER_STRAP) $(CFLAGS) -Ivendor/include -Ibootstrap/include -lvscheme -Wl,--no-as-needed -Wno-missing-braces
-	cp -a bin/vsc $(INSTALL_DIR)/bin/$(VSC)
+	cp -a $(BOOT_DIR)/bin/vsc $(INSTALL_DIR)/bin/$(VSC)

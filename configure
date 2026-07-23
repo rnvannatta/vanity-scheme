@@ -5,10 +5,31 @@ echo "Configuring Vanity Scheme"
 mkdir -p config/vanity/compiler/
 mkdir -p config/x86_64-w64-mingw32/vanity/compiler/
 
+if command -v x86_64-w64-mingw32-gcc >/dev/null 2>&1; then windows_default=y; else windows_default=n; fi
+if command -v em-config >/dev/null 2>&1; then wasm_default=y; else wasm_default=n; fi
+if command -v bison >/dev/null 2>&1; then have_bison=y; else have_bison=n; fi
+if command -v lex >/dev/null 2>&1; then have_lex=y; else have_lex=n; fi
+
 read -p "Major Version:" major
 read -p "Minor Version:" minor
 read -p "Install Dir:" install
-read -p "Emscripten Install Dir:" eminstall
+if [ "$windows_default" = "y" ]; then
+  read -p "Build Windows backend? (Y/n):" windows
+  if [ "$windows" = "n" ]; then windows=n; else windows=y; fi
+else
+  read -p "Build Windows backend? (y/N):" windows
+  if [ "$windows" = "y" ]; then windows=y; else windows=n; fi
+fi
+if [ "$wasm_default" = "y" ]; then
+  read -p "Build WASM backend? (Y/n):" wasm
+  if [ "$wasm" = "n" ]; then wasm=n; else wasm=y; fi
+else
+  read -p "Build WASM backend? (y/N):" wasm
+  if [ "$wasm" = "y" ]; then wasm=y; else wasm=n; fi
+fi
+if [ "$wasm" = "y" ]; then
+  read -p "Emscripten Install Dir:" eminstall
+fi
 read -p "Debug Build? (y/N):" debug
 read -p "Optimize? (Y/n):" optimize
 
@@ -16,7 +37,9 @@ if [ -z "$major" ]; then major=0; fi
 if [ -z "$minor" ]; then minor=0; fi
 if [ -z "$install" ]; then install="/usr/local"; fi
 if [ -z "$eminstall" ]; then
-  if [ -z $EM_CACHE ]; then
+  if [ "$wasm_default" = "y" ]; then
+    eminstall=`em-config CACHE`;
+  elif [ -z $EM_CACHE ]; then
     eminstall="/usr/share/emscripten/cache/sysroot";
   else
     eminstall=$EM_CACHE/sysroot;
@@ -27,11 +50,41 @@ if [ "$debug" = "y" ]; then scmflags="-g "; else scmflags=""; fi
 if [ "$optimize" = "n" ]; then cflags+="-O0"; else cflags+="-O2"; fi
 if [ "$optimize" = "n" ]; then scmflags+="-O0"; else scmflags+="-O2"; fi
 
+feature_scmflags=""
+if [ "$windows" = "n" ]; then feature_scmflags+="-Ddisable-platform-windows "; fi
+if [ "$wasm" = "n" ]; then feature_scmflags+="-Ddisable-platform-emscripten "; fi
+
+# Is $1 (grammar source) newer than $2 (pre-generated output)?
+# Prefer git history over mtimes so fresh checkouts don't warn spuriously.
+is_stale() {
+  if command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    # uncommitted changes to the source mean the generated file can't be current
+    if ! git diff --quiet HEAD -- "$1" 2>/dev/null; then return 0; fi
+    src_time=$(git log -1 --format=%ct -- "$1")
+    gen_time=$(git log -1 --format=%ct -- "$2")
+    [ -n "$src_time" ] && [ -n "$gen_time" ] && [ "$src_time" -gt "$gen_time" ]
+  else
+    [ "$1" -nt "$2" ]
+  fi
+}
+
+if [ "$have_bison" = "n" ] && is_stale src/ffi.y bootstrap/src/ffi.tab.c; then
+  echo "warning: bison not found and src/ffi.y has changed since bootstrap/src/ffi.tab.c was generated;"
+  echo "         the pre-generated parser may be stale"
+fi
+if [ "$have_lex" = "n" ] && is_stale src/ffi.l bootstrap/src/ffi.lex.c; then
+  echo "warning: lex/flex not found and src/ffi.l has changed since bootstrap/src/ffi.lex.c was generated;"
+  echo "         the pre-generated lexer may be stale"
+fi
+
 install="${install/#\~/$HOME}"
 install=`realpath $install`
 
 echo "Installing Vanity Scheme $major.$minor to $install with extra CFLAGS: $cflags and extra SCMFLAGS: $scmflags"
-echo "and installing wasm to $eminstall"
+echo "Windows backend: $windows, WASM backend: $wasm, bison: $have_bison, lex: $have_lex"
+if [ "$wasm" = "y" ]; then
+  echo "and installing wasm to $eminstall"
+fi
 
 echo "MAJOR := $major" > config.mk
 echo "MINOR := $minor" >> config.mk
@@ -39,6 +92,11 @@ echo "INSTALL_DIR := $install" >> config.mk
 echo "EMSCRIPTEN_INSTALL_DIR := $eminstall" >> config.mk
 echo "CFLAGS += $cflags" >> config.mk
 echo "SCMFLAGS += $scmflags" >> config.mk
+echo "FEATURE_SCMFLAGS := $feature_scmflags" >> config.mk
+echo "ENABLE_WINDOWS := $windows" >> config.mk
+echo "ENABLE_WASM := $wasm" >> config.mk
+echo "HAVE_BISON := $have_bison" >> config.mk
+echo "HAVE_LEX := $have_lex" >> config.mk
 
 cat << EOF > config/vanity/compiler/config.scm
 (define-library (vanity compiler config)

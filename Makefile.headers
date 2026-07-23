@@ -7,26 +7,31 @@ DEPS = $(addprefix build/headers, $(RUNTIME_LISP_SRC:.scm=.d) $(SRC:.scm=.d) $(C
 
 include config.mk
 
+# See the matching block in Makefile.all: these allow building with an
+# uninstalled compiler (Makefile.preflight).
+VSC ?= vsc
+VSC_DEP ?=
+
 .PHONY : headers
 
 headers : $(addprefix build/, $(SRC:.scm=.scmh) $(INTERP_SRC:.scm=.scmh) $(COMPILE_SRC:.scm=.scmh) $(RUNTIME_LISP_SRC:.scm=.scmh))
 
 -include $(DEPS)
 
-build/%.scmh : src/%.scm
+build/%.scmh : src/%.scm $(VSC_DEP)
 	@mkdir -p `dirname $@`
-	vsc -h $< -o $@
+	$(VSC) -h $< -o $@
 	@mkdir -p `dirname build/include/$*.scmh`
 	@rsync --checksum $@ build/include/$*.scmh
 
-build/%.scmh : runtime/%.scm
+build/%.scmh : runtime/%.scm $(VSC_DEP)
 	@mkdir -p `dirname $@`
-	vsc -h $< -o $@
+	$(VSC) -h $< -o $@
 	@mkdir -p `dirname include/$*.scmh`
 	@rsync --checksum $@ include/$*.scmh
 
-build/%.scmh : config/%.scm
+build/%.scmh : config/%.scm $(VSC_DEP)
 	@mkdir -p `dirname $@`
-	vsc -h $< -o $@
+	$(VSC) -h $< -o $@
 	@mkdir -p `dirname build/include/$*.scmh`
 	@rsync --checksum $@ build/include/$*.scmh

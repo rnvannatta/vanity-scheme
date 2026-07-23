@@ -1,15 +1,24 @@
 Installation is tricky. Here's instructions for a clean install of debian.
 
+You can install vanity without mingw or emscripten support. And you scan skip installing flex and bison to build vanity with checked-in parsers.
+
 # Basic Prereqs
 
 ```
 sudo dpkg --add-architecture i386
 sudo apt-get update
+# only required if you wish to target windows.
 sudo apt-get install wine wine32 wine64 libwine libwine:i386 fonts-wine
-sudo apt-get install git gcc mingw-w64 make clang rsync libsdl2-dev binutils vim flex bison
+sudo apt-get install mingw-w64 flex bison
+# strongly recommended deps
+sudo apt-get install flex bison
+# required deps
+sudo apt-get install git gcc make rsync binutils
 ```
 
 # Emscripten
+
+Only required if you wish to target wasm.
 
 ```
 git clone https://github.com/emscripten-core/emsdk.git
@@ -24,7 +33,7 @@ export EMSDK_QUIET=1
 source ~/emsdk/emsdk_env.sh
 export EM_CACHE=~/.emscripten_cache
 ```
-Order is important. the `EM_CACHE` line must be last. validate success with `emcc --version`
+Order is important. the `EM_CACHE` line must be last. validate success with `em-config CACHE` and `emcc --version`.
 
 # At last, vanity
 
@@ -43,6 +52,7 @@ sudo make install -j
 
 validate success with
 ```
+sudo apt-get install libsdl2-dev
 cd demos/pong/
 make a.out a.out.js -j
 ./a.out
