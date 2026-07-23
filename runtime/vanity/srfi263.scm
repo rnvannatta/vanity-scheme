@@ -92,17 +92,21 @@
                       (cons (make-slot getter-name setter-name type)
                             (get-slot-list obj-data)))))
 
-  (define (set-slot! obj-data type getter-name . args)
-    (let* ((has-setter? (< 1 (length args)))
-           (setter-name (and has-setter? (car args)))
-           (value (if has-setter? (cadr args) (car args))))
-      (let* ((accessors (gen-accessors type getter-name setter-name value))
-             (getter (car accessors))
-             (setter (cdr accessors)))
-        (delete-slot! obj-data getter-name)
-        (set-object-data-slots! obj-data type getter-name getter setter-name setter)
-        (when (eq? type 'parent)
-          (set-parent-list! obj-data (cons value (get-parent-list obj-data)))))))
+  (define (set-slot!/impl obj-data type getter-name setter-name value)
+    (let* ((accessors (gen-accessors type getter-name setter-name value))
+           (getter (car accessors))
+           (setter (cdr accessors)))
+      (delete-slot! obj-data getter-name)
+      (set-object-data-slots! obj-data type getter-name getter setter-name setter)
+      (when (eq? type 'parent)
+        (set-parent-list! obj-data (cons value (get-parent-list obj-data))))))
+
+  (define set-slot!
+    (case-lambda
+      ((obj-data type getter-name value)
+       (set-slot!/impl obj-data type getter-name #f value))
+      ((obj-data type getter-name setter-name value)
+       (set-slot!/impl obj-data type getter-name setter-name value))))
 
   (define (method-finder name message-alist)
     (lambda (self)
@@ -147,28 +151,89 @@
                   (get-slot-list ((object 'mirror) object-data-message)))
                 (recursive-ancestor-collector self))))
 
-  (define (make-resender caller message)
-    (lambda (target-override . args)
-      (let ((target (if target-override target-override caller)))
-        (send-with-error-handling caller target message '()
-                                  (not target-override) args))))
+  (define (find-method method-lookup method-name message-alist parents-only)
+    (car (recursive-lookup method-lookup
+                           (method-finder method-name message-alist)
+                           parents-only)))
 
-  (define (send-with-error-handling caller method-lookup method-name message-alist parents-only args)
-    (let* ((result (recursive-lookup method-lookup
-                                     (method-finder method-name message-alist)
-                                     parents-only))
-           (method (car result)))
-      (apply method caller (make-resender caller method-name) args)))
+  ;; Most messages have few arguments.  Keep those calls fixed-arity so the
+  ;; compiler can use Vanity's fast case-lambda calling convention.
+  (define send-with-error-handling
+    (case-lambda
+      ((caller method-lookup method-name message-alist parents-only)
+       ((find-method method-lookup method-name message-alist parents-only)
+        caller (make-resender caller method-name)))
+      ((caller method-lookup method-name message-alist parents-only a)
+       ((find-method method-lookup method-name message-alist parents-only)
+        caller (make-resender caller method-name) a))
+      ((caller method-lookup method-name message-alist parents-only a b)
+       ((find-method method-lookup method-name message-alist parents-only)
+        caller (make-resender caller method-name) a b))
+      ((caller method-lookup method-name message-alist parents-only a b c)
+       ((find-method method-lookup method-name message-alist parents-only)
+        caller (make-resender caller method-name) a b c))
+      ((caller method-lookup method-name message-alist parents-only a b c d)
+       ((find-method method-lookup method-name message-alist parents-only)
+        caller (make-resender caller method-name) a b c d))
+      ((caller method-lookup method-name message-alist parents-only . args)
+       (apply (find-method method-lookup method-name message-alist parents-only)
+              caller (make-resender caller method-name) args))))
+
+  (define (make-resender caller message)
+    (case-lambda
+      ((target-override)
+       (send-with-error-handling caller
+                                 (if target-override target-override caller)
+                                 message '() (not target-override)))
+      ((target-override a)
+       (send-with-error-handling caller
+                                 (if target-override target-override caller)
+                                 message '() (not target-override) a))
+      ((target-override a b)
+       (send-with-error-handling caller
+                                 (if target-override target-override caller)
+                                 message '() (not target-override) a b))
+      ((target-override a b c)
+       (send-with-error-handling caller
+                                 (if target-override target-override caller)
+                                 message '() (not target-override) a b c))
+      ((target-override a b c d)
+       (send-with-error-handling caller
+                                 (if target-override target-override caller)
+                                 message '() (not target-override) a b c d))
+      ((target-override . args)
+       (apply send-with-error-handling caller
+              (if target-override target-override caller)
+              message '() (not target-override) args))))
 
   (define (*object* obj-data)
     (letrec ((handler
-              (lambda (message . args)
-                (send-with-error-handling handler handler message
-                                          (get-message-alist obj-data) #f args))))
+              (case-lambda
+                ((message)
+                 (send-with-error-handling handler handler message
+                                           (get-message-alist obj-data) #f))
+                ((message a)
+                 (send-with-error-handling handler handler message
+                                           (get-message-alist obj-data) #f a))
+                ((message a b)
+                 (send-with-error-handling handler handler message
+                                           (get-message-alist obj-data) #f a b))
+                ((message a b c)
+                 (send-with-error-handling handler handler message
+                                           (get-message-alist obj-data) #f a b c))
+                ((message a b c d)
+                 (send-with-error-handling handler handler message
+                                           (get-message-alist obj-data) #f a b c d))
+                ((message . args)
+                 (apply send-with-error-handling handler handler message
+                        (get-message-alist obj-data) #f args)))))
       handler))
 
-  (define (set-method-slot! obj-data name . args)
-    (apply set-slot! obj-data 'method name args))
+  (define set-method-slot!
+    (case-lambda
+      ((obj-data name value) (set-slot! obj-data 'method name value))
+      ((obj-data name setter-name value)
+       (set-slot! obj-data 'method name setter-name value))))
 
   (define (populate-mirror mirror mirror-data obj-data owner)
     (for-each
@@ -213,8 +278,12 @@
            (object (*object* obj-data)))
       (set-method-slot!
        obj-data 'set-method-slot!
-       (lambda (self resend name . args)
-         (apply set-method-slot! ((self 'mirror) object-data-message) name args)))
+       (case-lambda
+         ((self resend name value)
+          (set-method-slot! ((self 'mirror) object-data-message) name value))
+         ((self resend name setter-name value)
+          (set-method-slot! ((self 'mirror) object-data-message)
+                            name setter-name value))))
       (set-method-slot!
        obj-data 'mirror
        (lambda (self resend)
@@ -241,12 +310,20 @@
          (delete-slot! ((self 'mirror) object-data-message) name)))
       (set-method-slot!
        obj-data 'set-value-slot!
-       (lambda (self resend name . args)
-         (apply set-slot! ((self 'mirror) object-data-message) 'value name args)))
+       (case-lambda
+         ((self resend name value)
+          (set-slot! ((self 'mirror) object-data-message) 'value name value))
+         ((self resend name setter-name value)
+          (set-slot! ((self 'mirror) object-data-message)
+                     'value name setter-name value))))
       (set-method-slot!
        obj-data 'set-parent-slot!
-       (lambda (self resend name . args)
-         (apply set-slot! ((self 'mirror) object-data-message) 'parent name args)))
+       (case-lambda
+         ((self resend name value)
+          (set-slot! ((self 'mirror) object-data-message) 'parent name value))
+         ((self resend name setter-name value)
+          (set-slot! ((self 'mirror) object-data-message)
+                     'parent name setter-name value))))
       (set-method-slot!
        obj-data 'message-not-understood
        (lambda (self resend message args)

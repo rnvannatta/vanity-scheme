@@ -96,6 +96,31 @@
   (math-class 'delete-slot! 'adder)
   (assert-equal (length ((math-class 'mirror) 'immediate-ancestor-list)) 1))
 
+;;; Fixed and fallback message arities
+
+;; Exercise the object dispatcher and resend procedure together.  Zero and two
+;; arguments use fixed-arity case-lambda clauses; five arguments deliberately
+;; cross into the variadic fallback.
+(let* ((parent (*the-root-object* 'derive))
+       (child (parent 'derive)))
+  (parent 'set-method-slot! 'zero-arguments
+          (lambda (self resend) 'zero))
+  (child 'set-method-slot! 'zero-arguments
+         (lambda (self resend) (resend #f)))
+  (assert-equal (child 'zero-arguments) 'zero)
+
+  (parent 'set-method-slot! 'two-arguments
+          (lambda (self resend a b) (list a b)))
+  (child 'set-method-slot! 'two-arguments
+         (lambda (self resend a b) (resend #f a b)))
+  (assert-equal (child 'two-arguments 'a 'b) '(a b))
+
+  (parent 'set-method-slot! 'five-arguments
+          (lambda (self resend a b c d e) (list a b c d e)))
+  (child 'set-method-slot! 'five-arguments
+         (lambda (self resend a b c d e) (resend #f a b c d e)))
+  (assert-equal (child 'five-arguments 1 2 3 4 5) '(1 2 3 4 5)))
+
 ;; The upstream suite also tests its `(srfi 263 syntax)` library here.  Vanity
 ;; does not currently import macros through generated .scmh interfaces, so that
 ;; portion is deliberately omitted until macro-library imports are supported.
