@@ -2631,6 +2631,56 @@ IMPLEMENT_BUFFER(s32, S32, 4)
 IMPLEMENT_BUFFER(f32, F32, 4)
 IMPLEMENT_BUFFER(f64, F64, 8)
 
+int elem_width_of(char typeid) {
+  switch(typeid) {
+    case BUF_S8:
+    case BUF_U8:
+      return 1;
+    case BUF_S16:
+    case BUF_U16:
+      return 2;
+    case BUF_S32:
+    case BUF_F32:
+      return 4;
+    case BUF_F64:
+      return 8;
+  }
+  return 0;
+}
+
+V_BEGIN_FUNC_RANGE(VRawVectorCopy, "raw-vector-copy!", 4, 6, k, _dst, _at, _src, _start, _end)
+  VBlob * dst = VCheckedDecodePointer2(runtime, _dst, VBUFFER, "raw-vector-copy!");
+  VBlob * src = VCheckedDecodePointer2(runtime, _src, VBUFFER, "raw-vector-copy!");
+  int dst_elem_width = elem_width_of(dst->buf[0]);
+  int src_elem_width = elem_width_of(src->buf[0]);
+  if(!dst_elem_width) VErrorC(runtime, "raw-vector-copy!: unknown vector type: ~S", _dst);
+  if(!src_elem_width) VErrorC(runtime, "raw-vector-copy!: unknown vector type: ~S", _src);
+
+  int at = VCheckedDecodeInt2(runtime, _at, "raw-vector-copy!");
+  int start;
+  if(argc > 4)
+    start = VCheckedDecodeInt2(runtime, _start, "raw-vector-copy!");
+  else
+    start = 0;
+  int end;
+  if(argc > 5)
+    end = VCheckedDecodeInt2(runtime, _end, "raw-vector-copy!");
+  else
+    end = (src->len - src_elem_width) / src_elem_width;
+  int nelems = end - start;
+  if(at < 0 || start < 0 || nelems < 0)
+    VErrorC(runtime, "raw-vector-copy!: invalid at, start, or end. at ~D, start ~D, end ~D", at, start, end);
+  int nbytes = nelems * src_elem_width;
+
+  int dst_off = (at + 1) * dst_elem_width;
+  int src_off = (start + 1) * src_elem_width;
+  if(dst->len < dst_off + nbytes || src->len < src_off + nbytes)
+    VErrorC(runtime, "raw-vector-copy!: copy out of bounds");
+  memmove(dst->buf + dst_off, src->buf + src_off, nbytes);
+  V_BOUNCE(k, runtime, VVOID);
+V_END_FUNC
+
+
 // The bounds check lives entirely in Suffix##Read / Suffix##Write; here we only
 // validate the buffer type and mutability. The byte offset i maps to buffer byte
 // i+1 (byte 0 is the tag), so a negative i lands on the tag or before and the

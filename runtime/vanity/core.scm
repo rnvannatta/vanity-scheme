@@ -1845,7 +1845,7 @@
        (##vcore.access path mode))))
   (define (delete-file path)
     (let ((ret ((foreign-function "C" "int remove(const char* path)") path)))
-      (if ret (file-error "delete file: operation failed" path))))
+      (if (not (eqv? ret 0)) (file-error "delete file: operation failed" path))))
   (define-constant exit ##vcore.exit)
 
   (define (emergency-exit e)
