@@ -4,7 +4,8 @@ A concept-level guide to the `vsc` pipeline: the shared vocabulary (`continuatio
 `##qualified-lambda`, `basic-block`, ...), the IR contracts between stages, and the
 invariants every pass must preserve. Driver: `src/vanity/compiler/frontend.scm`
 (`RUN COMPILE` section). Debugging: `-E0` dumps post-expand, `-E1` post-CPS, `-E2`
-post-optimize, `-t` emits C.
+post-optimize, `-t` emits C; `--verify` validates the post-expand IR against the
+core-language grammar (authoritative statement in `verify.scm`'s header comment).
 
 Pipeline:
 
@@ -128,7 +129,11 @@ the traversal cases in every pass are kept for when it comes back.
 
 ## Core-language grammar (expansion output = CPS input)
 
-Both expanders — `expand-toplevel` (legacy) and `expand-syntax` (hygienic) — take one
+This grammar is enforceable: `vsc --verify` (and `vanity --verify`) validates the
+post-expansion IR against the authoritative rule list at the top of
+`src/vanity/compiler/verify.scm`, catching the wrong-arity special forms that
+otherwise silently degrade into applications; known expander deviations live in
+`EXPAND_WRINKLES.md`. Both expanders — `expand-toplevel` (legacy) and `expand-syntax` (hygienic) — take one
 toplevel datum and return a **list** of core-language toplevel forms:
 
 - toplevel forms: `(define x val)`, `(import lib)`, `(##vcore.declare "_V20..." lambda)`,

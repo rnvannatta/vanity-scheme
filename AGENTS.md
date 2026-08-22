@@ -1,5 +1,3 @@
-# CLAUDE.md
-
 ## What this is
 
 Vanity Scheme: a self-hosting R7RS Scheme-to-C compiler (`vsc`), interpreter (`vanity`), and runtime (`libvscheme.so`), targeting Linux, Windows (mingw), and wasm (emscripten). Cheney-on-the-MTA design, similar to Chicken Scheme. ~4 years old with archeological layering — some idioms are legacy (noted below).
@@ -48,7 +46,7 @@ Driver: `src/vanity/compiler/frontend.scm` (see the pipeline at its `RUN COMPILE
 4. `lower.scm` — `bruijn-ify` (de Bruijn variable indices), `to-functions` (procedure soup, explicit closures)
 5. `transpile.scm` — `printout2` emits C, or `bytecode.scm` emits `.vasm` bytecode
 
-Debugging aids: `vsc -E0/-E1/-E2` dumps post-expand / post-CPS / post-optimize IR; `-t` emits C; `--keep-temps` keeps intermediates; `--benchmark` times stages. The interpreter (`src/vanity/interpreter/frontend.scm`) runs the identical pipeline to bytecode and feeds `eval-vasm`.
+Debugging aids: `vsc -E0/-E1/-E2` dumps post-expand / post-CPS / post-optimize IR; `-t` emits C; `--keep-temps` keeps intermediates; `--benchmark` times stages; `--verify` validates the post-expand IR against the core grammar (stated in `verify.scm`'s header; expander deviations tracked in `EXPAND_WRINKLES.md`). The interpreter (`src/vanity/interpreter/frontend.scm`) runs the identical pipeline to bytecode and feeds `eval-vasm`.
 
 Supporting modules: `variables.scm` (name mangling — `_V0` var, `_V30` FFI shim, `_V40` intrinsic cell, `_V50` qualified function, `_V60` static env, etc., documented at top of file), `library.scm` (`.scmh` interface headers), `ffi.scm` + `src/ffi.y`/`ffi.l` (bison/flex C-header parser for `##foreign-import`), `blasphemy.scm` (the CL-LOOP-style `do-loop` expander), `hush.scm` (compile-time hashing for literal interning), `match.scm` (the pattern matcher used pervasively in the compiler).
 
@@ -104,7 +102,7 @@ it first. Failure to add this line will result in the PR being denied.
 
 ## Language & style notes
 
-- Mostly R7RS with deliberate breaks: no `dynamic-wind`; `+` raises on fixnum overflow rather than promoting. Extras: `match`, `do-loop`, `printf`/`sprintf`, fibers (`fiber-fork`, `fiber-map`, `async`/`await`). `IMPLEMENTED.md` tracks R7RS/SRFI coverage.
+- Mostly R7RS with deliberate breaks: no `dynamic-wind`; `+` raises on fixnum overflow rather than promoting; `cond`, `case`, and `match` raise ("exhausted cond statement") when no clause matches instead of returning unspecified — excluding fallthrough is a deliberate robustness choice, so write an explicit `else` clause when falling through is intended; `integer?` and `exact?` are synonyms, both meaning "is an int" — `(integer? 2.0)` is `#f`, unlike R7RS. Mathematically inconsistent but eminently practical: don't add R7RS-style `(and (integer? x) (exact? x))` belt-and-suspenders. Extras: `match`, `do-loop`, `printf`/`sprintf`, fibers (`fiber-fork`, `fiber-map`, `async`/`await`). `IMPLEMENTED.md` tracks R7RS/SRFI coverage.
 - Compiler Scheme style: heavy use of `match`, `cut`/`cute`, named-let loops; internal special forms are `##`-prefixed (`##vcore.*`, `##qualified-lambda`, `##letrec`, ...). Errors via `compiler-error` from `(vanity compiler utils)`.
 - The compiler has no line numbers in errors and is frail to user typos — segfaults in compiler or generated code are bugs worth reporting, not shrugging off.
 - `-g` gives generated executables a call-history printout on crash; names there are CPS artifacts (`global_k5`, `_V0foo_lambda1`).

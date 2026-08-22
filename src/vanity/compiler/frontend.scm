@@ -37,7 +37,8 @@
   (vanity compiler library)
   (vanity compiler config)
   (vanity compiler alpha-convert)
-  (vanity compiler optimize))
+  (vanity compiler optimize)
+  (vanity compiler verify))
 
 (define scm-files '())
 (define obj-files '())
@@ -66,6 +67,7 @@
           (if platform-emscripten-enabled? '("emscripten") '())))
 (define purec? #f)
 (define hygiene? #f)
+(define verify? #f)
 (define main "main")
 (define cc #f)
 (define w-unbound-variables #f)
@@ -182,6 +184,7 @@
   (displayln "  --shared        Compile as shared library")
   (displayln "  --keep-temps    Keep temporary compilation files, such as C intermediates")
   (displayln "  --hygiene       Use new hygienic macro-expander (still in development)")
+  (displayln "  --verify        Validate the post-expansion core IR against its grammar")
   ;(displayln "  --api=<num>    Compile with major api version 0 or 1")
   (displayln (apply string-append "  --platform=<os> Which OS to make executables for. One of:"
                     (map (lambda (p) (string-append " '" p "'")) enabled-platforms)))
@@ -209,7 +212,7 @@
 
 (with-exception-handler handle-exception
   (lambda ()
-    (let loop ((args (getopt "vghtco:I:D:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (main #t main) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark) (hygiene #f hygiene)))))
+    (let loop ((args (getopt "vghtco:I:D:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (main #t main) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark) (hygiene #f hygiene) (verify #f verify)))))
       (if (not (null? args))
           (begin
             (case (caar args)
@@ -269,6 +272,7 @@
               ((benchmark) (set! benchmark? #t))
               ((bytecode) (set! bytecode? #t))
               ((hygiene) (set! hygiene? #t))
+              ((verify) (set! verify? #t))
               (else (compiler-error "Unknown CLI option" (cdar args))))
             (loop (cdr args)))))
     (if (not (member platform '("linux" "windows" "emscripten")))
@@ -367,6 +371,8 @@
                                        (if hygiene?
                                            (map (lambda (e) (expand-syntax e)) file)
                                            (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths) architecture))) file))))))
+                    (if verify?
+                        (benchmark "verify" (lambda () (verify-expanded (apply append expanded)))))
                     (if w-unbound-variables
                         (let loop ((exprs (apply append expanded)) (bound '()) (free '()))
                           (if (null? exprs)
