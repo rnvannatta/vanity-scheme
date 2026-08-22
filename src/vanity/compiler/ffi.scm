@@ -28,8 +28,9 @@
 ;  int func(mytype arr[]) => parsed incorrectly as int func(unsigned short arr)
 ; GRIVIANCES:
 ;  typedef a b: a can't be a typedef
-;  enum { X = Y }: y cant be an integer constant expression
-;  int func(mytype arr[static X]): faked
+;  enum { X = Y }: Y can be an integer constant expression, but can't
+;                  reference other enum constants, use sizeof, casts, or chars
+;  int func(int arr[static 3]): parses, but the length isn't enforced by the shim
 ;  typedefs are forgotten after each foreign-function and foreign-import
 
 (define-library (vanity compiler ffi)
