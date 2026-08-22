@@ -6,10 +6,12 @@
     (vanity compiler cps)
     (vanity compiler lower)
     (vanity compiler bytecode)
-    (vanity compiler utils))
+    (vanity compiler utils)
+    (vanity compiler verify))
   (export ##vcore.vanity-main load)
 
   (define hygiene #f)
+  (define verify #f)
 
   (define (extension file)
     (let extension-loop ((i (- (string-length file) 1)))
@@ -51,6 +53,7 @@
              (if hygiene
                  expanded
                  (map alpha-convert expanded)))
+           (_ (if verify (verify-expanded alpha)))
            (cps (map (cute to-cps <> (if path (cons path paths) paths)) alpha))
            (opt (map (lambda (e) (optimize e #f)) cps))
            (bruijn (map (cut bruijn-ify <> #t) opt))
@@ -92,6 +95,7 @@
     (displayln "  --scheme    Interpret the file as a scheme source file regardless of file extension")
     (displayln "  --vasm      Interpret the file as a vanity bytecode assembly file regardless of file extension")
     (displayln "  --hygiene   Use new hygienic macro-expander (still in development)")
+    (displayln "  --verify    Validate the post-expansion core IR against its grammar")
     (displayln "  --help      You know about this")
     (displayln "  --version   Show version and build info"))
   (define (display-version)
@@ -101,7 +105,7 @@
   (define (##vcore.vanity-main)
     (define file #f)
     (define lang #f)
-    (let main-loop ((args (getopt "I:D:l:" (command-line) '((help #f help) (version #f version) (scheme #f scheme) (vasm #f vasm) (hygiene #f hygiene)))))
+    (let main-loop ((args (getopt "I:D:l:" (command-line) '((help #f help) (version #f version) (scheme #f scheme) (vasm #f vasm) (hygiene #f hygiene) (verify #f verify)))))
       (if (not (null? args))
           (begin
             (case (caar args)
@@ -113,6 +117,8 @@
                (set! lang (caar args)))
               ((hygiene)
                (set! hygiene #t))
+              ((verify)
+               (set! verify #t))
               ((version)
                (display-version) (exit 0))
               ((help)
