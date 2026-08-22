@@ -66,9 +66,19 @@ extern _Bool is_typedef(char const * symbol);
 %option nodefault
 
 WHITESPACE [ \t]|\\\n
+INT_SUFFIX ([uU](l|L|ll|LL)?|(l|L|ll|LL)[uU]?)
 
 %%
-[.:;,[\](){}<=>?!~|&*/%+-] { return *yytext; }
+[.:;,[\](){}<=>?!~|&*/%+^-] { return *yytext; }
+
+"<<" { return T_SHL; }
+">>" { return T_SHR; }
+"<=" { return T_LEQ; }
+">=" { return T_GEQ; }
+"==" { return T_EQ; }
+"!=" { return T_NEQ; }
+"&&" { return T_ANDAND; }
+"||" { return T_OROR; }
 
   /* TODO: bad form, read keywords from hash table instead */
 "void" { yylval.keyword_val = T_VOID; return T_TYPE; }
@@ -100,10 +110,10 @@ WHITESPACE [ \t]|\\\n
 "extern" { yylval.keyword_val = T_EXTERN; return T_STORAGE; }
 "typedef" { yylval.keyword_val = T_TYPEDEF; return T_STORAGE; }
 
-  /* no doubles or strings */
-[1-9][0-9]* { yylval.int_val = strtoul(yytext, NULL, 0); return T_INTEGER; }
-0[0-9]* { yylval.int_val = strtoul(yytext, NULL, 0); return T_INTEGER; }
-0[xX][0-9a-fA-F]+ { yylval.int_val = strtoul(yytext, NULL, 0); return T_INTEGER; }
+  /* just parsing integer constant expressions, no doubles or strings */
+[1-9][0-9]*{INT_SUFFIX}? { yylval.int_val = strtoull(yytext, NULL, 0); return T_INTEGER; }
+0[0-9]*{INT_SUFFIX}? { yylval.int_val = strtoull(yytext, NULL, 0); return T_INTEGER; }
+0[xX][0-9a-fA-F]+{INT_SUFFIX}? { yylval.int_val = strtoull(yytext, NULL, 0); return T_INTEGER; }
 
 [a-zA-Z_][0-9a-zA-Z_]* { yylval.vword_val = VPoolString(&parse_pool, yytext); return is_typedef(yytext) ? T_TYPENAME : T_VARIABLE; }
 
@@ -118,7 +128,7 @@ WHITESPACE [ \t]|\\\n
 "//"([^\n\\]|\\+(.|\n))*\n
 \/\*([^*]|\*+[^*/])*\*+\/
 
-  /* .* { printf("unable to lex input: %s\n", yytext); return T_ERROR; } */
+. { return T_ERROR; }
 
 %%
 

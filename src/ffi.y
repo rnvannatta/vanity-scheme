@@ -149,7 +149,18 @@ VWORD kons_str(char const * str, VWORD rest) {
 #define CADDDR(x) VInlineCar2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, x))))
 #define CADDDDR(x) VInlineCar2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, x)))))
 
+// check and rewrite foo(void) - TODO do it at a semantically later step rather than here
+static bool is_void_params(VWORD param) {
+  if(!VIsEq(VNULL, CADR(param))) return false;
+  VWORD type = CADDR(param);
+  VWORD decl = CADDDR(param);
+  return !VDecodeBool(decl) &&
+         VIsEq(VNULL, CDR(type)) &&
+         VIsEq(CAR(type), keyword_to_vword(T_VOID));
+}
+
 static VWORD detangle_params(VWORD param) {
+  if(is_void_params(param)) return LIST("parameter_list");
   VWORD ret = VNULL;
   while(!VDecodeBool(VInlineNullP2(NULL, param))) {
     VWORD newparam = LIST(CADDR(param), CADDDR(param));
@@ -198,6 +209,12 @@ extern bool parse_error;
 extern VWORD parse_ret;
 extern VRuntime * global_runtime;
 
+static VWORD encode_cexpr(long long v) {
+  if(v > INT_MAX || v < INT_MIN)
+    VErrorC(global_runtime, "foreign-parse-header-c: failed to parse, integer constant expression exceeds 31 bit limit %lld", v);
+  return VEncodeInt((int)v);
+}
+
 static void register_typedef(VWORD type, VWORD decl) {
   if(!memv("typedef", type)) return;
 
@@ -232,13 +249,29 @@ extern void yy_set_buffer(FILE * in);
 
 %token <vword_val> T_TYPENAME T_VARIABLE
 
+%token T_SHL T_SHR T_LEQ T_GEQ T_EQ T_NEQ T_ANDAND T_OROR
+
 %union {
-  unsigned long long int_val;
+  long long int_val;
   int keyword_val;
   VWORD vword_val;
 }
 
-%type <vword_val> start toplevel declaration declarator_list prefix_declarator postfix_declarator parameter_list abstract_prefix_declarator abstract_postfix_declarator param_prefix_declarator param_postfix_declarator qualified_type post_qualified_type enum_list expr specified_type post_specified_type plain_type identifier
+%type <vword_val> start toplevel declaration declarator_list prefix_declarator postfix_declarator parameter_list abstract_prefix_declarator abstract_postfix_declarator param_prefix_declarator param_postfix_declarator qualified_type post_qualified_type enum_list specified_type post_specified_type plain_type identifier
+%type <int_val> expr
+
+%right '?' ':'
+%left T_OROR
+%left T_ANDAND
+%left '|'
+%left '^'
+%left '&'
+%left T_EQ T_NEQ
+%left '<' '>' T_LEQ T_GEQ
+%left T_SHL T_SHR
+%left '+' '-'
+%left '*' '/' '%'
+%precedence T_UNARY
 
 %define parse.error verbose
 %define parse.lac full
@@ -323,7 +356,7 @@ postfix_declarator : identifier
                    | postfix_declarator '[' ']'
                    { $$ = LIST("array", $1, VFALSE); }
                    | postfix_declarator '[' expr ']'
-                   { $$ = LIST("array", $1, $3); }
+                   { $$ = LIST("array", $1, encode_cexpr($3)); }
                    | postfix_declarator '(' parameter_list ')'
                    { $$ = LIST("function", $1, detangle_params($3)); }
                    | '(' prefix_declarator ')'
@@ -335,9 +368,9 @@ abstract_postfix_declarator : abstract_postfix_declarator '(' ')'
                             | abstract_postfix_declarator '[' ']'
                             { $$ = LIST("array", $1, VFALSE); }
                             | abstract_postfix_declarator '[' expr ']'
-                            { $$ = LIST("array", $1, $3); }
+                            { $$ = LIST("array", $1, encode_cexpr($3)); }
                             | abstract_postfix_declarator '[' T_STORAGE expr ']'
-                            { if($3 != T_STATIC) YYERROR; $$ = LIST("static-array", $1, $4); }
+                            { if($3 != T_STATIC) YYERROR; $$ = LIST("static-array", $1, encode_cexpr($4)); }
                             | abstract_postfix_declarator '(' parameter_list ')'
                             { $$ = LIST("function", $1, detangle_params($3)); }
                             | '(' ')'
@@ -345,9 +378,9 @@ abstract_postfix_declarator : abstract_postfix_declarator '(' ')'
                             | '[' ']'
                             { $$ = LIST("array", VFALSE, VFALSE); }
                             | '[' expr ']'
-                            { $$ = LIST("array", VFALSE, $2); }
+                            { $$ = LIST("array", VFALSE, encode_cexpr($2)); }
                             | '[' T_STORAGE expr ']'
-                            { if($2 != T_STATIC) YYERROR; $$ = LIST("static-array", VFALSE, $3); }
+                            { if($2 != T_STATIC) YYERROR; $$ = LIST("static-array", VFALSE, encode_cexpr($3)); }
                             | '(' parameter_list ')'
                             { $$ = LIST("function", VFALSE, detangle_params($2)); }
                             | '(' abstract_prefix_declarator ')'
@@ -381,9 +414,9 @@ param_postfix_declarator : T_VARIABLE
                          | param_postfix_declarator '[' ']'
                          { $$ = LIST("array", $1, VFALSE); }
                          | param_postfix_declarator '[' expr ']'
-                         { $$ = LIST("array", $1, $3); }
+                         { $$ = LIST("array", $1, encode_cexpr($3)); }
                          | param_postfix_declarator '[' T_STORAGE expr ']'
-                         { if($3 != T_STATIC) YYERROR; $$ = LIST("static-array", $1, $4); }
+                         { if($3 != T_STATIC) YYERROR; $$ = LIST("static-array", $1, encode_cexpr($4)); }
                          | param_postfix_declarator '(' parameter_list ')'
                          { $$ = LIST("function", $1, detangle_params($3)); }
                          | '(' param_prefix_declarator ')'
@@ -456,54 +489,82 @@ post_specified_type : plain_type
 enum_list : T_VARIABLE
           { $$ = LIST(VNULL, $1, VFALSE); }
           | T_VARIABLE '=' expr
-          { $$ = LIST(VNULL, $1, $3); }
+          { $$ = LIST(VNULL, $1, encode_cexpr($3)); }
           | enum_list ',' T_VARIABLE
           { $$ = LIST($1, $3, VFALSE); }
           | enum_list ',' T_VARIABLE '=' expr
-          { $$ = LIST($1, $3, $5); }
+          { $$ = LIST($1, $3, encode_cexpr($5)); }
           ;
 
+// integer constant expressions, folded during the parse
+// missing sizeof/alignof, comma, casts,
+// and references to previously declared enum constants
+// the integer constant folding is also lazily doing everything as a long long
 expr : T_INTEGER
-     { if($1 > INT_MAX) VErrorC(global_runtime, "foreign-prase-header-c: failed to parse, integer exceeds 31 bit limit %llu", $1); $$ = VEncodeInt($1); }
-     /*
-     | '-' expr
-     | '+' expr
-     | '!' expr
-     | T_SIZEOF expr
-     | T_ALIGNOF expr
+     { $$ = $1; }
+     | '(' expr ')'
+     { $$ = $2; }
+     | '-' expr %prec T_UNARY
+     { $$ = -$2; }
+     | '+' expr %prec T_UNARY
+     { $$ = $2; }
+     | '!' expr %prec T_UNARY
+     { $$ = !$2; }
+     | '~' expr %prec T_UNARY
+     { $$ = ~$2; }
 
      | expr '*' expr
+     { $$ = $1 * $3; }
      | expr '/' expr
+     { if($3 == 0) VErrorC(global_runtime, "foreign-parse-header-c: failed to parse, division by zero in constant expression");
+       $$ = $1 / $3; }
      | expr '%' expr
+     { if($3 == 0) VErrorC(global_runtime, "foreign-parse-header-c: failed to parse, division by zero in constant expression");
+       $$ = $1 % $3; }
 
      | expr '+' expr
+     { $$ = $1 + $3; }
      | expr '-' expr
+     { $$ = $1 - $3; }
 
      | expr T_SHL expr
+     { if($3 < 0 || $3 > 62) VErrorC(global_runtime, "foreign-parse-header-c: failed to parse, bad shift amount in constant expression %lld", $3);
+       $$ = $1 << $3; }
      | expr T_SHR expr
+     { if($3 < 0 || $3 > 62) VErrorC(global_runtime, "foreign-parse-header-c: failed to parse, bad shift amount in constant expression %lld", $3);
+       $$ = $1 >> $3; }
 
      | expr '>' expr
+     { $$ = $1 > $3; }
      | expr '<' expr
+     { $$ = $1 < $3; }
      | expr T_GEQ expr
+     { $$ = $1 >= $3; }
      | expr T_LEQ expr
+     { $$ = $1 <= $3; }
 
      | expr T_EQ expr
+     { $$ = $1 == $3; }
      | expr T_NEQ expr
+     { $$ = $1 != $3; }
 
      | expr '&' expr
-
-     | expr '|' expr
+     { $$ = $1 & $3; }
 
      | expr '^' expr
+     { $$ = $1 ^ $3; }
 
-     | expr '&&' expr
+     | expr '|' expr
+     { $$ = $1 | $3; }
 
-     | expr '||' expr
+     | expr T_ANDAND expr
+     { $$ = $1 && $3; }
+
+     | expr T_OROR expr
+     { $$ = $1 || $3; }
 
      | expr '?' expr ':' expr
-
-     | expr ',' expr
-     */
+     { $$ = $1 ? $3 : $5; }
      ;
 
 %%
