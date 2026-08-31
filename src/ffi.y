@@ -149,18 +149,8 @@ VWORD kons_str(char const * str, VWORD rest) {
 #define CADDDR(x) VInlineCar2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, x))))
 #define CADDDDR(x) VInlineCar2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, VInlineCdr2(NULL, x)))))
 
-// check and rewrite foo(void) - TODO do it at a semantically later step rather than here
-static bool is_void_params(VWORD param) {
-  if(!VIsEq(VNULL, CADR(param))) return false;
-  VWORD type = CADDR(param);
-  VWORD decl = CADDDR(param);
-  return !VDecodeBool(decl) &&
-         VIsEq(VNULL, CDR(type)) &&
-         VIsEq(CAR(type), keyword_to_vword(T_VOID));
-}
-
+// note foo(void) is rewritten to an empty parameter list on the scheme side
 static VWORD detangle_params(VWORD param) {
-  if(is_void_params(param)) return LIST("parameter_list");
   VWORD ret = VNULL;
   while(!VDecodeBool(VInlineNullP2(NULL, param))) {
     VWORD newparam = LIST(CADDR(param), CADDDR(param));
@@ -215,6 +205,28 @@ static VWORD encode_cexpr(long long v) {
   return VEncodeInt((int)v);
 }
 
+// enum constants are registered here as they parse so later integer
+// constant expressions can reference them, like the typedef table it
+// lives only for the duration of one parse
+static VWORD enum_table = { LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
+static long long enum_counter;
+
+static void register_enum(VWORD name, long long val) {
+  enum_table = CONS(CONS(name, encode_cexpr(val)), enum_table);
+}
+
+static long long lookup_enum(VWORD name) {
+  char const * str = VDecodeString(name)->buf;
+  VWORD lst = enum_table;
+  while(!VDecodeBool(VInlineNullP2(NULL, lst))) {
+    VWORD e = CAR(lst);
+    if(!strcmp(VDecodeString(CAR(e))->buf, str)) return VDecodeInt(CDR(e));
+    lst = CDR(lst);
+  }
+  VErrorC(global_runtime, "foreign-parse-header-c: failed to parse, unknown identifier in integer constant expression: ~Z", str);
+  return 0;
+}
+
 static void register_typedef(VWORD type, VWORD decl) {
   if(!memv("typedef", type)) return;
 
@@ -249,7 +261,7 @@ extern void yy_set_buffer(FILE * in);
 
 %token <vword_val> T_TYPENAME T_VARIABLE
 
-%token T_SHL T_SHR T_LEQ T_GEQ T_EQ T_NEQ T_ANDAND T_OROR
+%token T_SHL T_SHR T_LEQ T_GEQ T_EQ T_NEQ T_ANDAND T_OROR T_ELLIPSIS
 
 %union {
   long long int_val;
@@ -258,7 +270,7 @@ extern void yy_set_buffer(FILE * in);
 }
 
 %type <vword_val> start toplevel declaration declarator_list prefix_declarator postfix_declarator parameter_list abstract_prefix_declarator abstract_postfix_declarator param_prefix_declarator param_postfix_declarator qualified_type post_qualified_type enum_list specified_type post_specified_type plain_type identifier
-%type <int_val> expr
+%type <int_val> expr cexpr
 
 %right '?' ':'
 %left T_OROR
@@ -355,10 +367,12 @@ postfix_declarator : identifier
                    { $$ = LIST("function", $1); }
                    | postfix_declarator '[' ']'
                    { $$ = LIST("array", $1, VFALSE); }
-                   | postfix_declarator '[' expr ']'
+                   | postfix_declarator '[' cexpr ']'
                    { $$ = LIST("array", $1, encode_cexpr($3)); }
                    | postfix_declarator '(' parameter_list ')'
                    { $$ = LIST("function", $1, detangle_params($3)); }
+                   | postfix_declarator '(' parameter_list ',' T_ELLIPSIS ')'
+                   { $$ = LIST("variadic-function", $1, detangle_params($3)); }
                    | '(' prefix_declarator ')'
                    { $$ = $2; }
                    ;
@@ -367,22 +381,26 @@ abstract_postfix_declarator : abstract_postfix_declarator '(' ')'
                             { $$ = LIST("function", $1); }
                             | abstract_postfix_declarator '[' ']'
                             { $$ = LIST("array", $1, VFALSE); }
-                            | abstract_postfix_declarator '[' expr ']'
+                            | abstract_postfix_declarator '[' cexpr ']'
                             { $$ = LIST("array", $1, encode_cexpr($3)); }
-                            | abstract_postfix_declarator '[' T_STORAGE expr ']'
+                            | abstract_postfix_declarator '[' T_STORAGE cexpr ']'
                             { if($3 != T_STATIC) YYERROR; $$ = LIST("static-array", $1, encode_cexpr($4)); }
                             | abstract_postfix_declarator '(' parameter_list ')'
                             { $$ = LIST("function", $1, detangle_params($3)); }
+                            | abstract_postfix_declarator '(' parameter_list ',' T_ELLIPSIS ')'
+                            { $$ = LIST("variadic-function", $1, detangle_params($3)); }
                             | '(' ')'
                             { $$ = LIST("function", VFALSE); }
                             | '[' ']'
                             { $$ = LIST("array", VFALSE, VFALSE); }
-                            | '[' expr ']'
+                            | '[' cexpr ']'
                             { $$ = LIST("array", VFALSE, encode_cexpr($2)); }
-                            | '[' T_STORAGE expr ']'
+                            | '[' T_STORAGE cexpr ']'
                             { if($2 != T_STATIC) YYERROR; $$ = LIST("static-array", VFALSE, encode_cexpr($3)); }
                             | '(' parameter_list ')'
                             { $$ = LIST("function", VFALSE, detangle_params($2)); }
+                            | '(' parameter_list ',' T_ELLIPSIS ')'
+                            { $$ = LIST("variadic-function", VFALSE, detangle_params($2)); }
                             | '(' abstract_prefix_declarator ')'
                             { $$ = $2; }
                             ;
@@ -413,12 +431,14 @@ param_postfix_declarator : T_VARIABLE
                          { $$ = LIST("function", $1); }
                          | param_postfix_declarator '[' ']'
                          { $$ = LIST("array", $1, VFALSE); }
-                         | param_postfix_declarator '[' expr ']'
+                         | param_postfix_declarator '[' cexpr ']'
                          { $$ = LIST("array", $1, encode_cexpr($3)); }
-                         | param_postfix_declarator '[' T_STORAGE expr ']'
+                         | param_postfix_declarator '[' T_STORAGE cexpr ']'
                          { if($3 != T_STATIC) YYERROR; $$ = LIST("static-array", $1, encode_cexpr($4)); }
                          | param_postfix_declarator '(' parameter_list ')'
                          { $$ = LIST("function", $1, detangle_params($3)); }
+                         | param_postfix_declarator '(' parameter_list ',' T_ELLIPSIS ')'
+                         { $$ = LIST("variadic-function", $1, detangle_params($3)); }
                          | '(' param_prefix_declarator ')'
                          { $$ = $2; }
 
@@ -487,83 +507,96 @@ post_specified_type : plain_type
                     ;
 
 enum_list : T_VARIABLE
-          { $$ = LIST(VNULL, $1, VFALSE); }
-          | T_VARIABLE '=' expr
-          { $$ = LIST(VNULL, $1, encode_cexpr($3)); }
+          { enum_counter = 0; register_enum($1, enum_counter);
+            $$ = LIST(VNULL, $1, VFALSE); }
+          | T_VARIABLE '=' cexpr
+          { enum_counter = $3; register_enum($1, enum_counter);
+            $$ = LIST(VNULL, $1, encode_cexpr($3)); }
           | enum_list ',' T_VARIABLE
-          { $$ = LIST($1, $3, VFALSE); }
-          | enum_list ',' T_VARIABLE '=' expr
-          { $$ = LIST($1, $3, encode_cexpr($5)); }
+          { enum_counter += 1; register_enum($3, enum_counter);
+            $$ = LIST($1, $3, VFALSE); }
+          | enum_list ',' T_VARIABLE '=' cexpr
+          { enum_counter = $5; register_enum($3, enum_counter);
+            $$ = LIST($1, $3, encode_cexpr($5)); }
           ;
 
 // integer constant expressions, folded during the parse
-// missing sizeof/alignof, comma, casts,
-// and references to previously declared enum constants
+// missing sizeof/alignof and casts
 // the integer constant folding is also lazily doing everything as a long long
-expr : T_INTEGER
+// cexpr is the conditional-expression level: enum values and array bounds
+// sit there, so the comma operator is only reachable through parentheses
+expr : cexpr
      { $$ = $1; }
+     | expr ',' cexpr
+     { $$ = $3; }
+     ;
+
+cexpr : T_INTEGER
+     { $$ = $1; }
+     | T_VARIABLE
+     { $$ = lookup_enum($1); }
      | '(' expr ')'
      { $$ = $2; }
-     | '-' expr %prec T_UNARY
+     | '-' cexpr %prec T_UNARY
      { $$ = -$2; }
-     | '+' expr %prec T_UNARY
+     | '+' cexpr %prec T_UNARY
      { $$ = $2; }
-     | '!' expr %prec T_UNARY
+     | '!' cexpr %prec T_UNARY
      { $$ = !$2; }
-     | '~' expr %prec T_UNARY
+     | '~' cexpr %prec T_UNARY
      { $$ = ~$2; }
 
-     | expr '*' expr
+     | cexpr '*' cexpr
      { $$ = $1 * $3; }
-     | expr '/' expr
+     | cexpr '/' cexpr
      { if($3 == 0) VErrorC(global_runtime, "foreign-parse-header-c: failed to parse, division by zero in constant expression");
        $$ = $1 / $3; }
-     | expr '%' expr
+     | cexpr '%' cexpr
      { if($3 == 0) VErrorC(global_runtime, "foreign-parse-header-c: failed to parse, division by zero in constant expression");
        $$ = $1 % $3; }
 
-     | expr '+' expr
+     | cexpr '+' cexpr
      { $$ = $1 + $3; }
-     | expr '-' expr
+     | cexpr '-' cexpr
      { $$ = $1 - $3; }
 
-     | expr T_SHL expr
+     | cexpr T_SHL cexpr
      { if($3 < 0 || $3 > 62) VErrorC(global_runtime, "foreign-parse-header-c: failed to parse, bad shift amount in constant expression %lld", $3);
        $$ = $1 << $3; }
-     | expr T_SHR expr
+     | cexpr T_SHR cexpr
      { if($3 < 0 || $3 > 62) VErrorC(global_runtime, "foreign-parse-header-c: failed to parse, bad shift amount in constant expression %lld", $3);
        $$ = $1 >> $3; }
 
-     | expr '>' expr
+     | cexpr '>' cexpr
      { $$ = $1 > $3; }
-     | expr '<' expr
+     | cexpr '<' cexpr
      { $$ = $1 < $3; }
-     | expr T_GEQ expr
+     | cexpr T_GEQ cexpr
      { $$ = $1 >= $3; }
-     | expr T_LEQ expr
+     | cexpr T_LEQ cexpr
      { $$ = $1 <= $3; }
 
-     | expr T_EQ expr
+     | cexpr T_EQ cexpr
      { $$ = $1 == $3; }
-     | expr T_NEQ expr
+     | cexpr T_NEQ cexpr
      { $$ = $1 != $3; }
 
-     | expr '&' expr
+     | cexpr '&' cexpr
      { $$ = $1 & $3; }
 
-     | expr '^' expr
+     | cexpr '^' cexpr
      { $$ = $1 ^ $3; }
 
-     | expr '|' expr
+     | cexpr '|' cexpr
      { $$ = $1 | $3; }
 
-     | expr T_ANDAND expr
+     | cexpr T_ANDAND cexpr
      { $$ = $1 && $3; }
 
-     | expr T_OROR expr
+     | cexpr T_OROR cexpr
      { $$ = $1 || $3; }
 
-     | expr '?' expr ':' expr
+     | cexpr '?' cexpr ':' cexpr
      { $$ = $1 ? $3 : $5; }
      ;
 
@@ -595,6 +628,7 @@ void VForeignParseDeclCImpl(V_CORE_ARGS, VWORD k, VWORD decl) {
   VDonateMemoryPool(runtime, &parse_pool);
   // erasing the typedef table doesn't feel great
   typedef_table = (VWORD){ LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
+  enum_table = (VWORD){ LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
 
   VGarbageCollect2Closure(runtime, VDecodeClosureApply2(runtime, k), 1, parse_ret);
 
@@ -622,6 +656,7 @@ void VForeignParseHeaderCImpl(V_CORE_ARGS, VWORD k, VWORD header) {
   VDonateMemoryPool(runtime, &parse_pool);
   // erasing the typedef table doesn't feel great
   typedef_table = (VWORD){ LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
+  enum_table = (VWORD){ LITERAL_HEADER | VIMM_TOK | VTOK_NULL };
 
   VGarbageCollect2Closure(runtime, VDecodeClosureApply2(runtime, k), 1, parse_ret);
 }

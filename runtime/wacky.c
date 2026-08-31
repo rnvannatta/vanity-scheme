@@ -45,7 +45,15 @@ void VApplyForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD func, VWORD return_ty
   int cur_fpr = 0;
   while(!VIsEq(arg_types, VNULL)) {
     VPair * typenode = VDecodePair(arg_types);
-    VBlob * type = VCheckedDecodeBlob2(runtime, typenode->first, "ffi-call");
+    VWORD typeword = typenode->first;
+    // [static n] bounds ride along as a (tag . n) pair
+    int min_len = -1;
+    if(VIsPair(typeword)) {
+      VPair * boundnode = VDecodePair(typeword);
+      min_len = VCheckedDecodeInt2(runtime, boundnode->rest, "ffi-call");
+      typeword = boundnode->first;
+    }
+    VBlob * type = VCheckedDecodeBlob2(runtime, typeword, "ffi-call");
 
     VPair * argnode = VDecodePair(args);
     VWORD arg = argnode->first;
@@ -100,13 +108,32 @@ void VApplyForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD func, VWORD return_ty
       } else if(!strcmp(type->buf, "const-void-pointer")) {
         reg = (uintptr_t)VCheckedDecodeConstVoidPtr2(runtime, arg, "ffi-call");
       } else if(!strcmp(type->buf, "c-string")) {
-        reg = (uintptr_t)VCheckedDecodeCString2(runtime, arg, "ffi-call");
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeCString2Min(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeCString2(runtime, arg, "ffi-call"));
       } else if(!strcmp(type->buf, "const-c-string")) {
-        reg = (uintptr_t)VCheckedDecodeConstCString2(runtime, arg, "ffi-call");
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeConstCString2Min(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeConstCString2(runtime, arg, "ffi-call"));
       } else if(!strcmp(type->buf, "f32-pointer")) {
-        reg = (uintptr_t)VCheckedDecodeF32Ptr(runtime, arg, "ffi-call");
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeF32PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeF32Ptr(runtime, arg, "ffi-call"));
       } else if(!strcmp(type->buf, "f64-pointer")) {
-        reg = (uintptr_t)VCheckedDecodeF64Ptr(runtime, arg, "ffi-call");
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeF64PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeF64Ptr(runtime, arg, "ffi-call"));
+      } else if(!strcmp(type->buf, "s32-pointer")) {
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeS32PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeS32Ptr(runtime, arg, "ffi-call"));
+      } else if(!strcmp(type->buf, "u16-pointer")) {
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeU16PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeU16Ptr(runtime, arg, "ffi-call"));
+      } else if(!strcmp(type->buf, "s16-pointer")) {
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeS16PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeS16Ptr(runtime, arg, "ffi-call"));
+      } else if(!strcmp(type->buf, "u8-pointer")) {
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeU8PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeU8Ptr(runtime, arg, "ffi-call"));
+      } else if(!strcmp(type->buf, "s8-pointer")) {
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeS8PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeS8Ptr(runtime, arg, "ffi-call"));
       } else if(!strcmp(type->buf, "VWORD")) {
       } else {
         VErrorC(runtime, "ffi-call: Unknown type: ~S", typenode->first);
@@ -195,7 +222,15 @@ void VApplyForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD func, VWORD return_ty
   int cur_reg = 0;
   while(!VIsEq(arg_types, VNULL)) {
     VPair * typenode = VDecodePair(arg_types);
-    VBlob * type = VCheckedDecodeBlob2(runtime, typenode->first, "ffi-call");
+    VWORD typeword = typenode->first;
+    // [static n] bounds ride along as a (tag . n) pair
+    int min_len = -1;
+    if(VIsPair(typeword)) {
+      VPair * boundnode = VDecodePair(typeword);
+      min_len = VCheckedDecodeInt2(runtime, boundnode->rest, "ffi-call");
+      typeword = boundnode->first;
+    }
+    VBlob * type = VCheckedDecodeBlob2(runtime, typeword, "ffi-call");
 
     VPair * argnode = VDecodePair(args);
     VWORD arg = argnode->first;
@@ -251,13 +286,32 @@ void VApplyForeignFunctionImpl(V_CORE_ARGS, VWORD k, VWORD func, VWORD return_ty
       } else if(!strcmp(type->buf, "const-void-pointer")) {
         reg = (uintptr_t)VCheckedDecodeConstVoidPtr2(runtime, arg, "ffi-call");
       } else if(!strcmp(type->buf, "c-string")) {
-        reg = (uintptr_t)VCheckedDecodeCString2(runtime, arg, "ffi-call");
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeCString2Min(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeCString2(runtime, arg, "ffi-call"));
       } else if(!strcmp(type->buf, "const-c-string")) {
-        reg = (uintptr_t)VCheckedDecodeConstCString2(runtime, arg, "ffi-call");
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeConstCString2Min(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeConstCString2(runtime, arg, "ffi-call"));
       } else if(!strcmp(type->buf, "f32-pointer")) {
-        reg = (uintptr_t)VCheckedDecodeF32Ptr(runtime, arg, "ffi-call");
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeF32PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeF32Ptr(runtime, arg, "ffi-call"));
       } else if(!strcmp(type->buf, "f64-pointer")) {
-        reg = (uintptr_t)VCheckedDecodeF64Ptr(runtime, arg, "ffi-call");
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeF64PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeF64Ptr(runtime, arg, "ffi-call"));
+      } else if(!strcmp(type->buf, "s32-pointer")) {
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeS32PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeS32Ptr(runtime, arg, "ffi-call"));
+      } else if(!strcmp(type->buf, "u16-pointer")) {
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeU16PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeU16Ptr(runtime, arg, "ffi-call"));
+      } else if(!strcmp(type->buf, "s16-pointer")) {
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeS16PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeS16Ptr(runtime, arg, "ffi-call"));
+      } else if(!strcmp(type->buf, "u8-pointer")) {
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeU8PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeU8Ptr(runtime, arg, "ffi-call"));
+      } else if(!strcmp(type->buf, "s8-pointer")) {
+        reg = (uintptr_t)(min_len >= 0 ? VCheckedDecodeS8PtrMin(runtime, arg, min_len, "ffi-call")
+                                       : VCheckedDecodeS8Ptr(runtime, arg, "ffi-call"));
       } else if(!strcmp(type->buf, "VWORD")) {
       } else {
         VErrorC(runtime, "ffi-call: Unknown type: ~S", typenode->first);

@@ -28,10 +28,9 @@
 ;  int func(mytype arr[]) => parsed incorrectly as int func(unsigned short arr)
 ; GRIVIANCES:
 ;  typedef a b: a can't be a typedef
-;  enum { X = Y }: Y can be an integer constant expression, but can't
-;                  reference other enum constants, use sizeof, casts, or chars
-;  int func(int arr[static 3]): parses, but the length isn't enforced by the shim
-;  typedefs are forgotten after each foreign-function and foreign-import
+;  enum { X = Y }: Y can't use sizeof, casts, or chars
+;  typedefs and enum constants are forgotten after each foreign-function
+;  and foreign-import, so decl strings can't see a prior import's enums
 
 (define-library (vanity compiler ffi)
   (export mangle-foreign mangle-foreign-function mangle-foreign-basic mangle-foreign-closure validate-foreign-function print-foreign-function resolve-foreign-import get-foreign-encoder get-foreign-decoder)
@@ -90,21 +89,28 @@
               (match arg
                 ; outermost array decays to a pointer in funargs
                 (('array len rest) (list 'pointer rest))
+                ; except [static n] arrays remember their minimum length
+                (('static-array len rest) (list 'static-pointer len rest))
                 (else arg)))
             (reduce-args (cdr args)))))
+    ; foo(void) means an empty parameter list
+    (define (unvoid-params args)
+      (if (equal? args '((("void") #f))) '() args))
     (define (reduce-declare-loop ret decl)
       ; assumes ret has already been preprocessed
       (match decl
         (("function" expr)
          `(function ,expr ,(drop-const ret)))
         (("function" expr ("parameter_list" args ...))
-         `(function ,expr ,(drop-const ret) . ,(map drop-const (reduce-args args))))
+         `(function ,expr ,(drop-const ret) . ,(map drop-const (reduce-args (unvoid-params args)))))
+        (("variadic-function" expr params)
+         (compiler-error "variadic C functions are unsupported (they cannot be implemented on wasm)" expr))
         (("pointer" expr)
          (reduce-declare-loop (list 'pointer ret) expr))
         (("array" expr len)
          (reduce-declare-loop (list 'array len ret) expr))
         (("static-array" expr len)
-         (reduce-declare-loop (list 'array len ret) expr))
+         (reduce-declare-loop (list 'static-array len ret) expr))
         (expr `(variable ,ret ,expr))))
     (reduce-declare-loop ret decl))
   ; simplifies a raw c type token stream into a more organized type
@@ -200,6 +206,27 @@
          `(function ,(string->symbol name) ,ret . ,args))
         (else (compiler-error "Unsupported C declaration" expr)))))
 
+  ; extern variables become 0-or-1 arg shims: (foo) reads the C variable, (foo v) writes it
+  ; const extern variables only get the getter
+  (define (check-extern-variable-type type expr)
+    (define const? (and (pair? type) (eqv? (car type) 'const)))
+    (define base (if const? (cadr type) type))
+    (if (or (eqv? base 'void)
+            (not (get-foreign-encoder base))
+            (and (not const?) (not (get-foreign-decoder base))))
+        (compiler-error "Unsupported type for C extern variable" expr)))
+  ; assumes ret has already been processed
+  (define (unwrap-extern ret decl table)
+    (let ((expr (reduce-declare ret decl table)))
+      (match expr
+        ; extern on a function declaration is just noise
+        (('function . _) (unwrap-function ret decl table))
+        (('variable type name)
+         (if (not (string? name)) (compiler-error "Not a simple extern variable declaration" expr))
+         (check-extern-variable-type type expr)
+         `(extern-variable ,(string->symbol name) ,type))
+        (else (compiler-error "Unsupported C extern declaration" expr)))))
+
   (define (unwrap-enums ret table)
     (define (unwrap-enums-iter enums val table)
       (if (null? enums) table
@@ -219,17 +246,18 @@
       (("toplevel") table)
       (("toplevel" ("declaration" ret . decls) . toprest)
        (let ((typedef? (member "typedef" ret))
+             (extern? (member "extern" ret))
              (table (unwrap-enums ret table))
              (ret (reduce-type ret table #t)))
          (let loop ((mydecls decls) (table table))
           (if (null? mydecls)
               (unwrap-declares `("toplevel" . ,toprest) table)
-              (loop 
+              (loop
                 (cdr mydecls)
                 (cons
-                  (if typedef?
-                      (unwrap-typedef ret (car mydecls) table)
-                      (unwrap-function ret (car mydecls) table))
+                  (cond (typedef? (unwrap-typedef ret (car mydecls) table))
+                        (extern? (unwrap-extern ret (car mydecls) table))
+                        (else (unwrap-function ret (car mydecls) table)))
                   table))))))))
   ; also reverses the table
   (define (table->defines table acc)
@@ -253,6 +281,15 @@
                  (cdr table)
                  (cons
                   `(define ,name (##foreign.function "C" "" ,ret ,(symbol->string name) . ,args))
+                  acc))))
+          (('extern-variable name type)
+           (if (duplicate-mismatch name (car table) (cdr table)
+                (lambda (conflict) (compiler-error "variable redeclared as different symbol" (car table) conflict)))
+               (table->defines (cdr table) acc)
+               (table->defines
+                 (cdr table)
+                 (cons
+                  `(define ,name (##foreign.function "C" "" (extern ,type) ,name))
                   acc))))
           (('enum name val)
            ; enum values cannot be declared twice
@@ -291,8 +328,14 @@
               (parse (is-one-decl raw-parse #;(deep-copy raw-parse))))
          ;(set! raw-parse #f)
          ;(release-parse)
-         (let ((ff (unwrap-function (reduce-type (car parse) '() #t) (cadr parse) '())))
-           `(##foreign.function "C" ,decl ,(caddr ff) ,(cadr ff) . ,(cdddr ff)))))
+         (let ((ff (if (member "extern" (car parse))
+                       (unwrap-extern (reduce-type (car parse) '() #t) (cadr parse) '())
+                       (unwrap-function (reduce-type (car parse) '() #t) (cadr parse) '()))))
+           (match ff
+             (('function name ret . args)
+              `(##foreign.function "C" ,decl ,ret ,name . ,args))
+             (('extern-variable name type)
+              `(##foreign.function "C" ,decl (extern ,type) ,name))))))
       (else (compiler-error "Invalid foreign function syntax" expr))))
 
   (define (find-file file paths)
@@ -367,7 +410,16 @@
                      ; no FILE yet
                     ))))
   (define (get-foreign-decoder type)
-    (if (and (pair? type) (eqv? (car type) 'pointer))
+    (if (and (pair? type) (memv (car type) '(pointer static-pointer)))
+        (if (eqv? (car type) 'static-pointer)
+            ; T buf[static n]: when the matching typevector is passed the shim
+            ; enforces it has at least n elements. other pointer flavors have
+            ; no length to check and keep the plain decoder
+            (let ((n (cadr type))
+                  (base (get-foreign-decoder (list 'pointer (caddr type)))))
+              (if (memv (car base) '(f32-pointer f64-pointer s32-pointer u16-pointer s16-pointer u8-pointer s8-pointer c-string const-c-string))
+                  (cons (car base) (cons (string-append (cdr base) "Min") n))
+                  base))
         (match (cadr type)
           ('char '(c-string . "VCheckedDecodeCString2"))
           (('const 'char) '(const-c-string . "VCheckedDecodeConstCString2"))
@@ -392,7 +444,7 @@
           (('const 'unsigned-char) '(u8-pointer . "VCheckedDecodeU8Ptr"))
           (('const 'signed-char) '(s8-pointer . "VCheckedDecodeS8Ptr"))
 
-          (else '(void-pointer . "VCheckedDecodeForeignPointer2")))
+          (else '(void-pointer . "VCheckedDecodeForeignPointer2"))))
         (assv type '((_Bool . "VCheckedDecodeBool2")
                      (char . "VCheckedDecodeChar2")
                      (signed-char . "VCheckedDecodeSignedChar2")
@@ -414,13 +466,63 @@
                      ))))
   (define (print-foreign-function purec? expr)
     (match expr
+      ; extern variable shims: 0 scheme args reads the C variable, 1 arg writes it
+      (('##foreign.function lang decl ('extern type) name)
+       (let* ((mangled (mangle-foreign-function name))
+              (basic (mangle-foreign-basic name))
+              (closure (mangle-foreign-closure name))
+              (const? (and (pair? type) (eqv? (car type) 'const)))
+              (base-type (if const? (cadr type) type))
+              (encoder (cdr (get-foreign-encoder base-type)))
+              ; setters for pointer-typed externs only take foreign pointers: the
+              ; usual argument decoders hand out blob interiors, and unlike a call
+              ; argument a stored pointer outlives the next gc, which moves blobs
+              (decoder (cond (const? #f)
+                             ((and (pair? base-type) (eqv? (car base-type) 'pointer))
+                              "VCheckedDecodeForeignPointer2")
+                             (else (cdr (get-foreign-decoder base-type))))))
+         (printf "~A;~N" decl)
+
+         ; CPS SHIM
+         (printf "static V_BEGIN_FUNC_RANGE(~A, \"~A\", 1, ~A, _k, _arg0)~N" mangled name (if const? 1 2))
+         (if (not const?)
+             (begin
+               (printf "  if(argc == 2) {~N")
+               (printf "    ~A = ~A(runtime, _arg0, \"~A\");~N" name decoder name)
+               (printf "    V_BOUNCE(_k, runtime, VVOID);~N")
+               (printf "  }~N")))
+         (printf "  V_BOUNCE(_k, runtime, ~A(~A));~N" encoder name)
+         (printf "V_END_FUNC~N")
+
+         ; BASIC MACRO: fused basic-block calls textually apply this and so
+         ; dispatch on however many args the callsite passed, like _VBasic_VAdd2
+         (printf "#define ~A(runtime, statics, ...) \\~N" basic)
+         (printf "  ({ VRuntime * _basic_runtime = runtime; \\~N")
+         (printf "     VWORD _basic_args[] = { VVOID __VA_OPT__(,) __VA_ARGS__ }; \\~N")
+         (printf "     enum { _basic_argc = sizeof _basic_args / sizeof *_basic_args - 1 }; \\~N")
+         (if const?
+             (begin
+               (printf "     _Static_assert(_basic_argc == 0, \"~A: is const, expected 0 arguments\"); \\~N" name)
+               (printf "     (void)_basic_runtime; (void)_basic_args; \\~N")
+               (printf "     ~A(~A); })~N" encoder name))
+             (begin
+               (printf "     _Static_assert(_basic_argc <= 1, \"~A: expected at most 1 argument\"); \\~N" name)
+               (printf "     _basic_argc ? (~A = ~A(_basic_runtime, _basic_args[_basic_argc], \"~A\"), VVOID) \\~N" name decoder name)
+               (printf "                 : ~A(~A); })~N" encoder name)))
+
+         ; CLOSURE
+         (printf "static VClosure ~A = { .base.tag = VCLOSURE, .base.flags = VFLAG_STATIC, .func = (VFunc)~A };~N" closure mangled)))
       (('##foreign.function lang decl ret name args ...)
        (let ((mangled (mangle-foreign-function name))
              (basic (mangle-foreign-basic name))
              (closure (mangle-foreign-closure name))
              (names (iota (length args))))
          (define (print-arg arg argname)
-           (printf "~A(runtime, _arg~A, \"~A\")" (cdr (get-foreign-decoder arg)) argname name))
+           (match (cdr (get-foreign-decoder arg))
+             ((decoder . min-len)
+              (printf "~A(runtime, _arg~A, ~A, \"~A\")" decoder argname min-len name))
+             (decoder
+              (printf "~A(runtime, _arg~A, \"~A\")" decoder argname name))))
          (printf "~A;~N" decl)
 
          ; NONBASIC FUNC
