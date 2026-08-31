@@ -71,6 +71,7 @@ INT_SUFFIX ([uU](l|L|ll|LL)?|(l|L|ll|LL)[uU]?)
 %%
 [.:;,[\](){}<=>?!~|&*/%+^-] { return *yytext; }
 
+"..." { return T_ELLIPSIS; }
 "<<" { return T_SHL; }
 ">>" { return T_SHR; }
 "<=" { return T_LEQ; }

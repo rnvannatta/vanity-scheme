@@ -83,6 +83,8 @@
                (else (error "vasm declare: not a nonnegative integer" x))))
         (('declare-foreign lang ret name args ...)
          expr)
+        (('declare-foreign-variable lang enc dec name const?)
+         expr)
         ; set! as a function breaks the rules! of lexical scope
         (('push-set!) expr)
         (('bf x)

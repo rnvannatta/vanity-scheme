@@ -169,10 +169,31 @@
       (else (process-fun-case fun))))
   (define (process-foreign-function expr)
     (match expr
+      (('##foreign.function lang decl ('extern type) name)
+       ; extern variables: 0 args reads, 1 arg writes. getter encodes, setter
+       ; decodes, and those tags differ for pointers, so carry both. pointer
+       ; setters only take foreign pointers, see print-foreign-function
+       (let* ((const? (and (pair? type) (eqv? (car type) 'const)))
+              (base (if const? (cadr type) type)))
+         `((label
+             ,(string->symbol (mangle-foreign-function name))
+             (declare-foreign-variable ,lang
+                                       ,(car (get-foreign-encoder base))
+                                       ,(cond (const? #f)
+                                              ((and (pair? base) (eqv? (car base) 'pointer)) 'foreign-pointer)
+                                              (else (car (get-foreign-decoder base))))
+                                       ,(symbol->string name)
+                                       ,const?)))))
       (('##foreign.function lang decl ret name args ...)
        `((label
            ,(string->symbol (mangle-foreign-function name))
-           (declare-foreign ,lang ,(car (get-foreign-encoder ret)) ,name . ,(map (lambda (arg) (car (get-foreign-decoder arg))) args)))))))
+           (declare-foreign ,lang ,(car (get-foreign-encoder ret)) ,name .
+             ,(map (lambda (arg)
+                     ; static-pointer decoders carry a minimum length in their
+                     ; cdr, threaded to the interpreter as a (tag . n) pair
+                     (let ((d (get-foreign-decoder arg)))
+                       (if (pair? (cdr d)) (cons (car d) (cddr d)) (car d))))
+                   args)))))))
   (define (process-declare declare)
     (match declare
       (('##foreign.declare d) `())
@@ -190,7 +211,7 @@
             (append (car segments) (loop (cdr segments)))))))
 
   (define (write-bytecode-line line)
-    (if (not (memv (car line) '(label toplevel lambda lambda+ case-lambda case-lambda+ declare declare-foreign)))
+    (if (not (memv (car line) '(label toplevel lambda lambda+ case-lambda case-lambda+ declare declare-foreign declare-foreign-variable)))
         (display #\tab))
     (writeln line))
   (define (write-bytecode bytecode)

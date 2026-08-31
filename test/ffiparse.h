@@ -26,5 +26,15 @@ enum {
 int rand(void);
 void srand(unsigned int seed);
 
-// [static n] parses, though the length isn't enforced
-int strncmp(const char a[static 1], const char b[static 1], size_t n);
+// enum constants usable in later integer constant expressions
+enum { BASE = 4, TWICE = BASE * 2, NEXT };
+enum { OTHER = TWICE + NEXT };
+
+// [static n] can reference enum constants; strings must have n chars counting the nul
+int strncmp(const char a[static BASE], const char b[static 1], size_t n);
+
+void * malloc(size_t);
+void free(void *);
+
+// extern variables become getter/setter shims
+extern int opterr;

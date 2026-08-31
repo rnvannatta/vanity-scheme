@@ -396,12 +396,13 @@ typedef struct VEnv VEnv;
     va_end(_args); \
     VInitEnv(self, argc, argc, statics);
 
+#define V_INIT_RANGE_VAR(x) if(_var_cursor < argc) self->vars[_var_cursor++] = x;
 #define V_BEGIN_FUNC_RANGE(name, scmname, nargs_min, nargs_max, ...) \
   void name(VRuntime * runtime, VEnv * statics, int argc __VA_OPT__(MAP(V_ADD_WORD, __VA_ARGS__))) { \
     V_ARG_RANGE3(runtime, scmname, nargs_min, nargs_max, argc); \
     VEnv * self = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[argc])); \
     int _var_cursor = 0; \
-    __VA_OPT__(MAP(V_INIT_VAR, __VA_ARGS__)) \
+    __VA_OPT__(MAP(V_INIT_RANGE_VAR, __VA_ARGS__)) \
     VInitEnv(self, argc, argc, statics);
 
 #define V_END_FUNC }
@@ -1202,9 +1203,35 @@ static inline char * VCheckedDecodeCString2(VRuntime * runtime, VWORD v, char co
   VErrorC(runtime, "~Z: not castable to c string: ~S\n", proc, v);
   return NULL;
 }
+static inline char * VCheckedDecodeCString2Min(VRuntime * runtime, VWORD v, int n, char const * proc) {
+  // blob len counts the null terminal, matching char[static n]'s promise of n
+  // accessible chars: "abc" satisfies [static 4]
+  if(VIsString(v)) {
+    VBlob * b = VDecodeBlob(v);
+    if(b->len < (unsigned)n)
+      VErrorC(runtime, "~Z: string shorter than [static ~D]: ~S\n", proc, n, v);
+    return b->buf;
+  } else if(VIsForeignPointer(v)) {
+    return (void*)VDecodePointer(v);
+  }
+  VErrorC(runtime, "~Z: not castable to c string: ~S\n", proc, v);
+  return NULL;
+}
 static inline char const * VCheckedDecodeConstCString2(VRuntime * runtime, VWORD v, char const * proc) {
   if(VIsString(v) || VIsSymbol(v)) {
     return VDecodeBlob(v)->buf;
+  } else if(VIsForeignPointer(v)) {
+    return (void*)VDecodePointer(v);
+  }
+  VErrorC(runtime, "~Z: not castable to const c string: ~S\n", proc, v);
+  return NULL;
+}
+static inline char const * VCheckedDecodeConstCString2Min(VRuntime * runtime, VWORD v, int n, char const * proc) {
+  if(VIsString(v) || VIsSymbol(v)) {
+    VBlob * b = VDecodeBlob(v);
+    if(b->len < (unsigned)n)
+      VErrorC(runtime, "~Z: string shorter than [static ~D]: ~S\n", proc, n, v);
+    return b->buf;
   } else if(VIsForeignPointer(v)) {
     return (void*)VDecodePointer(v);
   }
@@ -1252,6 +1279,21 @@ static inline ctype * VCheckedDecode ## Prefix ## Ptr(VRuntime * runtime, VWORD 
     VBlob * b = VDecodeBlob(v); \
     if(b->buf[0] == BUF_ ## Prefix) \
       return (ctype*)(b->buf + sizeof(ctype)); \
+  } \
+  VErrorC(runtime, "~Z: not castable to float pointer: ~S\n", proc, v); \
+  return NULL; \
+} \
+static inline ctype * VCheckedDecode ## Prefix ## PtrMin(VRuntime * runtime, VWORD v, int n, char const * proc) { \
+  if(VIsForeignPointer(v)) { \
+    return (void*)VDecodePointer(v); \
+  } \
+  if(VIsPointerTo(v, VBUFFER)) { \
+    VBlob * b = VDecodeBlob(v); \
+    if(b->buf[0] == BUF_ ## Prefix) { \
+      if(b->len < sizeof(ctype) * ((unsigned)n + 1)) \
+        VErrorC(runtime, "~Z: typevector shorter than [static ~D]: ~S\n", proc, n, v); \
+      return (ctype*)(b->buf + sizeof(ctype)); \
+    } \
   } \
   VErrorC(runtime, "~Z: not castable to float pointer: ~S\n", proc, v); \
   return NULL; \
