@@ -9,6 +9,7 @@
 
 void VEvalVasmLambdaTrampoline(V_CORE_ARGS, ...);
 void VEvalVasmForeignLambda(V_CORE_ARGS, ...);
+V_DECLARE_FUNC(VEvalVasmForeignVariable, k, val);
 void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
   VWORD stack[256];
   int stackptr = 0;
@@ -126,20 +127,39 @@ void VEvalVasm_Impl(VRuntime * runtime, VVector * tape, int pc, VEnv * env) {
       VWORD func = tape->arr[func_pc];
 
       VPair * data_decl = VCheckedDecodePair2(runtime, func, "eval-vasm: malformed foreign-function");
+      char const * decl_kind = VCheckedDecodeSymbol2(runtime, data_decl->first, "eval-vasm: malformed foreign-function")->buf;
       VPair * data_lang = VCheckedDecodePair2(runtime, data_decl->rest, "eval-vasm: malformed foreign-function");
-      VPair * data_ret = VCheckedDecodePair2(runtime, data_lang->rest, "eval-vasm: malformed foreign-function");
-      VPair * data_name = VCheckedDecodePair2(runtime, data_ret->rest, "eval-vasm: malformed foreign-function");
-
-      void * lookup = VLoadFunction(runtime, data_name->first);
-      VWORD foreign_func = VEncodeForeignPointer(lookup);
-
-      VEnv * closure_env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[2]));
-      VInitEnv(closure_env, 3, 3, NULL);
-      closure_env->vars[0] = foreign_func;
-      closure_env->vars[1] = data_ret->first;
-      closure_env->vars[2] = data_name->rest;
       VClosure * closure = VAlloca(runtime, sizeof(VClosure));
-      *closure = VMakeClosure2(VEvalVasmForeignLambda, closure_env);
+      if(!strcmp(decl_kind, "declare-foreign-variable")) {
+        // (declare-foreign-variable lang enc-tag dec-tag name const?)
+        // dec-tag is #f for const variables
+        VPair * data_enc = VCheckedDecodePair2(runtime, data_lang->rest, "eval-vasm: malformed foreign-variable");
+        VPair * data_dec = VCheckedDecodePair2(runtime, data_enc->rest, "eval-vasm: malformed foreign-variable");
+        VPair * data_name = VCheckedDecodePair2(runtime, data_dec->rest, "eval-vasm: malformed foreign-variable");
+
+        // dlsym also resolves data symbols to their address
+        void * lookup = VLoadFunction(runtime, data_name->first);
+
+        VEnv * closure_env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[3]));
+        VInitEnv(closure_env, 3, 3, NULL);
+        closure_env->vars[0] = VEncodeForeignPointer(lookup);
+        closure_env->vars[1] = data_enc->first;
+        closure_env->vars[2] = data_dec->first;
+        *closure = VMakeClosure2((VFunc)VEvalVasmForeignVariable, closure_env);
+      } else {
+        VPair * data_ret = VCheckedDecodePair2(runtime, data_lang->rest, "eval-vasm: malformed foreign-function");
+        VPair * data_name = VCheckedDecodePair2(runtime, data_ret->rest, "eval-vasm: malformed foreign-function");
+
+        void * lookup = VLoadFunction(runtime, data_name->first);
+        VWORD foreign_func = VEncodeForeignPointer(lookup);
+
+        VEnv * closure_env = VAlloca(runtime, sizeof(VEnv) + sizeof(VWORD[3]));
+        VInitEnv(closure_env, 3, 3, NULL);
+        closure_env->vars[0] = foreign_func;
+        closure_env->vars[1] = data_ret->first;
+        closure_env->vars[2] = data_name->rest;
+        *closure = VMakeClosure2(VEvalVasmForeignLambda, closure_env);
+      }
       stack[stackptr++] = VEncodeClosure(closure);
     }
     else if(!strcmp(name, "push-set!")) {
@@ -282,6 +302,53 @@ void VEvalVasmForeignLambda(V_CORE_ARGS, ...) {
     V_CALL_FUNC(VApplyForeignFunctionImpl, NULL, runtime, k, func, ret, arg_types, args_root.rest);
   }
 }
+
+// extern variable shims: 0 scheme args reads the C variable, 1 arg writes it.
+// closure env is {var-ptr, enc-tag, dec-tag}, dec-tag #f meaning const.
+// tags are the same symbols the compiled path's encoder/decoder tables use,
+// except pointer setters only take foreign-pointer: the usual argument
+// decoders hand out blob interiors, and unlike a call argument a stored
+// pointer outlives the next gc, which moves blobs
+V_BEGIN_FUNC_RANGE(VEvalVasmForeignVariable, "foreign-variable", 1, 2, k, val)
+  void * ptr = (void*)VDecodePointer(statics->vars[0]);
+  if(argc == 2) {
+    VWORD dec_tag = statics->vars[2];
+    if(VIsEq(dec_tag, VFALSE))
+      VErrorC(runtime, "foreign-variable: cannot write const variable~N");
+    char const * dec = VCheckedDecodeSymbol2(runtime, dec_tag, "foreign-variable")->buf;
+    if(!strcmp(dec, "_Bool")) *(_Bool*)ptr = VCheckedDecodeBool2(runtime, val, "foreign-variable");
+    else if(!strcmp(dec, "char")) *(char*)ptr = VCheckedDecodeChar2(runtime, val, "foreign-variable");
+    else if(!strcmp(dec, "signed-char")) *(signed char*)ptr = VCheckedDecodeSignedChar2(runtime, val, "foreign-variable");
+    else if(!strcmp(dec, "unsigned-char")) *(unsigned char*)ptr = VCheckedDecodeUnsignedChar2(runtime, val, "foreign-variable");
+    else if(!strcmp(dec, "short")) *(short*)ptr = VCheckedDecodeShort2(runtime, val, "foreign-variable");
+    else if(!strcmp(dec, "unsigned-short")) *(unsigned short*)ptr = VCheckedDecodeUnsignedShort2(runtime, val, "foreign-variable");
+    else if(!strcmp(dec, "int")) *(int*)ptr = VCheckedDecodeInt2(runtime, val, "foreign-variable");
+    else if(!strcmp(dec, "unsigned-int")) *(unsigned*)ptr = VCheckedDecodeInt2(runtime, val, "foreign-variable");
+    else if(!strcmp(dec, "float")) *(float*)ptr = VCheckedDecodeNumber2(runtime, val, "foreign-variable");
+    else if(!strcmp(dec, "double")) *(double*)ptr = VCheckedDecodeNumber2(runtime, val, "foreign-variable");
+    else if(!strcmp(dec, "foreign-pointer")) *(void**)ptr = VCheckedDecodeForeignPointer2(runtime, val, "foreign-variable");
+    else if(!strcmp(dec, "VWORD")) *(VWORD*)ptr = VCheckedDecodeVWORD2(runtime, val, "foreign-variable");
+    else VErrorC(runtime, "foreign-variable: unknown type: ~Z~N", dec);
+    V_CALL(k, runtime, VVOID);
+  } else {
+    char const * enc = VCheckedDecodeSymbol2(runtime, statics->vars[1], "foreign-variable")->buf;
+    VWORD ret;
+    if(!strcmp(enc, "_Bool")) ret = VEncodeBool(*(_Bool*)ptr);
+    else if(!strcmp(enc, "char")) ret = VEncodeChar(*(char*)ptr);
+    else if(!strcmp(enc, "signed-char")) ret = VEncodeInt(*(signed char*)ptr);
+    else if(!strcmp(enc, "unsigned-char")) ret = VEncodeInt(*(unsigned char*)ptr);
+    else if(!strcmp(enc, "short")) ret = VEncodeInt(*(short*)ptr);
+    else if(!strcmp(enc, "unsigned-short")) ret = VEncodeInt(*(unsigned short*)ptr);
+    else if(!strcmp(enc, "int")) ret = VEncodeInt(*(int*)ptr);
+    else if(!strcmp(enc, "unsigned-int")) ret = VEncodeInt(*(unsigned*)ptr);
+    else if(!strcmp(enc, "float")) ret = VEncodeDouble(*(float*)ptr);
+    else if(!strcmp(enc, "double")) ret = VEncodeDouble(*(double*)ptr);
+    else if(!strcmp(enc, "void-pointer")) ret = VEncodeForeignPointer(*(void**)ptr);
+    else if(!strcmp(enc, "VWORD")) ret = *(VWORD*)ptr;
+    else { VErrorC(runtime, "foreign-variable: unknown type: ~Z~N", enc); ret = VVOID; }
+    V_CALL(k, runtime, ret);
+  }
+V_END_FUNC
 
 static void VEvalVasmToplevelImpl(V_CORE_ARGS, VWORD k, VWORD tape, VWORD pc) {
   V_ARG_CHECK3(runtime, "eval-vasm-toplevel", 3, argc);

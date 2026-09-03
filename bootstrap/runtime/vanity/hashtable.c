@@ -33,55 +33,22 @@ V_DECLARE_FUNC_MIN(VMultiImport, _var0, _var1, _var2);
 
 VEnv * _V60_V0vanity_V0hashtable;
 
-static struct { VBlob sym; char bytes[28]; } _V10_Dstring_D89 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 28 }, "_V0vanity_V0hash__table_V20" };
-static struct { VBlob sym; char bytes[26]; } _V10_Dstring_D88 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 26 }, "_V0vanity_V0hashtable_V20" };
-static VPair _V10_Dpair_D87 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D86 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D85 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D84 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D83 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D82 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D81 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D80 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D79 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D78 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D77 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D76 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D75 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D74 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D73 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D72 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0current__hash;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0current__hash = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "current-hash" };
-VWEAK VWORD _V0hash__table__ref;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V0hash__table__ref = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "hash-table-ref" };
-VWEAK VWORD _V0hash__table__delete_B;VWEAK struct { VBlob sym; char bytes[19]; } _VW_V0hash__table__delete_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 19 }, "hash-table-delete!" };
-VWEAK VWORD _V0hash__table__walk;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0hash__table__walk = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "hash-table-walk" };
-VWEAK VWORD _V0hash__table__map___Glist;VWEAK struct { VBlob sym; char bytes[21]; } _VW_V0hash__table__map___Glist = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 21 }, "hash-table-map->list" };
+static struct { VBlob sym; char bytes[28]; } _V10_Dstring_D60 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 28 }, "_V0vanity_V0hash__table_V20" };
+static struct { VBlob sym; char bytes[26]; } _V10_Dstring_D59 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 26 }, "_V0vanity_V0hashtable_V20" };
 VWEAK VWORD _V0hash__table___Galist;VWEAK struct { VBlob sym; char bytes[18]; } _VW_V0hash__table___Galist = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 18 }, "hash-table->alist" };
 VWEAK VWORD _V0hash__table__fold;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0hash__table__fold = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "hash-table-fold" };
+VWEAK VWORD _V0hash__table__map___Glist;VWEAK struct { VBlob sym; char bytes[21]; } _VW_V0hash__table__map___Glist = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 21 }, "hash-table-map->list" };
 VWEAK VWORD _V0hash__table__for__each;VWEAK struct { VBlob sym; char bytes[20]; } _VW_V0hash__table__for__each = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 20 }, "hash-table-for-each" };
+VWEAK VWORD _V0hash__table__walk;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0hash__table__walk = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "hash-table-walk" };
 VWEAK VWORD _V0hash__table__size;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0hash__table__size = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "hash-table-size" };
+VWEAK VWORD _V0hash__table__delete_B;VWEAK struct { VBlob sym; char bytes[19]; } _VW_V0hash__table__delete_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 19 }, "hash-table-delete!" };
 VWEAK VWORD _V0hash__table__set_B;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0hash__table__set_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "hash-table-set!" };
+VWEAK VWORD _V0hash__table__ref;VWEAK struct { VBlob sym; char bytes[15]; } _VW_V0hash__table__ref = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 15 }, "hash-table-ref" };
 VWEAK VWORD _V0make__hash__table;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V0make__hash__table = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "make-hash-table" };
+VWEAK VWORD _V0current__hash;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V0current__hash = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "current-hash" };
 VWEAK VWORD _V40VMultiImport;
 VWEAK VClosure _VW_V40VMultiImport = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMultiImport, NULL };
-static VPair _V10_Dpair_D71 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D70 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D69 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D68 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D67 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D66 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D65 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D64 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0_Mx;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mx = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%x" };
-static VPair _V10_Dpair_D63 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D62 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D61 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D60 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D59 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0_Mk;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mk = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%k" };
 static void _V0vanity_V0hashtable_V20_V0lambda2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2, VWORD _var3, VWORD _var4, VWORD _var5, VWORD _var6, VWORD _var7, VWORD _var8, VWORD _var9, VWORD _var10) {
- static VDebugInfo dbg = { "_V0vanity_V0hashtable_V20_V0lambda2" };
- VRecordCall2(runtime, &dbg);
  if(argc != 11) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0hashtable_V20_V0lambda2, got ~D~N"
   "-- expected 11~N"
@@ -186,8 +153,6 @@ static void _V0vanity_V0hashtable_V20_V0lambda2(VRuntime * runtime, VEnv * stati
     }
 }
 static void _V0vanity_V0hashtable_V20_V0k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0hashtable_V20_V0k2" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0hashtable_V20_V0k2, got ~D~N"
   "-- expected 1~N"
@@ -197,10 +162,10 @@ static void _V0vanity_V0hashtable_V20_V0k2(VRuntime * runtime, VEnv * statics, i
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((##intrinsic "VMultiImport") (close _V0vanity_V0hashtable_V20_V0lambda2) (##string ##.string.88) (bruijn ##.%x.35 0 0) 'make-hash-table 'hash-table-set! 'hash-table-size 'hash-table-for-each 'hash-table-fold 'hash-table->alist 'hash-table-map->list 'hash-table-walk 'hash-table-delete! 'hash-table-ref 'current-hash)
+  // ((##intrinsic "VMultiImport") (close _V0vanity_V0hashtable_V20_V0lambda2) (##string ##.string.59) (bruijn ##.%x.35 0 0) 'make-hash-table 'hash-table-set! 'hash-table-size 'hash-table-for-each 'hash-table-fold 'hash-table->alist 'hash-table-map->list 'hash-table-walk 'hash-table-delete! 'hash-table-ref 'current-hash)
     VCallFuncWithGC(runtime, (VFunc)VMultiImport, 14,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0hashtable_V20_V0lambda2, self)))),
-      VEncodePointer(&_V10_Dstring_D88.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D59.sym, VPOINTER_OTHER),
       _var0,
       _V0make__hash__table,
       _V0hash__table__set_B,
@@ -215,8 +180,6 @@ static void _V0vanity_V0hashtable_V20_V0k2(VRuntime * runtime, VEnv * statics, i
       _V0current__hash);
 }
 static void _V0vanity_V0hashtable_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0hashtable_V20_V0k1" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0hashtable_V20_V0k1, got ~D~N"
   "-- expected 1~N"
@@ -232,8 +195,6 @@ static void _V0vanity_V0hashtable_V20_V0k1(VRuntime * runtime, VEnv * statics, i
       _var0);
 }
 static void _V0vanity_V0hashtable_V20_V0lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0hashtable_V20_V0lambda1" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0hashtable_V20_V0lambda1, got ~D~N"
   "-- expected 1~N"
@@ -243,87 +204,23 @@ static void _V0vanity_V0hashtable_V20_V0lambda1(VRuntime * runtime, VEnv * stati
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0hashtable_V20_V0k1) (##string ##.string.89))
+  // (##vcore.load-library (close _V0vanity_V0hashtable_V20_V0k1) (##string ##.string.60))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0hashtable_V20_V0k1, self)))),
-      VEncodePointer(&_V10_Dstring_D89.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D60.sym, VPOINTER_OTHER));
 }
 VFunc _V0vanity_V0hashtable_V20 = (VFunc)_V0vanity_V0hashtable_V20_V0lambda1;
 static __attribute__((constructor)) void VDllMain1() {
-  _V0current__hash = VEncodePointer(VInternSymbol(-1388026837, &_VW_V0current__hash.sym), VPOINTER_OTHER);
-  _V0hash__table__ref = VEncodePointer(VInternSymbol(987278019, &_VW_V0hash__table__ref.sym), VPOINTER_OTHER);
-  _V0hash__table__delete_B = VEncodePointer(VInternSymbol(1653184530, &_VW_V0hash__table__delete_B.sym), VPOINTER_OTHER);
-  _V0hash__table__walk = VEncodePointer(VInternSymbol(2018621625, &_VW_V0hash__table__walk.sym), VPOINTER_OTHER);
-  _V0hash__table__map___Glist = VEncodePointer(VInternSymbol(-793455360, &_VW_V0hash__table__map___Glist.sym), VPOINTER_OTHER);
   _V0hash__table___Galist = VEncodePointer(VInternSymbol(-586883858, &_VW_V0hash__table___Galist.sym), VPOINTER_OTHER);
   _V0hash__table__fold = VEncodePointer(VInternSymbol(-579030885, &_VW_V0hash__table__fold.sym), VPOINTER_OTHER);
+  _V0hash__table__map___Glist = VEncodePointer(VInternSymbol(-793455360, &_VW_V0hash__table__map___Glist.sym), VPOINTER_OTHER);
   _V0hash__table__for__each = VEncodePointer(VInternSymbol(-188805111, &_VW_V0hash__table__for__each.sym), VPOINTER_OTHER);
+  _V0hash__table__walk = VEncodePointer(VInternSymbol(2018621625, &_VW_V0hash__table__walk.sym), VPOINTER_OTHER);
   _V0hash__table__size = VEncodePointer(VInternSymbol(2129173623, &_VW_V0hash__table__size.sym), VPOINTER_OTHER);
+  _V0hash__table__delete_B = VEncodePointer(VInternSymbol(1653184530, &_VW_V0hash__table__delete_B.sym), VPOINTER_OTHER);
   _V0hash__table__set_B = VEncodePointer(VInternSymbol(-799540310, &_VW_V0hash__table__set_B.sym), VPOINTER_OTHER);
+  _V0hash__table__ref = VEncodePointer(VInternSymbol(987278019, &_VW_V0hash__table__ref.sym), VPOINTER_OTHER);
   _V0make__hash__table = VEncodePointer(VInternSymbol(-2146525516, &_VW_V0make__hash__table.sym), VPOINTER_OTHER);
-  _V0_Mx = VEncodePointer(VInternSymbol(-1853698215, &_VW_V0_Mx.sym), VPOINTER_OTHER);
-  _V0_Mk = VEncodePointer(VInternSymbol(-865914236, &_VW_V0_Mk.sym), VPOINTER_OTHER);
-  _V10_Dpair_D87.first = VEncodePointer(&_V10_Dpair_D84, VPOINTER_PAIR);
-  _V10_Dpair_D87.rest = VEncodePointer(&_V10_Dpair_D86, VPOINTER_PAIR);
-  _V10_Dpair_D86.first = VEncodePointer(&_V10_Dpair_D85, VPOINTER_PAIR);
-  _V10_Dpair_D86.rest = VNULL;
-  _V10_Dpair_D85.first = VEncodePointer(&_V10_Dpair_D64, VPOINTER_PAIR);
-  _V10_Dpair_D85.rest = VEncodePointer(&_V10_Dpair_D69, VPOINTER_PAIR);
-  _V10_Dpair_D84.first = VEncodeBool(false);
-  _V10_Dpair_D84.rest = VEncodePointer(&_V10_Dpair_D83, VPOINTER_PAIR);
-  _V10_Dpair_D83.first = VEncodePointer(&_V10_Dpair_D82, VPOINTER_PAIR);
-  _V10_Dpair_D83.rest = VNULL;
-  _V10_Dpair_D82.first = _V0make__hash__table;
-  _V10_Dpair_D82.rest = VEncodePointer(&_V10_Dpair_D81, VPOINTER_PAIR);
-  _V10_Dpair_D81.first = _V0hash__table__set_B;
-  _V10_Dpair_D81.rest = VEncodePointer(&_V10_Dpair_D80, VPOINTER_PAIR);
-  _V10_Dpair_D80.first = _V0hash__table__size;
-  _V10_Dpair_D80.rest = VEncodePointer(&_V10_Dpair_D79, VPOINTER_PAIR);
-  _V10_Dpair_D79.first = _V0hash__table__for__each;
-  _V10_Dpair_D79.rest = VEncodePointer(&_V10_Dpair_D78, VPOINTER_PAIR);
-  _V10_Dpair_D78.first = _V0hash__table__fold;
-  _V10_Dpair_D78.rest = VEncodePointer(&_V10_Dpair_D77, VPOINTER_PAIR);
-  _V10_Dpair_D77.first = _V0hash__table___Galist;
-  _V10_Dpair_D77.rest = VEncodePointer(&_V10_Dpair_D76, VPOINTER_PAIR);
-  _V10_Dpair_D76.first = _V0hash__table__map___Glist;
-  _V10_Dpair_D76.rest = VEncodePointer(&_V10_Dpair_D75, VPOINTER_PAIR);
-  _V10_Dpair_D75.first = _V0hash__table__walk;
-  _V10_Dpair_D75.rest = VEncodePointer(&_V10_Dpair_D74, VPOINTER_PAIR);
-  _V10_Dpair_D74.first = _V0hash__table__delete_B;
-  _V10_Dpair_D74.rest = VEncodePointer(&_V10_Dpair_D73, VPOINTER_PAIR);
-  _V10_Dpair_D73.first = _V0hash__table__ref;
-  _V10_Dpair_D73.rest = VEncodePointer(&_V10_Dpair_D72, VPOINTER_PAIR);
-  _V10_Dpair_D72.first = _V0current__hash;
-  _V10_Dpair_D72.rest = VNULL;
+  _V0current__hash = VEncodePointer(VInternSymbol(-1388026837, &_VW_V0current__hash.sym), VPOINTER_OTHER);
   _V40VMultiImport = VEncodePointer(VLookupConstant("_V40VMultiImport", &_VW_V40VMultiImport), VPOINTER_CLOSURE);
-  _V10_Dpair_D71.first = VEncodePointer(&_V10_Dpair_D66, VPOINTER_PAIR);
-  _V10_Dpair_D71.rest = VEncodePointer(&_V10_Dpair_D70, VPOINTER_PAIR);
-  _V10_Dpair_D70.first = VEncodePointer(&_V10_Dpair_D69, VPOINTER_PAIR);
-  _V10_Dpair_D70.rest = VNULL;
-  _V10_Dpair_D69.first = VEncodePointer(&_V10_Dpair_D64, VPOINTER_PAIR);
-  _V10_Dpair_D69.rest = VEncodePointer(&_V10_Dpair_D60, VPOINTER_PAIR);
-  _V10_Dpair_D68.first = VEncodePointer(&_V10_Dpair_D66, VPOINTER_PAIR);
-  _V10_Dpair_D68.rest = VEncodePointer(&_V10_Dpair_D67, VPOINTER_PAIR);
-  _V10_Dpair_D67.first = VEncodePointer(&_V10_Dpair_D60, VPOINTER_PAIR);
-  _V10_Dpair_D67.rest = VNULL;
-  _V10_Dpair_D66.first = VEncodeBool(false);
-  _V10_Dpair_D66.rest = VEncodePointer(&_V10_Dpair_D65, VPOINTER_PAIR);
-  _V10_Dpair_D65.first = VEncodePointer(&_V10_Dpair_D64, VPOINTER_PAIR);
-  _V10_Dpair_D65.rest = VNULL;
-  _V10_Dpair_D64.first = _V0_Mx;
-  _V10_Dpair_D64.rest = VNULL;
-  _V10_Dpair_D63.first = VEncodePointer(&_V10_Dpair_D61, VPOINTER_PAIR);
-  _V10_Dpair_D63.rest = VEncodePointer(&_V10_Dpair_D62, VPOINTER_PAIR);
-  _V10_Dpair_D62.first = VNULL;
-  _V10_Dpair_D62.rest = VNULL;
-  _V10_Dpair_D61.first = VEncodeBool(false);
-  _V10_Dpair_D61.rest = VEncodePointer(&_V10_Dpair_D60, VPOINTER_PAIR);
-  _V10_Dpair_D60.first = VEncodePointer(&_V10_Dpair_D59, VPOINTER_PAIR);
-  _V10_Dpair_D60.rest = VNULL;
-  _V10_Dpair_D59.first = _V0_Mk;
-  _V10_Dpair_D59.rest = VNULL;
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0hashtable_V20_V0lambda2, VEncodePointer(&_V10_Dpair_D87, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0hashtable_V20_V0k2, VEncodePointer(&_V10_Dpair_D71, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0hashtable_V20_V0k1, VEncodePointer(&_V10_Dpair_D68, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0hashtable_V20_V0lambda1, VEncodePointer(&_V10_Dpair_D63, VPOINTER_PAIR));
 }

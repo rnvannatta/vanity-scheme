@@ -52,7 +52,7 @@ V_DECLARE_FUNC_MIN(VMultiImport, _var0, _var1, _var2);
 
 VEnv * _V60_V0vanity_V0waybill;
 
-static struct { VBlob sym; char bytes[24]; } _V10_Dstring_D112 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 24 }, "_V0vanity_V0waybill_V20" };
+static struct { VBlob sym; char bytes[24]; } _V10_Dstring_D98 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 24 }, "_V0vanity_V0waybill_V20" };
 VWEAK VWORD _V40VClearinghousePoll;
 VWEAK VClosure _VW_V40VClearinghousePoll = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VClearinghousePoll, NULL };
 VWEAK VWORD _V0clearinghouse__poll_B;VWEAK struct { VBlob sym; char bytes[20]; } _VW_V0clearinghouse__poll_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 20 }, "clearinghouse-poll!" };
@@ -110,27 +110,9 @@ VWEAK VWORD _V0any__ephemeral__waybill_Q;VWEAK struct { VBlob sym; char bytes[23
 VWEAK VWORD _V40VAnyWeakWaybillP;
 VWEAK VClosure _VW_V40VAnyWeakWaybillP = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VAnyWeakWaybillP, NULL };
 VWEAK VWORD _V0any__weak__waybill_Q;VWEAK struct { VBlob sym; char bytes[18]; } _VW_V0any__weak__waybill_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 18 }, "any-weak-waybill\?" };
-static VPair _V10_Dpair_D111 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D110 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D109 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D108 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 VWEAK VWORD _V40VMultiImport;
 VWEAK VClosure _VW_V40VMultiImport = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMultiImport, NULL };
-static VPair _V10_Dpair_D107 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D106 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D105 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D104 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D103 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0_Mx;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mx = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%x" };
-static VPair _V10_Dpair_D102 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D101 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D100 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D99 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D98 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0_Mk;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mk = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%k" };
 static void _V0vanity_V0waybill_V20_V0lambda2(VRuntime * runtime, VEnv * statics, int argc) {
- static VDebugInfo dbg = { "_V0vanity_V0waybill_V20_V0lambda2" };
- VRecordCall2(runtime, &dbg);
  if(argc != 0) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0waybill_V20_V0lambda2, got ~D~N"
   "-- expected 0~N"
@@ -272,8 +254,6 @@ static void _V0vanity_V0waybill_V20_V0lambda2(VRuntime * runtime, VEnv * statics
     }
 }
 static void _V0vanity_V0waybill_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0waybill_V20_V0k1" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0waybill_V20_V0k1, got ~D~N"
   "-- expected 1~N"
@@ -283,15 +263,13 @@ static void _V0vanity_V0waybill_V20_V0k1(VRuntime * runtime, VEnv * statics, int
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((##intrinsic "VMultiImport") (close _V0vanity_V0waybill_V20_V0lambda2) (##string ##.string.112) (bruijn ##.%x.59 0 0))
+  // ((##intrinsic "VMultiImport") (close _V0vanity_V0waybill_V20_V0lambda2) (##string ##.string.98) (bruijn ##.%x.59 0 0))
     VCallFuncWithGC(runtime, (VFunc)VMultiImport, 3,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0waybill_V20_V0lambda2, self)))),
-      VEncodePointer(&_V10_Dstring_D112.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D98.sym, VPOINTER_OTHER),
       _var0);
 }
 static void _V0vanity_V0waybill_V20_V0lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0waybill_V20_V0lambda1" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0waybill_V20_V0lambda1, got ~D~N"
   "-- expected 1~N"
@@ -326,8 +304,6 @@ static __attribute__((constructor)) void VDllMain1() {
   _V0any__transport__waybill_Q = VEncodePointer(VInternSymbol(2010010734, &_VW_V0any__transport__waybill_Q.sym), VPOINTER_OTHER);
   _V0any__ephemeral__waybill_Q = VEncodePointer(VInternSymbol(-2043263001, &_VW_V0any__ephemeral__waybill_Q.sym), VPOINTER_OTHER);
   _V0any__weak__waybill_Q = VEncodePointer(VInternSymbol(-517206405, &_VW_V0any__weak__waybill_Q.sym), VPOINTER_OTHER);
-  _V0_Mx = VEncodePointer(VInternSymbol(-1853698215, &_VW_V0_Mx.sym), VPOINTER_OTHER);
-  _V0_Mk = VEncodePointer(VInternSymbol(-865914236, &_VW_V0_Mk.sym), VPOINTER_OTHER);
   _V40VClearinghousePoll = VEncodePointer(VLookupConstant("_V40VClearinghousePoll", &_VW_V40VClearinghousePoll), VPOINTER_CLOSURE);
   _V40VWaybillAddress = VEncodePointer(VLookupConstant("_V40VWaybillAddress", &_VW_V40VWaybillAddress), VPOINTER_CLOSURE);
   _V40VWaybillSignaledP = VEncodePointer(VLookupConstant("_V40VWaybillSignaledP", &_VW_V40VWaybillSignaledP), VPOINTER_CLOSURE);
@@ -347,36 +323,5 @@ static __attribute__((constructor)) void VDllMain1() {
   _V40VAnyTransportWaybillP = VEncodePointer(VLookupConstant("_V40VAnyTransportWaybillP", &_VW_V40VAnyTransportWaybillP), VPOINTER_CLOSURE);
   _V40VAnyEphemeralWaybillP = VEncodePointer(VLookupConstant("_V40VAnyEphemeralWaybillP", &_VW_V40VAnyEphemeralWaybillP), VPOINTER_CLOSURE);
   _V40VAnyWeakWaybillP = VEncodePointer(VLookupConstant("_V40VAnyWeakWaybillP", &_VW_V40VAnyWeakWaybillP), VPOINTER_CLOSURE);
-  _V10_Dpair_D111.first = VEncodePointer(&_V10_Dpair_D108, VPOINTER_PAIR);
-  _V10_Dpair_D111.rest = VEncodePointer(&_V10_Dpair_D110, VPOINTER_PAIR);
-  _V10_Dpair_D110.first = VEncodePointer(&_V10_Dpair_D109, VPOINTER_PAIR);
-  _V10_Dpair_D110.rest = VNULL;
-  _V10_Dpair_D109.first = VEncodePointer(&_V10_Dpair_D103, VPOINTER_PAIR);
-  _V10_Dpair_D109.rest = VEncodePointer(&_V10_Dpair_D99, VPOINTER_PAIR);
-  _V10_Dpair_D108.first = VEncodeBool(false);
-  _V10_Dpair_D108.rest = VEncodePointer(&_V10_Dpair_D101, VPOINTER_PAIR);
   _V40VMultiImport = VEncodePointer(VLookupConstant("_V40VMultiImport", &_VW_V40VMultiImport), VPOINTER_CLOSURE);
-  _V10_Dpair_D107.first = VEncodePointer(&_V10_Dpair_D105, VPOINTER_PAIR);
-  _V10_Dpair_D107.rest = VEncodePointer(&_V10_Dpair_D106, VPOINTER_PAIR);
-  _V10_Dpair_D106.first = VEncodePointer(&_V10_Dpair_D99, VPOINTER_PAIR);
-  _V10_Dpair_D106.rest = VNULL;
-  _V10_Dpair_D105.first = VEncodeBool(false);
-  _V10_Dpair_D105.rest = VEncodePointer(&_V10_Dpair_D104, VPOINTER_PAIR);
-  _V10_Dpair_D104.first = VEncodePointer(&_V10_Dpair_D103, VPOINTER_PAIR);
-  _V10_Dpair_D104.rest = VNULL;
-  _V10_Dpair_D103.first = _V0_Mx;
-  _V10_Dpair_D103.rest = VNULL;
-  _V10_Dpair_D102.first = VEncodePointer(&_V10_Dpair_D100, VPOINTER_PAIR);
-  _V10_Dpair_D102.rest = VEncodePointer(&_V10_Dpair_D101, VPOINTER_PAIR);
-  _V10_Dpair_D101.first = VNULL;
-  _V10_Dpair_D101.rest = VNULL;
-  _V10_Dpair_D100.first = VEncodeBool(false);
-  _V10_Dpair_D100.rest = VEncodePointer(&_V10_Dpair_D99, VPOINTER_PAIR);
-  _V10_Dpair_D99.first = VEncodePointer(&_V10_Dpair_D98, VPOINTER_PAIR);
-  _V10_Dpair_D99.rest = VNULL;
-  _V10_Dpair_D98.first = _V0_Mk;
-  _V10_Dpair_D98.rest = VNULL;
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0waybill_V20_V0lambda2, VEncodePointer(&_V10_Dpair_D111, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0waybill_V20_V0k1, VEncodePointer(&_V10_Dpair_D107, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0waybill_V20_V0lambda1, VEncodePointer(&_V10_Dpair_D102, VPOINTER_PAIR));
 }
