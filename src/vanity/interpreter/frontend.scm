@@ -47,7 +47,7 @@
     (let* ((architecture (if (eqv? platform 'windows) "windows_amd64" "sysv_amd64"))
            (expanded
              (if hygiene
-                 (expand-syntax expr)
+                 (expand-syntax expr (if path (cons path paths) paths) architecture)
                  (expand-toplevel expr (if path (cons path paths) paths) architecture)))
            (alpha
              (if hygiene

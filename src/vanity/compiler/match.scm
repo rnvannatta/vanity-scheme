@@ -124,7 +124,8 @@
                    (syms (map gensym variables))
                    (k (gensym "kk"))
                    (k2 (gensym "kk"))
-                   (expr (gensym "expr")))
+                   (expr (gensym "expr"))
+                   (tail-expr (gensym "tail-expr")))
               `(##vcore.call-with-values
                  (lambda ()
                    (##vcore.call/cc
@@ -147,8 +148,8 @@
                                     `(,k2 (##vcore.cdr ,expr) . ,(map (lambda (var sym) `(##vcore.cons ,var ,sym)) variables syms)))
                                   (,k ,expr . ,(map (lambda (sym) `(reverse ,sym)) syms)))))
                             loop)))))
-                 (lambda (tail-expr . ,variables)
-                   ,(match-iter (cons 'tail-expr (cdr expr-stack)) (cons tail-pattern pattern-stack) success-expr))))
+                 (lambda (,tail-expr . ,variables)
+                   ,(match-iter (cons tail-expr (cdr expr-stack)) (cons tail-pattern pattern-stack) success-expr))))
         )
       )
       )
