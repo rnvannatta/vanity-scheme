@@ -52,8 +52,10 @@
         (let ((len (lengthof expr)))
           (if (> len cutoff) (return #f) #t)))))
   (define (quotation? expr)
-    (let ((ret (assv (car expr) '((quote . "'") (quasiquote . "`") (unquote . ",") (unquote-splicing . ",@")))))
-      (if ret (cdr ret) #f)))
+    (if (and (pair? (cdr expr)) (null? (cddr expr)))
+        (let ((ret (assv (car expr) '((quote . "'") (quasiquote . "`") (unquote . ",") (unquote-splicing . ",@")))))
+          (if ret (cdr ret) #f))
+        #f))
 
   (define (pretty-print expr) (pretty-print-impl expr 0 #t 40) (newline))
   (define (join-line? form)

@@ -280,9 +280,8 @@
            `(##vcore.cons `unquote (##vcore.cons ,(expand-quasiquote (- quotation 1) x) '()))))
       ((('unquote-splicing x) . y)
        (if (= quotation 1)
-           ; FIXME dont' like this naked append, need long and short function
-           `(append ,x ,(expand-quasiquote quotation y))
-           `(##vcore.cons (##vcore.cons `unquote-splicing (##vcore.cons ,(expand-quasiquote (- quotation 1) x) '()) ,(expand-quasiquote quotation y)))))
+           `(##vcore.append ,x ,(expand-quasiquote quotation y))
+           `(##vcore.cons (##vcore.cons `unquote-splicing (##vcore.cons ,(expand-quasiquote (- quotation 1) x) '())) ,(expand-quasiquote quotation y))))
       ((a . b) `(##vcore.cons ,(expand-quasiquote quotation a) ,(expand-quasiquote quotation b)))
       (x
        (cond ((vector? x) `(##vcore.list->vector ,(expand-quasiquote quotation (vector->list x))))
@@ -306,9 +305,8 @@
            `(##vcore.cons `unquote (##vcore.cons ,(expand-global-syntax (- quotation 1) x) '()))))
       ((('unquote-splicing x) . y)
        (if (= quotation 1)
-           ; FIXME dont' like this naked append, need long and short function
-           `(append ,x ,(expand-global-syntax quotation y))
-           `(##vcore.cons (##vcore.cons `unquote-splicing (##vcore.cons ,(expand-global-syntax (- quotation 1) x) '()) ,(expand-global-syntax quotation y)))))
+           `(##vcore.append ,x ,(expand-global-syntax quotation y))
+           `(##vcore.cons (##vcore.cons `unquote-splicing (##vcore.cons ,(expand-global-syntax (- quotation 1) x) '())) ,(expand-global-syntax quotation y))))
       ((a . b) `(##vcore.cons ,(expand-global-syntax quotation a) ,(expand-global-syntax quotation b)))
       (x
        (cond ((vector? x) `(##vcore.list->vector ,(expand-global-syntax quotation (vector->list x))))

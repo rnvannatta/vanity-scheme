@@ -28,6 +28,8 @@
     (eq? (get-syntax-data a) (get-syntax-data b)))
 
   (define free-vars-allowed (make-parameter #t))
+  (define library-paths (make-parameter '()))
+  (define target-architecture (make-parameter "sysv_amd64"))
 
   (define (add-binding! id binding)
     ; We want to avoid the global scope to avoid cluttering it.
@@ -203,7 +205,6 @@
            ; free variable: we let them through because toplevel variables are free
            (and (free-vars-allowed) (get-syntax-data stx))))
       ((symbol? stx) (error "resolve: naked symbol in syntax" stx))
-      ; vectors are self quoting. same behavior as quote which is further below
       ((syntax-vector? stx) (syntax-object->datum stx))
       ((not (syntax-pair? stx))
        (if (syntax? stx)
@@ -213,6 +214,11 @@
         (case (and (identifier? (syntax-car stx)) (resolve-identifier (syntax-car stx)))
           ((lambda)
            `(lambda ,(resolve-formals (syntax-cadr stx)) ,(resolve (syntax-car (syntax-cddr stx)))))
+          ((case-lambda)
+           `(case-lambda
+              . ,(syntax-map
+                   (lambda (clause) (list (resolve-formals (syntax-car clause)) (resolve (syntax-cadr clause))))
+                   (syntax-cdr stx))))
           ((letrec)
            `(letrec
               ,(syntax-map (lambda (pair) (list (resolve-identifier (syntax-car pair)) (resolve (syntax-cadr pair)))) (syntax-cadr stx))               ,(resolve (syntax-car (syntax-cddr stx)))))
@@ -391,14 +397,19 @@
           ((syntax-pair? val) (advanced-primitive-letrec val))
           (else (not (and (identifier? val) (member val xs free-identifier=?))))))))
 
-  ; also expands letrec, which is allowed by the spec
-  ; letrec*'s faithful expansion runs faster than letrec's
-  (define (expand-letrec* stx env)
+  (define (expand-letrec* stx env) (expand-letrec-impl stx env #f))
+  (define (expand-letrec stx env) (expand-letrec-impl stx env #t))
+  (define (expand-letrec-impl stx env letrec?)
     (define idvals (syntax-cadr stx))
     (define body (syntax-cddr stx))
 
     (define introduced-sc (make-scope))
     (define (introduce x) (introduced-identifier x introduced-sc))
+    (define (fresh-tmp)
+      (let* ((sym (generate-symbol 'tmp))
+             (id (make-syntax sym (list (global-scope) introduced-sc))))
+        (add-binding! id sym)
+        id))
 
     (define sc (make-scope))
     (define ids (syntax-map (lambda (idval) (flip-scope (syntax-car idval) sc)) idvals))
@@ -407,12 +418,35 @@
 
     (let* ((letrec-env (append (map (lambda (binding) (cons binding variable)) bindings) env))
            (exp-idvals (syntax-map (lambda (id idval) (list id (expand-impl (flip-scope (syntax-cadr idval) sc) letrec-env))) ids idvals))
-           (exp-body (expand-body (flip-scope body sc) letrec-env)))
-      (if (every? (cut primitive-letrec? <> ids) (map cadr exp-idvals))
-          `(,(introduce 'letrec) ,exp-idvals ,exp-body)
+           (exp-body (expand-body (flip-scope body sc) letrec-env))
+           (thunked-body (list (list (introduce 'lambda) '() exp-body))))
+      (if letrec?
+          (let loop ((idvals '())
+                     (tmps '())
+                     (inits '())
+                     (todo (reverse exp-idvals))
+                     (body thunked-body))
+            (cond
+              ((null? todo)
+               `(,(introduce 'letrec) ,idvals ((,(introduce 'lambda) ,tmps ,body) . ,inits)))
+              ((primitive-letrec? (cadar todo) ids)
+                (loop
+                  (cons (car todo) idvals)
+                  tmps
+                  inits
+                  (cdr todo)
+                  body))
+              (else
+                (let ((tmp (fresh-tmp)))
+                  (loop
+                    (cons (list (caar todo) #f) idvals)
+                    (cons tmp tmps)
+                    (cons (cadar todo) inits)
+                    (cdr todo)
+                    `(,(introduce 'begin) (,(introduce 'set!) ,(caar todo) ,tmp) ,body))))))
           (let loop ((idvals '())
                      (todo (reverse exp-idvals))
-                     (body exp-body))
+                     (body thunked-body))
             (cond
               ((null? todo)
                `(,(introduce 'letrec) ,idvals ,body))
@@ -423,7 +457,7 @@
                   body))
               (else
                 (loop
-                  (cons (list (caar todo) #void) idvals)
+                  (cons (list (caar todo) #f) idvals)
                   (cdr todo)
                   `(,(introduce 'begin) (,(introduce 'set!) ,(caar todo) ,(cadar todo)) ,body))))))))
 
@@ -622,7 +656,8 @@
       ((lambda) (cons (syntax-car stx) (expand-lambda (syntax-cdr stx) env)))
       ((case-lambda)
        (cons (syntax-car stx) (syntax-map (cut expand-lambda <> env) (syntax-cdr stx))))
-      ((letrec* letrec) (expand-letrec* stx env))
+      ((letrec*) (expand-letrec* stx env))
+      ((letrec) (expand-letrec stx env))
       ((let-syntax) (expand-let-syntax stx env))
       ((syntax quote) stx)
       ((begin)
@@ -648,7 +683,7 @@
            (list (syntax-car stx)
                  (expand-impl (syntax-cadr stx) env)
                  (expand-impl (syntax-car (syntax-cddr stx)) env)
-                 #void)))
+                 #f)))
       ((and)
        (case (syntax-length stx)
          ((1) #t)
@@ -735,7 +770,7 @@
           (expand-toplevel
             (##global-quasisyntax
               (begin
-                ,@(map (lambda (name) (##global-quasisyntax (define ,name #void))) names)
+                ,@(map (lambda (name) (##global-quasisyntax (define ,name #f))) names)
                 (##vcore.call-with-values
                    (lambda () ,(syntax-caddr stx))
                    (lambda
@@ -751,8 +786,7 @@
           (expand-toplevel-define-syntax (desugar-define-syntax stx))
           '())
          ((import)
-          ; No effect on expanders currently. global values are unmangled. and no macros to bind yet.
-          (list stx))
+          (syntax-map (lambda (lib) (list (syntax-car stx) lib)) (syntax-cdr stx)))
          ((##vcore.declare)
           (parameterize ((toplevel-expand-env (fresh-toplevel-expand-env))
                          (global-scope (make-scope))
@@ -776,5 +810,7 @@
       (else
        (list (expand-app stx (toplevel-expand-env))))))
 
-  (define (expand-syntax expr)
-    (map resolve (expand-toplevel (datum->syntax-object (make-syntax 'dummy (list (global-scope))) expr) #f))))
+  (define (expand-syntax expr paths architecture)
+    (parameterize ((library-paths paths)
+                   (target-architecture architecture))
+      (map resolve (expand-toplevel (datum->syntax-object (make-syntax 'dummy (list (global-scope))) expr) #f)))))

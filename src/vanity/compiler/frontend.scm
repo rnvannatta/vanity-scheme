@@ -369,7 +369,7 @@
                          (expanded (benchmark "expand"
                                      (lambda ()
                                        (if hygiene?
-                                           (map (lambda (e) (expand-syntax e)) file)
+                                           (map (lambda (e) (expand-syntax e (cons path paths) architecture)) file)
                                            (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths) architecture))) file))))))
                     (if verify?
                         (benchmark "verify" (lambda () (verify-expanded (apply append expanded)))))

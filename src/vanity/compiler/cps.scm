@@ -372,14 +372,10 @@
          (values
            `(##letrec ,path . ,letrec-new)
            letrec-free))
-        (('basic-block cost (regs applies) ... cont)
-         (define-values (applies-new applies-free) (iter-combination applies))
-         (define-values (cont-new cont-free) (iter-apply cont))
-         (values
-           `(basic-block ,cost
-              ,@(map list regs applies-new)
-              cont-new)
-           (lset-difference (lset-union applies-free cont-free) regs)))
+        ; annotate-free-vars runs before optimize-impl, which is what creates
+        ; basic-blocks, so one showing up here means the ir is malformed
+        (('basic-block . _)
+         (compiler-error "annotate-free-vars: basic-block before optimization" expr))
         (('if p a b)
          (define-values (p-new p-free) (iter-atom p))
          (define-values (a-new a-free) (iter-apply a))

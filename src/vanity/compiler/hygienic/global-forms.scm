@@ -51,14 +51,14 @@
         ((unquote)
          (let ((x (syntax-cadr expr)))
            (if (= quotation 1)
-               (cond ((vector? x) (##global-quasisyntax (##vcore.list->vector ,(vector->list x))))
-                   ((f64vector? x) (##global-quasisyntax (##vcore.list->f64vector ,(f64vector->list x))))
-                   ((f32vector? x) (##global-quasisyntax (##vcore.list->f32vector ,(f32vector->list x))))
-                   ((s32vector? x) (##global-quasisyntax (##vcore.list->s32vector ,(s32vector->list x))))
-                   ((u16vector? x) (##global-quasisyntax (##vcore.list->u16vector ,(u16vector->list x))))
-                   ((s16vector? x) (##global-quasisyntax (##vcore.list->s16vector ,(s16vector->list x))))
-                   ((u8vector? x) (##global-quasisyntax (##vcore.list->u8vector ,(u8vector->list x))))
-                   ((s8vector? x) (##global-quasisyntax (##vcore.list->s8vector ,(s8vector->list x))))
+               (cond ((vector? x) (##global-quasisyntax (##vcore.list->vector ',(vector->list x))))
+                   ((f64vector? x) (##global-quasisyntax (##vcore.list->f64vector ',(f64vector->list x))))
+                   ((f32vector? x) (##global-quasisyntax (##vcore.list->f32vector ',(f32vector->list x))))
+                   ((s32vector? x) (##global-quasisyntax (##vcore.list->s32vector ',(s32vector->list x))))
+                   ((u16vector? x) (##global-quasisyntax (##vcore.list->u16vector ',(u16vector->list x))))
+                   ((s16vector? x) (##global-quasisyntax (##vcore.list->s16vector ',(s16vector->list x))))
+                   ((u8vector? x) (##global-quasisyntax (##vcore.list->u8vector ',(u8vector->list x))))
+                   ((s8vector? x) (##global-quasisyntax (##vcore.list->s8vector ',(s8vector->list x))))
                    (else x))
                (##global-quasisyntax (##vcore.cons 'unquote (##vcore.cons ,(expand-quasiquote-impl (- quotation 1) x) '()))))))
         (else
@@ -69,7 +69,7 @@
                   (##global-quasisyntax
                     (##vcore.append ,(syntax-cadr (syntax-car expr)) ,(expand-quasiquote-impl quotation (syntax-cdr expr))))
                   (##global-quasisyntax
-                    (##vcore.cons (##vcore.cons 'unquote-splicing (##vcore.cons ,(expand-quasiquote-impl (- quotation 1) (syntax-cadr (syntax-car expr))) '()) ,(expand-quasiquote-impl quotation (syntax-cdr expr))))))
+                    (##vcore.cons (##vcore.cons 'unquote-splicing (##vcore.cons ,(expand-quasiquote-impl (- quotation 1) (syntax-cadr (syntax-car expr))) '())) ,(expand-quasiquote-impl quotation (syntax-cdr expr)))))
               (##global-quasisyntax
                 (##vcore.cons ,(expand-quasiquote-impl quotation (syntax-car expr))
                               ,(expand-quasiquote-impl quotation (syntax-cdr expr))))))))
@@ -89,14 +89,14 @@
         ((unquote)
          (let ((x (syntax-cadr expr)))
            (if (= quotation 1)
-               (cond ((vector? x) (##global-quasisyntax (##vcore.list->vector ,(vector->list x))))
-                   ((f64vector? x) (##global-quasisyntax (##vcore.list->f64vector ,(f64vector->list x))))
-                   ((f32vector? x) (##global-quasisyntax (##vcore.list->f32vector ,(f32vector->list x))))
-                   ((s32vector? x) (##global-quasisyntax (##vcore.list->s32vector ,(s32vector->list x))))
-                   ((u16vector? x) (##global-quasisyntax (##vcore.list->u16vector ,(u16vector->list x))))
-                   ((s16vector? x) (##global-quasisyntax (##vcore.list->s16vector ,(s16vector->list x))))
-                   ((u8vector? x) (##global-quasisyntax (##vcore.list->u8vector ,(u8vector->list x))))
-                   ((s8vector? x) (##global-quasisyntax (##vcore.list->s8vector ,(s8vector->list x))))
+               (cond ((vector? x) (##global-quasisyntax (##vcore.list->vector ',(vector->list x))))
+                   ((f64vector? x) (##global-quasisyntax (##vcore.list->f64vector ',(f64vector->list x))))
+                   ((f32vector? x) (##global-quasisyntax (##vcore.list->f32vector ',(f32vector->list x))))
+                   ((s32vector? x) (##global-quasisyntax (##vcore.list->s32vector ',(s32vector->list x))))
+                   ((u16vector? x) (##global-quasisyntax (##vcore.list->u16vector ',(u16vector->list x))))
+                   ((s16vector? x) (##global-quasisyntax (##vcore.list->s16vector ',(s16vector->list x))))
+                   ((u8vector? x) (##global-quasisyntax (##vcore.list->u8vector ',(u8vector->list x))))
+                   ((s8vector? x) (##global-quasisyntax (##vcore.list->s8vector ',(s8vector->list x))))
                    (else x))
                (##global-quasisyntax (##vcore.cons 'unquote (##vcore.cons ,(expand-quasisyntax-impl (- quotation 1) x) '()))))))
         (else
@@ -107,7 +107,7 @@
                   (##global-quasisyntax
                     (##vcore.append ,(syntax-cadr (syntax-car expr)) ,(expand-quasisyntax-impl quotation (syntax-cdr expr))))
                   (##global-quasisyntax
-                    (##vcore.cons (##vcore.cons 'unquote-splicing (##vcore.cons ,(expand-quasisyntax-impl (- quotation 1) (syntax-cadr (syntax-car expr))) '()) ,(expand-quasisyntax-impl quotation (syntax-cdr expr))))))
+                    (##vcore.cons (##vcore.cons 'unquote-splicing (##vcore.cons ,(expand-quasisyntax-impl (- quotation 1) (syntax-cadr (syntax-car expr))) '())) ,(expand-quasisyntax-impl quotation (syntax-cdr expr)))))
               (##global-quasisyntax
                 (##vcore.cons ,(expand-quasisyntax-impl quotation (syntax-car expr))
                               ,(expand-quasisyntax-impl quotation (syntax-cdr expr))))))))
