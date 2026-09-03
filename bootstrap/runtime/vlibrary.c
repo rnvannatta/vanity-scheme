@@ -2388,24 +2388,31 @@ V_BEGIN_FUNC(VAccess, "access", 3, k, _path, _mode)
 // Buffers
 //
 
+// The Read/Write helpers own the sole bounds check for every buffer accessor.
+// offset is a signed byte offset into buffer->buf; offset 0 is the type tag, so
+// valid data lives in [1, buffer->len). A lone `offset < 1` therefore rejects
+// both negative user indices and any attempt to alias the tag byte, and lets the
+// reinterpret-cast accessors skip a redundant check of their own. proc names the
+// calling procedure for the error message (passed through ~Z).
 #define IMPLEMENT_BUFFER_READWRITE(prefix, Prefix, elem_width, ctype, CType) \
-static void Prefix ## Write(VRuntime * runtime, VBlob * buffer, unsigned offset, VWORD v) { \
+static void Prefix ## Write(VRuntime * runtime, VBlob * buffer, const char * proc, int64_t offset, VWORD v) { \
   const int stride = elem_width; \
-  if(buffer->len < offset + stride) \
-    VErrorC(runtime, #prefix "vector-set!: index out of bounds ~D", (offset-stride)/stride); \
+  if(offset < 1 || offset + stride > (int64_t)buffer->len) \
+    VErrorC(runtime, "~Z: index out of bounds ~D", proc, (int)(offset/stride - 1)); \
   int i = 0; \
   if(VWordType(v) == VIMM_INT) \
     i = VDecodeInt(v); \
   else \
-    VErrorC(runtime, #prefix "vector-set!: not an int ~S", v); \
+    VErrorC(runtime, "~Z: not an int ~S", proc, v); \
   if(!(CType ## _MIN <= i && i <= CType ## _MAX)) \
-    VErrorC(runtime, #prefix "vector-set!: not a " #ctype " ~S", v); \
+    VErrorC(runtime, "~Z: not a " #ctype " ~S", proc, v); \
   ctype ## _t x = i; \
   memcpy(buffer->buf + offset, &x, stride); \
 } \
-static VWORD Prefix ## Read(VRuntime * runtime, VBlob * buffer, unsigned offset) { \
-  if(buffer->len < offset + elem_width) \
-    VErrorC(runtime, "s32vector-ref!: index out of bounds ~D", (offset-elem_width)/elem_width); \
+static VWORD Prefix ## Read(VRuntime * runtime, VBlob * buffer, const char * proc, int64_t offset) { \
+  const int stride = elem_width; \
+  if(offset < 1 || offset + stride > (int64_t)buffer->len) \
+    VErrorC(runtime, "~Z: index out of bounds ~D", proc, (int)(offset/stride - 1)); \
   ctype ## _t i = 0; \
   memcpy(&i, buffer->buf + offset, elem_width); \
   return VEncodeInt(i); \
@@ -2421,44 +2428,79 @@ IMPLEMENT_BUFFER_READWRITE(s16, S16, 2, int16, INT16)
 IMPLEMENT_BUFFER_READWRITE(u16, U16, 2, uint16, UINT16)
 IMPLEMENT_BUFFER_READWRITE(s32, S32, 4, int32, INT32)
 
-static VWORD F32Read(VRuntime * runtime, VBlob * buffer, unsigned offset) {
-  if(buffer->len < offset + 4)
-    VErrorC(runtime, "f32vector-ref!: index out of bounds ~D", (offset-4)/4);
+static VWORD F32Read(VRuntime * runtime, VBlob * buffer, const char * proc, int64_t offset) {
+  const int stride = 4;
+  if(offset < 1 || offset + stride > (int64_t)buffer->len)
+    VErrorC(runtime, "~Z: index out of bounds ~D", proc, (int)(offset/stride - 1));
   float f = 0;
   memcpy(&f, buffer->buf + offset, 4);
   return VEncodeNumber(f);
 }
-static VWORD F64Read(VRuntime * runtime, VBlob * buffer, unsigned offset) {
-  if(buffer->len < offset + 8)
-    VErrorC(runtime, "f64vector-ref!: index out of bounds ~D", (offset-8)/8);
+static VWORD F64Read(VRuntime * runtime, VBlob * buffer, const char * proc, int64_t offset) {
+  const int stride = 8;
+  if(offset < 1 || offset + stride > (int64_t)buffer->len)
+    VErrorC(runtime, "~Z: index out of bounds ~D", proc, (int)(offset/stride - 1));
   double d = 0;
   memcpy(&d, buffer->buf + offset, 8);
   return VEncodeNumber(d);
 }
 
-static void F32Write(VRuntime * runtime, VBlob * buffer, unsigned offset, VWORD v) {
-  if(buffer->len < offset + 4)
-    VErrorC(runtime, "f32vector-set!: index out of bounds ~D", (offset-4)/4);
+static void F32Write(VRuntime * runtime, VBlob * buffer, const char * proc, int64_t offset, VWORD v) {
+  const int stride = 4;
+  if(offset < 1 || offset + stride > (int64_t)buffer->len)
+    VErrorC(runtime, "~Z: index out of bounds ~D", proc, (int)(offset/stride - 1));
   float f = 0;
   if(VIsDouble(v))
     f = VDecodeNumber(v);
   else if(VWordType(v) == VIMM_INT)
     f = VDecodeInt(v);
   else
-    VErrorC(runtime, "f32vector-set!: not an int or a double ~S", v);
+    VErrorC(runtime, "~Z: not an int or a double ~S", proc, v);
   memcpy(buffer->buf + offset, &f, 4);
 }
-static void F64Write(VRuntime * runtime, VBlob * buffer, unsigned offset, VWORD v) {
-  if(buffer->len < offset + 8)
-    VErrorC(runtime, "f64vector-set!: index out of bounds ~D", (offset-8)/8);
+static void F64Write(VRuntime * runtime, VBlob * buffer, const char * proc, int64_t offset, VWORD v) {
+  const int stride = 8;
+  if(offset < 1 || offset + stride > (int64_t)buffer->len)
+    VErrorC(runtime, "~Z: index out of bounds ~D", proc, (int)(offset/stride - 1));
   double d = 0;
   if(VIsDouble(v))
     d = VDecodeNumber(v);
   else if(VWordType(v) == VIMM_INT)
     d = VDecodeInt(v);
   else
-    VErrorC(runtime, "f64vector-set!: not an int or a double ~S", v);
+    VErrorC(runtime, "~Z: not an int or a double ~S", proc, v);
   memcpy(buffer->buf + offset, &d, 8);
+}
+
+static VWORD BoolRead(VRuntime * runtime, VBlob * buffer, const char * proc, int64_t offset) {
+  const int stride = 1;
+  if(offset < 1 || offset + stride > (int64_t)buffer->len)
+    VErrorC(runtime, "~Z: index out of bounds ~D", proc, (int)(offset - 1));
+  uint8_t b = 0;
+  memcpy(&b, buffer->buf + offset, 1);
+  return VEncodeBool(b != 0);
+}
+static void BoolWrite(VRuntime * runtime, VBlob * buffer, const char * proc, int64_t offset, VWORD v) {
+  const int stride = 1;
+  if(offset < 1 || offset + stride > (int64_t)buffer->len)
+    VErrorC(runtime, "~Z: index out of bounds ~D", proc, (int)(offset - 1));
+  uint8_t b = VDecodeBool(v) ? 1 : 0;
+  memcpy(buffer->buf + offset, &b, 1);
+}
+static VWORD PointerRead(VRuntime * runtime, VBlob * buffer, const char * proc, int64_t offset) {
+  const int stride = sizeof(void*);
+  if(offset < 1 || offset + stride > (int64_t)buffer->len)
+    VErrorC(runtime, "~Z: index out of bounds ~D", proc, (int)(offset - 1));
+  void * p = NULL;
+  memcpy(&p, buffer->buf + offset, sizeof p);
+  return VEncodeForeignPointer(p);
+}
+static void PointerWrite(VRuntime * runtime, VBlob * buffer, const char * proc, int64_t offset, VWORD v) {
+  const int stride = sizeof(void*);
+  if(offset < 1 || offset + stride > (int64_t)buffer->len)
+    VErrorC(runtime, "~Z: index out of bounds ~D", proc, (int)(offset - 1));
+  void * p = VCheckedDecodeForeignPointer2(runtime, v, proc);
+  memcpy(buffer->buf + offset, &p, sizeof p);
 }
 
 #define IMPLEMENT_BUFFER(prefix, Prefix, elem_width) \
@@ -2486,7 +2528,7 @@ V_BEGIN_FUNC_RANGE(VMake ## Prefix ## Vector, "make-" #prefix "vector", 2, 3, k,
   if(VDecodeBool(fill)) { \
     unsigned offset = elem_width; \
     for(unsigned i = 0; i < len; i++) { \
-      Prefix ## Write(runtime, ret, offset, fill); \
+      Prefix ## Write(runtime, ret, "make-" #prefix "vector", offset, fill); \
       offset += elem_width; \
     } \
   } \
@@ -2511,7 +2553,7 @@ V_BEGIN_FUNC(VList ## Prefix ## Vector, "list->" #prefix "vector", 2, k, lst) \
   unsigned offset = elem_width; \
   while(VWordType(v) == VPOINTER_PAIR) { \
     VPair * p = VDecodePair(v); \
-    Prefix ## Write(runtime, vec, offset, p->first); \
+    Prefix ## Write(runtime, vec, "list->" #prefix "vector", offset, p->first); \
     offset += elem_width; \
     v = p->rest; \
   } \
@@ -2527,7 +2569,7 @@ V_BEGIN_FUNC_MIN(V ## Prefix ## Vector, #prefix "vector", 1, k) \
   vec->buf[0] = BUF_ ## Prefix; \
   unsigned offset = elem_width; \
   for(int i = 1; i < argc; i++) { \
-    Prefix ## Write(runtime, vec, offset, self->vars[i]); \
+    Prefix ## Write(runtime, vec, #prefix "vector", offset, self->vars[i]); \
     offset += elem_width; \
   } \
   V_BOUNCE(k, runtime, VEncodePointer(vec, VPOINTER_OTHER)); \
@@ -2543,7 +2585,7 @@ V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorRef, #prefix "vector-ref", 2, _buf, _i) 
   VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, #prefix "vector-ref"); \
   if(buf->buf[0] != BUF_ ## Prefix) \
     VErrorC(runtime, #prefix "vector-length: not a vector of the right type.", _buf); \
-  return Prefix ## Read(runtime, buf, elem_width*(i+1)); \
+  return Prefix ## Read(runtime, buf, #prefix "vector-ref", elem_width*(i+1)); \
 V_END_FUNC \
 V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorSet, #prefix "vector-set!", 3, _buf, _i, val) \
   int i = VCheckedDecodeInt2(runtime, _i, #prefix "vector-set!"); \
@@ -2551,7 +2593,7 @@ V_BEGIN_FUNC_BASIC(V ## Prefix ## VectorSet, #prefix "vector-set!", 3, _buf, _i,
   if(buf->base.flags & VFLAG_IMMUTABLE) VErrorC(runtime, #prefix "vector-set!: vector is immutable"); \
   if(buf->buf[0] != BUF_ ## Prefix) \
     VErrorC(runtime, #prefix "vector-set!: not a vector of the right type.", _buf); \
-  Prefix ## Write(runtime, buf, elem_width*(i+1), val); \
+  Prefix ## Write(runtime, buf, #prefix "vector-set!", elem_width*(i+1), val); \
   return VVOID; \
 V_END_FUNC \
 V_BEGIN_FUNC_RANGE(V ## Prefix ## VectorCopy, #prefix "vector-copy!", 4, 6, k, _dst, _at, _src, _start, _end) \
@@ -2588,6 +2630,89 @@ IMPLEMENT_BUFFER(s32, S32, 4)
 
 IMPLEMENT_BUFFER(f32, F32, 4)
 IMPLEMENT_BUFFER(f64, F64, 8)
+
+int elem_width_of(char typeid) {
+  switch(typeid) {
+    case BUF_S8:
+    case BUF_U8:
+      return 1;
+    case BUF_S16:
+    case BUF_U16:
+      return 2;
+    case BUF_S32:
+    case BUF_F32:
+      return 4;
+    case BUF_F64:
+      return 8;
+  }
+  return 0;
+}
+
+V_BEGIN_FUNC_RANGE(VRawVectorCopy, "raw-vector-copy!", 4, 6, k, _dst, _at, _src, _start, _end)
+  VBlob * dst = VCheckedDecodePointer2(runtime, _dst, VBUFFER, "raw-vector-copy!");
+  VBlob * src = VCheckedDecodePointer2(runtime, _src, VBUFFER, "raw-vector-copy!");
+  int dst_elem_width = elem_width_of(dst->buf[0]);
+  int src_elem_width = elem_width_of(src->buf[0]);
+  if(!dst_elem_width) VErrorC(runtime, "raw-vector-copy!: unknown vector type: ~S", _dst);
+  if(!src_elem_width) VErrorC(runtime, "raw-vector-copy!: unknown vector type: ~S", _src);
+
+  int at = VCheckedDecodeInt2(runtime, _at, "raw-vector-copy!");
+  int start;
+  if(argc > 4)
+    start = VCheckedDecodeInt2(runtime, _start, "raw-vector-copy!");
+  else
+    start = 0;
+  int end;
+  if(argc > 5)
+    end = VCheckedDecodeInt2(runtime, _end, "raw-vector-copy!");
+  else
+    end = (src->len - src_elem_width) / src_elem_width;
+  int nelems = end - start;
+  if(at < 0 || start < 0 || nelems < 0)
+    VErrorC(runtime, "raw-vector-copy!: invalid at, start, or end. at ~D, start ~D, end ~D", at, start, end);
+  int nbytes = nelems * src_elem_width;
+
+  int dst_off = (at + 1) * dst_elem_width;
+  int src_off = (start + 1) * src_elem_width;
+  if(dst->len < dst_off + nbytes || src->len < src_off + nbytes)
+    VErrorC(runtime, "raw-vector-copy!: copy out of bounds");
+  memmove(dst->buf + dst_off, src->buf + src_off, nbytes);
+  V_BOUNCE(k, runtime, VVOID);
+V_END_FUNC
+
+
+// The bounds check lives entirely in Suffix##Read / Suffix##Write; here we only
+// validate the buffer type and mutability. The byte offset i maps to buffer byte
+// i+1 (byte 0 is the tag), so a negative i lands on the tag or before and the
+// helper's `offset < 1` guard rejects it.
+#define IMPLEMENT_U8VECTOR_REINTERPRET(suffix, Suffix) \
+V_BEGIN_FUNC_BASIC(VU8VectorRef ## Suffix, "u8vector-ref-" #suffix, 2, _buf, _i) \
+  int i = VCheckedDecodeInt2(runtime, _i, "u8vector-ref-" #suffix); \
+  VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, "u8vector-ref-" #suffix); \
+  if(buf->buf[0] != BUF_U8) \
+    VErrorC(runtime, "u8vector-ref-" #suffix ": not a u8vector ~S", _buf); \
+  return Suffix ## Read(runtime, buf, "u8vector-ref-" #suffix, (int64_t)i + 1); \
+V_END_FUNC \
+V_BEGIN_FUNC_BASIC(VU8VectorSet ## Suffix, "u8vector-set-" #suffix "!", 3, _buf, _i, val) \
+  int i = VCheckedDecodeInt2(runtime, _i, "u8vector-set-" #suffix "!"); \
+  VBlob * buf = VCheckedDecodePointer2(runtime, _buf, VBUFFER, "u8vector-set-" #suffix "!"); \
+  if(buf->base.flags & VFLAG_IMMUTABLE) \
+    VErrorC(runtime, "u8vector-set-" #suffix "!: vector is immutable"); \
+  if(buf->buf[0] != BUF_U8) \
+    VErrorC(runtime, "u8vector-set-" #suffix "!: not a u8vector ~S", _buf); \
+  Suffix ## Write(runtime, buf, "u8vector-set-" #suffix "!", (int64_t)i + 1, val); \
+  return VVOID; \
+V_END_FUNC
+
+IMPLEMENT_U8VECTOR_REINTERPRET(boolean, Bool)
+IMPLEMENT_U8VECTOR_REINTERPRET(s8,  S8)
+IMPLEMENT_U8VECTOR_REINTERPRET(u8,  U8)
+IMPLEMENT_U8VECTOR_REINTERPRET(s16, S16)
+IMPLEMENT_U8VECTOR_REINTERPRET(u16, U16)
+IMPLEMENT_U8VECTOR_REINTERPRET(s32, S32)
+IMPLEMENT_U8VECTOR_REINTERPRET(f32, F32)
+IMPLEMENT_U8VECTOR_REINTERPRET(f64, F64)
+IMPLEMENT_U8VECTOR_REINTERPRET(pointer, Pointer)
 
 V_BEGIN_FUNC(VCompileTypevector, "compile-typevector", 2, k, _vec)
   VBlob * vec = VDecodeBlob(_vec);

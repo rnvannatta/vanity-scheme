@@ -63,7 +63,17 @@ extern int yydebug;
     T_STORAGE = 264,               /* T_STORAGE  */
     T_INTEGER = 265,               /* T_INTEGER  */
     T_TYPENAME = 266,              /* T_TYPENAME  */
-    T_VARIABLE = 267               /* T_VARIABLE  */
+    T_VARIABLE = 267,              /* T_VARIABLE  */
+    T_SHL = 268,                   /* T_SHL  */
+    T_SHR = 269,                   /* T_SHR  */
+    T_LEQ = 270,                   /* T_LEQ  */
+    T_GEQ = 271,                   /* T_GEQ  */
+    T_EQ = 272,                    /* T_EQ  */
+    T_NEQ = 273,                   /* T_NEQ  */
+    T_ANDAND = 274,                /* T_ANDAND  */
+    T_OROR = 275,                  /* T_OROR  */
+    T_ELLIPSIS = 276,              /* T_ELLIPSIS  */
+    T_UNARY = 277                  /* T_UNARY  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -72,13 +82,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 235 "src/ffi.y"
+#line 266 "src/ffi.y"
 
-  unsigned long long int_val;
+  long long int_val;
   int keyword_val;
   VWORD vword_val;
 
-#line 82 "ffi.tab.h"
+#line 92 "ffi.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

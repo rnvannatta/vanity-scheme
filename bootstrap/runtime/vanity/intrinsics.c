@@ -35,232 +35,216 @@ V_DECLARE_FUNC_MIN(VMultiImport, _var0, _var1, _var2);
 
 VEnv * _V60_V0vanity_V0intrinsics;
 
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D1350 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
-static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D1349 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "_V0vanity_V0intrinsics_V20" };
-static VPair _V10_Dpair_D1348 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1347 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1346 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1345 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1344 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VBitCount" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1343 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VArithmeticShift" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1342 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseOrC2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1341 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseOrC1" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1340 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VBitwiseAndC2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1339 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VBitwiseAndC1" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1338 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseNor" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1337 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseNand" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1336 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseXnor" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1335 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseAnd" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1334 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseXor" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1333 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseIor" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1332 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseNot" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1331 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VJiffiesPerSecond" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1330 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCurrentJiffy" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1329 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAccess" };
-static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D1328 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VMakeTemporaryFile2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1327 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRealpath" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1326 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAwait" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1325 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAsync" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1324 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VFiberForkList" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1323 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRandomAdvance" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D1322 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VRandomSampleFloat" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D1321 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VRandomSampleBounded" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1320 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VRandomSample" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1319 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRandomCopy" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1318 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VMakeRandom" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1317 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VRegisterSigint" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D1228 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "_V0vanity_V0core_V20" };
+static struct { VBlob sym; char bytes[27]; } _V10_Dstring_D1227 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 27 }, "_V0vanity_V0intrinsics_V20" };
+VWEAK VWORD _V0is__basic__intrinsic_Q;VWEAK struct { VBlob sym; char bytes[20]; } _VW_V0is__basic__intrinsic_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 20 }, "is-basic-intrinsic\?" };
+VWEAK VWORD _V0lookup__intrinsic;VWEAK struct { VBlob sym; char bytes[17]; } _VW_V0lookup__intrinsic = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 17 }, "lookup-intrinsic" };
+VWEAK VWORD _V0lookup__intrinsic__name;VWEAK struct { VBlob sym; char bytes[22]; } _VW_V0lookup__intrinsic__name = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 22 }, "lookup-intrinsic-name" };
+VWEAK VWORD _V0lookup__inline__name;VWEAK struct { VBlob sym; char bytes[19]; } _VW_V0lookup__inline__name = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 19 }, "lookup-inline-name" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1226 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VBitCount" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1225 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VArithmeticShift" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1224 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseOrC2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1223 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseOrC1" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1222 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VBitwiseAndC2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1221 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VBitwiseAndC1" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1220 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseNor" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1219 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseNand" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1218 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VBitwiseXnor" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1217 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseAnd" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1216 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseXor" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1215 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseIor" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1214 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VBitwiseNot" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1213 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VJiffiesPerSecond" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1212 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCurrentJiffy" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1211 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAccess" };
+static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D1210 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VMakeTemporaryFile2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1209 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRealpath" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1208 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAwait" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1207 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VAsync" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1206 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VFiberForkList" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1205 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRandomAdvance" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D1204 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VRandomSampleFloat" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D1203 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VRandomSampleBounded" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1202 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VRandomSample" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1201 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRandomCopy" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1200 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VMakeRandom" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1199 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VRegisterSigint" };
 VWEAK VWORD _V10vcore_Dregister__sigint;VWEAK struct { VBlob sym; char bytes[24]; } _VW_V10vcore_Dregister__sigint = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 24 }, "##vcore.register-sigint" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1316 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCommandLine2" };
-static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D1315 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VOpenOutputProcess2" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D1314 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenInputProcess2" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1313 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSystem2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1312 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VYieldToHostMajor" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1311 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VYieldToHost" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1310 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VGarbageCollect" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1309 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VFinalize" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1308 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHasFinalizer" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1307 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VSetFinalizer" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1306 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VNewlineStdout" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1305 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VWriteStdout" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1304 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VDisplayStdout" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1303 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VNewline2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1302 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VWrite2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1301 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDisplay2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1300 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRead2" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1299 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadLine3" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1298 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadLine2" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1297 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadChar2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1296 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VEofP2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1295 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VGetOutputString2" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D1294 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputString2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1293 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VTtyPortP" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1292 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCloseStream2" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D1291 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputStream2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1290 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VOpenInputStream2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1289 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStderrPort" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1288 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStdoutPort" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1287 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VStdinPort" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1286 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VIntChar" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1285 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VCharInt2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1284 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VGensym" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1283 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSymbolString2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1282 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringNumber2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1281 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringSymbol2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1280 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringLength2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1279 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringSet2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1278 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringRef2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1277 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VStringCopy2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1276 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSubstring2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1275 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeString2" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1274 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VHashTableDelete" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1273 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1272 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableRef" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1271 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VHashTableVector" };
-static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D1270 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VHashTableHashFunc" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1269 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VHashTableEqvFunc" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1268 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeHashTable" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1267 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRecordLength2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1266 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordSet2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1265 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordRef2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1264 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VCreateRecord2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1263 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VReadU8Vector" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1262 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VS8VectorLength" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1261 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorSet" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1260 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorRef" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1259 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListS8Vector" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1258 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeS8Vector" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1257 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS8VectorP" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1256 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VS8Vector" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1255 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VU8VectorLength" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1254 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorSet" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1253 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorRef" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1252 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListU8Vector" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1251 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeU8Vector" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1250 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VU8VectorP" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1249 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VU8Vector" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1248 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS16VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1247 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1246 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1245 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS16Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1244 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS16Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1243 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS16VectorP" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1242 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS16Vector" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1241 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VU16VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1240 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1239 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1238 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListU16Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1237 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeU16Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1236 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VU16VectorP" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1235 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VU16Vector" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1234 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS32VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1233 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1232 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1231 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS32Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1230 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS32Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1229 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS32VectorP" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1228 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS32Vector" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1227 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF32VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1226 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1225 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1224 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF32Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1223 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF32Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1222 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF32VectorP" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1221 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VF32Vector" };
-static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1220 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF64VectorLength" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1219 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorSet" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1218 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorRef" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1217 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF64Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1216 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF64Vector" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1215 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF64VectorP" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1214 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VF64Vector" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1213 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VVectorLength2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1212 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorSet2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1211 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorRef2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1210 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VListVector2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1209 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VMakeVector" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1208 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCreateVector" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1207 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAppend" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1206 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCdr2" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1205 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCar2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1204 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCdr2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1203 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCar2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1202 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCons2" };
-static VPair _V10_Dpair_D1201 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1200 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1199 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1198 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VUnloadLibrary2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1197 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VLoadLibrary2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1196 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeImport2" };
-static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1195 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VLookupLibrary2" };
-static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1194 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMultiDefine2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1193 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSetDeclare" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1198 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCommandLine2" };
+static struct { VBlob sym; char bytes[20]; } _V10_Dstring_D1197 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 20 }, "VOpenOutputProcess2" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D1196 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenInputProcess2" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1195 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSystem2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1194 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VYieldToHostMajor" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1193 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VYieldToHost" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1192 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VGarbageCollect" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1191 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VFinalize" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1190 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHasFinalizer" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1189 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VSetFinalizer" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1188 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VNewlineStdout" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1187 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VWriteStdout" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1186 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VDisplayStdout" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1185 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VNewline2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1184 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VWrite2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1183 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDisplay2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1182 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRead2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1181 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadLine3" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1180 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadLine2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1179 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VReadChar2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1178 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VEofP2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1177 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VGetOutputString2" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D1176 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputString2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1175 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VTtyPortP" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1174 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCloseStream2" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D1173 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VOpenOutputStream2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1172 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VOpenInputStream2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1171 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStderrPort" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1170 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStdoutPort" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1169 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VStdinPort" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1168 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VIntChar" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1167 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VCharInt2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1166 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VGensym" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1165 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSymbolString2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1164 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringNumber2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1163 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringSymbol2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1162 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VStringLength2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1161 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringSet2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1160 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VStringRef2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1159 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VStringCopy2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1158 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSubstring2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1157 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeString2" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1156 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VHashTableDelete" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1155 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1154 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VHashTableRef" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1153 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VHashTableVector" };
+static struct { VBlob sym; char bytes[19]; } _V10_Dstring_D1152 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 19 }, "VHashTableHashFunc" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1151 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VHashTableEqvFunc" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1150 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeHashTable" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1149 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VRecordLength2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1148 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordSet2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1147 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VRecordRef2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1146 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VCreateRecord2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1145 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VReadU8Vector" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1144 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VS8VectorLength" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1143 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorSet" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1142 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VS8VectorRef" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1141 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListS8Vector" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1140 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeS8Vector" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1139 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS8VectorP" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1138 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VS8Vector" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1137 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VU8VectorLength" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1136 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorSet" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1135 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VU8VectorRef" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1134 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VListU8Vector" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1133 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMakeU8Vector" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1132 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VU8VectorP" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1131 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VU8Vector" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1130 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS16VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1129 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1128 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS16VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1127 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS16Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1126 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS16Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1125 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS16VectorP" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1124 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS16Vector" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1123 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VU16VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1122 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1121 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VU16VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1120 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListU16Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1119 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeU16Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1118 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VU16VectorP" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1117 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VU16Vector" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1116 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VS32VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1115 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1114 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VS32VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1113 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListS32Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1112 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeS32Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1111 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VS32VectorP" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1110 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VS32Vector" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1109 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF32VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1108 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1107 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF32VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1106 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF32Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1105 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF32Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1104 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF32VectorP" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1103 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VF32Vector" };
+static struct { VBlob sym; char bytes[17]; } _V10_Dstring_D1102 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 17 }, "VF64VectorLength" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1101 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorSet" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1100 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VF64VectorRef" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1099 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VListF64Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1098 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VMakeF64Vector" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1097 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VF64VectorP" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1096 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VF64Vector" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1095 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VVectorLength2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1094 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorSet2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1093 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VVectorRef2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1092 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VListVector2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1091 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VMakeVector" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1090 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VCreateVector" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1089 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAppend" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1088 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCdr2" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1087 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VSetCar2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1086 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCdr2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1085 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCar2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1084 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCons2" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1083 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VUnloadLibrary2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1082 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VLoadLibrary2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1081 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VMakeImport2" };
+static struct { VBlob sym; char bytes[16]; } _V10_Dstring_D1080 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 16 }, "VLookupLibrary2" };
+static struct { VBlob sym; char bytes[14]; } _V10_Dstring_D1079 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 14 }, "VMultiDefine2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1078 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSetDeclare" };
 VWEAK VWORD _V10vcore_Dset__declare_B;VWEAK struct { VBlob sym; char bytes[21]; } _VW_V10vcore_Dset__declare_B = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 21 }, "##vcore.set-declare!" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1192 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VFunction3" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1077 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VFunction3" };
 VWEAK VWORD _V10vcore_Dfunction3;VWEAK struct { VBlob sym; char bytes[18]; } _VW_V10vcore_Dfunction3 = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 18 }, "##vcore.function3" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1191 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VFunction2" };
-static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1190 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSetGlobalVar2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1189 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VDefineGlobalVar2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1188 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VExit2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1187 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAbort2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1186 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VApplyCps" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1185 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VApply2" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1184 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VValues2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1183 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VCallValues2" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1182 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VCallCC2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1181 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VNext2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1180 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRaise" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D1179 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VPopExceptionHandler" };
-static struct { VBlob sym; char bytes[22]; } _V10_Dstring_D1178 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 22 }, "VPushExceptionHandler" };
-static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D1177 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VGetExceptionHandler" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1176 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VPopDynamic" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1175 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VPushDynamic" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1174 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VGetDynamics" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1173 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VNot2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1172 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VBlobEqv2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1171 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSymbolEqv2" };
-static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D1170 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "VEq2" };
-static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1169 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VForeignPointerP2" };
-static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1168 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VNullptrP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1167 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VVoidP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1166 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VCharP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1165 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDoubleP2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1164 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VIntP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1163 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VStringP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1162 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VSymbolP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1161 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VBlobP2" };
-static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1160 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VProcedureP2" };
-static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1159 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VHashTableP" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1158 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VVectorP2" };
-static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1157 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRecordP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1156 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VPairP2" };
-static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1155 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VNullP2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1154 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VRem2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1153 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VQuot2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1152 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpGt" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1151 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpGe" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1150 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpEq" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1149 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpLt" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1148 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpLe" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1147 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCmp2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1146 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VDiv2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1145 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VMul2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1144 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VSub2" };
-static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1143 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VAdd2" };
-static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1142 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VExact" };
-static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1141 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VInexact" };
-static VPair _V10_Dpair_D1140 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1139 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1138 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1137 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1136 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1135 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1134 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1133 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1132 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1131 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1130 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1129 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1128 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1076 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VFunction2" };
+static struct { VBlob sym; char bytes[15]; } _V10_Dstring_D1075 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 15 }, "VSetGlobalVar2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1074 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VDefineGlobalVar2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1073 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VExit2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1072 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VAbort2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1071 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VApplyCps" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1070 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VApply2" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1069 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VValues2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1068 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VCallValues2" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1067 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VCallCC2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1066 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VNext2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1065 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VRaise" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D1064 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VPopExceptionHandler" };
+static struct { VBlob sym; char bytes[22]; } _V10_Dstring_D1063 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 22 }, "VPushExceptionHandler" };
+static struct { VBlob sym; char bytes[21]; } _V10_Dstring_D1062 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 21 }, "VGetExceptionHandler" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1061 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VPopDynamic" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1060 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VPushDynamic" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1059 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VGetDynamics" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1058 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VNot2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1057 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VBlobEqv2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1056 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VSymbolEqv2" };
+static struct { VBlob sym; char bytes[5]; } _V10_Dstring_D1055 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 5 }, "VEq2" };
+static struct { VBlob sym; char bytes[18]; } _V10_Dstring_D1054 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 18 }, "VForeignPointerP2" };
+static struct { VBlob sym; char bytes[11]; } _V10_Dstring_D1053 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 11 }, "VNullptrP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1052 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VVoidP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1051 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VCharP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1050 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VDoubleP2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1049 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VIntP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1048 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VStringP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1047 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VSymbolP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1046 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VBlobP2" };
+static struct { VBlob sym; char bytes[13]; } _V10_Dstring_D1045 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 13 }, "VProcedureP2" };
+static struct { VBlob sym; char bytes[12]; } _V10_Dstring_D1044 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 12 }, "VHashTableP" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1043 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VVectorP2" };
+static struct { VBlob sym; char bytes[10]; } _V10_Dstring_D1042 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 10 }, "VRecordP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1041 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VPairP2" };
+static struct { VBlob sym; char bytes[8]; } _V10_Dstring_D1040 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 8 }, "VNullP2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1039 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VRem2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1038 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VQuot2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1037 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpGt" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1036 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpGe" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1035 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpEq" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1034 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpLt" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1033 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VCmpLe" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1032 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VCmp2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1031 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VDiv2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1030 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VMul2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1029 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VSub2" };
+static struct { VBlob sym; char bytes[6]; } _V10_Dstring_D1028 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 6 }, "VAdd2" };
+static struct { VBlob sym; char bytes[7]; } _V10_Dstring_D1027 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 7 }, "VExact" };
+static struct { VBlob sym; char bytes[9]; } _V10_Dstring_D1026 = { { .base = { .tag = VSTRING, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, 9 }, "VInexact" };
 VWEAK VWORD _V40_V10vcore_Dbit__count;
 VWEAK VClosure _VW_V40_V10vcore_Dbit__count = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VBitCount, NULL };
 VWEAK VWORD _V10vcore_Dbit__count;VWEAK struct { VBlob sym; char bytes[18]; } _VW_V10vcore_Dbit__count = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 18 }, "##vcore.bit-count" };
@@ -674,78 +658,7 @@ VWEAK VClosure _VW_V40_V10vcore_Dcar = { .base = { .tag = VCLOSURE, .flags = VFL
 VWEAK VWORD _V10vcore_Dcar;VWEAK struct { VBlob sym; char bytes[12]; } _VW_V10vcore_Dcar = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 12 }, "##vcore.car" };
 VWEAK VWORD _V40_V10vcore_Dcons;
 VWEAK VClosure _VW_V40_V10vcore_Dcons = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VCons2, NULL };
-static VPair _V10_Dpair_D1127 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1126 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1125 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 VWEAK VWORD _V10vcore_Dqcons;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V10vcore_Dqcons = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 14 }, "##vcore.qcons" };
-static VPair _V10_Dpair_D1124 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1123 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1122 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1121 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1120 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1119 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1118 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1117 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1116 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1115 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1114 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1113 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1112 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1111 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1110 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1109 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1108 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1107 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1106 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1105 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1104 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1103 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1102 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1101 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1100 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1099 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1098 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1097 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1096 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1095 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1094 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1093 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1092 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1091 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1090 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1089 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1088 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1087 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1086 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1085 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1084 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1083 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1082 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1081 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1080 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1079 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1078 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1077 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1076 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1075 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1074 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1073 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1072 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1071 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1070 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1069 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1068 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1067 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1066 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1065 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1064 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1063 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1062 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1061 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1060 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1059 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1058 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0_Mp;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mp = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%p" };
 VWEAK VWORD _V10vcore_Dcons;VWEAK struct { VBlob sym; char bytes[13]; } _VW_V10vcore_Dcons = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 13 }, "##vcore.cons" };
 VWEAK VWORD _V40_V10vcore_Dunload__library;
 VWEAK VClosure _VW_V40_V10vcore_Dunload__library = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VUnloadLibrary2, NULL };
@@ -931,56 +844,13 @@ VWEAK VWORD _V10vcore_Dexact;VWEAK struct { VBlob sym; char bytes[14]; } _VW_V10
 VWEAK VWORD _V40_V10vcore_Dinexact;
 VWEAK VClosure _VW_V40_V10vcore_Dinexact = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VInexact, NULL };
 VWEAK VWORD _V10vcore_Dinexact;VWEAK struct { VBlob sym; char bytes[16]; } _VW_V10vcore_Dinexact = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 16 }, "##vcore.inexact" };
-static VPair _V10_Dpair_D1057 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1056 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1055 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1054 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1053 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1052 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1051 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1050 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0lookup__inline__name;VWEAK struct { VBlob sym; char bytes[19]; } _VW_V0lookup__inline__name = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 19 }, "lookup-inline-name" };
-VWEAK VWORD _V0lookup__intrinsic__name;VWEAK struct { VBlob sym; char bytes[22]; } _VW_V0lookup__intrinsic__name = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 22 }, "lookup-intrinsic-name" };
-VWEAK VWORD _V0is__basic__intrinsic_Q;VWEAK struct { VBlob sym; char bytes[20]; } _VW_V0is__basic__intrinsic_Q = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 20 }, "is-basic-intrinsic\?" };
-static VPair _V10_Dpair_D1049 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1048 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1047 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1046 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0sym;VWEAK struct { VBlob sym; char bytes[4]; } _VW_V0sym = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 4 }, "sym" };
-static VPair _V10_Dpair_D1045 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1044 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1043 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0lookup__intrinsic;VWEAK struct { VBlob sym; char bytes[17]; } _VW_V0lookup__intrinsic = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 17 }, "lookup-intrinsic" };
-VWEAK VWORD _V0intrinsics;VWEAK struct { VBlob sym; char bytes[11]; } _VW_V0intrinsics = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 11 }, "intrinsics" };
-VWEAK VWORD _V0vanity;VWEAK struct { VBlob sym; char bytes[7]; } _VW_V0vanity = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 7 }, "vanity" };
-static VPair _V10_Dpair_D1042 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1041 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1040 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1039 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
 VWEAK VWORD _V40VMultiImport;
 VWEAK VClosure _VW_V40VMultiImport = { .base = { .tag = VCLOSURE, .flags = VFLAG_STATIC }, (VFunc)VMultiImport, NULL };
-static VPair _V10_Dpair_D1038 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1037 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1036 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1035 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1034 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1033 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1032 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1031 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0_Mx;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mx = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%x" };
-static VPair _V10_Dpair_D1030 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1029 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1028 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1027 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-static VPair _V10_Dpair_D1026 = { .base = { .tag = VPAIR, .flags = VFLAG_STATIC | VFLAG_IMMUTABLE }, };
-VWEAK VWORD _V0_Mk;VWEAK struct { VBlob sym; char bytes[3]; } _VW_V0_Mk = { { .base = { .tag = VSYMBOL, .flags = VFLAG_STATIC }, 3 }, "%k" };
 V_DECLARE_FUNC(_V50_V0vanity_V0intrinsics_V0lookup__inline__name, _var0, _var1);
 V_DECLARE_FUNC(_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name, _var0, _var1);
 V_DECLARE_FUNC(_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q, _var0, _var1);
 V_DECLARE_FUNC(_V50_V0vanity_V0intrinsics_V0lookup__intrinsic, _var0, _var1);
 void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k3(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k3" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k3, got ~D~N"
   "-- expected 1~N"
@@ -1010,8 +880,6 @@ statics->vars[0])) {
 }
 }
 void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k4(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k4" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k4, got ~D~N"
   "-- expected 1~N"
@@ -3147,8 +3015,6 @@ self->vars[0])) {
 }
 }
 void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
- static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic" };
- VRecordCall2(runtime, &dbg);
  if(argc != 2) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic, got ~D~N"
   "-- expected 2~N"
@@ -4103,8 +3969,6 @@ self->vars[0])) {
     }
 }
 void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k5(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k5" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k5, got ~D~N"
   "-- expected 1~N"
@@ -4134,8 +3998,6 @@ statics->vars[0])) {
 }
 }
 void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k6(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k6" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k6, got ~D~N"
   "-- expected 1~N"
@@ -4846,8 +4708,6 @@ self->vars[0])) {
 }
 }
 void _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
- static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q" };
- VRecordCall2(runtime, &dbg);
  if(argc != 2) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q, got ~D~N"
   "-- expected 2~N"
@@ -5382,8 +5242,6 @@ self->vars[0])) {
     }
 }
 void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k7(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k7" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k7, got ~D~N"
   "-- expected 1~N"
@@ -5413,8 +5271,6 @@ statics->vars[0])) {
 }
 }
 void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k8(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k8" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k8, got ~D~N"
   "-- expected 1~N"
@@ -5424,11 +5280,11 @@ void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k8(VRuntime * runtim
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (if (bruijn ##.%p.370 0 0) ((bruijn ##.%k.309 62 0) (##string ##.string.1202)) (basic-block 1 1 (##.%p.874) ((##vcore.eq? (bruijn ##.sym.13 63 1) '##vcore.car)) (if (bruijn ##.%p.874 0 0) ((bruijn ##.%k.309 63 0) (##string ##.string.1203)) (basic-block 1 1 (##.%p.875) ((##vcore.eq? (bruijn ##.sym.13 64 1) '##vcore.cdr)) (if (bruijn ##.%p.875 0 0) ((bruijn ##.%k.309 64 0) (##string ##.string.1204)) (basic-block 1 1 (##.%p.876) ((##vcore.eq? (bruijn ##.sym.13 65 1) '##vcore.set-car!)) (if (bruijn ##.%p.876 0 0) ((bruijn ##.%k.309 65 0) (##string ##.string.1205)) (basic-block 1 1 (##.%p.877) ((##vcore.eq? (bruijn ##.sym.13 66 1) '##vcore.set-cdr!)) (if (bruijn ##.%p.877 0 0) ((bruijn ##.%k.309 66 0) (##string ##.string.1206)) (basic-block 1 1 (##.%p.878) ((##vcore.eq? (bruijn ##.sym.13 67 1) '##vcore.append)) (if (bruijn ##.%p.878 0 0) ((bruijn ##.%k.309 67 0) (##string ##.string.1207)) (basic-block 1 1 (##.%p.879) ((##vcore.eq? (bruijn ##.sym.13 68 1) '##vcore.vector)) (if (bruijn ##.%p.879 0 0) ((bruijn ##.%k.309 68 0) (##string ##.string.1208)) (basic-block 1 1 (##.%p.880) ((##vcore.eq? (bruijn ##.sym.13 69 1) '##vcore.make-vector)) (if (bruijn ##.%p.880 0 0) ((bruijn ##.%k.309 69 0) (##string ##.string.1209)) (basic-block 1 1 (##.%p.881) ((##vcore.eq? (bruijn ##.sym.13 70 1) '##vcore.list->vector)) (if (bruijn ##.%p.881 0 0) ((bruijn ##.%k.309 70 0) (##string ##.string.1210)) (basic-block 1 1 (##.%p.882) ((##vcore.eq? (bruijn ##.sym.13 71 1) '##vcore.list->vector)) (if (bruijn ##.%p.882 0 0) ((bruijn ##.%k.309 71 0) (##string ##.string.1210)) (basic-block 1 1 (##.%p.883) ((##vcore.eq? (bruijn ##.sym.13 72 1) '##vcore.vector-ref)) (if (bruijn ##.%p.883 0 0) ((bruijn ##.%k.309 72 0) (##string ##.string.1211)) (basic-block 1 1 (##.%p.884) ((##vcore.eq? (bruijn ##.sym.13 73 1) '##vcore.vector-set!)) (if (bruijn ##.%p.884 0 0) ((bruijn ##.%k.309 73 0) (##string ##.string.1212)) (basic-block 1 1 (##.%p.885) ((##vcore.eq? (bruijn ##.sym.13 74 1) '##vcore.vector-length)) (if (bruijn ##.%p.885 0 0) ((bruijn ##.%k.309 74 0) (##string ##.string.1213)) (basic-block 1 1 (##.%p.886) ((##vcore.eq? (bruijn ##.sym.13 75 1) '##vcore.f64vector)) (if (bruijn ##.%p.886 0 0) ((bruijn ##.%k.309 75 0) (##string ##.string.1214)) (basic-block 1 1 (##.%p.887) ((##vcore.eq? (bruijn ##.sym.13 76 1) '##vcore.f64vector?)) (if (bruijn ##.%p.887 0 0) ((bruijn ##.%k.309 76 0) (##string ##.string.1215)) (basic-block 1 1 (##.%p.888) ((##vcore.eq? (bruijn ##.sym.13 77 1) '##vcore.make-f64vector)) (if (bruijn ##.%p.888 0 0) ((bruijn ##.%k.309 77 0) (##string ##.string.1216)) (basic-block 1 1 (##.%p.889) ((##vcore.eq? (bruijn ##.sym.13 78 1) '##vcore.list->f64vector)) (if (bruijn ##.%p.889 0 0) ((bruijn ##.%k.309 78 0) (##string ##.string.1217)) (basic-block 1 1 (##.%p.890) ((##vcore.eq? (bruijn ##.sym.13 79 1) '##vcore.f64vector-ref)) (if (bruijn ##.%p.890 0 0) ((bruijn ##.%k.309 79 0) (##string ##.string.1218)) (basic-block 1 1 (##.%p.891) ((##vcore.eq? (bruijn ##.sym.13 80 1) '##vcore.f64vector-set!)) (if (bruijn ##.%p.891 0 0) ((bruijn ##.%k.309 80 0) (##string ##.string.1219)) (basic-block 1 1 (##.%p.892) ((##vcore.eq? (bruijn ##.sym.13 81 1) '##vcore.f64vector-length)) (if (bruijn ##.%p.892 0 0) ((bruijn ##.%k.309 81 0) (##string ##.string.1220)) (basic-block 1 1 (##.%p.893) ((##vcore.eq? (bruijn ##.sym.13 82 1) '##vcore.f32vector)) (if (bruijn ##.%p.893 0 0) ((bruijn ##.%k.309 82 0) (##string ##.string.1221)) (basic-block 1 1 (##.%p.894) ((##vcore.eq? (bruijn ##.sym.13 83 1) '##vcore.f32vector?)) (if (bruijn ##.%p.894 0 0) ((bruijn ##.%k.309 83 0) (##string ##.string.1222)) (basic-block 1 1 (##.%p.895) ((##vcore.eq? (bruijn ##.sym.13 84 1) '##vcore.make-f32vector)) (if (bruijn ##.%p.895 0 0) ((bruijn ##.%k.309 84 0) (##string ##.string.1223)) (basic-block 1 1 (##.%p.896) ((##vcore.eq? (bruijn ##.sym.13 85 1) '##vcore.list->f32vector)) (if (bruijn ##.%p.896 0 0) ((bruijn ##.%k.309 85 0) (##string ##.string.1224)) (basic-block 1 1 (##.%p.897) ((##vcore.eq? (bruijn ##.sym.13 86 1) '##vcore.f32vector-ref)) (if (bruijn ##.%p.897 0 0) ((bruijn ##.%k.309 86 0) (##string ##.string.1225)) (basic-block 1 1 (##.%p.898) ((##vcore.eq? (bruijn ##.sym.13 87 1) '##vcore.f32vector-set!)) (if (bruijn ##.%p.898 0 0) ((bruijn ##.%k.309 87 0) (##string ##.string.1226)) (basic-block 1 1 (##.%p.899) ((##vcore.eq? (bruijn ##.sym.13 88 1) '##vcore.f32vector-length)) (if (bruijn ##.%p.899 0 0) ((bruijn ##.%k.309 88 0) (##string ##.string.1227)) (basic-block 1 1 (##.%p.900) ((##vcore.eq? (bruijn ##.sym.13 89 1) '##vcore.s32vector)) (if (bruijn ##.%p.900 0 0) ((bruijn ##.%k.309 89 0) (##string ##.string.1228)) (basic-block 1 1 (##.%p.901) ((##vcore.eq? (bruijn ##.sym.13 90 1) '##vcore.s32vector?)) (if (bruijn ##.%p.901 0 0) ((bruijn ##.%k.309 90 0) (##string ##.string.1229)) (basic-block 1 1 (##.%p.902) ((##vcore.eq? (bruijn ##.sym.13 91 1) '##vcore.make-s32vector)) (if (bruijn ##.%p.902 0 0) ((bruijn ##.%k.309 91 0) (##string ##.string.1230)) (basic-block 1 1 (##.%p.903) ((##vcore.eq? (bruijn ##.sym.13 92 1) '##vcore.list->s32vector)) (if (bruijn ##.%p.903 0 0) ((bruijn ##.%k.309 92 0) (##string ##.string.1231)) (basic-block 1 1 (##.%p.904) ((##vcore.eq? (bruijn ##.sym.13 93 1) '##vcore.s32vector-ref)) (if (bruijn ##.%p.904 0 0) ((bruijn ##.%k.309 93 0) (##string ##.string.1232)) (basic-block 1 1 (##.%p.905) ((##vcore.eq? (bruijn ##.sym.13 94 1) '##vcore.s32vector-set!)) (if (bruijn ##.%p.905 0 0) ((bruijn ##.%k.309 94 0) (##string ##.string.1233)) (basic-block 1 1 (##.%p.906) ((##vcore.eq? (bruijn ##.sym.13 95 1) '##vcore.s32vector-length)) (if (bruijn ##.%p.906 0 0) ((bruijn ##.%k.309 95 0) (##string ##.string.1234)) (basic-block 1 1 (##.%p.907) ((##vcore.eq? (bruijn ##.sym.13 96 1) '##vcore.u16vector)) (if (bruijn ##.%p.907 0 0) ((bruijn ##.%k.309 96 0) (##string ##.string.1235)) (basic-block 1 1 (##.%p.908) ((##vcore.eq? (bruijn ##.sym.13 97 1) '##vcore.u16vector?)) (if (bruijn ##.%p.908 0 0) ((bruijn ##.%k.309 97 0) (##string ##.string.1236)) (basic-block 1 1 (##.%p.909) ((##vcore.eq? (bruijn ##.sym.13 98 1) '##vcore.make-u16vector)) (if (bruijn ##.%p.909 0 0) ((bruijn ##.%k.309 98 0) (##string ##.string.1237)) (basic-block 1 1 (##.%p.910) ((##vcore.eq? (bruijn ##.sym.13 99 1) '##vcore.list->u16vector)) (if (bruijn ##.%p.910 0 0) ((bruijn ##.%k.309 99 0) (##string ##.string.1238)) (basic-block 1 1 (##.%p.911) ((##vcore.eq? (bruijn ##.sym.13 100 1) '##vcore.u16vector-ref)) (if (bruijn ##.%p.911 0 0) ((bruijn ##.%k.309 100 0) (##string ##.string.1239)) (basic-block 1 1 (##.%p.912) ((##vcore.eq? (bruijn ##.sym.13 101 1) '##vcore.u16vector-set!)) (if (bruijn ##.%p.912 0 0) ((bruijn ##.%k.309 101 0) (##string ##.string.1240)) (basic-block 1 1 (##.%p.913) ((##vcore.eq? (bruijn ##.sym.13 102 1) '##vcore.u16vector-length)) (if (bruijn ##.%p.913 0 0) ((bruijn ##.%k.309 102 0) (##string ##.string.1241)) (basic-block 1 1 (##.%p.914) ((##vcore.eq? (bruijn ##.sym.13 103 1) '##vcore.s16vector)) (if (bruijn ##.%p.914 0 0) ((bruijn ##.%k.309 103 0) (##string ##.string.1242)) (basic-block 1 1 (##.%p.915) ((##vcore.eq? (bruijn ##.sym.13 104 1) '##vcore.s16vector?)) (if (bruijn ##.%p.915 0 0) ((bruijn ##.%k.309 104 0) (##string ##.string.1243)) (basic-block 1 1 (##.%p.916) ((##vcore.eq? (bruijn ##.sym.13 105 1) '##vcore.make-s16vector)) (if (bruijn ##.%p.916 0 0) ((bruijn ##.%k.309 105 0) (##string ##.string.1244)) (basic-block 1 1 (##.%p.917) ((##vcore.eq? (bruijn ##.sym.13 106 1) '##vcore.list->s16vector)) (if (bruijn ##.%p.917 0 0) ((bruijn ##.%k.309 106 0) (##string ##.string.1245)) (basic-block 1 1 (##.%p.918) ((##vcore.eq? (bruijn ##.sym.13 107 1) '##vcore.s16vector-ref)) (if (bruijn ##.%p.918 0 0) ((bruijn ##.%k.309 107 0) (##string ##.string.1246)) (basic-block 1 1 (##.%p.919) ((##vcore.eq? (bruijn ##.sym.13 108 1) '##vcore.s16vector-set!)) (if (bruijn ##.%p.919 0 0) ((bruijn ##.%k.309 108 0) (##string ##.string.1247)) (basic-block 1 1 (##.%p.920) ((##vcore.eq? (bruijn ##.sym.13 109 1) '##vcore.s16vector-length)) (if (bruijn ##.%p.920 0 0) ((bruijn ##.%k.309 109 0) (##string ##.string.1248)) (basic-block 1 1 (##.%p.921) ((##vcore.eq? (bruijn ##.sym.13 110 1) '##vcore.u8vector)) (if (bruijn ##.%p.921 0 0) ((bruijn ##.%k.309 110 0) (##string ##.string.1249)) (basic-block 1 1 (##.%p.922) ((##vcore.eq? (bruijn ##.sym.13 111 1) '##vcore.u8vector?)) (if (bruijn ##.%p.922 0 0) ((bruijn ##.%k.309 111 0) (##string ##.string.1250)) (basic-block 1 1 (##.%p.923) ((##vcore.eq? (bruijn ##.sym.13 112 1) '##vcore.make-u8vector)) (if (bruijn ##.%p.923 0 0) ((bruijn ##.%k.309 112 0) (##string ##.string.1251)) (basic-block 1 1 (##.%p.924) ((##vcore.eq? (bruijn ##.sym.13 113 1) '##vcore.list->u8vector)) (if (bruijn ##.%p.924 0 0) ((bruijn ##.%k.309 113 0) (##string ##.string.1252)) (basic-block 1 1 (##.%p.925) ((##vcore.eq? (bruijn ##.sym.13 114 1) '##vcore.u8vector-ref)) (if (bruijn ##.%p.925 0 0) ((bruijn ##.%k.309 114 0) (##string ##.string.1253)) (basic-block 1 1 (##.%p.926) ((##vcore.eq? (bruijn ##.sym.13 115 1) '##vcore.u8vector-set!)) (if (bruijn ##.%p.926 0 0) ((bruijn ##.%k.309 115 0) (##string ##.string.1254)) (basic-block 1 1 (##.%p.927) ((##vcore.eq? (bruijn ##.sym.13 116 1) '##vcore.u8vector-length)) (if (bruijn ##.%p.927 0 0) ((bruijn ##.%k.309 116 0) (##string ##.string.1255)) (basic-block 1 1 (##.%p.928) ((##vcore.eq? (bruijn ##.sym.13 117 1) '##vcore.s8vector)) (if (bruijn ##.%p.928 0 0) ((bruijn ##.%k.309 117 0) (##string ##.string.1256)) (basic-block 1 1 (##.%p.929) ((##vcore.eq? (bruijn ##.sym.13 118 1) '##vcore.s8vector?)) (if (bruijn ##.%p.929 0 0) ((bruijn ##.%k.309 118 0) (##string ##.string.1257)) (basic-block 1 1 (##.%p.930) ((##vcore.eq? (bruijn ##.sym.13 119 1) '##vcore.make-s8vector)) (if (bruijn ##.%p.930 0 0) ((bruijn ##.%k.309 119 0) (##string ##.string.1258)) (basic-block 1 1 (##.%p.931) ((##vcore.eq? (bruijn ##.sym.13 120 1) '##vcore.list->s8vector)) (if (bruijn ##.%p.931 0 0) ((bruijn ##.%k.309 120 0) (##string ##.string.1259)) (basic-block 1 1 (##.%p.932) ((##vcore.eq? (bruijn ##.sym.13 121 1) '##vcore.s8vector-ref)) (if (bruijn ##.%p.932 0 0) ((bruijn ##.%k.309 121 0) (##string ##.string.1260)) (basic-block 1 1 (##.%p.933) ((##vcore.eq? (bruijn ##.sym.13 122 1) '##vcore.s8vector-set!)) (if (bruijn ##.%p.933 0 0) ((bruijn ##.%k.309 122 0) (##string ##.string.1261)) (basic-block 1 1 (##.%p.934) ((##vcore.eq? (bruijn ##.sym.13 123 1) '##vcore.s8vector-length)) (if (bruijn ##.%p.934 0 0) ((bruijn ##.%k.309 123 0) (##string ##.string.1262)) (basic-block 1 1 (##.%p.935) ((##vcore.eq? (bruijn ##.sym.13 124 1) '##vcore.read-u8vector)) (if (bruijn ##.%p.935 0 0) ((bruijn ##.%k.309 124 0) (##string ##.string.1263)) (basic-block 1 1 (##.%p.936) ((##vcore.eq? (bruijn ##.sym.13 125 1) '##vcore.record)) (if (bruijn ##.%p.936 0 0) ((bruijn ##.%k.309 125 0) (##string ##.string.1264)) (basic-block 1 1 (##.%p.937) ((##vcore.eq? (bruijn ##.sym.13 126 1) '##vcore.record-ref)) (if (bruijn ##.%p.937 0 0) ((bruijn ##.%k.309 126 0) (##string ##.string.1265)) (basic-block 1 1 (##.%p.938) ((##vcore.eq? (bruijn ##.sym.13 127 1) '##vcore.record-set!)) (if (bruijn ##.%p.938 0 0) ((bruijn ##.%k.309 127 0) (##string ##.string.1266)) (basic-block 1 1 (##.%p.939) ((##vcore.eq? (bruijn ##.sym.13 128 1) '##vcore.record-length)) (if (bruijn ##.%p.939 0 0) ((bruijn ##.%k.309 128 0) (##string ##.string.1267)) (basic-block 1 1 (##.%p.940) ((##vcore.eq? (bruijn ##.sym.13 129 1) '##vcore.make-hash-table)) (if (bruijn ##.%p.940 0 0) ((bruijn ##.%k.309 129 0) (##string ##.string.1268)) (basic-block 1 1 (##.%p.941) ((##vcore.eq? (bruijn ##.sym.13 130 1) '##vcore.hash-table-equivalence-function)) (if (bruijn ##.%p.941 0 0) ((bruijn ##.%k.309 130 0) (##string ##.string.1269)) (basic-block 1 1 (##.%p.942) ((##vcore.eq? (bruijn ##.sym.13 131 1) '##vcore.hash-table-hash-function)) (if (bruijn ##.%p.942 0 0) ((bruijn ##.%k.309 131 0) (##string ##.string.1270)) (basic-block 1 1 (##.%p.943) ((##vcore.eq? (bruijn ##.sym.13 132 1) '##vcore.hash-table-vector)) (if (bruijn ##.%p.943 0 0) ((bruijn ##.%k.309 132 0) (##string ##.string.1271)) (basic-block 1 1 (##.%p.944) ((##vcore.eq? (bruijn ##.sym.13 133 1) '##vcore.hash-table-ref)) (if (bruijn ##.%p.944 0 0) ((bruijn ##.%k.309 133 0) (##string ##.string.1272)) (basic-block 1 1 (##.%p.945) ((##vcore.eq? (bruijn ##.sym.13 134 1) '##vcore.hash-table-set!)) (if (bruijn ##.%p.945 0 0) ((bruijn ##.%k.309 134 0) (##string ##.string.1273)) (basic-block 1 1 (##.%p.946) ((##vcore.eq? (bruijn ##.sym.13 135 1) '##vcore.hash-table-delete!)) (if (bruijn ##.%p.946 0 0) ((bruijn ##.%k.309 135 0) (##string ##.string.1274)) (basic-block 1 1 (##.%p.947) ((##vcore.eq? (bruijn ##.sym.13 136 1) '##vcore.make-string)) (if (bruijn ##.%p.947 0 0) ((bruijn ##.%k.309 136 0) (##string ##.string.1275)) (basic-block 1 1 (##.%p.948) ((##vcore.eq? (bruijn ##.sym.13 137 1) '##vcore.substring)) (if (bruijn ##.%p.948 0 0) ((bruijn ##.%k.309 137 0) (##string ##.string.1276)) (basic-block 1 1 (##.%p.949) ((##vcore.eq? (bruijn ##.sym.13 138 1) '##vcore.string-copy!)) (if (bruijn ##.%p.949 0 0) ((bruijn ##.%k.309 138 0) (##string ##.string.1277)) (basic-block 1 1 (##.%p.950) ((##vcore.eq? (bruijn ##.sym.13 139 1) '##vcore.string-ref)) (if (bruijn ##.%p.950 0 0) ((bruijn ##.%k.309 139 0) (##string ##.string.1278)) (basic-block 1 1 (##.%p.951) ((##vcore.eq? (bruijn ##.sym.13 140 1) '##vcore.string-set!)) (if (bruijn ##.%p.951 0 0) ((bruijn ##.%k.309 140 0) (##string ##.string.1279)) (basic-block 1 1 (##.%p.952) ((##vcore.eq? (bruijn ##.sym.13 141 1) '##vcore.string-length)) (if (bruijn ##.%p.952 0 0) ((bruijn ##.%k.309 141 0) (##string ##.string.1280)) (basic-block 1 1 (##.%p.953) ((##vcore.eq? (bruijn ##.sym.13 142 1) '##vcore.string->symbol)) (if (bruijn ##.%p.953 0 0) ((bruijn ##.%k.309 142 0) (##string ##.string.1281)) (basic-block 1 1 (##.%p.954) ((##vcore.eq? (bruijn ##.sym.13 143 1) '##vcore.string->number)) (if (bruijn ##.%p.954 0 0) ((bruijn ##.%k.309 143 0) (##string ##.string.1282)) (basic-block 1 1 (##.%p.955) ((##vcore.eq? (bruijn ##.sym.13 144 1) '##vcore.symbol->string)) (if (bruijn ##.%p.955 0 0) ((bruijn ##.%k.309 144 0) (##string ##.string.1283)) (basic-block 1 1 (##.%p.956) ((##vcore.eq? (bruijn ##.sym.13 145 1) '##vcore.gensym)) (if (bruijn ##.%p.956 0 0) ((bruijn ##.%k.309 145 0) (##string ##.string.1284)) (basic-block 1 1 (##.%p.957) ((##vcore.eq? (bruijn ##.sym.13 146 1) '##vcore.char-integer)) (if (bruijn ##.%p.957 0 0) ((bruijn ##.%k.309 146 0) (##string ##.string.1285)) (basic-block 1 1 (##.%p.958) ((##vcore.eq? (bruijn ##.sym.13 147 1) '##vcore.integer->char)) (if (bruijn ##.%p.958 0 0) ((bruijn ##.%k.309 147 0) (##string ##.string.1286)) (basic-block 1 1 (##.%p.959) ((##vcore.eq? (bruijn ##.sym.13 148 1) '##vcore.stdin->port)) (if (bruijn ##.%p.959 0 0) ((bruijn ##.%k.309 148 0) (##string ##.string.1287)) (basic-block 1 1 (##.%p.960) ((##vcore.eq? (bruijn ##.sym.13 149 1) '##vcore.stdout->port)) (if (bruijn ##.%p.960 0 0) ((bruijn ##.%k.309 149 0) (##string ##.string.1288)) (basic-block 1 1 (##.%p.961) ((##vcore.eq? (bruijn ##.sym.13 150 1) '##vcore.stderr->port)) (if (bruijn ##.%p.961 0 0) ((bruijn ##.%k.309 150 0) (##string ##.string.1289)) (basic-block 1 1 (##.%p.962) ((##vcore.eq? (bruijn ##.sym.13 151 1) '##vcore.open-input-stream)) (if (bruijn ##.%p.962 0 0) ((bruijn ##.%k.309 151 0) (##string ##.string.1290)) (basic-block 1 1 (##.%p.963) ((##vcore.eq? (bruijn ##.sym.13 152 1) '##vcore.open-output-stream)) (if (bruijn ##.%p.963 0 0) ((bruijn ##.%k.309 152 0) (##string ##.string.1291)) (basic-block 1 1 (##.%p.964) ((##vcore.eq? (bruijn ##.sym.13 153 1) '##vcore.close-stream)) (if (bruijn ##.%p.964 0 0) ((bruijn ##.%k.309 153 0) (##string ##.string.1292)) (basic-block 1 1 (##.%p.965) ((##vcore.eq? (bruijn ##.sym.13 154 1) '##vcore.tty-port?)) (if (bruijn ##.%p.965 0 0) ((bruijn ##.%k.309 154 0) (##string ##.string.1293)) (basic-block 1 1 (##.%p.966) ((##vcore.eq? (bruijn ##.sym.13 155 1) '##vcore.open-output-string)) (if (bruijn ##.%p.966 0 0) ((bruijn ##.%k.309 155 0) (##string ##.string.1294)) (basic-block 1 1 (##.%p.967) ((##vcore.eq? (bruijn ##.sym.13 156 1) '##vcore.get-output-string)) (if (bruijn ##.%p.967 0 0) ((bruijn ##.%k.309 156 0) (##string ##.string.1295)) (basic-block 1 1 (##.%p.968) ((##vcore.eq? (bruijn ##.sym.13 157 1) '##vcore.eof-object?)) (if (bruijn ##.%p.968 0 0) ((bruijn ##.%k.309 157 0) (##string ##.string.1296)) (basic-block 1 1 (##.%p.969) ((##vcore.eq? (bruijn ##.sym.13 158 1) '##vcore.read-char)) (if (bruijn ##.%p.969 0 0) ((bruijn ##.%k.309 158 0) (##string ##.string.1297)) (basic-block 1 1 (##.%p.970) ((##vcore.eq? (bruijn ##.sym.13 159 1) '##vcore.read-line)) (if (bruijn ##.%p.970 0 0) ((bruijn ##.%k.309 159 0) (##string ##.string.1298)) (basic-block 1 1 (##.%p.971) ((##vcore.eq? (bruijn ##.sym.13 160 1) '##vcore.read-line2)) (if (bruijn ##.%p.971 0 0) ((bruijn ##.%k.309 160 0) (##string ##.string.1299)) (basic-block 1 1 (##.%p.972) ((##vcore.eq? (bruijn ##.sym.13 161 1) '##vcore.read)) (if (bruijn ##.%p.972 0 0) ((bruijn ##.%k.309 161 0) (##string ##.string.1300)) (basic-block 1 1 (##.%p.973) ((##vcore.eq? (bruijn ##.sym.13 162 1) '##vcore.display-word)) (if (bruijn ##.%p.973 0 0) ((bruijn ##.%k.309 162 0) (##string ##.string.1301)) (basic-block 1 1 (##.%p.974) ((##vcore.eq? (bruijn ##.sym.13 163 1) '##vcore.write)) (if (bruijn ##.%p.974 0 0) ((bruijn ##.%k.309 163 0) (##string ##.string.1302)) (basic-block 1 1 (##.%p.975) ((##vcore.eq? (bruijn ##.sym.13 164 1) '##vcore.newline)) (if (bruijn ##.%p.975 0 0) ((bruijn ##.%k.309 164 0) (##string ##.string.1303)) (basic-block 1 1 (##.%p.976) ((##vcore.eq? (bruijn ##.sym.13 165 1) '##vcore.display-stdout)) (if (bruijn ##.%p.976 0 0) ((bruijn ##.%k.309 165 0) (##string ##.string.1304)) (basic-block 1 1 (##.%p.977) ((##vcore.eq? (bruijn ##.sym.13 166 1) '##vcore.write-stdout)) (if (bruijn ##.%p.977 0 0) ((bruijn ##.%k.309 166 0) (##string ##.string.1305)) (basic-block 1 1 (##.%p.978) ((##vcore.eq? (bruijn ##.sym.13 167 1) '##vcore.newline-stdout)) (if (bruijn ##.%p.978 0 0) ((bruijn ##.%k.309 167 0) (##string ##.string.1306)) (basic-block 1 1 (##.%p.979) ((##vcore.eq? (bruijn ##.sym.13 168 1) '##vcore.set-finalizer!)) (if (bruijn ##.%p.979 0 0) ((bruijn ##.%k.309 168 0) (##string ##.string.1307)) (basic-block 1 1 (##.%p.980) ((##vcore.eq? (bruijn ##.sym.13 169 1) '##vcore.has-finalizer?)) (if (bruijn ##.%p.980 0 0) ((bruijn ##.%k.309 169 0) (##string ##.string.1308)) (basic-block 1 1 (##.%p.981) ((##vcore.eq? (bruijn ##.sym.13 170 1) '##vcore.finalize!)) (if (bruijn ##.%p.981 0 0) ((bruijn ##.%k.309 170 0) (##string ##.string.1309)) (basic-block 1 1 (##.%p.982) ((##vcore.eq? (bruijn ##.sym.13 171 1) '##vcore.garbage-collect)) (if (bruijn ##.%p.982 0 0) ((bruijn ##.%k.309 171 0) (##string ##.string.1310)) (basic-block 1 1 (##.%p.983) ((##vcore.eq? (bruijn ##.sym.13 172 1) '##vcore.yield-to-host)) (if (bruijn ##.%p.983 0 0) ((bruijn ##.%k.309 172 0) (##string ##.string.1311)) (basic-block 1 1 (##.%p.984) ((##vcore.eq? (bruijn ##.sym.13 173 1) '##vcore.yield-to-host-major)) (if (bruijn ##.%p.984 0 0) ((bruijn ##.%k.309 173 0) (##string ##.string.1312)) (basic-block 1 1 (##.%p.985) ((##vcore.eq? (bruijn ##.sym.13 174 1) '##vcore.system)) (if (bruijn ##.%p.985 0 0) ((bruijn ##.%k.309 174 0) (##string ##.string.1313)) (basic-block 1 1 (##.%p.986) ((##vcore.eq? (bruijn ##.sym.13 175 1) '##vcore.open-input-process)) (if (bruijn ##.%p.986 0 0) ((bruijn ##.%k.309 175 0) (##string ##.string.1314)) (basic-block 1 1 (##.%p.987) ((##vcore.eq? (bruijn ##.sym.13 176 1) '##vcore.open-output-process)) (if (bruijn ##.%p.987 0 0) ((bruijn ##.%k.309 176 0) (##string ##.string.1315)) (basic-block 1 1 (##.%p.988) ((##vcore.eq? (bruijn ##.sym.13 177 1) '##vcore.command-line)) (if (bruijn ##.%p.988 0 0) ((bruijn ##.%k.309 177 0) (##string ##.string.1316)) (basic-block 1 1 (##.%p.989) ((##vcore.eq? (bruijn ##.sym.13 178 1) '##vcore.register-sigint)) (if (bruijn ##.%p.989 0 0) ((bruijn ##.%k.309 178 0) (##string ##.string.1317)) (basic-block 1 1 (##.%p.990) ((##vcore.eq? (bruijn ##.sym.13 179 1) '##vcore.make-random)) (if (bruijn ##.%p.990 0 0) ((bruijn ##.%k.309 179 0) (##string ##.string.1318)) (basic-block 1 1 (##.%p.991) ((##vcore.eq? (bruijn ##.sym.13 180 1) '##vcore.random-copy)) (if (bruijn ##.%p.991 0 0) ((bruijn ##.%k.309 180 0) (##string ##.string.1319)) (basic-block 1 1 (##.%p.992) ((##vcore.eq? (bruijn ##.sym.13 181 1) '##vcore.random-sample!)) (if (bruijn ##.%p.992 0 0) ((bruijn ##.%k.309 181 0) (##string ##.string.1320)) (basic-block 1 1 (##.%p.993) ((##vcore.eq? (bruijn ##.sym.13 182 1) '##vcore.random-sample-bounded!)) (if (bruijn ##.%p.993 0 0) ((bruijn ##.%k.309 182 0) (##string ##.string.1321)) (basic-block 1 1 (##.%p.994) ((##vcore.eq? (bruijn ##.sym.13 183 1) '##vcore.random-sample-float!)) (if (bruijn ##.%p.994 0 0) ((bruijn ##.%k.309 183 0) (##string ##.string.1322)) (basic-block 1 1 (##.%p.995) ((##vcore.eq? (bruijn ##.sym.13 184 1) '##vcore.random-advance!)) (if (bruijn ##.%p.995 0 0) ((bruijn ##.%k.309 184 0) (##string ##.string.1323)) (basic-block 1 1 (##.%p.996) ((##vcore.eq? (bruijn ##.sym.13 185 1) '##vcore.fiber-fork-list)) (if (bruijn ##.%p.996 0 0) ((bruijn ##.%k.309 185 0) (##string ##.string.1324)) (basic-block 1 1 (##.%p.997) ((##vcore.eq? (bruijn ##.sym.13 186 1) '##vcore.async)) (if (bruijn ##.%p.997 0 0) ((bruijn ##.%k.309 186 0) (##string ##.string.1325)) (basic-block 1 1 (##.%p.998) ((##vcore.eq? (bruijn ##.sym.13 187 1) '##vcore.await)) (if (bruijn ##.%p.998 0 0) ((bruijn ##.%k.309 187 0) (##string ##.string.1326)) (basic-block 1 1 (##.%p.999) ((##vcore.eq? (bruijn ##.sym.13 188 1) '##vcore.realpath)) (if (bruijn ##.%p.999 0 0) ((bruijn ##.%k.309 188 0) (##string ##.string.1327)) (basic-block 1 1 (##.%p.1000) ((##vcore.eq? (bruijn ##.sym.13 189 1) '##vcore.make-temporary-file)) (if (bruijn ##.%p.1000 0 0) ((bruijn ##.%k.309 189 0) (##string ##.string.1328)) (basic-block 1 1 (##.%p.1001) ((##vcore.eq? (bruijn ##.sym.13 190 1) '##vcore.access)) (if (bruijn ##.%p.1001 0 0) ((bruijn ##.%k.309 190 0) (##string ##.string.1329)) (basic-block 1 1 (##.%p.1002) ((##vcore.eq? (bruijn ##.sym.13 191 1) '##vcore.current-jiffy)) (if (bruijn ##.%p.1002 0 0) ((bruijn ##.%k.309 191 0) (##string ##.string.1330)) (basic-block 1 1 (##.%p.1003) ((##vcore.eq? (bruijn ##.sym.13 192 1) '##vcore.jiffies-per-second)) (if (bruijn ##.%p.1003 0 0) ((bruijn ##.%k.309 192 0) (##string ##.string.1331)) (basic-block 1 1 (##.%p.1004) ((##vcore.eq? (bruijn ##.sym.13 193 1) '##vcore.bitwise-not)) (if (bruijn ##.%p.1004 0 0) ((bruijn ##.%k.309 193 0) (##string ##.string.1332)) (basic-block 1 1 (##.%p.1005) ((##vcore.eq? (bruijn ##.sym.13 194 1) '##vcore.bitwise-ior)) (if (bruijn ##.%p.1005 0 0) ((bruijn ##.%k.309 194 0) (##string ##.string.1333)) (basic-block 1 1 (##.%p.1006) ((##vcore.eq? (bruijn ##.sym.13 195 1) '##vcore.bitwise-xor)) (if (bruijn ##.%p.1006 0 0) ((bruijn ##.%k.309 195 0) (##string ##.string.1334)) (basic-block 1 1 (##.%p.1007) ((##vcore.eq? (bruijn ##.sym.13 196 1) '##vcore.bitwise-and)) (if (bruijn ##.%p.1007 0 0) ((bruijn ##.%k.309 196 0) (##string ##.string.1335)) (basic-block 1 1 (##.%p.1008) ((##vcore.eq? (bruijn ##.sym.13 197 1) '##vcore.bitwise-xnor)) (if (bruijn ##.%p.1008 0 0) ((bruijn ##.%k.309 197 0) (##string ##.string.1336)) (basic-block 1 1 (##.%p.1009) ((##vcore.eq? (bruijn ##.sym.13 198 1) '##vcore.bitwise-nand)) (if (bruijn ##.%p.1009 0 0) ((bruijn ##.%k.309 198 0) (##string ##.string.1337)) (basic-block 1 1 (##.%p.1010) ((##vcore.eq? (bruijn ##.sym.13 199 1) '##vcore.bitwise-nor)) (if (bruijn ##.%p.1010 0 0) ((bruijn ##.%k.309 199 0) (##string ##.string.1338)) (basic-block 1 1 (##.%p.1011) ((##vcore.eq? (bruijn ##.sym.13 200 1) '##vcore.bitwise-andc1)) (if (bruijn ##.%p.1011 0 0) ((bruijn ##.%k.309 200 0) (##string ##.string.1339)) (basic-block 1 1 (##.%p.1012) ((##vcore.eq? (bruijn ##.sym.13 201 1) '##vcore.bitwise-andc2)) (if (bruijn ##.%p.1012 0 0) ((bruijn ##.%k.309 201 0) (##string ##.string.1340)) (basic-block 1 1 (##.%p.1013) ((##vcore.eq? (bruijn ##.sym.13 202 1) '##vcore.bitwise-orc1)) (if (bruijn ##.%p.1013 0 0) ((bruijn ##.%k.309 202 0) (##string ##.string.1341)) (basic-block 1 1 (##.%p.1014) ((##vcore.eq? (bruijn ##.sym.13 203 1) '##vcore.bitwise-orc2)) (if (bruijn ##.%p.1014 0 0) ((bruijn ##.%k.309 203 0) (##string ##.string.1342)) (basic-block 1 1 (##.%p.1015) ((##vcore.eq? (bruijn ##.sym.13 204 1) '##vcore.arithmetic-shift)) (if (bruijn ##.%p.1015 0 0) ((bruijn ##.%k.309 204 0) (##string ##.string.1343)) (basic-block 1 1 (##.%p.1016) ((##vcore.eq? (bruijn ##.sym.13 205 1) '##vcore.bit-count)) (if (bruijn ##.%p.1016 0 0) ((bruijn ##.%k.309 205 0) (##string ##.string.1344)) ((bruijn ##.%k.309 205 0) #f))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+  // (if (bruijn ##.%p.370 0 0) ((bruijn ##.%k.309 62 0) (##string ##.string.1084)) (basic-block 1 1 (##.%p.874) ((##vcore.eq? (bruijn ##.sym.13 63 1) '##vcore.car)) (if (bruijn ##.%p.874 0 0) ((bruijn ##.%k.309 63 0) (##string ##.string.1085)) (basic-block 1 1 (##.%p.875) ((##vcore.eq? (bruijn ##.sym.13 64 1) '##vcore.cdr)) (if (bruijn ##.%p.875 0 0) ((bruijn ##.%k.309 64 0) (##string ##.string.1086)) (basic-block 1 1 (##.%p.876) ((##vcore.eq? (bruijn ##.sym.13 65 1) '##vcore.set-car!)) (if (bruijn ##.%p.876 0 0) ((bruijn ##.%k.309 65 0) (##string ##.string.1087)) (basic-block 1 1 (##.%p.877) ((##vcore.eq? (bruijn ##.sym.13 66 1) '##vcore.set-cdr!)) (if (bruijn ##.%p.877 0 0) ((bruijn ##.%k.309 66 0) (##string ##.string.1088)) (basic-block 1 1 (##.%p.878) ((##vcore.eq? (bruijn ##.sym.13 67 1) '##vcore.append)) (if (bruijn ##.%p.878 0 0) ((bruijn ##.%k.309 67 0) (##string ##.string.1089)) (basic-block 1 1 (##.%p.879) ((##vcore.eq? (bruijn ##.sym.13 68 1) '##vcore.vector)) (if (bruijn ##.%p.879 0 0) ((bruijn ##.%k.309 68 0) (##string ##.string.1090)) (basic-block 1 1 (##.%p.880) ((##vcore.eq? (bruijn ##.sym.13 69 1) '##vcore.make-vector)) (if (bruijn ##.%p.880 0 0) ((bruijn ##.%k.309 69 0) (##string ##.string.1091)) (basic-block 1 1 (##.%p.881) ((##vcore.eq? (bruijn ##.sym.13 70 1) '##vcore.list->vector)) (if (bruijn ##.%p.881 0 0) ((bruijn ##.%k.309 70 0) (##string ##.string.1092)) (basic-block 1 1 (##.%p.882) ((##vcore.eq? (bruijn ##.sym.13 71 1) '##vcore.list->vector)) (if (bruijn ##.%p.882 0 0) ((bruijn ##.%k.309 71 0) (##string ##.string.1092)) (basic-block 1 1 (##.%p.883) ((##vcore.eq? (bruijn ##.sym.13 72 1) '##vcore.vector-ref)) (if (bruijn ##.%p.883 0 0) ((bruijn ##.%k.309 72 0) (##string ##.string.1093)) (basic-block 1 1 (##.%p.884) ((##vcore.eq? (bruijn ##.sym.13 73 1) '##vcore.vector-set!)) (if (bruijn ##.%p.884 0 0) ((bruijn ##.%k.309 73 0) (##string ##.string.1094)) (basic-block 1 1 (##.%p.885) ((##vcore.eq? (bruijn ##.sym.13 74 1) '##vcore.vector-length)) (if (bruijn ##.%p.885 0 0) ((bruijn ##.%k.309 74 0) (##string ##.string.1095)) (basic-block 1 1 (##.%p.886) ((##vcore.eq? (bruijn ##.sym.13 75 1) '##vcore.f64vector)) (if (bruijn ##.%p.886 0 0) ((bruijn ##.%k.309 75 0) (##string ##.string.1096)) (basic-block 1 1 (##.%p.887) ((##vcore.eq? (bruijn ##.sym.13 76 1) '##vcore.f64vector?)) (if (bruijn ##.%p.887 0 0) ((bruijn ##.%k.309 76 0) (##string ##.string.1097)) (basic-block 1 1 (##.%p.888) ((##vcore.eq? (bruijn ##.sym.13 77 1) '##vcore.make-f64vector)) (if (bruijn ##.%p.888 0 0) ((bruijn ##.%k.309 77 0) (##string ##.string.1098)) (basic-block 1 1 (##.%p.889) ((##vcore.eq? (bruijn ##.sym.13 78 1) '##vcore.list->f64vector)) (if (bruijn ##.%p.889 0 0) ((bruijn ##.%k.309 78 0) (##string ##.string.1099)) (basic-block 1 1 (##.%p.890) ((##vcore.eq? (bruijn ##.sym.13 79 1) '##vcore.f64vector-ref)) (if (bruijn ##.%p.890 0 0) ((bruijn ##.%k.309 79 0) (##string ##.string.1100)) (basic-block 1 1 (##.%p.891) ((##vcore.eq? (bruijn ##.sym.13 80 1) '##vcore.f64vector-set!)) (if (bruijn ##.%p.891 0 0) ((bruijn ##.%k.309 80 0) (##string ##.string.1101)) (basic-block 1 1 (##.%p.892) ((##vcore.eq? (bruijn ##.sym.13 81 1) '##vcore.f64vector-length)) (if (bruijn ##.%p.892 0 0) ((bruijn ##.%k.309 81 0) (##string ##.string.1102)) (basic-block 1 1 (##.%p.893) ((##vcore.eq? (bruijn ##.sym.13 82 1) '##vcore.f32vector)) (if (bruijn ##.%p.893 0 0) ((bruijn ##.%k.309 82 0) (##string ##.string.1103)) (basic-block 1 1 (##.%p.894) ((##vcore.eq? (bruijn ##.sym.13 83 1) '##vcore.f32vector?)) (if (bruijn ##.%p.894 0 0) ((bruijn ##.%k.309 83 0) (##string ##.string.1104)) (basic-block 1 1 (##.%p.895) ((##vcore.eq? (bruijn ##.sym.13 84 1) '##vcore.make-f32vector)) (if (bruijn ##.%p.895 0 0) ((bruijn ##.%k.309 84 0) (##string ##.string.1105)) (basic-block 1 1 (##.%p.896) ((##vcore.eq? (bruijn ##.sym.13 85 1) '##vcore.list->f32vector)) (if (bruijn ##.%p.896 0 0) ((bruijn ##.%k.309 85 0) (##string ##.string.1106)) (basic-block 1 1 (##.%p.897) ((##vcore.eq? (bruijn ##.sym.13 86 1) '##vcore.f32vector-ref)) (if (bruijn ##.%p.897 0 0) ((bruijn ##.%k.309 86 0) (##string ##.string.1107)) (basic-block 1 1 (##.%p.898) ((##vcore.eq? (bruijn ##.sym.13 87 1) '##vcore.f32vector-set!)) (if (bruijn ##.%p.898 0 0) ((bruijn ##.%k.309 87 0) (##string ##.string.1108)) (basic-block 1 1 (##.%p.899) ((##vcore.eq? (bruijn ##.sym.13 88 1) '##vcore.f32vector-length)) (if (bruijn ##.%p.899 0 0) ((bruijn ##.%k.309 88 0) (##string ##.string.1109)) (basic-block 1 1 (##.%p.900) ((##vcore.eq? (bruijn ##.sym.13 89 1) '##vcore.s32vector)) (if (bruijn ##.%p.900 0 0) ((bruijn ##.%k.309 89 0) (##string ##.string.1110)) (basic-block 1 1 (##.%p.901) ((##vcore.eq? (bruijn ##.sym.13 90 1) '##vcore.s32vector?)) (if (bruijn ##.%p.901 0 0) ((bruijn ##.%k.309 90 0) (##string ##.string.1111)) (basic-block 1 1 (##.%p.902) ((##vcore.eq? (bruijn ##.sym.13 91 1) '##vcore.make-s32vector)) (if (bruijn ##.%p.902 0 0) ((bruijn ##.%k.309 91 0) (##string ##.string.1112)) (basic-block 1 1 (##.%p.903) ((##vcore.eq? (bruijn ##.sym.13 92 1) '##vcore.list->s32vector)) (if (bruijn ##.%p.903 0 0) ((bruijn ##.%k.309 92 0) (##string ##.string.1113)) (basic-block 1 1 (##.%p.904) ((##vcore.eq? (bruijn ##.sym.13 93 1) '##vcore.s32vector-ref)) (if (bruijn ##.%p.904 0 0) ((bruijn ##.%k.309 93 0) (##string ##.string.1114)) (basic-block 1 1 (##.%p.905) ((##vcore.eq? (bruijn ##.sym.13 94 1) '##vcore.s32vector-set!)) (if (bruijn ##.%p.905 0 0) ((bruijn ##.%k.309 94 0) (##string ##.string.1115)) (basic-block 1 1 (##.%p.906) ((##vcore.eq? (bruijn ##.sym.13 95 1) '##vcore.s32vector-length)) (if (bruijn ##.%p.906 0 0) ((bruijn ##.%k.309 95 0) (##string ##.string.1116)) (basic-block 1 1 (##.%p.907) ((##vcore.eq? (bruijn ##.sym.13 96 1) '##vcore.u16vector)) (if (bruijn ##.%p.907 0 0) ((bruijn ##.%k.309 96 0) (##string ##.string.1117)) (basic-block 1 1 (##.%p.908) ((##vcore.eq? (bruijn ##.sym.13 97 1) '##vcore.u16vector?)) (if (bruijn ##.%p.908 0 0) ((bruijn ##.%k.309 97 0) (##string ##.string.1118)) (basic-block 1 1 (##.%p.909) ((##vcore.eq? (bruijn ##.sym.13 98 1) '##vcore.make-u16vector)) (if (bruijn ##.%p.909 0 0) ((bruijn ##.%k.309 98 0) (##string ##.string.1119)) (basic-block 1 1 (##.%p.910) ((##vcore.eq? (bruijn ##.sym.13 99 1) '##vcore.list->u16vector)) (if (bruijn ##.%p.910 0 0) ((bruijn ##.%k.309 99 0) (##string ##.string.1120)) (basic-block 1 1 (##.%p.911) ((##vcore.eq? (bruijn ##.sym.13 100 1) '##vcore.u16vector-ref)) (if (bruijn ##.%p.911 0 0) ((bruijn ##.%k.309 100 0) (##string ##.string.1121)) (basic-block 1 1 (##.%p.912) ((##vcore.eq? (bruijn ##.sym.13 101 1) '##vcore.u16vector-set!)) (if (bruijn ##.%p.912 0 0) ((bruijn ##.%k.309 101 0) (##string ##.string.1122)) (basic-block 1 1 (##.%p.913) ((##vcore.eq? (bruijn ##.sym.13 102 1) '##vcore.u16vector-length)) (if (bruijn ##.%p.913 0 0) ((bruijn ##.%k.309 102 0) (##string ##.string.1123)) (basic-block 1 1 (##.%p.914) ((##vcore.eq? (bruijn ##.sym.13 103 1) '##vcore.s16vector)) (if (bruijn ##.%p.914 0 0) ((bruijn ##.%k.309 103 0) (##string ##.string.1124)) (basic-block 1 1 (##.%p.915) ((##vcore.eq? (bruijn ##.sym.13 104 1) '##vcore.s16vector?)) (if (bruijn ##.%p.915 0 0) ((bruijn ##.%k.309 104 0) (##string ##.string.1125)) (basic-block 1 1 (##.%p.916) ((##vcore.eq? (bruijn ##.sym.13 105 1) '##vcore.make-s16vector)) (if (bruijn ##.%p.916 0 0) ((bruijn ##.%k.309 105 0) (##string ##.string.1126)) (basic-block 1 1 (##.%p.917) ((##vcore.eq? (bruijn ##.sym.13 106 1) '##vcore.list->s16vector)) (if (bruijn ##.%p.917 0 0) ((bruijn ##.%k.309 106 0) (##string ##.string.1127)) (basic-block 1 1 (##.%p.918) ((##vcore.eq? (bruijn ##.sym.13 107 1) '##vcore.s16vector-ref)) (if (bruijn ##.%p.918 0 0) ((bruijn ##.%k.309 107 0) (##string ##.string.1128)) (basic-block 1 1 (##.%p.919) ((##vcore.eq? (bruijn ##.sym.13 108 1) '##vcore.s16vector-set!)) (if (bruijn ##.%p.919 0 0) ((bruijn ##.%k.309 108 0) (##string ##.string.1129)) (basic-block 1 1 (##.%p.920) ((##vcore.eq? (bruijn ##.sym.13 109 1) '##vcore.s16vector-length)) (if (bruijn ##.%p.920 0 0) ((bruijn ##.%k.309 109 0) (##string ##.string.1130)) (basic-block 1 1 (##.%p.921) ((##vcore.eq? (bruijn ##.sym.13 110 1) '##vcore.u8vector)) (if (bruijn ##.%p.921 0 0) ((bruijn ##.%k.309 110 0) (##string ##.string.1131)) (basic-block 1 1 (##.%p.922) ((##vcore.eq? (bruijn ##.sym.13 111 1) '##vcore.u8vector?)) (if (bruijn ##.%p.922 0 0) ((bruijn ##.%k.309 111 0) (##string ##.string.1132)) (basic-block 1 1 (##.%p.923) ((##vcore.eq? (bruijn ##.sym.13 112 1) '##vcore.make-u8vector)) (if (bruijn ##.%p.923 0 0) ((bruijn ##.%k.309 112 0) (##string ##.string.1133)) (basic-block 1 1 (##.%p.924) ((##vcore.eq? (bruijn ##.sym.13 113 1) '##vcore.list->u8vector)) (if (bruijn ##.%p.924 0 0) ((bruijn ##.%k.309 113 0) (##string ##.string.1134)) (basic-block 1 1 (##.%p.925) ((##vcore.eq? (bruijn ##.sym.13 114 1) '##vcore.u8vector-ref)) (if (bruijn ##.%p.925 0 0) ((bruijn ##.%k.309 114 0) (##string ##.string.1135)) (basic-block 1 1 (##.%p.926) ((##vcore.eq? (bruijn ##.sym.13 115 1) '##vcore.u8vector-set!)) (if (bruijn ##.%p.926 0 0) ((bruijn ##.%k.309 115 0) (##string ##.string.1136)) (basic-block 1 1 (##.%p.927) ((##vcore.eq? (bruijn ##.sym.13 116 1) '##vcore.u8vector-length)) (if (bruijn ##.%p.927 0 0) ((bruijn ##.%k.309 116 0) (##string ##.string.1137)) (basic-block 1 1 (##.%p.928) ((##vcore.eq? (bruijn ##.sym.13 117 1) '##vcore.s8vector)) (if (bruijn ##.%p.928 0 0) ((bruijn ##.%k.309 117 0) (##string ##.string.1138)) (basic-block 1 1 (##.%p.929) ((##vcore.eq? (bruijn ##.sym.13 118 1) '##vcore.s8vector?)) (if (bruijn ##.%p.929 0 0) ((bruijn ##.%k.309 118 0) (##string ##.string.1139)) (basic-block 1 1 (##.%p.930) ((##vcore.eq? (bruijn ##.sym.13 119 1) '##vcore.make-s8vector)) (if (bruijn ##.%p.930 0 0) ((bruijn ##.%k.309 119 0) (##string ##.string.1140)) (basic-block 1 1 (##.%p.931) ((##vcore.eq? (bruijn ##.sym.13 120 1) '##vcore.list->s8vector)) (if (bruijn ##.%p.931 0 0) ((bruijn ##.%k.309 120 0) (##string ##.string.1141)) (basic-block 1 1 (##.%p.932) ((##vcore.eq? (bruijn ##.sym.13 121 1) '##vcore.s8vector-ref)) (if (bruijn ##.%p.932 0 0) ((bruijn ##.%k.309 121 0) (##string ##.string.1142)) (basic-block 1 1 (##.%p.933) ((##vcore.eq? (bruijn ##.sym.13 122 1) '##vcore.s8vector-set!)) (if (bruijn ##.%p.933 0 0) ((bruijn ##.%k.309 122 0) (##string ##.string.1143)) (basic-block 1 1 (##.%p.934) ((##vcore.eq? (bruijn ##.sym.13 123 1) '##vcore.s8vector-length)) (if (bruijn ##.%p.934 0 0) ((bruijn ##.%k.309 123 0) (##string ##.string.1144)) (basic-block 1 1 (##.%p.935) ((##vcore.eq? (bruijn ##.sym.13 124 1) '##vcore.read-u8vector)) (if (bruijn ##.%p.935 0 0) ((bruijn ##.%k.309 124 0) (##string ##.string.1145)) (basic-block 1 1 (##.%p.936) ((##vcore.eq? (bruijn ##.sym.13 125 1) '##vcore.record)) (if (bruijn ##.%p.936 0 0) ((bruijn ##.%k.309 125 0) (##string ##.string.1146)) (basic-block 1 1 (##.%p.937) ((##vcore.eq? (bruijn ##.sym.13 126 1) '##vcore.record-ref)) (if (bruijn ##.%p.937 0 0) ((bruijn ##.%k.309 126 0) (##string ##.string.1147)) (basic-block 1 1 (##.%p.938) ((##vcore.eq? (bruijn ##.sym.13 127 1) '##vcore.record-set!)) (if (bruijn ##.%p.938 0 0) ((bruijn ##.%k.309 127 0) (##string ##.string.1148)) (basic-block 1 1 (##.%p.939) ((##vcore.eq? (bruijn ##.sym.13 128 1) '##vcore.record-length)) (if (bruijn ##.%p.939 0 0) ((bruijn ##.%k.309 128 0) (##string ##.string.1149)) (basic-block 1 1 (##.%p.940) ((##vcore.eq? (bruijn ##.sym.13 129 1) '##vcore.make-hash-table)) (if (bruijn ##.%p.940 0 0) ((bruijn ##.%k.309 129 0) (##string ##.string.1150)) (basic-block 1 1 (##.%p.941) ((##vcore.eq? (bruijn ##.sym.13 130 1) '##vcore.hash-table-equivalence-function)) (if (bruijn ##.%p.941 0 0) ((bruijn ##.%k.309 130 0) (##string ##.string.1151)) (basic-block 1 1 (##.%p.942) ((##vcore.eq? (bruijn ##.sym.13 131 1) '##vcore.hash-table-hash-function)) (if (bruijn ##.%p.942 0 0) ((bruijn ##.%k.309 131 0) (##string ##.string.1152)) (basic-block 1 1 (##.%p.943) ((##vcore.eq? (bruijn ##.sym.13 132 1) '##vcore.hash-table-vector)) (if (bruijn ##.%p.943 0 0) ((bruijn ##.%k.309 132 0) (##string ##.string.1153)) (basic-block 1 1 (##.%p.944) ((##vcore.eq? (bruijn ##.sym.13 133 1) '##vcore.hash-table-ref)) (if (bruijn ##.%p.944 0 0) ((bruijn ##.%k.309 133 0) (##string ##.string.1154)) (basic-block 1 1 (##.%p.945) ((##vcore.eq? (bruijn ##.sym.13 134 1) '##vcore.hash-table-set!)) (if (bruijn ##.%p.945 0 0) ((bruijn ##.%k.309 134 0) (##string ##.string.1155)) (basic-block 1 1 (##.%p.946) ((##vcore.eq? (bruijn ##.sym.13 135 1) '##vcore.hash-table-delete!)) (if (bruijn ##.%p.946 0 0) ((bruijn ##.%k.309 135 0) (##string ##.string.1156)) (basic-block 1 1 (##.%p.947) ((##vcore.eq? (bruijn ##.sym.13 136 1) '##vcore.make-string)) (if (bruijn ##.%p.947 0 0) ((bruijn ##.%k.309 136 0) (##string ##.string.1157)) (basic-block 1 1 (##.%p.948) ((##vcore.eq? (bruijn ##.sym.13 137 1) '##vcore.substring)) (if (bruijn ##.%p.948 0 0) ((bruijn ##.%k.309 137 0) (##string ##.string.1158)) (basic-block 1 1 (##.%p.949) ((##vcore.eq? (bruijn ##.sym.13 138 1) '##vcore.string-copy!)) (if (bruijn ##.%p.949 0 0) ((bruijn ##.%k.309 138 0) (##string ##.string.1159)) (basic-block 1 1 (##.%p.950) ((##vcore.eq? (bruijn ##.sym.13 139 1) '##vcore.string-ref)) (if (bruijn ##.%p.950 0 0) ((bruijn ##.%k.309 139 0) (##string ##.string.1160)) (basic-block 1 1 (##.%p.951) ((##vcore.eq? (bruijn ##.sym.13 140 1) '##vcore.string-set!)) (if (bruijn ##.%p.951 0 0) ((bruijn ##.%k.309 140 0) (##string ##.string.1161)) (basic-block 1 1 (##.%p.952) ((##vcore.eq? (bruijn ##.sym.13 141 1) '##vcore.string-length)) (if (bruijn ##.%p.952 0 0) ((bruijn ##.%k.309 141 0) (##string ##.string.1162)) (basic-block 1 1 (##.%p.953) ((##vcore.eq? (bruijn ##.sym.13 142 1) '##vcore.string->symbol)) (if (bruijn ##.%p.953 0 0) ((bruijn ##.%k.309 142 0) (##string ##.string.1163)) (basic-block 1 1 (##.%p.954) ((##vcore.eq? (bruijn ##.sym.13 143 1) '##vcore.string->number)) (if (bruijn ##.%p.954 0 0) ((bruijn ##.%k.309 143 0) (##string ##.string.1164)) (basic-block 1 1 (##.%p.955) ((##vcore.eq? (bruijn ##.sym.13 144 1) '##vcore.symbol->string)) (if (bruijn ##.%p.955 0 0) ((bruijn ##.%k.309 144 0) (##string ##.string.1165)) (basic-block 1 1 (##.%p.956) ((##vcore.eq? (bruijn ##.sym.13 145 1) '##vcore.gensym)) (if (bruijn ##.%p.956 0 0) ((bruijn ##.%k.309 145 0) (##string ##.string.1166)) (basic-block 1 1 (##.%p.957) ((##vcore.eq? (bruijn ##.sym.13 146 1) '##vcore.char-integer)) (if (bruijn ##.%p.957 0 0) ((bruijn ##.%k.309 146 0) (##string ##.string.1167)) (basic-block 1 1 (##.%p.958) ((##vcore.eq? (bruijn ##.sym.13 147 1) '##vcore.integer->char)) (if (bruijn ##.%p.958 0 0) ((bruijn ##.%k.309 147 0) (##string ##.string.1168)) (basic-block 1 1 (##.%p.959) ((##vcore.eq? (bruijn ##.sym.13 148 1) '##vcore.stdin->port)) (if (bruijn ##.%p.959 0 0) ((bruijn ##.%k.309 148 0) (##string ##.string.1169)) (basic-block 1 1 (##.%p.960) ((##vcore.eq? (bruijn ##.sym.13 149 1) '##vcore.stdout->port)) (if (bruijn ##.%p.960 0 0) ((bruijn ##.%k.309 149 0) (##string ##.string.1170)) (basic-block 1 1 (##.%p.961) ((##vcore.eq? (bruijn ##.sym.13 150 1) '##vcore.stderr->port)) (if (bruijn ##.%p.961 0 0) ((bruijn ##.%k.309 150 0) (##string ##.string.1171)) (basic-block 1 1 (##.%p.962) ((##vcore.eq? (bruijn ##.sym.13 151 1) '##vcore.open-input-stream)) (if (bruijn ##.%p.962 0 0) ((bruijn ##.%k.309 151 0) (##string ##.string.1172)) (basic-block 1 1 (##.%p.963) ((##vcore.eq? (bruijn ##.sym.13 152 1) '##vcore.open-output-stream)) (if (bruijn ##.%p.963 0 0) ((bruijn ##.%k.309 152 0) (##string ##.string.1173)) (basic-block 1 1 (##.%p.964) ((##vcore.eq? (bruijn ##.sym.13 153 1) '##vcore.close-stream)) (if (bruijn ##.%p.964 0 0) ((bruijn ##.%k.309 153 0) (##string ##.string.1174)) (basic-block 1 1 (##.%p.965) ((##vcore.eq? (bruijn ##.sym.13 154 1) '##vcore.tty-port?)) (if (bruijn ##.%p.965 0 0) ((bruijn ##.%k.309 154 0) (##string ##.string.1175)) (basic-block 1 1 (##.%p.966) ((##vcore.eq? (bruijn ##.sym.13 155 1) '##vcore.open-output-string)) (if (bruijn ##.%p.966 0 0) ((bruijn ##.%k.309 155 0) (##string ##.string.1176)) (basic-block 1 1 (##.%p.967) ((##vcore.eq? (bruijn ##.sym.13 156 1) '##vcore.get-output-string)) (if (bruijn ##.%p.967 0 0) ((bruijn ##.%k.309 156 0) (##string ##.string.1177)) (basic-block 1 1 (##.%p.968) ((##vcore.eq? (bruijn ##.sym.13 157 1) '##vcore.eof-object?)) (if (bruijn ##.%p.968 0 0) ((bruijn ##.%k.309 157 0) (##string ##.string.1178)) (basic-block 1 1 (##.%p.969) ((##vcore.eq? (bruijn ##.sym.13 158 1) '##vcore.read-char)) (if (bruijn ##.%p.969 0 0) ((bruijn ##.%k.309 158 0) (##string ##.string.1179)) (basic-block 1 1 (##.%p.970) ((##vcore.eq? (bruijn ##.sym.13 159 1) '##vcore.read-line)) (if (bruijn ##.%p.970 0 0) ((bruijn ##.%k.309 159 0) (##string ##.string.1180)) (basic-block 1 1 (##.%p.971) ((##vcore.eq? (bruijn ##.sym.13 160 1) '##vcore.read-line2)) (if (bruijn ##.%p.971 0 0) ((bruijn ##.%k.309 160 0) (##string ##.string.1181)) (basic-block 1 1 (##.%p.972) ((##vcore.eq? (bruijn ##.sym.13 161 1) '##vcore.read)) (if (bruijn ##.%p.972 0 0) ((bruijn ##.%k.309 161 0) (##string ##.string.1182)) (basic-block 1 1 (##.%p.973) ((##vcore.eq? (bruijn ##.sym.13 162 1) '##vcore.display-word)) (if (bruijn ##.%p.973 0 0) ((bruijn ##.%k.309 162 0) (##string ##.string.1183)) (basic-block 1 1 (##.%p.974) ((##vcore.eq? (bruijn ##.sym.13 163 1) '##vcore.write)) (if (bruijn ##.%p.974 0 0) ((bruijn ##.%k.309 163 0) (##string ##.string.1184)) (basic-block 1 1 (##.%p.975) ((##vcore.eq? (bruijn ##.sym.13 164 1) '##vcore.newline)) (if (bruijn ##.%p.975 0 0) ((bruijn ##.%k.309 164 0) (##string ##.string.1185)) (basic-block 1 1 (##.%p.976) ((##vcore.eq? (bruijn ##.sym.13 165 1) '##vcore.display-stdout)) (if (bruijn ##.%p.976 0 0) ((bruijn ##.%k.309 165 0) (##string ##.string.1186)) (basic-block 1 1 (##.%p.977) ((##vcore.eq? (bruijn ##.sym.13 166 1) '##vcore.write-stdout)) (if (bruijn ##.%p.977 0 0) ((bruijn ##.%k.309 166 0) (##string ##.string.1187)) (basic-block 1 1 (##.%p.978) ((##vcore.eq? (bruijn ##.sym.13 167 1) '##vcore.newline-stdout)) (if (bruijn ##.%p.978 0 0) ((bruijn ##.%k.309 167 0) (##string ##.string.1188)) (basic-block 1 1 (##.%p.979) ((##vcore.eq? (bruijn ##.sym.13 168 1) '##vcore.set-finalizer!)) (if (bruijn ##.%p.979 0 0) ((bruijn ##.%k.309 168 0) (##string ##.string.1189)) (basic-block 1 1 (##.%p.980) ((##vcore.eq? (bruijn ##.sym.13 169 1) '##vcore.has-finalizer?)) (if (bruijn ##.%p.980 0 0) ((bruijn ##.%k.309 169 0) (##string ##.string.1190)) (basic-block 1 1 (##.%p.981) ((##vcore.eq? (bruijn ##.sym.13 170 1) '##vcore.finalize!)) (if (bruijn ##.%p.981 0 0) ((bruijn ##.%k.309 170 0) (##string ##.string.1191)) (basic-block 1 1 (##.%p.982) ((##vcore.eq? (bruijn ##.sym.13 171 1) '##vcore.garbage-collect)) (if (bruijn ##.%p.982 0 0) ((bruijn ##.%k.309 171 0) (##string ##.string.1192)) (basic-block 1 1 (##.%p.983) ((##vcore.eq? (bruijn ##.sym.13 172 1) '##vcore.yield-to-host)) (if (bruijn ##.%p.983 0 0) ((bruijn ##.%k.309 172 0) (##string ##.string.1193)) (basic-block 1 1 (##.%p.984) ((##vcore.eq? (bruijn ##.sym.13 173 1) '##vcore.yield-to-host-major)) (if (bruijn ##.%p.984 0 0) ((bruijn ##.%k.309 173 0) (##string ##.string.1194)) (basic-block 1 1 (##.%p.985) ((##vcore.eq? (bruijn ##.sym.13 174 1) '##vcore.system)) (if (bruijn ##.%p.985 0 0) ((bruijn ##.%k.309 174 0) (##string ##.string.1195)) (basic-block 1 1 (##.%p.986) ((##vcore.eq? (bruijn ##.sym.13 175 1) '##vcore.open-input-process)) (if (bruijn ##.%p.986 0 0) ((bruijn ##.%k.309 175 0) (##string ##.string.1196)) (basic-block 1 1 (##.%p.987) ((##vcore.eq? (bruijn ##.sym.13 176 1) '##vcore.open-output-process)) (if (bruijn ##.%p.987 0 0) ((bruijn ##.%k.309 176 0) (##string ##.string.1197)) (basic-block 1 1 (##.%p.988) ((##vcore.eq? (bruijn ##.sym.13 177 1) '##vcore.command-line)) (if (bruijn ##.%p.988 0 0) ((bruijn ##.%k.309 177 0) (##string ##.string.1198)) (basic-block 1 1 (##.%p.989) ((##vcore.eq? (bruijn ##.sym.13 178 1) '##vcore.register-sigint)) (if (bruijn ##.%p.989 0 0) ((bruijn ##.%k.309 178 0) (##string ##.string.1199)) (basic-block 1 1 (##.%p.990) ((##vcore.eq? (bruijn ##.sym.13 179 1) '##vcore.make-random)) (if (bruijn ##.%p.990 0 0) ((bruijn ##.%k.309 179 0) (##string ##.string.1200)) (basic-block 1 1 (##.%p.991) ((##vcore.eq? (bruijn ##.sym.13 180 1) '##vcore.random-copy)) (if (bruijn ##.%p.991 0 0) ((bruijn ##.%k.309 180 0) (##string ##.string.1201)) (basic-block 1 1 (##.%p.992) ((##vcore.eq? (bruijn ##.sym.13 181 1) '##vcore.random-sample!)) (if (bruijn ##.%p.992 0 0) ((bruijn ##.%k.309 181 0) (##string ##.string.1202)) (basic-block 1 1 (##.%p.993) ((##vcore.eq? (bruijn ##.sym.13 182 1) '##vcore.random-sample-bounded!)) (if (bruijn ##.%p.993 0 0) ((bruijn ##.%k.309 182 0) (##string ##.string.1203)) (basic-block 1 1 (##.%p.994) ((##vcore.eq? (bruijn ##.sym.13 183 1) '##vcore.random-sample-float!)) (if (bruijn ##.%p.994 0 0) ((bruijn ##.%k.309 183 0) (##string ##.string.1204)) (basic-block 1 1 (##.%p.995) ((##vcore.eq? (bruijn ##.sym.13 184 1) '##vcore.random-advance!)) (if (bruijn ##.%p.995 0 0) ((bruijn ##.%k.309 184 0) (##string ##.string.1205)) (basic-block 1 1 (##.%p.996) ((##vcore.eq? (bruijn ##.sym.13 185 1) '##vcore.fiber-fork-list)) (if (bruijn ##.%p.996 0 0) ((bruijn ##.%k.309 185 0) (##string ##.string.1206)) (basic-block 1 1 (##.%p.997) ((##vcore.eq? (bruijn ##.sym.13 186 1) '##vcore.async)) (if (bruijn ##.%p.997 0 0) ((bruijn ##.%k.309 186 0) (##string ##.string.1207)) (basic-block 1 1 (##.%p.998) ((##vcore.eq? (bruijn ##.sym.13 187 1) '##vcore.await)) (if (bruijn ##.%p.998 0 0) ((bruijn ##.%k.309 187 0) (##string ##.string.1208)) (basic-block 1 1 (##.%p.999) ((##vcore.eq? (bruijn ##.sym.13 188 1) '##vcore.realpath)) (if (bruijn ##.%p.999 0 0) ((bruijn ##.%k.309 188 0) (##string ##.string.1209)) (basic-block 1 1 (##.%p.1000) ((##vcore.eq? (bruijn ##.sym.13 189 1) '##vcore.make-temporary-file)) (if (bruijn ##.%p.1000 0 0) ((bruijn ##.%k.309 189 0) (##string ##.string.1210)) (basic-block 1 1 (##.%p.1001) ((##vcore.eq? (bruijn ##.sym.13 190 1) '##vcore.access)) (if (bruijn ##.%p.1001 0 0) ((bruijn ##.%k.309 190 0) (##string ##.string.1211)) (basic-block 1 1 (##.%p.1002) ((##vcore.eq? (bruijn ##.sym.13 191 1) '##vcore.current-jiffy)) (if (bruijn ##.%p.1002 0 0) ((bruijn ##.%k.309 191 0) (##string ##.string.1212)) (basic-block 1 1 (##.%p.1003) ((##vcore.eq? (bruijn ##.sym.13 192 1) '##vcore.jiffies-per-second)) (if (bruijn ##.%p.1003 0 0) ((bruijn ##.%k.309 192 0) (##string ##.string.1213)) (basic-block 1 1 (##.%p.1004) ((##vcore.eq? (bruijn ##.sym.13 193 1) '##vcore.bitwise-not)) (if (bruijn ##.%p.1004 0 0) ((bruijn ##.%k.309 193 0) (##string ##.string.1214)) (basic-block 1 1 (##.%p.1005) ((##vcore.eq? (bruijn ##.sym.13 194 1) '##vcore.bitwise-ior)) (if (bruijn ##.%p.1005 0 0) ((bruijn ##.%k.309 194 0) (##string ##.string.1215)) (basic-block 1 1 (##.%p.1006) ((##vcore.eq? (bruijn ##.sym.13 195 1) '##vcore.bitwise-xor)) (if (bruijn ##.%p.1006 0 0) ((bruijn ##.%k.309 195 0) (##string ##.string.1216)) (basic-block 1 1 (##.%p.1007) ((##vcore.eq? (bruijn ##.sym.13 196 1) '##vcore.bitwise-and)) (if (bruijn ##.%p.1007 0 0) ((bruijn ##.%k.309 196 0) (##string ##.string.1217)) (basic-block 1 1 (##.%p.1008) ((##vcore.eq? (bruijn ##.sym.13 197 1) '##vcore.bitwise-xnor)) (if (bruijn ##.%p.1008 0 0) ((bruijn ##.%k.309 197 0) (##string ##.string.1218)) (basic-block 1 1 (##.%p.1009) ((##vcore.eq? (bruijn ##.sym.13 198 1) '##vcore.bitwise-nand)) (if (bruijn ##.%p.1009 0 0) ((bruijn ##.%k.309 198 0) (##string ##.string.1219)) (basic-block 1 1 (##.%p.1010) ((##vcore.eq? (bruijn ##.sym.13 199 1) '##vcore.bitwise-nor)) (if (bruijn ##.%p.1010 0 0) ((bruijn ##.%k.309 199 0) (##string ##.string.1220)) (basic-block 1 1 (##.%p.1011) ((##vcore.eq? (bruijn ##.sym.13 200 1) '##vcore.bitwise-andc1)) (if (bruijn ##.%p.1011 0 0) ((bruijn ##.%k.309 200 0) (##string ##.string.1221)) (basic-block 1 1 (##.%p.1012) ((##vcore.eq? (bruijn ##.sym.13 201 1) '##vcore.bitwise-andc2)) (if (bruijn ##.%p.1012 0 0) ((bruijn ##.%k.309 201 0) (##string ##.string.1222)) (basic-block 1 1 (##.%p.1013) ((##vcore.eq? (bruijn ##.sym.13 202 1) '##vcore.bitwise-orc1)) (if (bruijn ##.%p.1013 0 0) ((bruijn ##.%k.309 202 0) (##string ##.string.1223)) (basic-block 1 1 (##.%p.1014) ((##vcore.eq? (bruijn ##.sym.13 203 1) '##vcore.bitwise-orc2)) (if (bruijn ##.%p.1014 0 0) ((bruijn ##.%k.309 203 0) (##string ##.string.1224)) (basic-block 1 1 (##.%p.1015) ((##vcore.eq? (bruijn ##.sym.13 204 1) '##vcore.arithmetic-shift)) (if (bruijn ##.%p.1015 0 0) ((bruijn ##.%k.309 204 0) (##string ##.string.1225)) (basic-block 1 1 (##.%p.1016) ((##vcore.eq? (bruijn ##.sym.13 205 1) '##vcore.bit-count)) (if (bruijn ##.%p.1016 0 0) ((bruijn ##.%k.309 205 0) (##string ##.string.1226)) ((bruijn ##.%k.309 205 0) #f))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 if(VDecodeBool(
 _var0)) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 62-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1202.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1084.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5441,7 +5297,7 @@ _var0)) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 63-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1203.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1085.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5454,7 +5310,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 64-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1204.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1086.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5467,7 +5323,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 65-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1205.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1087.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5480,7 +5336,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 66-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1206.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1088.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5493,7 +5349,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 67-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1207.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1089.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5506,7 +5362,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 68-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1208.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1090.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5519,7 +5375,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 69-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1209.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1091.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5532,7 +5388,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 70-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1210.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1092.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5545,7 +5401,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 71-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1210.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1092.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5558,7 +5414,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 72-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1211.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1093.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5571,7 +5427,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 73-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1212.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1094.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5584,7 +5440,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 74-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1213.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1095.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5597,7 +5453,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 75-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1214.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1096.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5610,7 +5466,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 76-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1215.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1097.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5623,7 +5479,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 77-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1216.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1098.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5636,7 +5492,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 78-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1217.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1099.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5649,7 +5505,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 79-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1218.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1100.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5662,7 +5518,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 80-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1219.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1101.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5675,7 +5531,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 81-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1220.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1102.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5688,7 +5544,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 82-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1221.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1103.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5701,7 +5557,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 83-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1222.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1104.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5714,7 +5570,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 84-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1223.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1105.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5727,7 +5583,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 85-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1224.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1106.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5740,7 +5596,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 86-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1225.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1107.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5753,7 +5609,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 87-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1226.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1108.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5766,7 +5622,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 88-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1227.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1109.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5779,7 +5635,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 89-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1228.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1110.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5792,7 +5648,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 90-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1229.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1111.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5805,7 +5661,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 91-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1230.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1112.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5818,7 +5674,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 92-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1231.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1113.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5831,7 +5687,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 93-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1232.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1114.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5844,7 +5700,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 94-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1233.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1115.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5857,7 +5713,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 95-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1234.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1116.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5870,7 +5726,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 96-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1235.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1117.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5883,7 +5739,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 97-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1236.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1118.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5896,7 +5752,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 98-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1237.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1119.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5909,7 +5765,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 99-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1238.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1120.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5922,7 +5778,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 100-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1239.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1121.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5935,7 +5791,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 101-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1240.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1122.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5948,7 +5804,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 102-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1241.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1123.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5961,7 +5817,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 103-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1242.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1124.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5974,7 +5830,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 104-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1243.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1125.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -5987,7 +5843,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 105-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1244.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1126.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6000,7 +5856,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 106-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1245.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1127.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6013,7 +5869,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 107-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1246.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1128.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6026,7 +5882,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 108-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1247.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1129.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6039,7 +5895,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 109-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1248.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1130.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6052,7 +5908,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 110-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1249.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1131.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6065,7 +5921,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 111-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1250.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1132.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6078,7 +5934,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 112-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1251.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1133.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6091,7 +5947,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 113-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1252.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1134.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6104,7 +5960,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 114-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1253.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1135.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6117,7 +5973,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 115-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1254.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1136.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6130,7 +5986,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 116-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1255.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1137.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6143,7 +5999,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 117-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1256.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1138.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6156,7 +6012,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 118-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1257.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1139.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6169,7 +6025,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 119-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1258.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1140.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6182,7 +6038,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 120-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1259.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1141.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6195,7 +6051,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 121-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1260.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1142.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6208,7 +6064,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 122-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1261.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1143.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6221,7 +6077,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 123-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1262.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1144.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6234,7 +6090,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 124-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1263.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1145.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6247,7 +6103,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 125-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1264.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1146.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6260,7 +6116,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 126-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1265.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1147.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6273,7 +6129,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 127-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1266.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1148.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6286,7 +6142,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 128-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1267.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1149.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6299,7 +6155,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 129-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1268.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1150.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6312,7 +6168,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 130-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1269.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1151.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6325,7 +6181,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 131-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1270.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1152.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6338,7 +6194,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 132-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1271.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1153.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6351,7 +6207,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 133-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1272.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1154.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6364,7 +6220,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 134-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1273.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1155.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6377,7 +6233,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 135-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1274.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1156.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6390,7 +6246,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 136-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1275.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1157.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6403,7 +6259,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 137-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1276.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1158.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6416,7 +6272,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 138-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1277.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1159.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6429,7 +6285,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 139-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1278.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1160.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6442,7 +6298,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 140-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1279.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1161.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6455,7 +6311,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 141-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1280.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1162.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6468,7 +6324,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 142-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1281.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1163.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6481,7 +6337,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 143-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1282.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1164.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6494,7 +6350,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 144-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1283.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1165.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6507,7 +6363,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 145-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1284.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1166.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6520,7 +6376,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 146-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1285.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1167.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6533,7 +6389,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 147-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1286.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1168.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6546,7 +6402,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 148-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1287.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1169.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6559,7 +6415,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 149-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1288.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1170.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6572,7 +6428,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 150-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1289.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1171.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6585,7 +6441,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 151-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1290.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1172.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6598,7 +6454,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 152-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1291.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1173.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6611,7 +6467,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 153-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1292.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1174.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6624,7 +6480,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 154-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1293.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1175.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6637,7 +6493,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 155-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1294.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1176.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6650,7 +6506,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 156-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1295.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1177.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6663,7 +6519,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 157-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1296.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1178.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6676,7 +6532,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 158-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1297.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1179.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6689,7 +6545,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 159-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1298.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1180.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6702,7 +6558,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 160-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1299.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1181.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6715,7 +6571,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 161-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1300.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1182.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6728,7 +6584,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 162-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1301.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1183.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6741,7 +6597,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 163-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1302.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1184.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6754,7 +6610,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 164-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1303.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1185.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6767,7 +6623,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 165-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1304.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1186.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6780,7 +6636,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 166-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1305.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1187.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6793,7 +6649,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 167-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1306.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1188.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6806,7 +6662,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 168-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1307.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1189.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6819,7 +6675,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 169-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1308.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1190.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6832,7 +6688,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 170-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1309.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1191.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6845,7 +6701,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 171-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1310.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1192.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6858,7 +6714,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 172-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1311.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1193.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6871,7 +6727,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 173-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1312.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1194.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6884,7 +6740,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 174-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1313.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1195.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6897,7 +6753,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 175-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1314.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1196.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6910,7 +6766,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 176-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1315.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1197.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6923,7 +6779,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 177-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1316.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1198.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6936,7 +6792,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 178-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1317.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1199.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6949,7 +6805,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 179-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1318.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1200.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6962,7 +6818,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 180-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1319.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1201.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6975,7 +6831,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 181-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1320.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1202.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -6988,7 +6844,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 182-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1321.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1203.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7001,7 +6857,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 183-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1322.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1204.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7014,7 +6870,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 184-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1323.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1205.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7027,7 +6883,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 185-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1324.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1206.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7040,7 +6896,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 186-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1325.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1207.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7053,7 +6909,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 187-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1326.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1208.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7066,7 +6922,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 188-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1327.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1209.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7079,7 +6935,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 189-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1328.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1210.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7092,7 +6948,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 190-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1329.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1211.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7105,7 +6961,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 191-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1330.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1212.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7118,7 +6974,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 192-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1331.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1213.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7131,7 +6987,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 193-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1332.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1214.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7144,7 +7000,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 194-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1333.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1215.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7157,7 +7013,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 195-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1334.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1216.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7170,7 +7026,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 196-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1335.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1217.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7183,7 +7039,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 197-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1336.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1218.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7196,7 +7052,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 198-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1337.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1219.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7209,7 +7065,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 199-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1338.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1220.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7222,7 +7078,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 200-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1339.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1221.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7235,7 +7091,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 201-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1340.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1222.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7248,7 +7104,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 202-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1341.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1223.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7261,7 +7117,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 203-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1342.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1224.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7274,7 +7130,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 204-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1343.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1225.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7287,7 +7143,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 205-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1344.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1226.sym, VPOINTER_OTHER));
 } else {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 205-1, 0)), 1,
       VEncodeBool(false));
@@ -7580,8 +7436,6 @@ self->vars[0])) {
 }
 }
 void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
- static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name" };
- VRecordCall2(runtime, &dbg);
  if(argc != 2) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name, got ~D~N"
   "-- expected 2~N"
@@ -7592,7 +7446,7 @@ void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name(VRuntime * runtime, VE
   VInitEnv(self, 2, 2, statics);
   self->vars[0] = _var0;
   self->vars[1] = _var1;
-  // (basic-block 1 1 (##.%p.813) ((##vcore.eq? (bruijn ##.sym.13 1 1) '##vcore.inexact)) (if (bruijn ##.%p.813 0 0) ((bruijn ##.%k.309 1 0) (##string ##.string.1141)) (basic-block 1 1 (##.%p.814) ((##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.exact)) (if (bruijn ##.%p.814 0 0) ((bruijn ##.%k.309 2 0) (##string ##.string.1142)) (basic-block 1 1 (##.%p.815) ((##vcore.eq? (bruijn ##.sym.13 3 1) '##vcore.+)) (if (bruijn ##.%p.815 0 0) ((bruijn ##.%k.309 3 0) (##string ##.string.1143)) (basic-block 1 1 (##.%p.816) ((##vcore.eq? (bruijn ##.sym.13 4 1) '##vcore.-)) (if (bruijn ##.%p.816 0 0) ((bruijn ##.%k.309 4 0) (##string ##.string.1144)) (basic-block 1 1 (##.%p.817) ((##vcore.eq? (bruijn ##.sym.13 5 1) '##vcore.*)) (if (bruijn ##.%p.817 0 0) ((bruijn ##.%k.309 5 0) (##string ##.string.1145)) (basic-block 1 1 (##.%p.818) ((##vcore.eq? (bruijn ##.sym.13 6 1) '##vcore./)) (if (bruijn ##.%p.818 0 0) ((bruijn ##.%k.309 6 0) (##string ##.string.1146)) (basic-block 1 1 (##.%p.819) ((##vcore.eq? (bruijn ##.sym.13 7 1) '##vcore.cmp)) (if (bruijn ##.%p.819 0 0) ((bruijn ##.%k.309 7 0) (##string ##.string.1147)) (basic-block 1 1 (##.%p.820) ((##vcore.eq? (bruijn ##.sym.13 8 1) '##vcore.<=)) (if (bruijn ##.%p.820 0 0) ((bruijn ##.%k.309 8 0) (##string ##.string.1148)) (basic-block 1 1 (##.%p.821) ((##vcore.eq? (bruijn ##.sym.13 9 1) '##vcore.<)) (if (bruijn ##.%p.821 0 0) ((bruijn ##.%k.309 9 0) (##string ##.string.1149)) (basic-block 1 1 (##.%p.822) ((##vcore.eq? (bruijn ##.sym.13 10 1) '##vcore.=)) (if (bruijn ##.%p.822 0 0) ((bruijn ##.%k.309 10 0) (##string ##.string.1150)) (basic-block 1 1 (##.%p.823) ((##vcore.eq? (bruijn ##.sym.13 11 1) '##vcore.>=)) (if (bruijn ##.%p.823 0 0) ((bruijn ##.%k.309 11 0) (##string ##.string.1151)) (basic-block 1 1 (##.%p.824) ((##vcore.eq? (bruijn ##.sym.13 12 1) '##vcore.>)) (if (bruijn ##.%p.824 0 0) ((bruijn ##.%k.309 12 0) (##string ##.string.1152)) (basic-block 1 1 (##.%p.825) ((##vcore.eq? (bruijn ##.sym.13 13 1) '##vcore.quotient)) (if (bruijn ##.%p.825 0 0) ((bruijn ##.%k.309 13 0) (##string ##.string.1153)) (basic-block 1 1 (##.%p.826) ((##vcore.eq? (bruijn ##.sym.13 14 1) '##vcore.remainder)) (if (bruijn ##.%p.826 0 0) ((bruijn ##.%k.309 14 0) (##string ##.string.1154)) (basic-block 1 1 (##.%p.827) ((##vcore.eq? (bruijn ##.sym.13 15 1) '##vcore.null?)) (if (bruijn ##.%p.827 0 0) ((bruijn ##.%k.309 15 0) (##string ##.string.1155)) (basic-block 1 1 (##.%p.828) ((##vcore.eq? (bruijn ##.sym.13 16 1) '##vcore.pair?)) (if (bruijn ##.%p.828 0 0) ((bruijn ##.%k.309 16 0) (##string ##.string.1156)) (basic-block 1 1 (##.%p.829) ((##vcore.eq? (bruijn ##.sym.13 17 1) '##vcore.record?)) (if (bruijn ##.%p.829 0 0) ((bruijn ##.%k.309 17 0) (##string ##.string.1157)) (basic-block 1 1 (##.%p.830) ((##vcore.eq? (bruijn ##.sym.13 18 1) '##vcore.vector?)) (if (bruijn ##.%p.830 0 0) ((bruijn ##.%k.309 18 0) (##string ##.string.1158)) (basic-block 1 1 (##.%p.831) ((##vcore.eq? (bruijn ##.sym.13 19 1) '##vcore.hash-table?)) (if (bruijn ##.%p.831 0 0) ((bruijn ##.%k.309 19 0) (##string ##.string.1159)) (basic-block 1 1 (##.%p.832) ((##vcore.eq? (bruijn ##.sym.13 20 1) '##vcore.procedure?)) (if (bruijn ##.%p.832 0 0) ((bruijn ##.%k.309 20 0) (##string ##.string.1160)) (basic-block 1 1 (##.%p.833) ((##vcore.eq? (bruijn ##.sym.13 21 1) '##vcore.blob?)) (if (bruijn ##.%p.833 0 0) ((bruijn ##.%k.309 21 0) (##string ##.string.1161)) (basic-block 1 1 (##.%p.834) ((##vcore.eq? (bruijn ##.sym.13 22 1) '##vcore.symbol?)) (if (bruijn ##.%p.834 0 0) ((bruijn ##.%k.309 22 0) (##string ##.string.1162)) (basic-block 1 1 (##.%p.835) ((##vcore.eq? (bruijn ##.sym.13 23 1) '##vcore.string?)) (if (bruijn ##.%p.835 0 0) ((bruijn ##.%k.309 23 0) (##string ##.string.1163)) (basic-block 1 1 (##.%p.836) ((##vcore.eq? (bruijn ##.sym.13 24 1) '##vcore.int?)) (if (bruijn ##.%p.836 0 0) ((bruijn ##.%k.309 24 0) (##string ##.string.1164)) (basic-block 1 1 (##.%p.837) ((##vcore.eq? (bruijn ##.sym.13 25 1) '##vcore.double?)) (if (bruijn ##.%p.837 0 0) ((bruijn ##.%k.309 25 0) (##string ##.string.1165)) (basic-block 1 1 (##.%p.838) ((##vcore.eq? (bruijn ##.sym.13 26 1) '##vcore.char?)) (if (bruijn ##.%p.838 0 0) ((bruijn ##.%k.309 26 0) (##string ##.string.1166)) (basic-block 1 1 (##.%p.839) ((##vcore.eq? (bruijn ##.sym.13 27 1) '##vcore.void?)) (if (bruijn ##.%p.839 0 0) ((bruijn ##.%k.309 27 0) (##string ##.string.1167)) (basic-block 1 1 (##.%p.840) ((##vcore.eq? (bruijn ##.sym.13 28 1) '##vcore.nullptr?)) (if (bruijn ##.%p.840 0 0) ((bruijn ##.%k.309 28 0) (##string ##.string.1168)) (basic-block 1 1 (##.%p.841) ((##vcore.eq? (bruijn ##.sym.13 29 1) '##vcore.foreign-pointer?)) (if (bruijn ##.%p.841 0 0) ((bruijn ##.%k.309 29 0) (##string ##.string.1169)) (basic-block 1 1 (##.%p.842) ((##vcore.eq? (bruijn ##.sym.13 30 1) '##vcore.eq?)) (if (bruijn ##.%p.842 0 0) ((bruijn ##.%k.309 30 0) (##string ##.string.1170)) (basic-block 1 1 (##.%p.843) ((##vcore.eq? (bruijn ##.sym.13 31 1) '##vcore.symbol=?)) (if (bruijn ##.%p.843 0 0) ((bruijn ##.%k.309 31 0) (##string ##.string.1171)) (basic-block 1 1 (##.%p.844) ((##vcore.eq? (bruijn ##.sym.13 32 1) '##vcore.blob=?)) (if (bruijn ##.%p.844 0 0) ((bruijn ##.%k.309 32 0) (##string ##.string.1172)) (basic-block 1 1 (##.%p.845) ((##vcore.eq? (bruijn ##.sym.13 33 1) '##vcore.eqv?)) (if (bruijn ##.%p.845 0 0) ((bruijn ##.%k.309 33 0) (##string ##.string.1170)) (basic-block 1 1 (##.%p.846) ((##vcore.eq? (bruijn ##.sym.13 34 1) '##vcore.not)) (if (bruijn ##.%p.846 0 0) ((bruijn ##.%k.309 34 0) (##string ##.string.1173)) (basic-block 1 1 (##.%p.847) ((##vcore.eq? (bruijn ##.sym.13 35 1) '##vcore.get-dynamics)) (if (bruijn ##.%p.847 0 0) ((bruijn ##.%k.309 35 0) (##string ##.string.1174)) (basic-block 1 1 (##.%p.848) ((##vcore.eq? (bruijn ##.sym.13 36 1) '##vcore.push-dynamic)) (if (bruijn ##.%p.848 0 0) ((bruijn ##.%k.309 36 0) (##string ##.string.1175)) (basic-block 1 1 (##.%p.849) ((##vcore.eq? (bruijn ##.sym.13 37 1) '##vcore.pop-dynamic)) (if (bruijn ##.%p.849 0 0) ((bruijn ##.%k.309 37 0) (##string ##.string.1176)) (basic-block 1 1 (##.%p.850) ((##vcore.eq? (bruijn ##.sym.13 38 1) '##vcore.get-exception-handler)) (if (bruijn ##.%p.850 0 0) ((bruijn ##.%k.309 38 0) (##string ##.string.1177)) (basic-block 1 1 (##.%p.851) ((##vcore.eq? (bruijn ##.sym.13 39 1) '##vcore.push-exception-handler)) (if (bruijn ##.%p.851 0 0) ((bruijn ##.%k.309 39 0) (##string ##.string.1178)) (basic-block 1 1 (##.%p.852) ((##vcore.eq? (bruijn ##.sym.13 40 1) '##vcore.pop-exception-handler)) (if (bruijn ##.%p.852 0 0) ((bruijn ##.%k.309 40 0) (##string ##.string.1179)) (basic-block 1 1 (##.%p.853) ((##vcore.eq? (bruijn ##.sym.13 41 1) '##vcore.raise)) (if (bruijn ##.%p.853 0 0) ((bruijn ##.%k.309 41 0) (##string ##.string.1180)) (basic-block 1 1 (##.%p.854) ((##vcore.eq? (bruijn ##.sym.13 42 1) '##vcore.next)) (if (bruijn ##.%p.854 0 0) ((bruijn ##.%k.309 42 0) (##string ##.string.1181)) (basic-block 1 1 (##.%p.855) ((##vcore.eq? (bruijn ##.sym.13 43 1) '##vcore.call/cc)) (if (bruijn ##.%p.855 0 0) ((bruijn ##.%k.309 43 0) (##string ##.string.1182)) (basic-block 1 1 (##.%p.856) ((##vcore.eq? (bruijn ##.sym.13 44 1) '##vcore.call-with-values)) (if (bruijn ##.%p.856 0 0) ((bruijn ##.%k.309 44 0) (##string ##.string.1183)) (basic-block 1 1 (##.%p.857) ((##vcore.eq? (bruijn ##.sym.13 45 1) '##vcore.values)) (if (bruijn ##.%p.857 0 0) ((bruijn ##.%k.309 45 0) (##string ##.string.1184)) (basic-block 1 1 (##.%p.858) ((##vcore.eq? (bruijn ##.sym.13 46 1) '##vcore.apply)) (if (bruijn ##.%p.858 0 0) ((bruijn ##.%k.309 46 0) (##string ##.string.1185)) (basic-block 1 1 (##.%p.859) ((##vcore.eq? (bruijn ##.sym.13 47 1) '##vcore.apply-cps)) (if (bruijn ##.%p.859 0 0) ((bruijn ##.%k.309 47 0) (##string ##.string.1186)) (basic-block 1 1 (##.%p.860) ((##vcore.eq? (bruijn ##.sym.13 48 1) '##vcore.abort)) (if (bruijn ##.%p.860 0 0) ((bruijn ##.%k.309 48 0) (##string ##.string.1187)) (basic-block 1 1 (##.%p.861) ((##vcore.eq? (bruijn ##.sym.13 49 1) '##vcore.exit)) (if (bruijn ##.%p.861 0 0) ((bruijn ##.%k.309 49 0) (##string ##.string.1188)) (basic-block 1 1 (##.%p.862) ((##vcore.eq? (bruijn ##.sym.13 50 1) '##vcore.define-global)) (if (bruijn ##.%p.862 0 0) ((bruijn ##.%k.309 50 0) (##string ##.string.1189)) (basic-block 1 1 (##.%p.863) ((##vcore.eq? (bruijn ##.sym.13 51 1) '##vcore.set-global!)) (if (bruijn ##.%p.863 0 0) ((bruijn ##.%k.309 51 0) (##string ##.string.1190)) (basic-block 1 1 (##.%p.864) ((##vcore.eq? (bruijn ##.sym.13 52 1) '##vcore.function)) (if (bruijn ##.%p.864 0 0) ((bruijn ##.%k.309 52 0) (##string ##.string.1191)) (basic-block 1 1 (##.%p.865) ((##vcore.eq? (bruijn ##.sym.13 53 1) '##vcore.function3)) (if (bruijn ##.%p.865 0 0) ((bruijn ##.%k.309 53 0) (##string ##.string.1192)) (basic-block 1 1 (##.%p.866) ((##vcore.eq? (bruijn ##.sym.13 54 1) '##vcore.set-declare!)) (if (bruijn ##.%p.866 0 0) ((bruijn ##.%k.309 54 0) (##string ##.string.1193)) (basic-block 1 1 (##.%p.867) ((##vcore.eq? (bruijn ##.sym.13 55 1) '##vcore.define)) (if (bruijn ##.%p.867 0 0) ((bruijn ##.%k.309 55 0) (##string ##.string.1189)) (basic-block 1 1 (##.%p.868) ((##vcore.eq? (bruijn ##.sym.13 56 1) '##vcore.multidefine)) (if (bruijn ##.%p.868 0 0) ((bruijn ##.%k.309 56 0) (##string ##.string.1194)) (basic-block 1 1 (##.%p.869) ((##vcore.eq? (bruijn ##.sym.13 57 1) '##vcore.lookup-library)) (if (bruijn ##.%p.869 0 0) ((bruijn ##.%k.309 57 0) (##string ##.string.1195)) (basic-block 1 1 (##.%p.870) ((##vcore.eq? (bruijn ##.sym.13 58 1) '##vcore.make-import)) (if (bruijn ##.%p.870 0 0) ((bruijn ##.%k.309 58 0) (##string ##.string.1196)) (basic-block 1 1 (##.%p.871) ((##vcore.eq? (bruijn ##.sym.13 59 1) '##vcore.load-library)) (if (bruijn ##.%p.871 0 0) ((bruijn ##.%k.309 59 0) (##string ##.string.1197)) (basic-block 1 1 (##.%p.872) ((##vcore.eq? (bruijn ##.sym.13 60 1) '##vcore.unload-library)) (if (bruijn ##.%p.872 0 0) ((bruijn ##.%k.309 60 0) (##string ##.string.1198)) (basic-block 1 1 (##.%p.873) ((##vcore.eq? (bruijn ##.sym.13 61 1) '##vcore.cons)) ((close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k7) (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k8)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+  // (basic-block 1 1 (##.%p.813) ((##vcore.eq? (bruijn ##.sym.13 1 1) '##vcore.inexact)) (if (bruijn ##.%p.813 0 0) ((bruijn ##.%k.309 1 0) (##string ##.string.1026)) (basic-block 1 1 (##.%p.814) ((##vcore.eq? (bruijn ##.sym.13 2 1) '##vcore.exact)) (if (bruijn ##.%p.814 0 0) ((bruijn ##.%k.309 2 0) (##string ##.string.1027)) (basic-block 1 1 (##.%p.815) ((##vcore.eq? (bruijn ##.sym.13 3 1) '##vcore.+)) (if (bruijn ##.%p.815 0 0) ((bruijn ##.%k.309 3 0) (##string ##.string.1028)) (basic-block 1 1 (##.%p.816) ((##vcore.eq? (bruijn ##.sym.13 4 1) '##vcore.-)) (if (bruijn ##.%p.816 0 0) ((bruijn ##.%k.309 4 0) (##string ##.string.1029)) (basic-block 1 1 (##.%p.817) ((##vcore.eq? (bruijn ##.sym.13 5 1) '##vcore.*)) (if (bruijn ##.%p.817 0 0) ((bruijn ##.%k.309 5 0) (##string ##.string.1030)) (basic-block 1 1 (##.%p.818) ((##vcore.eq? (bruijn ##.sym.13 6 1) '##vcore./)) (if (bruijn ##.%p.818 0 0) ((bruijn ##.%k.309 6 0) (##string ##.string.1031)) (basic-block 1 1 (##.%p.819) ((##vcore.eq? (bruijn ##.sym.13 7 1) '##vcore.cmp)) (if (bruijn ##.%p.819 0 0) ((bruijn ##.%k.309 7 0) (##string ##.string.1032)) (basic-block 1 1 (##.%p.820) ((##vcore.eq? (bruijn ##.sym.13 8 1) '##vcore.<=)) (if (bruijn ##.%p.820 0 0) ((bruijn ##.%k.309 8 0) (##string ##.string.1033)) (basic-block 1 1 (##.%p.821) ((##vcore.eq? (bruijn ##.sym.13 9 1) '##vcore.<)) (if (bruijn ##.%p.821 0 0) ((bruijn ##.%k.309 9 0) (##string ##.string.1034)) (basic-block 1 1 (##.%p.822) ((##vcore.eq? (bruijn ##.sym.13 10 1) '##vcore.=)) (if (bruijn ##.%p.822 0 0) ((bruijn ##.%k.309 10 0) (##string ##.string.1035)) (basic-block 1 1 (##.%p.823) ((##vcore.eq? (bruijn ##.sym.13 11 1) '##vcore.>=)) (if (bruijn ##.%p.823 0 0) ((bruijn ##.%k.309 11 0) (##string ##.string.1036)) (basic-block 1 1 (##.%p.824) ((##vcore.eq? (bruijn ##.sym.13 12 1) '##vcore.>)) (if (bruijn ##.%p.824 0 0) ((bruijn ##.%k.309 12 0) (##string ##.string.1037)) (basic-block 1 1 (##.%p.825) ((##vcore.eq? (bruijn ##.sym.13 13 1) '##vcore.quotient)) (if (bruijn ##.%p.825 0 0) ((bruijn ##.%k.309 13 0) (##string ##.string.1038)) (basic-block 1 1 (##.%p.826) ((##vcore.eq? (bruijn ##.sym.13 14 1) '##vcore.remainder)) (if (bruijn ##.%p.826 0 0) ((bruijn ##.%k.309 14 0) (##string ##.string.1039)) (basic-block 1 1 (##.%p.827) ((##vcore.eq? (bruijn ##.sym.13 15 1) '##vcore.null?)) (if (bruijn ##.%p.827 0 0) ((bruijn ##.%k.309 15 0) (##string ##.string.1040)) (basic-block 1 1 (##.%p.828) ((##vcore.eq? (bruijn ##.sym.13 16 1) '##vcore.pair?)) (if (bruijn ##.%p.828 0 0) ((bruijn ##.%k.309 16 0) (##string ##.string.1041)) (basic-block 1 1 (##.%p.829) ((##vcore.eq? (bruijn ##.sym.13 17 1) '##vcore.record?)) (if (bruijn ##.%p.829 0 0) ((bruijn ##.%k.309 17 0) (##string ##.string.1042)) (basic-block 1 1 (##.%p.830) ((##vcore.eq? (bruijn ##.sym.13 18 1) '##vcore.vector?)) (if (bruijn ##.%p.830 0 0) ((bruijn ##.%k.309 18 0) (##string ##.string.1043)) (basic-block 1 1 (##.%p.831) ((##vcore.eq? (bruijn ##.sym.13 19 1) '##vcore.hash-table?)) (if (bruijn ##.%p.831 0 0) ((bruijn ##.%k.309 19 0) (##string ##.string.1044)) (basic-block 1 1 (##.%p.832) ((##vcore.eq? (bruijn ##.sym.13 20 1) '##vcore.procedure?)) (if (bruijn ##.%p.832 0 0) ((bruijn ##.%k.309 20 0) (##string ##.string.1045)) (basic-block 1 1 (##.%p.833) ((##vcore.eq? (bruijn ##.sym.13 21 1) '##vcore.blob?)) (if (bruijn ##.%p.833 0 0) ((bruijn ##.%k.309 21 0) (##string ##.string.1046)) (basic-block 1 1 (##.%p.834) ((##vcore.eq? (bruijn ##.sym.13 22 1) '##vcore.symbol?)) (if (bruijn ##.%p.834 0 0) ((bruijn ##.%k.309 22 0) (##string ##.string.1047)) (basic-block 1 1 (##.%p.835) ((##vcore.eq? (bruijn ##.sym.13 23 1) '##vcore.string?)) (if (bruijn ##.%p.835 0 0) ((bruijn ##.%k.309 23 0) (##string ##.string.1048)) (basic-block 1 1 (##.%p.836) ((##vcore.eq? (bruijn ##.sym.13 24 1) '##vcore.int?)) (if (bruijn ##.%p.836 0 0) ((bruijn ##.%k.309 24 0) (##string ##.string.1049)) (basic-block 1 1 (##.%p.837) ((##vcore.eq? (bruijn ##.sym.13 25 1) '##vcore.double?)) (if (bruijn ##.%p.837 0 0) ((bruijn ##.%k.309 25 0) (##string ##.string.1050)) (basic-block 1 1 (##.%p.838) ((##vcore.eq? (bruijn ##.sym.13 26 1) '##vcore.char?)) (if (bruijn ##.%p.838 0 0) ((bruijn ##.%k.309 26 0) (##string ##.string.1051)) (basic-block 1 1 (##.%p.839) ((##vcore.eq? (bruijn ##.sym.13 27 1) '##vcore.void?)) (if (bruijn ##.%p.839 0 0) ((bruijn ##.%k.309 27 0) (##string ##.string.1052)) (basic-block 1 1 (##.%p.840) ((##vcore.eq? (bruijn ##.sym.13 28 1) '##vcore.nullptr?)) (if (bruijn ##.%p.840 0 0) ((bruijn ##.%k.309 28 0) (##string ##.string.1053)) (basic-block 1 1 (##.%p.841) ((##vcore.eq? (bruijn ##.sym.13 29 1) '##vcore.foreign-pointer?)) (if (bruijn ##.%p.841 0 0) ((bruijn ##.%k.309 29 0) (##string ##.string.1054)) (basic-block 1 1 (##.%p.842) ((##vcore.eq? (bruijn ##.sym.13 30 1) '##vcore.eq?)) (if (bruijn ##.%p.842 0 0) ((bruijn ##.%k.309 30 0) (##string ##.string.1055)) (basic-block 1 1 (##.%p.843) ((##vcore.eq? (bruijn ##.sym.13 31 1) '##vcore.symbol=?)) (if (bruijn ##.%p.843 0 0) ((bruijn ##.%k.309 31 0) (##string ##.string.1056)) (basic-block 1 1 (##.%p.844) ((##vcore.eq? (bruijn ##.sym.13 32 1) '##vcore.blob=?)) (if (bruijn ##.%p.844 0 0) ((bruijn ##.%k.309 32 0) (##string ##.string.1057)) (basic-block 1 1 (##.%p.845) ((##vcore.eq? (bruijn ##.sym.13 33 1) '##vcore.eqv?)) (if (bruijn ##.%p.845 0 0) ((bruijn ##.%k.309 33 0) (##string ##.string.1055)) (basic-block 1 1 (##.%p.846) ((##vcore.eq? (bruijn ##.sym.13 34 1) '##vcore.not)) (if (bruijn ##.%p.846 0 0) ((bruijn ##.%k.309 34 0) (##string ##.string.1058)) (basic-block 1 1 (##.%p.847) ((##vcore.eq? (bruijn ##.sym.13 35 1) '##vcore.get-dynamics)) (if (bruijn ##.%p.847 0 0) ((bruijn ##.%k.309 35 0) (##string ##.string.1059)) (basic-block 1 1 (##.%p.848) ((##vcore.eq? (bruijn ##.sym.13 36 1) '##vcore.push-dynamic)) (if (bruijn ##.%p.848 0 0) ((bruijn ##.%k.309 36 0) (##string ##.string.1060)) (basic-block 1 1 (##.%p.849) ((##vcore.eq? (bruijn ##.sym.13 37 1) '##vcore.pop-dynamic)) (if (bruijn ##.%p.849 0 0) ((bruijn ##.%k.309 37 0) (##string ##.string.1061)) (basic-block 1 1 (##.%p.850) ((##vcore.eq? (bruijn ##.sym.13 38 1) '##vcore.get-exception-handler)) (if (bruijn ##.%p.850 0 0) ((bruijn ##.%k.309 38 0) (##string ##.string.1062)) (basic-block 1 1 (##.%p.851) ((##vcore.eq? (bruijn ##.sym.13 39 1) '##vcore.push-exception-handler)) (if (bruijn ##.%p.851 0 0) ((bruijn ##.%k.309 39 0) (##string ##.string.1063)) (basic-block 1 1 (##.%p.852) ((##vcore.eq? (bruijn ##.sym.13 40 1) '##vcore.pop-exception-handler)) (if (bruijn ##.%p.852 0 0) ((bruijn ##.%k.309 40 0) (##string ##.string.1064)) (basic-block 1 1 (##.%p.853) ((##vcore.eq? (bruijn ##.sym.13 41 1) '##vcore.raise)) (if (bruijn ##.%p.853 0 0) ((bruijn ##.%k.309 41 0) (##string ##.string.1065)) (basic-block 1 1 (##.%p.854) ((##vcore.eq? (bruijn ##.sym.13 42 1) '##vcore.next)) (if (bruijn ##.%p.854 0 0) ((bruijn ##.%k.309 42 0) (##string ##.string.1066)) (basic-block 1 1 (##.%p.855) ((##vcore.eq? (bruijn ##.sym.13 43 1) '##vcore.call/cc)) (if (bruijn ##.%p.855 0 0) ((bruijn ##.%k.309 43 0) (##string ##.string.1067)) (basic-block 1 1 (##.%p.856) ((##vcore.eq? (bruijn ##.sym.13 44 1) '##vcore.call-with-values)) (if (bruijn ##.%p.856 0 0) ((bruijn ##.%k.309 44 0) (##string ##.string.1068)) (basic-block 1 1 (##.%p.857) ((##vcore.eq? (bruijn ##.sym.13 45 1) '##vcore.values)) (if (bruijn ##.%p.857 0 0) ((bruijn ##.%k.309 45 0) (##string ##.string.1069)) (basic-block 1 1 (##.%p.858) ((##vcore.eq? (bruijn ##.sym.13 46 1) '##vcore.apply)) (if (bruijn ##.%p.858 0 0) ((bruijn ##.%k.309 46 0) (##string ##.string.1070)) (basic-block 1 1 (##.%p.859) ((##vcore.eq? (bruijn ##.sym.13 47 1) '##vcore.apply-cps)) (if (bruijn ##.%p.859 0 0) ((bruijn ##.%k.309 47 0) (##string ##.string.1071)) (basic-block 1 1 (##.%p.860) ((##vcore.eq? (bruijn ##.sym.13 48 1) '##vcore.abort)) (if (bruijn ##.%p.860 0 0) ((bruijn ##.%k.309 48 0) (##string ##.string.1072)) (basic-block 1 1 (##.%p.861) ((##vcore.eq? (bruijn ##.sym.13 49 1) '##vcore.exit)) (if (bruijn ##.%p.861 0 0) ((bruijn ##.%k.309 49 0) (##string ##.string.1073)) (basic-block 1 1 (##.%p.862) ((##vcore.eq? (bruijn ##.sym.13 50 1) '##vcore.define-global)) (if (bruijn ##.%p.862 0 0) ((bruijn ##.%k.309 50 0) (##string ##.string.1074)) (basic-block 1 1 (##.%p.863) ((##vcore.eq? (bruijn ##.sym.13 51 1) '##vcore.set-global!)) (if (bruijn ##.%p.863 0 0) ((bruijn ##.%k.309 51 0) (##string ##.string.1075)) (basic-block 1 1 (##.%p.864) ((##vcore.eq? (bruijn ##.sym.13 52 1) '##vcore.function)) (if (bruijn ##.%p.864 0 0) ((bruijn ##.%k.309 52 0) (##string ##.string.1076)) (basic-block 1 1 (##.%p.865) ((##vcore.eq? (bruijn ##.sym.13 53 1) '##vcore.function3)) (if (bruijn ##.%p.865 0 0) ((bruijn ##.%k.309 53 0) (##string ##.string.1077)) (basic-block 1 1 (##.%p.866) ((##vcore.eq? (bruijn ##.sym.13 54 1) '##vcore.set-declare!)) (if (bruijn ##.%p.866 0 0) ((bruijn ##.%k.309 54 0) (##string ##.string.1078)) (basic-block 1 1 (##.%p.867) ((##vcore.eq? (bruijn ##.sym.13 55 1) '##vcore.define)) (if (bruijn ##.%p.867 0 0) ((bruijn ##.%k.309 55 0) (##string ##.string.1074)) (basic-block 1 1 (##.%p.868) ((##vcore.eq? (bruijn ##.sym.13 56 1) '##vcore.multidefine)) (if (bruijn ##.%p.868 0 0) ((bruijn ##.%k.309 56 0) (##string ##.string.1079)) (basic-block 1 1 (##.%p.869) ((##vcore.eq? (bruijn ##.sym.13 57 1) '##vcore.lookup-library)) (if (bruijn ##.%p.869 0 0) ((bruijn ##.%k.309 57 0) (##string ##.string.1080)) (basic-block 1 1 (##.%p.870) ((##vcore.eq? (bruijn ##.sym.13 58 1) '##vcore.make-import)) (if (bruijn ##.%p.870 0 0) ((bruijn ##.%k.309 58 0) (##string ##.string.1081)) (basic-block 1 1 (##.%p.871) ((##vcore.eq? (bruijn ##.sym.13 59 1) '##vcore.load-library)) (if (bruijn ##.%p.871 0 0) ((bruijn ##.%k.309 59 0) (##string ##.string.1082)) (basic-block 1 1 (##.%p.872) ((##vcore.eq? (bruijn ##.sym.13 60 1) '##vcore.unload-library)) (if (bruijn ##.%p.872 0 0) ((bruijn ##.%k.309 60 0) (##string ##.string.1083)) (basic-block 1 1 (##.%p.873) ((##vcore.eq? (bruijn ##.sym.13 61 1) '##vcore.cons)) ((close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k7) (close _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k8)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[1]; } container;
@@ -7604,7 +7458,7 @@ void _V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name(VRuntime * runtime, VE
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D1141.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1026.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7617,7 +7471,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D1142.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1027.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7630,7 +7484,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D1143.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1028.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7643,7 +7497,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, statics->up->up->up->vars[0]), 1,
-      VEncodePointer(&_V10_Dstring_D1144.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1029.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7656,7 +7510,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 5-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1145.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1030.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7669,7 +7523,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 6-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1146.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1031.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7682,7 +7536,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 7-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1147.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1032.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7695,7 +7549,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 8-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1148.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1033.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7708,7 +7562,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 9-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1149.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1034.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7721,7 +7575,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 10-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1150.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1035.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7734,7 +7588,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 11-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1151.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1036.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7747,7 +7601,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 12-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1152.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1037.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7760,7 +7614,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 13-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1153.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1038.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7773,7 +7627,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 14-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1154.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1039.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7786,7 +7640,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 15-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1155.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1040.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7799,7 +7653,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 16-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1156.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1041.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7812,7 +7666,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 17-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1157.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1042.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7825,7 +7679,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 18-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1158.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1043.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7838,7 +7692,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 19-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1159.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1044.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7851,7 +7705,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 20-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1160.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1045.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7864,7 +7718,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 21-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1161.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1046.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7877,7 +7731,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 22-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1162.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1047.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7890,7 +7744,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 23-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1163.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1048.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7903,7 +7757,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 24-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1164.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1049.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7916,7 +7770,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 25-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1165.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1050.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7929,7 +7783,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 26-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1166.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1051.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7942,7 +7796,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 27-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1167.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1052.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7955,7 +7809,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 28-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1168.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1053.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7968,7 +7822,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 29-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1169.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1054.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7981,7 +7835,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 30-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1170.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1055.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -7994,7 +7848,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 31-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1171.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1056.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8007,7 +7861,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 32-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1172.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1057.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8020,7 +7874,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 33-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1170.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1055.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8033,7 +7887,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 34-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1173.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1058.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8046,7 +7900,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 35-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1174.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1059.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8059,7 +7913,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 36-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1175.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1060.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8072,7 +7926,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 37-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1176.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1061.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8085,7 +7939,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 38-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1177.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1062.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8098,7 +7952,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 39-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1178.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1063.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8111,7 +7965,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 40-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1179.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1064.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8124,7 +7978,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 41-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1180.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1065.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8137,7 +7991,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 42-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1181.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1066.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8150,7 +8004,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 43-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1182.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1067.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8163,7 +8017,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 44-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1183.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1068.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8176,7 +8030,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 45-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1184.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1069.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8189,7 +8043,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 46-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1185.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1070.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8202,7 +8056,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 47-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1186.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1071.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8215,7 +8069,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 48-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1187.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1072.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8228,7 +8082,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 49-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1188.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1073.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8241,7 +8095,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 50-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1189.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1074.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8254,7 +8108,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 51-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1190.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1075.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8267,7 +8121,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 52-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1191.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1076.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8280,7 +8134,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 53-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1192.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1077.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8293,7 +8147,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 54-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1193.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1078.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8306,7 +8160,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 55-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1189.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1074.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8319,7 +8173,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 56-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1194.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1079.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8332,7 +8186,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 57-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1195.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1080.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8345,7 +8199,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 58-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1196.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1081.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8358,7 +8212,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 59-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1197.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1082.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8371,7 +8225,7 @@ self->vars[0])) {
 if(VDecodeBool(
 self->vars[0])) {
     VCallDecodedWithGC(runtime, VDecodeClosureApply2(runtime, VGetArg(statics, 60-1, 0)), 1,
-      VEncodePointer(&_V10_Dstring_D1198.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1083.sym, VPOINTER_OTHER));
 } else {
     {
     VEnv * statics = self;
@@ -8506,8 +8360,6 @@ self->vars[0])) {
     }
 }
 void _V50_V0vanity_V0intrinsics_V0lookup__inline__name(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1) {
- static VDebugInfo dbg = { "_V50_V0vanity_V0intrinsics_V0lookup__inline__name" };
- VRecordCall2(runtime, &dbg);
  if(argc != 2) {
   VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0intrinsics_V0lookup__inline__name, got ~D~N"
   "-- expected 2~N"
@@ -8518,8 +8370,6 @@ void _V50_V0vanity_V0intrinsics_V0lookup__inline__name(VRuntime * runtime, VEnv 
       VEncodeBool(false));
 }
 static void _V0vanity_V0intrinsics_V20_V0lambda2(VRuntime * runtime, VEnv * statics, int argc) {
- static VDebugInfo dbg = { "_V0vanity_V0intrinsics_V20_V0lambda2" };
- VRecordCall2(runtime, &dbg);
  if(argc != 0) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0intrinsics_V20_V0lambda2, got ~D~N"
   "-- expected 0~N"
@@ -8575,8 +8425,6 @@ static void _V0vanity_V0intrinsics_V20_V0lambda2(VRuntime * runtime, VEnv * stat
     }
 }
 static void _V0vanity_V0intrinsics_V20_V0k2(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0intrinsics_V20_V0k2" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0intrinsics_V20_V0k2, got ~D~N"
   "-- expected 1~N"
@@ -8586,15 +8434,13 @@ static void _V0vanity_V0intrinsics_V20_V0k2(VRuntime * runtime, VEnv * statics, 
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // ((##intrinsic "VMultiImport") (close _V0vanity_V0intrinsics_V20_V0lambda2) (##string ##.string.1349) (bruijn ##.%x.524 0 0))
+  // ((##intrinsic "VMultiImport") (close _V0vanity_V0intrinsics_V20_V0lambda2) (##string ##.string.1227) (bruijn ##.%x.524 0 0))
     VCallFuncWithGC(runtime, (VFunc)VMultiImport, 3,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0intrinsics_V20_V0lambda2, self)))),
-      VEncodePointer(&_V10_Dstring_D1349.sym, VPOINTER_OTHER),
+      VEncodePointer(&_V10_Dstring_D1227.sym, VPOINTER_OTHER),
       _var0);
 }
 static void _V0vanity_V0intrinsics_V20_V0k1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0intrinsics_V20_V0k1" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0intrinsics_V20_V0k1, got ~D~N"
   "-- expected 1~N"
@@ -8610,8 +8456,6 @@ static void _V0vanity_V0intrinsics_V20_V0k1(VRuntime * runtime, VEnv * statics, 
       _var0);
 }
 static void _V0vanity_V0intrinsics_V20_V0lambda1(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0) {
- static VDebugInfo dbg = { "_V0vanity_V0intrinsics_V20_V0lambda1" };
- VRecordCall2(runtime, &dbg);
  if(argc != 1) {
   VErrorC(runtime, "Not enough arguments to _V0vanity_V0intrinsics_V20_V0lambda1, got ~D~N"
   "-- expected 1~N"
@@ -8621,13 +8465,17 @@ static void _V0vanity_V0intrinsics_V20_V0lambda1(VRuntime * runtime, VEnv * stat
   VEnv * self = &container.self;
   VInitEnv(self, 1, 1, statics);
   self->vars[0] = _var0;
-  // (##vcore.load-library (close _V0vanity_V0intrinsics_V20_V0k1) (##string ##.string.1350))
+  // (##vcore.load-library (close _V0vanity_V0intrinsics_V20_V0k1) (##string ##.string.1228))
     VCallFuncWithGC(runtime, (VFunc)VLoadLibrary2, 2,
       (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V0vanity_V0intrinsics_V20_V0k1, self)))),
-      VEncodePointer(&_V10_Dstring_D1350.sym, VPOINTER_OTHER));
+      VEncodePointer(&_V10_Dstring_D1228.sym, VPOINTER_OTHER));
 }
 VFunc _V0vanity_V0intrinsics_V20 = (VFunc)_V0vanity_V0intrinsics_V20_V0lambda1;
 static __attribute__((constructor)) void VDllMain1() {
+  _V0is__basic__intrinsic_Q = VEncodePointer(VInternSymbol(-832470335, &_VW_V0is__basic__intrinsic_Q.sym), VPOINTER_OTHER);
+  _V0lookup__intrinsic = VEncodePointer(VInternSymbol(1810441535, &_VW_V0lookup__intrinsic.sym), VPOINTER_OTHER);
+  _V0lookup__intrinsic__name = VEncodePointer(VInternSymbol(451875892, &_VW_V0lookup__intrinsic__name.sym), VPOINTER_OTHER);
+  _V0lookup__inline__name = VEncodePointer(VInternSymbol(-127727763, &_VW_V0lookup__inline__name.sym), VPOINTER_OTHER);
   _V10vcore_Dregister__sigint = VEncodePointer(VInternSymbol(847283797, &_VW_V10vcore_Dregister__sigint.sym), VPOINTER_OTHER);
   _V10vcore_Dset__declare_B = VEncodePointer(VInternSymbol(940374228, &_VW_V10vcore_Dset__declare_B.sym), VPOINTER_OTHER);
   _V10vcore_Dfunction3 = VEncodePointer(VInternSymbol(-501529761, &_VW_V10vcore_Dfunction3.sym), VPOINTER_OTHER);
@@ -8769,7 +8617,6 @@ static __attribute__((constructor)) void VDllMain1() {
   _V10vcore_Dcdr = VEncodePointer(VInternSymbol(-1160051211, &_VW_V10vcore_Dcdr.sym), VPOINTER_OTHER);
   _V10vcore_Dcar = VEncodePointer(VInternSymbol(976741304, &_VW_V10vcore_Dcar.sym), VPOINTER_OTHER);
   _V10vcore_Dqcons = VEncodePointer(VInternSymbol(-1450939338, &_VW_V10vcore_Dqcons.sym), VPOINTER_OTHER);
-  _V0_Mp = VEncodePointer(VInternSymbol(-513073359, &_VW_V0_Mp.sym), VPOINTER_OTHER);
   _V10vcore_Dcons = VEncodePointer(VInternSymbol(-774369668, &_VW_V10vcore_Dcons.sym), VPOINTER_OTHER);
   _V10vcore_Dunload__library = VEncodePointer(VInternSymbol(514499771, &_VW_V10vcore_Dunload__library.sym), VPOINTER_OTHER);
   _V10vcore_Dload__library = VEncodePointer(VInternSymbol(-798060666, &_VW_V10vcore_Dload__library.sym), VPOINTER_OTHER);
@@ -8833,55 +8680,6 @@ static __attribute__((constructor)) void VDllMain1() {
   _V10vcore_D_P = VEncodePointer(VInternSymbol(419804493, &_VW_V10vcore_D_P.sym), VPOINTER_OTHER);
   _V10vcore_Dexact = VEncodePointer(VInternSymbol(1125478527, &_VW_V10vcore_Dexact.sym), VPOINTER_OTHER);
   _V10vcore_Dinexact = VEncodePointer(VInternSymbol(683811701, &_VW_V10vcore_Dinexact.sym), VPOINTER_OTHER);
-  _V0lookup__inline__name = VEncodePointer(VInternSymbol(-127727763, &_VW_V0lookup__inline__name.sym), VPOINTER_OTHER);
-  _V0lookup__intrinsic__name = VEncodePointer(VInternSymbol(451875892, &_VW_V0lookup__intrinsic__name.sym), VPOINTER_OTHER);
-  _V0is__basic__intrinsic_Q = VEncodePointer(VInternSymbol(-832470335, &_VW_V0is__basic__intrinsic_Q.sym), VPOINTER_OTHER);
-  _V0sym = VEncodePointer(VInternSymbol(2139759047, &_VW_V0sym.sym), VPOINTER_OTHER);
-  _V0lookup__intrinsic = VEncodePointer(VInternSymbol(1810441535, &_VW_V0lookup__intrinsic.sym), VPOINTER_OTHER);
-  _V0intrinsics = VEncodePointer(VInternSymbol(-1100999328, &_VW_V0intrinsics.sym), VPOINTER_OTHER);
-  _V0vanity = VEncodePointer(VInternSymbol(-312377406, &_VW_V0vanity.sym), VPOINTER_OTHER);
-  _V0_Mx = VEncodePointer(VInternSymbol(-1853698215, &_VW_V0_Mx.sym), VPOINTER_OTHER);
-  _V0_Mk = VEncodePointer(VInternSymbol(-865914236, &_VW_V0_Mk.sym), VPOINTER_OTHER);
-  _V10_Dpair_D1348.first = VEncodePointer(&_V10_Dpair_D1347, VPOINTER_PAIR);
-  _V10_Dpair_D1348.rest = VEncodePointer(&_V10_Dpair_D1056, VPOINTER_PAIR);
-  _V10_Dpair_D1347.first = VEncodePointer(&_V10_Dpair_D1346, VPOINTER_PAIR);
-  _V10_Dpair_D1347.rest = VEncodePointer(&_V10_Dpair_D1048, VPOINTER_PAIR);
-  _V10_Dpair_D1346.first = _V0vanity;
-  _V10_Dpair_D1346.rest = VEncodePointer(&_V10_Dpair_D1345, VPOINTER_PAIR);
-  _V10_Dpair_D1345.first = _V0intrinsics;
-  _V10_Dpair_D1345.rest = VEncodePointer(&_V10_Dpair_D1050, VPOINTER_PAIR);
-  _V10_Dpair_D1201.first = VEncodePointer(&_V10_Dpair_D1126, VPOINTER_PAIR);
-  _V10_Dpair_D1201.rest = VEncodePointer(&_V10_Dpair_D1199, VPOINTER_PAIR);
-  _V10_Dpair_D1200.first = VEncodePointer(&_V10_Dpair_D1028, VPOINTER_PAIR);
-  _V10_Dpair_D1200.rest = VEncodePointer(&_V10_Dpair_D1199, VPOINTER_PAIR);
-  _V10_Dpair_D1199.first = VEncodePointer(&_V10_Dpair_D1120, VPOINTER_PAIR);
-  _V10_Dpair_D1199.rest = VNULL;
-  _V10_Dpair_D1140.first = VEncodePointer(&_V10_Dpair_D1139, VPOINTER_PAIR);
-  _V10_Dpair_D1140.rest = VEncodePointer(&_V10_Dpair_D1056, VPOINTER_PAIR);
-  _V10_Dpair_D1139.first = VEncodePointer(&_V10_Dpair_D1138, VPOINTER_PAIR);
-  _V10_Dpair_D1139.rest = VEncodePointer(&_V10_Dpair_D1048, VPOINTER_PAIR);
-  _V10_Dpair_D1138.first = _V0vanity;
-  _V10_Dpair_D1138.rest = VEncodePointer(&_V10_Dpair_D1137, VPOINTER_PAIR);
-  _V10_Dpair_D1137.first = _V0intrinsics;
-  _V10_Dpair_D1137.rest = VEncodePointer(&_V10_Dpair_D1136, VPOINTER_PAIR);
-  _V10_Dpair_D1136.first = _V0lookup__intrinsic__name;
-  _V10_Dpair_D1136.rest = VNULL;
-  _V10_Dpair_D1135.first = VEncodePointer(&_V10_Dpair_D1126, VPOINTER_PAIR);
-  _V10_Dpair_D1135.rest = VEncodePointer(&_V10_Dpair_D1133, VPOINTER_PAIR);
-  _V10_Dpair_D1134.first = VEncodePointer(&_V10_Dpair_D1028, VPOINTER_PAIR);
-  _V10_Dpair_D1134.rest = VEncodePointer(&_V10_Dpair_D1133, VPOINTER_PAIR);
-  _V10_Dpair_D1133.first = VEncodePointer(&_V10_Dpair_D1094, VPOINTER_PAIR);
-  _V10_Dpair_D1133.rest = VNULL;
-  _V10_Dpair_D1132.first = VEncodePointer(&_V10_Dpair_D1131, VPOINTER_PAIR);
-  _V10_Dpair_D1132.rest = VEncodePointer(&_V10_Dpair_D1056, VPOINTER_PAIR);
-  _V10_Dpair_D1131.first = VEncodePointer(&_V10_Dpair_D1130, VPOINTER_PAIR);
-  _V10_Dpair_D1131.rest = VEncodePointer(&_V10_Dpair_D1048, VPOINTER_PAIR);
-  _V10_Dpair_D1130.first = _V0vanity;
-  _V10_Dpair_D1130.rest = VEncodePointer(&_V10_Dpair_D1129, VPOINTER_PAIR);
-  _V10_Dpair_D1129.first = _V0intrinsics;
-  _V10_Dpair_D1129.rest = VEncodePointer(&_V10_Dpair_D1128, VPOINTER_PAIR);
-  _V10_Dpair_D1128.first = _V0is__basic__intrinsic_Q;
-  _V10_Dpair_D1128.rest = VNULL;
   _V40_V10vcore_Dbit__count = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbit__count", &_VW_V40_V10vcore_Dbit__count), VPOINTER_CLOSURE);
   _V40_V10vcore_Darithmetic__shift = VEncodePointer(VLookupConstant("_V40_V10vcore_Darithmetic__shift", &_VW_V40_V10vcore_Darithmetic__shift), VPOINTER_CLOSURE);
   _V40_V10vcore_Dbitwise__orc2 = VEncodePointer(VLookupConstant("_V40_V10vcore_Dbitwise__orc2", &_VW_V40_V10vcore_Dbitwise__orc2), VPOINTER_CLOSURE);
@@ -9020,146 +8818,6 @@ static __attribute__((constructor)) void VDllMain1() {
   _V40_V10vcore_Dcdr = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcdr", &_VW_V40_V10vcore_Dcdr), VPOINTER_CLOSURE);
   _V40_V10vcore_Dcar = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcar", &_VW_V40_V10vcore_Dcar), VPOINTER_CLOSURE);
   _V40_V10vcore_Dcons = VEncodePointer(VLookupConstant("_V40_V10vcore_Dcons", &_VW_V40_V10vcore_Dcons), VPOINTER_CLOSURE);
-  _V10_Dpair_D1127.first = VEncodePointer(&_V10_Dpair_D1126, VPOINTER_PAIR);
-  _V10_Dpair_D1127.rest = VEncodePointer(&_V10_Dpair_D1123, VPOINTER_PAIR);
-  _V10_Dpair_D1126.first = VEncodeBool(false);
-  _V10_Dpair_D1126.rest = VEncodePointer(&_V10_Dpair_D1125, VPOINTER_PAIR);
-  _V10_Dpair_D1125.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1125.rest = VNULL;
-  _V10_Dpair_D1124.first = VEncodePointer(&_V10_Dpair_D1028, VPOINTER_PAIR);
-  _V10_Dpair_D1124.rest = VEncodePointer(&_V10_Dpair_D1123, VPOINTER_PAIR);
-  _V10_Dpair_D1123.first = VEncodePointer(&_V10_Dpair_D1122, VPOINTER_PAIR);
-  _V10_Dpair_D1123.rest = VNULL;
-  _V10_Dpair_D1122.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1122.rest = VEncodePointer(&_V10_Dpair_D1121, VPOINTER_PAIR);
-  _V10_Dpair_D1121.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1121.rest = VEncodePointer(&_V10_Dpair_D1120, VPOINTER_PAIR);
-  _V10_Dpair_D1120.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1120.rest = VEncodePointer(&_V10_Dpair_D1119, VPOINTER_PAIR);
-  _V10_Dpair_D1119.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1119.rest = VEncodePointer(&_V10_Dpair_D1118, VPOINTER_PAIR);
-  _V10_Dpair_D1118.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1118.rest = VEncodePointer(&_V10_Dpair_D1117, VPOINTER_PAIR);
-  _V10_Dpair_D1117.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1117.rest = VEncodePointer(&_V10_Dpair_D1116, VPOINTER_PAIR);
-  _V10_Dpair_D1116.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1116.rest = VEncodePointer(&_V10_Dpair_D1115, VPOINTER_PAIR);
-  _V10_Dpair_D1115.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1115.rest = VEncodePointer(&_V10_Dpair_D1114, VPOINTER_PAIR);
-  _V10_Dpair_D1114.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1114.rest = VEncodePointer(&_V10_Dpair_D1113, VPOINTER_PAIR);
-  _V10_Dpair_D1113.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1113.rest = VEncodePointer(&_V10_Dpair_D1112, VPOINTER_PAIR);
-  _V10_Dpair_D1112.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1112.rest = VEncodePointer(&_V10_Dpair_D1111, VPOINTER_PAIR);
-  _V10_Dpair_D1111.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1111.rest = VEncodePointer(&_V10_Dpair_D1110, VPOINTER_PAIR);
-  _V10_Dpair_D1110.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1110.rest = VEncodePointer(&_V10_Dpair_D1109, VPOINTER_PAIR);
-  _V10_Dpair_D1109.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1109.rest = VEncodePointer(&_V10_Dpair_D1108, VPOINTER_PAIR);
-  _V10_Dpair_D1108.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1108.rest = VEncodePointer(&_V10_Dpair_D1107, VPOINTER_PAIR);
-  _V10_Dpair_D1107.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1107.rest = VEncodePointer(&_V10_Dpair_D1106, VPOINTER_PAIR);
-  _V10_Dpair_D1106.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1106.rest = VEncodePointer(&_V10_Dpair_D1105, VPOINTER_PAIR);
-  _V10_Dpair_D1105.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1105.rest = VEncodePointer(&_V10_Dpair_D1104, VPOINTER_PAIR);
-  _V10_Dpair_D1104.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1104.rest = VEncodePointer(&_V10_Dpair_D1103, VPOINTER_PAIR);
-  _V10_Dpair_D1103.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1103.rest = VEncodePointer(&_V10_Dpair_D1102, VPOINTER_PAIR);
-  _V10_Dpair_D1102.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1102.rest = VEncodePointer(&_V10_Dpair_D1101, VPOINTER_PAIR);
-  _V10_Dpair_D1101.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1101.rest = VEncodePointer(&_V10_Dpair_D1100, VPOINTER_PAIR);
-  _V10_Dpair_D1100.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1100.rest = VEncodePointer(&_V10_Dpair_D1099, VPOINTER_PAIR);
-  _V10_Dpair_D1099.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1099.rest = VEncodePointer(&_V10_Dpair_D1098, VPOINTER_PAIR);
-  _V10_Dpair_D1098.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1098.rest = VEncodePointer(&_V10_Dpair_D1097, VPOINTER_PAIR);
-  _V10_Dpair_D1097.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1097.rest = VEncodePointer(&_V10_Dpair_D1096, VPOINTER_PAIR);
-  _V10_Dpair_D1096.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1096.rest = VEncodePointer(&_V10_Dpair_D1095, VPOINTER_PAIR);
-  _V10_Dpair_D1095.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1095.rest = VEncodePointer(&_V10_Dpair_D1094, VPOINTER_PAIR);
-  _V10_Dpair_D1094.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1094.rest = VEncodePointer(&_V10_Dpair_D1093, VPOINTER_PAIR);
-  _V10_Dpair_D1093.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1093.rest = VEncodePointer(&_V10_Dpair_D1092, VPOINTER_PAIR);
-  _V10_Dpair_D1092.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1092.rest = VEncodePointer(&_V10_Dpair_D1091, VPOINTER_PAIR);
-  _V10_Dpair_D1091.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1091.rest = VEncodePointer(&_V10_Dpair_D1090, VPOINTER_PAIR);
-  _V10_Dpair_D1090.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1090.rest = VEncodePointer(&_V10_Dpair_D1089, VPOINTER_PAIR);
-  _V10_Dpair_D1089.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1089.rest = VEncodePointer(&_V10_Dpair_D1088, VPOINTER_PAIR);
-  _V10_Dpair_D1088.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1088.rest = VEncodePointer(&_V10_Dpair_D1087, VPOINTER_PAIR);
-  _V10_Dpair_D1087.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1087.rest = VEncodePointer(&_V10_Dpair_D1086, VPOINTER_PAIR);
-  _V10_Dpair_D1086.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1086.rest = VEncodePointer(&_V10_Dpair_D1085, VPOINTER_PAIR);
-  _V10_Dpair_D1085.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1085.rest = VEncodePointer(&_V10_Dpair_D1084, VPOINTER_PAIR);
-  _V10_Dpair_D1084.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1084.rest = VEncodePointer(&_V10_Dpair_D1083, VPOINTER_PAIR);
-  _V10_Dpair_D1083.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1083.rest = VEncodePointer(&_V10_Dpair_D1082, VPOINTER_PAIR);
-  _V10_Dpair_D1082.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1082.rest = VEncodePointer(&_V10_Dpair_D1081, VPOINTER_PAIR);
-  _V10_Dpair_D1081.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1081.rest = VEncodePointer(&_V10_Dpair_D1080, VPOINTER_PAIR);
-  _V10_Dpair_D1080.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1080.rest = VEncodePointer(&_V10_Dpair_D1079, VPOINTER_PAIR);
-  _V10_Dpair_D1079.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1079.rest = VEncodePointer(&_V10_Dpair_D1078, VPOINTER_PAIR);
-  _V10_Dpair_D1078.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1078.rest = VEncodePointer(&_V10_Dpair_D1077, VPOINTER_PAIR);
-  _V10_Dpair_D1077.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1077.rest = VEncodePointer(&_V10_Dpair_D1076, VPOINTER_PAIR);
-  _V10_Dpair_D1076.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1076.rest = VEncodePointer(&_V10_Dpair_D1075, VPOINTER_PAIR);
-  _V10_Dpair_D1075.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1075.rest = VEncodePointer(&_V10_Dpair_D1074, VPOINTER_PAIR);
-  _V10_Dpair_D1074.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1074.rest = VEncodePointer(&_V10_Dpair_D1073, VPOINTER_PAIR);
-  _V10_Dpair_D1073.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1073.rest = VEncodePointer(&_V10_Dpair_D1072, VPOINTER_PAIR);
-  _V10_Dpair_D1072.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1072.rest = VEncodePointer(&_V10_Dpair_D1071, VPOINTER_PAIR);
-  _V10_Dpair_D1071.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1071.rest = VEncodePointer(&_V10_Dpair_D1070, VPOINTER_PAIR);
-  _V10_Dpair_D1070.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1070.rest = VEncodePointer(&_V10_Dpair_D1069, VPOINTER_PAIR);
-  _V10_Dpair_D1069.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1069.rest = VEncodePointer(&_V10_Dpair_D1068, VPOINTER_PAIR);
-  _V10_Dpair_D1068.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1068.rest = VEncodePointer(&_V10_Dpair_D1067, VPOINTER_PAIR);
-  _V10_Dpair_D1067.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1067.rest = VEncodePointer(&_V10_Dpair_D1066, VPOINTER_PAIR);
-  _V10_Dpair_D1066.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1066.rest = VEncodePointer(&_V10_Dpair_D1065, VPOINTER_PAIR);
-  _V10_Dpair_D1065.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1065.rest = VEncodePointer(&_V10_Dpair_D1064, VPOINTER_PAIR);
-  _V10_Dpair_D1064.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1064.rest = VEncodePointer(&_V10_Dpair_D1063, VPOINTER_PAIR);
-  _V10_Dpair_D1063.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1063.rest = VEncodePointer(&_V10_Dpair_D1062, VPOINTER_PAIR);
-  _V10_Dpair_D1062.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1062.rest = VEncodePointer(&_V10_Dpair_D1061, VPOINTER_PAIR);
-  _V10_Dpair_D1061.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1061.rest = VEncodePointer(&_V10_Dpair_D1060, VPOINTER_PAIR);
-  _V10_Dpair_D1060.first = VEncodePointer(&_V10_Dpair_D1058, VPOINTER_PAIR);
-  _V10_Dpair_D1060.rest = VEncodePointer(&_V10_Dpair_D1059, VPOINTER_PAIR);
-  _V10_Dpair_D1059.first = VEncodePointer(&_V10_Dpair_D1047, VPOINTER_PAIR);
-  _V10_Dpair_D1059.rest = VEncodePointer(&_V10_Dpair_D1055, VPOINTER_PAIR);
-  _V10_Dpair_D1058.first = _V0_Mp;
-  _V10_Dpair_D1058.rest = VNULL;
   _V40_V10vcore_Dunload__library = VEncodePointer(VLookupConstant("_V40_V10vcore_Dunload__library", &_VW_V40_V10vcore_Dunload__library), VPOINTER_CLOSURE);
   _V40_V10vcore_Dload__library = VEncodePointer(VLookupConstant("_V40_V10vcore_Dload__library", &_VW_V40_V10vcore_Dload__library), VPOINTER_CLOSURE);
   _V40_V10vcore_Dmake__import = VEncodePointer(VLookupConstant("_V40_V10vcore_Dmake__import", &_VW_V40_V10vcore_Dmake__import), VPOINTER_CLOSURE);
@@ -9221,83 +8879,5 @@ static __attribute__((constructor)) void VDllMain1() {
   _V40_V10vcore_D_P = VEncodePointer(VLookupConstant("_V40_V10vcore_D_P", &_VW_V40_V10vcore_D_P), VPOINTER_CLOSURE);
   _V40_V10vcore_Dexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dexact", &_VW_V40_V10vcore_Dexact), VPOINTER_CLOSURE);
   _V40_V10vcore_Dinexact = VEncodePointer(VLookupConstant("_V40_V10vcore_Dinexact", &_VW_V40_V10vcore_Dinexact), VPOINTER_CLOSURE);
-  _V10_Dpair_D1057.first = VEncodePointer(&_V10_Dpair_D1049, VPOINTER_PAIR);
-  _V10_Dpair_D1057.rest = VEncodePointer(&_V10_Dpair_D1056, VPOINTER_PAIR);
-  _V10_Dpair_D1056.first = VEncodePointer(&_V10_Dpair_D1055, VPOINTER_PAIR);
-  _V10_Dpair_D1056.rest = VNULL;
-  _V10_Dpair_D1055.first = VEncodePointer(&_V10_Dpair_D1053, VPOINTER_PAIR);
-  _V10_Dpair_D1055.rest = VEncodePointer(&_V10_Dpair_D1054, VPOINTER_PAIR);
-  _V10_Dpair_D1054.first = VNULL;
-  _V10_Dpair_D1054.rest = VEncodePointer(&_V10_Dpair_D1040, VPOINTER_PAIR);
-  _V10_Dpair_D1053.first = _V0lookup__intrinsic;
-  _V10_Dpair_D1053.rest = VEncodePointer(&_V10_Dpair_D1052, VPOINTER_PAIR);
-  _V10_Dpair_D1052.first = _V0is__basic__intrinsic_Q;
-  _V10_Dpair_D1052.rest = VEncodePointer(&_V10_Dpair_D1051, VPOINTER_PAIR);
-  _V10_Dpair_D1051.first = _V0lookup__intrinsic__name;
-  _V10_Dpair_D1051.rest = VEncodePointer(&_V10_Dpair_D1050, VPOINTER_PAIR);
-  _V10_Dpair_D1050.first = _V0lookup__inline__name;
-  _V10_Dpair_D1050.rest = VNULL;
-  _V10_Dpair_D1049.first = VEncodePointer(&_V10_Dpair_D1045, VPOINTER_PAIR);
-  _V10_Dpair_D1049.rest = VEncodePointer(&_V10_Dpair_D1048, VPOINTER_PAIR);
-  _V10_Dpair_D1048.first = VEncodePointer(&_V10_Dpair_D1047, VPOINTER_PAIR);
-  _V10_Dpair_D1048.rest = VNULL;
-  _V10_Dpair_D1047.first = _V0_Mk;
-  _V10_Dpair_D1047.rest = VEncodePointer(&_V10_Dpair_D1046, VPOINTER_PAIR);
-  _V10_Dpair_D1046.first = _V0sym;
-  _V10_Dpair_D1046.rest = VNULL;
-  _V10_Dpair_D1045.first = _V0vanity;
-  _V10_Dpair_D1045.rest = VEncodePointer(&_V10_Dpair_D1044, VPOINTER_PAIR);
-  _V10_Dpair_D1044.first = _V0intrinsics;
-  _V10_Dpair_D1044.rest = VEncodePointer(&_V10_Dpair_D1043, VPOINTER_PAIR);
-  _V10_Dpair_D1043.first = _V0lookup__intrinsic;
-  _V10_Dpair_D1043.rest = VNULL;
-  _V10_Dpair_D1042.first = VEncodePointer(&_V10_Dpair_D1039, VPOINTER_PAIR);
-  _V10_Dpair_D1042.rest = VEncodePointer(&_V10_Dpair_D1041, VPOINTER_PAIR);
-  _V10_Dpair_D1041.first = VEncodePointer(&_V10_Dpair_D1040, VPOINTER_PAIR);
-  _V10_Dpair_D1041.rest = VNULL;
-  _V10_Dpair_D1040.first = VEncodePointer(&_V10_Dpair_D1031, VPOINTER_PAIR);
-  _V10_Dpair_D1040.rest = VEncodePointer(&_V10_Dpair_D1036, VPOINTER_PAIR);
-  _V10_Dpair_D1039.first = VEncodeBool(false);
-  _V10_Dpair_D1039.rest = VEncodePointer(&_V10_Dpair_D1029, VPOINTER_PAIR);
   _V40VMultiImport = VEncodePointer(VLookupConstant("_V40VMultiImport", &_VW_V40VMultiImport), VPOINTER_CLOSURE);
-  _V10_Dpair_D1038.first = VEncodePointer(&_V10_Dpair_D1033, VPOINTER_PAIR);
-  _V10_Dpair_D1038.rest = VEncodePointer(&_V10_Dpair_D1037, VPOINTER_PAIR);
-  _V10_Dpair_D1037.first = VEncodePointer(&_V10_Dpair_D1036, VPOINTER_PAIR);
-  _V10_Dpair_D1037.rest = VNULL;
-  _V10_Dpair_D1036.first = VEncodePointer(&_V10_Dpair_D1031, VPOINTER_PAIR);
-  _V10_Dpair_D1036.rest = VEncodePointer(&_V10_Dpair_D1027, VPOINTER_PAIR);
-  _V10_Dpair_D1035.first = VEncodePointer(&_V10_Dpair_D1033, VPOINTER_PAIR);
-  _V10_Dpair_D1035.rest = VEncodePointer(&_V10_Dpair_D1034, VPOINTER_PAIR);
-  _V10_Dpair_D1034.first = VEncodePointer(&_V10_Dpair_D1027, VPOINTER_PAIR);
-  _V10_Dpair_D1034.rest = VNULL;
-  _V10_Dpair_D1033.first = VEncodeBool(false);
-  _V10_Dpair_D1033.rest = VEncodePointer(&_V10_Dpair_D1032, VPOINTER_PAIR);
-  _V10_Dpair_D1032.first = VEncodePointer(&_V10_Dpair_D1031, VPOINTER_PAIR);
-  _V10_Dpair_D1032.rest = VNULL;
-  _V10_Dpair_D1031.first = _V0_Mx;
-  _V10_Dpair_D1031.rest = VNULL;
-  _V10_Dpair_D1030.first = VEncodePointer(&_V10_Dpair_D1028, VPOINTER_PAIR);
-  _V10_Dpair_D1030.rest = VEncodePointer(&_V10_Dpair_D1029, VPOINTER_PAIR);
-  _V10_Dpair_D1029.first = VNULL;
-  _V10_Dpair_D1029.rest = VNULL;
-  _V10_Dpair_D1028.first = VEncodeBool(false);
-  _V10_Dpair_D1028.rest = VEncodePointer(&_V10_Dpair_D1027, VPOINTER_PAIR);
-  _V10_Dpair_D1027.first = VEncodePointer(&_V10_Dpair_D1026, VPOINTER_PAIR);
-  _V10_Dpair_D1027.rest = VNULL;
-  _V10_Dpair_D1026.first = _V0_Mk;
-  _V10_Dpair_D1026.rest = VNULL;
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k3, VEncodePointer(&_V10_Dpair_D1124, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic_V0k4, VEncodePointer(&_V10_Dpair_D1127, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic, VEncodePointer(&_V10_Dpair_D1057, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k5, VEncodePointer(&_V10_Dpair_D1134, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q_V0k6, VEncodePointer(&_V10_Dpair_D1135, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0intrinsics_V0is__basic__intrinsic_Q, VEncodePointer(&_V10_Dpair_D1132, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k7, VEncodePointer(&_V10_Dpair_D1200, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name_V0k8, VEncodePointer(&_V10_Dpair_D1201, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__intrinsic__name, VEncodePointer(&_V10_Dpair_D1140, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V50_V0vanity_V0intrinsics_V0lookup__inline__name, VEncodePointer(&_V10_Dpair_D1348, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0intrinsics_V20_V0lambda2, VEncodePointer(&_V10_Dpair_D1042, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0intrinsics_V20_V0k2, VEncodePointer(&_V10_Dpair_D1038, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0intrinsics_V20_V0k1, VEncodePointer(&_V10_Dpair_D1035, VPOINTER_PAIR));
-  VRegisterProcDebugInfo((VFunc)_V0vanity_V0intrinsics_V20_V0lambda1, VEncodePointer(&_V10_Dpair_D1030, VPOINTER_PAIR));
 }

@@ -801,8 +801,8 @@ SYSV_CALL void VErrorC(VRuntime * runtime, const char * str, ...) {
     int len = port_ftell(&p);
     port_rewind(&p);
 
-    if(len < ret->len)
-      ret->len = len;
+    if(len + 1 <= ret->len)
+      ret->len = len + 1;
     else
       len = ret->len-1;
 
