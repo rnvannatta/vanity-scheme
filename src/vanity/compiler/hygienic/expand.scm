@@ -31,6 +31,61 @@
   (define library-paths (make-parameter '()))
   (define target-architecture (make-parameter "sysv_amd64"))
 
+  (define trace-expand? (make-parameter #f))
+  ; ring buffer format: #(serial depth name stx-in stx-out)
+  (define trace-ring (make-vector 16 #f))
+  (define trace-ring-pos 0)
+  (define timeout-poll 0)
+
+  (define (write-syntax stx) (write-syntax-impl stx 4))
+  (define (write-syntax-impl stx depth)
+    (define (join-spaced strs)
+      (if (null? strs)
+          ""
+          (let loop ((acc (car strs)) (strs (cdr strs)))
+            (if (null? strs) acc (loop (string-append acc " " (car strs)) (cdr strs))))))
+    (cond
+      ((identifier? stx)
+       (if (explain-scopes?)
+           (sprintf "~A@~A" (get-syntax-data stx) (scope-set->string (get-syntax-scopes stx)))
+           (sprintf "~A" (get-syntax-data stx))))
+      ((syntax-null? stx) "()")
+      ((syntax-pair? stx)
+       (if (<= depth 0)
+           "..."
+           (let loop ((xs stx) (breadth 8) (acc '()))
+             (cond
+               ((syntax-null? xs) (sprintf "(~A)" (join-spaced (reverse acc))))
+               ((not (syntax-pair? xs))
+                (sprintf "(~A . ~A)" (join-spaced (reverse acc)) (write-syntax-impl xs (- depth 1))))
+               ((<= breadth 0) (sprintf "(~A ...)" (join-spaced (reverse acc))))
+               (else (loop (syntax-cdr xs) (- breadth 1)
+                           (cons (write-syntax-impl (syntax-car xs) (- depth 1)) acc)))))))
+      ((syntax-vector? stx)
+       (if (<= depth 0)
+           "#(...)"
+           (sprintf "#(~A)" (join-spaced (vector->list (syntax-vector-map (lambda (e) (write-syntax-impl e (- depth 1))) stx))))))
+      (else (sprintf "~S" stx))))
+
+  (define (report-expansion-timeout!)
+    (define err (current-error-port))
+    (format err "\e[1;31mmacro expansion timed out\e[0m~N")
+    (format err "last transformer applications (oldest first):~N")
+    (let loop ((i 0) (any #f))
+      (if (< i 16)
+          (let ((e (vector-ref trace-ring (remainder (+ trace-ring-pos i) 16))))
+            (if e
+                (begin
+                  (format err "  [expand intro#~A d~A] ~A~N    in:  ~A~N    out: ~A~N"
+                          (vector-ref e 0) (vector-ref e 1) (vector-ref e 2)
+                          (write-syntax (vector-ref e 3))
+                          (if (vector-ref e 4) (write-syntax (vector-ref e 4)) "<in progress>"))
+                  (loop (+ i 1) #t))
+                (loop (+ i 1) any)))
+          (unless any (format err "  (none recorded)~N"))))
+    (format err "rerun with --trace-expand for the full log~N")
+    (compiler-error "macro expansion timed out"))
+
   (define (add-binding! id binding)
     ; We want to avoid the global scope to avoid cluttering it.
     ; It's not a correctness problem but is a perf one, and does result in a leak.
@@ -62,12 +117,32 @@
        (syntax-vector-map syntax-object->datum v))
       (else v)))
 
-  (define (check-unambiguous max-id candidate-ids)
+  (define (check-unambiguous id max-id candidate-ids)
     (define id-scopes (get-syntax-scopes (car max-id)))
     (for-each
       (lambda (e)
         (unless (lset<= scope=? (get-syntax-scopes (car e)) id-scopes)
-          (error "ambiguous id" max-id candidate-ids)))
+          (if (explain-scopes?) (explain-ambiguity id max-id candidate-ids))
+          (compiler-error "ambiguous identifier"
+            (get-syntax-data (car max-id))
+            (sprintf "use site ~A" (scope-set->string (get-syntax-scopes id)))
+            (sprintf "winner ~A" (scope-set->string id-scopes))
+            (sprintf "incomparable candidate ~A" (scope-set->string (get-syntax-scopes (car e)))))))
+      candidate-ids))
+  (define (explain-ambiguity id max-id candidate-ids)
+    ; error-path only, under --explain-scopes
+    (define err (current-error-port))
+    (define winner-scopes (get-syntax-scopes (car max-id)))
+    (format err "  use site: ~A ~A~N" (get-syntax-data id) (scope-set->string (get-syntax-scopes id)))
+    (format err "  winner:   ~A~N" (scope-set->string winner-scopes))
+    (for-each
+      (lambda (e)
+        (unless (eq? e max-id)
+          (define e-scopes (get-syntax-scopes (car e)))
+          (format err "  candidate: ~A~N" (scope-set->string e-scopes))
+          (unless (lset<= scope=? e-scopes winner-scopes)
+            (format err "    incomparable with winner; symmetric difference ~A~N"
+                    (scope-set->string (lset-xor scope=? e-scopes winner-scopes))))))
       candidate-ids))
   (define (argmax f xs)
     (cdr
@@ -96,8 +171,56 @@
     (if (null? candidate-ids)
         #f
         (let ((max-id (argmax (lambda (e) (length (get-syntax-scopes (car e)))) candidate-ids)))
-          (check-unambiguous max-id candidate-ids)
+          (check-unambiguous id max-id candidate-ids)
           (cdr max-id))))
+  (define (explain-identifier-failure id)
+    ; scans the registry because find-all-matching-bindings only walks scopes the identifier itself carries.
+    (define err (current-error-port))
+    (define sym (get-syntax-data id))
+    (define use-scopes (get-syntax-scopes id))
+    (format err "  use site: ~A ~A~N" sym (scope-set->string use-scopes))
+    (for-each
+      (lambda (sc)
+        (define p (get-scope-provenance sc))
+        (when (and (pair? p) (eq? (car p) 'intro))
+          (format err "    note: ~A was introduced by macro ~A; rerun with --trace-expand~N"
+                  (scope->string sc) (cdr p))))
+      use-scopes)
+    (let ((considered (find-all-matching-bindings id)))
+      (if (null? considered)
+          (format err "  bindings named ~A that were considered: (none)~N" sym)
+          (begin
+            (format err "  bindings named ~A that were considered:~N" sym)
+            (for-each
+              (lambda (e)
+                (format err "    ~A ~A~N" sym (scope-set->string (get-syntax-scopes (car e)))))
+              considered))))
+    (let* ((scan-scopes
+             ; dedup'd union: use-site scopes, the current global scope, and the
+             ; registry (only populated while --explain-scopes was on)
+             (let loop ((in (append use-scopes (list (global-scope)) (all-registered-scopes))) (out '()))
+               (cond ((null? in) (reverse out))
+                     ((memq (car in) out) (loop (cdr in) out))
+                     (else (loop (cdr in) (cons (car in) out))))))
+           (near-misses
+             (filter
+               (lambda (e) (not (lset<= scope=? (get-syntax-scopes (car e)) use-scopes)))
+               (append-map
+                 (lambda (sc)
+                   (filter (lambda (e) (eq? (get-syntax-data (car e)) sym))
+                           (get-scope-bindings sc)))
+                 scan-scopes))))
+      (if (null? near-misses)
+          (format err "  near misses: (none)~N")
+          (begin
+            (format err "  near misses:~N")
+            (for-each
+              (lambda (e)
+                (define b-scopes (get-syntax-scopes (car e)))
+                (define missing (filter (lambda (sc) (not (memq sc use-scopes))) b-scopes))
+                (format err "    ~A ~A~N      rejected: ~A not among the use site's scopes~N"
+                        sym (scope-set->string b-scopes) (scope-set->string missing)))
+              near-misses)))))
   (define (find-exact-binding id)
     (define id-sym (get-syntax-data id))
     (define all-id-scopes (get-syntax-scopes id))
@@ -181,14 +304,21 @@
     (cond
       ; free variable: we let them through because toplevel variables are free
       ((not binding)
-       (unless (free-vars-allowed) (compiler-error "free variable" (get-syntax-data stx)))
+       (unless (free-vars-allowed)
+         (if (explain-scopes?) (explain-identifier-failure stx))
+         (compiler-error "free variable" (get-syntax-data stx)
+                         (scope-set->string (get-syntax-scopes stx))))
        stx)
-      ((member binding special-forms) (error "bad syntax" stx))
+      ((member binding special-forms)
+       (error "bad syntax" (get-syntax-data stx)
+              (scope-set->string (get-syntax-scopes stx))))
       (else
         (define v (assoc binding env))
         (cond
           ((not v)
-           (error "not in context" (get-syntax-data stx)))
+           (if (explain-scopes?) (explain-identifier-failure stx))
+           (error "not in context" (get-syntax-data stx)
+                  (scope-set->string (get-syntax-scopes stx))))
           ((eq? (cdr v) variable) stx)
           (else (error "bad syntax" (get-syntax-data stx)))))))
 
@@ -232,24 +362,24 @@
   (define (introduced-identifier x sc)
     (make-syntax x (list (global-scope) sc)))
 
-  (define (eval-for-syntax-binding rhs)
-    (define expanded (resolve (expand-impl rhs (toplevel-expand-env))))
+  (define (eval-for-syntax-binding rhs depth)
+    (define expanded (resolve (expand-impl rhs (toplevel-expand-env) depth)))
     (eval expanded macro-expand-env))
 
-  (define (expand-let-syntax stx env)
+  (define (expand-let-syntax stx env depth)
     (define let-syntax-id (syntax-car stx))
     (define lhs-ids (syntax-map syntax-car (syntax-cadr stx)))
     (define rhss (syntax-map syntax-cadr (syntax-cadr stx)))
     (define body (syntax-car (syntax-cddr stx)))
 
-    (define sc (make-scope))
+    (define sc (make-scope 'let-syntax))
     (define ids (syntax-map (lambda (lhs-id) (flip-scope lhs-id sc)) lhs-ids))
     (define bindings (syntax-map (lambda (id) (generate-symbol (get-syntax-data id))) ids))
     (for-each (lambda (id binding) (add-binding! id binding)) ids bindings)
 
-    (let* ((rhs-vals (syntax-map eval-for-syntax-binding rhss))
+    (let* ((rhs-vals (syntax-map (cut eval-for-syntax-binding <> depth) rhss))
            (body-env (append (map (lambda (binding val) (cons binding val)) bindings rhs-vals) env)))
-      (expand-impl (flip-scope body sc) body-env)))
+      (expand-impl (flip-scope body sc) body-env depth)))
 
   (define (syntax-undot-list xs)
     (cond ((syntax-null? xs) '())
@@ -266,15 +396,15 @@
                (eq? (get-syntax-data (syntax-car expr)) '##foreign.function)))
         #;(and (pair? expr) (eqv? (car expr) 'lambda) (null? (free-variables expr)))))
 
-  (define (expand-body stx env)
-    (define introduced-sc (make-scope))
+  (define (expand-body stx env depth)
+    (define introduced-sc (make-scope 'body))
     (define (introduce x) (introduced-identifier x introduced-sc))
     ; TODO actually check for constantness
     (define (finish-constants constants body)
       (if (null? constants)
-          (expand-impl body env)
+          (expand-impl body env depth)
           (let ((expr (expand-impl `((,(introduce 'lambda) ,(map syntax-car (reverse constants)) ,body)
-                                     . ,(map syntax-cadr (reverse constants))) env)))
+                                     . ,(map syntax-cadr (reverse constants))) env depth)))
             (for-each
               (lambda (e)
                 (unless (constant-expr? (syntax-cadr e))
@@ -354,27 +484,28 @@
                    (loop
                      defines
                      constants
-                     (cons (apply-transformer (get-syntax-data (syntax-caar body)) (cdr v) (syntax-car body)) (syntax-cdr body))))
+                     (cons (apply-transformer (get-syntax-data (syntax-caar body)) (cdr v) (syntax-car body) (+ depth 1))
+                           (syntax-cdr body))))
                   (else (finish defines constants body))))
               #;(else )))
           (finish defines constants body))))
 
-  (define (expand-lambda stx env)
+  (define (expand-lambda stx env depth)
     (define formals (syntax-car stx))
     (define body (syntax-cdr stx))
 
     (define dotted? (not (syntax-proper-list? formals)))
-    (define sc (make-scope))
+    (define sc (make-scope 'lambda))
     (define ids (syntax-map (lambda (id) (flip-scope id sc)) (syntax-undot-list formals)))
     (define bindings (map (lambda (e) (generate-symbol (get-syntax-data e))) ids))
     (for-each (lambda (id binding) (add-binding! id binding)) ids bindings)
 
 
     (let* ((body-env (append (map (lambda (binding) (cons binding variable)) bindings) env))
-           (exp-body (expand-body (flip-scope body sc) body-env)))
+           (exp-body (expand-body (flip-scope body sc) body-env depth)))
       `(,(if dotted? (append (drop-right ids 1) (car (take-right ids 1))) ids) ,exp-body)))
-  (define (expand-app xs env)
-    (syntax-map (lambda (x) (expand-impl x env)) xs))
+  (define (expand-app xs env depth)
+    (syntax-map (lambda (x) (expand-impl x env depth)) xs))
 
   (define (primitive-letrec? val xs)
     (call/cc
@@ -397,13 +528,13 @@
           ((syntax-pair? val) (advanced-primitive-letrec val))
           (else (not (and (identifier? val) (member val xs free-identifier=?))))))))
 
-  (define (expand-letrec* stx env) (expand-letrec-impl stx env #f))
-  (define (expand-letrec stx env) (expand-letrec-impl stx env #t))
-  (define (expand-letrec-impl stx env letrec?)
+  (define (expand-letrec* stx env depth) (expand-letrec-impl stx env depth #f))
+  (define (expand-letrec stx env depth) (expand-letrec-impl stx env depth #t))
+  (define (expand-letrec-impl stx env depth letrec?)
     (define idvals (syntax-cadr stx))
     (define body (syntax-cddr stx))
 
-    (define introduced-sc (make-scope))
+    (define introduced-sc (make-scope 'letrec-tmp))
     (define (introduce x) (introduced-identifier x introduced-sc))
     (define (fresh-tmp)
       (let* ((sym (generate-symbol 'tmp))
@@ -411,14 +542,14 @@
         (add-binding! id sym)
         id))
 
-    (define sc (make-scope))
+    (define sc (make-scope (if letrec? 'letrec 'letrec*)))
     (define ids (syntax-map (lambda (idval) (flip-scope (syntax-car idval) sc)) idvals))
     (define bindings (map (lambda (e) (generate-symbol (get-syntax-data e))) ids))
     (for-each (lambda (id binding) (add-binding! id binding)) ids bindings)
 
     (let* ((letrec-env (append (map (lambda (binding) (cons binding variable)) bindings) env))
-           (exp-idvals (syntax-map (lambda (id idval) (list id (expand-impl (flip-scope (syntax-cadr idval) sc) letrec-env))) ids idvals))
-           (exp-body (expand-body (flip-scope body sc) letrec-env))
+           (exp-idvals (syntax-map (lambda (id idval) (list id (expand-impl (flip-scope (syntax-cadr idval) sc) letrec-env depth))) ids idvals))
+           (exp-body (expand-body (flip-scope body sc) letrec-env depth))
            (thunked-body (list (list (introduce 'lambda) '() exp-body))))
       (if letrec?
           (let loop ((idvals '())
@@ -485,13 +616,13 @@
       (set-cdr! (toplevel-expand-env) (cons (cons binding value) (cdr (toplevel-expand-env)))))
     binding)
 
-  (define (expand-toplevel-define stx)
+  (define (expand-toplevel-define stx depth)
     (define define-id (syntax-car stx))
     (define var (syntax-cadr stx))
     (define val (syntax-car (syntax-cddr stx)))
 
     (add-toplevel-binding! var variable)
-    (##global-quasisyntax (define ,var ,(expand-impl val (toplevel-expand-env)))))
+    (##global-quasisyntax (define ,var ,(expand-impl val (toplevel-expand-env) depth))))
 
   (define (syntax-proper-list? xs)
     (cond ((syntax-null? xs) #t)
@@ -504,7 +635,7 @@
           (loop (+ acc 1) (syntax-cdr xs))
           acc)))
 
-  (define (desugar-define-syntax stx)
+  (define (desugar-define-syntax stx depth)
     ; lack of ##vcore.apply aside, i'd rather do this the 'right way' than use gensym even if it works
     ; and figure out an ergonmic method of doing it the 'right way'.
     ; I guess the answer is to use apply-transformer? though that doesn't solve the global syntax problem.
@@ -529,10 +660,11 @@
                         (##vcore.apply transformer form)
                         (error ,(sprintf "incorrect number of args to macro ~A" (get-syntax-data (syntax-car var))) (- (length form) 1) ,(syntax-improper-length (syntax-cdr var)))
                         ))))))
-          stx)
+          stx
+          depth)
         stx))
 
-  (define (expand-toplevel-define-syntax stx)
+  (define (expand-toplevel-define-syntax stx depth)
     (define define-id (syntax-car stx))
     (define var (syntax-cadr stx))
     (define raw-val (syntax-car (syntax-cddr stx)))
@@ -546,7 +678,7 @@
          (else
            (format (current-error-port) "\e[1;31merror while compiling macro:\e[0m ~A~N" (get-syntax-data var))
            (raise exception)))
-        (eval-for-syntax-binding raw-val)))
+        (eval-for-syntax-binding raw-val depth)))
     (set-cdr! (assq binding (toplevel-expand-env)) val)
     '())
 
@@ -558,88 +690,20 @@
             (compiler-error "malformed exported variable" (syntax-object->datum e)))
           (syntax-cadr e))))
 
-  #;(define (expand-define-library stx env)
-    (define libname (syntax-cadr lib))
-
-    (define (make-library-output exports)
-      (expand-impl (##global-quasisyntax (quasiquote ,(map (lambda (e) (cons e (list (global-quasisyntax unquote) e))) exports)))))
-
-    (define exports '())
-    (define imports '())
-    (define constant-imports '())
-    (define mangled-imports '())
-
-    (define declares '())
-    (define defines '())
-    (define constants '())
-    (define just-defines #t)
-
-    (define (expand-library-expr expr)
-      (cond
-        ((and (syntax-pair? expr) (identifier? (syntax-car expr)))
-         (case (resolve-identifier (syntax-car expr)) #;(get-syntax-data expr)
-           ((export)
-            (set! exports (append (syntax-map export-rename (syntax-cdr expr)) exports))
-            (list))
-           ((define)
-            (let ((def (desugar-define stx)))
-              (cond 
-                ((find-exact-binding (syntax-cadr expr))
-                 (set! just-defines #f)
-                 (list (##global-quasisyntax (set! ,(syntax-cadr def) ,(expand-impl (syntax-caddr def) env)))))
-                ((or (constant-expr? (syntax-caddr expr))
-                     (lambda-expr? (syntax-caddr expr)))
-                 (set! defines (cons (expand-toplevel-define stx) defines))
-                 (list))
-                (else
-                 (set! just-defines #f)
-                 (set! defines (cons (expand-toplevel-define (list (syntax-car stx) (syntax-cadr stx) #void)) defines))
-                 (list (##global-quasisyntax (set! ,(syntax-cadr def) ,(expand-impl (syntax-caddr def) env))))))))
-        ))
-        (else
-          (set! just-defines #f)
-          (list (expand-impl expr env)))))
-    (define (qualify defines all-defines body)
-      #f)
-    #;(define basic-library
-      (let* ((expanded (syntax-map expand-library-expr (syntax-cddr lib)))
-             (body (append (apply append expanded)
-                           (list (make-library-outputs exports))))
-             (defines (if #f (qualify defines defines body) defines)))
-        (##global-quasisyntax
-          (lambda ()
-            (letrec ,(map syntax-cdr defines)
-               ,(beginify body))))))
-    ;(define free-vars (free-variables basic-library))
-
-    (define unbound-vars '())
-    (define constant-vars '())
-    (define imported-vars '())
-
-    (register-library-interface! (header-from-library (syntax-object->datum lib) (library-paths)))
-    (let ((libname (mangle-library (syntax-object->datum libname))))
-      (##global-quasisyntax
-        (,@(reverse declares)
-         (##vcore.declare ,libname
-           (lambda ()
-             ,((lambda (x) x)
-               (global-quasisyntax
-                 (##vcore.call-with-values
-                   (lambda ()
-                     ((##intrinsic "VMultiImport" 3 +)
-                      ,libname
-                      (##vcore.vector
-                        . ,(map (lambda (i) (##global-quasisyntax (##vcore.load-library ,i))) mangled-imports))
-                      . ,(map (lambda (f) (list (##global-quasisyntax quote) (cdr f))) imported-vars)))
-                   (lambda ,(map car imported-vars)
-                     ((lambda ,(map car constant-vars)
-                        ,(fold-right
-                           (lambda (e acc) (##global-quasisyntax (begin ,e ,acc)))
-                           (car (take-right (cddr basic-library) 1))
-                           (drop-right (cddr basic-library) 1)))
-                      . ,(map cdr constant-vars))))))))))))
-  (define (apply-transformer name t stx)
-    (define intro-scope (make-scope))
+  (define (apply-transformer name t stx depth)
+    (define intro-scope
+      (begin
+        (if (expansion-timed-out?) (report-expansion-timeout!))
+        (make-scope (cons 'intro name))))
+    (define entry
+      (and (symbol? name)
+           (let ((entry (vector (get-scope-serial intro-scope) depth name stx #f)))
+             (vector-set! trace-ring trace-ring-pos entry)
+             (set! trace-ring-pos (if (>= trace-ring-pos 15) 0 (+ trace-ring-pos 1)))
+             (if (trace-expand?)
+                 (format (current-error-port) "[expand intro#~A d~A] ~A~N  in:  ~A~N"
+                         (vector-ref entry 0) depth name (write-syntax stx)))
+             entry)))
     ; paint the macro color everything that isn't introduced
     (define intro-s (flip-scope stx intro-scope))
     (define transformed-s
@@ -650,88 +714,103 @@
            (raise exception)))
         (t intro-s)))
     ; then flip so that the introduced things are colored and the unintroduced are uncolored
-    (flip-scope transformed-s intro-scope))
-  (define (expand-id-application-form expand stx binding env)
+    (define out (flip-scope transformed-s intro-scope))
+    (if entry
+        (begin
+          (vector-set! entry 4 out)
+          (if (trace-expand?)
+              (format (current-error-port) "  out: ~A~N" (write-syntax out)))))
+    out)
+  (define (expand-id-application-form expand stx binding env depth rewrite?)
     (case binding
-      ((lambda) (cons (syntax-car stx) (expand-lambda (syntax-cdr stx) env)))
+      ((lambda) (cons (syntax-car stx) (expand-lambda (syntax-cdr stx) env depth)))
       ((case-lambda)
-       (cons (syntax-car stx) (syntax-map (cut expand-lambda <> env) (syntax-cdr stx))))
-      ((letrec*) (expand-letrec* stx env))
-      ((letrec) (expand-letrec stx env))
-      ((let-syntax) (expand-let-syntax stx env))
+       (cons (syntax-car stx) (syntax-map (cut expand-lambda <> env depth) (syntax-cdr stx))))
+      ((letrec*) (expand-letrec* stx env depth))
+      ((letrec) (expand-letrec stx env depth))
+      ((let-syntax) (expand-let-syntax stx env depth))
       ((syntax quote) stx)
       ((begin)
        (case (syntax-length stx)
          ((1) #void)
-         ((2) (expand-impl (syntax-cadr stx) env))
+         ((2) (expand-impl (syntax-cadr stx) env depth))
          ((3)
           (list
             (syntax-car stx)
-            (expand-impl (syntax-cadr stx) env)
-            (expand-impl (syntax-caddr stx) env)))
+            (expand-impl (syntax-cadr stx) env depth)
+            (expand-impl (syntax-caddr stx) env depth)))
          (else
           (list
             (syntax-car stx)
-            (expand-impl (syntax-cadr stx) env)
-            (expand-impl (cons (##global-quasisyntax begin) (syntax-cddr stx)) env)))))
+            (expand-impl (syntax-cadr stx) env depth)
+            (expand-impl (cons (##global-quasisyntax begin) (syntax-cddr stx)) env depth)))))
       ((if)
        (if (= (syntax-length stx) 4)
            (list (syntax-car stx)
-                 (expand-impl (syntax-cadr stx) env)
-                 (expand-impl (syntax-car (syntax-cddr stx)) env)
-                 (expand-impl (syntax-cadr (syntax-cddr stx)) env))
+                 (expand-impl (syntax-cadr stx) env depth)
+                 (expand-impl (syntax-car (syntax-cddr stx)) env depth)
+                 (expand-impl (syntax-cadr (syntax-cddr stx)) env depth))
            (list (syntax-car stx)
-                 (expand-impl (syntax-cadr stx) env)
-                 (expand-impl (syntax-car (syntax-cddr stx)) env)
+                 (expand-impl (syntax-cadr stx) env depth)
+                 (expand-impl (syntax-car (syntax-cddr stx)) env depth)
                  #f)))
       ((and)
        (case (syntax-length stx)
          ((1) #t)
-         ((2) (expand-impl (syntax-cadr stx) env))
-         ((3) (##global-quasisyntax (if ,(expand-impl (syntax-cadr stx) env) ,(expand-impl (syntax-caddr stx) env) #f)))
+         ((2) (expand-impl (syntax-cadr stx) env depth))
+         ((3) (##global-quasisyntax (if ,(expand-impl (syntax-cadr stx) env depth) ,(expand-impl (syntax-caddr stx) env depth) #f)))
          (else
           (##global-quasisyntax
-            (if ,(expand-impl (syntax-cadr stx) env)
-                ,(expand-impl (##global-quasisyntax (and . ,(syntax-cddr stx))) env)
+            (if ,(expand-impl (syntax-cadr stx) env depth)
+                ,(expand-impl (##global-quasisyntax (and . ,(syntax-cddr stx))) env depth)
                 #f)))))
       ((or)
        (case (syntax-length stx)
          ((1) #f)
-         ((2) (expand-impl (syntax-cadr stx) env))
-         ((3) (list (syntax-car stx) (expand-impl (syntax-cadr stx) env) (expand-impl (syntax-caddr stx) env)))
+         ((2) (expand-impl (syntax-cadr stx) env depth))
+         ((3) (list (syntax-car stx) (expand-impl (syntax-cadr stx) env depth) (expand-impl (syntax-caddr stx) env depth)))
          (else
           (##global-quasisyntax
-            (or ,(expand-impl (syntax-cadr stx) env)
-                ,(expand-impl (##global-quasisyntax (or . ,(syntax-cddr stx))) env))))))
+            (or ,(expand-impl (syntax-cadr stx) env depth)
+                ,(expand-impl (##global-quasisyntax (or . ,(syntax-cddr stx))) env depth))))))
       ((set!)
        (if (> (syntax-length stx) 3)
            (let ((place (syntax-caddr stx)))
              (if (identifier? place)
                  (##global-quasisyntax
-                    (set! ,place ,(expand-impl `(,(syntax-cadr stx) . ,(syntax-cddr stx)) env)))
+                    (set! ,place ,(expand-impl `(,(syntax-cadr stx) . ,(syntax-cddr stx)) env depth)))
                  (let ((val (generate-symbol 'val)))
                    (expand-impl
                      (##global-quasisyntax
                        ((##vcore.mutator ,(syntax-car place))
                         ,@(syntax-cdr place)
                         (lambda (,val) (,(syntax-cadr stx) ,val . ,(syntax-cdr (syntax-cddr stx))))))
-                     env))))
+                     env depth))))
            (let ((place (syntax-cadr stx)))
              (if (identifier? place)
-                 `(,(syntax-car stx) ,place ,(expand-impl (syntax-caddr stx) env))
+                 `(,(syntax-car stx) ,place ,(expand-impl (syntax-caddr stx) env depth))
                  (expand-impl
                    (##global-quasisyntax
                      ((##vcore.setter ,(syntax-car place)) ,@(syntax-cdr place) ,(syntax-caddr stx)))
-                   env)))))
+                   env depth)))))
       ((##intrinsic ##basic-intrinsic) stx)
       (else
         (define v (assoc binding env))
         (cond
           ((and v (procedure? (cdr v)))
-           (expand (apply-transformer (get-syntax-data (syntax-car stx)) (cdr v) stx) env))
-          (else (expand-app stx env))))))
+           ; a macro at the head of transformer output rewrites the same form
+           ; and shares its trace depth; one met while descending opens a new
+           ; level. Must stay a tail call: rewrite chains are unbounded.
+           (let ((d (if rewrite? depth (+ depth 1))))
+             (expand (apply-transformer (get-syntax-data (syntax-car stx)) (cdr v) stx d) env d)))
+          (else (expand-app stx env depth))))))
 
-  (define (expand-impl stx env)
+  (define (expand-impl stx env depth) (expand-form stx env depth #f))
+  (define (expand-form stx env depth rewrite?)
+    ; poll the wallclock sparsely: rewrite loops that never re-enter
+    ; apply-transformer (W10's cause is unknown) still hit this
+    (set! timeout-poll (if (>= timeout-poll 1023) 0 (+ timeout-poll 1)))
+    (if (and (= timeout-poll 0) (expansion-timed-out?)) (report-expansion-timeout!))
     (cond
       ((identifier? stx) (expand-identifier stx env))
       ((syntax-null? stx) (error "expand: stray () in program"))
@@ -740,10 +819,13 @@
       ((not (syntax-pair? stx)) stx)
       ((identifier? (syntax-car stx))
        (define binding (resolve-identifier (syntax-car stx)))
-       (expand-id-application-form expand-impl stx binding env))
+       (expand-id-application-form
+         (lambda (out env depth) (expand-form out env depth #t))
+         stx binding env depth rewrite?))
       (else
-       (expand-app stx env))))
-  (define (expand-toplevel stx _)
+       (expand-app stx env depth))))
+  (define (expand-toplevel stx depth) (expand-toplevel-form stx depth #f))
+  (define (expand-toplevel-form stx depth rewrite?)
     (cond
       ((identifier? stx) (list (expand-identifier stx (toplevel-expand-env))))
       ((syntax-null? stx) (error "expand: stray () in program"))
@@ -755,14 +837,16 @@
        (case binding
          ((begin)
           ; toplevel defines are splicing
-          (append-map (cut expand-toplevel <> _) (syntax-cdr stx)))
+          ; syntax-append-map, not append-map: macro-produced begins have a
+          ; syntax-object () tail that raw list traversal chokes on
+          (syntax-append-map (cut expand-toplevel <> depth) (syntax-cdr stx)))
          ((define)
-          (list (expand-toplevel-define (desugar-define stx))))
+          (list (expand-toplevel-define (desugar-define stx) depth)))
          ((define-constant)
           (let ((def (desugar-define stx)))
             (unless (constant-expr? (syntax-caddr stx))
               (compiler-error "expand: ot a constant expression" (syntax-object->datum stx)))
-            (list (expand-toplevel-define def))))
+            (list (expand-toplevel-define def depth))))
          ((define-values)
           (define formals (syntax-cadr stx))
           (define names (syntax-undot-list formals))
@@ -781,21 +865,21 @@
                            (else (car mangles))))
                       #void
                       ,@(map (lambda (name mangle) (##global-quasisyntax (set! ,name ,mangle))) names mangles)))))
-            #f))
+            depth))
          ((define-syntax)
-          (expand-toplevel-define-syntax (desugar-define-syntax stx))
+          (expand-toplevel-define-syntax (desugar-define-syntax stx depth) depth)
           '())
          ((import)
           (syntax-map (lambda (lib) (list (syntax-car stx) lib)) (syntax-cdr stx)))
          ((##vcore.declare)
           (parameterize ((toplevel-expand-env (fresh-toplevel-expand-env))
-                         (global-scope (make-scope))
+                         (global-scope (make-scope 'global))
                          (free-vars-allowed #f))
             (init-global-forms)
-            (list (list (syntax-car stx) (syntax-cadr stx) (expand-impl (syntax-caddr stx) (toplevel-expand-env))))))
+            (list (list (syntax-car stx) (syntax-cadr stx) (expand-impl (syntax-caddr stx) (toplevel-expand-env) depth)))))
          #;((define-library)
           (parameterize ((toplevel-expand-env (fresh-toplevel-expand-env))
-                         (global-scope (make-scope))
+                         (global-scope (make-scope 'global))
                          #;(free-vars-allowed #f))
             (init-global-forms)
             (expand-define-library stx (toplevel-expand-env))))
@@ -805,12 +889,22 @@
           ; call/cc to avoid double listification
           (call/cc
             (lambda (k)
-              (list (expand-id-application-form (lambda (x y) (k (expand-toplevel x y))) stx binding (toplevel-expand-env)))))
-          )))
+              (list (expand-id-application-form
+                      (lambda (out _ depth) (k (expand-toplevel-form out depth #t)))
+                      stx binding (toplevel-expand-env) depth rewrite?)))))))
       (else
-       (list (expand-app stx (toplevel-expand-env))))))
+       (list (expand-app stx (toplevel-expand-env) depth)))))
 
-  (define (expand-syntax expr paths architecture)
+  ; options: alist with any of (trace-expand . bool), (explain-scopes . bool),
+  ; (expand-timeout . seconds). The deadline is per toplevel form, since that
+  ; is expand-syntax's granularity.
+  (define (expand-syntax expr paths architecture options)
+    (define (opt k) (let ((e (assq k options))) (if e (cdr e) #f)))
+    (set-expansion-deadline!
+      (let ((secs (opt 'expand-timeout)))
+        (and secs (+ (current-jiffy) (* secs (jiffies-per-second))))))
     (parameterize ((library-paths paths)
-                   (target-architecture architecture))
-      (map resolve (expand-toplevel (datum->syntax-object (make-syntax 'dummy (list (global-scope))) expr) #f)))))
+                   (target-architecture architecture)
+                   (trace-expand? (opt 'trace-expand))
+                   (explain-scopes? (opt 'explain-scopes)))
+      (map resolve (expand-toplevel (datum->syntax-object (make-syntax 'dummy (list (global-scope))) expr) 0)))))

@@ -2,26 +2,61 @@
   (import (vanity core) (only (vanity list) lset-xor any))
   (export
     make-scope scope? scope=? get-scope-bindings set-scope-bindings! global-scope
-    ;make-syntax-id syntax-id? get-syntax-sym
+    get-scope-serial get-scope-provenance scope->string scope-set->string
+    explain-scopes? all-registered-scopes
+    set-expansion-deadline! expansion-timed-out?
     identifier?
     get-syntax-scopes set-syntax-scopes!
 
     make-syntax syntax? get-syntax-data set-syntax-data! ;get-syntax-flips set-syntax-flips!
     syntax-null? syntax-pair? syntax-cons syntax-car syntax-cdr
-    syntax-caar syntax-cadr syntax-cdar syntax-cddr syntax-map syntax-for-each syntax-list
+    syntax-caar syntax-cadr syntax-cdar syntax-cddr syntax-map syntax-append-map syntax-for-each syntax-list
     syntax-caddr
     syntax-vector? syntax-vector syntax-make-vector syntax-vector-ref syntax-vector-map syntax-vector-for-each
     lazy-flip-scope eager-flip-scope flip-scope
     )
 
+  (define explain-scopes? (make-parameter #f))
+  (define scope-registry '())
+  (define (all-registered-scopes) scope-registry)
+  ; a double: serials are display-only labels, and in vanity ints throw on overflow
+  (define scope-serial-counter 0.0)
+
   (define-record-type scope
-    (make-scope-impl bindings)
+    (make-scope-impl bindings serial provenance)
     scope?
-    (bindings get-scope-bindings set-scope-bindings!))
-  (define (make-scope)
-    (make-scope-impl '()))
+    (bindings get-scope-bindings set-scope-bindings!)
+    (serial get-scope-serial)
+    (provenance get-scope-provenance))
+  ; provenance: global, lambda, letrec, letrec*, let-syntax, body, letrec-tmp or (intro . macro-name)
+  (define make-scope
+    (case-lambda
+      (() (make-scope 'scope))
+      ((provenance)
+       (set! scope-serial-counter (+ scope-serial-counter 1.0))
+       (let ((sc (make-scope-impl '() scope-serial-counter provenance)))
+         (if (explain-scopes?) (set! scope-registry (cons sc scope-registry)))
+         sc))))
   (define-constant scope=? ##vcore.eq?)
-  (define global-scope (make-parameter (make-scope)))
+  (define global-scope (make-parameter (make-scope 'global)))
+
+  (define (scope->string sc)
+    (let ((p (get-scope-provenance sc)) (n (get-scope-serial sc)))
+      (if (and (pair? p) (eq? (car p) 'intro))
+          (sprintf "(intro#~A ~A)" n (cdr p))
+          (sprintf "~A#~A" p n))))
+  (define (scope-set->string scopes)
+    (define (join sep strs)
+      (if (null? strs)
+          ""
+          (let loop ((acc (car strs)) (strs (cdr strs)))
+            (if (null? strs) acc (loop (string-append acc sep (car strs)) (cdr strs))))))
+    (sprintf "(~A)" (join " " (map scope->string scopes))))
+
+  (define expansion-deadline #f)
+  (define (set-expansion-deadline! d) (set! expansion-deadline d))
+  (define (expansion-timed-out?)
+    (and expansion-deadline (> (current-jiffy) expansion-deadline)))
 
   ; we wrap syntax trees in this struct to defer flip operations
   (define-record-type syntax
@@ -83,8 +118,6 @@
   ; The more intuitive add-scope is not necessary, and while add-scope seems
   ; simpler, flip-scope is more scalable long term for an optimization
   ; that adds lazy scope marking to macro-expansion.
-
-  ; It's left as an exercise to the reader to implement that optimization.
   (define (eager-flip-scope v sc)
     (cond
       ((identifier? v)
@@ -175,5 +208,11 @@
      (define (syntax-vector-for-each f . args)
        (apply vector-for-each f (map syntax-unpack args)))
     ))
+
+  (define (syntax-append-map f xs)
+    (let loop ((xs xs))
+      (if (syntax-null? xs)
+          '()
+          (append (f (syntax-car xs)) (loop (syntax-cdr xs))))))
 )
 

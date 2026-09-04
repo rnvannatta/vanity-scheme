@@ -102,7 +102,17 @@ it first. Failure to add this line will result in the PR being denied.
 
 ## Language & style notes
 
-- Mostly R7RS with deliberate breaks: no `dynamic-wind`; `+` raises on fixnum overflow rather than promoting; `cond`, `case`, and `match` raise ("exhausted cond statement") when no clause matches instead of returning unspecified — excluding fallthrough is a deliberate robustness choice, so write an explicit `else` clause when falling through is intended; `integer?` and `exact?` are synonyms, both meaning "is an int" — `(integer? 2.0)` is `#f`, unlike R7RS. Mathematically inconsistent but eminently practical: don't add R7RS-style `(and (integer? x) (exact? x))` belt-and-suspenders. Extras: `match`, `do-loop`, `printf`/`sprintf`, fibers (`fiber-fork`, `fiber-map`, `async`/`await`). `IMPLEMENTED.md` tracks R7RS/SRFI coverage.
+- Mostly R7RS with deliberate breaks: no `dynamic-wind` (parameter objects are nonetheless correct across continuation jumps: `call/cc` captures the parameter binding chain in the continuation and restores it on invocation, and fibers copy it on fork, so `parameterize` unwinds properly on escape); `+` raises on fixnum overflow rather than promoting; `cond`, `case`, and `match` raise ("exhausted cond statement") when no clause matches instead of returning unspecified — excluding fallthrough is a deliberate robustness choice, so write an explicit `else` clause when falling through is intended; `integer?` and `exact?` are synonyms, both meaning "is an int" — `(integer? 2.0)` is `#f`, unlike R7RS. Mathematically inconsistent but eminently practical: don't add R7RS-style `(and (integer? x) (exact? x))` belt-and-suspenders. Extras: `match`, `do-loop`, `printf`/`sprintf`, fibers (`fiber-fork`, `fiber-map`, `async`/`await`). `IMPLEMENTED.md` tracks R7RS/SRFI coverage.
 - Compiler Scheme style: heavy use of `match`, `cut`/`cute`, named-let loops; internal special forms are `##`-prefixed (`##vcore.*`, `##qualified-lambda`, `##letrec`, ...). Errors via `compiler-error` from `(vanity compiler utils)`.
 - The compiler has no line numbers in errors and is frail to user typos — segfaults in compiler or generated code are bugs worth reporting, not shrugging off.
 - `-g` gives generated executables a call-history printout on crash; names there are CPS artifacts (`global_k5`, `_V0foo_lambda1`).
+
+## Comments
+
+Default to no comment. The code says *how*; a comment earns its place only by saying a *why* the reader can't recover from the code or from this file. Write one when:
+
+- A non-obvious invariant, ordering constraint, or hidden coupling would otherwise be broken by a reasonable-looking edit.
+- The reason for a choice lives outside the code: a runtime/GC subtlety, an ABI requirement, a bootstrap-loop constraint, a workaround for a specific bug.
+- The *how* is genuinely hard — a tricky algorithm, an unusual encoding — and a sentence saves the reader real effort.
+
+Assume the reader is a skilled Scheme and C programmer who has read this file and Vanity Scheme's documentation. So skip: restating what the code does; obvious placement or plumbing rationale ("here so X can call it"); standard idioms (why `append-map`, why an accumulator); anything that immediately follows from a documented Vanity quirk (the `else` clause in a `cond`). Keep change narration — "fixed", "was previously", "added to handle" — out of the source; that belongs in the commit message.

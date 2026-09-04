@@ -68,6 +68,9 @@
 (define purec? #f)
 (define hygiene? #f)
 (define verify? #f)
+(define trace-expand? #f)
+(define expand-timeout #f)
+(define explain-scopes? #f)
 (define main "main")
 (define cc #f)
 (define w-unbound-variables #f)
@@ -185,6 +188,9 @@
   (displayln "  --keep-temps    Keep temporary compilation files, such as C intermediates")
   (displayln "  --hygiene       Use new hygienic macro-expander (still in development)")
   (displayln "  --verify        Validate the post-expansion core IR against its grammar")
+  (displayln "  --trace-expand  Log every macro transformer application to stderr (hygienic expander only)")
+  (displayln "  --expand-timeout=<sec> Abort macro expansion after <sec> wallclock seconds with a trace-tail diagnostic (hygienic expander only)")
+  (displayln "  --explain-scopes Verbose scope-set dumps on identifier resolution errors (hygienic expander only)")
   ;(displayln "  --api=<num>    Compile with major api version 0 or 1")
   (displayln (apply string-append "  --platform=<os> Which OS to make executables for. One of:"
                     (map (lambda (p) (string-append " '" p "'")) enabled-platforms)))
@@ -212,7 +218,7 @@
 
 (with-exception-handler handle-exception
   (lambda ()
-    (let loop ((args (getopt "vghtco:I:D:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (main #t main) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark) (hygiene #f hygiene) (verify #f verify)))))
+    (let loop ((args (getopt "vghtco:I:D:O:E:W:" (command-line) '((shared #f shared) (help #f help) (api #t api) (platform #t platform) (main #t main) (cc #t cc) (version #f version) (keep-temps #f keep-temps) (makefile #f makefile) (maketarget #t maketarget) (bytecode #f bytecode) (benchmark #f benchmark) (hygiene #f hygiene) (verify #f verify) (trace-expand #f trace-expand) (expand-timeout #t expand-timeout) (explain-scopes #f explain-scopes)))))
       (if (not (null? args))
           (begin
             (case (caar args)
@@ -273,6 +279,12 @@
               ((bytecode) (set! bytecode? #t))
               ((hygiene) (set! hygiene? #t))
               ((verify) (set! verify? #t))
+              ((trace-expand) (set! trace-expand? #t))
+              ((expand-timeout)
+               (set! expand-timeout (string->number (cdar args)))
+               (if (not (and expand-timeout (or (integer? expand-timeout) (real? expand-timeout)) (> expand-timeout 0)))
+                   (compiler-error "--expand-timeout expects a positive number of seconds" (cdar args))))
+              ((explain-scopes) (set! explain-scopes? #t))
               (else (compiler-error "Unknown CLI option" (cdar args))))
             (loop (cdr args)))))
     (if (not (member platform '("linux" "windows" "emscripten")))
@@ -369,7 +381,10 @@
                          (expanded (benchmark "expand"
                                      (lambda ()
                                        (if hygiene?
-                                           (map (lambda (e) (expand-syntax e (cons path paths) architecture)) file)
+                                           (let ((expand-options `((trace-expand . ,trace-expand?)
+                                                                   (expand-timeout . ,expand-timeout)
+                                                                   (explain-scopes . ,explain-scopes?))))
+                                             (map (lambda (e) (expand-syntax e (cons path paths) architecture expand-options)) file))
                                            (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths) architecture))) file))))))
                     (if verify?
                         (benchmark "verify" (lambda () (verify-expanded (apply append expanded)))))

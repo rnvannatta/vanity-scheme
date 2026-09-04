@@ -12,6 +12,9 @@
 
   (define hygiene #f)
   (define verify #f)
+  (define trace-expand #f)
+  (define expand-timeout #f)
+  (define explain-scopes #f)
 
   (define (extension file)
     (let extension-loop ((i (- (string-length file) 1)))
@@ -47,7 +50,10 @@
     (let* ((architecture (if (eqv? platform 'windows) "windows_amd64" "sysv_amd64"))
            (expanded
              (if hygiene
-                 (expand-syntax expr (if path (cons path paths) paths) architecture)
+                 (expand-syntax expr (if path (cons path paths) paths) architecture
+                                `((trace-expand . ,trace-expand)
+                                  (expand-timeout . ,expand-timeout)
+                                  (explain-scopes . ,explain-scopes)))
                  (expand-toplevel expr (if path (cons path paths) paths) architecture)))
            (alpha
              (if hygiene
@@ -96,6 +102,9 @@
     (displayln "  --vasm      Interpret the file as a vanity bytecode assembly file regardless of file extension")
     (displayln "  --hygiene   Use new hygienic macro-expander (still in development)")
     (displayln "  --verify    Validate the post-expansion core IR against its grammar")
+    (displayln "  --trace-expand  Log every macro transformer application to stderr (hygienic expander only)")
+    (displayln "  --expand-timeout=<sec> Abort macro expansion after <sec> wallclock seconds (hygienic expander only)")
+    (displayln "  --explain-scopes Verbose scope-set dumps on identifier resolution errors (hygienic expander only)")
     (displayln "  --help      You know about this")
     (displayln "  --version   Show version and build info"))
   (define (display-version)
@@ -105,7 +114,7 @@
   (define (##vcore.vanity-main)
     (define file #f)
     (define lang #f)
-    (let main-loop ((args (getopt "I:D:l:" (command-line) '((help #f help) (version #f version) (scheme #f scheme) (vasm #f vasm) (hygiene #f hygiene) (verify #f verify)))))
+    (let main-loop ((args (getopt "I:D:l:" (command-line) '((help #f help) (version #f version) (scheme #f scheme) (vasm #f vasm) (hygiene #f hygiene) (verify #f verify) (trace-expand #f trace-expand) (expand-timeout #t expand-timeout) (explain-scopes #f explain-scopes)))))
       (if (not (null? args))
           (begin
             (case (caar args)
@@ -119,6 +128,14 @@
                (set! hygiene #t))
               ((verify)
                (set! verify #t))
+              ((trace-expand)
+               (set! trace-expand #t))
+              ((expand-timeout)
+               (set! expand-timeout (string->number (cdar args)))
+               (if (not (and expand-timeout (or (integer? expand-timeout) (real? expand-timeout)) (> expand-timeout 0)))
+                   (error "--expand-timeout expects a positive number of seconds" (cdar args))))
+              ((explain-scopes)
+               (set! explain-scopes #t))
               ((version)
                (display-version) (exit 0))
               ((help)
