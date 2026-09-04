@@ -14,7 +14,11 @@
           (else
            (cons (cons formals args) env))))
 
+  (define eval-poll 0)
   (define (eval expr env)
+    (set! eval-poll (if (>= eval-poll 1023) 0 (+ eval-poll 1)))
+    (if (and (= eval-poll 0) (expansion-timed-out?))
+        (error "macro expansion timed out (inside a macro transformer)"))
     (cond
       ((symbol? expr)
        (let ((lookup (assoc expr env)))
