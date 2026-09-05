@@ -1,23 +1,21 @@
 (define-library (vanity compiler hygienic expand)
-  (import (vanity core) (vanity list) (vanity intrinsics) (vanity compiler utils) (vanity compiler hygienic types) (vanity compiler hygienic global-forms) (vanity compiler hygienic eval))
+  (import (vanity core) (vanity list) (vanity intrinsics) (vanity compiler utils) (vanity compiler hygienic types) (vanity compiler hygienic global-forms) (vanity compiler hygienic eval)
+          (only (vanity compiler variables) mangle-library free-variables variable-pure?)
+          (only (vanity compiler library) process-import! register-library-interface!)
+          (only (vanity compiler expand) header-from-library))
   (export expand-syntax)
 
   ; WHAT REMAINS FOR A FUNCTIONABLE CORE
 
-  ; define-library
-  ; import
+  ; define-library: only export/import/define/define-constant/define-syntax/begin
+  ;   and expressions; see library-unsupported-forms for what still errors.
   ; reimport
-  ; ##vcore.declare
 
   ; ##foreign-function
   ; ##foreign-import
 
   ; cond-expand
   ; features
-
-  ; qualified lambdas
-  ; qualified case lambdas
-  ; ##letrec
 
   (define (bound-identifier=? a b)
     (and (eq? (get-syntax-data a) (get-syntax-data b))
@@ -28,6 +26,25 @@
     (eq? (get-syntax-data a) (get-syntax-data b)))
 
   (define free-vars-allowed (make-parameter #t))
+  ; (symbol . gensym) for each name a library body imports. Imports are not
+  ; bindings: an imported name is left unresolved and only swapped for its
+  ; gensym at resolve time, so the resolved body keeps legacy's shape and the
+  ; VMultiImport wiring can be derived from a free-variables walk of it. The
+  ; gensym (not the symbol) is what the receiver lambda binds, since every
+  ; formal in the program must be unique.
+  (define library-imports (make-parameter '()))
+  ; what an unbound identifier resolves to, or #f if it may not be free here
+  (define (resolve-free-identifier sym)
+    (cond
+      ((free-vars-allowed) sym)
+      ((lookup-intrinsic-name sym) sym)
+      ((assq sym (library-imports)) => cdr)
+      (else #f)))
+  (define (free-identifier-allowed? sym) (and (resolve-free-identifier sym) #t))
+  ; every global scope ever made: the program's plus one per fresh universe
+  ; (library / ##vcore.declare). The registry can't stand in for this: the
+  ; program's global scope predates --explain-scopes being switched on.
+  (define universe-scopes (list (global-scope)))
   (define library-paths (make-parameter '()))
   (define target-architecture (make-parameter "sysv_amd64"))
 
@@ -196,9 +213,9 @@
                 (format err "    ~A ~A~N" sym (scope-set->string (get-syntax-scopes (car e)))))
               considered))))
     (let* ((scan-scopes
-             ; dedup'd union: use-site scopes, the current global scope, and the
-             ; registry (only populated while --explain-scopes was on)
-             (let loop ((in (append use-scopes (list (global-scope)) (all-registered-scopes))) (out '()))
+             ; dedup'd union: use-site scopes, every universe's global scope, and
+             ; the registry (only populated while --explain-scopes was on)
+             (let loop ((in (append use-scopes universe-scopes (all-registered-scopes))) (out '()))
                (cond ((null? in) (reverse out))
                      ((memq (car in) out) (loop (cdr in) out))
                      (else (loop (cdr in) (cons (car in) out))))))
@@ -219,7 +236,13 @@
                 (define b-scopes (get-syntax-scopes (car e)))
                 (define missing (filter (lambda (sc) (not (memq sc use-scopes))) b-scopes))
                 (format err "    ~A ~A~N      rejected: ~A not among the use site's scopes~N"
-                        sym (scope-set->string b-scopes) (scope-set->string missing)))
+                        sym (scope-set->string b-scopes) (scope-set->string missing))
+                (for-each
+                  (lambda (sc)
+                    (when (and (memq sc universe-scopes) (not (eq? sc (global-scope))))
+                      (format err "      note: ~A is a different universe from this ~A; a library or ##vcore.declare body sees only its own definitions and imports~N"
+                              (scope->string sc) (scope->string (global-scope)))))
+                  missing))
               near-misses)))))
   (define (find-exact-binding id)
     (define id-sym (get-syntax-data id))
@@ -286,7 +309,7 @@
       (##vcore.append . ,syntax-append)
       ))
 
-  (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax define-syntax quote syntax if and or set! ##intrinsic ##basic-intrinsic ##vcore.declare export import))
+  (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax define-syntax quote syntax if and or set! ##intrinsic ##basic-intrinsic ##vcore.declare export import define-library))
   (define (init-global-forms)
     (for-each (lambda (sym) (add-binding! (make-syntax sym (list (global-scope))) sym)) (append special-forms global-forms)))
   (init-global-forms)
@@ -304,7 +327,7 @@
     (cond
       ; free variable: we let them through because toplevel variables are free
       ((not binding)
-       (unless (free-vars-allowed)
+       (unless (free-identifier-allowed? (get-syntax-data stx))
          (if (explain-scopes?) (explain-identifier-failure stx))
          (compiler-error "free variable" (get-syntax-data stx)
                          (scope-set->string (get-syntax-scopes stx))))
@@ -330,10 +353,13 @@
              (cons (resolve-identifier (syntax-car formals)) (resolve-formals (syntax-cdr formals))))
             (else (resolve-identifier formals))))
     (cond
+      ((resolved-form? stx) (resolved-form-datum stx))
       ((identifier? stx)
        (or (resolve-identifier stx)
            ; free variable: we let them through because toplevel variables are free
-           (and (free-vars-allowed) (get-syntax-data stx))))
+           (resolve-free-identifier (get-syntax-data stx))
+           (compiler-error "free variable" (get-syntax-data stx)
+                           (scope-set->string (get-syntax-scopes stx)))))
       ((symbol? stx) (error "resolve: naked symbol in syntax" stx))
       ((syntax-vector? stx) (syntax-object->datum stx))
       ((not (syntax-pair? stx))
@@ -362,8 +388,31 @@
   (define (introduced-identifier x sc)
     (make-syntax x (list (global-scope) sc)))
 
+  ; a toplevel form that has already been resolved to a datum; resolve passes
+  ; it through. used for e.g. define-library.
+  (define-record-type resolved-form
+    (make-resolved-form datum)
+    resolved-form?
+    (datum resolved-form-datum))
+
+  ; used for encapsulation of define-library modules and declares
+  (define (expand-in-fresh-universe provenance stx f)
+    (define outer (global-scope))
+    (define inner (make-scope provenance))
+    (set! universe-scopes (cons inner universe-scopes))
+    (parameterize ((global-scope inner)
+                   (toplevel-expand-env (fresh-toplevel-expand-env))
+                   (free-vars-allowed #f)
+                   (library-imports '()))
+      (init-global-forms)
+      (f (flip-scope (flip-scope stx outer) inner))))
+
   (define (eval-for-syntax-binding rhs depth)
-    (define expanded (resolve (expand-impl rhs (toplevel-expand-env) depth)))
+    ; transformers *currently* run against the fixed macro-expand-env,
+    ; whose names are free symbols even inside a library
+    (define expanded
+      (parameterize ((free-vars-allowed #t))
+        (resolve (expand-impl rhs (toplevel-expand-env) depth))))
     (eval expanded macro-expand-env))
 
   (define (expand-let-syntax stx env depth)
@@ -686,9 +735,195 @@
     (if (identifier? e)
         e
         (begin
-          (unless (and (syntax-pair? e) (syntax-pair? (cdr e)) (eq? (get-syntax-data (syntax-car e)) 'rename))
+          (unless (and (syntax-pair? e) (syntax-pair? (syntax-cdr e)) (eq? (get-syntax-data (syntax-car e)) 'rename))
             (compiler-error "malformed exported variable" (syntax-object->datum e)))
           (syntax-cadr e))))
+
+  (define (beginify body)
+    (fold-right
+      (lambda (e acc) (list 'begin e acc))
+      (car (take-right body 1))
+      (drop-right body 1)))
+
+  (define library-unsupported-forms
+    '(##foreign.import foreign-import define-record-type cond-expand include include-ci define-values define-library))
+
+  ; Output mirrors legacy expand-library exactly so the
+  ; two are alpha-comparable: ##letrec bindings and the define-constant
+  ; lambda in reverse source order, body set!s/expressions in source order,
+  ; each export form's names prepended as a block, and the import wiring
+  ; derived from a free-variables walk of the assembled body.
+  (define (expand-define-library stx depth)
+    (define libname (syntax-object->datum (syntax-cadr stx)))
+    (unless (and (pair? libname) (every symbol? libname))
+      (compiler-error "malformed define-library name" libname))
+    (expand-in-fresh-universe
+      (cons 'library libname)
+      (syntax-cddr stx)
+      (lambda (decls)
+        (define sc (make-scope 'library-body))
+        (define (introduce x) (introduced-identifier x sc))
+        (define (head-of form)
+          (and (syntax-pair? form) (identifier? (syntax-car form)) (resolve-identifier (syntax-car form))))
+        (define (head-symbol form)
+          (and (syntax-pair? form) (identifier? (syntax-car form)) (get-syntax-data (syntax-car form))))
+        (define (lambda-define? raw)
+          (memq (head-of raw) '(lambda case-lambda)))
+        (define (bind-definition! var form)
+          (unless (identifier? var)
+            (compiler-error "define must define a symbol" (syntax-object->datum form)))
+          (when (find-exact-binding var)
+            (compiler-error "duplicate definition in library" libname (get-syntax-data var)))
+          (add-toplevel-binding! var variable))
+
+        ; entries, newest first: (define NAME GENSYM RAW-RHS)
+        ;                        (constant NAME GENSYM RAW-RHS)
+        ;                        (expr FORM)
+        (define (finish entries exports imports constant-imports mangled-imports)
+          (define import-gensyms
+            (map (lambda (sym) (cons sym (generate-symbol sym)))
+                 (append (map car imports) (map car constant-imports))))
+          (define (import-of gensym)
+            (let ((e (find (lambda (e) (eq? (cdr e) gensym)) import-gensyms)))
+              (and e (car e))))
+          (define expanded
+            (parameterize ((library-imports import-gensyms))
+              (let* ((env (toplevel-expand-env))
+                     (expand-resolve (lambda (x) (resolve (expand-impl x env depth))))
+                     (alist-stx
+                       (fold-right
+                         (lambda (name acc)
+                           (##global-quasisyntax (##vcore.cons (##vcore.cons ',name ,(introduce name)) ,acc)))
+                         (##global-quasisyntax '())
+                         exports)))
+                (cons
+                  (expand-resolve alist-stx)
+                  (map
+                    (lambda (e)
+                      (case (car e)
+                        ((expr) (list 'expr (expand-resolve (cadr e))))
+                        (else (list (car e) (cadr e) (caddr e) (cadddr e) (expand-resolve (cadddr e))))))
+                    (reverse entries))))))
+          (define export-alist (car expanded))
+          (define entries-in-order (cdr expanded))
+          (define (entry-name e) (cadr e))
+          (define (entry-gensym e) (caddr e))
+          (define (entry-raw e) (cadddr e))
+          (define (entry-val e) (car (cddddr e)))
+          (define (letrec-init? e)
+            (or (lambda-define? (entry-raw e)) (constant-expr? (entry-raw e))))
+          (define defines (filter (lambda (e) (eq? (car e) 'define)) entries-in-order))
+          (define constants (filter (lambda (e) (eq? (car e) 'constant)) entries-in-order))
+          (define body
+            (append
+              (filter-map
+                (lambda (e)
+                  (case (car e)
+                    ((expr) (cadr e))
+                    ((define) (if (letrec-init? e) #f `(set! ,(entry-gensym e) ,(entry-val e))))
+                    (else #f)))
+                entries-in-order)
+              (list export-alist)))
+          (define all-defines
+            (map (lambda (e) `(define ,(entry-gensym e) ,(if (letrec-init? e) (entry-val e) #f))) defines))
+          (define (qualify e)
+            (define g (entry-gensym e))
+            (define val (entry-val e))
+            (define qualified-name `(,@libname ,(entry-name e)))
+            (define (pure-elsewhere?) (and (variable-pure? g all-defines) (variable-pure? g body)))
+            (cond
+              ((not (letrec-init? e)) `(,g #f))
+              ((and (pair? val) (eq? (car val) 'lambda)
+                    (variable-pure? g val) (pure-elsewhere?))
+               `(,g (##qualified-lambda ,qualified-name #t ,(cadr val) ,(caddr val))))
+              ((and (pair? val) (eq? (car val) 'case-lambda)
+                    (every (lambda (clause) (variable-pure? g `(lambda ,(car clause) ,(cadr clause)))) (cdr val))
+                    (pure-elsewhere?))
+               `(,g (##qualified-case-lambda ,qualified-name #t . ,(cdr val))))
+              (else `(,g ,val))))
+          (define constants-wrapped
+            `((lambda ,(map entry-gensym (reverse constants))
+                (##letrec ,libname ,(map qualify (reverse defines)) ,(beginify body)))
+              . ,(map entry-val (reverse constants))))
+          (define free-vars (free-variables `(lambda () ,constants-wrapped)))
+          (let loop ((free-vars free-vars) (constant-vars '()) (imported-vars '()))
+            (cond
+              ((null? free-vars)
+               (register-library-interface! (header-from-library (syntax-object->datum stx) (library-paths)))
+               (let ((mangled (mangle-library libname)))
+                 `(##vcore.declare ,mangled
+                    (lambda ()
+                      (##vcore.call-with-values
+                        (lambda ()
+                          ((##intrinsic "VMultiImport" 3 +)
+                            ,mangled
+                            (##vcore.vector . ,(map (lambda (i) `(##vcore.load-library ,i)) mangled-imports))
+                            . ,(map (lambda (f) `(quote ,(cdr f))) imported-vars)))
+                        (lambda ,(map car imported-vars)
+                          ((lambda ,(map car constant-vars) ,constants-wrapped)
+                           . ,(map cdr constant-vars))))))))
+              ; entries become (gensym . value) / (gensym . internal-name):
+              ; the gensym is the formal, the cdr what it is wired to
+              ((assv (import-of (caar free-vars)) constant-imports)
+               => (lambda (lookup) (loop (cdr free-vars) (cons (cons (caar free-vars) (cdr lookup)) constant-vars) imported-vars)))
+              ((assv (import-of (caar free-vars)) imports)
+               => (lambda (lookup) (loop (cdr free-vars) constant-vars (cons (cons (caar free-vars) (cdr lookup)) imported-vars))))
+              (else (compiler-error "library has free variable" libname (caar free-vars))))))
+
+        (let loop ((todo (flip-scope decls sc)) (entries '()) (exports '()) (imports '()) (constant-imports '()) (mangled-imports '()))
+          (if (syntax-null? todo)
+              (finish entries exports imports constant-imports mangled-imports)
+              (let* ((form (syntax-car todo))
+                     (rest (syntax-cdr todo))
+                     (head (head-of form)))
+                (case head
+                  ((begin)
+                   (loop (syntax-append (syntax-cdr form) rest) entries exports imports constant-imports mangled-imports))
+                  ((export)
+                   (loop rest entries
+                         (append (syntax-map (lambda (e) (get-syntax-data (export-rename e))) (syntax-cdr form)) exports)
+                         imports constant-imports mangled-imports))
+                  ((import)
+                   (let ((libs (syntax-map (lambda (spec) (process-import! (syntax-object->datum spec) (library-paths))) (syntax-cdr form))))
+                     (loop rest entries exports
+                           (fold append imports
+                                 (reverse (map (lambda (lib) (map (lambda (e) (cons (cdr e) (car e))) (cadr lib))) libs)))
+                           (fold append constant-imports
+                                 (reverse (map (lambda (lib) (map (lambda (e) (cons (cdr e) (car e))) (caddr lib))) libs)))
+                           (append (map mangle-library (map car libs)) mangled-imports))))
+                  ((define)
+                   (let ((def (desugar-define form)))
+                     (unless (= (syntax-length def) 3)
+                       (compiler-error "malformed define" (syntax-object->datum form)))
+                     (let* ((var (syntax-cadr def))
+                            (g (bind-definition! var form)))
+                       (loop rest (cons (list 'define (get-syntax-data var) g (syntax-caddr def)) entries)
+                             exports imports constant-imports mangled-imports))))
+                  ((define-constant)
+                   (unless (= (syntax-length form) 3)
+                     (compiler-error "malformed define-constant" (syntax-object->datum form)))
+                   (let ((var (syntax-cadr form)) (val (syntax-caddr form)))
+                     (when (syntax-pair? var)
+                       (compiler-error "define-constant does not support trivial lambdas yet" (syntax-object->datum form)))
+                     (unless (constant-expr? val)
+                       (compiler-error "define-constant does not define a constant expression" (syntax-object->datum form)))
+                     (let ((g (bind-definition! var form)))
+                       (loop rest (cons (list 'constant (get-syntax-data var) g val) entries)
+                             exports imports constant-imports mangled-imports))))
+                  ((define-syntax)
+                   (expand-toplevel-define-syntax (desugar-define-syntax form depth) depth)
+                   (loop rest entries exports imports constant-imports mangled-imports))
+                  (else
+                    (let ((v (and head (assoc head (toplevel-expand-env)))))
+                      (cond
+                        ((memq (or head (head-symbol form)) library-unsupported-forms)
+                         (compiler-error "not supported in hygienic define-library yet" (head-symbol form)))
+                        ((and v (procedure? (cdr v)))
+                         (loop (cons (apply-transformer (head-symbol form) (cdr v) form (+ depth 1)) rest)
+                               entries exports imports constant-imports mangled-imports))
+                        (else
+                          (loop rest (cons (list 'expr form) entries)
+                                exports imports constant-imports mangled-imports))))))))))))
 
   (define (apply-transformer name t stx depth)
     (define intro-scope
@@ -872,17 +1107,15 @@
          ((import)
           (syntax-map (lambda (lib) (list (syntax-car stx) lib)) (syntax-cdr stx)))
          ((##vcore.declare)
-          (parameterize ((toplevel-expand-env (fresh-toplevel-expand-env))
-                         (global-scope (make-scope 'global))
-                         (free-vars-allowed #f))
-            (init-global-forms)
-            (list (list (syntax-car stx) (syntax-cadr stx) (expand-impl (syntax-caddr stx) (toplevel-expand-env) depth)))))
-         #;((define-library)
-          (parameterize ((toplevel-expand-env (fresh-toplevel-expand-env))
-                         (global-scope (make-scope 'global))
-                         #;(free-vars-allowed #f))
-            (init-global-forms)
-            (expand-define-library stx (toplevel-expand-env))))
+          (list (make-resolved-form
+                  (expand-in-fresh-universe
+                    (cons 'declare (syntax-object->datum (syntax-cadr stx)))
+                    (syntax-caddr stx)
+                    (lambda (body)
+                      `(##vcore.declare ,(syntax-object->datum (syntax-cadr stx))
+                         ,(resolve (expand-impl body (toplevel-expand-env) depth))))))))
+         ((define-library)
+          (list (make-resolved-form (expand-define-library stx depth))))
          (else
           ; if a macro is evaluated, it returns a toplevel return, which is a list of expressions
           ; otherwise an expression is return which needs to be listified.

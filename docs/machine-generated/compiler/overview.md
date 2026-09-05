@@ -132,7 +132,8 @@ the traversal cases in every pass are kept for when it comes back.
 This grammar is enforceable: `vsc --verify` (and `vanity --verify`) validates the
 post-expansion IR against the authoritative rule list at the top of
 `src/vanity/compiler/verify.scm`, catching the wrong-arity special forms that
-otherwise silently degrade into applications; known expander deviations live in
+otherwise silently degrade into applications and `##vcore.declare` payloads with
+free variables (every later pass assumes a declare is closed); known expander deviations live in
 `EXPAND_WRINKLES.md`. Both expanders — `expand-toplevel` (legacy) and `expand-syntax` (hygienic) — take one
 toplevel datum and return a **list** of core-language toplevel forms:
 
