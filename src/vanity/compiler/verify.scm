@@ -72,6 +72,14 @@
 ;     but they aren't for version 1 of this validator. For example, ##vcore.declare
 ;     could enforce that the string is a proper _V20 mangled name.
 ;
+;   ##vcore.declare notes: the LAMBDA must be closed: its only free symbols may
+;     be BUILTINs. Toplevel defines and imports are not visible inside it, and
+;     the rest of the pipeline assumes as much: free-variables-toplevel treats a
+;     declare as contributing no free variables, and the backend would otherwise
+;     emit a weak global that silently aliases whatever the program defines
+;     under that name. A define-library expands to a closed declare by
+;     construction; this is the check for everything else.
+;
 ;   ID : a non-reserved, non-builtin symbol
 ;     notes: ids are the only symbols which can be bound, set!, defined,
 ;     imported, or exported
@@ -145,7 +153,8 @@
     (vanity hashtable)
     (vanity intrinsics)
     (vanity compiler utils)
-    (vanity compiler match))
+    (vanity compiler match)
+    (only (vanity compiler variables) free-variables))
   (export verify-expanded)
 
   (define reserved-shapes
@@ -376,7 +385,13 @@
          (if (not (string? str)) (bad! "##vcore.declare name is not a string" form ctx))
          (cond
            ((and (pair? lam) (memv (car lam) '(lambda case-lambda ##qualified-lambda ##qualified-case-lambda)))
-            (verify-expr lam ctx))
+            (let ((before violations))
+              (verify-expr lam ctx)
+              ; free-variables requires structurally valid input
+              (if (eq? before violations)
+                  (for-each
+                    (lambda (fv) (bad! "free variable in ##vcore.declare payload" (car fv) ctx))
+                    (free-variables lam)))))
            ((and (pair? lam) (eqv? (car lam) '##vcore.function))
             (bad! "##vcore.function payload in ##vcore.declare is miscompiled by cps (see EXPAND_WRINKLES.md)" form ctx))
            (else (bad! "##vcore.declare payload is not a lambda or case-lambda" form ctx))))

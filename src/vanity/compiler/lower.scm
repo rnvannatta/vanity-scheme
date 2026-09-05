@@ -240,7 +240,7 @@
            `(close ,lamb)))
         (('##qualified-case-lambda name static? debug-info . cases)
          (if (null? (cdr cases))
-             (iter-atom fun `(##qualified-lambda ,name ,static? . ,(car cases)) func-position?)
+             (iter-atom fun `(##qualified-lambda ,name ,static? ,debug-info . ,(car cases)) func-position?)
              (let ((lamb (mangle-qualified-function name)))
                (set! qualified-functions (cons (list lamb 0 #t) qualified-functions))
                (set! functions (cons `(,lamb #t ,(lift-literal debug-info) . ,(map (lambda (e) (iter-lambda fun e)) cases)) functions))
