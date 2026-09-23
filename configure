@@ -38,7 +38,7 @@ if [ -z "$minor" ]; then minor=0; fi
 if [ -z "$install" ]; then install="/usr/local"; fi
 if [ -z "$eminstall" ]; then
   if [ "$wasm_default" = "y" ]; then
-    eminstall=`em-config CACHE`;
+    eminstall=`em-config CACHE`/sysroot;
   elif [ -z $EM_CACHE ]; then
     eminstall="/usr/share/emscripten/cache/sysroot";
   else
