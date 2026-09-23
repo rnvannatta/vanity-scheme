@@ -13,8 +13,18 @@ Sets-of-scopes expander (SRFI-72-flavored). Replaces both `expand.scm` *and*
   into the top node's set, and `propogate-flips` pushes sets one level down on access
   (`syntax-car` etc.), giving O(1) marking of macro output.
 - **Scopes** are records holding a bindings alist (identifier → *binding*, a `generate-symbol`
-  gensym). Each binder form (`lambda`, `letrec*`, `let-syntax`, body scope) makes one fresh
-  scope, flips it onto the binder's ids and body, and records bindings in the scope.
+  gensym). Each binder form (`lambda`, `letrec`/`letrec*`, `let-syntax`/`letrec-syntax`, body)
+  makes one fresh scope, flips it onto the binder's ids and body, and records bindings in the
+  scope.
+- **Bodies** (`expand-body`): the body scope is flipped on first, then the scan binds each
+  definition as it meets it — `define`/`define-constant`/`define-values` to gensyms in the env,
+  `define-syntax` to a transformer evaluated on the spot (so definition-position uses after
+  it work) — splices `begin`, and applies macros in definition position. The first expression
+  ends the scan; RHSs and expressions are expanded with the complete env and lowered through
+  `lower-letrec` (the same letrec/letrec* shapes `letrec` uses). Binding during the scan is
+  what lets an internal macro's templates resolve to sibling definitions, including ones bound
+  later in the scan: both carry the body scope. `let-syntax`/`letrec-syntax` bodies are bodies
+  too; only `letrec-syntax` flips its scope onto the transformer expressions.
 - **Resolution** (`resolve-identifier`): among bindings with the same symbol whose scope set
   is a *subset* of the use site's, pick the one with the most scopes; if any candidate is
   not a subset of the winner, error "ambiguous id". Unresolved identifiers are allowed at
