@@ -28,8 +28,9 @@
     (bindings get-scope-bindings set-scope-bindings!)
     (serial get-scope-serial)
     (provenance get-scope-provenance))
-  ; provenance: global, lambda, letrec, letrec*, let-syntax, body, letrec-tmp, library-body,
-  ; (intro . macro-name), or a fresh universe: (library . libname) / (declare . cname)
+  ; provenance: global, lambda, letrec, letrec*, let-syntax, letrec-syntax, body, body-tmp,
+  ; letrec-tmp, library-body, (intro . macro-name), or a fresh universe:
+  ; (library . libname) / (declare . cname)
   (define make-scope
     (case-lambda
       (() (make-scope 'scope))

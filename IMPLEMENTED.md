@@ -597,7 +597,7 @@ Also u8vector is an alias for bytevector and all procedures exist there too
 |-------------------------------|-------------|-------------|------------|
 |define-syntax                  | Yes         |             |            |
 |let-syntax                     | Yes         |             |            |
-|letrec-syntax                  |             |             |            |
+|letrec-syntax                  | Yes         |             |            |
 |identifier?                    |             |             |            |
 |bound-identifier=?             |             |             |            |
 |free-identifier=?              |             |             |            |

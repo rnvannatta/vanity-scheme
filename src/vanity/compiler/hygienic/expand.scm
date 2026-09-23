@@ -309,7 +309,7 @@
       (##vcore.append . ,syntax-append)
       ))
 
-  (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax define-syntax quote syntax if and or set! ##intrinsic ##basic-intrinsic ##vcore.declare export import define-library))
+  (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax letrec-syntax define-syntax quote syntax if and or set! ##intrinsic ##basic-intrinsic ##vcore.declare export import define-library))
   (define (init-global-forms)
     (for-each (lambda (sym) (add-binding! (make-syntax sym (list (global-scope))) sym)) (append special-forms global-forms)))
   (init-global-forms)
@@ -415,20 +415,30 @@
         (resolve (expand-impl rhs (toplevel-expand-env) depth))))
     (eval expanded macro-expand-env))
 
-  (define (expand-let-syntax stx env depth)
-    (define let-syntax-id (syntax-car stx))
+  (define (eval-syntax-definition var raw-val depth)
+    (guard
+      (exception
+       (else
+         (format (current-error-port) "\e[1;31merror while compiling macro:\e[0m ~A~N" (get-syntax-data var))
+         (raise exception)))
+      (eval-for-syntax-binding raw-val depth)))
+
+  (define (expand-let-syntax stx env depth) (expand-let-syntax-impl stx env depth #f))
+  (define (expand-letrec-syntax stx env depth) (expand-let-syntax-impl stx env depth #t))
+  (define (expand-let-syntax-impl stx env depth rec?)
     (define lhs-ids (syntax-map syntax-car (syntax-cadr stx)))
     (define rhss (syntax-map syntax-cadr (syntax-cadr stx)))
-    (define body (syntax-car (syntax-cddr stx)))
+    (define body (syntax-cddr stx))
 
-    (define sc (make-scope 'let-syntax))
-    (define ids (syntax-map (lambda (lhs-id) (flip-scope lhs-id sc)) lhs-ids))
-    (define bindings (syntax-map (lambda (id) (generate-symbol (get-syntax-data id))) ids))
+    (define sc (make-scope (if rec? 'letrec-syntax 'let-syntax)))
+    (define ids (map (lambda (lhs-id) (flip-scope lhs-id sc)) lhs-ids))
+    (define bindings (map (lambda (id) (generate-symbol (get-syntax-data id))) ids))
     (for-each (lambda (id binding) (add-binding! id binding)) ids bindings)
 
-    (let* ((rhs-vals (syntax-map (cut eval-for-syntax-binding <> depth) rhss))
-           (body-env (append (map (lambda (binding val) (cons binding val)) bindings rhs-vals) env)))
-      (expand-impl (flip-scope body sc) body-env depth)))
+    ; the scope on a letrec-syntax rhs is what lets its templates see the sibling macros
+    (let* ((rhs-vals (map (lambda (rhs) (eval-for-syntax-binding (if rec? (flip-scope rhs sc) rhs) depth)) rhss))
+           (body-env (append (map cons bindings rhs-vals) env)))
+      (expand-body (flip-scope body sc) body-env depth)))
 
   (define (syntax-undot-list xs)
     (cond ((syntax-null? xs) '())
@@ -445,73 +455,78 @@
                (eq? (get-syntax-data (syntax-car expr)) '##foreign.function)))
         #;(and (pair? expr) (eqv? (car expr) 'lambda) (null? (free-variables expr)))))
 
+  ; Definitions are bound as they are scanned, not by a letrec* re-expansion
+  ; afterwards, and the body scope goes on before the scan starts: a
+  ; define-syntax evaluated mid-scan quotes its templates then and there, and
+  ; they resolve to sibling definitions (even ones bound later in the scan)
+  ; only because both already carry sc.
   (define (expand-body stx env depth)
-    (define introduced-sc (make-scope 'body))
+    (define introduced-sc (make-scope 'body-tmp))
     (define (introduce x) (introduced-identifier x introduced-sc))
-    ; TODO actually check for constantness
-    (define (finish-constants constants body)
+    (define sc (make-scope 'body))
+    (define (bind! id form)
+      (unless (identifier? id)
+        (compiler-error "define must define a symbol" (syntax-object->datum form)))
+      (when (find-exact-binding id)
+        (compiler-error "duplicate definition in body" (get-syntax-data id) (syntax-object->datum form)))
+      (let ((binding (generate-symbol (get-syntax-data id))))
+        (add-binding! id binding)
+        binding))
+    (define (bind-variable! id form env)
+      (cons (cons (bind! id form) variable) env))
+    ; (id rhs), with the trivial-lambda sugar desugared
+    (define (split-define def)
+      (cond
+        ((syntax-pair? (syntax-cadr def))
+         (list (syntax-car (syntax-cadr def))
+               `(,(introduce 'lambda) ,(syntax-cdr (syntax-cadr def)) . ,(syntax-cddr def))))
+        ((= (syntax-length def) 3)
+         (list (syntax-cadr def) (syntax-caddr def)))
+        (else (compiler-error "malformed define" (syntax-object->datum def)))))
+    (define (finish defines constants body env)
+      (define idvals (reverse defines))
+      (define exp-idvals (map (lambda (idval) (list (car idval) (expand-impl (cadr idval) env depth))) idvals))
+      (define exp-body (expand-impl `(,(introduce 'begin) . ,body) env depth))
+      (define letrec-body
+        (if (null? defines)
+            exp-body
+            (lower-letrec (map car idvals) exp-idvals exp-body #f)))
       (if (null? constants)
-          (expand-impl body env depth)
-          (let ((expr (expand-impl `((,(introduce 'lambda) ,(map syntax-car (reverse constants)) ,body)
-                                     . ,(map syntax-cadr (reverse constants))) env depth)))
+          letrec-body
+          (let ((constants (reverse constants)))
             (for-each
-              (lambda (e)
-                (unless (constant-expr? (syntax-cadr e))
-                  (compiler-error "expand: ot a constant expression" `(define-constant . ,(syntax-object->datum e)))))
+              (lambda (c)
+                (unless (constant-expr? (cadr c))
+                  (compiler-error "expand: not a constant expression" `(define-constant . ,(syntax-object->datum c)))))
               constants)
-            expr)))
-    (define (finish defines constants body)
-      (finish-constants
-        constants
-        (let ((body `(,(introduce 'begin) . ,body)))
-          (if (null? defines)
-              body
-              `(,(introduce 'letrec*)
-                ,(reverse defines)
-                ,body)))))
-    (let loop ((defines '()) (constants '()) (body stx))
+            `((,(introduce 'lambda) ,(map car constants) ,letrec-body)
+              . ,(map (lambda (c) (expand-impl (cadr c) env depth)) constants)))))
+    (let loop ((defines '()) (constants '()) (body (flip-scope stx sc)) (env env))
       (if (and (syntax-pair? body)
                (syntax-pair? (syntax-car body))
                (identifier? (syntax-caar body)))
           (let ((binding (resolve-identifier (syntax-caar body))))
             (case binding
               ((begin)
-               (loop defines constants (syntax-append (syntax-cdar body) (syntax-cdr body))))
+               (loop defines constants (syntax-append (syntax-cdar body) (syntax-cdr body)) env))
               ((define)
-               (let ((def (syntax-car body)))
-                  (if (syntax-pair? (syntax-cadr def))
-                      (loop
-                        (cons
-                          `(,(syntax-car (syntax-cadr def))
-                            (,(introduce 'lambda)
-                                ,(syntax-cdr (syntax-cadr def))
-                                . ,(syntax-cddr def)))
-                          defines)
-                        constants
-                        (syntax-cdr body))
-                      (loop (cons (syntax-cdr def) defines) constants (syntax-cdr body)))))
+               (let ((idval (split-define (syntax-car body))))
+                 (loop (cons idval defines) constants (syntax-cdr body)
+                       (bind-variable! (car idval) (syntax-car body) env))))
               ((define-constant)
-               (let ((def (syntax-car body)))
-                  (if (syntax-pair? (syntax-cadr def))
-                      (loop
-                        defines
-                        (cons
-                          `(,(syntax-car (syntax-cadr def))
-                            (,(introduce 'lambda)
-                                ,(syntax-cdr (syntax-cadr def))
-                                . ,(syntax-cddr def)))
-                          constants)
-                        (syntax-cdr body))
-                      (loop defines (cons (syntax-cdr def) constants) (syntax-cdr body)))))
+               (let ((idval (split-define (syntax-car body))))
+                 (loop defines (cons idval constants) (syntax-cdr body)
+                       (bind-variable! (car idval) (syntax-car body) env))))
               ((define-values)
                (define def (syntax-car body))
                (define formals (syntax-cadr def))
                (define names (syntax-undot-list formals))
                (define mangles (map (lambda (name) (introduce (generate-symbol 'tmp))) names))
                (define def-body (syntax-car (syntax-cddr def)))
+               (define dummy (introduce (generate-symbol 'dummy)))
                (loop
                  (append
-                   `((,(introduce (generate-symbol 'dummy))
+                   `((,dummy
                      (,(introduce '##vcore.call-with-values)
                       (,(introduce 'lambda) () ,def-body)
                       (,(introduce 'lambda)
@@ -525,7 +540,16 @@
                    (reverse (map (lambda (name) (list name #f)) names))
                    defines)
                  constants
-                 (syntax-cdr body)))
+                 (syntax-cdr body)
+                 (fold (lambda (id env) (bind-variable! id def env)) env (cons dummy names))))
+              ((define-syntax)
+               (let ((def (desugar-define-syntax (syntax-car body) depth)))
+                 (unless (= (syntax-length def) 3)
+                   (compiler-error "malformed define-syntax" (syntax-object->datum def)))
+                 (let* ((var (syntax-cadr def))
+                        (binding (bind! var (syntax-car body)))
+                        (val (eval-syntax-definition var (syntax-caddr def) depth)))
+                   (loop defines constants (syntax-cdr body) (cons (cons binding val) env)))))
               (else
                 (define v (assoc binding env))
                 (cond
@@ -534,10 +558,10 @@
                      defines
                      constants
                      (cons (apply-transformer (get-syntax-data (syntax-caar body)) (cdr v) (syntax-car body) (+ depth 1))
-                           (syntax-cdr body))))
-                  (else (finish defines constants body))))
-              #;(else )))
-          (finish defines constants body))))
+                           (syntax-cdr body))
+                     env))
+                  (else (finish defines constants body env))))))
+          (finish defines constants body env))))
 
   (define (expand-lambda stx env depth)
     (define formals (syntax-car stx))
@@ -583,6 +607,18 @@
     (define idvals (syntax-cadr stx))
     (define body (syntax-cddr stx))
 
+    (define sc (make-scope (if letrec? 'letrec 'letrec*)))
+    (define ids (syntax-map (lambda (idval) (flip-scope (syntax-car idval) sc)) idvals))
+    (define bindings (map (lambda (e) (generate-symbol (get-syntax-data e))) ids))
+    (for-each (lambda (id binding) (add-binding! id binding)) ids bindings)
+
+    (let* ((letrec-env (append (map (lambda (binding) (cons binding variable)) bindings) env))
+           (exp-idvals (syntax-map (lambda (id idval) (list id (expand-impl (flip-scope (syntax-cadr idval) sc) letrec-env depth))) ids idvals))
+           (exp-body (expand-body (flip-scope body sc) letrec-env depth)))
+      (lower-letrec ids exp-idvals exp-body letrec?)))
+
+  ; both shapes, body thunk included, replicate legacy's so -E0 stays alpha-equal (W13)
+  (define (lower-letrec ids exp-idvals exp-body letrec?)
     (define introduced-sc (make-scope 'letrec-tmp))
     (define (introduce x) (introduced-identifier x introduced-sc))
     (define (fresh-tmp)
@@ -591,15 +627,7 @@
         (add-binding! id sym)
         id))
 
-    (define sc (make-scope (if letrec? 'letrec 'letrec*)))
-    (define ids (syntax-map (lambda (idval) (flip-scope (syntax-car idval) sc)) idvals))
-    (define bindings (map (lambda (e) (generate-symbol (get-syntax-data e))) ids))
-    (for-each (lambda (id binding) (add-binding! id binding)) ids bindings)
-
-    (let* ((letrec-env (append (map (lambda (binding) (cons binding variable)) bindings) env))
-           (exp-idvals (syntax-map (lambda (id idval) (list id (expand-impl (flip-scope (syntax-cadr idval) sc) letrec-env depth))) ids idvals))
-           (exp-body (expand-body (flip-scope body sc) letrec-env depth))
-           (thunked-body (list (list (introduce 'lambda) '() exp-body))))
+    (let ((thunked-body (list (list (introduce 'lambda) '() exp-body))))
       (if letrec?
           (let loop ((idvals '())
                      (tmps '())
@@ -721,13 +749,7 @@
     ; have the binding be visible during macro evaluation
     (define binding (add-toplevel-binding! var #f))
     ; and then set it to the evaluated value.
-    (define val
-      (guard
-        (exception
-         (else
-           (format (current-error-port) "\e[1;31merror while compiling macro:\e[0m ~A~N" (get-syntax-data var))
-           (raise exception)))
-        (eval-for-syntax-binding raw-val depth)))
+    (define val (eval-syntax-definition var raw-val depth))
     (set-cdr! (assq binding (toplevel-expand-env)) val)
     '())
 
@@ -964,6 +986,7 @@
       ((letrec*) (expand-letrec* stx env depth))
       ((letrec) (expand-letrec stx env depth))
       ((let-syntax) (expand-let-syntax stx env depth))
+      ((letrec-syntax) (expand-letrec-syntax stx env depth))
       ((syntax quote) stx)
       ((begin)
        (case (syntax-length stx)
