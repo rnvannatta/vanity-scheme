@@ -14,6 +14,8 @@
     syntax-caddr
     syntax-vector? syntax-vector syntax-make-vector syntax-vector-ref syntax-vector-map syntax-vector-for-each
     lazy-flip-scope eager-flip-scope flip-scope
+    syntax-object->datum datum->syntax-object
+    syntax-length syntax-proper-list? syntax-undot-list syntax->list syntax-keyword?
     )
 
   (define explain-scopes? (make-parameter #f))
@@ -216,5 +218,52 @@
       (if (syntax-null? xs)
           '()
           (append (f (syntax-car xs)) (loop (syntax-cdr xs))))))
+
+  (define (datum->syntax-object template v)
+    (cond
+      ((identifier? v) v)
+      ((symbol? v) (make-syntax v (get-syntax-scopes template)))
+      ((syntax-pair? v)
+       (syntax-cons
+         (datum->syntax-object template (syntax-car v))
+         (datum->syntax-object template (syntax-cdr v))))
+      ((syntax-vector? v)
+       (syntax-vector-map (cut datum->syntax-object template <>) v))
+      (else v)))
+
+  (define (syntax-object->datum v)
+    (cond
+      ((identifier? v) (get-syntax-data v))
+      ((syntax-pair? v)
+       (cons
+         (syntax-object->datum (syntax-car v))
+         (syntax-object->datum (syntax-cdr v))))
+      ((syntax-vector? v)
+       (syntax-vector-map syntax-object->datum v))
+      (else v)))
+
+  (define (syntax-length xs)
+    (let loop ((acc 0) (xs xs))
+      (if (syntax-null? xs) acc (loop (+ acc 1) (syntax-cdr xs)))))
+
+  (define (syntax-proper-list? xs)
+    (cond ((syntax-null? xs) #t)
+          ((syntax-pair? xs) (syntax-proper-list? (syntax-cdr xs)))
+          (else #f)))
+
+  (define (syntax-undot-list xs)
+    (cond ((syntax-null? xs) '())
+          ((syntax-pair? xs) (cons (syntax-car xs) (syntax-undot-list (syntax-cdr xs))))
+          (else (cons xs '()))))
+
+  ; raw spine, syntax elements: what ,@ in ##global-quasisyntax needs, since
+  ; it becomes a raw ##vcore.append
+  (define (syntax->list xs)
+    (if (syntax-null? xs)
+        '()
+        (cons (syntax-car xs) (syntax->list (syntax-cdr xs)))))
+
+  (define (syntax-keyword? x sym)
+    (and (identifier? x) (eq? (get-syntax-data x) sym)))
 )
 

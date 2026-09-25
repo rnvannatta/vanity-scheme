@@ -858,26 +858,38 @@
 
       (('guard (var . clauses) . body)
        (let ((guard-k (gensym 'guard-k))
+             (handler (gensym 'handler))
              (condition (gensym 'condition))
              (handler-k (gensym 'handler-k))
+             (outer (gensym 'outer))
+             (ret (gensym 'ret))
              (args (gensym 'args)))
          (expand-syntax
-         `((call/cc
+         `((##vcore.call/cc
             (lambda (,guard-k)
-              (with-exception-handler
-                (lambda (,condition)
-                  ((call/cc
-                     (lambda (,handler-k)
-                       (,guard-k
-                         (lambda ()
-                           (let ((,var ,condition))
-                             ,(if (assv 'else clauses)
-                                  `(cond . ,clauses)
-                                  `(cond ,@clauses (else (,handler-k (lambda () (raise-continuable ,condition)))))))))))))
-                (lambda ()
-                  (##vcore.call-with-values
-                    (lambda () . ,body)
-                    (lambda ,args (,guard-k (lambda () (apply values ,args)))))))))))))
+              (let ((,handler
+                      (lambda (,condition)
+                        ((##vcore.call/cc
+                           (lambda (,handler-k)
+                             (,guard-k
+                               (lambda ()
+                                 (let ((,var ,condition))
+                                   ,(if (assv 'else clauses)
+                                        `(cond . ,clauses)
+                                        `(cond ,@clauses
+                                               (else
+                                                 (,handler-k
+                                                   (lambda ()
+                                                     (let* ((,outer (##vcore.get-exception-handler))
+                                                            (,ret (,outer ,condition)))
+                                                       (##vcore.push-exception-handler ,outer)
+                                                       ,ret)))))))))))))))
+                ; with-exception-handler, inlined: its pop is unreachable
+                ; here since the body always escapes through guard-k
+                (##vcore.push-exception-handler ,handler)
+                (##vcore.call-with-values
+                  (lambda () . ,body)
+                  (lambda ,args (,guard-k (lambda () (##vcore.apply ##vcore.values ,args))))))))))))
 
       (('let*-values ((xs producer) . rest) . body)
        (expand-syntax `(##vcore.call-with-values (lambda () ,producer) (lambda ,xs (let*-values ,rest . ,body)))))
@@ -941,17 +953,17 @@
        (if (null? body)
            (expand-syntax `(or ,p (cond . ,rest)))
            (expand-syntax `(if ,p (let () . ,body) (cond . ,rest)))))
-      (('cond) `(error "exhausted cond statement"))
+      (('cond) `(##vcore.raise (##vcore.record #f 'error "exhausted cond statement" '())))
       (('cond . noise) (compiler-error "malformed cond" `(cond . ,noise)))
 
       (('case x . rest) (let ((foobar (gensym "x"))) (expand-syntax `(let ((,foobar ,x)) (case-iter ,foobar . ,rest)))))
       (('case-iter x ('else . body)) (expand-syntax `(let () . ,body)))
       (('case-iter x ((toks ...) . body) . rest)
        (expand-syntax
-         `(if (or . ,(map (lambda (y) `(eqv? ,x (quote ,y))) toks))
+         `(if (or . ,(map (lambda (y) `(##vcore.eq? ,x (quote ,y))) toks))
               (let () . ,body)
               (case-iter ,x . ,rest))))
-      (('case-iter x) `(error "exhausted case statement"))
+      (('case-iter x) `(##vcore.raise (##vcore.record #f 'error "exhausted case statement" '())))
       ; FIXME don't expose case iteration like this - should probably compile to hash table or memv?
 
       (('cut f . args) (expand-syntax `(cut-iter () () . ,(cons f args))))
@@ -960,7 +972,7 @@
       (('cut-iter xs args '<...>)
        (let ((rest (gensym 'rest)))
          (expand-syntax
-           `(lambda (,@(reverse xs) . ,rest) (apply ,@(reverse args) ,rest)))))
+           `(lambda (,@(reverse xs) . ,rest) (##vcore.apply ,@(reverse args) ,rest)))))
       (('cut-iter xs args x . rest) (expand-syntax `(cut-iter ,xs (,x . ,args) . ,rest)))
       (('cut . noise) (compiler-error "malformed cut" `(cut . ,noise)))
 
@@ -970,7 +982,7 @@
       (('cute-iter xs args '<...>)
        (let ((rest (gensym 'rest)))
          (expand-syntax
-           `(lambda (,@(reverse xs) . ,rest) (apply ,@(reverse args) ,rest)))))
+           `(lambda (,@(reverse xs) . ,rest) (##vcore.apply ,@(reverse args) ,rest)))))
       (('cute-iter xs args x . rest)
        (let ((tmp (gensym 'tmp)))
          (expand-syntax `(let ((,tmp ,x)) (cute-iter ,xs (,tmp . ,args) . ,rest)))))

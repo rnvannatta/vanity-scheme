@@ -55,10 +55,10 @@
           waybill
           (make-entry weakness stability clearinghouse key datum))))
 
-  ; how displaced a hash is from its preferred spot
-  (define (hash-slot hash capacity)
+  (define (hash->slot hash capacity)
     (bitwise-and hash (- capacity 1)))
 
+  ; how displaced a hash is from its preferred spot
   (define (hash-poverty hash idx capacity)
     (bitwise-and
       (- idx (bitwise-and hash (- capacity 1)))
@@ -89,7 +89,7 @@
       for x across vec
       for idx from 0
       let ihash = (if x (waybill-address x))
-      let islot = (if x (hash-slot ihash capacity))
+      let islot = (if x (hash->slot ihash capacity))
       let ipoverty = (if x (hash-poverty ihash idx capacity))
       ; sequence< doesn't work correctly for gaps of capacity/2 or greater
       when (and ipoverty (>= ipoverty (quotient capacity 2)))
@@ -100,7 +100,7 @@
              let jdx = (bitwise-and (- idx j) (- capacity 1))
              let y = (vector-ref vec jdx)
              let jhash = (if y (waybill-address y))
-             let jslot = (if y (hash-slot jhash capacity))
+             let jslot = (if y (hash->slot jhash capacity))
              let jpoverty = (if y (hash-poverty jhash jdx capacity))
              when (and jpoverty (>= jpoverty (quotient capacity 2)))
                do (error "probe length is too long to validate" jpoverty)

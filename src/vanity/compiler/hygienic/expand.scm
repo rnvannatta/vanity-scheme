@@ -9,13 +9,9 @@
 
   ; define-library: only export/import/define/define-constant/define-syntax/begin
   ;   and expressions; see library-unsupported-forms for what still errors.
-  ; reimport
 
   ; ##foreign-function
   ; ##foreign-import
-
-  ; cond-expand
-  ; features
 
   (define (bound-identifier=? a b)
     (and (eq? (get-syntax-data a) (get-syntax-data b))
@@ -45,7 +41,6 @@
   ; (library / ##vcore.declare). The registry can't stand in for this: the
   ; program's global scope predates --explain-scopes being switched on.
   (define universe-scopes (list (global-scope)))
-  (define library-paths (make-parameter '()))
   (define target-architecture (make-parameter "sysv_amd64"))
 
   (define trace-expand? (make-parameter #f))
@@ -110,29 +105,6 @@
            (scope (car scopes))
            (scope (if (and (eq? scope (global-scope)) (pair? (cdr scopes))) (cadr scopes) scope)))
       (set-scope-bindings! scope (cons (cons id binding) (get-scope-bindings scope)))))
-
-  (define (datum->syntax-object template v)
-    (cond
-      ((identifier? v) v)
-      ((symbol? v) (make-syntax v (get-syntax-scopes template)))
-      ((syntax-pair? v)
-       (syntax-cons
-         (datum->syntax-object template (syntax-car v))
-         (datum->syntax-object template (syntax-cdr v))))
-      ((syntax-vector? v)
-       (syntax-vector-map (cut datum->syntax-object template <>) v))
-      (else v)))
-
-  (define (syntax-object->datum v)
-    (cond
-      ((identifier? v) (get-syntax-data v))
-      ((syntax-pair? v)
-       (cons
-         (syntax-object->datum (syntax-car v))
-         (syntax-object->datum (syntax-cdr v))))
-      ((syntax-vector? v)
-       (syntax-vector-map syntax-object->datum v))
-      (else v)))
 
   (define (check-unambiguous id max-id candidate-ids)
     (define id-scopes (get-syntax-scopes (car max-id)))
@@ -258,24 +230,16 @@
                (cdar bindings))
               (else (loop2 (cdr bindings))))))))
 
-  (define (syntax-copy-list lst)
-    (if (syntax-null? lst)
-        '()
-        (syntax-cons (syntax-car lst) (syntax-copy-list (syntax-cdr lst)))))
   (define (syntax-apply f . args)
     (define fresh-args
       (let loop ((args args))
         (if (null? (cdr args))
-            (cons (syntax-copy-list (car args)) '())
+            (cons (syntax->list (car args)) '())
             (cons (car args) (loop (cdr args))))))
     (apply apply f fresh-args))
 
   (define (syntax-append a b)
-    (##vcore.append (syntax-copy-list a) (syntax-copy-list b)))
-
-  (define (syntax-length xs)
-    (let loop ((acc 0) (xs xs))
-      (if (syntax-null? xs) acc (loop (+ acc 1) (syntax-cdr xs)))))
+    (##vcore.append (syntax->list a) (syntax->list b)))
 
   (define macro-expand-env
     `((datum->syntax-object . ,datum->syntax-object)
@@ -382,6 +346,8 @@
            `(quote ,(syntax-object->datum (syntax-cadr stx))))
           ((syntax)
            `(quote ,(syntax-cadr stx)))
+          ; operands are names and arities, e.g. the + in ("VName" 1 +)
+          ((##intrinsic ##basic-intrinsic) (syntax-object->datum stx))
           ((if) `(if . ,(resolve (syntax-cdr stx))))
           (else (syntax-map resolve stx))))))
 
@@ -439,11 +405,6 @@
     (let* ((rhs-vals (map (lambda (rhs) (eval-for-syntax-binding (if rec? (flip-scope rhs sc) rhs) depth)) rhss))
            (body-env (append (map cons bindings rhs-vals) env)))
       (expand-body (flip-scope body sc) body-env depth)))
-
-  (define (syntax-undot-list xs)
-    (cond ((syntax-null? xs) '())
-          ((syntax-pair? xs) (cons (syntax-car xs) (syntax-undot-list (syntax-cdr xs))))
-          (else (cons xs '()))))
 
   (define (constant-expr? expr)
     (or (and (identifier? expr) (lookup-intrinsic-name (get-syntax-data expr)))
@@ -701,11 +662,6 @@
     (add-toplevel-binding! var variable)
     (##global-quasisyntax (define ,var ,(expand-impl val (toplevel-expand-env) depth))))
 
-  (define (syntax-proper-list? xs)
-    (cond ((syntax-null? xs) #t)
-          ((syntax-pair? xs) (syntax-proper-list? (syntax-cdr xs)))
-          (else #f)))
-
   (define (syntax-improper-length xs)
     (let loop ((acc 0) (xs xs))
       (if (syntax-pair? xs)
@@ -768,7 +724,7 @@
       (drop-right body 1)))
 
   (define library-unsupported-forms
-    '(##foreign.import foreign-import define-record-type cond-expand include include-ci define-values define-library))
+    '(##foreign.import foreign-import include include-ci define-values define-library))
 
   ; Output mirrors legacy expand-library exactly so the
   ; two are alpha-comparable: ##letrec bindings and the define-constant
@@ -1032,24 +988,31 @@
             (or ,(expand-impl (syntax-cadr stx) env depth)
                 ,(expand-impl (##global-quasisyntax (or . ,(syntax-cddr stx))) env depth))))))
       ((set!)
+       (define (check-place place)
+         (unless (or (identifier? place) (and (syntax-pair? place) (syntax-proper-list? place)))
+           (compiler-error "malformed set!" (syntax-object->datum stx))))
+       (unless (and (syntax-proper-list? stx) (>= (syntax-length stx) 3))
+         (compiler-error "malformed set!" (syntax-object->datum stx)))
        (if (> (syntax-length stx) 3)
            (let ((place (syntax-caddr stx)))
+             (check-place place)
              (if (identifier? place)
                  (##global-quasisyntax
                     (set! ,place ,(expand-impl `(,(syntax-cadr stx) . ,(syntax-cddr stx)) env depth)))
-                 (let ((val (generate-symbol 'val)))
+                 (let ((val (global-identifier (generate-symbol 'val))))
                    (expand-impl
                      (##global-quasisyntax
                        ((##vcore.mutator ,(syntax-car place))
-                        ,@(syntax-cdr place)
+                        ,@(syntax->list (syntax-cdr place))
                         (lambda (,val) (,(syntax-cadr stx) ,val . ,(syntax-cdr (syntax-cddr stx))))))
                      env depth))))
            (let ((place (syntax-cadr stx)))
+             (check-place place)
              (if (identifier? place)
                  `(,(syntax-car stx) ,place ,(expand-impl (syntax-caddr stx) env depth))
                  (expand-impl
                    (##global-quasisyntax
-                     ((##vcore.setter ,(syntax-car place)) ,@(syntax-cdr place) ,(syntax-caddr stx)))
+                     ((##vcore.setter ,(syntax-car place)) ,@(syntax->list (syntax-cdr place)) ,(syntax-caddr stx)))
                    env depth)))))
       ((##intrinsic ##basic-intrinsic) stx)
       (else
