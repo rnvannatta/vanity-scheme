@@ -1,7 +1,7 @@
 (define-library (vanity compiler hygienic types)
   (import (vanity core) (only (vanity list) lset-xor any))
   (export
-    make-scope scope? scope=? get-scope-bindings set-scope-bindings! global-scope
+    make-scope scope? scope=? get-scope-bindings set-scope-bindings! global-scope toplevel-scope
     get-scope-serial get-scope-provenance scope->string scope-set->string
     explain-scopes? all-registered-scopes
     set-expansion-deadline! expansion-timed-out?
@@ -15,7 +15,7 @@
     syntax-vector? syntax-vector syntax-make-vector syntax-vector-ref syntax-vector-map syntax-vector-for-each
     lazy-flip-scope eager-flip-scope flip-scope
     syntax-object->datum datum->syntax-object
-    syntax-length syntax-proper-list? syntax-undot-list syntax->list syntax-keyword?
+    syntax-length syntax-proper-list? syntax-undot-list syntax->list
     )
 
   (define explain-scopes? (make-parameter #f))
@@ -30,9 +30,9 @@
     (bindings get-scope-bindings set-scope-bindings!)
     (serial get-scope-serial)
     (provenance get-scope-provenance))
-  ; provenance: global, lambda, letrec, letrec*, let-syntax, letrec-syntax, body, body-tmp,
-  ; letrec-tmp, library-body, (intro . macro-name), or a fresh universe:
-  ; (library . libname) / (declare . cname)
+  ; provenance: global, program, lambda, letrec, letrec*, let-syntax, letrec-syntax, body,
+  ; body-tmp, letrec-tmp, (intro . macro-name), or a fresh universe's pair:
+  ; (library-global . libname) + (library . libname) / (declare-global . cname) + (declare . cname)
   (define make-scope
     (case-lambda
       (() (make-scope 'scope))
@@ -43,6 +43,11 @@
          sc))))
   (define-constant scope=? ##vcore.eq?)
   (define global-scope (make-parameter (make-scope 'global)))
+  ; Every universe has two layers: global-scope binds the core forms, and
+  ; user source additionally carries toplevel-scope, which introduced
+  ; identifiers lack. Without the second layer a user binder around a macro's
+  ; introduced reference would carry a subset of its scopes and capture it.
+  (define toplevel-scope (make-parameter (make-scope 'program)))
 
   (define (scope->string sc)
     (let ((p (get-scope-provenance sc)) (n (get-scope-serial sc)))
@@ -263,7 +268,5 @@
         '()
         (cons (syntax-car xs) (syntax->list (syntax-cdr xs)))))
 
-  (define (syntax-keyword? x sym)
-    (and (identifier? x) (eq? (get-syntax-data x) sym)))
 )
 
