@@ -31,7 +31,8 @@
     (serial get-scope-serial)
     (provenance get-scope-provenance))
   ; provenance: global, program, lambda, letrec, letrec*, let-syntax, letrec-syntax, body,
-  ; body-tmp, letrec-tmp, (intro . macro-name), or a fresh universe's pair:
+  ; body-tmp, letrec-tmp, (intro . macro-name), (use macro-name . definition-context),
+  ; or a fresh universe's pair:
   ; (library-global . libname) + (library . libname) / (declare-global . cname) + (declare . cname)
   (define make-scope
     (case-lambda
@@ -51,9 +52,10 @@
 
   (define (scope->string sc)
     (let ((p (get-scope-provenance sc)) (n (get-scope-serial sc)))
-      (if (and (pair? p) (eq? (car p) 'intro))
-          (sprintf "(intro#~A ~A)" n (cdr p))
-          (sprintf "~A#~A" p n))))
+      (cond
+        ((and (pair? p) (eq? (car p) 'intro)) (sprintf "(intro#~A ~A)" n (cdr p)))
+        ((and (pair? p) (eq? (car p) 'use)) (sprintf "(use#~A ~A)" n (cadr p)))
+        (else (sprintf "~A#~A" p n)))))
   (define (scope-set->string scopes)
     (define (join sep strs)
       (if (null? strs)

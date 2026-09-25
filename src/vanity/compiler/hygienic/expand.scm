@@ -205,6 +205,27 @@
   (define (fresh-toplevel-expand-env) (cons (cons #f #f) (alist-copy global-form-env)))
   (define toplevel-expand-env (make-parameter (fresh-toplevel-expand-env)))
 
+  ; Use-site scopes (Flatt, Binding as Sets of Scopes, 2.3-2.4). A user macro
+  ; used in the definition context that defines it has templates with the
+  ; same scopes as its use site, so the intro scope separates them in only one
+  ; direction: a use-site binder would capture a same-named template
+  ; reference, or be ambiguous against a template binder. So each user macro
+  ; use also puts a use-site scope on its input, which stays on the output.
+  ; A definition context strips its own use-site scopes from the names it
+  ; defines, else (define-five five) couldn't bind a plain five. Racket adds
+  ; them only when the macro is defined in the using context; elsewhere they
+  ; are merely redundant. The context is the scope of the body or universe.
+  (define definition-context (make-parameter (toplevel-scope)))
+  (define (definition-id id)
+    (define ctx (definition-context))
+    (define (own-use-site? sc)
+      (let ((p (get-scope-provenance sc)))
+        (and (pair? p) (eq? (car p) 'use) (eq? (cddr p) ctx))))
+    (if (and (identifier? id) (any own-use-site? (get-syntax-scopes id)))
+        (make-syntax (get-syntax-data id) (remove own-use-site? (get-syntax-scopes id)))
+        id))
+  (define core-transformers (map cdr global-form-env))
+
 
   (define variable (generate-symbol 'variable))
 
@@ -293,6 +314,7 @@
     (set! universe-scopes (cons inner-toplevel universe-scopes))
     (parameterize ((global-scope inner-global)
                    (toplevel-scope inner-toplevel)
+                   (definition-context inner-toplevel)
                    (toplevel-expand-env (fresh-toplevel-expand-env))
                    (free-vars-allowed #f)
                    (library-imports '()))
@@ -355,11 +377,12 @@
     (define (bind! id form)
       (unless (identifier? id)
         (compiler-error "define must define a symbol" (syntax-object->datum form)))
-      (when (find-exact-binding id)
-        (compiler-error "duplicate definition in body" (get-syntax-data id) (syntax-object->datum form)))
-      (let ((binding (generate-symbol (get-syntax-data id))))
-        (add-binding! id binding)
-        binding))
+      (let ((id (definition-id id)))
+        (when (find-exact-binding id)
+          (compiler-error "duplicate definition in body" (get-syntax-data id) (syntax-object->datum form)))
+        (let ((binding (generate-symbol (get-syntax-data id))))
+          (add-binding! id binding)
+          binding)))
     (define (bind-variable! id form env)
       (cons (cons (bind! id form) variable) env))
     ; (id rhs), with the trivial-lambda sugar desugared
@@ -389,67 +412,68 @@
               constants)
             `((,(introduce 'lambda) ,(map car constants) ,letrec-body)
               . ,(map (lambda (c) (expand-impl (cadr c) env depth)) constants)))))
-    (let loop ((defines '()) (constants '()) (body (flip-scope stx sc)) (env env))
-      (if (and (syntax-pair? body)
-               (syntax-pair? (syntax-car body))
-               (identifier? (syntax-caar body)))
-          (let ((binding (resolve-identifier (syntax-caar body))))
-            (case binding
-              ((begin)
-               (loop defines constants (syntax-append (syntax-cdar body) (syntax-cdr body)) env))
-              ((define)
-               (let ((idval (split-define (syntax-car body))))
-                 (loop (cons idval defines) constants (syntax-cdr body)
-                       (bind-variable! (car idval) (syntax-car body) env))))
-              ((define-constant)
-               (let ((idval (split-define (syntax-car body))))
-                 (loop defines (cons idval constants) (syntax-cdr body)
-                       (bind-variable! (car idval) (syntax-car body) env))))
-              ((define-values)
-               (define def (syntax-car body))
-               (define formals (syntax-cadr def))
-               (define names (syntax-undot-list formals))
-               (define mangles (map (lambda (name) (introduce (generate-symbol 'tmp))) names))
-               (define def-body (syntax-car (syntax-cddr def)))
-               (define dummy (introduce (generate-symbol 'dummy)))
-               (loop
-                 (append
-                   `((,dummy
-                     (,(introduce '##vcore.call-with-values)
-                      (,(introduce 'lambda) () ,def-body)
-                      (,(introduce 'lambda)
-                         ,(let loop ((formals formals) (mangles mangles))
-                               (cond
-                                 ((syntax-pair? formals) (cons (car mangles) (loop (syntax-cdr formals) (cdr mangles))))
-                                 ((syntax-null? formals) '())
-                                 (else (car mangles))))
-                         #void
-                         . ,(map (lambda (name mangle) `(,(introduce 'set!) ,name ,mangle)) names mangles)))))
-                   (reverse (map (lambda (name) (list name #f)) names))
-                   defines)
-                 constants
-                 (syntax-cdr body)
-                 (fold (lambda (id env) (bind-variable! id def env)) env (cons dummy names))))
-              ((define-syntax)
-               (let ((def (desugar-define-syntax (syntax-car body) depth)))
-                 (unless (= (syntax-length def) 3)
-                   (compiler-error "malformed define-syntax" (syntax-object->datum def)))
-                 (let* ((var (syntax-cadr def))
-                        (binding (bind! var (syntax-car body)))
-                        (val (eval-syntax-definition var (syntax-caddr def) depth)))
-                   (loop defines constants (syntax-cdr body) (cons (cons binding val) env)))))
-              (else
-                (define v (assoc binding env))
-                (cond
-                  ((and v (procedure? (cdr v)))
-                   (loop
-                     defines
-                     constants
-                     (cons (apply-transformer (get-syntax-data (syntax-caar body)) (cdr v) (syntax-car body) (+ depth 1))
-                           (syntax-cdr body))
-                     env))
-                  (else (finish defines constants body env))))))
-          (finish defines constants body env))))
+    (parameterize ((definition-context sc))
+      (let loop ((defines '()) (constants '()) (body (flip-scope stx sc)) (env env))
+        (if (and (syntax-pair? body)
+                 (syntax-pair? (syntax-car body))
+                 (identifier? (syntax-caar body)))
+            (let ((binding (resolve-identifier (syntax-caar body))))
+              (case binding
+                ((begin)
+                 (loop defines constants (syntax-append (syntax-cdar body) (syntax-cdr body)) env))
+                ((define)
+                 (let ((idval (split-define (syntax-car body))))
+                   (loop (cons idval defines) constants (syntax-cdr body)
+                         (bind-variable! (car idval) (syntax-car body) env))))
+                ((define-constant)
+                 (let ((idval (split-define (syntax-car body))))
+                   (loop defines (cons idval constants) (syntax-cdr body)
+                         (bind-variable! (car idval) (syntax-car body) env))))
+                ((define-values)
+                 (define def (syntax-car body))
+                 (define formals (syntax-cadr def))
+                 (define names (syntax-undot-list formals))
+                 (define mangles (map (lambda (name) (introduce (generate-symbol 'tmp))) names))
+                 (define def-body (syntax-car (syntax-cddr def)))
+                 (define dummy (introduce (generate-symbol 'dummy)))
+                 (loop
+                   (append
+                     `((,dummy
+                       (,(introduce '##vcore.call-with-values)
+                        (,(introduce 'lambda) () ,def-body)
+                        (,(introduce 'lambda)
+                           ,(let loop ((formals formals) (mangles mangles))
+                                 (cond
+                                   ((syntax-pair? formals) (cons (car mangles) (loop (syntax-cdr formals) (cdr mangles))))
+                                   ((syntax-null? formals) '())
+                                   (else (car mangles))))
+                           #void
+                           . ,(map (lambda (name mangle) `(,(introduce 'set!) ,name ,mangle)) names mangles)))))
+                     (reverse (map (lambda (name) (list name #f)) names))
+                     defines)
+                   constants
+                   (syntax-cdr body)
+                   (fold (lambda (id env) (bind-variable! id def env)) env (cons dummy names))))
+                ((define-syntax)
+                 (let ((def (desugar-define-syntax (syntax-car body) depth)))
+                   (unless (= (syntax-length def) 3)
+                     (compiler-error "malformed define-syntax" (syntax-object->datum def)))
+                   (let* ((var (syntax-cadr def))
+                          (binding (bind! var (syntax-car body)))
+                          (val (eval-syntax-definition var (syntax-caddr def) depth)))
+                     (loop defines constants (syntax-cdr body) (cons (cons binding val) env)))))
+                (else
+                  (define v (assoc binding env))
+                  (cond
+                    ((and v (procedure? (cdr v)))
+                     (loop
+                       defines
+                       constants
+                       (cons (apply-transformer (get-syntax-data (syntax-caar body)) (cdr v) (syntax-car body) (+ depth 1))
+                             (syntax-cdr body))
+                       env))
+                    (else (finish defines constants body env))))))
+            (finish defines constants body env)))))
 
   (define (expand-lambda stx env depth)
     (define formals (syntax-car stx))
@@ -585,7 +609,7 @@
 
   (define (expand-toplevel-define stx depth)
     (define define-id (syntax-car stx))
-    (define var (syntax-cadr stx))
+    (define var (definition-id (syntax-cadr stx)))
     (define val (syntax-car (syntax-cddr stx)))
 
     (add-toplevel-binding! var variable #f)
@@ -628,7 +652,7 @@
 
   (define (expand-toplevel-define-syntax stx depth)
     (define define-id (syntax-car stx))
-    (define var (syntax-cadr stx))
+    (define var (definition-id (syntax-cadr stx)))
     (define raw-val (syntax-car (syntax-cddr stx)))
 
     ; have the binding be visible during macro evaluation
@@ -801,14 +825,14 @@
                    (let ((def (desugar-define form)))
                      (unless (= (syntax-length def) 3)
                        (compiler-error "malformed define" (syntax-object->datum form)))
-                     (let* ((var (syntax-cadr def))
+                     (let* ((var (definition-id (syntax-cadr def)))
                             (g (bind-definition! var form)))
                        (loop rest (cons (list 'define (toplevel-name var g) g (syntax-caddr def)) entries)
                              exports imports constant-imports mangled-imports))))
                   ((define-constant)
                    (unless (= (syntax-length form) 3)
                      (compiler-error "malformed define-constant" (syntax-object->datum form)))
-                   (let ((var (syntax-cadr form)) (val (syntax-caddr form)))
+                   (let ((var (definition-id (syntax-cadr form))) (val (syntax-caddr form)))
                      (when (syntax-pair? var)
                        (compiler-error "define-constant does not support trivial lambdas yet" (syntax-object->datum form)))
                      (unless (constant-expr? val)
@@ -845,8 +869,13 @@
                  (format (current-error-port) "[expand intro#~A d~A] ~A~N  in:  ~A~N"
                          (vector-ref entry 0) depth name (write-syntax stx)))
              entry)))
+    (define use-scope
+      (and (symbol? name) (not (memq t core-transformers))
+           (make-scope (cons 'use (cons name (definition-context))))))
     ; paint the macro color everything that isn't introduced
-    (define intro-s (flip-scope stx intro-scope))
+    (define intro-s
+      (let ((s (flip-scope stx intro-scope)))
+        (if use-scope (flip-scope s use-scope) s)))
     (define transformed-s
       (guard
         (exception
