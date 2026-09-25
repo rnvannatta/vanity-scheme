@@ -1,5 +1,5 @@
 (define-library (vanity compiler hygienic expand)
-  (import (vanity core) (vanity list) (vanity intrinsics) (vanity compiler utils) (vanity compiler hygienic types) (vanity compiler hygienic global-forms) (vanity compiler hygienic eval)
+  (import (vanity core) (vanity list) (vanity intrinsics) (vanity compiler utils) (vanity compiler hygienic types) (vanity compiler hygienic resolve) (vanity compiler hygienic global-forms) (vanity compiler hygienic eval)
           (only (vanity compiler variables) mangle-library free-variables variable-pure?)
           (only (vanity compiler library) process-import! register-library-interface!)
           (only (vanity compiler expand) header-from-library))
@@ -12,14 +12,6 @@
 
   ; ##foreign-function
   ; ##foreign-import
-
-  (define (bound-identifier=? a b)
-    (and (eq? (get-syntax-data a) (get-syntax-data b))
-         (lset= scope=? (get-syntax-scopes a) (get-syntax-scopes b))))
-  (define (free-identifier=? a b)
-    (eq? (resolve-identifier a) (resolve-identifier b)))
-  (define (literal-identifier=? a b)
-    (eq? (get-syntax-data a) (get-syntax-data b)))
 
   (define free-vars-allowed (make-parameter #t))
   ; (symbol . gensym) for each name a library body imports. Imports are not
@@ -37,10 +29,10 @@
       ((assq sym (library-imports)) => cdr)
       (else #f)))
   (define (free-identifier-allowed? sym) (and (resolve-free-identifier sym) #t))
-  ; every global scope ever made: the program's plus one per fresh universe
+  ; every toplevel scope ever made: the program's plus one per fresh universe
   ; (library / ##vcore.declare). The registry can't stand in for this: the
-  ; program's global scope predates --explain-scopes being switched on.
-  (define universe-scopes (list (global-scope)))
+  ; program's toplevel scope predates --explain-scopes being switched on.
+  (define universe-scopes (list (toplevel-scope)))
   (define target-architecture (make-parameter "sysv_amd64"))
 
   (define trace-expand? (make-parameter #f))
@@ -98,70 +90,6 @@
     (format err "rerun with --trace-expand for the full log~N")
     (compiler-error "macro expansion timed out"))
 
-  (define (add-binding! id binding)
-    ; We want to avoid the global scope to avoid cluttering it.
-    ; It's not a correctness problem but is a perf one, and does result in a leak.
-    (let* ((scopes (get-syntax-scopes id))
-           (scope (car scopes))
-           (scope (if (and (eq? scope (global-scope)) (pair? (cdr scopes))) (cadr scopes) scope)))
-      (set-scope-bindings! scope (cons (cons id binding) (get-scope-bindings scope)))))
-
-  (define (check-unambiguous id max-id candidate-ids)
-    (define id-scopes (get-syntax-scopes (car max-id)))
-    (for-each
-      (lambda (e)
-        (unless (lset<= scope=? (get-syntax-scopes (car e)) id-scopes)
-          (if (explain-scopes?) (explain-ambiguity id max-id candidate-ids))
-          (compiler-error "ambiguous identifier"
-            (get-syntax-data (car max-id))
-            (sprintf "use site ~A" (scope-set->string (get-syntax-scopes id)))
-            (sprintf "winner ~A" (scope-set->string id-scopes))
-            (sprintf "incomparable candidate ~A" (scope-set->string (get-syntax-scopes (car e)))))))
-      candidate-ids))
-  (define (explain-ambiguity id max-id candidate-ids)
-    ; error-path only, under --explain-scopes
-    (define err (current-error-port))
-    (define winner-scopes (get-syntax-scopes (car max-id)))
-    (format err "  use site: ~A ~A~N" (get-syntax-data id) (scope-set->string (get-syntax-scopes id)))
-    (format err "  winner:   ~A~N" (scope-set->string winner-scopes))
-    (for-each
-      (lambda (e)
-        (unless (eq? e max-id)
-          (define e-scopes (get-syntax-scopes (car e)))
-          (format err "  candidate: ~A~N" (scope-set->string e-scopes))
-          (unless (lset<= scope=? e-scopes winner-scopes)
-            (format err "    incomparable with winner; symmetric difference ~A~N"
-                    (scope-set->string (lset-xor scope=? e-scopes winner-scopes))))))
-      candidate-ids))
-  (define (argmax f xs)
-    (cdr
-      (fold
-        (lambda (a b)
-          (let ((fa (f a)))
-            (if (> fa (car b)) (cons fa a) b)))
-        (cons (f (car xs)) (car xs))
-        (cdr xs))))
-
-  (define (find-all-matching-bindings id)
-    (define id-sym (get-syntax-data id))
-    (define all-id-scopes (get-syntax-scopes id))
-    (let loop ((rest-id-scopes all-id-scopes))
-      (if (null? rest-id-scopes)
-          '()
-          (append
-            (filter
-              (lambda (e)
-                (and (eq? (get-syntax-data (car e)) id-sym)
-                     (lset<= scope=? (get-syntax-scopes (car e)) all-id-scopes)))
-              (get-scope-bindings (car rest-id-scopes)))
-            (loop (cdr rest-id-scopes))))))
-  (define (resolve-identifier id)
-    (define candidate-ids (find-all-matching-bindings id))
-    (if (null? candidate-ids)
-        #f
-        (let ((max-id (argmax (lambda (e) (length (get-syntax-scopes (car e)))) candidate-ids)))
-          (check-unambiguous id max-id candidate-ids)
-          (cdr max-id))))
   (define (explain-identifier-failure id)
     ; scans the registry because find-all-matching-bindings only walks scopes the identifier itself carries.
     (define err (current-error-port))
@@ -211,25 +139,11 @@
                         sym (scope-set->string b-scopes) (scope-set->string missing))
                 (for-each
                   (lambda (sc)
-                    (when (and (memq sc universe-scopes) (not (eq? sc (global-scope))))
+                    (when (and (memq sc universe-scopes) (not (eq? sc (toplevel-scope))))
                       (format err "      note: ~A is a different universe from this ~A; a library or ##vcore.declare body sees only its own definitions and imports~N"
-                              (scope->string sc) (scope->string (global-scope)))))
+                              (scope->string sc) (scope->string (toplevel-scope)))))
                   missing))
               near-misses)))))
-  (define (find-exact-binding id)
-    (define id-sym (get-syntax-data id))
-    (define all-id-scopes (get-syntax-scopes id))
-    (let loop ((rest-id-scopes all-id-scopes))
-      (if (null? rest-id-scopes)
-          #f
-          (let loop2 ((bindings (get-scope-bindings (car rest-id-scopes))))
-            (cond
-              ((null? bindings) (loop (cdr rest-id-scopes)))
-              ((and (eq? (get-syntax-data (caar bindings)) id-sym)
-                    (lset= scope=? (get-syntax-scopes (caar bindings)) all-id-scopes))
-               (cdar bindings))
-              (else (loop2 (cdr bindings))))))))
-
   (define (syntax-apply f . args)
     (define fresh-args
       (let loop ((args args))
@@ -268,6 +182,10 @@
       (eq? . ,eq?)
       (eqv? . ,eqv?)
       (equal? . ,equal?)
+      (identifier? . ,identifier?)
+      (bound-identifier=? . ,bound-identifier=?)
+      (free-identifier=? . ,free-identifier=?)
+      (literal-identifier=? . ,literal-identifier=?)
       (##vcore.cons . ,syntax-cons)
       (##vcore.apply . ,syntax-apply)
       (##vcore.append . ,syntax-append)
@@ -275,7 +193,11 @@
 
   (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax letrec-syntax define-syntax quote syntax if and or set! ##intrinsic ##basic-intrinsic ##vcore.declare export import define-library))
   (define (init-global-forms)
-    (for-each (lambda (sym) (add-binding! (make-syntax sym (list (global-scope))) sym)) (append special-forms global-forms)))
+    (for-each
+      (lambda (sym)
+        (add-binding! (make-syntax sym (list (global-scope))) sym)
+        (register-universe-binding! sym sym))
+      (append special-forms global-forms)))
   (init-global-forms)
 
   (define (alist-copy alist)
@@ -319,7 +241,7 @@
     (cond
       ((resolved-form? stx) (resolved-form-datum stx))
       ((identifier? stx)
-       (or (resolve-identifier stx)
+       (or (let ((binding (resolve-identifier stx))) (and binding (binding-name binding)))
            ; free variable: we let them through because toplevel variables are free
            (resolve-free-identifier (get-syntax-data stx))
            (compiler-error "free variable" (get-syntax-data stx)
@@ -362,16 +284,21 @@
     (datum resolved-form-datum))
 
   ; used for encapsulation of define-library modules and declares
-  (define (expand-in-fresh-universe provenance stx f)
-    (define outer (global-scope))
-    (define inner (make-scope provenance))
-    (set! universe-scopes (cons inner universe-scopes))
-    (parameterize ((global-scope inner)
+  ; kind is library or declare
+  (define (expand-in-fresh-universe kind name stx f)
+    (define outer-global (global-scope))
+    (define outer-toplevel (toplevel-scope))
+    (define inner-global (make-scope (cons (if (eq? kind 'library) 'library-global 'declare-global) name)))
+    (define inner-toplevel (make-scope (cons kind name)))
+    (set! universe-scopes (cons inner-toplevel universe-scopes))
+    (parameterize ((global-scope inner-global)
+                   (toplevel-scope inner-toplevel)
                    (toplevel-expand-env (fresh-toplevel-expand-env))
                    (free-vars-allowed #f)
                    (library-imports '()))
       (init-global-forms)
-      (f (flip-scope (flip-scope stx outer) inner))))
+      (f (fold (lambda (sc stx) (flip-scope stx sc)) stx
+               (list outer-global outer-toplevel inner-global inner-toplevel)))))
 
   (define (eval-for-syntax-binding rhs depth)
     ; transformers *currently* run against the fixed macro-expand-env,
@@ -637,29 +564,31 @@
         (##global-quasisyntax (define ,(syntax-car var) (lambda ,(syntax-cdr var) . ,body)))
         stx))
 
-  (define (add-toplevel-binding! var value)
-    (define binding (find-exact-binding var))
+  ; The name a universe-level definition is known by outside expansion: its
+  ; symbol if the user wrote it, else its (gensym) key, so a macro-introduced
+  ; definition can't collide with a user one of the same symbol.
+  (define (toplevel-name var key)
+    (if (user-toplevel-identifier? var) (get-syntax-data var) key))
 
+  ; Returns the binding key. A program toplevel define is emitted under its
+  ; toplevel-name; library definitions are emitted under their key, since
+  ; they become formals and every formal in the program must be unique.
+  (define (add-toplevel-binding! var value emit-key?)
     ; toplevel define acts like set! if var already is defined.
-    (when (not binding)
-      ; I am 98% certain we can avoid gensym for toplevel
-      ;(set! binding (get-syntax-data var))
-      (set! binding
-        (if (equal? (list (global-scope)) (get-syntax-scopes var))
-            (get-syntax-data var)
-            (generate-symbol (get-syntax-data var))))
-      (let* ((bindings (get-scope-bindings (global-scope))))
-        (set-scope-bindings! (global-scope) (cons (cons var binding) bindings)))
-      ; a define is still in the toplevel scope.
-      (set-cdr! (toplevel-expand-env) (cons (cons binding value) (cdr (toplevel-expand-env)))))
-    binding)
+    (or (find-exact-binding var)
+        (let ((key (generate-symbol (get-syntax-data var))))
+          (add-binding! var key)
+          (register-universe-binding! key (if emit-key? key (toplevel-name var key)))
+          ; a define is still in the toplevel scope.
+          (set-cdr! (toplevel-expand-env) (cons (cons key value) (cdr (toplevel-expand-env))))
+          key)))
 
   (define (expand-toplevel-define stx depth)
     (define define-id (syntax-car stx))
     (define var (syntax-cadr stx))
     (define val (syntax-car (syntax-cddr stx)))
 
-    (add-toplevel-binding! var variable)
+    (add-toplevel-binding! var variable #f)
     (##global-quasisyntax (define ,var ,(expand-impl val (toplevel-expand-env) depth))))
 
   (define (syntax-improper-length xs)
@@ -703,7 +632,7 @@
     (define raw-val (syntax-car (syntax-cddr stx)))
 
     ; have the binding be visible during macro evaluation
-    (define binding (add-toplevel-binding! var #f))
+    (define binding (add-toplevel-binding! var #f #f))
     ; and then set it to the evaluated value.
     (define val (eval-syntax-definition var raw-val depth))
     (set-cdr! (assq binding (toplevel-expand-env)) val)
@@ -736,11 +665,10 @@
     (unless (and (pair? libname) (every symbol? libname))
       (compiler-error "malformed define-library name" libname))
     (expand-in-fresh-universe
-      (cons 'library libname)
+      'library libname
       (syntax-cddr stx)
       (lambda (decls)
-        (define sc (make-scope 'library-body))
-        (define (introduce x) (introduced-identifier x sc))
+        (define (introduce x) (make-syntax x (list (global-scope) (toplevel-scope))))
         (define (head-of form)
           (and (syntax-pair? form) (identifier? (syntax-car form)) (resolve-identifier (syntax-car form))))
         (define (head-symbol form)
@@ -752,7 +680,7 @@
             (compiler-error "define must define a symbol" (syntax-object->datum form)))
           (when (find-exact-binding var)
             (compiler-error "duplicate definition in library" libname (get-syntax-data var)))
-          (add-toplevel-binding! var variable))
+          (add-toplevel-binding! var variable #t))
 
         ; entries, newest first: (define NAME GENSYM RAW-RHS)
         ;                        (constant NAME GENSYM RAW-RHS)
@@ -848,7 +776,7 @@
                => (lambda (lookup) (loop (cdr free-vars) constant-vars (cons (cons (caar free-vars) (cdr lookup)) imported-vars))))
               (else (compiler-error "library has free variable" libname (caar free-vars))))))
 
-        (let loop ((todo (flip-scope decls sc)) (entries '()) (exports '()) (imports '()) (constant-imports '()) (mangled-imports '()))
+        (let loop ((todo decls) (entries '()) (exports '()) (imports '()) (constant-imports '()) (mangled-imports '()))
           (if (syntax-null? todo)
               (finish entries exports imports constant-imports mangled-imports)
               (let* ((form (syntax-car todo))
@@ -875,7 +803,7 @@
                        (compiler-error "malformed define" (syntax-object->datum form)))
                      (let* ((var (syntax-cadr def))
                             (g (bind-definition! var form)))
-                       (loop rest (cons (list 'define (get-syntax-data var) g (syntax-caddr def)) entries)
+                       (loop rest (cons (list 'define (toplevel-name var g) g (syntax-caddr def)) entries)
                              exports imports constant-imports mangled-imports))))
                   ((define-constant)
                    (unless (= (syntax-length form) 3)
@@ -886,7 +814,7 @@
                      (unless (constant-expr? val)
                        (compiler-error "define-constant does not define a constant expression" (syntax-object->datum form)))
                      (let ((g (bind-definition! var form)))
-                       (loop rest (cons (list 'constant (get-syntax-data var) g val) entries)
+                       (loop rest (cons (list 'constant (toplevel-name var g) g val) entries)
                              exports imports constant-imports mangled-imports))))
                   ((define-syntax)
                    (expand-toplevel-define-syntax (desugar-define-syntax form depth) depth)
@@ -1095,7 +1023,7 @@
          ((##vcore.declare)
           (list (make-resolved-form
                   (expand-in-fresh-universe
-                    (cons 'declare (syntax-object->datum (syntax-cadr stx)))
+                    'declare (syntax-object->datum (syntax-cadr stx))
                     (syntax-caddr stx)
                     (lambda (body)
                       `(##vcore.declare ,(syntax-object->datum (syntax-cadr stx))
@@ -1126,4 +1054,4 @@
                    (target-architecture architecture)
                    (trace-expand? (opt 'trace-expand))
                    (explain-scopes? (opt 'explain-scopes)))
-      (map resolve (expand-toplevel (datum->syntax-object (make-syntax 'dummy (list (global-scope))) expr) 0)))))
+      (map resolve (expand-toplevel (datum->syntax-object (make-syntax 'dummy (list (global-scope) (toplevel-scope))) expr) 0)))))

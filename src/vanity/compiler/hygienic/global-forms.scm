@@ -1,5 +1,6 @@
 (define-library (vanity compiler hygienic global-forms)
   (import (vanity core) (vanity list) (vanity compiler hygienic types)
+          (only (vanity compiler hygienic resolve) literal-keyword? bound-identifier=?)
           (only (vanity compiler utils) compiler-error get-feature-list)
           (only (vanity compiler library) library-exists?)
           (only (vanity compiler variables) mangle-library))
@@ -52,13 +53,6 @@
             ((lambda ,(syntax-map syntax-car (syntax-cadr form)) . ,(syntax-cddr form))
              . ,(syntax-map syntax-cadr (syntax-cadr form)))))))
 
-  ; Introduced binders whose references sit inside a user binder's region
-  ; need a fresh symbol, not just the intro scope: at program toplevel user
-  ; identifiers carry only the global scope, so a same-named user binding
-  ; around the reference would be an incomparable candidate (ambiguous).
-  (define (fresh-identifier sym)
-    (global-identifier (generate-symbol sym)))
-
   (define (syntax-list-of-length? x n)
     (and (syntax-proper-list? x) (= (syntax-length x) n)))
 
@@ -105,10 +99,10 @@
             (let ((test (syntax-car clause))
                   (body (syntax-cdr clause)))
               (cond
-                ((syntax-keyword? test 'else)
+                ((literal-keyword? test 'else)
                  (check-last-else form rest "cond")
                  (##global-quasisyntax (let () . ,body)))
-                ((and (syntax-pair? body) (syntax-keyword? (syntax-car body) '=>))
+                ((and (syntax-pair? body) (literal-keyword? (syntax-car body) '=>))
                  (unless (= (syntax-length body) 2) (malformed "cond" form))
                  (##global-quasisyntax
                    (let ((x ,test))
@@ -122,7 +116,7 @@
   (define (expand-case form)
     (unless (and (syntax-proper-list? form) (>= (syntax-length form) 2))
       (malformed "case" form))
-    (let ((key (fresh-identifier 'x)))
+    (let ()
       (define (iter clauses)
         (if (syntax-null? clauses)
             (##global-quasisyntax
@@ -134,17 +128,17 @@
               (let ((data (syntax-car clause))
                     (body (syntax-cdr clause)))
                 (cond
-                  ((syntax-keyword? data 'else)
+                  ((literal-keyword? data 'else)
                    (check-last-else form rest "case")
                    (##global-quasisyntax (let () . ,body)))
                   ((syntax-proper-list? data)
                    (##global-quasisyntax
-                     (if (or ,@(syntax-map (lambda (d) (##global-quasisyntax (##vcore.eq? ,key ',d))) data))
+                     (if (or ,@(syntax-map (lambda (d) (##global-quasisyntax (##vcore.eq? x ',d))) data))
                          (let () . ,body)
                          ,(iter rest))))
                   (else (malformed "case" form)))))))
       (##global-quasisyntax
-        (let ((,key ,(syntax-cadr form))) ,(iter (syntax-cddr form))))))
+        (let ((x ,(syntax-cadr form))) ,(iter (syntax-cddr form))))))
 
   (define (expand-do form)
     (unless (and (let-like-form? form 3)
@@ -166,15 +160,14 @@
                   specs))
            (exit-clause (syntax-caddr form))
            (ret (syntax-cdr exit-clause))
-           (body (syntax-cdr (syntax-cddr form)))
-           (do-loop (fresh-identifier 'do-loop)))
+           (body (syntax-cdr (syntax-cddr form))))
       (##global-quasisyntax
-        (let ,do-loop ,(map (lambda (spec) (list (syntax-car spec) (syntax-cadr spec))) specs)
+        (let do-iter ,(map (lambda (spec) (list (syntax-car spec) (syntax-cadr spec))) specs)
           (if ,(syntax-car exit-clause)
               (let () . ,(if (syntax-null? ret) (list #void) ret))
               (begin
                 (let () . ,(if (syntax-null? body) (list #void) body))
-                (,do-loop . ,steps)))))))
+                (do-iter . ,steps)))))))
 
   (define (expand-receive form)
     (unless (and (syntax-proper-list? form) (>= (syntax-length form) 3))
@@ -204,8 +197,8 @@
                     (let loop ((f f))
                       (cond ((syntax-null? f) '())
                             ((syntax-pair? f)
-                             (cons (fresh-identifier (get-syntax-data (syntax-car f))) (loop (syntax-cdr f))))
-                            (else (fresh-identifier (get-syntax-data f))))))
+                             (cons (global-identifier (get-syntax-data (syntax-car f))) (loop (syntax-cdr f))))
+                            (else (global-identifier (get-syntax-data f))))))
                   formals))
            (body (syntax-cddr form)))
       (let loop ((todo tmps) (bindings bindings))
@@ -249,6 +242,7 @@
   ; cute evaluates each non-slot argument once, into a let wrapped around the
   ; lambda; the lets nest leftmost-outermost.
   (define (expand-cut-impl form what cute?)
+    (define (numbered prefix n) (global-identifier (string->symbol (sprintf "~A~A" prefix n))))
     (unless (and (syntax-proper-list? form) (>= (syntax-length form) 2))
       (malformed what form))
     (let loop ((items (syntax->list (syntax-cdr form))) (xs '()) (args '()) (lets '()))
@@ -257,17 +251,16 @@
       (cond
         ((null? items)
          (wrap-lets (##global-quasisyntax (lambda ,(reverse xs) ,(reverse args)))))
-        ((syntax-keyword? (car items) '<>)
-         (let ((x (fresh-identifier 'x)))
+        ((literal-keyword? (car items) '<>)
+         (let ((x (numbered "x" (length xs))))
            (loop (cdr items) (cons x xs) (cons x args) lets)))
-        ((syntax-keyword? (car items) '<...>)
+        ((literal-keyword? (car items) '<...>)
          (unless (null? (cdr items)) (malformed what form))
-         (let ((rest (fresh-identifier 'rest)))
-           (wrap-lets
-             (##global-quasisyntax
-               (lambda (,@(reverse xs) . ,rest) (##vcore.apply ,@(reverse args) ,rest))))))
+         (wrap-lets
+           (##global-quasisyntax
+             (lambda (,@(reverse xs) . rest) (##vcore.apply ,@(reverse args) rest)))))
         (cute?
-         (let ((tmp (fresh-identifier 'tmp)))
+         (let ((tmp (numbered "tmp" (length lets))))
            (loop (cdr items) xs (cons tmp args) (cons (list tmp (car items)) lets))))
         (else
          (loop (cdr items) xs (cons (car items) args) lets)))))
@@ -298,40 +291,33 @@
            (clauses (syntax-cdr (syntax-cadr form)))
            (body (syntax-cddr form))
            (has-else?
-             (any (lambda (clause) (and (syntax-pair? clause) (syntax-keyword? (syntax-car clause) 'else)))
-                  (syntax->list clauses)))
-           (guard-k (fresh-identifier 'guard-k))
-           (handler (fresh-identifier 'handler))
-           (condition (fresh-identifier 'condition))
-           (handler-k (fresh-identifier 'handler-k))
-           (outer (fresh-identifier 'outer))
-           (ret (fresh-identifier 'ret))
-           (args (fresh-identifier 'args)))
+             (any (lambda (clause) (and (syntax-pair? clause) (literal-keyword? (syntax-car clause) 'else)))
+                  (syntax->list clauses))))
       (##global-quasisyntax
         ((##vcore.call/cc
-           (lambda (,guard-k)
-             (let ((,handler
-                     (lambda (,condition)
+           (lambda (guard-k)
+             (let ((handler
+                     (lambda (condition)
                        ((##vcore.call/cc
-                          (lambda (,handler-k)
-                            (,guard-k
+                          (lambda (handler-k)
+                            (guard-k
                               (lambda ()
-                                (let ((,var ,condition))
+                                (let ((,var condition))
                                   ,(if has-else?
                                        (##global-quasisyntax (cond . ,clauses))
                                        (##global-quasisyntax
                                          (cond ,@(syntax->list clauses)
                                                (else
-                                                 (,handler-k
+                                                 (handler-k
                                                    (lambda ()
-                                                     (let* ((,outer (##vcore.get-exception-handler))
-                                                            (,ret (,outer ,condition)))
-                                                       (##vcore.push-exception-handler ,outer)
-                                                       ,ret))))))))))))))))
-               (##vcore.push-exception-handler ,handler)
+                                                     (let* ((outer (##vcore.get-exception-handler))
+                                                            (ret (outer condition)))
+                                                       (##vcore.push-exception-handler outer)
+                                                       ret))))))))))))))))
+               (##vcore.push-exception-handler handler)
                (##vcore.call-with-values
                  (lambda () . ,body)
-                 (lambda ,args (,guard-k (lambda () (##vcore.apply ##vcore.values ,args))))))))))))
+                 (lambda args (guard-k (lambda () (##vcore.apply ##vcore.values args))))))))))))
 
   (define (expand-define-record-type form)
     (unless (and (syntax-proper-list? form)
@@ -356,11 +342,8 @@
         (unless (= (length field-names) (length fields))
           (compiler-error "malformed define-record-type: there must be exactly one field declaration per fieldname"
                           field-syms (map syntax-object->datum fields)))
-        ; recordname is referenced inside the constructor, whose formals are
-        ; the user's field names. truepred is fresh so a record in a library
-        ; gets a unique qualified name for it, as legacy's gensym did.
-        (let* ((recordname (fresh-identifier (get-syntax-data name)))
-               (truepred (fresh-identifier (get-syntax-data pred)))
+        (let* ((recordname (global-identifier (get-syntax-data name)))
+               (truepred (global-identifier (get-syntax-data pred)))
                (accessor
                  (lambda (accessor formals access)
                    (unless (identifier? accessor)
@@ -373,7 +356,7 @@
                (field-definitions
                  (lambda (field-name i)
                    (let ((spec (find (lambda (spec)
-                                       (and (syntax-pair? spec) (syntax-keyword? (syntax-car spec) (get-syntax-data field-name))))
+                                       (and (syntax-pair? spec) (identifier? (syntax-car spec)) (bound-identifier=? (syntax-car spec) field-name)))
                                      fields)))
                      (unless spec
                        (compiler-error "define-record type: field not defined in field declaration list"
@@ -416,7 +399,7 @@
             (unless (and (syntax-pair? clause) (syntax-proper-list? clause))
               (malformed "cond-expand" form))
             (cond
-              ((syntax-keyword? (syntax-car clause) 'else)
+              ((literal-keyword? (syntax-car clause) 'else)
                (check-last-else form rest "cond-expand")
                (##global-quasisyntax (begin . ,(syntax-cdr clause))))
               ((cond-expand-true? (syntax-object->datum (syntax-car clause)))
