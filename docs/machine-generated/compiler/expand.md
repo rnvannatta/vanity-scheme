@@ -13,11 +13,12 @@ Concepts worth knowing:
 
 - **`primitive-letrec?`**: a `letrec[*]` binding can be allocated directly if its value is a
   lambda/literal/intrinsic, or a combination that neither contains lambdas nor references
-  the letrec's own variables. Non-primitive bindings are lowered to `#f`-init + `set!`
+  the letrec's own variables. Non-primitive bindings are lowered (`lower-letrec`) to `#f`-init + `set!`
   (letrec*) or `#f`-init + temporaries in an inner let (letrec). So the `letrec` reaching
   CPS is always the primitive kind.
 - **Internal defines** (`expand-body`): a body's `define`s/`define-values` are collected and
-  rewritten into a single `letrec*`; `define-constant`s become an enclosing let of the
+  lowered as a single `letrec*` (vals and the already-expanded body go straight to
+  `lower-letrec`, which never re-expands its inputs); `define-constant`s become an enclosing let of the
   (checked-constant, never-`set!`) values.
 - **Library expansion** (`expand-library`): `(define-library (a b) ...)` becomes
   `(##vcore.declare "_V20a_V0b" (lambda () ...))`. The thunk imports its dependencies with
