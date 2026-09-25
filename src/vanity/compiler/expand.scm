@@ -84,53 +84,43 @@
           (else (f xs))))
 
 
-  ; TODO remove the need to expand the body syntax
-  ; by ensuring all callers have the body expanded
-  ; likewise for the vals.
-  (define (expand-letrec* orig-xs vals body)
-    (let loop ((body `((let () . ,body)))
-               (done-vals '())
-               (vals (reverse (map expand-syntax vals)))
-               (xs (reverse orig-xs)))
-      (cond ((null? vals)
-             `(letrec ,(map list orig-xs done-vals)
-                ,(expand-syntax `(begin . ,body))))
-            ((primitive-letrec? (car vals) orig-xs)
-             (loop
-               body
-               (cons (car vals) done-vals)
-               (cdr vals)
-               (cdr xs)))
-            (else
-             (loop
-               (cons `(set! ,(car xs) ,(car vals)) body)
-               (cons #f done-vals)
-               (cdr vals)
-               (cdr xs))))))
-  (define (expand-letrec orig-xs vals body)
-    (let loop ((inner-let '())
-               (body `((let () . ,body)))
-               (done-vals '())
-               (vals (reverse (map expand-syntax vals)))
-               (xs (reverse orig-xs)))
-      (cond ((null? vals)
-             `(letrec ,(map list orig-xs done-vals)
-                ,(expand-syntax `(let ,inner-let (begin . ,body)))))
-            ((primitive-letrec? (car vals) orig-xs)
-             (loop
-               inner-let
-               body
-               (cons (car vals) done-vals)
-               (cdr vals)
-               (cdr xs)))
-            (else
-             (let ((tmp (gensym "tmp")))
-               (loop
-                 (cons `(,tmp ,(car vals)) inner-let)
-                 (cons `(set! ,(car xs) ,tmp) body)
-                 (cons #f done-vals)
-                 (cdr vals)
-                 (cdr xs)))))))
+  ; vals and body must already be expanded: the result is assembled as core
+  ; forms and never re-expanded
+  (define (lower-letrec xs vals body letrec?)
+    (let loop ((bindings '())
+               (tmps '())
+               (inits '())
+               (body `((lambda () ,body)))
+               (todo (reverse (map list xs vals))))
+      (match todo
+        (()
+         (if letrec?
+             `(letrec ,bindings ((lambda ,tmps ,body) . ,inits))
+             `(letrec ,bindings ,body)))
+        (((x val) . rest)
+         (cond
+           ((primitive-letrec? val xs)
+            (loop (cons (list x val) bindings) tmps inits body rest))
+           (letrec?
+            (let ((tmp (gensym "tmp")))
+              (loop
+                (cons (list x #f) bindings)
+                (cons tmp tmps)
+                (cons val inits)
+                `(begin (set! ,x ,tmp) ,body)
+                rest)))
+           (else
+            (loop
+              (cons (list x #f) bindings)
+              tmps
+              inits
+              `(begin (set! ,x ,val) ,body)
+              rest)))))))
+  (define (expand-letrec-syntax form xs vals body letrec?)
+    (if (null? body) (compiler-error "empty letrec body" form))
+    (let* ((vals (map expand-syntax vals))
+           (body (expand-body body)))
+      (lower-letrec xs vals body letrec?)))
 
   (define (constant-expr? expr)
     (or (and (symbol? expr) (lookup-intrinsic-name expr))
@@ -241,7 +231,7 @@
                     (match (reverse defines)
                       (() body)
                       ((('define xs vals) ...)
-                       (expand-syntax `(letrec* ,(map list xs vals) ,body))))))
+                       (lower-letrec xs (map expand-syntax vals) body #f)))))
               (if (not (null? constants))
                   (for-each
                     (lambda (k)
@@ -897,13 +887,13 @@
       (('let*-values . noise) (compiler-error "malformed let-values*" `(let*-values . ,noise)))
 
       (('letrec* ((xs vals) ...) . body)
-       (expand-letrec* xs vals body))
+       (expand-letrec-syntax expr xs vals body #f))
       (('letrec* . noise) (compiler-error "malformed letrec*" `(letrec . ,noise)))
       (('letrec ((xs vals) ...) . body)
-       (expand-letrec xs vals body))
+       (expand-letrec-syntax expr xs vals body #t))
       (('##letrec path ((xs vals) ...) . body)
        (append `(##letrec ,path)
-         (cdr (expand-letrec xs vals body))))
+         (cdr (expand-letrec-syntax expr xs vals body #t))))
       (('letrec* . noise) (compiler-error "malformed letrec" `(letrec . ,noise)))
 
       (('let* ((x val) rest ...) . body) (expand-syntax `(let ((,x ,val)) (let* ,rest . ,body))))
