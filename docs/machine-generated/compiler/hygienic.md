@@ -37,10 +37,22 @@ Sets-of-scopes expander (SRFI-72-flavored). Replaces both `expand.scm` *and*
   sugar wraps the body in an arity-checking lambda. They are evaluated at expansion time by
   the tiny interpreter in `hygienic/eval.scm` against `macro-expand-env`, whose `car`/`cdr`/
   `map`/... are syntax-object-aware.
-- **`##global-quasisyntax`** (expanded by the *legacy* expander's `expand-global-syntax`,
-  since the hygienic expander is itself compiled by `vsc`): quasiquote whose literal symbols
-  become `(global-identifier 'sym)` — identifiers carrying only the global scope. It is the
-  bootstrap tool the hygienic expander uses to synthesize syntax.
+- **`##global-quasisyntax`**: quasiquote whose literal symbols become
+  `(global-identifier 'sym)` — identifiers carrying only the global scope. It is the
+  bootstrap tool the hygienic expander uses to synthesize syntax. The installed (legacy)
+  `vsc` expands it via `expand-global-syntax` when building the compiler; the hygienic
+  expander expands it too (`global-forms.scm`, sharing one walker with `quasiquote`/
+  `quasisyntax`), resolving `global-identifier` at the use site like legacy does, so the
+  `hygienic/` sources can expand themselves.
+- **Global forms** (`global-forms.scm`): the sugar the expander provides is custom expander
+  procedures, not `define-syntax` — named/unnamed `let`, `let*`, `cond`, `case`, `do`,
+  `when`/`unless`, `receive`, `let-values`/`let*-values`, `cut`/`cute`, `delay`/`delay-force`,
+  `parameterize`, `guard`, `define-record-type`, `cond-expand`, `features`, `reimport`, and
+  the quasi forms. Each is `form → form`, run through `apply-transformer` like a user macro
+  (so its introduced identifiers are hygienic), and builds the same intermediate forms as
+  the legacy clause so -E0 stays alpha-equal. `global-forms` (bound in every universe's
+  global scope) derives from `global-form-env`. Introduced binders are gensym'd identifiers
+  because of a toplevel scope collision (EXPAND_WRINKLES W17).
 - **Fresh universes** (`expand-in-fresh-universe`): a `define-library` or `##vcore.declare`
   body has the program's global scope swapped for a fresh one on every leaf (two lazy flips),
   so program-toplevel definitions and macros are unreachable and any identifier that is not
@@ -57,8 +69,8 @@ Sets-of-scopes expander (SRFI-72-flavored). Replaces both `expand.scm` *and*
   left unresolved and swapped for a per-library gensym at resolve time (`library-imports`),
   so the resolved body has legacy's shape and the `VMultiImport` wiring is derived from the
   same `free-variables` walk legacy uses. Assembly mirrors legacy `expand-library` ordering
-  exactly (alpha-equal output). Not yet taken: FFI forms, `define-record-type`,
-  `cond-expand`, `include`, `define-values`, macro export through `.scmh`.
+  exactly (alpha-equal output). Not yet taken: FFI forms, `include`, `define-values`,
+  macro export through `.scmh`.
 - `expand-syntax` returns the same core-language toplevel list as the legacy path, with
   locals already unique gensyms. Still missing (header comment): `import` of macros, FFI
-  forms, `cond-expand`, and the Phase 1 macro pack (`cond`, named `let`, ...).
+  forms, `match`, `do-loop`.

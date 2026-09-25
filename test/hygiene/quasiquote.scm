@@ -5,3 +5,6 @@
 (assert-equal `(1 ,(+ 1 1) ,@(list 3 4)) '(1 2 3 4))
 (assert-equal `(a `(b ,(c))) '(a (quasiquote (b (unquote (c))))))
 (assert-equal ((lambda (lambda) `(x ,lambda)) 9) '(x 9))
+; only 2-lists are unquote forms: (quote unquote) ends in a 1-list (unquote)
+(assert-equal `(x 'unquote) '(x (quote unquote)))
+(assert-equal `(,@'(1) (unquote-splicing)) '(1 (unquote-splicing)))

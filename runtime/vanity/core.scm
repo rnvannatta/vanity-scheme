@@ -167,7 +167,6 @@
   (define-constant boolean=? ##vcore.eq?)
   (define-constant char=? ##vcore.eq?)
 
-  (define-constant string=? ##vcore.blob=?)
   (define symbol=?
     (case-lambda
       ((x y) (##vcore.symbol=? x y))
