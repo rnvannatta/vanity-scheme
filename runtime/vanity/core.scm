@@ -165,7 +165,6 @@
   (define-constant eqv? ##vcore.eq?)
 
   (define-constant boolean=? ##vcore.eq?)
-  (define-constant char=? ##vcore.eq?)
 
   (define symbol=?
     (case-lambda
@@ -332,10 +331,10 @@
 
   ; All need to work on ints
   (define (abs x) (if (< x 0) (- x) x))
-  (define ceiling (##foreign.function "C" "double ceil(double);"))
-  (define floor (##foreign.function "C" "double floor(double);"))
-  (define round (##foreign.function "C" "double round(double);"))
-  (define truncate (##foreign.function "C" "double trunc(double);"))
+  (define ceiling (foreign-function "C" "double ceil(double);"))
+  (define floor (foreign-function "C" "double floor(double);"))
+  (define round (foreign-function "C" "double round(double);"))
+  (define truncate (foreign-function "C" "double trunc(double);"))
 
   (define (square x) (* x x))
   (define sqrt (foreign-function "C" "double sqrt(double);"))
@@ -353,13 +352,13 @@
       ((x) (atan-impl x))
       ((y x) (atan2-impl y x))))
 
-  (define exp (##foreign.function "C" "double exp(double);"))
-  (define log-impl (##foreign.function "C" "double log(double);"))
+  (define exp (foreign-function "C" "double exp(double);"))
+  (define log-impl (foreign-function "C" "double log(double);"))
   (define log
     (case-lambda
       ((x) (log-impl x))
       ((x base) (/ (log-impl x) (log-impl base)))))
-  (define pow (##foreign.function "C" "double pow(double, double);"))
+  (define pow (foreign-function "C" "double pow(double, double);"))
   (define expt pow)
 
   (define max
