@@ -5,6 +5,8 @@
           (only (vanity compiler expand) header-from-library))
   (export expand-syntax)
 
+  ; TODO consider providing Racket's syntax-local-identifier-as-binding as a primitive
+
   ; WHAT REMAINS FOR A FUNCTIONABLE CORE
 
   ; define-library: only export/import/define/define-constant/define-syntax/begin
