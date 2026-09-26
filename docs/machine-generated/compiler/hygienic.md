@@ -47,12 +47,24 @@ Sets-of-scopes expander (SRFI-72-flavored). Replaces both `expand.scm` *and*
 - **Global forms** (`global-forms.scm`): the sugar the expander provides is custom expander
   procedures, not `define-syntax` — named/unnamed `let`, `let*`, `cond`, `case`, `do`,
   `when`/`unless`, `receive`, `let-values`/`let*-values`, `cut`/`cute`, `delay`/`delay-force`,
-  `parameterize`, `guard`, `define-record-type`, `cond-expand`, `features`, `reimport`, and
-  the quasi forms. Each is `form → form`, run through `apply-transformer` like a user macro
+  `parameterize`, `guard`, `define-record-type`, `cond-expand`, `features`, `reimport`,
+  the quasi forms, and the legacy-datum forms below. Each is `form → form`, run through `apply-transformer` like a user macro
   (so its introduced identifiers are hygienic), and builds the same intermediate forms as
   the legacy clause so -E0 stays alpha-equal. `global-forms` (bound in every universe's
   global scope) derives from `global-form-env`. Introduced binders are gensym'd identifiers
   because of a toplevel scope collision (EXPAND_WRINKLES W17).
+- **Legacy-datum forms**: `match`, `do-loop` and `foreign-import` (`##foreign.import`) strip
+  the form to a datum, run the legacy transformer (`transform-match`, `expand-do-loop`,
+  `resolve-foreign-import`) unchanged, and rebuild with `datum->syntax-object` using the
+  *keyword identifier* as template (a forced pair's scopes are `'()`). Everything in the output
+  gets the keyword's context; lossless for hand-written forms, flattening for a macro-built
+  one whose pieces carry different contexts. `foreign-import`'s invented binders therefore
+  take the keyword's context (Racket `include` semantics); it expands to `(begin
+  (##foreign.declare ...) defines...)` and uses the real target architecture.
+- **FFI special forms**: `##foreign.function` (validated by `validate-foreign-function` at
+  expansion) and `##foreign.declare` (toplevel-only; `define-library` hoists it ahead of its
+  `##vcore.declare`, legacy's shape) have datum operands and resolve like `##intrinsic`.
+  `foreign-function`, `##foreign-function`, `foreign-declare` are alias global forms.
 - **Fresh universes** (`expand-in-fresh-universe`): a `define-library` or `##vcore.declare`
   body has the program's global scope swapped for a fresh one on every leaf (two lazy flips),
   so program-toplevel definitions and macros are unreachable and any identifier that is not
@@ -69,8 +81,7 @@ Sets-of-scopes expander (SRFI-72-flavored). Replaces both `expand.scm` *and*
   left unresolved and swapped for a per-library gensym at resolve time (`library-imports`),
   so the resolved body has legacy's shape and the `VMultiImport` wiring is derived from the
   same `free-variables` walk legacy uses. Assembly mirrors legacy `expand-library` ordering
-  exactly (alpha-equal output). Not yet taken: FFI forms, `include`, `define-values`,
+  exactly (alpha-equal output). Not yet taken: `include`, `define-values`,
   macro export through `.scmh`.
 - `expand-syntax` returns the same core-language toplevel list as the legacy path, with
-  locals already unique gensyms. Still missing (header comment): `import` of macros, FFI
-  forms, `match`, `do-loop`.
+  locals already unique gensyms. Still missing: `import` of macros.
