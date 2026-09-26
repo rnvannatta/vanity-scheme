@@ -108,7 +108,7 @@ VWEAK VClosure _VW_V40VMultiImport = { .base = { .tag = VCLOSURE, .flags = VFLAG
 V_DECLARE_FUNC_MIN(_V50_V0vanity_V0hash__table_V0make__hash__table);
 V_DECLARE_FUNC_MIN(_V50_V0vanity_V0hash__table_V0make__eq__hash__table);
 V_DECLARE_FUNC(_V50_V0vanity_V0hash__table_V0make__entry, _var0, _var1, _var2, _var3, _var4, _var5);
-V_DECLARE_FUNC(_V50_V0vanity_V0hash__table_V0hash__slot, _var0, _var1, _var2);
+V_DECLARE_FUNC(_V50_V0vanity_V0hash__table_V0hash___Gslot, _var0, _var1, _var2);
 V_DECLARE_FUNC(_V50_V0vanity_V0hash__table_V0hash__poverty, _var0, _var1, _var2, _var3);
 V_DECLARE_FUNC(_V50_V0vanity_V0hash__table_V0waybill__key__matches_Q, _var0, _var1, _var2);
 V_DECLARE_FUNC(_V50_V0vanity_V0hash__table_V0sequence_L, _var0, _var1, _var2, _var3);
@@ -3476,7 +3476,7 @@ void _V50_V0vanity_V0hash__table_V0validate__robinhood__impl_V10_Dloop_D1_D278_V
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.x.700 2 0) (##qualified-call (vanity hash-table hash-slot) #t (bruijn ##.hash-slot.113 11 24) (bruijn ##.%k.499 0 0) (bruijn ##.ihash.282 1 0) (bruijn ##.capacity.275 8 1)) ((bruijn ##.%k.499 0 0) #f))
+  // (if (bruijn ##.x.700 2 0) (##qualified-call (vanity hash-table hash->slot) #t (bruijn ##.hash->slot.113 11 24) (bruijn ##.%k.499 0 0) (bruijn ##.ihash.282 1 0) (bruijn ##.capacity.275 8 1)) ((bruijn ##.%k.499 0 0) #f))
 if(VDecodeBool(
 statics->up->vars[0])) {
   {
@@ -3488,9 +3488,9 @@ statics->up->vars[0])) {
     VWORD _arg2 = 
       VGetArg(statics, 8-1, 1);
     if(V_UNLIKELY(VStackOverflow(runtime))){
-      VGarbageCollect2Closure(runtime, (VClosure[]){VMakeClosure2((VFunc)_V50_V0vanity_V0hash__table_V0hash__slot, _V60_V0vanity_V0hash__table)}, 3, _arg0, _arg1, _arg2);
+      VGarbageCollect2Closure(runtime, (VClosure[]){VMakeClosure2((VFunc)_V50_V0vanity_V0hash__table_V0hash___Gslot, _V60_V0vanity_V0hash__table)}, 3, _arg0, _arg1, _arg2);
     } else {
-       _V50_V0vanity_V0hash__table_V0hash__slot(runtime, _closure_env, 3, _arg0, _arg1, _arg2);
+       _V50_V0vanity_V0hash__table_V0hash___Gslot(runtime, _closure_env, 3, _arg0, _arg1, _arg2);
     }
   }
 } else {
@@ -3612,7 +3612,7 @@ void _V50_V0vanity_V0hash__table_V0validate__robinhood__impl_V10_Dloop_D1_D278_V
   "-- expected 1~N"
   , argc);
  }
-  // (if (bruijn ##.y.706 2 0) (##qualified-call (vanity hash-table hash-slot) #t (bruijn ##.hash-slot.113 23 24) (bruijn ##.%k.491 0 0) (bruijn ##.jhash.292 1 0) (bruijn ##.capacity.275 20 1)) ((bruijn ##.%k.491 0 0) #f))
+  // (if (bruijn ##.y.706 2 0) (##qualified-call (vanity hash-table hash->slot) #t (bruijn ##.hash->slot.113 23 24) (bruijn ##.%k.491 0 0) (bruijn ##.jhash.292 1 0) (bruijn ##.capacity.275 20 1)) ((bruijn ##.%k.491 0 0) #f))
 if(VDecodeBool(
 statics->up->vars[0])) {
   {
@@ -3624,9 +3624,9 @@ statics->up->vars[0])) {
     VWORD _arg2 = 
       VGetArg(statics, 20-1, 1);
     if(V_UNLIKELY(VStackOverflow(runtime))){
-      VGarbageCollect2Closure(runtime, (VClosure[]){VMakeClosure2((VFunc)_V50_V0vanity_V0hash__table_V0hash__slot, _V60_V0vanity_V0hash__table)}, 3, _arg0, _arg1, _arg2);
+      VGarbageCollect2Closure(runtime, (VClosure[]){VMakeClosure2((VFunc)_V50_V0vanity_V0hash__table_V0hash___Gslot, _V60_V0vanity_V0hash__table)}, 3, _arg0, _arg1, _arg2);
     } else {
-       _V50_V0vanity_V0hash__table_V0hash__slot(runtime, _closure_env, 3, _arg0, _arg1, _arg2);
+       _V50_V0vanity_V0hash__table_V0hash___Gslot(runtime, _closure_env, 3, _arg0, _arg1, _arg2);
     }
   }
 } else {
@@ -4607,9 +4607,9 @@ void _V50_V0vanity_V0hash__table_V0hash__poverty(VRuntime * runtime, VEnv * stat
       self->vars[0]);
     }
 }
-void _V50_V0vanity_V0hash__table_V0hash__slot(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
+void _V50_V0vanity_V0hash__table_V0hash___Gslot(VRuntime * runtime, VEnv * statics, int argc, VWORD _var0, VWORD _var1, VWORD _var2) {
  if(argc != 3) {
-  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0hash__table_V0hash__slot, got ~D~N"
+  VErrorC(runtime, "Not enough arguments to _V50_V0vanity_V0hash__table_V0hash___Gslot, got ~D~N"
   "-- expected 3~N"
   , argc);
  }
@@ -5205,7 +5205,7 @@ static void _V0vanity_V0hash__table_V20_V0lambda2(VRuntime * runtime, VEnv * sta
   self->vars[2] = _var2;
   self->vars[3] = _var3;
   self->vars[4] = _var4;
-  // (##letrec (vanity hash-table) 32 ((close "_V50_V0vanity_V0hash__table_V0hash__table___Galist" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__fold" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__map___Glist" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__walk" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__for__each" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__size" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__delete_B" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__set_B" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__set__impl_B" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__grow" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__ref" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__ref__impl" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__rummage" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__sweep" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0robinhood__shuffle" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__reinsert_B" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__find__impl" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0validate__robinhood" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0validate__robinhood__impl" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__keyvector" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0sequence_G" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0sequence_L" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0waybill__key__matches_Q" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__poverty" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__slot" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0make__entry" (vanity hash-table)) #f (close "_V50_V0vanity_V0hash__table_V0make__eq__hash__table" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0make__hash__table" (vanity hash-table)) (##basic-intrinsic "VHashBlob") (##intrinsic "VHashCombine") (##intrinsic "VEqHash")) (set! (close _V0vanity_V0hash__table_V20_V0k121) (bruijn ##.make-eqv-hash-table.115 0 26) (bruijn ##.make-eq-hash-table.116 0 27)))
+  // (##letrec (vanity hash-table) 32 ((close "_V50_V0vanity_V0hash__table_V0hash__table___Galist" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__fold" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__map___Glist" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__walk" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__for__each" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__size" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__delete_B" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__set_B" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__set__impl_B" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__grow" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__ref" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__ref__impl" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__rummage" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__sweep" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0robinhood__shuffle" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__reinsert_B" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__find__impl" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0validate__robinhood" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0validate__robinhood__impl" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__table__keyvector" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0sequence_G" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0sequence_L" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0waybill__key__matches_Q" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash__poverty" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0hash___Gslot" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0make__entry" (vanity hash-table)) #f (close "_V50_V0vanity_V0hash__table_V0make__eq__hash__table" (vanity hash-table)) (close "_V50_V0vanity_V0hash__table_V0make__hash__table" (vanity hash-table)) (##basic-intrinsic "VHashBlob") (##intrinsic "VHashCombine") (##intrinsic "VEqHash")) (set! (close _V0vanity_V0hash__table_V20_V0k121) (bruijn ##.make-eqv-hash-table.115 0 26) (bruijn ##.make-eq-hash-table.116 0 27)))
     {
     VEnv * statics = self;
     struct { VEnv self; VWORD argv[32]; } container;
@@ -5236,7 +5236,7 @@ static void _V0vanity_V0hash__table_V20_V0lambda2(VRuntime * runtime, VEnv * sta
     self->vars[21] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0hash__table_V0sequence_L, _V60_V0vanity_V0hash__table))));
     self->vars[22] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0hash__table_V0waybill__key__matches_Q, _V60_V0vanity_V0hash__table))));
     self->vars[23] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0hash__table_V0hash__poverty, _V60_V0vanity_V0hash__table))));
-    self->vars[24] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0hash__table_V0hash__slot, _V60_V0vanity_V0hash__table))));
+    self->vars[24] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0hash__table_V0hash___Gslot, _V60_V0vanity_V0hash__table))));
     self->vars[25] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0hash__table_V0make__entry, _V60_V0vanity_V0hash__table))));
     self->vars[26] = VEncodeBool(false);
     self->vars[27] = (VEncodeClosure(V_EDEN_INIT(runtime, VClosure, VMakeClosure2((VFunc)_V50_V0vanity_V0hash__table_V0make__eq__hash__table, _V60_V0vanity_V0hash__table))));

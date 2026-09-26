@@ -180,7 +180,7 @@
          (if (or (not (pair? (cdar pattern-stack)))
                  (not (null? (cddar pattern-stack))))
              (compiler-error "malformed quote"))
-         `(if (equal? ',(cadar pattern-stack) ,(car expr-stack))
+         `(if (##vcore.eq? ',(cadar pattern-stack) ,(car expr-stack))
               ,(match-iter (cdr expr-stack) (cdr pattern-stack) success-expr)))
         ((and (pair? (car pattern-stack))
               (pair? (cdar pattern-stack))
