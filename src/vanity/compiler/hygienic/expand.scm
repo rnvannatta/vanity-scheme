@@ -2,7 +2,8 @@
   (import (vanity core) (vanity list) (vanity intrinsics) (vanity compiler utils) (vanity compiler hygienic types) (vanity compiler hygienic resolve) (vanity compiler hygienic global-forms) (vanity compiler hygienic eval)
           (only (vanity compiler variables) mangle-library free-variables variable-pure?)
           (only (vanity compiler library) process-import! register-library-interface!)
-          (only (vanity compiler expand) header-from-library))
+          (only (vanity compiler expand) header-from-library)
+          (only (vanity compiler ffi) validate-foreign-function))
   (export expand-syntax)
 
   ; TODO consider providing Racket's syntax-local-identifier-as-binding as a primitive
@@ -11,9 +12,6 @@
 
   ; define-library: only export/import/define/define-constant/define-syntax/begin
   ;   and expressions; see library-unsupported-forms for what still errors.
-
-  ; ##foreign-function
-  ; ##foreign-import
 
   (define free-vars-allowed (make-parameter #t))
   ; (symbol . gensym) for each name a library body imports. Imports are not
@@ -35,7 +33,6 @@
   ; (library / ##vcore.declare). The registry can't stand in for this: the
   ; program's toplevel scope predates --explain-scopes being switched on.
   (define universe-scopes (list (toplevel-scope)))
-  (define target-architecture (make-parameter "sysv_amd64"))
 
   (define trace-expand? (make-parameter #f))
   ; ring buffer format: #(serial depth name stx-in stx-out)
@@ -193,7 +190,7 @@
       (##vcore.append . ,syntax-append)
       ))
 
-  (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax letrec-syntax define-syntax quote syntax if and or set! ##intrinsic ##basic-intrinsic ##vcore.declare export import define-library))
+  (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax letrec-syntax define-syntax quote syntax if and or set! ##intrinsic ##basic-intrinsic ##foreign.function ##foreign.declare ##vcore.declare export import define-library))
   (define (init-global-forms)
     (for-each
       (lambda (sym)
@@ -292,7 +289,7 @@
           ((syntax)
            `(quote ,(syntax-cadr stx)))
           ; operands are names and arities, e.g. the + in ("VName" 1 +)
-          ((##intrinsic ##basic-intrinsic) (syntax-object->datum stx))
+          ((##intrinsic ##basic-intrinsic ##foreign.function ##foreign.declare) (syntax-object->datum stx))
           ((if) `(if . ,(resolve (syntax-cdr stx))))
           (else (syntax-map resolve stx))))))
 
@@ -501,7 +498,7 @@
           (cond
             ((and (syntax-pair? val) (identifier? (syntax-car val)))
              (case (resolve-identifier (syntax-car val))
-               ((quote ##intrinsic ##basic-intrinsic ##foreign-function) #t)
+               ((quote ##intrinsic ##basic-intrinsic ##foreign.function) #t)
                ((lambda case-lambda ##qualified-lambda ##qualified-case-lambda letrec ##letrec) (return #f))
                (else (syntax-map advanced-primitive-letrec val))))
             ((syntax-pair? val) (syntax-map advanced-primitive-letrec val))
@@ -510,7 +507,7 @@
           ((and (syntax-pair? val) (identifier? (syntax-car val)))
            (or 
              (memq (resolve-identifier (syntax-car val))
-               '(quote lambda case-lambda ##qualified-lambda ##qualified-case-lambda ##intrinsic ##basic-intrinsic ##foreign-function))
+               '(quote lambda case-lambda ##qualified-lambda ##qualified-case-lambda ##intrinsic ##basic-intrinsic ##foreign.function))
              (advanced-primitive-letrec val)))
           ((syntax-pair? val) (advanced-primitive-letrec val))
           (else (not (and (identifier? val) (member val xs free-identifier=?))))))))
@@ -678,8 +675,14 @@
       (car (take-right body 1))
       (drop-right body 1)))
 
+  (define (foreign-declare-datum stx)
+    (define datum (syntax-object->datum stx))
+    (unless (and (list? datum) (= (length datum) 2) (string? (cadr datum)))
+      (compiler-error "##foreign.declare's first argument is not a string" datum))
+    datum)
+
   (define library-unsupported-forms
-    '(##foreign.import foreign-import include include-ci define-values define-library))
+    '(include include-ci define-values define-library))
 
   ; Output mirrors legacy expand-library exactly so the
   ; two are alpha-comparable: ##letrec bindings and the define-constant
@@ -707,6 +710,8 @@
           (when (find-exact-binding var)
             (compiler-error "duplicate definition in library" libname (get-syntax-data var)))
           (add-toplevel-binding! var variable #t))
+        ; hoisted ahead of the ##vcore.declare, newest first
+        (define declares '())
 
         ; entries, newest first: (define NAME GENSYM RAW-RHS)
         ;                        (constant NAME GENSYM RAW-RHS)
@@ -783,7 +788,8 @@
               ((null? free-vars)
                (register-library-interface! (header-from-library (syntax-object->datum stx) (library-paths)))
                (let ((mangled (mangle-library libname)))
-                 `(##vcore.declare ,mangled
+                 `(,@(reverse declares)
+                   (##vcore.declare ,mangled
                     (lambda ()
                       (##vcore.call-with-values
                         (lambda ()
@@ -793,7 +799,7 @@
                             . ,(map (lambda (f) `(quote ,(cdr f))) imported-vars)))
                         (lambda ,(map car imported-vars)
                           ((lambda ,(map car constant-vars) ,constants-wrapped)
-                           . ,(map cdr constant-vars))))))))
+                           . ,(map cdr constant-vars)))))))))
               ; entries become (gensym . value) / (gensym . internal-name):
               ; the gensym is the formal, the cdr what it is wired to
               ((assv (import-of (caar free-vars)) constant-imports)
@@ -844,6 +850,9 @@
                              exports imports constant-imports mangled-imports))))
                   ((define-syntax)
                    (expand-toplevel-define-syntax (desugar-define-syntax form depth) depth)
+                   (loop rest entries exports imports constant-imports mangled-imports))
+                  ((##foreign.declare)
+                   (set! declares (cons (foreign-declare-datum form) declares))
                    (loop rest entries exports imports constant-imports mangled-imports))
                   (else
                     (let ((v (and head (assoc head (toplevel-expand-env)))))
@@ -974,6 +983,10 @@
                      ((##vcore.setter ,(syntax-car place)) ,@(syntax->list (syntax-cdr place)) ,(syntax-caddr stx)))
                    env depth)))))
       ((##intrinsic ##basic-intrinsic) stx)
+      ((##foreign.function)
+       (datum->syntax-object (syntax-car stx) (validate-foreign-function (syntax-object->datum stx))))
+      ((##foreign.declare)
+       (compiler-error "##foreign.declare is only allowed at toplevel" (syntax-object->datum stx)))
       (else
         (define v (assoc binding env))
         (cond
@@ -1060,7 +1073,9 @@
                       `(##vcore.declare ,(syntax-object->datum (syntax-cadr stx))
                          ,(resolve (expand-impl body (toplevel-expand-env) depth))))))))
          ((define-library)
-          (list (make-resolved-form (expand-define-library stx depth))))
+          (map make-resolved-form (expand-define-library stx depth)))
+         ((##foreign.declare)
+          (list (make-resolved-form (foreign-declare-datum stx))))
          (else
           ; if a macro is evaluated, it returns a toplevel return, which is a list of expressions
           ; otherwise an expression is return which needs to be listified.

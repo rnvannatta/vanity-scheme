@@ -3,13 +3,14 @@
           (only (vanity compiler hygienic resolve) literal-keyword? bound-identifier=?)
           (only (vanity compiler utils) compiler-error get-feature-list)
           (only (vanity compiler library) library-exists?)
-          (only (vanity compiler variables) mangle-library))
-  (export global-identifier global-forms global-form-env library-paths)
-
-  ; match
-  ; do-loop
+          (only (vanity compiler variables) mangle-library)
+          (only (vanity compiler match) transform-match)
+          (only (vanity compiler blasphemy) expand-do-loop)
+          (only (vanity compiler ffi) resolve-foreign-import))
+  (export global-identifier global-forms global-form-env library-paths target-architecture)
 
   (define library-paths (make-parameter '()))
+  (define target-architecture (make-parameter "sysv_amd64"))
 
   (define (global-identifier expr)
     (make-syntax expr (list (global-scope))))
@@ -481,6 +482,31 @@
       1
       (syntax-cadr form)))
 
+  ; The legacy datum transformers, run unchanged: everything in the output,
+  ; user-written or introduced, gets the keyword's context. The template must
+  ; be the keyword identifier: a forced pair's scopes are already '(), and a
+  ; syntax-cons'd pair isn't a syntax record at all. A macro-generated form
+  ; whose pieces carry different contexts gets flattened to one.
+  (define (datum-round-trip f)
+    (lambda (form)
+      (datum->syntax-object (syntax-car form) (f (syntax-object->datum form)))))
+
+  ; The imported names take the keyword's context, as Racket's include does;
+  ; a macro that wants them visible to its caller rebuilds the keyword with
+  ; datum->syntax-object.
+  (define (expand-foreign-import form)
+    (unless (syntax-list-of-length? form 3) (malformed "foreign-import" form))
+    ((datum-round-trip
+       (lambda (datum)
+         `(begin
+            . ,(resolve-foreign-import `(##foreign.import . ,(cdr datum)) (library-paths) (target-architecture)))))
+     form))
+
+  (define (expand-foreign-declare form)
+    (##global-quasisyntax (##foreign.declare . ,(syntax-cdr form))))
+  (define (expand-foreign-function form)
+    (##global-quasisyntax (##foreign.function . ,(syntax-cdr form))))
+
   (define global-form-env
     `((let . ,expand-let)
       (let* . ,expand-let*)
@@ -502,6 +528,13 @@
       (cond-expand . ,expand-cond-expand)
       (features . ,expand-features)
       (reimport . ,expand-reimport)
+      (match . ,(datum-round-trip (cut transform-match <> eqv?)))
+      (do-loop . ,(datum-round-trip expand-do-loop))
+      (##foreign.import . ,expand-foreign-import)
+      (foreign-import . ,expand-foreign-import)
+      (foreign-declare . ,expand-foreign-declare)
+      (foreign-function . ,expand-foreign-function)
+      (##foreign-function . ,expand-foreign-function)
       (,'quasiquote . ,expand-quasiquote)
       (quasisyntax . ,expand-quasisyntax)
       (##global-quasisyntax . ,expand-global-quasisyntax)))
