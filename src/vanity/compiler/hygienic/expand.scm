@@ -109,7 +109,7 @@
             (format err "  bindings named ~A that were considered:~N" sym)
             (for-each
               (lambda (e)
-                (format err "    ~A ~A~N" sym (scope-set->string (get-syntax-scopes (car e)))))
+                (format err "    ~A ~A~N" sym (scope-set->string (vector-ref e scope-entry-scopes))))
               considered))))
     (let* ((scan-scopes
              ; dedup'd union: use-site scopes, every universe's global scope, and
@@ -120,10 +120,10 @@
                      (else (loop (cdr in) (cons (car in) out))))))
            (near-misses
              (filter
-               (lambda (e) (not (scope-set<= (get-syntax-scopes (car e)) use-scopes)))
+               (lambda (e) (not (scope-set<= (vector-ref e scope-entry-scopes) use-scopes)))
                (append-map
                  (lambda (sc)
-                   (filter (lambda (e) (eq? (get-syntax-data (car e)) sym))
+                   (filter (lambda (e) (eq? (vector-ref e scope-entry-sym) sym))
                            (get-scope-bindings sc)))
                  scan-scopes))))
       (if (null? near-misses)
@@ -132,7 +132,7 @@
             (format err "  near misses:~N")
             (for-each
               (lambda (e)
-                (define b-scopes (get-syntax-scopes (car e)))
+                (define b-scopes (vector-ref e scope-entry-scopes))
                 (define missing (filter (lambda (sc) (not (memq sc use-scopes))) b-scopes))
                 (format err "    ~A ~A~N      rejected: ~A not among the use site's scopes~N"
                         sym (scope-set->string b-scopes) (scope-set->string missing))
