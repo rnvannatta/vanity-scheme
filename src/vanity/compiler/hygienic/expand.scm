@@ -1,6 +1,6 @@
 (define-library (vanity compiler hygienic expand)
   (import (vanity core) (vanity list) (vanity intrinsics) (vanity compiler utils) (vanity compiler hygienic types) (vanity compiler hygienic resolve) (vanity compiler hygienic global-forms) (vanity compiler hygienic eval)
-          (only (vanity compiler variables) mangle-library free-variables variable-pure?)
+          (only (vanity compiler variables) mangle-library free-variables mutated-variables)
           (only (vanity compiler library) process-import! register-library-interface!)
           (only (vanity compiler expand) header-from-library)
           (only (vanity compiler ffi) validate-foreign-function))
@@ -227,6 +227,13 @@
 
 
   (define variable (generate-symbol 'variable))
+  ; set! on a constant is a compile error. A pure-variable kind that set!
+  ; flips to variable in place would let library qualify drop its
+  ; mutated-variables walk, but synthesized set!s (lower-letrec's, and
+  ; library finish's datum set!) bypass the set! branch and so would never
+  ; flip it, and qualify would have to keep each define's env cell rather than
+  ; assq for it.
+  (define constant (generate-symbol 'constant))
 
   (define (expand-identifier stx env)
     (define binding (resolve-identifier stx))
@@ -248,7 +255,7 @@
            (if (explain-scopes?) (explain-identifier-failure stx))
            (error "not in context" (get-syntax-data stx)
                   (scope-set->string (get-syntax-scopes stx))))
-          ((eq? (cdr v) variable) stx)
+          ((or (eq? (cdr v) variable) (eq? (cdr v) constant)) stx)
           (else (error "bad syntax" (get-syntax-data stx)))))))
 
 
@@ -427,7 +434,7 @@
                 ((define-constant)
                  (let ((idval (split-define (syntax-car body))))
                    (loop defines (cons idval constants) (syntax-cdr body)
-                         (bind-variable! (car idval) (syntax-car body) env))))
+                         (cons (cons (bind! (car idval) (syntax-car body)) constant) env))))
                 ((define-values)
                  (define def (syntax-car body))
                  (define formals (syntax-cadr def))
@@ -704,12 +711,12 @@
           (and (syntax-pair? form) (identifier? (syntax-car form)) (get-syntax-data (syntax-car form))))
         (define (lambda-define? raw)
           (memq (head-of raw) '(lambda case-lambda)))
-        (define (bind-definition! var form)
+        (define (bind-definition! var form kind)
           (unless (identifier? var)
             (compiler-error "define must define a symbol" (syntax-object->datum form)))
           (when (find-exact-binding var)
             (compiler-error "duplicate definition in library" libname (get-syntax-data var)))
-          (add-toplevel-binding! var variable #t))
+          (add-toplevel-binding! var kind #t))
         ; hoisted ahead of the ##vcore.declare, newest first
         (define declares '())
 
@@ -761,21 +768,17 @@
                     (else #f)))
                 entries-in-order)
               (list export-alist)))
-          (define all-defines
-            (map (lambda (e) `(define ,(entry-gensym e) ,(if (letrec-init? e) (entry-val e) #f))) defines))
+          (define mutated
+            (mutated-variables (append (map entry-val (filter letrec-init? defines)) body)))
           (define (qualify e)
             (define g (entry-gensym e))
             (define val (entry-val e))
             (define qualified-name `(,@libname ,(entry-name e)))
-            (define (pure-elsewhere?) (and (variable-pure? g all-defines) (variable-pure? g body)))
             (cond
               ((not (letrec-init? e)) `(,g #f))
-              ((and (pair? val) (eq? (car val) 'lambda)
-                    (variable-pure? g val) (pure-elsewhere?))
+              ((and (pair? val) (eq? (car val) 'lambda) (not (memq g mutated)))
                `(,g (##qualified-lambda ,qualified-name #t ,(cadr val) ,(caddr val))))
-              ((and (pair? val) (eq? (car val) 'case-lambda)
-                    (every (lambda (clause) (variable-pure? g `(lambda ,(car clause) ,(cadr clause)))) (cdr val))
-                    (pure-elsewhere?))
+              ((and (pair? val) (eq? (car val) 'case-lambda) (not (memq g mutated)))
                `(,g (##qualified-case-lambda ,qualified-name #t . ,(cdr val))))
               (else `(,g ,val))))
           (define constants-wrapped
@@ -834,7 +837,7 @@
                      (unless (= (syntax-length def) 3)
                        (compiler-error "malformed define" (syntax-object->datum form)))
                      (let* ((var (definition-id (syntax-cadr def)))
-                            (g (bind-definition! var form)))
+                            (g (bind-definition! var form variable)))
                        (loop rest (cons (list 'define (toplevel-name var g) g (syntax-caddr def)) entries)
                              exports imports constant-imports mangled-imports))))
                   ((define-constant)
@@ -845,7 +848,7 @@
                        (compiler-error "define-constant does not support trivial lambdas yet" (syntax-object->datum form)))
                      (unless (constant-expr? val)
                        (compiler-error "define-constant does not define a constant expression" (syntax-object->datum form)))
-                     (let ((g (bind-definition! var form)))
+                     (let ((g (bind-definition! var form constant)))
                        (loop rest (cons (list 'constant (toplevel-name var g) g val) entries)
                              exports imports constant-imports mangled-imports))))
                   ((define-syntax)
@@ -959,14 +962,21 @@
        (define (check-place place)
          (unless (or (identifier? place) (and (syntax-pair? place) (syntax-proper-list? place)))
            (compiler-error "malformed set!" (syntax-object->datum stx))))
+       (define (check-not-constant place)
+         (let* ((binding (resolve-identifier place))
+                (v (and binding (assoc binding env))))
+           (when (and v (eq? (cdr v) constant))
+             (compiler-error "define-constant constant is mutated by set!" (syntax-object->datum stx)))))
        (unless (and (syntax-proper-list? stx) (>= (syntax-length stx) 3))
          (compiler-error "malformed set!" (syntax-object->datum stx)))
        (if (> (syntax-length stx) 3)
            (let ((place (syntax-caddr stx)))
              (check-place place)
              (if (identifier? place)
-                 (##global-quasisyntax
-                    (set! ,place ,(expand-impl `(,(syntax-cadr stx) . ,(syntax-cddr stx)) env depth)))
+                 (begin
+                   (check-not-constant place)
+                   (##global-quasisyntax
+                      (set! ,place ,(expand-impl `(,(syntax-cadr stx) . ,(syntax-cddr stx)) env depth))))
                  (let ((val (global-identifier (generate-symbol 'val))))
                    (expand-impl
                      (##global-quasisyntax
@@ -977,7 +987,9 @@
            (let ((place (syntax-cadr stx)))
              (check-place place)
              (if (identifier? place)
-                 `(,(syntax-car stx) ,place ,(expand-impl (syntax-caddr stx) env depth))
+                 (begin
+                   (check-not-constant place)
+                   `(,(syntax-car stx) ,place ,(expand-impl (syntax-caddr stx) env depth)))
                  (expand-impl
                    (##global-quasisyntax
                      ((##vcore.setter ,(syntax-car place)) ,@(syntax->list (syntax-cdr place)) ,(syntax-caddr stx)))

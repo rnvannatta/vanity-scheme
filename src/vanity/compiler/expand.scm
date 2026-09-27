@@ -399,29 +399,26 @@
           (set! just-defines #f)
           (list (expand-syntax expr)))))
     ; still has free variables
-    (define (qualify defines all-defines body)
+    (define (qualify defines mutated)
       (match defines
         (() '())
         ((('define f ('lambda xs . lambda-body)) . rest)
-         (if (and (variable-pure? f `(lambda ,xs . ,lambda-body)) (variable-pure? f all-defines) (variable-pure? f body))
-             (cons `(define ,f (##qualified-lambda (,@(cadr lib) ,f) #t ,xs . ,lambda-body)) (qualify (cdr defines) all-defines body))
-             (cons (car defines) (qualify (cdr defines) all-defines body))))
+         (if (not (memq f mutated))
+             (cons `(define ,f (##qualified-lambda (,@(cadr lib) ,f) #t ,xs . ,lambda-body)) (qualify (cdr defines) mutated))
+             (cons (car defines) (qualify (cdr defines) mutated))))
         ((('define f ('case-lambda (xses . lambda-bodies) ...)) . rest)
-         (if (and
-                (map (lambda (xs lambda-body) (variable-pure? f `(lambda ,xs . ,lambda-body))) xses lambda-bodies)
-                (variable-pure? f all-defines)
-                (variable-pure? f body))
+         (if (not (memq f mutated))
              (cons
                `(define ,f (##qualified-case-lambda (,@(cadr lib) ,f) #t . ,(map (lambda (xs lambda-body) `(,xs . ,lambda-body)) xses lambda-bodies)))
-               (qualify (cdr defines) all-defines body))
-             (cons (car defines) (qualify (cdr defines) all-defines body))))
+               (qualify (cdr defines) mutated))
+             (cons (car defines) (qualify (cdr defines) mutated))))
         (else
-          (cons (car defines) (qualify (cdr defines) all-defines body)))))
+          (cons (car defines) (qualify (cdr defines) mutated)))))
     (define basic-library
       (let* ((expanded (map expand-library-expr (cddr lib)))
              (body (append (apply append expanded)
                            (list (make-library-output exports))))
-             (defines (if #t (qualify defines defines body) defines)))
+             (defines (if #t (qualify defines (mutated-variables (append (map caddr defines) body))) defines)))
         `(lambda ()
            ((lambda ,(map cadr constants)
               (##letrec ,(cadr lib) ,(map cdr defines)

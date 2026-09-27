@@ -33,7 +33,7 @@
 ;          _VW  an interned value
 
 (define-library (vanity compiler variables)
-  (export mangle-symbol mangle-library mangle-qualified-function mangle-environment free-variables variable-pure?)
+  (export mangle-symbol mangle-library mangle-qualified-function mangle-environment free-variables variable-pure? mutated-variables)
   (import (vanity core) (vanity list) (vanity intrinsics) (vanity compiler utils))
 
   (define (mangle-environment name)
@@ -128,13 +128,13 @@
        (fold (lambda (body p) (and p (variable-pure-body? k (car body) (cadr body)))) #t bodies))
       (('set! x val)
        (and (not (eqv? x k)) (variable-pure? k val)))
-      (('define x val)
-       (or (eqv? x k) (variable-pure? k val)))
+      (('define _ val)
+       (variable-pure? k val))
       ; CPS version of set and define, which despite being syntax are procedure-ish
       (('set! cont x val)
        (and (not (eqv? x k)) (variable-pure? k cont) (variable-pure? k val)))
-      (('define cont x val)
-       (or (eqv? x k) (and (variable-pure? k cont) (variable-pure? k val))))
+      (('define cont _ val)
+       (and (variable-pure? k cont) (variable-pure? k val)))
       (('letrec ((xs vals) ...) body)
        ; a bit of a hack.
        ; but if k is in the xs, it's shadowed
@@ -148,6 +148,51 @@
       ((xs ...)
        (fold (lambda (x p) (and p (variable-pure? k x))) #t xs))
       (else #t)))
+
+  ; returns list of variables free in exprs that are mutated
+  ; safe on non-alpha-converted input
+  (define (mutated-variables exprs)
+    (define (bind xs bound)
+      (cond ((pair? xs) (cons (car xs) (bind (cdr xs) bound)))
+            ((null? xs) bound)
+            (else (cons xs bound))))
+    ; only set the data on variables that aren't shadowed by bound variables
+    (define (set-target x bound acc)
+      (if (memq x bound) acc (cons x acc)))
+    (define (walk-all exprs bound acc)
+      (fold (lambda (e acc) (walk e bound acc)) acc exprs))
+    (define (walk-clauses clauses bound acc)
+      (fold (lambda (clause acc) (walk (cadr clause) (bind (car clause) bound) acc)) acc clauses))
+    (define (walk expr bound acc)
+      (match expr
+        (('quote . _) acc)
+        (('##foreign.function . _) acc)
+        (('##intrinsic . _) acc)
+        (('##basic-intrinsic . _) acc)
+        (('lambda xs body)
+         (walk body (bind xs bound) acc))
+        (('case-lambda . clauses)
+         (walk-clauses clauses bound acc))
+        (('##qualified-lambda name static? xs body)
+         (walk body (bind xs bound) acc))
+        (('##qualified-case-lambda name static? . clauses)
+         (walk-clauses clauses bound acc))
+        (('set! x val)
+         (walk val bound (set-target x bound acc)))
+        (('define _ val)
+         (walk val bound acc))
+        (('set! cont x val)
+         (walk-all (list cont val) bound (set-target x bound acc)))
+        (('define cont _ val)
+         (walk-all (list cont val) bound acc))
+        (('letrec ((xs vals) ...) body)
+         (walk-all (cons body vals) (bind xs bound) acc))
+        (('##letrec _ ((xs vals) ...) body)
+         (walk-all (cons body vals) (bind xs bound) acc))
+        ((xs ...)
+         (walk-all xs bound acc))
+        (else acc)))
+    (walk-all exprs '() '()))
 
   (define (free-variables expr)
     (define (merge a b)
