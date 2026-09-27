@@ -1,14 +1,15 @@
 (define-library (vanity compiler hygienic types)
-  (import (vanity core) (only (vanity list) lset-xor any))
+  (import (vanity core) (only (vanity list) any))
   (export
     make-scope scope? scope=? get-scope-bindings set-scope-bindings! global-scope toplevel-scope
     get-scope-serial get-scope-provenance scope->string scope-set->string
+    scope-set-xor scope-set<= scope-set=
     explain-scopes? all-registered-scopes
     set-expansion-deadline! expansion-timed-out?
     identifier?
     get-syntax-scopes set-syntax-scopes!
 
-    make-syntax syntax? get-syntax-data set-syntax-data! ;get-syntax-flips set-syntax-flips!
+    make-syntax syntax? get-syntax-data set-syntax-data! get-syntax-cache set-syntax-cache!
     syntax-null? syntax-pair? syntax-cons syntax-car syntax-cdr
     syntax-caar syntax-cadr syntax-cdar syntax-cddr syntax-map syntax-append-map syntax-for-each syntax-list
     syntax-caddr
@@ -71,10 +72,13 @@
 
   ; we wrap syntax trees in this struct to defer flip operations
   (define-record-type syntax
-    (make-syntax data flips)
+    (make-syntax-impl data flips cache)
     syntax?
     (data get-syntax-data-impl set-syntax-data!)
-    (flips get-syntax-scopes set-syntax-scopes!))
+    (flips get-syntax-scopes set-syntax-scopes!)
+    ; #f or (epoch . binding), owned by resolve-identifier
+    (cache get-syntax-cache set-syntax-cache!))
+  (define (make-syntax data flips) (make-syntax-impl data flips #f))
   (define (identifier? x)
     (and (syntax? x) (symbol? (get-syntax-data-impl x))))
 
@@ -88,8 +92,8 @@
       (define (flip stx)
         (cond
           ((syntax? stx)
-           (make-syntax (get-syntax-data-impl stx) (lset-xor scope=? (get-syntax-scopes stx) scopes)))
-          ((or (symbol? stx) (pair? stx)) (make-syntax stx scopes))
+           (make-syntax-impl (get-syntax-data-impl stx) (scope-set-xor (get-syntax-scopes stx) scopes) #f))
+          ((or (symbol? stx) (pair? stx)) (make-syntax-impl stx scopes #f))
           ; literals don't need coloring
           (else stx)))
       (cond ((pair? data)
@@ -115,11 +119,45 @@
             ((eq? (car set) x) (cdr set))
             (else (cons (car set) (loop (cdr set))))))
         (cons x set)))
+  (define (scope-set<= a b)
+    (or (eq? a b)
+        (let loop ((a a))
+          (or (null? a) (and (memq (car a) b) (loop (cdr a)))))))
+  (define (scope-set= a b)
+    (or (eq? a b)
+        (and (= (length a) (length b)) (scope-set<= a b))))
+  ; Reproduces (lset-xor eq? a b)'s element order exactly: add-binding! files
+  ; a binding under the car of its scope set, and scan order breaks argmax ties.
+  (define (scope-set-xor a b)
+    (define (minus xs ys)
+      (let loop ((xs xs))
+        (cond
+          ((null? xs) '())
+          ((memq (car xs) ys) (loop (cdr xs)))
+          (else (cons (car xs) (loop (cdr xs)))))))
+    (define (disjoint? xs ys)
+      (let loop ((xs xs))
+        (or (null? xs) (and (not (memq (car xs) ys)) (loop (cdr xs))))))
+    (cond
+      ((null? b) a)
+      ((null? a) b)
+      ((eq? a b) '())
+      ((null? (cdr b)) (flip-scope-set a (car b)))
+      ((disjoint? b a) (append b a))
+      (else
+        (let ((a-b (minus a b)))
+          (if (null? a-b)
+              (minus b a)
+              (let loop ((b b) (acc a-b))
+                (cond
+                  ((null? b) acc)
+                  ((memq (car b) a) (loop (cdr b) acc))
+                  (else (loop (cdr b) (cons (car b) acc))))))))))
   (define (lazy-flip-scope stx x)
     (cond
       ((syntax? stx)
-       (make-syntax (get-syntax-data-impl stx) (flip-scope-set (get-syntax-scopes stx) x)))
-      ((or (symbol? stx) (pair? stx)) (make-syntax stx (list x)))
+       (make-syntax-impl (get-syntax-data-impl stx) (flip-scope-set (get-syntax-scopes stx) x) #f))
+      ((or (symbol? stx) (pair? stx)) (make-syntax-impl stx (list x) #f))
       ; literals don't need coloring
       (else stx)))
 
@@ -132,9 +170,10 @@
   (define (eager-flip-scope v sc)
     (cond
       ((identifier? v)
-       (make-syntax
+       (make-syntax-impl
          (get-syntax-data-impl v)
-         (flip-scope-set (get-syntax-scopes v) sc)))
+         (flip-scope-set (get-syntax-scopes v) sc)
+         #f))
       ((list? v)
        (map (lambda (e) (eager-flip-scope e sc)) v))
       (else v)))

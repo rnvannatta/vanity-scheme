@@ -21,7 +21,7 @@
         (error "macro expansion timed out (inside a macro transformer)"))
     (cond
       ((symbol? expr)
-       (let ((lookup (assoc expr env)))
+       (let ((lookup (assq expr env)))
          (if lookup (cdr lookup) (error "eval: symbol not found" expr))))
       ((null? expr) (error "eval: stray null"))
       ((not (pair? expr)) expr)

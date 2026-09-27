@@ -35,7 +35,12 @@
     register-universe-binding! universe-binding? binding-name user-toplevel-identifier?
     bound-identifier=? free-identifier=? literal-identifier=? literal-keyword?)
 
+  (define binding-epochs (make-hash-table eq? current-hash #f #t))
+  (define binding-clock 0.0)
+
   (define (add-binding! id binding)
+    (set! binding-clock (+ binding-clock 1.0))
+    (hash-table-set! binding-epochs (get-syntax-data id) binding-clock)
     ; We want to avoid the global scope to avoid cluttering it.
     ; It's not a correctness problem but is a perf one, and does result in a leak.
     (let* ((scopes (get-syntax-scopes id))
@@ -47,7 +52,7 @@
     (define id-scopes (get-syntax-scopes (car max-id)))
     (for-each
       (lambda (e)
-        (unless (lset<= scope=? (get-syntax-scopes (car e)) id-scopes)
+        (unless (scope-set<= (get-syntax-scopes (car e)) id-scopes)
           (if (explain-scopes?) (explain-ambiguity id max-id candidate-ids))
           (compiler-error "ambiguous identifier"
             (get-syntax-data (car max-id))
@@ -66,9 +71,9 @@
         (unless (eq? e max-id)
           (define e-scopes (get-syntax-scopes (car e)))
           (format err "  candidate: ~A~N" (scope-set->string e-scopes))
-          (unless (lset<= scope=? e-scopes winner-scopes)
+          (unless (scope-set<= e-scopes winner-scopes)
             (format err "    incomparable with winner; symmetric difference ~A~N"
-                    (scope-set->string (lset-xor scope=? e-scopes winner-scopes))))))
+                    (scope-set->string (scope-set-xor e-scopes winner-scopes))))))
       candidate-ids))
   (define (argmax f xs)
     (cdr
@@ -89,16 +94,27 @@
             (filter
               (lambda (e)
                 (and (eq? (get-syntax-data (car e)) id-sym)
-                     (lset<= scope=? (get-syntax-scopes (car e)) all-id-scopes)))
+                     (scope-set<= (get-syntax-scopes (car e)) all-id-scopes)))
               (get-scope-bindings (car rest-id-scopes)))
             (loop (cdr rest-id-scopes))))))
-  (define (resolve-identifier id)
+  (define (resolve-identifier-uncached id)
     (define candidate-ids (find-all-matching-bindings id))
     (if (null? candidate-ids)
         #f
         (let ((max-id (argmax (lambda (e) (length (get-syntax-scopes (car e)))) candidate-ids)))
           (check-unambiguous id max-id candidate-ids)
           (cdr max-id))))
+  ; Only a binding of the same symbol can change a resolution, and an
+  ; identifier's scopes are never mutated (flips build new syntax objects),
+  ; so a cached result holds until add-binding! bumps the symbol's epoch.
+  (define (resolve-identifier id)
+    (let ((epoch (hash-table-ref binding-epochs (get-syntax-data id) (lambda () 0.0)))
+          (cache (get-syntax-cache id)))
+      (if (and cache (eqv? (car cache) epoch))
+          (cdr cache)
+          (let ((binding (resolve-identifier-uncached id)))
+            (set-syntax-cache! id (cons epoch binding))
+            binding))))
   (define (find-exact-binding id)
     (define id-sym (get-syntax-data id))
     (define all-id-scopes (get-syntax-scopes id))
@@ -109,7 +125,7 @@
             (cond
               ((null? bindings) (loop (cdr rest-id-scopes)))
               ((and (eq? (get-syntax-data (caar bindings)) id-sym)
-                    (lset= scope=? (get-syntax-scopes (caar bindings)) all-id-scopes))
+                    (scope-set= (get-syntax-scopes (caar bindings)) all-id-scopes))
                (cdar bindings))
               (else (loop2 (cdr bindings))))))))
 
@@ -127,11 +143,11 @@
 
   ; written by the user at universe level, as opposed to introduced by a macro
   (define (user-toplevel-identifier? id)
-    (lset= scope=? (get-syntax-scopes id) (list (global-scope) (toplevel-scope))))
+    (scope-set= (get-syntax-scopes id) (list (global-scope) (toplevel-scope))))
 
   (define (bound-identifier=? a b)
     (and (eq? (get-syntax-data a) (get-syntax-data b))
-         (lset= scope=? (get-syntax-scopes a) (get-syntax-scopes b))))
+         (scope-set= (get-syntax-scopes a) (get-syntax-scopes b))))
   (define (free-identifier=? a b)
     (let ((ba (resolve-identifier a))
           (bb (resolve-identifier b)))

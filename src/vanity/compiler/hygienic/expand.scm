@@ -120,7 +120,7 @@
                      (else (loop (cdr in) (cons (car in) out))))))
            (near-misses
              (filter
-               (lambda (e) (not (lset<= scope=? (get-syntax-scopes (car e)) use-scopes)))
+               (lambda (e) (not (scope-set<= (get-syntax-scopes (car e)) use-scopes)))
                (append-map
                  (lambda (sc)
                    (filter (lambda (e) (eq? (get-syntax-data (car e)) sym))
@@ -245,11 +245,11 @@
          (compiler-error "free variable" (get-syntax-data stx)
                          (scope-set->string (get-syntax-scopes stx))))
        stx)
-      ((member binding special-forms)
+      ((memq binding special-forms)
        (error "bad syntax" (get-syntax-data stx)
               (scope-set->string (get-syntax-scopes stx))))
       (else
-        (define v (assoc binding env))
+        (define v (assq binding env))
         (cond
           ((not v)
            (if (explain-scopes?) (explain-identifier-failure stx))
@@ -469,7 +469,7 @@
                           (val (eval-syntax-definition var (syntax-caddr def) depth)))
                      (loop defines constants (syntax-cdr body) (cons (cons binding val) env)))))
                 (else
-                  (define v (assoc binding env))
+                  (define v (assq binding env))
                   (cond
                     ((and v (procedure? (cdr v)))
                      (loop
@@ -858,7 +858,7 @@
                    (set! declares (cons (foreign-declare-datum form) declares))
                    (loop rest entries exports imports constant-imports mangled-imports))
                   (else
-                    (let ((v (and head (assoc head (toplevel-expand-env)))))
+                    (let ((v (and head (assq head (toplevel-expand-env)))))
                       (cond
                         ((memq (or head (head-symbol form)) library-unsupported-forms)
                          (compiler-error "not supported in hygienic define-library yet" (head-symbol form)))
@@ -964,7 +964,7 @@
            (compiler-error "malformed set!" (syntax-object->datum stx))))
        (define (check-not-constant place)
          (let* ((binding (resolve-identifier place))
-                (v (and binding (assoc binding env))))
+                (v (and binding (assq binding env))))
            (when (and v (eq? (cdr v) constant))
              (compiler-error "define-constant constant is mutated by set!" (syntax-object->datum stx)))))
        (unless (and (syntax-proper-list? stx) (>= (syntax-length stx) 3))
@@ -1000,7 +1000,7 @@
       ((##foreign.declare)
        (compiler-error "##foreign.declare is only allowed at toplevel" (syntax-object->datum stx)))
       (else
-        (define v (assoc binding env))
+        (define v (assq binding env))
         (cond
           ((and v (procedure? (cdr v)))
            ; a macro at the head of transformer output rewrites the same form
