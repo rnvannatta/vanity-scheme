@@ -6,6 +6,9 @@ ENABLE_WASM ?= y
 HAVE_BISON ?= y
 HAVE_LEX ?= y
 
+EXPANDER_SCMFLAGS ?= --hygiene
+SCMFLAGS += $(EXPANDER_SCMFLAGS)
+
 # lay_egg output must stay full-featured regardless of local configuration
 EGG_SCMFLAGS := $(SCMFLAGS)
 SCMFLAGS += $(FEATURE_SCMFLAGS)
@@ -125,7 +128,7 @@ testrun_linux/% : compiler runtime
 	@EXE=`mktemp` ; \
 	echo "bin/vsc test/$* && ./a.out" ; \
 	OVERRIDE=`realpath lib/` ; \
-	if ! ($(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE test/$* -O2 -Wc,-Llib -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
+	if ! ($(PATCH) LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE test/$* -O2 $(EXPANDER_SCMFLAGS) -Wc,-Llib -Wc,-Iinclude -Wc,-lm -Iinclude ) ; then \
 		echo "COMPILE FAILURE: test/$*"; \
 		\rm -f $$EXE ; \
 		exit 1; \
@@ -146,7 +149,7 @@ testrun_windows/% : compiler runtime windows_runtime
 	@EXE=`mktemp` ; \
 	echo "bin/vsc test/$* && wine ./a.exe" ; \
 	OVERRIDE="`realpath lib/`:`realpath vendor/lib/`" ; \
-	if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE test/$* -Wc,-Llib/x86_64-w64-mingw32 -Wc,-Lvendor/lib/x86_64-w64-mingw32  -Wc,-Iinclude -Iinclude --platform=windows) ; then \
+	if ! (LD_LIBRARY_PATH=$$OVERRIDE:$$LD_LIBRARY_PATH bin/vsc -o$$EXE test/$* -Wc,-Llib/x86_64-w64-mingw32 -Wc,-Lvendor/lib/x86_64-w64-mingw32  -Wc,-Iinclude -Iinclude --platform=windows $(EXPANDER_SCMFLAGS)) ; then \
 		echo "COMPILE FAILURE: test/$*"; \
 		\rm -f $$EXE ; \
 		exit 1; \

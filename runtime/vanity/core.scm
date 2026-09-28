@@ -177,70 +177,24 @@
                ((not (##vcore.symbol=? x (car xs))) #f)
                (else (loop (cdr xs))))))))
 
-  (define (vector=? x y)
-    (if (not (= (vector-length x) (vector-length y)))
-        #f
-        (let loop ((i 0) (len (vector-length x)))
-          (cond
-            ((= i len) #t)
-            ((equal? (vector-ref x i) (vector-ref y i)) (loop (+ i 1) len))
-            (else #f)))))
-  (define (f32vector=? x y)
-    (if (not (= (f32vector-length x) (f32vector-length y)))
-        #f
-        (let loop ((i 0) (len (f32vector-length x)))
-          (cond
-            ((= i len) #t)
-            ((eq? (f32vector-ref x i) (f32vector-ref y i)) (loop (+ i 1) len))
-            (else #f)))))
-  (define (f64vector=? x y)
-    (if (not (= (f64vector-length x) (f64vector-length y)))
-        #f
-        (let loop ((i 0) (len (f64vector-length x)))
-          (cond
-            ((= i len) #t)
-            ((eq? (f64vector-ref x i) (f64vector-ref y i)) (loop (+ i 1) len))
-            (else #f)))))
-  (define (s32vector=? x y)
-    (if (not (= (s32vector-length x) (s32vector-length y)))
-        #f
-        (let loop ((i 0) (len (s32vector-length x)))
-          (cond
-            ((= i len) #t)
-            ((eq? (s32vector-ref x i) (s32vector-ref y i)) (loop (+ i 1) len))
-            (else #f)))))
-  (define (u16vector=? x y)
-    (if (not (= (u16vector-length x) (u16vector-length y)))
-        #f
-        (let loop ((i 0) (len (u16vector-length x)))
-          (cond
-            ((= i len) #t)
-            ((eq? (u16vector-ref x i) (u16vector-ref y i)) (loop (+ i 1) len))
-            (else #f)))))
-  (define (s16vector=? x y)
-    (if (not (= (s16vector-length x) (s16vector-length y)))
-        #f
-        (let loop ((i 0) (len (s16vector-length x)))
-          (cond
-            ((= i len) #t)
-            ((eq? (s16vector-ref x i) (s16vector-ref y i)) (loop (+ i 1) len))
-            (else #f)))))
-  (define (u8vector=? x y)
-    (if (not (= (u8vector-length x) (u8vector-length y)))
-        #f
-        (let loop ((i 0) (len (u8vector-length x)))
-          (cond
-            ((= i len) #t)
-            ((eq? (u8vector-ref x i) (u8vector-ref y i)) (loop (+ i 1) len))
-            (else #f)))))
-  (define (s8vector=? x y)
-    (if (not (= (s8vector-length x) (s8vector-length y)))
-        #f
-        (let loop ((i 0) (len (s8vector-length x)))
-          (cond
-            ((= i len) #t)
-            ((eq? (s8vector-ref x i) (s8vector-ref y i)) (loop (+ i 1) len))
-            (else #f)))))
+  (define-syntax (define-sequence=? name len-of ref elem=?)
+    #`(define (,name x y)
+        (if (not (= (,len-of x) (,len-of y)))
+            #f
+            (let loop ((i 0) (len (,len-of x)))
+              (cond
+                ((= i len) #t)
+                ((,elem=? (,ref x i) (,ref y i)) (loop (+ i 1) len))
+                (else #f))))))
+
+  (define-sequence=? vector=? vector-length vector-ref equal?)
+  (define-sequence=? f32vector=? f32vector-length f32vector-ref eq?)
+  (define-sequence=? f64vector=? f64vector-length f64vector-ref eq?)
+  (define-sequence=? s32vector=? s32vector-length s32vector-ref eq?)
+  (define-sequence=? u16vector=? u16vector-length u16vector-ref eq?)
+  (define-sequence=? s16vector=? s16vector-length s16vector-ref eq?)
+  (define-sequence=? u8vector=? u8vector-length u8vector-ref eq?)
+  (define-sequence=? s8vector=? s8vector-length s8vector-ref eq?)
 
   (define (record=? x y)
     (if (not (and (= (record-length x) (record-length y))
@@ -361,32 +315,24 @@
   (define pow (foreign-function "C" "double pow(double, double);"))
   (define expt pow)
 
-  (define max
-    (case-lambda
-      ((a) a)
-      ((a b)
-       (if (> a b) a b))
-      ((a b c)
-       (max (max a b) c))
-      ((a b c d)
-       (max (max (max a b) c) d))
-      ((a . bs)
-       (let loop ((ret a) (rem bs))
-        (if (null? bs) ret
-            (loop (max a (car bs)) (cdr bs)))))))
-  (define min
-    (case-lambda
-      ((a) a)
-      ((a b)
-       (if (< a b) a b))
-      ((a b c)
-       (min (min a b) c))
-      ((a b c d)
-       (min (min (min a b) c) d))
-      ((a . bs)
-       (let loop ((ret a) (rem bs))
-        (if (null? bs) ret
-            (loop (min a (car bs)) (cdr bs)))))))
+  (define-syntax (define-variadic-fold name op . clauses)
+    #`(define ,name
+        (case-lambda
+          ,@clauses
+          ((a) a)
+          ((a b) (,op a b))
+          ((a b c) (,op (,op a b) c))
+          ((a b c d) (,op (,op (,op a b) c) d))
+          ((a . bs)
+           (let loop ((ret a) (bs bs))
+             (if (null? bs)
+                 ret
+                 (loop (,op ret (car bs)) (cdr bs))))))))
+
+  (define-syntax (max2 a b) #`(let ((x ,a) (y ,b)) (if (> x y) x y)))
+  (define-syntax (min2 a b) #`(let ((x ,a) (y ,b)) (if (< x y) x y)))
+  (define-variadic-fold max max2)
+  (define-variadic-fold min min2)
 
   ; integer math functions
   (define (exact-integer-sqrt x)
@@ -617,58 +563,72 @@
 
   (define-constant symbol->string ##vcore.symbol->string)
 
-  (define string-for-each
-    (case-lambda
-      ((f str1)
-       (let ((len (string-length str1)))
-         (do-loop
-           for i from 0 to len
-           do (f (string-ref str1 i)))))
-      ((f str1 str2)
-       (let ((len (min (string-length str1) (string-length str2))))
-         (do-loop
-           for i from 0 to len
-           do (f (string-ref str1 i) (string-ref str2 i)))))
-      ((f str1 str2 str3)
-       (let ((len (min (string-length str1) (string-length str2) (string-length str3))))
-         (do-loop
-           for i from 0 to len
-           do (f (string-ref str1 i) (string-ref str2 i) (string-ref str3 i)))))
-      ((f str1 . strs)
-       (let ((len (apply min (string-length str1) (map string-length strs))))
-         (do-loop
-           for i from 0 to len
-           do (apply f (string-ref str1 i) (map (lambda (e) (string-ref e i)) strs)))))))
-  (define string-map
-    (case-lambda
-      ((f str1)
-       (let* ((len (string-length str1))
-              (ret (make-string len)))
-         (do-loop
-           for i from 0 to len
-           do (string-set! ret i (f (string-ref str1 i))))
-         ret))
-      ((f str1 str2)
-       (let* ((len (min (string-length str1) (string-length str2)))
-              (ret (make-string len)))
-         (do-loop
-           for i from 0 to len
-           do (string-set! ret i (f (string-ref str1 i) (string-ref str2 i))))
-         ret))
-      ((f str1 str2 str3)
-       (let* ((len (min (string-length str1) (string-length str2) (string-length str3)))
-              (ret (make-string len)))
-         (do-loop
-           for i from 0 to len
-           do (string-set! ret i (f (string-ref str1 i) (string-ref str2 i) (string-ref str3 i))))
-         ret))
-      ((f str1 . strs)
-       (let* ((len (apply min (string-length str1) (map string-length strs)))
-              (ret (make-string len)))
-         (do-loop
-           for i from 0 to len
-           do (string-set! ret i (apply f (string-ref str1 i) (map (lambda (e) (string-ref e i)) strs))))
-         ret))))
+  (define-syntax (define-sequence-for-each name len-of ref)
+    #`(define ,name
+        (case-lambda
+          ((f xs)
+           (let ((len (,len-of xs)))
+            (let loop ((i 0))
+              (if (< i len)
+                  (begin (f (,ref xs i)) (loop (+ i 1)))))))
+          ((f xs ys)
+           (let ((len (min (,len-of xs) (,len-of ys))))
+            (let loop ((i 0))
+              (if (< i len)
+                  (begin (f (,ref xs i) (,ref ys i)) (loop (+ i 1)))))))
+          ((f xs ys zs)
+           (let ((len (min (,len-of xs) (,len-of ys) (,len-of zs))))
+            (let loop ((i 0))
+              (if (< i len)
+                  (begin (f (,ref xs i) (,ref ys i) (,ref zs i)) (loop (+ i 1)))))))
+          ((f . seqs)
+           (let ((len (apply min (map ,len-of seqs))))
+            (let loop ((i 0))
+              (if (< i len)
+                  (begin (apply f (map (lambda (seq) (,ref seq i)) seqs)) (loop (+ i 1))))))))))
+
+  (define-syntax (define-sequence-map name make len-of ref store!)
+    #`(define ,name
+        (case-lambda
+          ((f xs)
+           (let* ((len (,len-of xs))
+                  (ret (,make len)))
+            (let loop ((i 0))
+              (if (< i len)
+                  (begin
+                    (,store! ret i (f (,ref xs i)))
+                    (loop (+ i 1)))
+                  ret))))
+          ((f xs ys)
+           (let* ((len (min (,len-of xs) (,len-of ys)))
+                  (ret (,make len)))
+            (let loop ((i 0))
+              (if (< i len)
+                  (begin
+                    (,store! ret i (f (,ref xs i) (,ref ys i)))
+                    (loop (+ i 1)))
+                  ret))))
+          ((f xs ys zs)
+           (let* ((len (min (,len-of xs) (,len-of ys) (,len-of zs)))
+                  (ret (,make len)))
+            (let loop ((i 0))
+              (if (< i len)
+                  (begin
+                    (,store! ret i (f (,ref xs i) (,ref ys i) (,ref zs i)))
+                    (loop (+ i 1)))
+                  ret))))
+          ((f . seqs)
+           (let* ((len (apply min (map ,len-of seqs)))
+                  (ret (,make len)))
+            (let loop ((i 0))
+              (if (< i len)
+                  (begin
+                    (,store! ret i (apply f (map (lambda (seq) (,ref seq i)) seqs)))
+                    (loop (+ i 1)))
+                  ret)))))))
+
+  (define-sequence-for-each string-for-each string-length string-ref)
+  (define-sequence-map string-map make-string string-length string-ref string-set!)
 
   (define (list->string lst)
     (let ((str (make-string (length lst))))
@@ -728,6 +688,24 @@
   (define-constant vector-length ##vcore.vector-length)
 
   ; typevectors
+  (define-syntax (define-sequence-copy name make len-of copy!)
+    #`(define ,name
+        (case-lambda
+          ((vec) (,name vec 0 (,len-of vec)))
+          ((vec start) (,name vec start (,len-of vec)))
+          ((vec start end)
+           (let ((ret (,make (- end start))))
+             (,copy! ret 0 vec start end)
+             ret)))))
+
+  (define-syntax (define-sequence->list name len-of ref)
+    #`(define (,name vec)
+        (let ((len (,len-of vec)))
+          (let loop ((acc '()) (i (- len 1)))
+            (if (< i 0)
+                acc
+                (loop (cons (,ref vec i) acc) (- i 1)))))))
+
   (define-constant f32vector? ##vcore.f32vector?)
   (define-constant make-f32vector ##vcore.make-f32vector)
   (define-constant list->f32vector ##vcore.list->f32vector)
@@ -736,20 +714,8 @@
   (define-constant f32vector-set! ##vcore.f32vector-set!)
   (define-constant f32vector-length ##vcore.f32vector-length)
   (define-constant f32vector-copy! (##intrinsic "VF32VectorCopy" 4 6))
-  (define f32vector-copy
-    (case-lambda
-      ((vec) (f32vector-copy vec 0 (f32vector-length vec)))
-      ((vec start) (f32vector-copy vec start (f32vector-length vec)))
-      ((vec start end)
-       (let ((ret (make-f32vector (- end start))))
-         (f32vector-copy! ret 0 vec start end)
-         ret))))
-  (define (f32vector->list vec)
-    (let ((len (f32vector-length vec)))
-      (let loop ((acc '()) (i (- len 1)))
-        (if (< i 0)
-            acc
-            (loop (cons (f32vector-ref vec i) acc) (- i 1))))))
+  (define-sequence-copy f32vector-copy make-f32vector f32vector-length f32vector-copy!)
+  (define-sequence->list f32vector->list f32vector-length f32vector-ref)
 
   (define-constant f64vector? ##vcore.f64vector?)
   (define-constant make-f64vector ##vcore.make-f64vector)
@@ -759,20 +725,8 @@
   (define-constant f64vector-set! ##vcore.f64vector-set!)
   (define-constant f64vector-length ##vcore.f64vector-length)
   (define-constant f64vector-copy! (##intrinsic "VF64VectorCopy" 4 6))
-  (define f64vector-copy
-    (case-lambda
-      ((vec) (f64vector-copy vec 0 (f64vector-length vec)))
-      ((vec start) (f64vector-copy vec start (f64vector-length vec)))
-      ((vec start end)
-       (let ((ret (make-f64vector (- end start))))
-         (f64vector-copy! ret 0 vec start end)
-         ret))))
-  (define (f64vector->list vec)
-    (let ((len (f64vector-length vec)))
-      (let loop ((acc '()) (i (- len 1)))
-        (if (< i 0)
-            acc
-            (loop (cons (f64vector-ref vec i) acc) (- i 1))))))
+  (define-sequence-copy f64vector-copy make-f64vector f64vector-length f64vector-copy!)
+  (define-sequence->list f64vector->list f64vector-length f64vector-ref)
 
   (define-constant s32vector? ##vcore.s32vector?)
   (define-constant make-s32vector ##vcore.make-s32vector)
@@ -782,20 +736,8 @@
   (define-constant s32vector-set! ##vcore.s32vector-set!)
   (define-constant s32vector-length ##vcore.s32vector-length)
   (define-constant s32vector-copy! (##intrinsic "VS32VectorCopy" 4 6))
-  (define s32vector-copy
-    (case-lambda
-      ((vec) (s32vector-copy vec 0 (s32vector-length vec)))
-      ((vec start) (s32vector-copy vec start (s32vector-length vec)))
-      ((vec start end)
-       (let ((ret (make-s32vector (- end start))))
-         (s32vector-copy! ret 0 vec start end)
-         ret))))
-  (define (s32vector->list vec)
-    (let ((len (s32vector-length vec)))
-      (let loop ((acc '()) (i (- len 1)))
-        (if (< i 0)
-            acc
-            (loop (cons (s32vector-ref vec i) acc) (- i 1))))))
+  (define-sequence-copy s32vector-copy make-s32vector s32vector-length s32vector-copy!)
+  (define-sequence->list s32vector->list s32vector-length s32vector-ref)
 
   (define-constant u16vector? ##vcore.u16vector?)
   (define-constant make-u16vector ##vcore.make-u16vector)
@@ -805,20 +747,8 @@
   (define-constant u16vector-set! ##vcore.u16vector-set!)
   (define-constant u16vector-length ##vcore.u16vector-length)
   (define-constant u16vector-copy! (##intrinsic "VU16VectorCopy" 4 6))
-  (define u16vector-copy
-    (case-lambda
-      ((vec) (u16vector-copy vec 0 (u16vector-length vec)))
-      ((vec start) (u16vector-copy vec start (u16vector-length vec)))
-      ((vec start end)
-       (let ((ret (make-u16vector (- end start))))
-         (u16vector-copy! ret 0 vec start end)
-         ret))))
-  (define (u16vector->list vec)
-    (let ((len (u16vector-length vec)))
-      (let loop ((acc '()) (i (- len 1)))
-        (if (< i 0)
-            acc
-            (loop (cons (u16vector-ref vec i) acc) (- i 1))))))
+  (define-sequence-copy u16vector-copy make-u16vector u16vector-length u16vector-copy!)
+  (define-sequence->list u16vector->list u16vector-length u16vector-ref)
 
   (define-constant s16vector? ##vcore.s16vector?)
   (define-constant make-s16vector ##vcore.make-s16vector)
@@ -828,20 +758,8 @@
   (define-constant s16vector-set! ##vcore.s16vector-set!)
   (define-constant s16vector-length ##vcore.s16vector-length)
   (define-constant s16vector-copy! (##intrinsic "VS16VectorCopy" 4 6))
-  (define s16vector-copy
-    (case-lambda
-      ((vec) (s16vector-copy vec 0 (s16vector-length vec)))
-      ((vec start) (s16vector-copy vec start (s16vector-length vec)))
-      ((vec start end)
-       (let ((ret (make-s16vector (- end start))))
-         (s16vector-copy! ret 0 vec start end)
-         ret))))
-  (define (s16vector->list vec)
-    (let ((len (s16vector-length vec)))
-      (let loop ((acc '()) (i (- len 1)))
-        (if (< i 0)
-            acc
-            (loop (cons (s16vector-ref vec i) acc) (- i 1))))))
+  (define-sequence-copy s16vector-copy make-s16vector s16vector-length s16vector-copy!)
+  (define-sequence->list s16vector->list s16vector-length s16vector-ref)
 
   (define-constant u8vector? ##vcore.u8vector?)
   (define-constant make-u8vector ##vcore.make-u8vector)
@@ -851,20 +769,8 @@
   (define-constant u8vector-set! ##vcore.u8vector-set!)
   (define-constant u8vector-length ##vcore.u8vector-length)
   (define-constant u8vector-copy! (##intrinsic "VU8VectorCopy" 4 6))
-  (define u8vector-copy
-    (case-lambda
-      ((vec) (u8vector-copy vec 0 (u8vector-length vec)))
-      ((vec start) (u8vector-copy vec start (u8vector-length vec)))
-      ((vec start end)
-       (let ((ret (make-u8vector (- end start))))
-         (u8vector-copy! ret 0 vec start end)
-         ret))))
-  (define (u8vector->list vec)
-    (let ((len (u8vector-length vec)))
-      (let loop ((acc '()) (i (- len 1)))
-        (if (< i 0)
-            acc
-            (loop (cons (u8vector-ref vec i) acc) (- i 1))))))
+  (define-sequence-copy u8vector-copy make-u8vector u8vector-length u8vector-copy!)
+  (define-sequence->list u8vector->list u8vector-length u8vector-ref)
 
   (define-constant bytevector? ##vcore.u8vector?)
   (define-constant make-bytevector ##vcore.make-u8vector)
@@ -943,20 +849,8 @@
   (define-constant s8vector-set! ##vcore.s8vector-set!)
   (define-constant s8vector-length ##vcore.s8vector-length)
   (define-constant s8vector-copy! (##intrinsic "VS8VectorCopy" 4 6))
-  (define s8vector-copy
-    (case-lambda
-      ((vec) (s8vector-copy vec 0 (s8vector-length vec)))
-      ((vec start) (s8vector-copy vec start (s8vector-length vec)))
-      ((vec start end)
-       (let ((ret (make-s8vector (- end start))))
-         (s8vector-copy! ret 0 vec start end)
-         ret))))
-  (define (s8vector->list vec)
-    (let ((len (s8vector-length vec)))
-      (let loop ((acc '()) (i (- len 1)))
-        (if (< i 0)
-            acc
-            (loop (cons (s8vector-ref vec i) acc) (- i 1))))))
+  (define-sequence-copy s8vector-copy make-s8vector s8vector-length s8vector-copy!)
+  (define-sequence->list s8vector->list s8vector-length s8vector-ref)
 
   (define (typevector? x)
     (or (s8vector? x)
@@ -967,75 +861,10 @@
         (f32vector? x)
         (f64vector? x)))
 
-  (define (vector->list vec)
-    (let ((len (vector-length vec)))
-      (let loop ((acc '()) (i (- len 1)))
-        (if (< i 0)
-            acc
-            (loop (cons (vector-ref vec i) acc) (- i 1))))))
+  (define-sequence->list vector->list vector-length vector-ref)
 
-  ; Hideous
-
-  (define vector-for-each
-    (case-lambda
-      ((f xs)
-       (let ((len (vector-length xs)))
-        (let loop ((i 0))
-          (if (< i len)
-              (begin (f (vector-ref xs i)) (loop (+ i 1)))))))
-      ((f xs ys)
-       (let ((len (min (vector-length xs) (vector-length ys))))
-        (let loop ((i 0))
-          (if (< i len)
-              (begin (f (vector-ref xs i) (vector-ref ys i)) (loop (+ i 1)))))))
-      ((f xs ys zs)
-       (let ((len (min (vector-length xs) (vector-length ys) (vector-length zs))))
-        (let loop ((i 0))
-          (if (< i len)
-              (begin (f (vector-ref xs i) (vector-ref ys i) (vector-ref zs i)) (loop (+ i 1)))))))
-      ((f . vecs)
-       (let ((len (apply min (map vector-length vecs))))
-        (let loop ((i 0))
-          (if (< i len)
-              (begin (apply f (map (lambda (vec) (vector-ref vec i)) vecs)) (loop (+ i 1)))))))))
-  (define vector-map
-    (case-lambda
-      ((f xs)
-       (let* ((len (vector-length xs))
-              (vec (make-vector len)))
-        (let loop ((i 0))
-          (if (< i len)
-              (begin
-                (vector-set! vec i (f (vector-ref xs i)))
-                (loop (+ i 1)))
-              vec))))
-      ((f xs ys)
-       (let* ((len (min (vector-length xs) (vector-length ys)))
-              (vec (make-vector len)))
-        (let loop ((i 0))
-          (if (< i len)
-              (begin
-                (vector-set! vec i (f (vector-ref xs i) (vector-ref ys i)))
-                (loop (+ i 1)))
-              vec))))
-      ((f xs ys zs)
-       (let* ((len (min (vector-length xs) (vector-length ys) (vector-length zs)))
-              (vec (make-vector len)))
-        (let loop ((i 0))
-          (if (< i len)
-              (begin
-                (vector-set! vec i (f (vector-ref xs i) (vector-ref ys i) (vector-ref zs i)))
-                (loop (+ i 1)))
-              vec))))
-      ((f . vecs)
-       (let* ((len (apply min (map vector-length vecs)))
-              (vec (make-vector len)))
-        (let loop ((i 0))
-          (if (< i len)
-              (begin
-                (vector-set! vec i (apply f (map (lambda (vec) (vector-ref vec i)) vecs)))
-                (loop (+ i 1)))
-              vec))))))
+  (define-sequence-for-each vector-for-each vector-length vector-ref)
+  (define-sequence-map vector-map make-vector vector-length vector-ref vector-set!)
 
   (define vector-copy
     (case-lambda
@@ -1129,44 +958,33 @@
         do (vector-set! vec i (string-ref str i)))
       vec))
 
-  (define (string=?-2 a b)
-    (let ((n (string-length a)) (m (string-length b)))
-      (and (= n m)
-           (let loop ((i 0))
-             (or (= i n)
-                 (and (char=? (string-ref a i) (string-ref b i))
-                      (loop (+ i 1))))))))
+  (define-syntax (define-string-equality name char=)
+    #`(define (,name a b)
+        (let ((n (string-length a)) (m (string-length b)))
+          (and (= n m)
+               (let loop ((i 0))
+                 (or (= i n)
+                     (and (,char= (string-ref a i) (string-ref b i))
+                          (loop (+ i 1)))))))))
 
-  (define (string<?-2 a b)
-    (let ((n (string-length a)) (m (string-length b)))
-      (let loop ((i 0))
-        (cond ((= i n) (< n m))
-              ((= i m) #f)
-              ((char<? (string-ref a i) (string-ref b i)) #t)
-              ((char=? (string-ref a i) (string-ref b i)) (loop (+ i 1)))
-              (else #f)))))
+  (define-syntax (define-string-ordering name char< char=)
+    #`(define (,name a b)
+        (let ((n (string-length a)) (m (string-length b)))
+          (let loop ((i 0))
+            (cond ((= i n) (< n m))
+                  ((= i m) #f)
+                  ((,char< (string-ref a i) (string-ref b i)) #t)
+                  ((,char= (string-ref a i) (string-ref b i)) (loop (+ i 1)))
+                  (else #f))))))
 
+  (define-string-equality string=?-2 char=?)
+  (define-string-ordering string<?-2 char<? char=?)
   (define (string>?-2 a b) (string<?-2 b a))
   (define (string<=?-2 a b) (not (string>?-2 a b)))
   (define (string>=?-2 a b) (not (string<?-2 a b)))
 
-  (define (string-ci=?-2 a b)
-    (let ((n (string-length a)) (m (string-length b)))
-      (and (= n m)
-           (let loop ((i 0))
-             (or (= i n)
-                 (and (char-ci=? (string-ref a i) (string-ref b i))
-                      (loop (+ i 1))))))))
-
-  (define (string-ci<?-2 a b)
-    (let ((n (string-length a)) (m (string-length b)))
-      (let loop ((i 0))
-        (cond ((= i n) (< n m))
-              ((= i m) #f)
-              ((char-ci<? (string-ref a i) (string-ref b i)) #t)
-              ((char-ci=? (string-ref a i) (string-ref b i)) (loop (+ i 1)))
-              (else #f)))))
-
+  (define-string-equality string-ci=?-2 char-ci=?)
+  (define-string-ordering string-ci<?-2 char-ci<? char-ci=?)
   (define (string-ci>?-2 a b) (string-ci<?-2 b a))
   (define (string-ci<=?-2 a b) (not (string-ci>?-2 a b)))
   (define (string-ci>=?-2 a b) (not (string-ci<?-2 a b)))
@@ -1177,75 +995,24 @@
            (or (null? lst)
                (and (bin? prev (car lst)) (loop (car lst) (cdr lst)))))))
 
-  (define string<=?
-    (case-lambda
-      ((a b) (string<=?-2 a b))
-      ((a b c) (and (string<=?-2 a b) (string<=?-2 b c)))
-      ((a b c d) (and (string<=?-2 a b) (string<=?-2 b c) (string<=?-2 c d)))
-      ((a b c d . rest) (chain-string-cmp string<=?-2 a b c d rest))))
+  (define-syntax (define-string-comparison name bin?)
+    #`(define ,name
+        (case-lambda
+          ((a b) (,bin? a b))
+          ((a b c) (and (,bin? a b) (,bin? b c)))
+          ((a b c d) (and (,bin? a b) (,bin? b c) (,bin? c d)))
+          ((a b c d . rest) (chain-string-cmp ,bin? a b c d rest)))))
 
-  (define string<?
-    (case-lambda
-      ((a b) (string<?-2 a b))
-      ((a b c) (and (string<?-2 a b) (string<?-2 b c)))
-      ((a b c d) (and (string<?-2 a b) (string<?-2 b c) (string<?-2 c d)))
-      ((a b c d . rest) (chain-string-cmp string<?-2 a b c d rest))))
-
-  (define string=?
-    (case-lambda
-      ((a b) (string=?-2 a b))
-      ((a b c) (and (string=?-2 a b) (string=?-2 b c)))
-      ((a b c d) (and (string=?-2 a b) (string=?-2 b c) (string=?-2 c d)))
-      ((a b c d . rest) (chain-string-cmp string=?-2 a b c d rest))))
-
-  (define string>=?
-    (case-lambda
-      ((a b) (string>=?-2 a b))
-      ((a b c) (and (string>=?-2 a b) (string>=?-2 b c)))
-      ((a b c d) (and (string>=?-2 a b) (string>=?-2 b c) (string>=?-2 c d)))
-      ((a b c d . rest) (chain-string-cmp string>=?-2 a b c d rest))))
-
-  (define string>?
-    (case-lambda
-      ((a b) (string>?-2 a b))
-      ((a b c) (and (string>?-2 a b) (string>?-2 b c)))
-      ((a b c d) (and (string>?-2 a b) (string>?-2 b c) (string>?-2 c d)))
-      ((a b c d . rest) (chain-string-cmp string>?-2 a b c d rest))))
-
-  (define string-ci<=?
-    (case-lambda
-      ((a b) (string-ci<=?-2 a b))
-      ((a b c) (and (string-ci<=?-2 a b) (string-ci<=?-2 b c)))
-      ((a b c d) (and (string-ci<=?-2 a b) (string-ci<=?-2 b c) (string-ci<=?-2 c d)))
-      ((a b c d . rest) (chain-string-cmp string-ci<=?-2 a b c d rest))))
-
-  (define string-ci<?
-    (case-lambda
-      ((a b) (string-ci<?-2 a b))
-      ((a b c) (and (string-ci<?-2 a b) (string-ci<?-2 b c)))
-      ((a b c d) (and (string-ci<?-2 a b) (string-ci<?-2 b c) (string-ci<?-2 c d)))
-      ((a b c d . rest) (chain-string-cmp string-ci<?-2 a b c d rest))))
-
-  (define string-ci=?
-    (case-lambda
-      ((a b) (string-ci=?-2 a b))
-      ((a b c) (and (string-ci=?-2 a b) (string-ci=?-2 b c)))
-      ((a b c d) (and (string-ci=?-2 a b) (string-ci=?-2 b c) (string-ci=?-2 c d)))
-      ((a b c d . rest) (chain-string-cmp string-ci=?-2 a b c d rest))))
-
-  (define string-ci>=?
-    (case-lambda
-      ((a b) (string-ci>=?-2 a b))
-      ((a b c) (and (string-ci>=?-2 a b) (string-ci>=?-2 b c)))
-      ((a b c d) (and (string-ci>=?-2 a b) (string-ci>=?-2 b c) (string-ci>=?-2 c d)))
-      ((a b c d . rest) (chain-string-cmp string-ci>=?-2 a b c d rest))))
-
-  (define string-ci>?
-    (case-lambda
-      ((a b) (string-ci>?-2 a b))
-      ((a b c) (and (string-ci>?-2 a b) (string-ci>?-2 b c)))
-      ((a b c d) (and (string-ci>?-2 a b) (string-ci>?-2 b c) (string-ci>?-2 c d)))
-      ((a b c d . rest) (chain-string-cmp string-ci>?-2 a b c d rest))))
+  (define-string-comparison string<=? string<=?-2)
+  (define-string-comparison string<? string<?-2)
+  (define-string-comparison string=? string=?-2)
+  (define-string-comparison string>=? string>=?-2)
+  (define-string-comparison string>? string>?-2)
+  (define-string-comparison string-ci<=? string-ci<=?-2)
+  (define-string-comparison string-ci<? string-ci<?-2)
+  (define-string-comparison string-ci=? string-ci=?-2)
+  (define-string-comparison string-ci>=? string-ci>=?-2)
+  (define-string-comparison string-ci>? string-ci>?-2)
 
   (define string-fill!
     (case-lambda
@@ -1311,171 +1078,38 @@
           #f)))
 
 
-  (define char<?
-    (case-lambda
-      ((a b)
-       (< (char->integer a) (char->integer b)))
-      ((a b c)
-       (< (char->integer a) (char->integer b) (char->integer c)))
-      ((a b c d)
-       (< (char->integer a) (char->integer b) (char->integer d)))
-      ((a b . rest)
-       (and
-         (< (char->integer a) (char->integer b))
-         (let loop ((x b) (xs rest))
-           (cond ((null? xs) #t)
-                 ((< (char->integer x) (char->integer (car xs)))
-                  (loop (car xs) (cdr xs)))
-                 (else #f)))))))
-  (define char<=?
-    (case-lambda
-      ((a b)
-       (<= (char->integer a) (char->integer b)))
-      ((a b c)
-       (<= (char->integer a) (char->integer b) (char->integer c)))
-      ((a b c d)
-       (<= (char->integer a) (char->integer b) (char->integer d)))
-      ((a b . rest)
-       (and
-         (<= (char->integer a) (char->integer b))
-         (let loop ((x b) (xs rest))
-           (cond ((null? xs) #t)
-                 ((<= (char->integer x) (char->integer (car xs)))
-                  (loop (car xs) (cdr xs)))
-                 (else #f)))))))
-  (define char=?
-    (case-lambda
-      ((a b)
-       (= (char->integer a) (char->integer b)))
-      ((a b c)
-       (= (char->integer a) (char->integer b) (char->integer c)))
-      ((a b c d)
-       (= (char->integer a) (char->integer b) (char->integer d)))
-      ((a b . rest)
-       (and
-         (= (char->integer a) (char->integer b))
-         (let loop ((x b) (xs rest))
-           (cond ((null? xs) #t)
-                 ((= (char->integer x) (char->integer (car xs)))
-                  (loop (car xs) (cdr xs)))
-                 (else #f)))))))
-  (define char>=?
-    (case-lambda
-      ((a b)
-       (>= (char->integer a) (char->integer b)))
-      ((a b c)
-       (>= (char->integer a) (char->integer b) (char->integer c)))
-      ((a b c d)
-       (>= (char->integer a) (char->integer b) (char->integer d)))
-      ((a b . rest)
-       (and
-         (>= (char->integer a) (char->integer b))
-         (let loop ((x b) (xs rest))
-           (cond ((null? xs) #t)
-                 ((>= (char->integer x) (char->integer (car xs)))
-                  (loop (car xs) (cdr xs)))
-                 (else #f)))))))
-  (define char>?
-    (case-lambda
-      ((a b)
-       (> (char->integer a) (char->integer b)))
-      ((a b c)
-       (> (char->integer a) (char->integer b) (char->integer c)))
-      ((a b c d)
-       (> (char->integer a) (char->integer b) (char->integer d)))
-      ((a b . rest)
-       (and
-         (> (char->integer a) (char->integer b))
-         (let loop ((x b) (xs rest))
-           (cond ((null? xs) #t)
-                 ((> (char->integer x) (char->integer (car xs)))
-                  (loop (car xs) (cdr xs)))
-                 (else #f)))))))
+  (define-syntax (define-char-comparison name op key)
+    #`(define ,name
+        (case-lambda
+          ((a b)
+           (,op (,key a) (,key b)))
+          ((a b c)
+           (,op (,key a) (,key b) (,key c)))
+          ((a b c d)
+           (,op (,key a) (,key b) (,key c) (,key d)))
+          ((a b . rest)
+           (and
+             (,op (,key a) (,key b))
+             (let loop ((x b) (xs rest))
+               (cond ((null? xs) #t)
+                     ((,op (,key x) (,key (car xs)))
+                      (loop (car xs) (cdr xs)))
+                     (else #f))))))))
 
+  (define-char-comparison char<? < char->integer)
+  (define-char-comparison char<=? <= char->integer)
+  (define-char-comparison char=? = char->integer)
+  (define-char-comparison char>=? >= char->integer)
+  (define-char-comparison char>? > char->integer)
 
   (define (char->ci-integer c)
     (char->integer (char-foldcase c)))
 
-  (define char-ci<?
-    (case-lambda
-      ((a b)
-       (< (char->ci-integer a) (char->ci-integer b)))
-      ((a b c)
-       (< (char->ci-integer a) (char->ci-integer b) (char->ci-integer c)))
-      ((a b c d)
-       (< (char->ci-integer a) (char->ci-integer b) (char->ci-integer d)))
-      ((a b . rest)
-       (and
-         (< (char->ci-integer a) (char->ci-integer b))
-         (let loop ((x b) (xs rest))
-           (cond ((null? xs) #t)
-                 ((< (char->ci-integer x) (char->ci-integer (car xs)))
-                  (loop (car xs) (cdr xs)))
-                 (else #f)))))))
-  (define char-ci<=?
-    (case-lambda
-      ((a b)
-       (<= (char->ci-integer a) (char->ci-integer b)))
-      ((a b c)
-       (<= (char->ci-integer a) (char->ci-integer b) (char->ci-integer c)))
-      ((a b c d)
-       (<= (char->ci-integer a) (char->ci-integer b) (char->ci-integer d)))
-      ((a b . rest)
-       (and
-         (<= (char->ci-integer a) (char->ci-integer b))
-         (let loop ((x b) (xs rest))
-           (cond ((null? xs) #t)
-                 ((<= (char->ci-integer x) (char->ci-integer (car xs)))
-                  (loop (car xs) (cdr xs)))
-                 (else #f)))))))
-  (define char-ci=?
-    (case-lambda
-      ((a b)
-       (= (char->ci-integer a) (char->ci-integer b)))
-      ((a b c)
-       (= (char->ci-integer a) (char->ci-integer b) (char->ci-integer c)))
-      ((a b c d)
-       (= (char->ci-integer a) (char->ci-integer b) (char->ci-integer d)))
-      ((a b . rest)
-       (and
-         (= (char->ci-integer a) (char->ci-integer b))
-         (let loop ((x b) (xs rest))
-           (cond ((null? xs) #t)
-                 ((= (char->ci-integer x) (char->ci-integer (car xs)))
-                  (loop (car xs) (cdr xs)))
-                 (else #f)))))))
-  (define char-ci>=?
-    (case-lambda
-      ((a b)
-       (>= (char->ci-integer a) (char->ci-integer b)))
-      ((a b c)
-       (>= (char->ci-integer a) (char->ci-integer b) (char->ci-integer c)))
-      ((a b c d)
-       (>= (char->ci-integer a) (char->ci-integer b) (char->ci-integer d)))
-      ((a b . rest)
-       (and
-         (>= (char->ci-integer a) (char->ci-integer b))
-         (let loop ((x b) (xs rest))
-           (cond ((null? xs) #t)
-                 ((>= (char->ci-integer x) (char->ci-integer (car xs)))
-                  (loop (car xs) (cdr xs)))
-                 (else #f)))))))
-  (define char-ci>?
-    (case-lambda
-      ((a b)
-       (> (char->ci-integer a) (char->ci-integer b)))
-      ((a b c)
-       (> (char->ci-integer a) (char->ci-integer b) (char->ci-integer c)))
-      ((a b c d)
-       (> (char->ci-integer a) (char->ci-integer b) (char->ci-integer d)))
-      ((a b . rest)
-       (and
-         (> (char->ci-integer a) (char->ci-integer b))
-         (let loop ((x b) (xs rest))
-           (cond ((null? xs) #t)
-                 ((> (char->ci-integer x) (char->ci-integer (car xs)))
-                  (loop (car xs) (cdr xs)))
-                 (else #f)))))))
+  (define-char-comparison char-ci<? < char->ci-integer)
+  (define-char-comparison char-ci<=? <= char->ci-integer)
+  (define-char-comparison char-ci=? = char->ci-integer)
+  (define-char-comparison char-ci>=? >= char->ci-integer)
+  (define-char-comparison char-ci>? > char->ci-integer)
 
   ; io
   (define current-output-port (make-parameter (##vcore.stdout->port)))
@@ -1854,50 +1488,10 @@
 
   (define current-second (foreign-function "C" "double VCurrentSecond();"))
 
-  (define bitwise-and
-    (case-lambda
-      (() -1)
-      ((a) a)
-      ((a b) (##vcore.bitwise-and a b))
-      ((a b c) (##vcore.bitwise-and (##vcore.bitwise-and a b) c))
-      ((a b c d) (##vcore.bitwise-and (##vcore.bitwise-and (##vcore.bitwise-and a b) c) d))
-      ((a . bs)
-       (let loop ((ret a) (rem bs))
-        (if (null? bs) ret
-            (loop (##vcore.bitwise-and a (car bs)) (cdr bs)))))))
-  (define bitwise-ior
-    (case-lambda
-      (() 0)
-      ((a) a)
-      ((a b) (##vcore.bitwise-ior a b))
-      ((a b c) (##vcore.bitwise-ior (##vcore.bitwise-ior a b) c))
-      ((a b c d) (##vcore.bitwise-ior (##vcore.bitwise-ior (##vcore.bitwise-ior a b) c) d))
-      ((a . bs)
-       (let loop ((ret a) (rem bs))
-        (if (null? bs) ret
-            (loop (##vcore.bitwise-ior a (car bs)) (cdr bs)))))))
-  (define bitwise-xor
-    (case-lambda
-      (() 0)
-      ((a) a)
-      ((a b) (##vcore.bitwise-xor a b))
-      ((a b c) (##vcore.bitwise-xor (##vcore.bitwise-xor a b) c))
-      ((a b c d) (##vcore.bitwise-xor (##vcore.bitwise-xor (##vcore.bitwise-xor a b) c) d))
-      ((a . bs)
-       (let loop ((ret a) (rem bs))
-        (if (null? bs) ret
-            (loop (##vcore.bitwise-xor a (car bs)) (cdr bs)))))))
-  (define bitwise-xnor
-    (case-lambda
-      (() -1)
-      ((a) a)
-      ((a b) (##vcore.bitwise-xnor a b))
-      ((a b c) (##vcore.bitwise-xnor (##vcore.bitwise-xnor a b) c))
-      ((a b c d) (##vcore.bitwise-xnor (##vcore.bitwise-xnor (##vcore.bitwise-xnor a b) c) d))
-      ((a . bs)
-       (let loop ((ret a) (rem bs))
-        (if (null? bs) ret
-            (loop (##vcore.bitwise-xnor a (car bs)) (cdr bs)))))))
+  (define-variadic-fold bitwise-and ##vcore.bitwise-and (() -1))
+  (define-variadic-fold bitwise-ior ##vcore.bitwise-ior (() 0))
+  (define-variadic-fold bitwise-xor ##vcore.bitwise-xor (() 0))
+  (define-variadic-fold bitwise-xnor ##vcore.bitwise-xnor (() -1))
   (define bitwise-eqv bitwise-xnor)
   (define bitwise-or bitwise-ior)
 
