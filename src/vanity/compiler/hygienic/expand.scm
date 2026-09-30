@@ -24,6 +24,7 @@
   ; what an unbound identifier resolves to, or #f if it may not be free here
   (define (resolve-free-identifier sym)
     (cond
+      ((> (current-phase) 0) #f)
       ((free-vars-allowed) sym)
       ((lookup-intrinsic-name sym) sym)
       ((assq sym (library-imports)) => cdr)
@@ -33,6 +34,15 @@
   ; (library / ##vcore.declare). The registry can't stand in for this: the
   ; program's toplevel scope predates --explain-scopes being switched on.
   (define universe-scopes (list (toplevel-scope)))
+  ; phases with a representative in some multi-scope that id carries
+  (define (phases-of id)
+    (fold
+      (lambda (sc acc)
+        (if (multi-scope? sc)
+            (fold (lambda (e acc) (if (memv (car e) acc) acc (cons (car e) acc))) acc (get-multi-scope-reps sc))
+            acc))
+      '()
+      (get-syntax-scopes id)))
 
   (define trace-expand? (make-parameter #f))
   ; ring buffer format: #(serial depth name stx-in stx-out)
@@ -118,13 +128,14 @@
                (cond ((null? in) (reverse out))
                      ((memq (car in) out) (loop (cdr in) out))
                      (else (loop (cdr in) (cons (car in) out))))))
+           (phase (current-phase))
            (near-misses
              (filter
-               (lambda (e) (not (scope-set<= (vector-ref e scope-entry-scopes) use-scopes)))
+               (lambda (e) (not (scope-set<=-at (vector-ref e scope-entry-scopes) use-scopes phase)))
                (append-map
                  (lambda (sc)
                    (filter (lambda (e) (eq? (vector-ref e scope-entry-sym) sym))
-                           (get-scope-bindings sc)))
+                           (get-scope-bindings (scope-at sc phase))))
                  scan-scopes))))
       (if (null? near-misses)
           (format err "  near misses: (none)~N")
@@ -133,16 +144,32 @@
             (for-each
               (lambda (e)
                 (define b-scopes (vector-ref e scope-entry-scopes))
-                (define missing (filter (lambda (sc) (not (memq sc use-scopes))) b-scopes))
-                (format err "    ~A ~A~N      rejected: ~A not among the use site's scopes~N"
-                        sym (scope-set->string b-scopes) (scope-set->string missing))
+                (define missing (filter (lambda (sc) (not (scope-in-set-at? sc use-scopes phase))) b-scopes))
+                (format err "    ~A ~A~N      rejected: ~A not among the use site's scopes at phase ~A~N"
+                        sym (scope-set->string b-scopes) (scope-set->string missing) phase)
                 (for-each
                   (lambda (sc)
-                    (when (and (memq sc universe-scopes) (not (eq? sc (toplevel-scope))))
+                    (when (and (memq (get-scope-owner sc) universe-scopes) (not (eq? (get-scope-owner sc) (toplevel-scope))))
                       (format err "      note: ~A is a different universe from this ~A; a library or ##vcore.declare body sees only its own definitions and imports~N"
                               (scope->string sc) (scope->string (toplevel-scope)))))
                   missing))
               near-misses)))))
+  ; An unbound id that is bound at another phase gets a specific error.
+  (define (check-phase-mismatch id)
+    (define here (current-phase))
+    (for-each
+      (lambda (p)
+        (unless (= p here)
+          (let ((found (parameterize ((current-phase p)) (find-all-matching-bindings id))))
+            (unless (null? found)
+              (compiler-error
+                (sprintf "bound at phase ~A but referenced at phase ~A~A" p here
+                         (if (universe-binding? (vector-ref (car found) scope-entry-binding))
+                             (if (< p here) "; define it in begin-for-syntax" "; define it outside begin-for-syntax")
+                             ""))
+                (get-syntax-data id))))))
+      (reverse (phases-of id))))
+
   (define (syntax-apply f . args)
     (define fresh-args
       (let loop ((args args))
@@ -154,7 +181,8 @@
   (define (syntax-append a b)
     (##vcore.append (syntax->list a) (syntax->list b)))
 
-  (define macro-expand-env
+  ; the hand-coded phase >= 1 base environment
+  (define meta-base-values
     `((datum->syntax-object . ,datum->syntax-object)
       (syntax-object->datum . ,syntax-object->datum)
       (null? . ,syntax-null?)
@@ -190,18 +218,48 @@
       (##vcore.append . ,syntax-append)
       ))
 
-  (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax letrec-syntax define-syntax quote syntax if and or set! ##intrinsic ##basic-intrinsic ##foreign.function ##foreign.declare ##vcore.declare export import define-library))
-  (define (init-global-forms)
-    (for-each
-      (lambda (sym)
-        (add-binding! (make-syntax sym (list (global-scope))) sym)
-        (register-universe-binding! sym sym))
-      (append special-forms global-forms)))
-  (init-global-forms)
+  ; (name . key): one key per name, shared by every universe and phase >= 1
+  (define meta-base
+    (map
+      (lambda (e)
+        (let ((key (generate-symbol (car e))))
+          (register-universe-binding! key key)
+          (meta-define! key (cdr e))
+          (cons (car e) key)))
+      meta-base-values))
+
+  (define special-forms '(begin define define-constant define-values lambda case-lambda letrec letrec* let-syntax letrec-syntax define-syntax quote syntax if and or set! ##intrinsic ##basic-intrinsic ##foreign.function ##foreign.declare ##vcore.declare export import define-library begin-for-syntax))
+  ; The initial bindings of a universe's global root at a phase. Core forms
+  ; have the same key at every phase; only their visibility is per phase.
+  (define (universe-language ms phase)
+    (parameterize ((current-phase phase))
+      (for-each
+        (lambda (sym)
+          (add-binding! (make-syntax sym (list ms)) sym)
+          (register-universe-binding! sym sym))
+        (append special-forms global-forms))
+      (when (> phase 0)
+        (for-each
+          (lambda (e) (add-binding! (make-syntax (car e) (list ms)) (cdr e)))
+          meta-base))))
+  (set-multi-scope-init! (global-scope) universe-language)
+  (scope-at (global-scope) 0)
+
+  (define variable (generate-symbol 'variable))
+  ; set! on a constant is a compile error. A pure-variable kind that set!
+  ; flips to variable in place would let library qualify drop its
+  ; mutated-variables walk, but synthesized set!s (lower-letrec's, and
+  ; library finish's datum set!) bypass the set! branch and so would never
+  ; flip it, and qualify would have to keep each define's env cell rather than
+  ; assq for it.
+  (define constant (generate-symbol 'constant))
 
   (define (alist-copy alist)
     (map (lambda (e) (cons (car e) (cdr e))) alist))
-  (define (fresh-toplevel-expand-env) (cons (cons #f #f) (alist-copy global-form-env)))
+  (define (fresh-toplevel-expand-env)
+    (cons (cons #f #f)
+          (append (alist-copy global-form-env)
+                  (map (lambda (e) (cons (cdr e) variable)) meta-base))))
   (define toplevel-expand-env (make-parameter (fresh-toplevel-expand-env)))
 
   ; Use-site scopes (Flatt, Binding as Sets of Scopes, 2.3-2.4). A user macro
@@ -225,16 +283,6 @@
         id))
   (define core-transformers (map cdr global-form-env))
 
-
-  (define variable (generate-symbol 'variable))
-  ; set! on a constant is a compile error. A pure-variable kind that set!
-  ; flips to variable in place would let library qualify drop its
-  ; mutated-variables walk, but synthesized set!s (lower-letrec's, and
-  ; library finish's datum set!) bypass the set! branch and so would never
-  ; flip it, and qualify would have to keep each define's env cell rather than
-  ; assq for it.
-  (define constant (generate-symbol 'constant))
-
   (define (expand-identifier stx env)
     (define binding (resolve-identifier stx))
     (cond
@@ -242,6 +290,7 @@
       ((not binding)
        (unless (free-identifier-allowed? (get-syntax-data stx))
          (if (explain-scopes?) (explain-identifier-failure stx))
+         (check-phase-mismatch stx)
          (compiler-error "free variable" (get-syntax-data stx)
                          (scope-set->string (get-syntax-scopes stx))))
        stx)
@@ -271,8 +320,10 @@
        (or (let ((binding (resolve-identifier stx))) (and binding (binding-name binding)))
            ; free variable: we let them through because toplevel variables are free
            (resolve-free-identifier (get-syntax-data stx))
-           (compiler-error "free variable" (get-syntax-data stx)
-                           (scope-set->string (get-syntax-scopes stx)))))
+           (begin
+             (check-phase-mismatch stx)
+             (compiler-error "free variable" (get-syntax-data stx)
+                             (scope-set->string (get-syntax-scopes stx))))))
       ((symbol? stx) (error "resolve: naked symbol in syntax" stx))
       ((syntax-vector? stx) (syntax-object->datum stx))
       ((not (syntax-pair? stx))
@@ -315,8 +366,8 @@
   (define (expand-in-fresh-universe kind name stx f)
     (define outer-global (global-scope))
     (define outer-toplevel (toplevel-scope))
-    (define inner-global (make-scope (cons (if (eq? kind 'library) 'library-global 'declare-global) name)))
-    (define inner-toplevel (make-scope (cons kind name)))
+    (define inner-global (make-multi-scope (cons (if (eq? kind 'library) 'library-global 'declare-global) name) universe-language))
+    (define inner-toplevel (make-multi-scope (cons kind name) #f))
     (set! universe-scopes (cons inner-toplevel universe-scopes))
     (parameterize ((global-scope inner-global)
                    (toplevel-scope inner-toplevel)
@@ -324,17 +375,16 @@
                    (toplevel-expand-env (fresh-toplevel-expand-env))
                    (free-vars-allowed #f)
                    (library-imports '()))
-      (init-global-forms)
+      (scope-at inner-global 0)
       (f (fold (lambda (sc stx) (flip-scope stx sc)) stx
                (list outer-global outer-toplevel inner-global inner-toplevel)))))
 
+  ; The transformer is made at phase n+1 but invoked (by apply-transformer)
+  ; at phase n, so identifier comparisons it makes happen at the use site's
+  ; phase.
   (define (eval-for-syntax-binding rhs depth)
-    ; transformers *currently* run against the fixed macro-expand-env,
-    ; whose names are free symbols even inside a library
-    (define expanded
-      (parameterize ((free-vars-allowed #t))
-        (resolve (expand-impl rhs (toplevel-expand-env) depth))))
-    (eval expanded macro-expand-env))
+    (parameterize ((current-phase (+ (current-phase) 1)))
+      (eval (resolve (expand-impl rhs (toplevel-expand-env) depth)) '())))
 
   (define (eval-syntax-definition var raw-val depth)
     (guard
@@ -608,7 +658,8 @@
     (or (find-exact-binding var)
         (let ((key (generate-symbol (get-syntax-data var))))
           (add-binding! var key)
-          (register-universe-binding! key (if emit-key? key (toplevel-name var key)))
+          ; toplevel-name would pun a phase >= 1 define with a phase-0 one
+          (register-universe-binding! key (if (or emit-key? (> (current-phase) 0)) key (toplevel-name var key)))
           ; a define is still in the toplevel scope.
           (set-cdr! (toplevel-expand-env) (cons (cons key value) (cdr (toplevel-expand-env))))
           key)))
@@ -667,6 +718,53 @@
     (define val (eval-syntax-definition var raw-val depth))
     (set-cdr! (assq binding (toplevel-expand-env)) val)
     '())
+
+  ; Universe level only; forms is the body of a begin-for-syntax at phase n.
+  ; Definitions are bound as they are scanned, so helpers in one block can
+  ; refer to each other in any order, and are evaluated into the meta store
+  ; after the scan. Nothing is emitted into the phase-0 program.
+  (define (expand-begin-for-syntax forms depth library?)
+    (define (head-of form)
+      (and (syntax-pair? form) (identifier? (syntax-car form)) (resolve-identifier (syntax-car form))))
+    (define (bind! var form kind)
+      (unless (identifier? var)
+        (compiler-error "define must define a symbol" (syntax-object->datum form)))
+      (when (and library? (find-exact-binding var))
+        (compiler-error "duplicate definition" (get-syntax-data var) (syntax-object->datum form)))
+      (add-toplevel-binding! var kind #t))
+    (define (eval-entry e)
+      (let ((val (eval (resolve (expand-impl (cdr e) (toplevel-expand-env) depth)) '())))
+        (if (car e) (meta-define! (car e) val))))
+    (parameterize ((current-phase (+ (current-phase) 1)))
+      ; entries, newest first: (key . rhs) for a define, (#f . form) for an expression
+      (let scan ((todo forms) (entries '()))
+        (if (syntax-null? todo)
+            (for-each eval-entry (reverse entries))
+            (let* ((form (syntax-car todo))
+                   (rest (syntax-cdr todo))
+                   (head (head-of form)))
+              (case head
+                ((begin) (scan (syntax-append (syntax-cdr form) rest) entries))
+                ((define define-constant)
+                 (let ((def (desugar-define form)))
+                   (unless (= (syntax-length def) 3)
+                     (compiler-error "malformed define" (syntax-object->datum form)))
+                   (let ((key (bind! (definition-id (syntax-cadr def)) form (if (eq? head 'define) variable constant))))
+                     (scan rest (cons (cons key (syntax-caddr def)) entries)))))
+                ((define-syntax)
+                 (expand-toplevel-define-syntax (desugar-define-syntax form depth) depth)
+                 (scan rest entries))
+                ((begin-for-syntax)
+                 (expand-begin-for-syntax (syntax-cdr form) depth library?)
+                 (scan rest entries))
+                ((import export define-values define-library ##vcore.declare ##foreign.declare)
+                 (compiler-error "not supported at phase >= 1 yet" (syntax-object->datum form)))
+                (else
+                  (let ((v (and head (assq head (toplevel-expand-env)))))
+                    (if (and v (procedure? (cdr v)))
+                        (scan (cons (apply-transformer (get-syntax-data (syntax-car form)) (cdr v) form (+ depth 1)) rest)
+                              entries)
+                        (scan rest (cons (cons #f form) entries)))))))))))
 
   (define (export-rename e)
     (if (identifier? e)
@@ -854,6 +952,9 @@
                   ((define-syntax)
                    (expand-toplevel-define-syntax (desugar-define-syntax form depth) depth)
                    (loop rest entries exports imports constant-imports mangled-imports))
+                  ((begin-for-syntax)
+                   (expand-begin-for-syntax (syntax-cdr form) depth #t)
+                   (loop rest entries exports imports constant-imports mangled-imports))
                   ((##foreign.declare)
                    (set! declares (cons (foreign-declare-datum form) declares))
                    (loop rest entries exports imports constant-imports mangled-imports))
@@ -996,7 +1097,12 @@
                    env depth)))))
       ((##intrinsic ##basic-intrinsic) stx)
       ((##foreign.function)
+       (when (> (current-phase) 0)
+         (compiler-error "##foreign.function is not supported at phase >= 1" (syntax-object->datum stx)))
        (datum->syntax-object (syntax-car stx) (validate-foreign-function (syntax-object->datum stx))))
+      ((begin-for-syntax)
+       (compiler-error "begin-for-syntax is only allowed at program or library toplevel"
+                       (syntax-object->datum stx)))
       ((##foreign.declare)
        (compiler-error "##foreign.declare is only allowed at toplevel" (syntax-object->datum stx)))
       (else
@@ -1073,6 +1179,9 @@
             depth))
          ((define-syntax)
           (expand-toplevel-define-syntax (desugar-define-syntax stx depth) depth)
+          '())
+         ((begin-for-syntax)
+          (expand-begin-for-syntax (syntax-cdr stx) depth #f)
           '())
          ((import)
           (syntax-map (lambda (lib) (list (syntax-car stx) lib)) (syntax-cdr stx)))

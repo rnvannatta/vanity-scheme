@@ -4,6 +4,8 @@
     make-scope scope? scope=? get-scope-bindings set-scope-bindings! global-scope toplevel-scope
     get-scope-serial get-scope-provenance scope->string scope-set->string
     scope-set-xor scope-set<= scope-set=
+    current-phase make-multi-scope multi-scope? get-multi-scope-reps set-multi-scope-init!
+    get-scope-owner get-scope-phase scope-at scope-in-set-at? scope-set<=-at
     explain-scopes? all-registered-scopes
     set-expansion-deadline! expansion-timed-out?
     identifier?
@@ -25,38 +27,74 @@
   ; a double: serials are display-only labels, and in vanity ints throw on overflow
   (define scope-serial-counter 0.0)
 
+  (define current-phase (make-parameter 0))
+
+  ; A scope is ordinary, a multi-scope, or a multi-scope's representative
+  ; for one phase. The universe roots are multi-scopes: identifiers carry
+  ; the multi-scope, while bindings live in its per-phase representatives,
+  ; so a binding's scope set holds representatives and never multi-scopes.
+  ; link/extra are (owner . phase) on a representative and (reps . init) on
+  ; a multi-scope, where reps is an alist phase -> representative and init,
+  ; if not #f, is called as (init ms phase) on each new representative.
+  ; Both are #f on an ordinary scope. A multi-scope's bindings are #f, so a
+  ; lookup's scope walk tells it apart with the one accessor it already makes.
   (define-record-type scope
-    (make-scope-impl bindings serial provenance)
+    (make-scope-impl bindings serial provenance link extra)
     scope?
     (bindings get-scope-bindings set-scope-bindings!)
     (serial get-scope-serial)
-    (provenance get-scope-provenance))
+    (provenance get-scope-provenance)
+    (link get-scope-owner set-scope-owner!)
+    (extra get-scope-phase set-scope-phase!))
+  (define get-multi-scope-reps get-scope-owner)
+  (define set-multi-scope-reps! set-scope-owner!)
+  (define get-multi-scope-init get-scope-phase)
+  (define set-multi-scope-init! set-scope-phase!)
+  (define (multi-scope? sc) (not (get-scope-bindings sc)))
+
   ; provenance: global, program, lambda, letrec, letrec*, let-syntax, letrec-syntax, body,
   ; body-tmp, letrec-tmp, (intro . macro-name), (use macro-name . definition-context),
   ; or a fresh universe's pair:
   ; (library-global . libname) + (library . libname) / (declare-global . cname) + (declare . cname)
+  (define (new-scope bindings provenance link extra)
+    (set! scope-serial-counter (+ scope-serial-counter 1.0))
+    (let ((sc (make-scope-impl bindings scope-serial-counter provenance link extra)))
+      (if (explain-scopes?) (set! scope-registry (cons sc scope-registry)))
+      sc))
   (define make-scope
     (case-lambda
       (() (make-scope 'scope))
-      ((provenance)
-       (set! scope-serial-counter (+ scope-serial-counter 1.0))
-       (let ((sc (make-scope-impl '() scope-serial-counter provenance)))
-         (if (explain-scopes?) (set! scope-registry (cons sc scope-registry)))
-         sc))))
+      ((provenance) (new-scope '() provenance #f #f))))
+  (define (make-multi-scope provenance init) (new-scope #f provenance '() init))
+  (define (scope-at sc phase)
+    (if (multi-scope? sc)
+        (let ((e (assv phase (get-multi-scope-reps sc))))
+          (if e
+              (cdr e)
+              (let ((rep (new-scope '() (get-scope-provenance sc) sc phase)))
+                ; registered before init runs: init binds into rep via scope-at
+                (set-multi-scope-reps! sc (cons (cons phase rep) (get-multi-scope-reps sc)))
+                (let ((init (get-multi-scope-init sc)))
+                  (if init (init sc phase)))
+                rep)))
+        sc))
   (define-constant scope=? ##vcore.eq?)
-  (define global-scope (make-parameter (make-scope 'global)))
+  (define global-scope (make-parameter (make-multi-scope 'global #f)))
   ; Every universe has two layers: global-scope binds the core forms, and
   ; user source additionally carries toplevel-scope, which introduced
   ; identifiers lack. Without the second layer a user binder around a macro's
   ; introduced reference would carry a subset of its scopes and capture it.
-  (define toplevel-scope (make-parameter (make-scope 'program)))
+  (define toplevel-scope (make-parameter (make-multi-scope 'program #f)))
 
   (define (scope->string sc)
-    (let ((p (get-scope-provenance sc)) (n (get-scope-serial sc)))
-      (cond
-        ((and (pair? p) (eq? (car p) 'intro)) (sprintf "(intro#~A ~A)" n (cdr p)))
-        ((and (pair? p) (eq? (car p) 'use)) (sprintf "(use#~A ~A)" n (cadr p)))
-        (else (sprintf "~A#~A" p n)))))
+    (define owner (and (not (multi-scope? sc)) (get-scope-owner sc)))
+    (if owner
+        (sprintf "~A@~A" (scope->string owner) (get-scope-phase sc))
+        (let ((p (get-scope-provenance sc)) (n (get-scope-serial sc)))
+          (cond
+            ((and (pair? p) (eq? (car p) 'intro)) (sprintf "(intro#~A ~A)" n (cdr p)))
+            ((and (pair? p) (eq? (car p) 'use)) (sprintf "(use#~A ~A)" n (cadr p)))
+            (else (sprintf "~A#~A" p n))))))
   (define (scope-set->string scopes)
     (define (join sep strs)
       (if (null? strs)
@@ -76,7 +114,7 @@
     syntax?
     (data get-syntax-data-impl set-syntax-data!)
     (flips get-syntax-scopes set-syntax-scopes!)
-    ; #f or (epoch . binding), owned by resolve-identifier
+    ; #f or a resolution record, owned by resolve-identifier
     (cache get-syntax-cache set-syntax-cache!))
   (define (make-syntax data flips) (make-syntax-impl data flips #f))
   (define (identifier? x)
@@ -126,6 +164,27 @@
   (define (scope-set= a b)
     (or (eq? a b)
         (and (= (length a) (length b)) (scope-set<= a b))))
+  ; Is s, from a binding's scope set, in identifier scope set ids at phase?
+  ; Only representatives have a truthy owner here, since binding scope sets
+  ; never hold multi-scopes.
+  (define (scope-in-set-at? s ids phase)
+    (or (memq s ids)
+        (let ((owner (get-scope-owner s)))
+          (and owner (eqv? (get-scope-phase s) phase) (memq owner ids)))))
+  ; scope-in-set-at? inlined as nested ifs: an and/or in test position gets a
+  ; let-bound join continuation, allocated even when memq succeeds
+  (define (scope-set<=-at entry-scopes ids phase)
+    (let loop ((a entry-scopes))
+      (cond
+        ((null? a) #t)
+        ((memq (car a) ids) (loop (cdr a)))
+        (else
+          (let ((owner (get-scope-owner (car a))))
+            (if owner
+                (if (eqv? (get-scope-phase (car a)) phase)
+                    (if (memq owner ids) (loop (cdr a)) #f)
+                    #f)
+                #f))))))
   ; Reproduces (lset-xor eq? a b)'s element order exactly: add-binding! files
   ; a binding under the car of its scope set, and scan order breaks argmax ties.
   (define (scope-set-xor a b)
