@@ -45,15 +45,18 @@
   (define-constant scope-entry-sym 0)
   (define-constant scope-entry-scopes 1)
   (define-constant scope-entry-binding 2)
+  ; Binds at (current-phase): the entry's scope set has each multi-scope
+  ; replaced by its representative for that phase.
   (define (add-binding! id binding)
+    (define phase (current-phase))
     (define sym (get-syntax-data id))
-    (define scopes (get-syntax-scopes id))
+    (define raw-scopes (get-syntax-scopes id))
+    (define scopes (map (lambda (sc) (scope-at sc phase)) raw-scopes))
     (set! binding-clock (+ binding-clock 1.0))
     (hash-table-set! binding-epochs sym binding-clock)
     ; We want to avoid the global scope to avoid cluttering it.
     ; It's not a correctness problem but is a perf one, and does result in a leak.
-    (let* ((scope (car scopes))
-           (scope (if (and (eq? scope (global-scope)) (pair? (cdr scopes))) (cadr scopes) scope)))
+    (let ((scope (if (and (eq? (car raw-scopes) (global-scope)) (pair? (cdr scopes))) (cadr scopes) (car scopes))))
       (set-scope-bindings! scope (cons (vector sym scopes binding) (get-scope-bindings scope)))))
 
   (define (check-unambiguous id max-id candidate-ids)
@@ -93,23 +96,29 @@
         (cdr xs))))
 
   (define (find-all-matching-bindings id)
+    (define phase (current-phase))
     (define id-sym (get-syntax-data id))
     (define all-id-scopes (get-syntax-scopes id))
-    (let loop ((rest-id-scopes all-id-scopes) (acc '()))
-      (if (null? rest-id-scopes)
-          (reverse acc)
-          (let loop2 ((bindings (get-scope-bindings (car rest-id-scopes))) (acc acc))
-            (if (null? bindings)
-                (loop (cdr rest-id-scopes) acc)
-                (let ((e (car bindings)))
-                  ; Nested ifs, not (and ...): an and in test position gets a
-                  ; let-bound join continuation, allocated even on the common
-                  ; failed-eq? path.
-                  (if (eq? (vector-ref e scope-entry-sym) id-sym)
-                      (if (scope-set<= (vector-ref e scope-entry-scopes) all-id-scopes)
-                          (loop2 (cdr bindings) (cons e acc))
-                          (loop2 (cdr bindings) acc))
-                      (loop2 (cdr bindings) acc))))))))
+    ; One loop over every entry of every scope: the per-entry path stays one
+    ; closure hop from the function's frame.
+    (let loop ((bindings '()) (rest-id-scopes all-id-scopes) (acc '()))
+      (if (null? bindings)
+          (if (null? rest-id-scopes)
+              (reverse acc)
+              (let ((next (get-scope-bindings (car rest-id-scopes))))
+                ; a multi-scope's bindings are #f: scan its representative's
+                (if next
+                    (loop next (cdr rest-id-scopes) acc)
+                    (loop (get-scope-bindings (scope-at (car rest-id-scopes) phase)) (cdr rest-id-scopes) acc))))
+          (let ((e (car bindings)))
+            ; Nested ifs, not (and ...): an and in test position gets a
+            ; let-bound join continuation, allocated even on the common
+            ; failed-eq? path.
+            (if (eq? (vector-ref e scope-entry-sym) id-sym)
+                (if (scope-set<=-at (vector-ref e scope-entry-scopes) all-id-scopes phase)
+                    (loop (cdr bindings) rest-id-scopes (cons e acc))
+                    (loop (cdr bindings) rest-id-scopes acc))
+                (loop (cdr bindings) rest-id-scopes acc))))))
   (define (resolve-identifier-uncached id)
     (define candidate-ids (find-all-matching-bindings id))
     (if (null? candidate-ids)
@@ -117,38 +126,51 @@
         (let ((max-id (argmax (lambda (e) (length (vector-ref e scope-entry-scopes))) candidate-ids)))
           (check-unambiguous id max-id candidate-ids)
           (vector-ref max-id scope-entry-binding))))
+  (define-record-type resolution
+    (make-resolution epoch phase binding)
+    resolution?
+    (epoch resolution-epoch)
+    (phase resolution-phase)
+    (binding resolution-binding))
   ; Only a binding of the same symbol can change a resolution, and an
   ; identifier's scopes are never mutated (flips build new syntax objects),
   ; so a cached result holds until add-binding! bumps the symbol's epoch.
   (define (resolve-identifier id)
     (let ((epoch (hash-table-ref binding-epochs (get-syntax-data id) (lambda () 0.0)))
+          (phase (current-phase))
           (cache (get-syntax-cache id)))
-      (if (and cache (eqv? (car cache) epoch))
-          (cdr cache)
+      (if (and cache (eqv? (resolution-epoch cache) epoch) (eqv? (resolution-phase cache) phase))
+          (resolution-binding cache)
           (let ((binding (resolve-identifier-uncached id)))
-            (set-syntax-cache! id (cons epoch binding))
+            (set-syntax-cache! id (make-resolution epoch phase binding))
             binding))))
   (define (find-exact-binding id)
+    (define phase (current-phase))
     (define id-sym (get-syntax-data id))
     (define all-id-scopes (get-syntax-scopes id))
-    (let loop ((rest-id-scopes all-id-scopes))
-      (if (null? rest-id-scopes)
-          #f
-          (let loop2 ((bindings (get-scope-bindings (car rest-id-scopes))))
-            (if (null? bindings)
-                (loop (cdr rest-id-scopes))
-                (let ((e (car bindings)))
-                  (if (eq? (vector-ref e scope-entry-sym) id-sym)
-                      (if (scope-set= (vector-ref e scope-entry-scopes) all-id-scopes)
-                          (vector-ref e scope-entry-binding)
-                          (loop2 (cdr bindings)))
-                      (loop2 (cdr bindings)))))))))
+    (define n (length all-id-scopes))
+    (let loop ((bindings '()) (rest-id-scopes all-id-scopes))
+      (if (null? bindings)
+          (if (null? rest-id-scopes)
+              #f
+              (let ((next (get-scope-bindings (car rest-id-scopes))))
+                (if next
+                    (loop next (cdr rest-id-scopes))
+                    (loop (get-scope-bindings (scope-at (car rest-id-scopes) phase)) (cdr rest-id-scopes)))))
+          (let ((e (car bindings)))
+            (if (eq? (vector-ref e scope-entry-sym) id-sym)
+                (if (= (length (vector-ref e scope-entry-scopes)) n)
+                    (if (scope-set<=-at (vector-ref e scope-entry-scopes) all-id-scopes phase)
+                        (vector-ref e scope-entry-binding)
+                        (loop (cdr bindings) rest-id-scopes))
+                    (loop (cdr bindings) rest-id-scopes))
+                (loop (cdr bindings) rest-id-scopes))))))
 
   ; Binding keys are what expansion dispatches on and keys the expand env
   ; with, so a user toplevel define of e.g. when must not reuse core when's
   ; key. Universe-level keys are therefore gensyms (core forms excepted), and
   ; this maps each to the name resolve emits for it. Lexical keys are absent.
-  (define universe-bindings (make-hash-table eq? current-hash))
+  (define universe-bindings (make-hash-table eq? current-hash #f #t))
   (define (register-universe-binding! key name)
     (hash-table-set! universe-bindings key name))
   (define (universe-binding? key)

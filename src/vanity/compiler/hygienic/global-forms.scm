@@ -496,6 +496,8 @@
   ; datum->syntax-object.
   (define (expand-foreign-import form)
     (unless (syntax-list-of-length? form 3) (malformed "foreign-import" form))
+    (when (> (current-phase) 0)
+      (compiler-error "foreign-import is not supported at phase >= 1" (syntax-object->datum form)))
     ((datum-round-trip
        (lambda (datum)
          `(begin

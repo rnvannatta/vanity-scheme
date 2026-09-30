@@ -1,6 +1,14 @@
 (define-library (vanity compiler hygienic eval)
-  (import (vanity core) (vanity list) (vanity compiler hygienic types) (vanity compiler hygienic global-forms))
-  (export eval)
+  (import
+    (except (vanity core) hash-table? make-hash-table hash-table-ref hash-table-set! hash-table-delete! hash-table->alist)
+    (vanity hashtable)
+    (vanity list)
+    (vanity compiler hygienic types))
+  (export eval meta-define!)
+
+  ; values of universe-level phase >= 1 bindings, by binding key
+  (define meta-store (make-hash-table eq? current-hash #f #t))
+  (define (meta-define! key value) (hash-table-set! meta-store key value))
 
   (define (bind-formals formals args env)
     (cond ((null? formals)
@@ -22,7 +30,9 @@
     (cond
       ((symbol? expr)
        (let ((lookup (assq expr env)))
-         (if lookup (cdr lookup) (error "eval: symbol not found" expr))))
+         (if lookup
+             (cdr lookup)
+             (hash-table-ref meta-store expr (lambda () (error "eval: symbol not found" expr))))))
       ((null? expr) (error "eval: stray null"))
       ((not (pair? expr)) expr)
       ((eq? (car expr) 'quote) (cadr expr))
