@@ -351,6 +351,26 @@
           ((if) `(if . ,(resolve (syntax-cdr stx))))
           (else (syntax-map resolve stx))))))
 
+  ; Scope serial at the nearest enclosing phase crossing or universe entry.
+  ; A syntax template sheds every scope made since then except intro scopes
+  ; (Flatt, Binding as Sets of Scopes, 4). Racket instead tracks the enclosing
+  ; binding forms, but here named let's scope is made by a transformer and a
+  ; macro use's output is expanded after apply-transformer returns, often by
+  ; a scan loop, so neither has a dynamic extent to record its scope in. The
+  ; answers agree: a scope is flipped only onto a form's body as that body is
+  ; expanded, so one made since the crossing is on a template only if its
+  ; form encloses the template.
+  (define crossing-serial (make-parameter 0.0))
+  (define (prune-template tmpl)
+    (define floor-serial (crossing-serial))
+    (remove-scopes
+      tmpl
+      (lambda (sc)
+        (and (> (get-scope-serial sc) floor-serial)
+             (not (multi-scope? sc))
+             (let ((p (get-scope-provenance sc)))
+               (not (and (pair? p) (eq? (car p) 'intro))))))))
+
   (define (introduced-identifier x sc)
     (make-syntax x (list (global-scope) sc)))
 
@@ -374,7 +394,8 @@
                    (definition-context inner-toplevel)
                    (toplevel-expand-env (fresh-toplevel-expand-env))
                    (free-vars-allowed #f)
-                   (library-imports '()))
+                   (library-imports '())
+                   (crossing-serial (current-scope-serial)))
       (scope-at inner-global 0)
       (f (fold (lambda (sc stx) (flip-scope stx sc)) stx
                (list outer-global outer-toplevel inner-global inner-toplevel)))))
@@ -383,7 +404,8 @@
   ; at phase n, so identifier comparisons it makes happen at the use site's
   ; phase.
   (define (eval-for-syntax-binding rhs depth)
-    (parameterize ((current-phase (+ (current-phase) 1)))
+    (parameterize ((current-phase (+ (current-phase) 1))
+                   (crossing-serial (current-scope-serial)))
       (eval (resolve (expand-impl rhs (toplevel-expand-env) depth)) '())))
 
   (define (eval-syntax-definition var raw-val depth)
@@ -735,7 +757,8 @@
     (define (eval-entry e)
       (let ((val (eval (resolve (expand-impl (cdr e) (toplevel-expand-env) depth)) '())))
         (if (car e) (meta-define! (car e) val))))
-    (parameterize ((current-phase (+ (current-phase) 1)))
+    (parameterize ((current-phase (+ (current-phase) 1))
+                   (crossing-serial (current-scope-serial)))
       ; entries, newest first: (key . rhs) for a define, (#f . form) for an expression
       (let scan ((todo forms) (entries '()))
         (if (syntax-null? todo)
@@ -1015,7 +1038,11 @@
       ((letrec) (expand-letrec stx env depth))
       ((let-syntax) (expand-let-syntax stx env depth))
       ((letrec-syntax) (expand-letrec-syntax stx env depth))
-      ((syntax quote) stx)
+      ((quote) stx)
+      ((syntax)
+       (unless (and (syntax-proper-list? stx) (= (syntax-length stx) 2))
+         (compiler-error "malformed syntax" (syntax-object->datum stx)))
+       (list (syntax-car stx) (prune-template (syntax-cadr stx))))
       ((begin)
        (case (syntax-length stx)
          ((1) #void)

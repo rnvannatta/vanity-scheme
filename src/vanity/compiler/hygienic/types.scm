@@ -1,8 +1,8 @@
 (define-library (vanity compiler hygienic types)
-  (import (vanity core) (only (vanity list) any))
+  (import (vanity core) (only (vanity list) any remove))
   (export
     make-scope scope? scope=? get-scope-bindings set-scope-bindings! global-scope toplevel-scope
-    get-scope-serial get-scope-provenance scope->string scope-set->string
+    get-scope-serial current-scope-serial get-scope-provenance scope->string scope-set->string
     scope-set-xor scope-set<= scope-set=
     current-phase make-multi-scope multi-scope? get-multi-scope-reps set-multi-scope-init!
     get-scope-owner get-scope-phase scope-at scope-in-set-at? scope-set<=-at
@@ -16,7 +16,7 @@
     syntax-caar syntax-cadr syntax-cdar syntax-cddr syntax-map syntax-append-map syntax-for-each syntax-list
     syntax-caddr
     syntax-vector? syntax-vector syntax-make-vector syntax-vector-ref syntax-vector-map syntax-vector-for-each
-    lazy-flip-scope eager-flip-scope flip-scope
+    lazy-flip-scope eager-flip-scope flip-scope remove-scopes
     syntax-object->datum datum->syntax-object
     syntax-length syntax-proper-list? syntax-undot-list syntax->list
     )
@@ -24,8 +24,10 @@
   (define explain-scopes? (make-parameter #f))
   (define scope-registry '())
   (define (all-registered-scopes) scope-registry)
-  ; a double: serials are display-only labels, and in vanity ints throw on overflow
+  ; Serials order scopes by creation, which syntax pruning relies on. A
+  ; double, since in vanity ints throw on overflow.
   (define scope-serial-counter 0.0)
+  (define (current-scope-serial) scope-serial-counter)
 
   (define current-phase (make-parameter 0))
 
@@ -236,6 +238,27 @@
       ((list? v)
        (map (lambda (e) (eager-flip-scope e sc)) v))
       (else v)))
+
+  ; Unlike a flip, this removes a scope only where it is present, so it can
+  ; strip scopes that sit on just part of a tree, like use-site scopes.
+  (define (remove-scopes stx strip?)
+    (cond
+      ((syntax? stx)
+       (let ((data (get-syntax-data stx)))
+         (cond
+           ((symbol? data)
+            (let ((scopes (get-syntax-scopes stx)))
+              (if (any strip? scopes) (make-syntax data (remove strip? scopes)) stx)))
+           ((or (pair? data) (vector? data))
+            (let ((new (remove-scopes data strip?)))
+              (if (eq? new data) stx (make-syntax new '()))))
+           (else stx))))
+      ((pair? stx)
+       (let ((a (remove-scopes (car stx) strip?))
+             (d (remove-scopes (cdr stx) strip?)))
+         (if (and (eq? a (car stx)) (eq? d (cdr stx))) stx (cons a d))))
+      ((vector? stx) (vector-map (lambda (e) (remove-scopes e strip?)) stx))
+      (else stx)))
 
   (cond-expand
     (#f
