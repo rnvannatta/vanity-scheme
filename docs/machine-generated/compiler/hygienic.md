@@ -29,6 +29,16 @@ Sets-of-scopes expander (SRFI-72-flavored). Replaces both `expand.scm` *and*
   is a *subset* of the use site's, pick the one with the most scopes; if any candidate is
   not a subset of the winner, error "ambiguous id". Unresolved identifiers are allowed at
   toplevel (free = global); inside `##vcore.declare` they are an error (`free-vars-allowed`).
+  At phase ≥ 1, every universe has toplevel semantics (Racket's `#%top`, per phase): a free
+  identifier that carries the universe's global and toplevel scopes names that universe's
+  variable of its symbol at that phase, through a per-(phase, symbol) key in `meta-namespace`,
+  so `begin-for-syntax` blocks may refer to later blocks. A later macro-introduced definition
+  that would capture such a reference is an error, and libraries/declares check at their end
+  that every free name was defined.
+- **Template pruning** (`syntax`): a template sheds the scopes of the binding forms enclosing
+  it since the nearest phase crossing (`template-prune-scopes`) and the scopes transformers
+  made for binders in their output since then (`transformer-scopes`: use-site scopes and named
+  let's), Flatt §4. Explicit lists, not creation order, so deserialized scopes are never pruned.
 - **Hygiene by flipping** (`apply-transformer`): flip a fresh intro scope onto the macro
   input, run the transformer, flip the same scope onto the output. Syntax that traveled
   through unchanged is flipped twice (mark cancels); syntax the macro introduced is flipped

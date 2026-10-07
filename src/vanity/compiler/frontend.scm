@@ -388,6 +388,11 @@
                                            (map (lambda (e) (map alpha-convert (expand-toplevel e (cons path paths) architecture))) file))))))
                     (if verify?
                         (benchmark "verify" (lambda () (verify-expanded (apply append expanded)))))
+                    (if (and w-unbound-variables hygiene?)
+                        (let ((free (unbound-meta-variables)))
+                          (if (not (null? free))
+                              ((if werror-unbound-variables compiler-error compiler-warning)
+                               "free variables at phase >= 1 in program, as (phase . name)" free))))
                     (if w-unbound-variables
                         (let loop ((exprs (apply append expanded)) (bound '()) (free '()))
                           (if (null? exprs)

@@ -2,8 +2,9 @@
   (import (vanity core) (only (vanity list) any remove))
   (export
     make-scope scope? scope=? get-scope-bindings set-scope-bindings! global-scope toplevel-scope
-    get-scope-serial current-scope-serial get-scope-provenance scope->string scope-set->string
+    get-scope-serial get-scope-provenance scope->string scope-set->string
     scope-set-xor scope-set<= scope-set=
+    transformer-scopes make-transformer-scope
     current-phase make-multi-scope multi-scope? get-multi-scope-reps set-multi-scope-init!
     get-scope-owner get-scope-phase scope-at scope-in-set-at? scope-set<=-at
     explain-scopes? all-registered-scopes
@@ -24,10 +25,8 @@
   (define explain-scopes? (make-parameter #f))
   (define scope-registry '())
   (define (all-registered-scopes) scope-registry)
-  ; Serials order scopes by creation, which syntax pruning relies on. A
-  ; double, since in vanity ints throw on overflow.
+  ; a double: serials are display-only labels, and in vanity ints throw on overflow
   (define scope-serial-counter 0.0)
-  (define (current-scope-serial) scope-serial-counter)
 
   (define current-phase (make-parameter 0))
 
@@ -67,6 +66,17 @@
     (case-lambda
       (() (make-scope 'scope))
       ((provenance) (new-scope '() provenance #f #f))))
+  ; A cell holding the scopes transformers made, since the nearest phase
+  ; crossing, for binders in their output: use-site scopes and named let's.
+  ; Like Racket's use-site box, it stands in for the enclosing-binder list a
+  ; syntax template prunes, since the transformer has returned before its
+  ; output is expanded and so has no dynamic extent to push a scope in.
+  (define transformer-scopes (make-parameter (list '())))
+  (define (make-transformer-scope provenance)
+    (let ((sc (make-scope provenance))
+          (cell (transformer-scopes)))
+      (set-car! cell (cons sc (car cell)))
+      sc))
   (define (make-multi-scope provenance init) (new-scope #f provenance '() init))
   (define (scope-at sc phase)
     (if (multi-scope? sc)

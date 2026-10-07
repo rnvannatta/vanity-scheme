@@ -4,11 +4,14 @@
     (vanity hashtable)
     (vanity list)
     (vanity compiler hygienic types))
-  (export eval meta-define!)
+  (export eval meta-define! set-meta-undefined-handler!)
 
   ; values of universe-level phase >= 1 bindings, by binding key
   (define meta-store (make-hash-table eq? current-hash #f #t))
   (define (meta-define! key value) (hash-table-set! meta-store key value))
+  ; called with a key that has no value; it raises
+  (define meta-undefined-handler (lambda (key) (error "eval: symbol not found" key)))
+  (define (set-meta-undefined-handler! f) (set! meta-undefined-handler f))
 
   (define (bind-formals formals args env)
     (cond ((null? formals)
@@ -32,7 +35,7 @@
        (let ((lookup (assq expr env)))
          (if lookup
              (cdr lookup)
-             (hash-table-ref meta-store expr (lambda () (error "eval: symbol not found" expr))))))
+             (hash-table-ref meta-store expr (lambda () (meta-undefined-handler expr))))))
       ((null? expr) (error "eval: stray null"))
       ((not (pair? expr)) expr)
       ((eq? (car expr) 'quote) (cadr expr))

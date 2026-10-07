@@ -40,7 +40,7 @@
           (if (syntax-null? body) (compiler-error "empty let body" (syntax-object->datum form)))
           ; sc marks the loop name and lambda but not the inits, so an init
           ; can't see the loop variable (W16)
-          (let* ((sc (make-scope 'named-let))
+          (let* ((sc (make-transformer-scope 'named-let))
                  (name (flip-scope (syntax-cadr form) sc)))
             (##global-quasisyntax
               (letrec ((,name ,(flip-scope
