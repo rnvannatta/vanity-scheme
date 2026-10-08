@@ -29,6 +29,9 @@ Sets-of-scopes expander (SRFI-72-flavored). Replaces both `expand.scm` *and*
   is a *subset* of the use site's, pick the one with the most scopes; if any candidate is
   not a subset of the winner, error "ambiguous id". Unresolved identifiers are allowed at
   toplevel (free = global); inside `##vcore.declare` they are an error (`free-vars-allowed`).
+  A program-toplevel `import` binds its names as a library body's does (below), but their
+  keys resolve back to the imported symbol, since cps defines imported globals by name; the
+  `import` form itself is emitted as a `resolved-form` datum.
   At phase ≥ 1, every universe has toplevel semantics (Racket's `#%top`, per phase): a free
   identifier that carries the universe's global and toplevel scopes names that universe's
   variable of its symbol at that phase, through a per-(phase, symbol) key in `meta-namespace`,
@@ -87,11 +90,18 @@ Sets-of-scopes expander (SRFI-72-flavored). Replaces both `expand.scm` *and*
 - **`define-library`** (`expand-define-library`): two passes over the declarations — scan
   (splice `begin`, collect `export`/`import`, bind `define`/`define-constant` to gensyms,
   evaluate `define-syntax`, apply macros in declaration position) then expand + resolve every
-  right-hand side with all bindings known. Imports are *not* bindings: an imported name is
-  left unresolved and swapped for a per-library gensym at resolve time (`library-imports`),
-  so the resolved body has legacy's shape and the `VMultiImport` wiring is derived from the
-  same `free-variables` walk legacy uses. Assembly mirrors legacy `expand-library` ordering
-  exactly (alpha-equal output). Not yet taken: `include`, `define-values`,
+  right-hand side with all bindings known. Imports are phase-0 bindings (`bind-import-set!`)
+  filed under the universe's toplevel scope alone, so a user definition of the same name,
+  which also carries the global scope, shadows the import in either order, and core sugar
+  never sees one. Each import key's `import-link` records the exporter's alist name (or a
+  constant's value), whether it is a constant (`binding-kind` gives `set!` its check), and
+  the exporting library; the key is the receiver's formal, and the `VMultiImport` wiring is
+  derived from a `free-variables` walk of the body, as legacy's is. A later import of a name
+  relinks its key (last import wins, except that a variable never displaces a constant; see
+  EXPAND_WRINKLES W24). Assembly mirrors legacy `expand-library` ordering exactly
+  (alpha-equal output), and the finished library is recorded in `library-registry`
+  (scopes, level-0 export table with origins, constants), checked to cover the legacy
+  header. Not yet taken: `include`, `define-values`,
   macro export through `.scmh`.
 - `expand-syntax` returns the same core-language toplevel list as the legacy path, with
   locals already unique gensyms. Still missing: `import` of macros.

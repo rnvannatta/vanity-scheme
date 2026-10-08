@@ -1,0 +1,23 @@
+; When imports give one name two different bindings, the last import wins,
+; within one import form and across forms.
+(define-library (hy a) (import (vanity core)) (export x) (define x 'a))
+(define-library (hy b) (import (vanity core)) (export y) (define y 'b))
+(define-library (hy b-last)
+  (import (vanity core) (rename (hy a) (x y)) (hy b))
+  (export get)
+  (define (get) y))
+(define-library (hy a-last)
+  (import (vanity core) (hy b) (rename (hy a) (x y)))
+  (export get)
+  (define (get) y))
+(define-library (hy a-last-forms)
+  (import (vanity core) (hy b))
+  (import (rename (hy a) (x y)))
+  (export get)
+  (define (get) y))
+
+(import (vanity core) (vanity assert)
+        (prefix (hy b-last) bl.) (prefix (hy a-last) al.) (prefix (hy a-last-forms) af.))
+(assert-equal (bl.get) 'b)
+(assert-equal (al.get) 'a)
+(assert-equal (af.get) 'a)
