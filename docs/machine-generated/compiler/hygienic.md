@@ -93,15 +93,27 @@ Sets-of-scopes expander (SRFI-72-flavored). Replaces both `expand.scm` *and*
   right-hand side with all bindings known. Imports are phase-0 bindings (`bind-import-set!`)
   filed under the universe's toplevel scope alone, so a user definition of the same name,
   which also carries the global scope, shadows the import in either order, and core sugar
-  never sees one. Each import key's `import-link` records the exporter's alist name (or a
-  constant's value), whether it is a constant (`binding-kind` gives `set!` its check), and
-  the exporting library; the key is the receiver's formal, and the `VMultiImport` wiring is
-  derived from a `free-variables` walk of the body, as legacy's is. A later import of a name
-  relinks its key (last import wins, except that a variable never displaces a constant; see
-  EXPAND_WRINKLES W24). Assembly mirrors legacy `expand-library` ordering exactly
-  (alpha-equal output), and the finished library is recorded in `library-registry`
-  (scopes, level-0 export table with origins, constants), checked to cover the legacy
-  header. Not yet taken: `include`, `define-values`,
-  macro export through `.scmh`.
+  never sees one. Each import key's `import-link` records the exporting library, the
+  exporter's alist name and interface name, its kind (variable, constant, macro, assigned),
+  a constant's value or a macro's transformer, and the universe owning the key;
+  `binding-value` falls back to it when the expand env lacks the key (`set!` gets its
+  constant check there, and a template's identifiers their meaning in an importer). The
+  key is the receiver's formal, and the `VMultiImport` wiring is derived from a
+  `free-variables` walk of the body, as legacy's is. A later import of a name relinks its
+  key (last import wins, except that a variable never displaces a constant, and a
+  macro/non-macro relink is an error; see EXPAND_WRINKLES W24). Assembly mirrors legacy
+  `expand-library` ordering exactly (alpha-equal output) for libraries without level >= 1
+  code, and the finished library is recorded in `library-registry` (scopes, export table by
+  level with origins, constants, what importing it binds), checked to cover the legacy
+  header; its in-process interface is written from the registry. Not yet taken: `include`,
+  `define-values`, macro export through `.scmh`.
+- **Phased libraries at shift 0** (HYGIENE_LIBRARIES.md M1): `export` in a library's
+  `begin-for-syntax` and of macros; importing a registry library binds them at their level.
+  A library exporting a macro or a level >= 1 binding links all its universe bindings (`register-own-links!`) and
+  implicitly exports its unassigned level-0 definitions under their keys at the tail of its
+  alist. `resolve` emits a key from another universe as an alias the using universe owns
+  (`link-alias`): a library body wires aliases as it does imports, appending the exporter
+  to its load vector if needed; the program links them with `(import (rename (only lib ...)
+  ...))` forms ahead of each `expand-syntax` call's output (`toplevel-link-forms`).
 - `expand-syntax` returns the same core-language toplevel list as the legacy path, with
-  locals already unique gensyms. Still missing: `import` of macros.
+  locals already unique gensyms.

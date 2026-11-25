@@ -4,7 +4,7 @@
           (vanity hashtable)
           (vanity list) (vanity intrinsics) (vanity compiler utils) (vanity compiler hygienic types) (vanity compiler hygienic resolve) (vanity compiler hygienic global-forms) (vanity compiler hygienic eval)
           (only (vanity compiler variables) mangle-library free-variables mutated-variables)
-          (only (vanity compiler library) process-import! register-library-interface!)
+          (only (vanity compiler library) map-import-set interface-import-entries import-path register-library-interface!)
           (only (vanity compiler expand) header-from-library)
           (only (vanity compiler ffi) validate-foreign-function))
   (export expand-syntax unbound-meta-variables)
@@ -74,56 +74,108 @@
   ; the toplevel representative's flat binding list, so every uncached lookup
   ; in a universe importing (vanity core) and (vanity list) scans ~600 entries.
   ; Binding imports cost cps.scm's expansion 30% (0.41s to 0.53s).
+  ; What a key bound in one universe means to another: an import's link to
+  ; its exporter, or, for a library exporting macros or level >= 1 bindings,
+  ; the link to one of its own, which its templates can carry into an importer.
   (define-record-type import-link
-    (make-import-link lib link constant?)
+    (make-owned-import-link lib name export-name kind value owner)
     import-link?
-    (lib import-link-lib set-import-link-lib!)
-    ; the name in the exporter's export alist, or a constant's value
-    (link import-link-link set-import-link-link!)
-    (constant? import-link-constant? set-import-link-constant!))
+    (lib import-link-lib)
+    ; the name in lib's export alist, the receiver's VMultiImport link;
+    ; for a level >= 1 binding, the meta key; #f for a constant lib doesn't export
+    (name import-link-name)
+    ; the name in lib's interface before the importer's prefix/rename, which
+    ; a program toplevel (only lib ...) filters on; #f when name is
+    (export-name import-link-export-name)
+    ; variable, constant, macro, or assigned (no export: a template reference is an error)
+    (kind import-link-kind)
+    ; a constant's datum or a macro's transformer
+    (value import-link-value)
+    ; the toplevel scope of the universe the key is bound in
+    (owner import-link-owner))
+  (define (make-import-link lib name export-name kind value)
+    (make-owned-import-link lib name export-name kind value #f))
+  (define (owned-import-link l)
+    (make-owned-import-link (import-link-lib l) (import-link-name l) (import-link-export-name l)
+                            (import-link-kind l) (import-link-value l) (toplevel-scope)))
+  (define (import-link-constant? l) (eq? (import-link-kind l) constant))
+  (define (import-link-macro? l) (eq? (import-link-kind l) 'macro))
   (define import-links (make-hash-table eq? current-hash #f #t))
   (define (import-link key) (hash-table-ref import-links key (lambda () #f)))
-  ; a cell holding the universe's (symbol . key) imports
+  ; a cell holding the universe's ((symbol . phase) . key) imports
   (define universe-imports (make-parameter (list '())))
   ; A library's import keys become its receiver's formals; the program's are
-  ; emitted by symbol, as cps defines imported globals.
-  (define (bind-import! sym lib link constant? emit-key?)
+  ; emitted by symbol, as cps defines imported globals. A level >= 1 import
+  ; is emitted as the exporter's meta key, whose value is in the meta store.
+  (define (bind-import! sym phase l emit-key?)
     (define cell (universe-imports))
-    (define e (assq sym (car cell)))
+    (define e (find (lambda (e) (and (eq? (caar e) sym) (= (cdar e) phase))) (car cell)))
+    (define (emitted-name key)
+      (cond ((> phase 0) (import-link-name l)) (emit-key? key) (else sym)))
     (if e
-        (let ((l (import-link (cdr e))))
-          (unless (and (import-link-constant? l) (not constant?))
-            (set-import-link-lib! l lib)
-            (set-import-link-link! l link)
-            (set-import-link-constant! l constant?)))
+        (let ((old (import-link (cdr e))))
+          ; uses the old macro already expanded would disagree with later ones
+          (unless (eq? (import-link-macro? old) (import-link-macro? l))
+            (compiler-error "import rebinds a name between a macro and a non-macro" sym))
+          (unless (and (import-link-constant? old) (not (import-link-constant? l)))
+            (hash-table-set! import-links (cdr e) (owned-import-link l))
+            (register-universe-binding! (cdr e) (emitted-name (cdr e)))))
         (let ((key (generate-symbol sym)))
-          (parameterize ((current-phase 0))
+          (parameterize ((current-phase phase))
             (add-binding! (make-syntax sym (list (toplevel-scope))) key))
-          (register-universe-binding! key (if emit-key? key sym))
-          (hash-table-set! import-links key (make-import-link lib link constant?))
-          (set-car! cell (cons (cons sym key) (car cell))))))
-  ; spec is an import set datum
+          (register-universe-binding! key (emitted-name key))
+          (hash-table-set! import-links key (owned-import-link l))
+          (set-car! cell (cons (cons (cons sym phase) key) (car cell))))))
+  ; spec is an import set datum; returns (path . entries)
   (define (bind-import-set! spec emit-key?)
-    (define lib (process-import! spec (library-paths)))
-    (for-each (lambda (e) (bind-import! (cdr e) (car lib) (car e) #f emit-key?)) (cadr lib))
-    (for-each (lambda (e) (bind-import! (cdr e) (car lib) (car e) #t emit-key?)) (caddr lib))
+    (define lib
+      (let ((entry (find-library-entry (import-path spec))))
+        (if entry
+            (map-import-set spec (lambda (_) (library-entry-imports entry)))
+            (map-import-set spec (lambda (path) (map (lambda (e) (cons (interface-entry->link path (car e)) (cdr e)))
+                                                     (interface-import-entries path (library-paths))))))))
+    (for-each (lambda (e) (bind-import! (cdr e) (caar e) (cdar e) emit-key?)) (cdr lib))
     lib)
-  ; variable, constant, a transformer, or #f if binding is not in context
-  (define (binding-kind binding env)
+  ; (phase . link) for one of interface-import-entries' payloads
+  (define (interface-entry->link path payload)
+    (cons 0
+          (if (eq? (car payload) 'variable)
+              (make-import-link path (cadr payload) (caddr payload) variable #f)
+              (make-import-link path (caddr payload) (cadddr payload) constant (cadr payload)))))
+  ; The env's value for binding -- variable, constant, a transformer, or #f
+  ; while its define-syntax is evaluated -- else what its link makes of a key
+  ; from another universe; #f if binding is not in context.
+  (define (binding-value binding env)
     (let ((v (assq binding env)))
-      (cond
-        (v (cdr v))
-        ((import-link binding) => (lambda (l) (if (import-link-constant? l) constant variable)))
-        (else #f))))
+      (if v
+          (cdr v)
+          (let ((l (import-link binding)))
+            (and l
+                 (case (import-link-kind l)
+                   ((macro) (import-link-value l))
+                   ((assigned)
+                    (compiler-error
+                      (sprintf "~A is assigned in ~A and cannot be referenced by an exported macro's expansion"
+                               (import-link-name l) (import-link-lib l))))
+                   (else (import-link-kind l))))))))
+  (define (binding-transformer binding env)
+    (let ((v (and binding (binding-value binding env))))
+      (and (procedure? v) v)))
 
   ; what an unbound identifier resolves to, or #f if it may not be free here
   (define (resolve-free-identifier id)
     (define sym (get-syntax-data id))
     (cond
       ((> (current-phase) 0) (meta-free-reference id))
-      ((free-vars-allowed) sym)
       ((lookup-intrinsic-name sym) sym)
+      ; a template identifier its own library didn't bind must not fall
+      ; through to the program's global of that name
+      ((foreign-universe-identifier? id) #f)
+      ((free-vars-allowed) sym)
       (else #f)))
+  (define (foreign-universe-identifier? id)
+    (any (lambda (sc) (and (not (eq? sc (toplevel-scope))) (memq sc universe-scopes)))
+         (get-syntax-scopes id)))
   (define (free-identifier-allowed? id) (and (resolve-free-identifier id) #t))
   ; every toplevel scope ever made: the program's plus one per fresh universe
   ; (library / ##vcore.declare). The registry can't stand in for this: the
@@ -260,7 +312,8 @@
               (define binding (vector-ref (car found) scope-entry-binding))
               (compiler-error
                 (if (import-link binding)
-                    (sprintf "imported at phase ~A but referenced at phase ~A; imports at phase >= 1 are not supported yet" p here)
+                    (sprintf "imported at phase ~A but referenced at phase ~A~A" p here
+                             (if (< p here) "; begin-for-syntax imports are not supported yet" ""))
                     (sprintf "bound at phase ~A but referenced at phase ~A~A" p here
                              (if (universe-binding? binding)
                                  (if (< p here) "; define it in begin-for-syntax" "; define it outside begin-for-syntax")
@@ -359,6 +412,7 @@
           (append (alist-copy global-form-env)
                   (map (lambda (e) (cons (cdr e) variable)) meta-base))))
   (define toplevel-expand-env (make-parameter (fresh-toplevel-expand-env)))
+  (define fresh-toplevel-env-size (length (cdr (fresh-toplevel-expand-env))))
 
   ; Use-site scopes (Flatt, Binding as Sets of Scopes, 2.3-2.4). A user macro
   ; used in the definition context that defines it has templates with the
@@ -396,7 +450,7 @@
        (error "bad syntax" (get-syntax-data stx)
               (scope-set->string (get-syntax-scopes stx))))
       (else
-        (define kind (binding-kind binding env))
+        (define kind (binding-value binding env))
         (cond
           ((not kind)
            (if (explain-scopes?) (explain-identifier-failure stx))
@@ -415,7 +469,12 @@
     (cond
       ((resolved-form? stx) (resolved-form-datum stx))
       ((identifier? stx)
-       (or (let ((binding (resolve-identifier stx))) (and binding (binding-name binding)))
+       (or (let ((binding (resolve-identifier stx)))
+             (and binding
+                  (let ((l (import-link binding)))
+                    (if (and l (= (current-phase) 0) (not (eq? (import-link-owner l) (toplevel-scope))))
+                        (link-alias binding l (get-syntax-data stx))
+                        (binding-name binding)))))
            ; free variable: we let them through because toplevel variables are free
            (resolve-free-identifier stx)
            (begin
@@ -492,6 +551,8 @@
                    (toplevel-expand-env (fresh-toplevel-expand-env))
                    (free-vars-allowed #f)
                    (universe-imports (list '()))
+                   (link-aliases (list '()))
+                   (library-level-exports (and (eq? kind 'library) (list '())))
                    (meta-namespace (list '())))
       (scope-at inner-global 0)
       (let ((out (at-crossing
@@ -643,13 +704,13 @@
                           (val (eval-syntax-definition var (syntax-caddr def) depth)))
                      (loop defines constants (syntax-cdr body) (cons (cons binding val) env)))))
                 (else
-                  (define v (assq binding env))
+                  (define t (binding-transformer binding env))
                   (cond
-                    ((and v (procedure? (cdr v)))
+                    (t
                      (loop
                        defines
                        constants
-                       (cons (apply-transformer (get-syntax-data (syntax-caar body)) (cdr v) (syntax-car body) (+ depth 1))
+                       (cons (apply-transformer (get-syntax-data (syntax-caar body)) t (syntax-car body) (+ depth 1))
                              (syntax-cdr body))
                        env))
                     (else (finish defines constants body env))))))
@@ -893,6 +954,9 @@
     (set-cdr! (assq binding (toplevel-expand-env)) val)
     '())
 
+  ; a cell of the library's (level internal . external) exports above level 0
+  (define library-level-exports (make-parameter #f))
+
   ; Universe level only; forms is the body of a begin-for-syntax at phase n.
   ; Definitions are bound as they are scanned, so helpers in one block can
   ; refer to each other in any order, and are evaluated into the meta store
@@ -933,12 +997,20 @@
                     ((begin-for-syntax)
                      (expand-begin-for-syntax (syntax-cdr form) depth library?)
                      (scan rest entries))
-                    ((import export define-values define-library ##vcore.declare ##foreign.declare)
+                    ((export)
+                     (unless (library-level-exports)
+                       (compiler-error "export in begin-for-syntax is only allowed in define-library"
+                                       (syntax-object->datum form)))
+                     (let ((cell (library-level-exports)))
+                       (set-car! cell (append (syntax-map (lambda (e) (cons (current-phase) (export-names e))) (syntax-cdr form))
+                                              (car cell))))
+                     (scan rest entries))
+                    ((import define-values define-library ##vcore.declare ##foreign.declare)
                      (compiler-error "not supported at phase >= 1 yet" (syntax-object->datum form)))
                     (else
-                      (let ((v (and head (assq head (toplevel-expand-env)))))
-                        (if (and v (procedure? (cdr v)))
-                            (scan (cons (apply-transformer (get-syntax-data (syntax-car form)) (cdr v) form (+ depth 1)) rest)
+                      (let ((t (binding-transformer head (toplevel-expand-env))))
+                        (if t
+                            (scan (cons (apply-transformer (get-syntax-data (syntax-car form)) t form (+ depth 1)) rest)
                                   entries)
                             (scan rest (cons (cons #f form) entries)))))))))))))
 
@@ -970,18 +1042,20 @@
   ; Every library expanded in this process, by name, newest first; a
   ; redefinition shadows the old entry. Outlives expand-syntax, for the REPL.
   (define-record-type library-entry
-    (make-library-entry name global-scope toplevel-scope exports constants instances)
+    (make-library-entry name global-scope toplevel-scope exports constants imports instances)
     library-entry?
     (name library-entry-name)
     (global-scope library-entry-global-scope)
     (toplevel-scope library-entry-toplevel-scope)
-    ; ((level . external) kind link origin): kind is variable or constant,
-    ; link the name in the export alist, origin (library level symbol) of the
-    ; defining binding, which is approximate for re-exported .scmh imports
-    ; until headers carry origins
+    ; ((level . external) kind link origin): kind is variable, constant or
+    ; macro, link the name in the export alist, origin (library level symbol)
+    ; of the defining binding, which is approximate for re-exported .scmh
+    ; imports until headers carry origins
     (exports library-entry-exports)
     ; (name datum) for each define-constant, as the header exports them all
     (constants library-entry-constants)
+    ; what importing the library binds, for map-import-set: ((level . link) . name)
+    (imports library-entry-imports)
     ; (phase . instance)
     (instances library-entry-instances set-library-entry-instances!))
   (define library-registry '())
@@ -991,33 +1065,73 @@
     (let ((e (find (lambda (e) (eq? (caddr e) link)) (library-entry-exports entry))))
       (and e (cadddr e))))
 
-  ; entries are finish's, in source order; header is header-from-library's.
-  ; The registry must cover the header, but may hold more: the header is read
-  ; off the raw datum, so it misses exports and constants a macro produces.
-  (define (register-library! libname exports entries header)
+  ; entries are finish's, in source order: (define NAME GENSYM RAW VAL),
+  ; (constant NAME GENSYM RAW VAL), (expr FORM). exports are (internal .
+  ; external) at level 0 and level-exports (level internal . external) above
+  ; it; implicit the keys exported under their own name. own-links? says
+  ; whether the library's bindings get links, for its templates to carry.
+  ; header is header-from-library's; the registry must cover it, but may hold
+  ; more: the header is read off the raw datum, so it misses exports and
+  ; constants a macro produces. Returns the interface to register.
+  (define (register-library! libname exports level-exports entries mutated implicit own-links? header)
+    (define env (toplevel-expand-env))
     (define (introduce x) (make-syntax x (list (global-scope) (toplevel-scope))))
-    (define (export-entry e)
-      (define internal (car e))
-      (define key (resolve-identifier (introduce internal)))
-      (define own (find (lambda (e) (and (memq (car e) '(define constant)) (eq? (caddr e) key))) entries))
+    (define (key-at internal level)
+      (or (parameterize ((current-phase level)) (resolve-identifier (introduce internal)))
+          (compiler-error "exported name is not defined" internal (sprintf "level ~A" level))))
+    (define (own-entry key)
+      (find (lambda (e) (and (memq (car e) '(define constant)) (eq? (caddr e) key))) entries))
+    (define (entry-val e) (car (cddddr e)))
+    ; (kind link value) of an export
+    (define (export-kind key level)
       (define l (import-link key))
-      (list (cons 0 (cdr e))
-            (cond (own (car own)) ((import-link-constant? l) 'constant) (else 'variable))
+      (define v (binding-value key env))
+      (cond
+        ((and (= level 0) (own-entry key))
+         => (lambda (e) (if (eq? (car e) 'constant) (list 'constant constant (entry-val e)) (list 'variable variable #f))))
+        ((procedure? v) (list 'macro 'macro v))
+        (l (list (if (import-link-constant? l) 'constant 'variable) (import-link-kind l) (import-link-value l)))
+        (else (list 'variable variable #f))))
+    (define (export-entry level internal external)
+      (define key (key-at internal level))
+      (define kind (export-kind key level))
+      (define l (import-link key))
+      (define link
+        (if (and (> level 0) (not (eq? (car kind) 'macro)))
+            (if l (owned-import-link l) (make-import-link libname (binding-name key) #f variable #f))
+            (make-import-link libname internal external (cadr kind) (caddr kind))))
+      (list (cons level external)
+            (car kind)
             internal
             (cond
-              (own (list libname 0 internal))
+              ((or (> level 0) (own-entry key) (not l)) (list libname level internal))
               ((and (not (import-link-constant? l)) (find-library-entry (import-link-lib l)))
                => (lambda (entry)
-                    (or (library-export-origin entry (import-link-link l))
-                        (list (import-link-lib l) 0 (import-link-link l)))))
-              (else (list (import-link-lib l) 0 (if (import-link-constant? l) internal (import-link-link l)))))))
+                    (or (library-export-origin entry (import-link-name l))
+                        (list (import-link-lib l) 0 (import-link-name l)))))
+              (else (list (import-link-lib l) 0 (if (import-link-constant? l) internal (import-link-name l)))))
+            link))
+    (define export-entries
+      (append
+        (map (lambda (e) (export-entry 0 (car e) (cdr e))) exports)
+        (map (lambda (e) (export-entry (car e) (cadr e) (cddr e))) level-exports)))
+    (define constant-entries (filter (lambda (e) (eq? (car e) 'constant)) entries))
+    ; W25: importers see every define-constant, exported or not
+    (define private-constant-imports
+      (filter-map
+        (lambda (e)
+          (and (not (find (lambda (x) (and (= (caar x) 0) (eq? (caddr x) (cadr e)))) export-entries))
+               (let ((name (and (memq (caddr e) implicit) (caddr e))))
+                 (cons (cons 0 (make-import-link libname name name constant (entry-val e))) (cadr e)))))
+        constant-entries))
     (define entry
       (make-library-entry
         libname (global-scope) (toplevel-scope)
-        (map export-entry exports)
-        (filter-map
-          (lambda (e) (and (eq? (car e) 'constant) (list (cadr e) (syntax-object->datum (cadddr e)))))
-          entries)
+        (map (lambda (e) (take e 4)) export-entries)
+        (map (lambda (e) (list (cadr e) (syntax-object->datum (cadddr e)))) constant-entries)
+        (append
+          (map (lambda (e) (cons (cons (caar e) (list-ref e 4)) (cdar e))) export-entries)
+          private-constant-imports)
         '()))
     (define header-exports
       (map (lambda (e) (if (pair? e) (caddr e) e)) (cdr (assq 'export (cddr header)))))
@@ -1029,7 +1143,52 @@
       (compiler-error "internal: library registry lacks names in the library's header" libname
                       (lset-difference eq? header-exports registry-exports)
                       (lset-difference eq? header-constants registry-constants)))
-    (set! library-registry (cons entry library-registry)))
+    (when own-links?
+      (register-own-links! libname exports entries mutated implicit))
+    (set! library-registry (cons entry library-registry))
+    `(define-library-interface ,libname
+       ,(assq 'import (cddr header))
+       (export
+         ,@(filter-map
+             (lambda (e)
+               (and (= (caar e) 0) (not (eq? (cadr e) 'macro))
+                    (if (eq? (caddr e) (cdar e)) (caddr e) (list 'rename (caddr e) (cdar e)))))
+             export-entries)
+         . ,implicit)
+       ,(assq 'constant-export (cddr header))))
+
+  ; Links for every universe-level binding a library made, so a template
+  ; that carries one into an importer can be wired there (§3.9).
+  (define (register-own-links! libname exports entries mutated implicit)
+    (define (introduce x) (make-syntax x (list (global-scope) (toplevel-scope))))
+    (define exported-keys
+      (map (lambda (e) (cons (resolve-identifier (introduce (car e))) e)) exports))
+    (define env (toplevel-expand-env))
+    (define level-0-keys
+      (filter-map (lambda (e) (and (memq (car e) '(define constant)) (caddr e))) entries))
+    (for-each
+      (lambda (e)
+        (define key (caddr e))
+        (define x (assq key exported-keys))
+        (define name (cond (x (cadr x)) ((memq key implicit) key) (else #f)))
+        (define export-name (cond (x (cddr x)) ((memq key implicit) key) (else #f)))
+        (hash-table-set! import-links key
+          (owned-import-link
+            (cond
+              ((eq? (car e) 'constant)
+               (make-import-link libname name export-name constant (car (cddddr e))))
+              ((memq key mutated) (make-import-link libname (cadr e) #f 'assigned #f))
+              (else (make-import-link libname name export-name variable #f))))))
+      (filter (lambda (e) (memq (car e) '(define constant))) entries))
+    (for-each
+      (lambda (e)
+        (unless (memq (car e) level-0-keys)
+          (hash-table-set! import-links (car e)
+            (owned-import-link
+              (if (procedure? (cdr e))
+                  (make-import-link libname #f #f 'macro (cdr e))
+                  (make-import-link libname (binding-name (car e)) #f variable #f))))))
+      (drop-right (cdr env) fresh-toplevel-env-size)))
 
   ; Output mirrors legacy expand-library exactly so the
   ; two are alpha-comparable: ##letrec bindings and the define-constant
@@ -1065,6 +1224,13 @@
         ;                        (expr FORM)
         ; exports: (internal . external), each export form a block, newest first
         (define (finish entries exports mangled-imports)
+          (define (export-key e) (resolve-identifier (introduce (car e))))
+          (define value-exports
+            (remove (lambda (e) (binding-transformer (export-key e) (toplevel-expand-env))) exports))
+          ; Templates reach importers only through exported macros and level
+          ; >= 1 exports, so only then do definitions need implicit exports (§3.9).
+          (define exports-syntax?
+            (or (pair? (car (library-level-exports))) (< (length value-exports) (length exports))))
           (define expanded
             (let* ((env (toplevel-expand-env))
                    (expand-resolve (lambda (x) (resolve (expand-impl x env depth))))
@@ -1073,7 +1239,7 @@
                        (lambda (name acc)
                          (##global-quasisyntax (##vcore.cons (##vcore.cons ',name ,(introduce name)) ,acc)))
                        (##global-quasisyntax '())
-                       (map car exports))))
+                       (map car value-exports))))
               (cons
                 (expand-resolve alist-stx)
                 (map
@@ -1092,18 +1258,38 @@
             (or (lambda-define? (entry-raw e)) (constant-expr? (entry-raw e))))
           (define defines (filter (lambda (e) (eq? (car e) 'define)) entries-in-order))
           (define constants (filter (lambda (e) (eq? (car e) 'constant)) entries-in-order))
+          (define body-forms
+            (filter-map
+              (lambda (e)
+                (case (car e)
+                  ((expr) (cadr e))
+                  ((define) (if (letrec-init? e) #f `(set! ,(entry-gensym e) ,(entry-val e))))
+                  (else #f)))
+              entries-in-order))
+          (define mutated
+            (mutated-variables (append (map entry-val (filter letrec-init? defines)) body-forms)))
+          (define implicit
+            (let ((exported (map export-key value-exports)))
+              (if exports-syntax?
+                  (filter-map
+                    (lambda (e)
+                      (and (memq (car e) '(define constant))
+                           (not (memq (entry-gensym e) mutated))
+                           (not (memq (entry-gensym e) exported))
+                           (entry-gensym e)))
+                    entries-in-order)
+                  '())))
+          ; implicit entries go last: VMultiImport scans the alist in order
           (define body
             (append
-              (filter-map
-                (lambda (e)
-                  (case (car e)
-                    ((expr) (cadr e))
-                    ((define) (if (letrec-init? e) #f `(set! ,(entry-gensym e) ,(entry-val e))))
-                    (else #f)))
-                entries-in-order)
-              (list export-alist)))
-          (define mutated
-            (mutated-variables (append (map entry-val (filter letrec-init? defines)) body)))
+              body-forms
+              (list (let tail ((alist export-alist))
+                      (if (and (pair? alist) (eq? (car alist) '##vcore.cons))
+                          (list '##vcore.cons (cadr alist) (tail (caddr alist)))
+                          (fold-right
+                            (lambda (k acc) `(##vcore.cons (##vcore.cons (quote ,k) ,k) ,acc))
+                            alist
+                            implicit))))))
           (define (qualify e)
             (define g (entry-gensym e))
             (define val (entry-val e))
@@ -1124,9 +1310,18 @@
             (cond
               ((null? free-vars)
                (let ((header (header-from-library (syntax-object->datum stx) (library-paths))))
-                 (register-library! libname exports entries-in-order header)
-                 (register-library-interface! header))
-               (let ((mangled (mangle-library libname)))
+                 (register-library-interface!
+                   (register-library! libname exports (car (library-level-exports)) entries-in-order
+                                      mutated implicit exports-syntax? header)))
+               ; a template's link can need a library the body never imported
+               (let* ((linked (delete-duplicates
+                                (filter-map
+                                  (lambda (f)
+                                    (let ((m (mangle-library (import-link-lib (import-link (car f))))))
+                                      (and (not (member m mangled-imports)) m)))
+                                  imported-vars)))
+                      (mangled-imports (append mangled-imports linked))
+                      (mangled (mangle-library libname)))
                  `(,@(reverse declares)
                    (##vcore.declare ,mangled
                     (lambda ()
@@ -1144,8 +1339,8 @@
               ((import-link (caar free-vars))
                => (lambda (l)
                     (if (import-link-constant? l)
-                        (loop (cdr free-vars) (cons (cons (caar free-vars) (import-link-link l)) constant-vars) imported-vars)
-                        (loop (cdr free-vars) constant-vars (cons (cons (caar free-vars) (import-link-link l)) imported-vars)))))
+                        (loop (cdr free-vars) (cons (cons (caar free-vars) (import-link-value l)) constant-vars) imported-vars)
+                        (loop (cdr free-vars) constant-vars (cons (cons (caar free-vars) (import-link-name l)) imported-vars)))))
               (else (compiler-error "library has free variable" libname (caar free-vars))))))
 
         (let loop ((todo decls) (entries '()) (exports '()) (mangled-imports '()))
@@ -1196,12 +1391,12 @@
                    (set! declares (cons (foreign-declare-datum form) declares))
                    (loop rest entries exports mangled-imports))
                   (else
-                    (let ((v (and head (assq head (toplevel-expand-env)))))
+                    (let ((t (binding-transformer head (toplevel-expand-env))))
                       (cond
                         ((memq (or head (head-symbol form)) library-unsupported-forms)
                          (compiler-error "not supported in hygienic define-library yet" (head-symbol form)))
-                        ((and v (procedure? (cdr v)))
-                         (loop (cons (apply-transformer (head-symbol form) (cdr v) form (+ depth 1)) rest)
+                        (t
+                         (loop (cons (apply-transformer (head-symbol form) t form (+ depth 1)) rest)
                                entries exports mangled-imports))
                         (else
                           (loop rest (cons (list 'expr form) entries)
@@ -1306,7 +1501,7 @@
            (compiler-error "malformed set!" (syntax-object->datum stx))))
        (define (check-not-constant place)
          (let ((binding (resolve-identifier place)))
-           (when (and binding (eq? (binding-kind binding env) constant))
+           (when (and binding (eq? (binding-value binding env) constant))
              (compiler-error "define-constant constant is mutated by set!" (syntax-object->datum stx)))))
        (unless (and (syntax-proper-list? stx) (>= (syntax-length stx) 3))
          (compiler-error "malformed set!" (syntax-object->datum stx)))
@@ -1346,14 +1541,14 @@
       ((##foreign.declare)
        (compiler-error "##foreign.declare is only allowed at toplevel" (syntax-object->datum stx)))
       (else
-        (define v (assq binding env))
+        (define t (binding-transformer binding env))
         (cond
-          ((and v (procedure? (cdr v)))
+          (t
            ; a macro at the head of transformer output rewrites the same form
            ; and shares its trace depth; one met while descending opens a new
            ; level. Must stay a tail call: rewrite chains are unbounded.
            (let ((d (if rewrite? depth (+ depth 1))))
-             (expand (apply-transformer (get-syntax-data (syntax-car stx)) (cdr v) stx d) env d)))
+             (expand (apply-transformer (get-syntax-data (syntax-car stx)) t stx d) env d)))
           (else (expand-app stx env depth))))))
 
   (define (expand-impl stx env depth) (expand-form stx env depth #f))
@@ -1455,6 +1650,54 @@
       (else
        (list (expand-app stx (toplevel-expand-env) depth)))))
 
+  ; A key from another universe, reached through a template, is emitted as
+  ; an alias of the universe's own, since a library's keys are binders in its
+  ; body and every binder in the program must be unique. The alias carries
+  ; the key's link, so a library body wires it as it does its imports; the
+  ; program's are linked by toplevel-link-forms. A cell of (key . alias).
+  (define link-aliases (make-parameter (list '())))
+  ; a cell of the program's new aliases while one expand-syntax call resolves
+  (define toplevel-links (make-parameter #f))
+  (define (link-alias key l sym)
+    (define cell (link-aliases))
+    (cond
+      ((assq key (car cell)) => cdr)
+      (else
+        (let ((alias (generate-symbol sym)))
+          (hash-table-set! import-links alias (owned-import-link l))
+          (set-car! cell (cons (cons key alias) (car cell)))
+          (if (toplevel-links)
+              (set-car! (toplevel-links) (cons alias (car (toplevel-links)))))
+          alias))))
+  ; One (import (rename (only lib e ...) (e key) ...)) per library, then a
+  ; define for each key sharing an export name with an earlier one, and for
+  ; each constant lib's alist doesn't have (W25).
+  (define (toplevel-link-forms keys)
+    (let loop ((keys keys) (by-lib '()) (defines '()))
+      (if (null? keys)
+          (append
+            (map (lambda (e)
+                   (let ((pairs (reverse (cdr e))))
+                     `(import (rename (only ,(car e) . ,(map car pairs))
+                                      . ,(map (lambda (p) (list (car p) (cdr p))) pairs)))))
+                 (reverse by-lib))
+            (reverse defines))
+          (let* ((key (car keys))
+                 (l (import-link key))
+                 (lib (import-link-lib l))
+                 (e (import-link-export-name l))
+                 (cell (assoc lib by-lib)))
+            (cond
+              ((not e)
+               (loop (cdr keys) by-lib (cons `(define ,key ,(import-link-value l)) defines)))
+              ((and cell (assq e (cdr cell)))
+               => (lambda (p) (loop (cdr keys) by-lib (cons `(define ,key ,(cdr p)) defines))))
+              (cell
+               (set-cdr! cell (cons (cons e key) (cdr cell)))
+               (loop (cdr keys) by-lib defines))
+              (else
+               (loop (cdr keys) (cons (list lib (cons e key)) by-lib) defines)))))))
+
   ; options: alist with any of (trace-expand . bool), (explain-scopes . bool),
   ; (expand-timeout . seconds). The deadline is per toplevel form, since that
   ; is expand-syntax's granularity.
@@ -1467,4 +1710,7 @@
                    (target-architecture architecture)
                    (trace-expand? (opt 'trace-expand))
                    (explain-scopes? (opt 'explain-scopes)))
-      (map resolve (expand-toplevel (datum->syntax-object (make-syntax 'dummy (list (global-scope) (toplevel-scope))) expr) 0)))))
+      (let* ((forms (expand-toplevel (datum->syntax-object (make-syntax 'dummy (list (global-scope) (toplevel-scope))) expr) 0))
+             (links (list '()))
+             (resolved (parameterize ((toplevel-links links)) (map resolve forms))))
+        (append (toplevel-link-forms (reverse (car links))) resolved)))))

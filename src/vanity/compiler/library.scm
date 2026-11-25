@@ -25,7 +25,7 @@
 
 (define-library (vanity compiler library)
   (import (vanity core) (vanity list) (vanity compiler utils))
-  (export process-import! library-exists? register-library-interface! import-path #;header-from-library valid-import? import-basepath import->path gather-dependencies)
+  (export process-import! map-import-set interface-import-entries library-exists? register-library-interface! import-path #;header-from-library valid-import? import-basepath import->path gather-dependencies)
 
   (define library-interfaces '())
   (define (load-library-interface import paths)
@@ -63,54 +63,56 @@
     (cond ((assoc 'constant-export (cddr lib)) => cdr)
           (else '())))
 
-  (define (process-import! import paths)
-    (define (prefix-import import prefix)
-      (cons (car import) (string->symbol (string-append prefix (symbol->string (cdr import))))))
-    (define (rename-import import renames)
-      (cons (car import) (cond ((assv (cdr import) renames) => cadr) (else (cdr import)))))
-    (define (process-export e)
-      (match e
-        (('rename a b)
-         (cons a b))
-        (else
-         (unless (symbol? e) (compiler-error "invalid export" e))
-         (cons e e))))
+  (define (process-export e)
+    (match e
+      (('rename a b)
+       (cons a b))
+      (else
+       (unless (symbol? e) (compiler-error "invalid export" e))
+       (cons e e))))
+
+  ; Applies import's only/except/prefix/rename to (payload . local) entries,
+  ; giving (path . entries); base maps the library name inside to its entries.
+  (define (map-import-set import base)
+    (define (prefix-import e prefix)
+      (cons (car e) (string->symbol (string-append prefix (symbol->string (cdr e))))))
+    (define (rename-import e renames)
+      (cons (car e) (cond ((assv (cdr e) renames) => cadr) (else (cdr e)))))
     (match import
       (('only import . names)
-       (let ((resolved-import (process-import! import paths)))
-         (match resolved-import
-           ((path imports constant-imports)
-            (list path
-              (filter (lambda (e) (memv (cdr e) names)) imports)
-              (filter (lambda (e) (memv (cdr e) names)) constant-imports))))))
+       (match (map-import-set import base)
+         ((path . entries) (cons path (filter (lambda (e) (memv (cdr e) names)) entries)))))
       (('except import . names)
-       (let ((resolved-import (process-import! import paths)))
-         (match resolved-import
-           ((path imports constant-imports)
-            (list path
-              (filter (lambda (e) (not (memv (cdr e) names))) imports)
-              (filter (lambda (e) (not (memv (cdr e) names))) constant-imports))))))
+       (match (map-import-set import base)
+         ((path . entries) (cons path (filter (lambda (e) (not (memv (cdr e) names))) entries)))))
       (('prefix import prefix)
-       (let ((resolved-import (process-import! import paths)))
-         (match resolved-import
-           ((path imports constant-imports)
-            (let ((stringfix (symbol->string prefix)))
-              (list path
-                (map (cut prefix-import <> stringfix) imports)
-                (map (cut prefix-import <> stringfix) constant-imports)))))))
+       (match (map-import-set import base)
+         ((path . entries) (cons path (map (cut prefix-import <> (symbol->string prefix)) entries)))))
       (('rename import . renames)
-       (let ((resolved-import (process-import! import paths)))
-         (match resolved-import
-           ((path imports constant-imports)
-              (list path
-                (map (cut rename-import <> renames) imports)
-                (map (cut rename-import <> renames) constant-imports))))))
-      (else
-        (let ((lib (find-library-interface! import paths)))
-          (list
-            import
-            (map process-export (extract-exports lib))
-            (map (lambda (e) (cons (cadr e) (car e))) (extract-constants lib)))))))
+       (match (map-import-set import base)
+         ((path . entries) (cons path (map (cut rename-import <> renames) entries)))))
+      (else (cons import (base import)))))
+
+  ; A library interface's entries for map-import-set, exports then constants:
+  ;   ((variable alist-name export-name) . local)
+  ;   ((constant value alist-name export-name) . local)
+  ; A constant's alist-name and export-name are #f unless it is also exported.
+  (define (interface-import-entries import paths)
+    (define lib (find-library-interface! import paths))
+    (define exports (map process-export (extract-exports lib)))
+    (append
+      (map (lambda (e) (cons (list 'variable (car e) (cdr e)) (cdr e))) exports)
+      (map (lambda (e)
+             (let ((x (assq (car e) exports)))
+               (cons (list 'constant (cadr e) (and x (car x)) (and x (cdr x))) (car e))))
+           (extract-constants lib))))
+
+  (define (process-import! import paths)
+    (match (map-import-set import (cut interface-import-entries <> paths))
+      ((path . entries)
+       (list path
+         (filter-map (lambda (e) (and (eq? (caar e) 'variable) (cons (cadar e) (cdr e)))) entries)
+         (filter-map (lambda (e) (and (eq? (caar e) 'constant) (cons (cadar e) (cdr e)))) entries)))))
 
   (define (acceptable-char? c)
     (let ((i (char->integer c)))
